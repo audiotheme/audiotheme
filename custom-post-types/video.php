@@ -248,7 +248,7 @@ function audiotheme_add_video_meta() {
 function audiotheme_video_meta_cb( $post ) {
 
 	// Store the saved values
-	$video = get_post_meta( $post->ID, '_audiotheme_video_url', true );
+	$video = get_post_meta( $post->ID, '_video_url', true );
 
 	// Nonce to verify intention later
 	wp_nonce_field( 'save_audiotheme_video_meta', 'audiotheme_video_nonce' );
@@ -286,8 +286,8 @@ function audiotheme_video_save( $id ) {
 	if( !current_user_can( 'edit_post' ) ) return;
 
 	// Make sure we get a clean url here with esc_url
-	if( isset( $_POST['_audiotheme_video_url'] ) )
-		update_post_meta( $id, '_audiotheme_video_url', esc_url( $_POST['_audiotheme_video_url'], array( 'http' ) ) );
+	if( isset( $_POST['_video_url'] ) )
+		update_post_meta( $id, '_video_url', esc_url( $_POST['_video_url'], array( 'http' ) ) );
 }
 
 ?>
