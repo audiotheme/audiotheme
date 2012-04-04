@@ -1,0 +1,198 @@
+.image-upload-preview {
+	max-width: 100px;
+	max-height: 100px;
+}
+.image-upload-preview img {
+	width: 100%;
+	height: auto;
+}
+
+/*---------------------------------------------------------
+	Clear floats
+------------------------------------------------------------ */
+.clear:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.clear {
+	zoom: 1;
+}
+
+/*---------------------------------------------------------
+	TTF Options
+------------------------------------------------------------ */
+div#struts-options {
+	width: 590px;
+	padding-bottom: 40px;
+}
+div#struts-options-body {
+	margin: 20px 0 0 0;
+	font-size: 12px;
+}
+
+/*Option box titles
+---------------------------------------*/
+div.struts-section h3 {
+	position: relative;
+	margin: 10px 0 0 0;
+	padding: 10px 35px 10px 15px;
+	font-family: Georgia, "Times New Roman", "Bitstream Charter", Times, serif;
+	font-weight: normal;
+	font-size: 15px;
+	background-color: #f1f1f1;
+	background-image: -ms-linear-gradient(top,#f9f9f9,#ececec);
+	background-image: -moz-linear-gradient(top,#f9f9f9,#ececec);
+	background-image: -o-linear-gradient(top,#f9f9f9,#ececec);
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#f9f9f9),to(#ececec));
+	background-image: -webkit-linear-gradient(top,#f9f9f9,#ececec);
+	background-image: linear-gradient(top,#f9f9f9,#ececec);
+	border: 1px solid #dfdfdf;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+	cursor: pointer;
+}
+div.struts-section h3.open {
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	-webkit-border-bottom-right-radius: 0;
+	-webkit-border-bottom-left-radius: 0;
+	-moz-border-radius-bottomright: 0;
+	-moz-border-radius-bottomleft: 0;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+div.struts-section h3 a {
+	display: block;
+	position: absolute;
+	right: 8px;
+	top: 11px;
+	width: 18px;
+	height: 18px;
+	overflow: hidden;
+	text-indent: -999em;
+	background-image: url(images/arrows.png);
+}
+div.struts-section h3 a:hover,
+div.struts-section h3:hover a {
+	background-image: url(images/arrows-dark.png);
+}
+div.struts-section h3 span {
+	font-size: 12px;
+	font-weight: normal;
+	float: right;
+	color: #aaa;
+}
+
+/*Option body
+---------------------------------------*/
+div.struts-section-body {
+	margin: 0;
+	padding: 5px 15px 0 15px;
+	background: #fcfcfc;
+	border: 1px solid #e6e6e6;
+	border-top: none;
+	-webkit-border-bottom-right-radius: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	-moz-border-radius-bottomright: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+div.struts-option {
+	margin: 30px 0;
+}
+div.struts-option-description {
+	float: right;
+	width: 270px;
+	padding: 10px;
+	background: #f1f1f1;
+	color: #777;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+}
+div.struts-option.text label,
+div.struts-option.select label,
+div.struts-option.textarea label,
+div.struts-option.color label,
+div.struts-option.image label {
+	display: block;
+	padding-bottom: 5px;
+}
+div.struts-option.color label a {
+	font-size: 11px;
+	text-decoration: none;
+	border-bottom: 1px dotted;
+}
+div.struts-option.text input {
+	width: 200px;
+	padding: 5px;
+}
+div.struts-option.textarea textarea {
+	width: 200px;
+	padding: 5px;
+	height: 100px;
+}
+div.farbtastic {
+	margin: 10px 0;
+}
+.updated, .error {
+	margin: 5px 15px 2px 0;
+}
+
+/*Option buttons
+---------------------------------------*/
+div.struts-save-button.submit {
+	padding-top: 0;
+}
+div#struts-options-body .struts-reset-button {
+	float: right;
+}
+div#struts-options-body .struts-saveall-button {
+	float: left;
+}
+div.struts-option.image input.image-input {
+	width: 200px;
+	padding: 5px;
+}
+div.struts-option.image input.button {
+	margin-top: 7px;
+}
+div.struts-buttons-container {
+	padding: 1.5em 0;
+}
+
+/*---------------------------------------------------------
+	Classic admin colors
+------------------------------------------------------------ */
+
+.admin-color-classic div.struts-option h3 {
+	background-color: #f5fafd;
+	background-image: -ms-linear-gradient(top,#f7fcfe,#eff8ff);
+	background-image: -moz-linear-gradient(top,#f7fcfe,#eff8ff);
+	background-image: -o-linear-gradient(top,#f7fcfe,#eff8ff);
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#f7fcfe),to(#eff8ff));
+	background-image: -webkit-linear-gradient(top,#f7fcfe,#eff8ff);
+	background-image: linear-gradient(top,#f7fcfe,#eff8ff);
+	border: 1px solid #d0dfe9;
+}
+.admin-color-classic div.struts-option h3 {
+	color: #174f69;
+}
+.admin-color-classic div.struts-option-body {
+	background: #f7fcfe;
+	border: 1px solid #d0dfe9;
+}
+.admin-color-classic div.struts-option-description {
+	background: #e7f2f7;
+}
