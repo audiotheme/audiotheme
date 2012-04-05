@@ -49,7 +49,10 @@ function audiotheme_init(){
 
 function audiotheme_includes(){
     // Custom post types
-    include( 'custom-post-types/video.php' );
+    include_once( 'custom-post-types/video.php' );
+    include_once( 'options/options-setup.php' );
 }
+
+add_action( 'after_setup_theme', 'audiotheme_options_init', 30 );
 
 ?>
