@@ -46,3 +46,13 @@ To add your own options to the theme options section, add the following to your 
 }
 add_action( 'audiotheme_custom_options', 'my_theme_options' );
 ```
+
+## Retrieving options
+
+To retrieve a theme option, you can use `audiotheme_get_option` and pass in the option name and optionally a default value if the option is empty. Example below:
+
+```php
+<?php audiotheme_get_option( 'logo_url', 'http://example.com/images/default_logo.png' )?>
+```
+
+If the option is empty and a default isn't provided, it will return `false`.

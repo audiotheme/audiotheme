@@ -38,32 +38,9 @@ endif;
  */
 if ( ! function_exists( 'audiotheme_get_option' ) ) :
 function audiotheme_get_option( $option_name, $default = false ) {
-	global $theme_options;
+	global $audiotheme_options;
 
-	$option = $theme_options->get_value( $option_name );
-
-	if ( isset( $option ) && ! empty( $option ) ) {
-		return $option;
-	}
-
-	return $default;
-}
-endif;
-
-
-/**
- * audiotheme Style Option
- *
- * Function called to get a Style Option. 
- * The option defaults to false unless otherwise set.
- *
- * @since 2.0
- */
-if ( ! function_exists( 'audiotheme_style' ) ) :
-function audiotheme_style( $option_name, $default = false ) {
-	global $theme_styles;
-
-	$option = $theme_styles->get_value( $option_name );
+	$option = $audiotheme_options->get_value( $option_name );
 
 	if ( isset( $option ) && ! empty( $option ) ) {
 		return $option;
