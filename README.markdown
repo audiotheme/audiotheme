@@ -2,6 +2,7 @@
 AudioTheme Framework uses a customized version of the [Struts Framework](https://github.com/thethemefoundry/struts).
 
 To add support for the AudioTheme's theme options section, add the following to your theme's functions.php
+
 ```php
 <?php function themename_setup() {
     add_theme_support('audiotheme-options');
