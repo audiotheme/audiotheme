@@ -53,6 +53,4 @@ function audiotheme_includes(){
     include_once( 'options/options-setup.php' );
 }
 
-add_action( 'after_setup_theme', 'audiotheme_options_init', 30 );
-
 ?>

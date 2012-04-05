@@ -25,6 +25,8 @@ function audiotheme_options_init() {
     	include_once( 'options-default.php' );
     }
 }
+
+add_action( 'after_setup_theme', 'audiotheme_options_init', 30 );
 endif;
 
 
