@@ -15,6 +15,7 @@ add_action( 'after_setup_theme', 'themename_setup' );
 AudioTheme Framework comes with some default options that are typically the same throughout all themes.
 
 Current default options include:
+
 - Logo (logo_url)
   
 To add support for default AudioTheme options, add the following to your theme's functions.php:
