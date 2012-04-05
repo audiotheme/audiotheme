@@ -21,7 +21,7 @@ function audiotheme_options_init() {
 	) );
 	
 	/* Load options */
-	if( current_theme_supports( 'audiotheme-default-options' ) ){
+	if( current_theme_supports( 'audiotheme-options' ) ){
     	include_once( 'options-default.php' );
     }
 }
