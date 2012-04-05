@@ -2,18 +2,17 @@
 /**
  * Controls the ability to choose a post template
  *
- * @package Genesis
- * @subpackage Single Post Templates
+ * @package audiotheme
  */
 
-if ( ! function_exists( 'get_post_templates' ) ) {
+if ( ! function_exists( 'audiotheme_get_post_templates' ) ) {
 /**
  * This function scans the template files of the active theme, and returns an
  * array of [Template Name => {file}.php]
  *
  * @return array
  */
-function get_post_templates() {
+function audiotheme_get_post_templates() {
 	$themes = get_themes();
 	$theme = get_current_theme();
 	$templates = $themes[$theme]['Template Files'];
@@ -46,17 +45,17 @@ function get_post_templates() {
 }
 }
 
-if ( ! function_exists( 'post_templates_dropdown' ) ) {
+if ( ! function_exists( 'audiotheme_post_templates_dropdown' ) ) {
 /**
  * Build the dropdown items
  *
  * @global mixed $post
  */
-function post_templates_dropdown() {
+function audiotheme_post_templates_dropdown() {
 	global $post;
-	$post_templates = get_post_templates();
+	$post_templates = audiotheme_get_post_templates();
 
-	foreach ( $post_templates as $template_name => $template_file ) { //loop through templates, make them options
+	foreach( $post_templates as $template_name => $template_file ) { //loop through templates, make them options
 		$selected = ( $template_file == get_post_meta( $post->ID, '_wp_post_template', true ) ) ? ' selected="selected"' : '';
 		$opt = '<option value="' . esc_attr( $template_file ) . '"' . $selected . '>' . esc_html( $template_name ) . '</option>';
 		echo $opt;
@@ -65,7 +64,7 @@ function post_templates_dropdown() {
 }
 
 
-add_filter( 'single_template', 'get_post_template' );
+add_filter( 'audiotheme_single_template', 'get_post_template' );
 if ( ! function_exists( 'get_post_template' ) ) {
 /**
  * Filter the single template value, and replace it with the template chosen by
@@ -75,7 +74,7 @@ if ( ! function_exists( 'get_post_template' ) ) {
  * @param string $template
  * @return string
  */
-function get_post_template( $template ) {
+function audiotheme_get_post_template( $template ) {
 	global $post;
 
 	$custom_field = get_post_meta( $post->ID, '_wp_post_template', true );
@@ -106,8 +105,8 @@ if ( ! function_exists( 'pt_add_custom_box' ) ) {
  * Adds a custom section to the Post edit screen
  */
 function pt_add_custom_box() {
-	if( get_post_templates() && function_exists( 'add_meta_box' ) ) {
-		add_meta_box( 'pt_post_templates', __( 'Single Post Template', 'genesis' ),
+	if( audiotheme_get_post_templates() && function_exists( 'add_meta_box' ) ) {
+		add_meta_box( 'pt_post_templates', __( 'Single Post Template', 'audiotheme' ),
 			'pt_inner_custom_box', 'post', 'normal', 'high' ); //add the boxes under the post
 	}
 }
@@ -126,12 +125,12 @@ function pt_inner_custom_box() {
 	echo '<input type="hidden" name="pt_noncename" id="pt_noncename" value="' . wp_create_nonce( plugin_basename( __FILE__ ) ) . '" />';
 
 	// The actual fields for data entry
-	echo '<label class="hidden" for="post_template">' . __( 'Post Template', 'genesis' ) . '</label><br />';
+	echo '<label class="hidden" for="post_template">' . __( 'Post Template', 'audiotheme' ) . '</label><br />';
 	echo '<select name="_wp_post_template" id="post_template" class="dropdown">';
-	echo '<option value="">' . __( 'Default', 'genesis' ) . '</option>';
+	echo '<option value="">' . __( 'Default', 'audiotheme' ) . '</option>';
 	post_templates_dropdown(); //get the options
 	echo '</select><br /><br />';
-	echo '<p>' . __( 'Some themes have custom templates you can use for single posts that might have additional features or custom layouts. If so, you will see them above.', 'genesis' ) . '</p><br />';
+	echo '<p>' . __( 'Some themes have custom templates you can use for single posts that might have additional features or custom layouts. If so, you will see them above.', 'audiotheme' ) . '</p><br />';
 }
 }
 

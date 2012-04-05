@@ -28,29 +28,62 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'AUDIOTHEME_DIR', plugin_dir_url(__FILE__) );
+define( 'AUIDIOTHEME_VERSION', 1.0 );
+define( 'AUDIOTHEME_DIR', plugin_dir_url( __FILE__ ) );
+
 
 // Include the additional files (custom post types, widgets, etc)
 audiotheme_includes();
 
-add_action('init',  'audiotheme_init');
-function audiotheme_init(){
 
-	load_plugin_textdomain( 'audiotheme', FALSE, AUDIOTHEME_DIR.'languages' );
-	
-	if( current_user_can( 'manage_options' ) ){
-		// Display admin pages
-		//add_action( 'admin_menu', 'audiotheme_create_menu' );
-	}
-		 	
+add_action( 'init',  'audiotheme_init' );
+/**
+ * AudioTheme Init
+ *
+ * @since 1.0
+ */
+function audiotheme_init() {
+
+	load_plugin_textdomain( 'audiotheme', false, AUDIOTHEME_DIR . 'languages' );
+
 }
 
-function audiotheme_includes(){
-    // Custom post types
-    include_once( 'custom-post-types/video.php' );
-    include_once( 'options/options-setup.php' );
+
+/**
+ * AudioTheme Includes
+ *
+ * @since 1.0
+ */
+function audiotheme_includes() {
+
+	/* Admin */
+	include_once( 'admin/user-meta.php' );
+	
+	/* Custom Post Types */
+	include_once( 'custom-post-types/video.php' );
+	
+	/* Functions */
+	include_once( 'functions/feed.php' );
+	include_once( 'functions/formatting.php' );
+	include_once( 'functions/general.php' );
+	include_once( 'functions/image.php' );
+	//include_once( 'functions/upgrade.php' );
+	    
+	/* Metaboxes */
+	include_once( 'metaboxes/video.php' );
+	    
+	/* Options */
+	include_once( 'options/options-setup.php' );
+	
+	/* Metaboxes */
+	include_once( 'shortcodes/footer.php' );
+	
+	/* Tools */
+	include_once( 'tools/custom-field-redirect.php' );
+	include_once( 'tools/post-templates.php' );
+	
 }
 
 ?>

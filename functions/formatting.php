@@ -2,100 +2,109 @@
 /**
  * Text formatting functions.
  *
- * @package Genesis
+ * @package AudioTheme
  */
 
+
 /**
+ * Truncate Phrase
+ *
  * Return a phrase shortened in length to a maximum number of characters.
  *
  * Result will be truncated at the last white space in the original
- * string. In this function the word separator is a single space (' ').
- * Other white space characters (like newlines and tabs) are ignored.
+ * string. In this function the word separator is a single space ( ' ' ).
+ * Other white space characters ( like newlines and tabs ) are ignored.
  *
  * If the first $max_characters of the string do contain a space
  * character, an empty string will be returned.
  *
- * @since 1.4
+ * @since 1.0
  *
  * @param string $phrase A string to be shortened.
  * @param integer $max_characters The maximum number of characters to return.
  * @return string
  */
-function genesis_truncate_phrase($phrase, $max_characters) {
+function audiotheme_truncate_phrase( $phrase, $max_characters ) {
 
 	$phrase = trim( $phrase );
 
-	if ( strlen($phrase) > $max_characters ) {
+	if ( strlen( $phrase ) > $max_characters ) {
 
 		// Truncate $phrase to $max_characters + 1
-		$phrase = substr($phrase, 0, $max_characters + 1);
+		$phrase = substr( $phrase, 0, $max_characters + 1 );
 
 		// Truncate to the last space in the truncated string.
-		$phrase = trim(substr($phrase, 0, strrpos($phrase, ' ')));
+		$phrase = trim( substr( $phrase, 0, strrpos( $phrase, ' ' ) ) );
 	}
 
 	return $phrase;
 }
 
+
 /**
+ * Get The Content with Limit
+ *
  * This function strips out tags and shortcodes,
  * limits the output to $max_char characters,
  * and appends an ellipses and more link to the end.
  *
- * @since 0.1
+ * @since 1.0
  */
-function get_the_content_limit($max_char, $more_link_text = '(more...)', $stripteaser = 0) {
+function audiotheme_get_the_content_limit( $max_char, $more_link_text = '(more...)', $stripteaser = 0 ) {
 
-	$content = get_the_content('', $stripteaser);
+	$content = get_the_content( '', $stripteaser );
 
 	// Strip tags and shortcodes
-	$content = strip_tags(strip_shortcodes($content), apply_filters('get_the_content_limit_allowedtags', '<script>,<style>'));
+	$content = strip_tags( strip_shortcodes( $content ), apply_filters( 'get_the_content_limit_allowedtags', '<script>,<style>' ) );
 
 	// Inline styles/scripts
-	$content = trim(preg_replace('#<(s(cript|tyle)).*?</\1>#si', '', $content));
+	$content = trim( preg_replace( '#<( s( cript|tyle ) ).*?</\1>#si', '', $content ) );
 
 	// Truncate $content to $max_char
-	$content = genesis_truncate_phrase($content, $max_char);
+	$content = audiotheme_truncate_phrase( $content, $max_char );
 
 	// More Link?
 	if ( $more_link_text ) {
-		$link = apply_filters( 'get_the_content_more_link', sprintf( '%s <a href="%s" class="more-link">%s</a>', g_ent('&hellip;'), get_permalink(), $more_link_text ), $more_link_text );
+		$link = apply_filters( 'get_the_content_more_link', sprintf( '%s <a href="%s" class="more-link">%s</a>', g_ent( '&hellip;' ), get_permalink(), $more_link_text ), $more_link_text );
 
-		$output = sprintf('<p>%s %s</p>', $content, $link);
+		$output = sprintf( '<p>%s %s</p>', $content, $link );
 	}
 	else {
-		$output = sprintf('<p>%s</p>', $content);
+		$output = sprintf( '<p>%s</p>', $content );
 	}
 
-	return apply_filters('get_the_content_limit', $output, $content, $link, $max_char);
+	return apply_filters( 'get_the_content_limit', $output, $content, $link, $max_char );
 
 }
-function the_content_limit($max_char, $more_link_text = '(more...)', $stripteaser = 0) {
 
-	$content = get_the_content_limit($max_char, $more_link_text, $stripteaser);
-	echo apply_filters('the_content_limit', $content);
+function audiotheme_the_content_limit( $max_char, $more_link_text = '( more... )', $stripteaser = 0 ) {
+
+	$content = get_the_content_limit( $max_char, $more_link_text, $stripteaser );
+	echo apply_filters( 'the_content_limit', $content );
 
 }
 
 /**
+ * Rel No-Follow
  *
+ * @since 1.0
  */
-function genesis_rel_nofollow($xhtml) {
-	$xhtml = genesis_strip_attr($xhtml, array('a'), array('rel'));
-	$xhtml = stripslashes(wp_rel_nofollow($xhtml));
+function audiotheme_rel_nofollow( $xhtml ) {
+	$xhtml = audiotheme_strip_attr( $xhtml, array( 'a' ), array( 'rel' ) );
+	$xhtml = stripslashes( wp_rel_nofollow( $xhtml ) );
 
 	return $xhtml;
 }
 
+
 /**
+ * Strip Attribute
+ *
  * This function accepts a string of xHTML, parses it for any elements in the
  * $elements array, then parses that element for any attributes in the $attributes
- * array, and strips the attribute and its value(s).
+ * array, and strips the attribute and its value( s ).
  *
- * @author Charles Clarkson
- * @link http://studiopress.com/support/showthread.php?t=20633
- *
- * @example genesis_strip_attr('<a class="class" href="http://google.com/">Google</a>', array('a'), array('class'));
+ * @example audiotheme_strip_attr( '<a class="class" href="http://google.com/">Google</a>', array( 'a' ), array( 'class' ) );
  *
  * @param string $xhtml A string of xHTML formatted code
  * @param array|string $elements Elements that $attributes should be stripped from
@@ -106,34 +115,37 @@ function genesis_rel_nofollow($xhtml) {
  *
  * @since 1.0
  */
-function genesis_strip_attr($xhtml, $elements, $attributes, $two_passes = true) {
+function audiotheme_strip_attr( $xhtml, $elements, $attributes, $two_passes = true ) {
 
 	// Cache elements pattern
-	$elements_pattern = join('|', $elements);
+	$elements_pattern = join( '|', $elements );
 
 	// Build patterns
 	$patterns = array();
-	foreach ( (array) $attributes as $attribute ) {
+	foreach ( ( array ) $attributes as $attribute ) {
 
 		// Opening tags
-		$patterns[] = sprintf('~(<(?:%s)[^>]*)\s+%s=[\\\'"][^\\\'"]+[\\\'"]([^>]*[^>]*>)~', $elements_pattern, $attribute);
+		$patterns[] = sprintf( '~( <( ?:%s )[^>]* )\s+%s=[\\\'"][^\\\'"]+[\\\'"]( [^>]*[^>]*> )~', $elements_pattern, $attribute );
 
 		// Self closing tags
-		$patterns[] = sprintf('~(<(?:%s)[^>]*)\s+%s=[\\\'"][^\\\'"]+[\\\'"]([^>]*[^/]+/>)~', $elements_pattern, $attribute);
+		$patterns[] = sprintf( '~( <( ?:%s )[^>]* )\s+%s=[\\\'"][^\\\'"]+[\\\'"]( [^>]*[^/]+/> )~', $elements_pattern, $attribute );
 
 	}
 
 	// First pass
-	$xhtml = preg_replace($patterns, '$1$2', $xhtml);
+	$xhtml = preg_replace( $patterns, '$1$2', $xhtml );
 
 	if ( $two_passes ) // Second pass
-		$xhtml = preg_replace($patterns, '$1$2', $xhtml);
+		$xhtml = preg_replace( $patterns, '$1$2', $xhtml );
 
 	return $xhtml;
 
 }
 
+
 /**
+ * Tweet Linkify
+ *
  * This function takes the content of a tweet, detects @replies,
  * #hashtags, and http://links, and links them appropriately.
  *
@@ -144,28 +156,31 @@ function genesis_strip_attr($xhtml, $elements, $attributes, $two_passes = true) 
  *
  * @return string
  *
- * @since 1.1
+ * @since 1.0
  */
-function genesis_tweet_linkify($tweet) {
+function audiotheme_tweet_linkify( $tweet ) {
 
-	$tweet = preg_replace("#(^|[\n ])([\w]+?://[\w]+[^ \"\n\r\t< ]*)#", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $tweet);
-	$tweet = preg_replace("#(^|[\n ])((www|ftp)\.[^ \"\t\n\r< ]*)#", "\\1<a href=\"http://\\2\" target=\"_blank\">\\2</a>", $tweet);
-	$tweet = preg_replace("/@(\w+)/", "<a href=\"http://www.twitter.com/\\1\" target=\"_blank\">@\\1</a>", $tweet);
-	$tweet = preg_replace("/#(\w+)/", "<a href=\"http://search.twitter.com/search?q=\\1\" target=\"_blank\">#\\1</a>", $tweet);
+	$tweet = preg_replace( "#( ^|[\n ] )( [\w]+?://[\w]+[^ \"\n\r\t< ]* )#", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $tweet );
+	$tweet = preg_replace( "#( ^|[\n ] )( ( www|ftp )\.[^ \"\t\n\r< ]* )#", "\\1<a href=\"http://\\2\" target=\"_blank\">\\2</a>", $tweet );
+	$tweet = preg_replace( "/@( \w+ )/", "<a href=\"http://www.twitter.com/\\1\" target=\"_blank\">@\\1</a>", $tweet );
+	$tweet = preg_replace( "/#( \w+ )/", "<a href=\"http://search.twitter.com/search?q=\\1\" target=\"_blank\">#\\1</a>", $tweet );
 
 	return $tweet;
 
 }
 
+
 /**
+ * G Ent Filter
+ *
  * This is a helper function. It passes text through the g_ent filter
  * so that entities can be converted on-the-fly.
  *
- * @since 1.5
+ * @since 1.0
  */
 function g_ent( $text = '' ) {
 
-	return apply_filters('g_ent', $text);
+	return apply_filters( 'g_ent', $text );
 
 }
 
@@ -175,9 +190,9 @@ function g_ent( $text = '' ) {
  *
  * @since 1.6
  */
-function genesis_formatting_allowedtags() {
+function audiotheme_formatting_allowedtags() {
 
-	return apply_filters( 'genesis_formatting_allowedtags', array(
+	return apply_filters( 'audiotheme_formatting_allowedtags', array( 
 		//	<p>, <span>, <div>
 		'p' => array( 'align' => array(), 'class' => array(), 'style' => array() ),
 		'span' => array( 'align' => array(), 'class' => array(), 'style' => array() ),
@@ -196,7 +211,7 @@ function genesis_formatting_allowedtags() {
 		//	<blockquote>, <br />
 		'blockquote' => array(),
 		'br' => array()
-	) );
+	 ) );
 
 }
 
@@ -216,10 +231,10 @@ function genesis_formatting_allowedtags() {
  * @since 1.7
  *
  * @param $older_date int Unix timestamp of date you want to calculate the time since for
- * @param $newer_date int Unix timestamp of date to compare older date to. Default false (current time)
+ * @param $newer_date int Unix timestamp of date to compare older date to. Default false ( current time )
  * @return str The time difference
  */
-function genesis_human_time_diff( $older_date, $newer_date = false ) {
+function audiotheme_human_time_diff( $older_date, $newer_date = false ) {
 
 	// If no newer date is given, assume now
 	$newer_date = $newer_date ? $newer_date : time();
@@ -228,10 +243,10 @@ function genesis_human_time_diff( $older_date, $newer_date = false ) {
 	$since = absint( $newer_date - $older_date );
 
 	if ( ! $since )
-		return '0 ' . _x( 'seconds', 'time difference', 'genesis' );
+		return '0 ' . _x( 'seconds', 'time difference', 'audiotheme' );
 
-	// Hold units of time in seconds, and their pluralised strings (not translated yet)
-	$units = array(
+	// Hold units of time in seconds, and their pluralised strings ( not translated yet )
+	$units = array( 
 		array( 31536000, _nx_noop( '%s year', '%s years', 'time difference' ) ),  // 60 * 60 * 24 * 365
 		array( 2592000, _nx_noop( '%s month', '%s months', 'time difference' ) ), // 60 * 60 * 24 * 30
 		array( 604800, _nx_noop( '%s week', '%s weeks', 'time difference' ) ),    // 60 * 60 * 24 * 7
@@ -239,19 +254,19 @@ function genesis_human_time_diff( $older_date, $newer_date = false ) {
 		array( 3600, _nx_noop( '%s hour', '%s hours', 'time difference' ) ),      // 60 * 60
 		array( 60, _nx_noop( '%s minute', '%s minutes', 'time difference' ) ),
 		array( 1, _nx_noop( '%s second', '%s seconds', 'time difference' ) ),
-	);
+	 );
 
 	// Step one: the first unit
 	for ( $i = 0, $j = count( $units ); $i < $j; $i++ ) {
 		$seconds = $units[$i][0];
 
-		// Finding the biggest chunk (if the chunk fits, break)
+		// Finding the biggest chunk ( if the chunk fits, break )
 		if ( ( $count = floor( $since / $seconds ) ) != 0 )
 			break;
 	}
 
 	// Translate unit string, and add to the output
-	$output = sprintf( translate_nooped_plural( $units[$i][1], $count, 'genesis' ), $count );
+	$output = sprintf( translate_nooped_plural( $units[$i][1], $count, 'audiotheme' ), $count );
 
 	// Note the next unit
 	$ii = $i + 1;
@@ -264,7 +279,7 @@ function genesis_human_time_diff( $older_date, $newer_date = false ) {
 		if ( ( $count2 = floor( ( $since - ( $seconds * $count ) ) / $seconds2 ) ) != 0 )
 
 			// Add translated separator string, and translated unit string
-			$output .= sprintf( ' %s ' . translate_nooped_plural( $units[$ii][1], $count2, 'genesis' ),	_x( 'and', 'separator in time difference', 'genesis' ),	$count2	);
+			$output .= sprintf( ' %s ' . translate_nooped_plural( $units[$ii][1], $count2, 'audiotheme' ),	_x( 'and', 'separator in time difference', 'audiotheme' ),	$count2	 );
 
 	}
 

@@ -1,16 +1,16 @@
 <?php
 /**
- * audiotheme Options Init
+ * AudioTHeme Options Init
  *
  * Initializes and loads up theme options. Uses the Struts option framework.
  * See https://github.com/jestro/struts
  *
- * @since 2.0
+ * @since 1.0
  */
 if ( ! function_exists( 'audiotheme_options_init' ) ) :
 function audiotheme_options_init() {
 	/* Load options class (struts) */
-	require_once('classes/struts.php' );
+	require_once( 'classes/struts.php' );
 	
 	/* Conigure options load */
 	Struts::load_config( array(
@@ -36,7 +36,7 @@ endif;
  * Function called to get a Theme Option. 
  * The option defaults to false unless otherwise set.
  *
- * @since 2.0
+ * @since 1.0
  */
 if ( ! function_exists( 'audiotheme_get_option' ) ) :
 function audiotheme_get_option( $option_name, $default = false ) {
@@ -44,7 +44,7 @@ function audiotheme_get_option( $option_name, $default = false ) {
 
 	$option = $audiotheme_options->get_value( $option_name );
 
-	if ( isset( $option ) && ! empty( $option ) ) {
+	if( isset( $option ) && ! empty( $option ) ) {
 		return $option;
 	}
 

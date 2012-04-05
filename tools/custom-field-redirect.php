@@ -3,8 +3,7 @@
  * This code adapted from the Custom Field Redirect
  * plugin by Nathan Rice, http://www.nathanrice.net/plugins
  *
- * @package Genesis
- * @subpackage Custom Field Redirect
+ * @package audiotheme
  */
 
 if( ! function_exists( 'custom_field_redirect' ) ) {
@@ -16,7 +15,7 @@ add_action( 'template_redirect', 'custom_field_redirect' );
  * Redirect a request to a post / page, if that item has a custom field
  * entry of 'redirect' and a value.
  *
- * @since Unknown
+ * @since 1.0
  *
  * @global mixed $wp_query
  */

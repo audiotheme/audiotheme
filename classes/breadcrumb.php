@@ -1,10 +1,7 @@
 <?php
 /**
- * Genesis Breadcrumbs class and related functions.
+ * AudioTheme Breadcrumbs class and related functions.
  *
- * @author Gary Jones
- *
- * @package Genesis
  */
 
 
@@ -12,16 +9,16 @@
  * Class to control breadcrumbs display.
  *
  * Private properties will be set to private when WordPress requires PHP 5.2.
- * If you change a private property expect that change to break Genesis in the future.
+ * If you change a private property expect that change to break AudioTheme in the future.
  *
- * @since 1.5
+ * @since 1.0
  */
-class Genesis_Breadcrumb {
+class AudioTheme_Breadcrumb {
 
 	/**
 	 * Settings array, a merge of provided values and defaults. Private.
 	 *
-	 * @since 1.5
+ 	 * @since 1.0
 	 *
 	 * @var array
 	 */
@@ -30,7 +27,7 @@ class Genesis_Breadcrumb {
 	/**
 	 * Cache get_option call. Private.
 	 *
-	 * @since 1.5
+ 	 * @since 1.0
 	 *
 	 * @var string
 	 */
@@ -39,16 +36,16 @@ class Genesis_Breadcrumb {
 	/**
 	 * Constructor. Set up cacheable values and settings.
 	 *
-	 * @since 1.5
+ 	 * @since 1.0
 	 *
 	 * @param array $args
 	 */
-	function genesis_breadcrumb() {
+	function audiotheme_breadcrumb() {
 		$this->on_front = get_option( 'show_on_front' );
 
 		/** Default arguments **/
 		$this->args = array(
-			'home'						=> __( 'Home', 'genesis' ),
+			'home'						=> __( 'Home', 'audiotheme' ),
 			'sep'						=> ' / ',
 			'list_sep'					=> ', ',
 			'prefix'					=> '<div class="breadcrumb">',
@@ -57,15 +54,15 @@ class Genesis_Breadcrumb {
 			'heirarchial_categories'	=> true,
 			'display'					=> true,
 			'labels' => array(
-				'prefix'	=> __( 'You are here: ', 'genesis' ),
-				'author'	=> __( 'Archives for ', 'genesis' ),
-				'category'	=> __( 'Archives for ', 'genesis' ),
-				'tag'		=> __( 'Archives for ', 'genesis' ),
-				'date'		=> __( 'Archives for ', 'genesis' ),
-				'search'	=> __( 'Search for ', 'genesis' ),
-				'tax'		=> __( 'Archives for ', 'genesis' ),
-				'post_type'	=> __( 'Archives for ', 'genesis' ),
-				'404'		=> __( 'Not found: ', 'genesis' )
+				'prefix'	=> __( 'You are here: ', 'audiotheme' ),
+				'author'	=> __( 'Archives for ', 'audiotheme' ),
+				'category'	=> __( 'Archives for ', 'audiotheme' ),
+				'tag'		=> __( 'Archives for ', 'audiotheme' ),
+				'date'		=> __( 'Archives for ', 'audiotheme' ),
+				'search'	=> __( 'Search for ', 'audiotheme' ),
+				'tax'		=> __( 'Archives for ', 'audiotheme' ),
+				'post_type'	=> __( 'Archives for ', 'audiotheme' ),
+				'404'		=> __( 'Not found: ', 'audiotheme' )
 			)
 		);
 
@@ -74,14 +71,14 @@ class Genesis_Breadcrumb {
 	/**
 	 * Return the final completed breadcrumb in markup wrapper. Public.
 	 *
-	 * @since 1.5
+ 	 * @since 1.0
 	 *
 	 * @return string HTML markup
 	 */
 	function get_output( $args = array() ) {
 
 		/** Merge and Filter user and default arguments **/
-		$this->args = apply_filters( 'genesis_breadcrumb_args', wp_parse_args( $args, $this->args ) );
+		$this->args = apply_filters( 'audiotheme_breadcrumb_args', wp_parse_args( $args, $this->args ) );
 
 		return $this->args['prefix'] . $this->args['labels']['prefix'] . $this->build_crumbs() . $this->args['suffix'];
 
@@ -90,7 +87,7 @@ class Genesis_Breadcrumb {
 	/**
 	 * Echo the final completed breadcrumb in markup wrapper. Public.
 	 *
-	 * @since 1.5
+ 	 * @since 1.0
 	 *
 	 * @return string HTML markup
 	 */
@@ -105,16 +102,16 @@ class Genesis_Breadcrumb {
 	 *
 	 * Default is Home, linked on all occasions except when is_home() is true.
 	 *
-	 * @since 1.5
+ 	 * @since 1.0
 	 *
 	 * @return string HTML markup
 	 */
 	function get_home_crumb() {
 
 		$url = 'page' == $this->on_front ? get_permalink( get_option( 'page_on_front' ) ) : trailingslashit( home_url() );
-		$crumb = ( is_home() && is_front_page() ) ? $this->args['home'] : $this->get_breadcrumb_link( $url, sprintf( __( 'View %s', 'genesis' ), $this->args['home'] ), $this->args['home'] );
+		$crumb = ( is_home() && is_front_page() ) ? $this->args['home'] : $this->get_breadcrumb_link( $url, sprintf( __( 'View %s', 'audiotheme' ), $this->args['home'] ), $this->args['home'] );
 
-		return apply_filters( 'genesis_home_crumb', $crumb, $this->args );
+		return apply_filters( 'audiotheme_home_crumb', $crumb, $this->args );
 
 	}
 
@@ -124,7 +121,7 @@ class Genesis_Breadcrumb {
 	 * Defaults to the home crumb (later removed as a duplicate). If using a
 	 * static front page, then the title of the Page is returned.
 	 *
-	 * @since 1.5
+ 	 * @since 1.0
 	 *
 	 * @return string HTML markup
 	 */
@@ -134,14 +131,14 @@ class Genesis_Breadcrumb {
 		if ( 'page' == $this->on_front )
 			$crumb = get_the_title( get_option( 'page_for_posts' ) );
 
-		return apply_filters( 'genesis_blog_crumb', $crumb, $this->args );
+		return apply_filters( 'audiotheme_blog_crumb', $crumb, $this->args );
 
 	}
 
 	/**
 	 * Return search results page breadcrumb. Private.
 	 *
-	 * @since 1.5
+ 	 * @since 1.0
 	 *
 	 * @return string HTML markup
 	 */
@@ -149,14 +146,14 @@ class Genesis_Breadcrumb {
 
 		$crumb = $this->args['labels']['search'] . '"' . esc_html( apply_filters( 'the_search_query', get_search_query() ) ) . '"';
 
-		return apply_filters( 'genesis_search_crumb', $crumb, $this->args );
+		return apply_filters( 'audiotheme_search_crumb', $crumb, $this->args );
 
 	}
 
 	/**
 	 * Return 404 (page not found) breadcrumb. Private.
 	 *
-	 * @since 1.5
+ 	 * @since 1.0
 	 *
 	 * @return string HTML markup
 	 */
@@ -166,17 +163,17 @@ class Genesis_Breadcrumb {
 
 		$crumb = $this->args['labels']['404'];
 
-		return apply_filters( 'genesis_404_crumb', $crumb, $this->args );
+		return apply_filters( 'audiotheme_404_crumb', $crumb, $this->args );
 
 	}
 
 	/**
 	 * Return content page breadcrumb. Private.
 	 *
-	 * @since 1.5
-	 *
 	 * @global mixed $wp_query
 	 * @return string HTML markup
+	 *
+ 	 * @since 1.0
 	 */
 	function get_page_crumb() {
 
@@ -204,7 +201,7 @@ class Genesis_Breadcrumb {
 				$crumbs = array( );
 				foreach ( $ancestors as $ancestor ) {
 					array_unshift( $crumbs, $this->get_breadcrumb_link(
-									get_permalink( $ancestor ), sprintf( __( 'View %s', 'genesis' ), get_the_title( $ancestor ) ), get_the_title( $ancestor )
+									get_permalink( $ancestor ), sprintf( __( 'View %s', 'audiotheme' ), get_the_title( $ancestor ) ), get_the_title( $ancestor )
 							)
 					);
 				}
@@ -216,14 +213,12 @@ class Genesis_Breadcrumb {
 			}
 		}
 
-		return apply_filters( 'genesis_page_crumb', $crumb, $this->args );
+		return apply_filters( 'audiotheme_page_crumb', $crumb, $this->args );
 
 	}
 
 	/**
 	 * Return archive breadcrumb. Private
-	 *
-	 * @since 1.5
 	 *
 	 * @global mixed $wp_query The page query object
 	 * @global mixed $wp_locale The locale object, used for getting the
@@ -231,6 +226,8 @@ class Genesis_Breadcrumb {
 	 * @return string HTML markup
 	 * @todo Heirarchial, and multiple, cats and taxonomies
 	 * @todo redirect taxonomies to plural pages.
+	 *
+ 	 * @since 1.0
 	 */
 	function get_archive_crumb() {
 
@@ -238,32 +235,32 @@ class Genesis_Breadcrumb {
 
 		if ( is_category() ) {
 			$crumb = $this->args['labels']['category'] . $this->get_term_parents( get_query_var( 'cat' ), 'category' );
-			$crumb .= edit_term_link( __( '(Edit)', 'genesis' ), ' ', '', null, false );
+			$crumb .= edit_term_link( __( '(Edit)', 'audiotheme' ), ' ', '', null, false );
 		}
 		elseif ( is_tag() ) {
 			$crumb = $this->args['labels']['tag'] . single_term_title( '', false );
-			$crumb .= edit_term_link( __( '(Edit)', 'genesis' ), ' ', '', null, false );
+			$crumb .= edit_term_link( __( '(Edit)', 'audiotheme' ), ' ', '', null, false );
 		}
 		elseif ( is_tax() ) {
 			$term = $wp_query->get_queried_object();
 			$crumb = $this->args['labels']['tax'] . $this->get_term_parents( $term->term_id, $term->taxonomy );
-			$crumb .= edit_term_link( __( '(Edit)', 'genesis' ), ' ', '', null, false );
+			$crumb .= edit_term_link( __( '(Edit)', 'audiotheme' ), ' ', '', null, false );
 		}
 		elseif ( is_year() ) {
 			$crumb = $this->args['labels']['date'] . get_query_var( 'year' );
 		}
 		elseif ( is_month() ) {
 			$crumb = $this->get_breadcrumb_link(
-							get_year_link( get_query_var( 'year' ) ), sprintf( __( 'View archives for %s', 'genesis' ), get_query_var( 'year' ) ), get_query_var( 'year' ), $this->args['sep']
+							get_year_link( get_query_var( 'year' ) ), sprintf( __( 'View archives for %s', 'audiotheme' ), get_query_var( 'year' ) ), get_query_var( 'year' ), $this->args['sep']
 			);
 			$crumb .= $this->args['labels']['date'] . single_month_title( ' ', false );
 		}
 		elseif ( is_day() ) {
 			$crumb = $this->get_breadcrumb_link(
-							get_year_link( get_query_var( 'year' ) ), sprintf( __( 'View archives for %s', 'genesis' ), get_query_var( 'year' ) ), get_query_var( 'year' ), $this->args['sep']
+							get_year_link( get_query_var( 'year' ) ), sprintf( __( 'View archives for %s', 'audiotheme' ), get_query_var( 'year' ) ), get_query_var( 'year' ), $this->args['sep']
 			);
 			$crumb .= $this->get_breadcrumb_link(
-							get_month_link( get_query_var( 'year' ), get_query_var( 'monthnum' ) ), sprintf( __( 'View archives for %s %s', 'genesis' ), $wp_locale->get_month( get_query_var( 'monthnum' ) ), get_query_var( 'year' ) ), $wp_locale->get_month( get_query_var( 'monthnum' ) ), $this->args['sep']
+							get_month_link( get_query_var( 'year' ), get_query_var( 'monthnum' ) ), sprintf( __( 'View archives for %s %s', 'audiotheme' ), $wp_locale->get_month( get_query_var( 'monthnum' ) ), get_query_var( 'year' ) ), $wp_locale->get_month( get_query_var( 'monthnum' ) ), $this->args['sep']
 			);
 			$crumb .= $this->args['labels']['date'] . get_query_var( 'day' ) . date( 'S', mktime( 0, 0, 0, 1, get_query_var( 'day' ) ) );
 		}
@@ -274,14 +271,14 @@ class Genesis_Breadcrumb {
 			$crumb = $this->args['labels']['post_type'] . esc_html( post_type_archive_title( '', false ) );
 		}
 
-		return apply_filters( 'genesis_archive_crumb', $crumb, $this->args );
+		return apply_filters( 'audiotheme_archive_crumb', $crumb, $this->args );
 
 	}
 
 	/**
 	 * Get single breadcrumb, including any parent crumbs. Private.
 	 *
-	 * @since 1.5
+ 	 * @since 1.0
 	 *
 	 * @global mixed $post Current post object
 	 * @return string HTML markup
@@ -295,7 +292,7 @@ class Genesis_Breadcrumb {
 			if ( $this->args['heirarchial_attachments'] ) { // if showing attachment parent
 				$attachment_parent = get_post( $post->post_parent );
 				$crumb = $this->get_breadcrumb_link(
-								get_permalink( $post->post_parent ), sprintf( __( 'View %s', 'genesis' ), $attachment_parent->post_title ), $attachment_parent->post_title, $this->args['sep']
+								get_permalink( $post->post_parent ), sprintf( __( 'View %s', 'audiotheme' ), $attachment_parent->post_title ), $attachment_parent->post_title, $this->args['sep']
 				);
 			}
 			$crumb .= single_post_title( '', false );
@@ -309,7 +306,7 @@ class Genesis_Breadcrumb {
 				if ( ! $this->args['heirarchial_categories'] ) { // Don't show parent categories (unless the post happen to be explicitely in them)
 					foreach ( $categories as $category ) {
 						$crumbs[] = $this->get_breadcrumb_link(
-										get_category_link( $category->term_id ), sprintf( __( 'View all posts in %s', 'genesis' ), $category->name ), $category->name
+										get_category_link( $category->term_id ), sprintf( __( 'View all posts in %s', 'audiotheme' ), $category->name ), $category->name
 						);
 					}
 					$crumb = join( $this->args['list_sep'], $crumbs ) . $this->args['sep'];
@@ -327,21 +324,21 @@ class Genesis_Breadcrumb {
 			$post_type = get_query_var( 'post_type' );
 			$post_type_object = get_post_type_object( $post_type );
 
-			$crumb = $this->get_breadcrumb_link( get_post_type_archive_link( $post_type ), sprintf( __( 'View all %s', 'genesis' ), $post_type_object->labels->name ), $post_type_object->labels->name );
+			$crumb = $this->get_breadcrumb_link( get_post_type_archive_link( $post_type ), sprintf( __( 'View all %s', 'audiotheme' ), $post_type_object->labels->name ), $post_type_object->labels->name );
 
 			$crumb .= $this->args['sep'] . single_post_title( '', false );
 		}
 
-		return apply_filters( 'genesis_single_crumb', $crumb, $this->args );
+		return apply_filters( 'audiotheme_single_crumb', $crumb, $this->args );
 
 	}
 
 	/**
 	 * Return the correct crumbs for this query, combined together. Private.
 	 *
-	 * @since 1.5
-	 *
 	 * @return string HTML markup
+	 *
+ 	 * @since 1.0
 	 */
 	function build_crumbs() {
 
@@ -386,7 +383,7 @@ class Genesis_Breadcrumb {
 		}
 
 		if ( $link && !is_wp_error( get_term_link( get_term( $parent->term_id, $taxonomy ), $taxonomy ) ) ) {
-			$chain[] = $this->get_breadcrumb_link( get_term_link( get_term( $parent->term_id, $taxonomy ), $taxonomy ), sprintf( __( 'View all items in %s', 'genesis' ), $parent->name ), $parent->name );
+			$chain[] = $this->get_breadcrumb_link( get_term_link( get_term( $parent->term_id, $taxonomy ), $taxonomy ), sprintf( __( 'View all items in %s', 'audiotheme' ), $parent->name ), $parent->name );
 		} else {
 			$chain[] = $parent->name;
 		}
@@ -418,37 +415,37 @@ class Genesis_Breadcrumb {
 }
 
 /**
- * Helper function for the Genesis Breadcrumb Class
+ * Helper function for the AudioTheme Breadcrumb Class
  *
- * @since 0.1.6
+ * @since 1.0
  */
-function genesis_breadcrumb( $args = array() ) {
+function AudioTheme_breadcrumb( $args = array() ) {
 
-	global $_genesis_breadcrumb;
+	global $_AudioTheme_breadcrumb;
 
-	if ( !$_genesis_breadcrumb ) {
-		$_genesis_breadcrumb = new Genesis_Breadcrumb;
+	if ( !$_AudioTheme_breadcrumb ) {
+		$_AudioTheme_breadcrumb = new AudioTheme_Breadcrumb;
 	}
 
-	$_genesis_breadcrumb->output( $args );
+	$_AudioTheme_breadcrumb->output( $args );
 
 }
 
-add_action('genesis_before_loop', 'genesis_do_breadcrumbs');
+add_action('audiotheme_before_loop', 'audiotheme_do_breadcrumbs');
 /**
  * Display Breadcrumbs above the Loop
  * Concedes priority to popular breadcrumb plugins
  *
- * @since 0.1.6
+ * @since 1.0
  */
-function genesis_do_breadcrumbs() {
+function audiotheme_do_breadcrumbs() {
 
 	// Conditional Checks
-	if ( ( is_front_page() || is_home() ) && ! genesis_get_option( 'breadcrumb_home' ) ) return;
-	if ( is_single() && ! genesis_get_option( 'breadcrumb_single' ) ) return;
-	if ( is_page() && ! genesis_get_option( 'breadcrumb_page' ) ) return;
-	if ( ( is_archive() || is_search() ) && ! genesis_get_option( 'breadcrumb_archive' ) ) return;
-	if ( is_404() && ! genesis_get_option( 'breadcrumb_404' ) ) return;
+	if ( ( is_front_page() || is_home() ) && ! AudioTheme_get_option( 'breadcrumb_home' ) ) return;
+	if ( is_single() && ! AudioTheme_get_option( 'breadcrumb_single' ) ) return;
+	if ( is_page() && ! AudioTheme_get_option( 'breadcrumb_page' ) ) return;
+	if ( ( is_archive() || is_search() ) && ! AudioTheme_get_option( 'breadcrumb_archive' ) ) return;
+	if ( is_404() && ! AudioTheme_get_option( 'breadcrumb_404' ) ) return;
 
 	if ( function_exists( 'bcn_display' ) ) {
 		echo '<div class="breadcrumb">'; bcn_display(); echo '</div>';
@@ -463,7 +460,7 @@ function genesis_do_breadcrumbs() {
 		crumbs();
 	}
 	else {
-		genesis_breadcrumb();
+		AudioTheme_breadcrumb();
 	}
 
 }
