@@ -14,13 +14,13 @@ require_once( AUDIOTHEME_DIR . '/widgets/menu-pages.php' );
 require_once( AUDIOTHEME_DIR . '/widgets/user-profile.php' );
 
 
-add_action( 'widgets_init', 'AudioTheme_load_widgets' );
+add_action( 'widgets_init', 'audiotheme_load_widgets' );
 /**
  * Register widgets for use in the Genesis theme.
  *
  * @since 1.0
  */
-function AudioTheme_load_widgets() {
+function audiotheme_load_widgets() {
 	
 	register_widget('AudioTheme_eNews_Updates');
 	register_widget('AudioTheme_Featured_Page');

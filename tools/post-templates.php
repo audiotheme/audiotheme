@@ -147,7 +147,7 @@ function pt_save_postdata( $post_id, $post ) {
 
 	// verify this came from the our screen and with proper authorization,
 	// because save_post can be triggered at other times
-	if ( ! wp_verify_nonce( $_POST['pt_noncename'], plugin_basename(__FILE__) ) )
+	if ( empty( $_POST['pt_noncename'] ) || ! wp_verify_nonce( $_POST['pt_noncename'], plugin_basename(__FILE__) ) )
 		return $post->ID;
 
 	// Is the user allowed to edit the post or page?

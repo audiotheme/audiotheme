@@ -38,7 +38,7 @@ function audiotheme_video_meta_cb( $post ) {
 
 	?>
 	<p>
-		<?php _e( 'Enter a video URL from one of the WordPress', 'themeit' ) ?> <a href="http://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F" target="_blank"><?php _e( 'supported video services.', 'audiotheme' ); ?></a>
+		<?php _e( 'Enter a video URL from one of the WordPress', 'audiotheme' ) ?> <a href="http://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F" target="_blank"><?php _e( 'supported video services.', 'audiotheme' ); ?></a>
 	</p>
 	
 	<p>

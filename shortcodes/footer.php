@@ -154,7 +154,7 @@ function audiotheme_footer_shaken_stirred_link_shortcode( $atts ) {
 
 add_shortcode( 'footer_blazersix_link', 'audiotheme_footer_blazersix_link_shortcode' );
 /**
- * Adds the link to BlazerSix home page
+ * Adds the link to Blazer Six home page
  * 
  * @since 1.0
  *
@@ -171,8 +171,8 @@ function audiotheme_footer_blazersix_link_shortcode( $atts ) {
 
 	$output = sprintf( '%1$s<a href="%2$s" title="%3$s">%3$s</a>%4$s', 
 		$atts['before'], 
-		'http://blazersix.com/', 
-		'Blazersix', 
+		'http://www.blazersix.com/', 
+		'Blazer Six', 
 		$atts['after'] 
 	);
 

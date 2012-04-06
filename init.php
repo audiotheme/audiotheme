@@ -30,8 +30,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 // Exit if accessed directly
 if( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'AUIDIOTHEME_VERSION', 1.0 );
-define( 'AUDIOTHEME_DIR', get_template_directory_uri() . '/audiotheme/' );
+define( 'AUDIOTHEME_VERSION', 1.0 );
+define( 'AUDIOTHEME_DIR', get_template_directory() . '/audiotheme/' );
+define( 'AUDIOTHEME_URI', get_template_directory_uri() . '/audiotheme/' );
 
 
 // Include the additional files (custom post types, widgets, etc)
