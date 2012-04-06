@@ -8,7 +8,8 @@ $audiotheme_options = new Struts_Options(
 	__( 'Theme Options', 'audiotheme' )
 );
 
-if( current_theme_supports( 'audiotheme-default-options' ) ){
+$support = get_theme_support( 'audiotheme-options' );
+if ( is_array( $support ) && isset( $support[0]['default_options'] ) && $support[0]['default_options'] ) {
     /* Setup Sections */
     $audiotheme_options->add_section( 'logo_section', __( 'Logo', 'audiotheme' ) );
     

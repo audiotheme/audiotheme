@@ -1,10 +1,10 @@
 # Getting Started
 
-Place the 'audiotheme' folder inside of your theme folder and then place the following code in your functions.php
+Add the '/audiotheme/' directory inside your theme and then place the following code in your functions.php
 
 ```php
 <?php
-require_once(TEMPLATEPATH . '/audiotheme/init.php');
+require_once( TEMPLATEPATH . '/audiotheme/init.php' );
 ```
 
 # Theme Options
@@ -14,7 +14,7 @@ To add support for the AudioTheme's theme options section, add the following to 
 
 ```php
 <?php function themename_setup() {
-    add_theme_support('audiotheme-options');
+    add_theme_support( 'audiotheme-options' );
 }
 add_action( 'after_setup_theme', 'themename_setup' );
 ```
@@ -31,8 +31,7 @@ To add support for default AudioTheme options, add the following to your theme's
 
 ```php
 <?php function themename_setup() {
-    add_theme_support('audiotheme-options');
-    add_theme_support('audiotheme-default-options');
+    add_theme_support( 'audiotheme-options', array( 'default_options' => true ) );
 }
 add_action( 'after_setup_theme', 'themename_setup' );
 ```
@@ -59,7 +58,7 @@ add_action( 'audiotheme_custom_options', 'my_theme_options' );
 
 ## Retrieving options
 
-To retrieve a theme option, you can use `audiotheme_get_option` and pass in the option name and optionally a default value if the option is empty. Example below:
+To retrieve a theme option, you can use `audiotheme_get_option` and pass in the option name and optionally a default value in case the option is empty. Example below:
 
 ```php
 <?php audiotheme_get_option( 'logo_url', 'http://example.com/images/default_logo.png' ); ?>
