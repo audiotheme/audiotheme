@@ -72,7 +72,6 @@ function audiotheme_includes() {
 	include_once( 'functions/formatting.php' );
 	include_once( 'functions/general.php' );
 	include_once( 'functions/image.php' );
-	//include_once( 'functions/upgrade.php' );
 	    
 	/* Metaboxes */
 	include_once( 'metaboxes/video.php' );
