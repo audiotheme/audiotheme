@@ -59,13 +59,14 @@ function audiotheme_init() {
 function audiotheme_includes() {
 
 	/* Admin */
+	include_once( 'admin/menus.php' );
 	include_once( 'admin/user-meta.php' );
 	
-	/* Custom Post Types */
-	include_once( 'custom-post-types/track.php' );
-	include_once( 'custom-post-types/records.php' );
-	include_once( 'custom-post-types/video.php' );
-	include_once( 'custom-post-types/gallery.php' );
+	/* Post Types */
+	include_once( 'post-types/track.php' );
+	include_once( 'post-types/records.php' );
+	include_once( 'post-types/video.php' );
+	include_once( 'post-types/gallery.php' );
 	
 	/* Functions */
 	include_once( 'functions/feed.php' );
