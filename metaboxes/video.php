@@ -10,7 +10,7 @@ function audiotheme_add_video_meta() {
 		'audiotheme-video-meta', 
 		__( 'Video Library: Add Video URL', 'audiotheme' ), 
 		'audiotheme_video_meta_cb', 
-		'video', 
+		'audiotheme_video', 
 		'side', 
 		'high' 
 	);

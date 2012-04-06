@@ -246,4 +246,8 @@ function audiotheme_video_tag_column( $tag_column ) {
 			break;
 	}
 }
+
+// Custom fields
+//require_once( AUDIOTHEME_DIR.'metaboxes/video.php' );
+
 ?>

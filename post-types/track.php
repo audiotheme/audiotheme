@@ -26,9 +26,7 @@ function audiotheme_register_tracks() {
 		'title',
 		'editor',
 		'thumbnail',
-		'excerpt',
-		'revisions',
-		'author'
+		'revisions'
 	);
 	
 	$args = array(
@@ -76,5 +74,39 @@ function audiotheme_track_updated_messages( $messages ) {
 	return $messages;
 	
 }
+
+/**
+ * Custom fields
+ *
+ * - Track URL (_track_url)
+ *
+ * @since 1.0
+ */
+function audiotheme_track_fields_init(){
+    add_meta_box( 'audiotheme-track-meta', 'Track Details', 'audiotheme_track_fields', 'audiotheme_track', 'normal', 'high' );
+}
+add_action( 'add_meta_boxes', 'audiotheme_track_fields_init' );
+
+function audiotheme_track_fields( $post ){
+    //retrieve the metadata values if they exist
+    $track_url = get_post_meta( $post->ID, '_track_url', true );
+    ?>
+    
+    <p>
+        <label for="track_url">Track URL</label>
+        <input type="text" id="track_url" name="_track_url" value="<?php echo esc_attr( $track_url ); ?>" />
+    </p>
+    
+<?php 
+}
+
+function audiotheme_track_fields_save( $post_id ) {
+    //verify the metadata is set
+    if ( isset( $_POST['_track_url'] ) ) {
+        //save the metadata
+        update_post_meta( $post_id, '_track_url', strip_tags( $_POST['_track_url'] ) ); 
+    }
+}
+add_action( 'save_post', 'audiotheme_track_fields_save' );
 
 ?>
