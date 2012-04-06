@@ -41,7 +41,7 @@ function audiotheme_register_galleries() {
 		'rewrite'            => array( 'slug' => 'galleries', 'with_front' => false ),
 		'capability_type'    => 'post',
 		'hierarchical'       => false,
-    	'menu_position'      => 20,
+    	'menu_position'      => 9,
     	'supports'           => $supports
 	);
 	

@@ -63,10 +63,10 @@ function audiotheme_includes() {
 	include_once( 'admin/user-meta.php' );
 	
 	/* Post Types */
-	include_once( 'post-types/track.php' );
-	include_once( 'post-types/records.php' );
-	include_once( 'post-types/video.php' );
 	include_once( 'post-types/gallery.php' );
+	include_once( 'post-types/records.php' );
+	include_once( 'post-types/track.php' );
+	include_once( 'post-types/video.php' );
 	
 	/* Functions */
 	include_once( 'functions/feed.php' );

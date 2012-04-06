@@ -41,7 +41,7 @@ function audiotheme_register_records() {
 		'rewrite'            => array( 'slug' => 'records', 'with_front' => false ),
 		'capability_type'    => 'post',
 		'hierarchical'       => false,
-    	'menu_position'      => 20,
+    	'menu_position'      => 7,
     	'supports'           => $supports
 	);
 	
