@@ -31,3 +31,21 @@ function AudioTheme_load_widgets() {
 	register_widget('AudioTheme_User_Profile_Widget');
 	
 }
+
+
+add_action( 'widgets_init', 'audiotheme_unregister_default_widgets', 1 );
+/**
+ * Unregister Default WP Widgets
+ *
+ * @since 1.0
+ */
+function audiotheme_unregister_default_widgets() {
+	
+	unregister_widget('WP_Widget_Calendar');
+	unregister_widget('WP_Widget_Links');
+	unregister_widget('WP_Widget_Meta');
+	unregister_widget('WP_Widget_Tag_Cloud');
+	unregister_widget('WP_Widget_RSS');
+	unregister_widget('WP_Widget_Akismet');
+
+}
