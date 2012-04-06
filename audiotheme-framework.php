@@ -86,6 +86,7 @@ function audiotheme_includes() {
 	include_once( 'tools/custom-field-redirect.php' );
 	include_once( 'tools/post-templates.php' );
 	
-}
+} 
+
 
 ?>
