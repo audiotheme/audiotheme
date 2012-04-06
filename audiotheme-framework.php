@@ -62,6 +62,9 @@ function audiotheme_includes() {
 	include_once( 'admin/user-meta.php' );
 	
 	/* Custom Post Types */
+	include_once( 'custom-post-types/discography.php' );
+	include_once( 'custom-post-types/gallery.php' );
+	include_once( 'custom-post-types/track.php' );
 	include_once( 'custom-post-types/video.php' );
 	
 	/* Functions */
