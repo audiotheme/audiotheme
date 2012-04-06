@@ -1,3 +1,12 @@
+# Getting Started
+
+Place the 'audiotheme' folder inside of your theme folder and then place the following code in your functions.php
+
+```php
+<?php
+require_once(TEMPLATEPATH . '/audiotheme/init.php');
+```
+
 # Theme Options
 AudioTheme Framework uses a customized version of the [Struts Framework](https://github.com/thethemefoundry/struts).
 
