@@ -1,85 +1,4 @@
 <?php
-add_action( 'init', 'audiotheme_register_video_taxonomies' );
-/**
- * Register Video Taxonomies
- *
- * @since 1.0
- */
-function audiotheme_register_video_taxonomies() {
-
-	$labels = array(
-		'name'                       => __( 'Video Types', 'audiotheme' ), 'taxonomy general name',
-		'singular_name'              => __( 'Video Type', 'audiotheme' ), 'taxonomy singular name',
-		'search_items'               => __( 'Search Video Types', 'audiotheme' ),
-		'popular_items'              => __( 'Popular Video Types', 'audiotheme' ),
-		'all_items'                  => __( 'All Video Types', 'audiotheme' ),
-		'parent_item'                => __( 'Parent Video Type', 'audiotheme' ),
-		'edit_item'                  => __( 'Edit Video Type', 'audiotheme' ),
-		'update_item'                => __( 'Update Video Type', 'audiotheme' ),
-		'add_new_item'               => __( 'Add New Video Type', 'audiotheme' ),
-		'new_item_name'              => __( 'New Video Type', 'audiotheme' ),
-		'separate_items_with_commas' => __( 'Separate Video Types with commas', 'audiotheme' ),
-		'add_or_remove_items'        => __( 'Add or Remove Video Types', 'audiotheme' ),
-		'choose_from_most_used'      => __( 'Choose from Most Used Video Types', 'audiotheme' )
-	);
-	
-	$args = array(
-		'label'             => __( 'Video Types', 'audiotheme' ),
-		'labels'            => $labels,
-		'public'            => true,
-		'hierarchical'      => true,
-		'show_ui'           => true,
-		'show_in_nav_menus' => true,
-		'args'              => array( 'orderby' => 'term_order' ),
-		'rewrite'           => array( 'slug' => 'videos/type', 'with_front' => false ),
-		'query_var'         => true
-	);
-	
-	register_taxonomy( 'video_type', 'video', $args );
-
-}
-
-
-add_action( 'init', 'audiotheme_register_video_tags' );
-/**
- * Register Video Tags
- *
- * @since 1.0
- */
-function audiotheme_register_video_tags() {
-
-	$labels = array(
-		'name'                       => __( 'Video Tags', 'audiotheme' ), 'taxonomy general name',
-		'singular_name'              => __( 'Video Tag', 'audiotheme' ), 'taxonomy singular name',
-		'search_items'               => __( 'Search Video Tags', 'audiotheme' ),
-		'popular_items'              => __( 'Popular Video Tags', 'audiotheme' ),
-		'all_items'                  => __( 'All Video Tags', 'audiotheme' ),
-		'edit_item'                  => __( 'Edit Video Tag', 'audiotheme' ),
-		'update_item'                => __( 'Update Video Tag', 'audiotheme' ),
-		'add_new_item'               => __( 'Add New Video Tag', 'audiotheme' ),
-		'new_item_name'              => __( 'New Video Tag', 'audiotheme' ),
-		'separate_items_with_commas' => __( 'Separate Video Tags with commas', 'audiotheme' ),
-		'add_or_remove_items'        => __( 'Add or Remove Video Tags', 'audiotheme' ),
-		'choose_from_most_used'      => __( 'Choose from Most Used Video Tags', 'audiotheme' )
-	);
-	
-	$args = array(
-		'label'             => __( 'Video Tags', 'audiotheme' ),
-		'labels'            => $labels,
-		'public'            => true,
-		'hierarchical'      => false,
-		'show_ui'           => true,
-		'show_in_nav_menus' => false,
-		'show_tagcloud'     => false,
-		'args'              => array( 'orderby' => 'term_order' ),
-		'rewrite'           => array( 'slug' => 'videos/tags', 'with_front' => false ),
-		'query_var'         => true
-	);
-	
-	register_taxonomy( 'video_tag', 'video', $args );
-	
-}
-
 add_action( 'init', 'audiotheme_register_videos' );
 /**
  * Register Video CPT
@@ -126,9 +45,92 @@ function audiotheme_register_videos() {
     	'supports'           => $supports
 	);
 	
-	register_post_type( 'video', $args );
+	register_post_type( 'audiotheme_video', $args );
 
 }
+
+
+add_action( 'init', 'audiotheme_register_video_taxonomies' );
+/**
+ * Register Video Taxonomies
+ *
+ * @since 1.0
+ */
+function audiotheme_register_video_taxonomies() {
+
+	$labels = array(
+		'name'                       => __( 'Video Types', 'audiotheme' ), 'taxonomy general name',
+		'singular_name'              => __( 'Video Type', 'audiotheme' ), 'taxonomy singular name',
+		'search_items'               => __( 'Search Video Types', 'audiotheme' ),
+		'popular_items'              => __( 'Popular Video Types', 'audiotheme' ),
+		'all_items'                  => __( 'All Video Types', 'audiotheme' ),
+		'parent_item'                => __( 'Parent Video Type', 'audiotheme' ),
+		'edit_item'                  => __( 'Edit Video Type', 'audiotheme' ),
+		'update_item'                => __( 'Update Video Type', 'audiotheme' ),
+		'add_new_item'               => __( 'Add New Video Type', 'audiotheme' ),
+		'new_item_name'              => __( 'New Video Type', 'audiotheme' ),
+		'separate_items_with_commas' => __( 'Separate Video Types with commas', 'audiotheme' ),
+		'add_or_remove_items'        => __( 'Add or Remove Video Types', 'audiotheme' ),
+		'choose_from_most_used'      => __( 'Choose from Most Used Video Types', 'audiotheme' )
+	);
+	
+	$args = array(
+		'label'             => __( 'Video Types', 'audiotheme' ),
+		'labels'            => $labels,
+		'public'            => true,
+		'hierarchical'      => true,
+		'show_ui'           => true,
+		'show_in_nav_menus' => true,
+		'args'              => array( 'orderby' => 'term_order' ),
+		'rewrite'           => array( 'slug' => 'videos/type', 'with_front' => false ),
+		'query_var'         => true
+	);
+	
+	register_taxonomy( 'audiotheme_video_type', 'audiotheme_video', $args );
+
+}
+
+
+add_action( 'init', 'audiotheme_register_video_tags' );
+/**
+ * Register Video Tags
+ *
+ * @since 1.0
+ */
+function audiotheme_register_video_tags() {
+
+	$labels = array(
+		'name'                       => __( 'Video Tags', 'audiotheme' ), 'taxonomy general name',
+		'singular_name'              => __( 'Video Tag', 'audiotheme' ), 'taxonomy singular name',
+		'search_items'               => __( 'Search Video Tags', 'audiotheme' ),
+		'popular_items'              => __( 'Popular Video Tags', 'audiotheme' ),
+		'all_items'                  => __( 'All Video Tags', 'audiotheme' ),
+		'edit_item'                  => __( 'Edit Video Tag', 'audiotheme' ),
+		'update_item'                => __( 'Update Video Tag', 'audiotheme' ),
+		'add_new_item'               => __( 'Add New Video Tag', 'audiotheme' ),
+		'new_item_name'              => __( 'New Video Tag', 'audiotheme' ),
+		'separate_items_with_commas' => __( 'Separate Video Tags with commas', 'audiotheme' ),
+		'add_or_remove_items'        => __( 'Add or Remove Video Tags', 'audiotheme' ),
+		'choose_from_most_used'      => __( 'Choose from Most Used Video Tags', 'audiotheme' )
+	);
+	
+	$args = array(
+		'label'             => __( 'Video Tags', 'audiotheme' ),
+		'labels'            => $labels,
+		'public'            => true,
+		'hierarchical'      => false,
+		'show_ui'           => true,
+		'show_in_nav_menus' => false,
+		'show_tagcloud'     => false,
+		'args'              => array( 'orderby' => 'term_order' ),
+		'rewrite'           => array( 'slug' => 'videos/tags', 'with_front' => false ),
+		'query_var'         => true
+	);
+	
+	register_taxonomy( 'audiotheme_video_tag', 'audiotheme_video', $args );
+	
+}
+
 
 add_filter( 'post_updated_messages', 'audiotheme_video_updated_messages' );
 /**
@@ -158,21 +160,23 @@ function audiotheme_video_updated_messages( $messages ) {
 }
 
 
-add_filter( 'manage_edit-video_columns', 'audiotheme_custom_video_columns' );
+add_filter( 'manage_edit-audiotheme_video_columns', 'audiotheme_custom_video_columns' );
 /**
  * Custom Video Columns
  *
  * @since 1.0
  */
 function audiotheme_custom_video_columns( $video_columns ) {
+	
 	$video_columns = array(
-		'cb' => '<input type="checkbox" />',
-		'title' => _x( __( 'Video', 'audiotheme' ), 'column name' ),
-		'author' => __( 'Author', 'audiotheme' ),
+		'cb'         => '<input type="checkbox" />',
+		'title'      => _x( __( 'Video', 'audiotheme' ), 'column name' ),
+		'author'     => __( 'Author', 'audiotheme' ),
 		'video-type' => __( 'Video Type', 'audiotheme' ),
 		'video-tags' => __( 'Video Tags', 'audiotheme' ),
-		'date' => _x( __( 'Date', 'audiotheme' ), 'column name' )
+		'date'       => _x( __( 'Date', 'audiotheme' ), 'column name' )
 	);
+	
 	return $video_columns;
 
 }
@@ -192,13 +196,21 @@ function audiotheme_video_taxonomy_column( $video_columns ) {
 			$taxonomy = 'video_type';
 			$post_type = get_post_type( $post->ID );
 			$video_types = get_the_terms( $post->ID, $taxonomy );
-			if ( !empty( $video_types ) ) {
-				foreach ( $video_types as $video_type )
-				$post_terms[] = "<a href=\"edit.php?post_type={$post_type}&{$taxonomy}={$video_type->slug}\">" . esc_html( sanitize_term_field( 'name', $video_type->name, $video_type->term_id, $taxonomy, 'edit' ) ) . '</a>';
-				echo join( ', ', $post_terms );
-			} else echo __( '<i>No video types.</i>', 'audiotheme' );
 			
-		break;
+			if( ! empty( $video_types ) ) {
+				foreach ( $video_types as $video_type ) {
+					$post_terms[] = sprintf( '<a href="%1$s">%2$s</a>',
+						esc_url( sprintf( 'edit.php?post_type=%1$s&%2$s=%3$s', $post_type, $taxonomy, $video_type->slug ) ),
+						esc_html( sanitize_term_field( 'name', $video_type->name, $video_type->term_id, $taxonomy, 'edit' ) )
+					);
+				}
+				
+				echo join( ', ', $post_terms );
+			} 
+			else {
+				echo '<i>' . __( 'No video types.', 'audiotheme' ) . '</i>';
+			}
+			break;
 	}
 }
 
