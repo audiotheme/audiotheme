@@ -12,7 +12,7 @@ jQuery(document).ready(function($) {
 	window.original_send_to_editor = window.send_to_editor;
 	window.send_to_editor = function(html) {
 		if(formfield) {
-			source = jQuery(html).find('img').attr('src');
+			source = (0 === html.indexOf('<img')) ? jQuery(html).attr('src') : jQuery(html).find('img').attr('src');
 			jQuery('#'+formfield).val(source);
 			tb_remove();
 		}else{
