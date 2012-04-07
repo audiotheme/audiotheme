@@ -75,8 +75,7 @@ function audiotheme_includes() {
 	include_once( 'functions/image.php' );
 	    
 	/* Metaboxes */
-    include_once( 'metaboxes/track.php' );
-	include_once( 'metaboxes/video.php' );
+    include_once( 'metaboxes/metabox-setup.php' );
 	    
 	/* Options */
 	include_once( 'options/options-setup.php' );

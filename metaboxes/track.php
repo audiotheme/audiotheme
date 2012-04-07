@@ -1,8 +1,6 @@
 <?php
-require_once('helper_functions.php');
-
 /**
- * Add Track Metabox
+ * Add Metabox
  *
  * @since 1.0
  */
@@ -19,18 +17,11 @@ function audiotheme_add_track_meta(){
 add_action( 'add_meta_boxes', 'audiotheme_add_track_meta' );
 
 /**
- * Track Metabox Callback
- *
- * - Track URL (_track_file_url)
+ * Metabox Callback
  *
  * @since 1.0
  */
 function audiotheme_track_meta_cb( $post ){
-    //retrieve the metadata values if they exist
-    $track_file = get_post_meta( $post->ID, '_track_file_url', true );
-    $artist = get_post_meta( $post->ID, '_artist', true );
-    $link = get_post_meta( $post->ID, '_track_link', true );
-    
     /* Nonce to verify intention later */
 	wp_nonce_field( 'save_audiotheme_track_meta', 'audiotheme_track_nonce' );
 	
