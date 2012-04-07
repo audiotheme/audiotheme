@@ -193,7 +193,7 @@ function audiotheme_video_save( $id ) {
 
 	// Make sure we get a clean url here with esc_url
 	if( isset( $_POST['_video_url'] ) )
-		update_post_meta( $id, '_video_url', esc_url( $_POST['_video_url'], array( 'http' ) ) );
+		update_post_meta( $id, '_video_url', esc_url( $_POST['_video_url'], array( 'http', 'https' ) ) );
 
 }
 
