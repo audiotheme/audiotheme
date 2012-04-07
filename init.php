@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: AudioTheme Framework
-Plugin URI: http://wordpress.org/extend/plugins/audiotheme-framework
-Description: The engine of AudioTheme 
+AudioTheme Framework
+The engine of AudioTheme 
+
 Version: 1.0.0
 Author: AudioTheme
 Author URI: http://AudioTheme.com
@@ -75,6 +75,7 @@ function audiotheme_includes() {
 	include_once( 'functions/image.php' );
 	    
 	/* Metaboxes */
+    include_once( 'metaboxes/track.php' );
 	include_once( 'metaboxes/video.php' );
 	    
 	/* Options */
