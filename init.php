@@ -69,6 +69,7 @@ function audiotheme_includes() {
 	include_once( 'post-types/video.php' );
 	
 	/* Functions */
+    include_once( 'functions/custom-post-types.php' );
 	include_once( 'functions/feed.php' );
 	include_once( 'functions/formatting.php' );
 	include_once( 'functions/general.php' );
