@@ -70,8 +70,8 @@ function audiotheme_track_save( $post_id ) {
 	if( !current_user_can( 'edit_post' ) ) return;
 	
     // Save metadata
-    audiotheme_update_post_meta( 'url', array('_track_file_url'), $post_id );
-    audiotheme_update_post_meta( 'text', array('_artist', '_track_link'), $post_id );
+    audiotheme_update_post_meta( $post_id, array('_track_file_url'), 'url' );
+    audiotheme_update_post_meta( $post_id, array('_artist', '_track_link'), 'text' );
 
 }
 add_action( 'save_post', 'audiotheme_track_save' );

@@ -13,7 +13,7 @@
  *
  * @since 1.0
  */
-function audiotheme_update_post_meta( $type = 'text', $fields_array = null, $post_id ){
+function audiotheme_update_post_meta( $post_id, $fields_array = null, $type = 'text' ){
     if( is_array( $fields_array ) ):
         foreach( $fields_array as $field ){
              if ( isset( $_POST[$field] ) ):
