@@ -33,25 +33,10 @@ function audiotheme_track_meta_cb( $post ){
     
     /* Nonce to verify intention later */
 	wp_nonce_field( 'save_audiotheme_track_meta', 'audiotheme_track_nonce' );
-    ?>
-    
-    <p>
-        <label for="track_file_url">Audio file URL</label>
-        <input type="text" id="track_file_url" name="_track_file_url" value="<?php echo esc_url( $track_file ); ?>" />
-    </p>
-    
-    <p>
-        <label for="artist">Artist</label>
-        <input type="text" id="artist" name="_artist" value="<?php echo esc_attr( $artist ); ?>" />
-    </p>
-    
-    <p>
-        <label for="link">Download Link</label>
-        <span class="description">A link to download or purchase the track. Leave this empty if you don't want users to download the track.</span>
-        <input type="text" id="link" name="_track_link" value="<?php echo esc_attr( $link ); ?>" />
-    </p>
-    
-<?php 
+	
+	audiotheme_meta_field( $post, 'url', '_track_file_url', 'Audio file URL' );
+	audiotheme_meta_field( $post, 'text', '_artist', 'Artist' );
+	audiotheme_meta_field( $post, 'text', '_track_link', 'Download Link', 'A link to download or purchase the track. Leave this empty if you don\'t want users to download the track.' );
 }
 
 /**

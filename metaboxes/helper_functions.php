@@ -29,4 +29,19 @@ function audiotheme_update_post_meta( $post_id, $fields_array = null, $type = 't
     endif;
 }
 
+function audiotheme_meta_field( $post, $type = 'text', $field, $label = false, $desc = false){ 
+    $value = get_post_meta( $post->ID, $field, true ); ?>
+    
+    <p>
+        <?php if( $label ){ ?><label for="<?php echo $field; ?>"><?php echo $label; ?></label><?php } ?>
+        <?php if( $desc ){ ?><span class="description"><?php echo $desc; ?></span><?php } ?>
+        
+         <?php if( $type == 'url' ) { ?>
+            <input type="<?php echo $type; ?>" id="<?php echo $field; ?>" name="<?php echo $field; ?>" value="<?php echo esc_url( $value ); ?>" />
+        <?php } elseif( $type == 'text' ) { ?>
+            <input type="<?php echo $type; ?>" id="<?php echo $field; ?>" name="<?php echo $field; ?>" value="<?php echo esc_attr( $value ); ?>" />
+        <?php } ?>
+    </p>
+<?php }
+
 ?>
