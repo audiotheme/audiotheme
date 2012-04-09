@@ -30,7 +30,7 @@ function audiotheme_track_meta_cb( $post ){
 	
 	audiotheme_meta_field( $post, 'url', '_track_file_url', __( 'Audio file URL', 'audiotheme' ) );
 	audiotheme_meta_field( $post, 'text', '_artist', __( 'Artist', 'audiotheme' ) );
-	audiotheme_meta_field( $post, 'text', '_track_link', 'Download Link', __( 'A link to download or purchase the track. Leave this empty if you don\'t want users to download the track.', 'audiotheme' ) );
+	audiotheme_meta_field( $post, 'text', '_track_link', __( 'Download Link', 'audiotheme' ), __( 'A link to download or purchase the track. Leave this empty if you don\'t want users to download the track.', 'audiotheme' ) );
 
 }
 
