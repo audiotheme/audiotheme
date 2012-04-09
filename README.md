@@ -4,34 +4,15 @@ Add the '/audiotheme/' directory inside your theme and then place the following 
 
 ```php
 <?php
-require_once( TEMPLATEPATH . '/audiotheme/init.php' );
+require_once( TEMPLATEPATH . '/audiotheme/audiotheme.php' );
 ```
 
 # Theme Options
-AudioTheme Framework uses a customized version of the [Struts Framework](https://github.com/thethemefoundry/struts).
-
 To add support for the AudioTheme's theme options section, add the following to your theme's functions.php
 
 ```php
 <?php function themename_setup() {
     add_theme_support( 'audiotheme-options' );
-}
-add_action( 'after_setup_theme', 'themename_setup' );
-```
-
-## Default Options
-
-AudioTheme Framework comes with some default options that are typically the same throughout all themes.
-
-Current default options include:
-
-- Logo (logo_url)
-  
-To add support for default AudioTheme options, add the following to your theme's functions.php:
-
-```php
-<?php function themename_setup() {
-    add_theme_support( 'audiotheme-options', array( 'default_options' => true ) );
 }
 add_action( 'after_setup_theme', 'themename_setup' );
 ```
@@ -42,26 +23,32 @@ To add your own options to the theme options section, add the following to your 
 
 ```php
 <?php function my_theme_options(){
-    global $audiotheme_options;
-    
-    // New Section
-    $audiotheme_options->add_section( 'styles_section', __( 'Styles', 'audiotheme' ) );
-    
-    // New Option
-    $audiotheme_options->add_option( 'primary_color', 'color', 'styles_section' )
-        ->label( __( 'Primary Color', 'audiotheme' ) )
-        ->description( __( 'This is lightest color of the primary colors.', 'audiotheme' ) )
-        ->default_value( '#bec4cc' );
+   $options = AudioTheme_Options::get_instance();
+	
+	$panel = $options->set_panel( 'theme-options' );
+	
+	$section = $options->add_section( '_default', '' );
+		$options->add_field( 'thickbox_image', 'logo', __( 'Logo', 'audiotheme' ), $section, array( 'description' => '<br>(300x150 max size)' ) );
+	$section = $options->add_section( 'blog_settings', 'Blog Settings' );
+		$options->add_field( 'thickbox_image', 'blog_logo', __( 'Blog Logo', 'audiotheme' ), $section, array( 'description' => '<br>(300x150 max size)' ) );
+	
+	$tab = $options->add_tab( 'scripts', 'Scripts' );
+		$section = $options->add_section( '_default_scripts_section', '', $tab );
+			$options->add_field( 'textarea', 'header_scripts', __( 'Header', 'audiotheme' ), $section );
+	
+	$tab = $options->add_tab( 'styles', __( 'Styles', 'audiotheme' ) );
+		$section = $options->add_section( '_default_styles_section', '', $tab );
+			$options->add_field( 'text', 'primary_color', __( 'Primary Color', 'audiotheme' ), $section, array( 'default_value' => '#bec4cc' ) );
 }
-add_action( 'audiotheme_custom_options', 'my_theme_options' );
+add_action( 'admin_init', 'my_theme_options' );
 ```
 
 ## Retrieving options
 
-To retrieve a theme option, you can use `audiotheme_get_option` and pass in the option name and optionally a default value in case the option is empty. Example below:
+To retrieve a theme option, you can use `get_audiotheme_option` and pass in the option name and optionally a default value in case the option is empty. Example below:
 
 ```php
-<?php audiotheme_get_option( 'logo_url', 'http://example.com/images/default_logo.png' ); ?>
+<?php get_audiotheme_option( 'logo_url', 'http://example.com/images/default_logo.png' ); ?>
 ```
 
 If the option is empty and a default isn't provided, it will return `false`.
