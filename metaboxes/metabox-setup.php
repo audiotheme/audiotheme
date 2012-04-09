@@ -13,7 +13,7 @@ include_once( 'video.php' );
  *
  * @since 1.0
  */
-function audiotheme_metabox_assets($hook) {
+function audiotheme_metabox_assets( $hook ) {
     $screen = get_current_screen();
     $screen = $screen->id;
     
@@ -51,11 +51,11 @@ function audiotheme_update_post_meta( $post_id, $fields_array = null, $type = 't
  *
  * @since 1.0
  */
-function audiotheme_meta_field( $post, $type = 'text', $field, $label = false, $desc = false){ 
+function audiotheme_meta_field( $post, $type = 'text', $field, $label = false, $desc = false ) { 
     $value = get_post_meta( $post->ID, $field, true ); ?>
     
     <p class="audiotheme-field">
-        <?php if( $label ){ ?><label for="<?php echo $field; ?>"><?php echo $label; ?></label><?php } ?>
+        <?php if( $label ) { ?><label for="<?php echo $field; ?>"><?php echo $label; ?></label><?php } ?>
         
          <?php if( $type == 'url' ) { ?>
             <input type="<?php echo $type; ?>" id="<?php echo $field; ?>" name="<?php echo $field; ?>" value="<?php echo esc_url( $value ); ?>" />
@@ -63,7 +63,7 @@ function audiotheme_meta_field( $post, $type = 'text', $field, $label = false, $
             <input type="<?php echo $type; ?>" id="<?php echo $field; ?>" name="<?php echo $field; ?>" value="<?php echo esc_attr( $value ); ?>" />
         <?php } ?>
         
-        <?php if( $desc ){ ?><span class="description"><?php echo $desc; ?></span><?php } ?>
+        <?php if( $desc ) { ?><span class="description"><?php echo $desc; ?></span><?php } ?>
     </p>
 <?php }
 
