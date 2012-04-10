@@ -1,0 +1,32 @@
+.ui-widget { font-family: sans-serif; font-size: 12px;}
+
+
+.ui-autocomplete { padding: 4px 0;}
+.ui-autocomplete .ui-menu-item { }
+.ui-autocomplete .ui-menu-item a { cursor: pointer; line-height: 18px; background-image: none; border-radius: 0;}
+.ui-autocomplete .ui-menu-item a.ui-state-hover,
+.ui-autocomplete .ui-menu-item a.ui-state-active { margin: 0; background: #eaf2fa; border-width: 0;}
+.ui-autocomplete-loading { background: url('../../../../../wp-admin/images/wpspin_light.gif') right center no-repeat;}
+
+
+.ui-datepicker { padding: 10px 10px 0 10px;}
+.ui-datepicker-header { background: none; border-width: 0;}
+.ui-datepicker table { font-size: 12px;}
+.ui-datepicker td span,
+.ui-datepicker td a { text-align: center;}
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default { background: #fff; border-width: 0;
+	 border-radius: 2px;}
+.ui-state-default:hover { background: #eee;}
+.ui-datepicker-current-day .ui-state-active { background: #ccc;}
+#ui-datepicker-div { display: none;}
+
+
+.ui-timepicker-list { overflow-y: auto; margin: 0; padding: 0; height: 150px; width: 6.5em; background: #fff; border: 1px solid #ddd;
+	border-radius: 4px;
+	box-sizing: border-box;}
+.ui-timepicker-list li { cursor: pointer; white-space: nowrap; list-style: none; margin: 0; padding: .2em .4em; color: #222; line-height: 18px;}
+.ui-timepicker-selected,
+.ui-timepicker-list li:hover,
+.ui-timepicker-selected:hover { color: #222; background: #eaf2fa;}
