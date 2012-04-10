@@ -25,7 +25,6 @@ function audiotheme_get_image_id( $num = 0 ) {
 	return false;
 }
 
-
 /**
  * Pulls an image from the media gallery and returns it
  *
@@ -83,9 +82,8 @@ function audiotheme_get_image( $args = array() ) {
 	return apply_filters( 'audiotheme_get_image', $output, $args, $id, $html, $url, $src );
 }
 
-
 /**
- * Pulls an image from media gallery and echos it
+ * Pulls an image from media gallery and echoes it
  *
  * @since 1.0
  */
@@ -97,26 +95,6 @@ function audiotheme_image( $args = array() ) {
 	else
 		return false;
 }
-
-// TODO: The add_filter hook should be moved out of this file
-add_filter( 'wp_get_attachment_image_attributes', 'audiotheme_filter_attachment_image_attributes', 10, 2 );
-/**
- * Filter Attachement Image Attributes
- *
- * Filters the attributes array in the wp_get_attachment_image function
- * For some reason, the wp_get_attachment_image function uses the caption
- * field value as the alt text, not the Alternate Text field value. Strange.
- *
- * @since 1.0
- */
-function audiotheme_filter_attachment_image_attributes( $attr, $attachment ) {
-	$alt = get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true );
-
-	if ( $alt ) $attr['alt'] = esc_attr( $alt );
-
-	return $attr;
-}
-
 
 /**
  * Get Additional Image Sizes
@@ -134,7 +112,6 @@ function audiotheme_get_additional_image_sizes() {
 
 	return array();
 }
-
 
 /**
  * Get Image Sizes

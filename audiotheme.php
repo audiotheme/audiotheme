@@ -110,7 +110,8 @@ function audiotheme_init() {
 		'rewrite' => array( 'slug' => 'records', 'with_front' => false ),
 		'show_ui' => true,
 		'show_in_menu' => true,
-		'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' )
+		'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' ),
+		'taxonomies' => array( 'post_tag' )
 	) );
 	
 	register_post_type( 'audiotheme_track', array(
@@ -161,7 +162,8 @@ function audiotheme_init() {
 		'rewrite' => array( 'slug' => 'videos', 'with_front' => false ),
 		'show_ui' => true,
 		'show_in_menu' => true,
-		'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' )
+		'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' ),
+		'taxonomies' => array( 'post_tag' )
 	) );
 	
 	

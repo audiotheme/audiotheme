@@ -29,8 +29,6 @@ To add your own options to the theme options section, add the following to your 
 	
 	$section = $options->add_section( '_default', '' );
 		$options->add_field( 'thickbox_image', 'logo', __( 'Logo', 'audiotheme' ), $section, array( 'description' => '<br>(300x150 max size)' ) );
-	$section = $options->add_section( 'blog_settings', 'Blog Settings' );
-		$options->add_field( 'thickbox_image', 'blog_logo', __( 'Blog Logo', 'audiotheme' ), $section, array( 'description' => '<br>(300x150 max size)' ) );
 	
 	$tab = $options->add_tab( 'scripts', 'Scripts' );
 		$section = $options->add_section( '_default_scripts_section', '', $tab );

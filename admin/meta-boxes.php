@@ -5,7 +5,6 @@
  * @since 1.0
  */
 function audiotheme_record_meta_cb( $post ) {
-	
 	// Nonce to verify intention later
 	wp_nonce_field( 'save_audiotheme_record_meta', 'audiotheme_record_nonce' );
 	audiotheme_meta_field( $post, 'text', '_tracks', __( 'Tracks', 'audiotheme' ), __( 'For development. Comma separated list of track ID\'s', 'audiotheme' ) );
@@ -17,21 +16,21 @@ function audiotheme_record_meta_cb( $post ) {
  * @since 1.0
  */
 function audiotheme_record_save( $post_id ) {
-	
 	// Let's not auto save the data
-	if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return; 
+	if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		return; 
 
 	// Check our nonce
-	if( ! isset( $_POST['audiotheme_record_nonce'] ) || ! wp_verify_nonce( $_POST['audiotheme_record_nonce'], 'save_audiotheme_record_meta' ) ) return;
+	if( ! isset( $_POST['audiotheme_record_nonce'] ) || ! wp_verify_nonce( $_POST['audiotheme_record_nonce'], 'save_audiotheme_record_meta' ) )
+		return;
 
 	// Make sure the current user can edit the post
-	if( ! current_user_can( 'edit_post' ) ) return;
+	if( ! current_user_can( 'edit_post' ) )
+		return;
 	
 	// Save metadata
 	audiotheme_update_post_meta( $post_id, array( '_tracks' ), 'text' );
-
 }
-add_action( 'save_post', 'audiotheme_record_save' );
 
 /**
  * Metabox Callback
@@ -39,14 +38,12 @@ add_action( 'save_post', 'audiotheme_record_save' );
  * @since 1.0
  */
 function audiotheme_track_meta_cb( $post ){
-	
 	// Nonce to verify intention later
 	wp_nonce_field( 'save_audiotheme_track_meta', 'audiotheme_track_nonce' );
 	
 	audiotheme_meta_field( $post, 'url', '_track_file_url', __( 'Audio file URL', 'audiotheme' ) );
 	audiotheme_meta_field( $post, 'text', '_artist', __( 'Artist', 'audiotheme' ) );
 	audiotheme_meta_field( $post, 'text', '_track_link', __( 'Download Link', 'audiotheme' ), __( 'A link to download or purchase the track. Leave this empty if you don\'t want users to download the track.', 'audiotheme' ) );
-
 }
 
 /**
@@ -55,22 +52,22 @@ function audiotheme_track_meta_cb( $post ){
  * @since 1.0
  */
 function audiotheme_track_save( $post_id ) {
-	
 	// Let's not auto save the data
-	if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return; 
+	if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		return; 
 
 	// Check our nonce
-	if( ! isset( $_POST['audiotheme_track_nonce'] ) || ! wp_verify_nonce( $_POST['audiotheme_track_nonce'], 'save_audiotheme_track_meta' ) ) return;
+	if( ! isset( $_POST['audiotheme_track_nonce'] ) || ! wp_verify_nonce( $_POST['audiotheme_track_nonce'], 'save_audiotheme_track_meta' ) )
+		return;
 
 	// Make sure the current user can edit the post
-	if( ! current_user_can( 'edit_post' ) ) return;
+	if( ! current_user_can( 'edit_post' ) )
+		return;
 	
 	// Save metadata
 	audiotheme_update_post_meta( $post_id, array( '_track_file_url' ), 'url' );
 	audiotheme_update_post_meta( $post_id, array( '_artist', '_track_link' ), 'text' );
-
 }
-add_action( 'save_post', 'audiotheme_track_save' );
 
 /**
  * Video Metabox Callback
@@ -85,10 +82,10 @@ add_action( 'save_post', 'audiotheme_track_save' );
  */
 function audiotheme_video_meta_cb( $post ) {
 
-	/* Store the saved values */
+	// Store the saved values
 	$video = get_post_meta( $post->ID, '_video_url', true );
 
-	/* Nonce to verify intention later */
+	// Nonce to verify intention later
 	wp_nonce_field( 'save_audiotheme_video_meta', 'audiotheme_video_nonce' );
 
 	?>
@@ -110,15 +107,8 @@ function audiotheme_video_meta_cb( $post ) {
 	</p>
 	
 	<style type="text/css">
-	#audiotheme-video-preview iframe {
-		background: url(<?php echo admin_url( 'images/wpspin_light.gif' ) ?>) center center no-repeat;
-	}
-	
-	.ajax-indicator { 
-		display: none;
-		margin: 0 0 0 5px; 
-		vertical-align: middle;
-	}
+	#audiotheme-video-preview iframe { background: url(<?php echo admin_url( 'images/wpspin_light.gif' ) ?>) center center no-repeat;}
+	.ajax-indicator { display: none; margin: 0 0 0 5px; vertical-align: middle;}
 	</style>
 	
 	<script>
@@ -148,12 +138,9 @@ function audiotheme_video_meta_cb( $post ) {
 		});
 	})(jQuery);
 	</script>
-	
 	<?php
 }
 
-
-add_action( 'wp_ajax_audiotheme_get_video_data', 'audiotheme_get_video_data' );
 /**
  * Get Video Data
  *
@@ -185,7 +172,7 @@ function audiotheme_get_video_data() {
 function audiotheme_oembed_dataparse( $return, $data, $url ) {
 	global $post_ID;
 	
-	/* Support for any oEmbed providers that respond with thumbnail_url */
+	// Support for any oEmbed providers that respond with thumbnail_url
 	if( isset( $data->thumbnail_url ) ) {
 		
 		$current_source = get_post_meta( $post_ID, '_thumbnail_source', true );
@@ -227,27 +214,26 @@ function audiotheme_add_video_thumbnail( $attachment_id ) {
 	set_post_thumbnail( $post_ID, $attachment_id );
 }
 
-
-add_action( 'save_post', 'audiotheme_video_save' );
 /**
  * Save Video Metabox Values
  *
  * @since 1.0
  */
 function audiotheme_video_save( $id ) {
-
 	// Let's not auto save the data
-	if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return; 
+	if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		return; 
 
 	// Check our nonce
-	if( !isset( $_POST['audiotheme_video_nonce'] ) || !wp_verify_nonce( $_POST['audiotheme_video_nonce'], 'save_audiotheme_video_meta' ) ) return;
+	if( ! isset( $_POST['audiotheme_video_nonce'] ) || ! wp_verify_nonce( $_POST['audiotheme_video_nonce'], 'save_audiotheme_video_meta' ) )
+		return;
 
 	// Make sure the current user can edit the post
-	if( !current_user_can( 'edit_post' ) ) return;
+	if( !current_user_can( 'edit_post' ) )
+		return;
 
 	// Make sure we get a clean url here with esc_url
 	if( isset( $_POST['_video_url'] ) )
 		update_post_meta( $id, '_video_url', esc_url( $_POST['_video_url'], array( 'http', 'https' ) ) );
-
 }
 ?>
