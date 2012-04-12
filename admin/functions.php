@@ -5,13 +5,13 @@
  * @since 1.0
  */
 function audiotheme_update_post_meta( $post_id, $fields_array = null, $type = 'text' ){
-    if( is_array( $fields_array ) ):
-        foreach( $fields_array as $field ){
+    if ( is_array( $fields_array ) ):
+        foreach ( $fields_array as $field ) {
              if ( isset( $_POST[$field] ) ):
              
-                if( $type == 'url' ){
+                if ( $type == 'url' ){
                     update_post_meta( $post_id, $field, esc_url( $_POST[$field], array( 'http', 'https' ) ) );
-                } else{
+                } else {
                     update_post_meta( $post_id, $field, strip_tags( $_POST[$field] ) ); 
                 }
              
@@ -32,21 +32,21 @@ function audiotheme_meta_field( $post, $type = 'text', $field, $label = false, $
     <p class="audiotheme-field">
         <?php
         // Label
-        if( $label ) {
+        if ( $label ) {
         	printf( '<label for="%1$s">%2$s</label>',
 				esc_attr( $field ),
-				sprintf( esc_html__( '%s', 'audiotheme' ), $label )
+				esc_html( $label )
         	);
         }
         
         // Type
-		if( $type == 'url' ) {
+		if ( 'url' == $type ) {
          	printf( '<input type="%1$s" id="%2$s" name="%2$s" value="%3$s" />',
          		esc_attr( $type ),
          		esc_attr( $field ),
          		esc_url( $value )
          	);
-		} elseif( $type == 'text' ) {
+		} elseif ( 'text' == $type ) {
          	printf( '<input type="%1$s" id="%2$s" name="%2$s" value="%3$s" />',
          		esc_attr( $type ),
          		esc_attr( $field ),
@@ -55,10 +55,10 @@ function audiotheme_meta_field( $post, $type = 'text', $field, $label = false, $
 		}
         
         // Description
-		if( $desc ) {
-        	printf( '<span class="description"></span>', 
-        		sprintf( esc_html__( '%s', 'audiotheme' ), $desc ) 
-        	);
+		if ( $desc ) {
+        	printf( '<span class="description">%s</span>',
+				esc_html( $desc )
+			);
 		} 
 		?>
     </p>
@@ -117,9 +117,9 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 			?>
 			<div id="minor-publishing-actions">
 				<div id="save-action">
-					<?php if( 'publish' != $post->post_status && 'future' != $post->post_status && 'pending' != $post->post_status ) { ?>
+					<?php if ( 'publish' != $post->post_status && 'future' != $post->post_status && 'pending' != $post->post_status ) { ?>
 						<input type="submit" name="save" id="save-post" value="<?php esc_attr_e('Save Draft'); ?>" tabindex="4" class="button button-highlighted" <?php if ( 'private' == $post->post_status ) { echo 'style="display: none"'; } ?>>
-					<?php } elseif( 'pending' == $post->post_status && $can_publish ) { ?>
+					<?php } elseif ( 'pending' == $post->post_status && $can_publish ) { ?>
 						<input type="submit" name="save" id="save-post" value="<?php esc_attr_e('Save as Pending'); ?>" tabindex="4" class="button button-highlighted">
 					<?php } ?>
 					<img src="<?php echo esc_url( admin_url( 'images/wpspin_light.gif' ) ); ?>" class="ajax-loading" id="draft-ajax-loading" alt="">
@@ -128,14 +128,14 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 				<div id="preview-action">
 					<?php
 					if ( 'publish' == $post->post_status ) {
-						$preview_link = esc_url( get_permalink( $post->ID ) );
+						$preview_link = get_permalink( $post->ID );
 						$preview_button = __( 'Preview Changes', 'audiotheme' );
 					} else {
 						$preview_link = get_permalink( $post->ID );
 						if ( is_ssl() ) {
 							$preview_link = str_replace( 'http://', 'https://', $preview_link );
 						}
-						$preview_link = esc_url( apply_filters( 'preview_post_link', add_query_arg( 'preview', 'true', $preview_link ) ) );
+						$preview_link = apply_filters( 'preview_post_link', add_query_arg( 'preview', 'true', $preview_link ) );
 						$preview_button = __( 'Preview', 'audiotheme' );
 					}
 					?>
@@ -241,9 +241,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 						?>
 						
 						<?php _e( 'Visibility:', 'audiotheme' ); ?>
-						<span id="post-visibility-display">
-							<?php printf( esc_html__( '%s', 'audiotheme' ), $visibility_trans ); ?>
-						</span>
+						<span id="post-visibility-display"><?php echo esc_html( $visibility_trans ); ?></span>
 						
 						<?php if ( $can_publish ) { ?>
 							<a href="#visibility" class="edit-visibility hide-if-no-js"><?php _e( 'Edit', 'audiotheme'  ); ?></a>
@@ -259,7 +257,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 								<label for="visibility-radio-public" class="selectit"><?php _e( 'Public', 'audiotheme' ); ?></label>
 								<br>
 								
-								<?php if( 'post' == $post_type && current_user_can( 'edit_others_posts' ) ) : ?>
+								<?php if ( 'post' == $post_type && current_user_can( 'edit_others_posts' ) ) : ?>
 									<span id="sticky-span">
 										<input type="checkbox" name="sticky" id="sticky" value="sticky" <?php checked( is_sticky( $post->ID ) ); ?> tabindex="4">
 										<label for="sticky" class="selectit"><?php _e( 'Stick this post to the front page', 'audiotheme' ); ?></label>
@@ -271,7 +269,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 								<label for="visibility-radio-password" class="selectit"><?php _e( 'Password protected', 'audiotheme' ); ?></label><br />
 								
 								<span id="password-span">
-									<label for="post_password"><?php _e( 'Password:' ); ?></label>
+									<label for="post_password"><?php _e( 'Password:', 'audiotheme' ); ?></label>
 									<input type="text" name="post_password" id="post_password" value="<?php echo esc_attr( $post->post_password ); ?>">
 									<br>
 								</span>
@@ -301,7 +299,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 					// translators: Publish box date format, see http://php.net/date
 					$datef = __( 'M j, Y @ G:i' );
 					if ( 0 != $post->ID ) {
-						if( 'future' == $post->post_status ) { // scheduled for publishing at a future date
+						if ( 'future' == $post->post_status ) { // scheduled for publishing at a future date
 							$stamp = __( 'Scheduled for: <strong>%1$s</strong>', 'audiotheme' );
 						} elseif ( 'publish' == $post->post_status || 'private' == $post->post_status ) { // already published
 							$stamp = __( 'Published on: <strong>%1$s</strong>', 'audiotheme' );

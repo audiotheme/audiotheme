@@ -187,6 +187,7 @@ function audiotheme_edit_venue_screen_process_actions() {
 
 
 add_action( 'wp_ajax_ajax_get_audiotheme_venue_matches', 'ajax_get_audiotheme_venue_matches' );
+add_action( 'wp_ajax_nopriv_ajax_get_audiotheme_venue_matches', 'ajax_get_audiotheme_venue_matches' );
 function ajax_get_audiotheme_venue_matches() {
 	global $wpdb;
 	

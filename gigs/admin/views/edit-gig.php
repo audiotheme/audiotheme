@@ -1,7 +1,7 @@
 <div id="gig-ui">
 	<table id="gig-fields">
 		<tr>
-			<th><label for="gig-date"><?php _e( 'Date', 'themeit' ) ?></label></th>
+			<th><label for="gig-date"><?php _e( 'Date', 'audiotheme' ) ?></label></th>
 			<td><input type="text" name="gig_date" id="gig-date" placeholder="MM/DD/YYY" value="<?php echo esc_attr( $gig_date ); ?>" autocomplete="off"></td>
 		</tr>
 		<tr>

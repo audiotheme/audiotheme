@@ -10,13 +10,7 @@
 	</h2>
 	
 	<?php
-	if ( isset($_REQUEST['locked']) || 
-	     isset($_REQUEST['skipped']) || 
-	     isset($_REQUEST['updated']) || 
-	     isset($_REQUEST['deleted']) || 
-	     isset($_REQUEST['trashed']) || 
-	     isset($_REQUEST['untrashed']) 
-	   ) {
+	if ( isset( $_REQUEST['locked'] ) || isset( $_REQUEST['skipped'] ) || isset( $_REQUEST['updated'] ) || isset( $_REQUEST['deleted'] ) || isset( $_REQUEST['trashed'] ) || isset( $_REQUEST['untrashed'] ) ) {
 		$messages = array(); ?>
 		<div id="message" class="updated">
 			<p>
