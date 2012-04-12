@@ -58,7 +58,11 @@ include AUDIOTHEME_DIR . 'includes/media.php';
  */
 add_action( 'after_setup_theme', 'audiotheme_setup' );
 function audiotheme_setup() {
+<<<<<<< HEAD
 	/* Include Shortcodes */
+=======
+	include AUDIOTHEME_DIR . 'includes/default-filters.php';
+>>>>>>> 77852fabf8962966b7d2dad66588e4da3386b132
 	include AUDIOTHEME_DIR . 'includes/shortcodes.php';
 	
 	/* Include Admin functionality */
