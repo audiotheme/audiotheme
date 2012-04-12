@@ -10,6 +10,7 @@ include AUDIOTHEME_DIR . 'admin/options.php';
 include AUDIOTHEME_DIR . 'admin/post-type-screens.php';
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 /**
  * Theme Options setup
@@ -24,6 +25,8 @@ AudioTheme_Options::setup();
  *
  * @since 1.0
  */
+=======
+>>>>>>> 77852fabf8962966b7d2dad66588e4da3386b132
 =======
 >>>>>>> 77852fabf8962966b7d2dad66588e4da3386b132
 add_action( 'init', 'audiotheme_admin_setup' );
@@ -57,6 +60,7 @@ function audiotheme_admin_setup() {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 /**
  * Theme Options Init
@@ -81,6 +85,8 @@ function audiotheme_options_init() {
  *
  * @since 1.0
  */
+=======
+>>>>>>> 77852fabf8962966b7d2dad66588e4da3386b132
 =======
 >>>>>>> 77852fabf8962966b7d2dad66588e4da3386b132
 function audiotheme_enqueue_admin_scripts() {
