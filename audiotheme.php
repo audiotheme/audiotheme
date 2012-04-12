@@ -43,6 +43,7 @@ include AUDIOTHEME_DIR . 'includes/media.php';
 
 add_action( 'after_setup_theme', 'audiotheme_setup' );
 function audiotheme_setup() {
+	include AUDIOTHEME_DIR . 'includes/default-filters.php';
 	include AUDIOTHEME_DIR . 'includes/shortcodes.php';
 	
 	if ( is_admin() ) {

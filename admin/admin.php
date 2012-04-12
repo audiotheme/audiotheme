@@ -4,11 +4,11 @@ include AUDIOTHEME_DIR . 'admin/meta-boxes.php';
 include AUDIOTHEME_DIR . 'admin/options.php';
 include AUDIOTHEME_DIR . 'admin/post-type-screens.php';
 
-AudioTheme_Options::setup();
-
 add_action( 'init', 'audiotheme_admin_setup' );
 
 function audiotheme_admin_setup() {
+	AudioTheme_Options::setup();
+	
 	add_action( 'save_post', 'audiotheme_record_save' );
 	add_action( 'save_post', 'audiotheme_track_save' );
 	add_action( 'save_post', 'audiotheme_video_save' );
@@ -24,18 +24,14 @@ function audiotheme_admin_setup() {
 	add_action( 'manage_posts_custom_column', 'audiotheme_display_custom_column', 10, 2 );
 	
 	if ( current_theme_supports( 'audiotheme-options' ) ) {
-		add_action( 'admin_menu', 'audiotheme_options_init', 9 );
+		$options = AudioTheme_Options::get_instance();
+		$panel = $options->add_panel( 'theme-options', __( 'Theme Options', 'audiotheme' ), array(
+			'menu_title' => __( 'Theme Options', 'audiotheme' ),
+			'option_group' => 'audiotheme_options',
+			'option_name' => array( 'audiotheme_options' ),
+			'show_in_menu' => 'themes.php'
+		) );
 	}
-}
-
-function audiotheme_options_init() {
-	$options = AudioTheme_Options::get_instance();
-	$panel = $options->add_panel( 'theme-options', __( 'Theme Options', 'audiotheme' ), array(
-		'menu_title' => __( 'Theme Options', 'audiotheme' ),
-		'option_group' => 'audiotheme_options',
-		'option_name' => array( 'audiotheme_options' ),
-		'show_in_menu' => 'themes.php'
-	) );
 }
 
 function audiotheme_enqueue_admin_scripts() {
