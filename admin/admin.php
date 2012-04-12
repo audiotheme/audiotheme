@@ -1,11 +1,28 @@
 <?php
+/**
+ * Admin Inclusions
+ *
+ * @since 1.0
+ */
 include AUDIOTHEME_DIR . 'admin/functions.php';
 include AUDIOTHEME_DIR . 'admin/meta-boxes.php';
 include AUDIOTHEME_DIR . 'admin/options.php';
 include AUDIOTHEME_DIR . 'admin/post-type-screens.php';
 
+
+/**
+ * Theme Options setup
+ *
+ * @since 1.0
+ */
 AudioTheme_Options::setup();
 
+
+/**
+ * Admin Setup
+ *
+ * @since 1.0
+ */
 add_action( 'init', 'audiotheme_admin_setup' );
 
 function audiotheme_admin_setup() {
@@ -28,6 +45,12 @@ function audiotheme_admin_setup() {
 	}
 }
 
+
+/**
+ * Theme Options Init
+ *
+ * @since 1.0
+ */
 function audiotheme_options_init() {
 	$options = AudioTheme_Options::get_instance();
 	$panel = $options->add_panel( 'theme-options', __( 'Theme Options', 'audiotheme' ), array(
@@ -38,13 +61,21 @@ function audiotheme_options_init() {
 	) );
 }
 
+
+/**
+ * Enqueue Admin Scripts
+ *
+ * Should be loaded on every admin request
+ *
+ * @since 1.0
+ */
 function audiotheme_enqueue_admin_scripts() {
-	// Should be loaded on every admin request
 	wp_enqueue_style( 'audiotheme-admin' );
 }
 
+
 /**
- * Add Metabox
+ * Add Meta Boxes
  *
  * @since 1.0
  */
@@ -55,6 +86,11 @@ function audiotheme_meta_boxes() {
 }
 
 
+/**
+ * Enqueue Admin Scripts
+ *
+ * @since 1.0
+ */
 function audiotheme_edit_user_contact_info( $contactmethods ) {
 	// Remove contact options
 	unset( $contactmethods['aim'] );

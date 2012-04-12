@@ -2,7 +2,7 @@
 	<div id="icon-venues" class="icon32"><br></div>
 	<h2><?php
 		echo $post_type_object->labels->name;
-		echo sprintf( ' <a class="add-new-h2" href="%s">%s</a>', get_audiotheme_venue_admin_url(), $post_type_object->labels->add_new );
+		echo sprintf( ' <a class="add-new-h2" href="%s">%s</a>', esc_url( get_audiotheme_venue_admin_url() ), esc_html( $post_type_object->labels->add_new ) );
 	?></h2>
 	
 	<?php
@@ -13,7 +13,7 @@
 			<p>
 				<?php
 				$messages = array(
-					1 => __( 'Venue added.' )
+					1 => __( 'Venue added.', 'audiotheme' )
 				);
 				
 				if ( ! empty( $_REQUEST['message'] ) && isset( $messages[ $_REQUEST['message'] ] ) ) {

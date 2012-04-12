@@ -1,58 +1,69 @@
 <?php
+/**
+ * Gigs Init
+ *
+ * @since 1.0
+ */
 add_action( 'init', 'audiotheme_gigs_init' );
-
 function audiotheme_gigs_init() {
+	
 	register_post_type( 'audiotheme_gig', array(
-		'has_archive' => 'tour',
-		'hierarchical' => false,
-		'labels' => array(
-			'name' => 'Gigs',
-			'singular_name' => 'Gig',
-			'add_new' => 'Add New',
-			'add_new_item' => 'Add New Gig',
-			'edit_item' => 'Edit Gig',
-			'new_item' => 'New Gig',
-			'view_item' => 'View Gig',
-			'search_items' => 'Search Gigs',
-			'not_found' => 'No gigs found.',
-			'not_found_in_trash' => 'No gigs found in Trash.',
-			'all_items' => 'All Gigs',
-			'menu_name' => 'Gigs'
+		'has_archive'            => 'tour',
+		'hierarchical'           => false,
+		'labels'                 => array(
+			'name'               => _x( 'Gigs', 'post type general name', 'audiotheme' ),
+			'singular_name'      => _x( 'Gig', 'post type singular name', 'audiotheme' ),
+			'add_new'            => _x( 'Add New', 'gig', 'audiotheme' ),
+			'add_new_item'       => __( 'Add New Gig', 'audiotheme' ),
+			'edit_item'          => __( 'Edit Gig', 'audiotheme' ),
+			'new_item'           => __( 'New Gig', 'audiotheme' ),
+			'view_item'          => __( 'View Gig', 'audiotheme' ),
+			'search_items'       => __( 'Search Gigs', 'audiotheme' ),
+			'not_found'          => __( 'No gigs found', 'audiotheme' ),
+			'not_found_in_trash' => __( 'No gigs found in Trash', 'audiotheme' ),
+			'all_items'          => __( 'All Gigs', 'audiotheme' ),
+			'menu_name'          => __( 'Gigs', 'audiotheme' )
 		),
-		'menu_position' => 6,
-		'public' => true,
-		'register_meta_box_cb' => 'audiotheme_edit_gig_meta_boxes',
-		'rewrite' => false, //array( 'slug' => 'tour/%year%', 'with_front' => false ),
-		'show_in_menu' => 'gigs',
-		'supports' => array( 'title', 'editor', 'thumbnail', '' )
+		'menu_position'          => 6,
+		'public'                 => true,
+		'register_meta_box_cb'   => 'audiotheme_edit_gig_meta_boxes',
+		'rewrite'                => false, //array( 'slug' => 'tour/%year%', 'with_front' => false ),
+		'show_in_menu'           => 'gigs',
+		'supports'               => array( 'title', 'editor', 'thumbnail', '' )
 	) );
 	
 	register_post_type( 'audiotheme_venue', array(
-		'has_archive' => false,
-		'hierarchical' => false,
-		'labels' => array(
-			'name' => 'Venues',
-			'singular_name' => 'Venue',
-			'add_new' => 'Add New',
-			'add_new_item' => 'Add New Venue',
-			'edit_item' => 'Edit Venue',
-			'new_item' => 'New Venue',
-			'view_item' => 'View Venue',
-			'search_items' => 'Search Venues',
-			'not_found' => 'No venues found.',
-			'not_found_in_trash' => 'No venues found in Trash.',
-			'all_items' => 'All Venues',
-			'menu_name' => 'Venues'
+		'has_archive'            => false,
+		'hierarchical'           => false,
+		'labels'                 => array(
+			'name'               => _x( 'Venues', 'post type general name', 'audiotheme' ),
+			'singular_name'      => _x( 'Venue', 'post type singular name', 'audiotheme' ),
+			'add_new'            => _x( 'Add New', 'venue', 'audiotheme' ),
+			'add_new_item'       => __( 'Add New Venue', 'audiotheme' ),
+			'edit_item'          => __( 'Edit Venue', 'audiotheme' ),
+			'new_item'           => __( 'New Venue', 'audiotheme' ),
+			'view_item'          => __( 'View Venue', 'audiotheme' ),
+			'search_items'       => __( 'Search Venues', 'audiotheme' ),
+			'not_found'          => __( 'No venues found', 'audiotheme' ),
+			'not_found_in_trash' => __( 'No venues found in Trash', 'audiotheme' ),
+			'all_items'          => __( 'All Venues', 'audiotheme' ),
+			'menu_name'          => __( 'Venues', 'audiotheme' )
 		),
-		'public' => false,
-		'publicly_queryable' => false,
-		'query_var' => 'audiotheme_venue',
-		'rewrite' => false,
-		'supports' => array( '' )
+		'public'                 => false,
+		'publicly_queryable'     => false,
+		'query_var'              => 'audiotheme_venue',
+		'rewrite'                => false,
+		'supports'               => array( '' )
 	) );
+	
 }
 
 
+/**
+ * Gig Inclusions
+ *
+ * @since 1.0
+ */
 include AUDIOTHEME_DIR . 'gigs/general-template.php';
 
 if ( is_admin() ) {

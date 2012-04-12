@@ -5,14 +5,19 @@
 		<a href="post-new.php?post_type=audiotheme_gig" class="add-new-h2"><?php echo esc_html( $post_type_object->labels->add_new ); ?></a>
 		<?php
 		if ( ! empty( $_REQUEST['s'] ) )
-			printf( '<span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;' ) . '</span>', get_search_query() );
+			printf( '<span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;', 'audiotheme' ) . '</span>', get_search_query() );
 		?>
 	</h2>
 	
 	<?php
-	if ( isset($_REQUEST['locked']) || isset($_REQUEST['skipped']) || isset($_REQUEST['updated']) || isset($_REQUEST['deleted']) || isset($_REQUEST['trashed']) || isset($_REQUEST['untrashed']) ) {
-		$messages = array();
-		?>
+	if ( isset($_REQUEST['locked']) || 
+	     isset($_REQUEST['skipped']) || 
+	     isset($_REQUEST['updated']) || 
+	     isset($_REQUEST['deleted']) || 
+	     isset($_REQUEST['trashed']) || 
+	     isset($_REQUEST['untrashed']) 
+	   ) {
+		$messages = array(); ?>
 		<div id="message" class="updated">
 			<p>
 				<?php
@@ -37,7 +42,7 @@
 				if ( isset( $_REQUEST['trashed'] ) && (int) $_REQUEST['trashed'] ) {
 					$messages[] = sprintf( _n( 'Item moved to the Trash.', '%s items moved to the Trash.', $_REQUEST['trashed'] ), number_format_i18n( $_REQUEST['trashed'] ) );
 					$ids = isset( $_REQUEST['ids'] ) ? $_REQUEST['ids'] : 0;
-					$messages[] = '<a href="' . esc_url( wp_nonce_url( get_audiotheme_gig_admin_url( "action=untrash&ids=$ids" ), "bulk-gigs" ) ) . '">' . __( 'Undo' ) . '</a>';
+					$messages[] = '<a href="' . esc_url( wp_nonce_url( get_audiotheme_gig_admin_url( "action=untrash&ids=$ids" ), "bulk-gigs" ) ) . '">' . __( 'Undo', 'audiotheme' ) . '</a>';
 					unset( $_REQUEST['trashed'] );
 				}
 				
@@ -46,8 +51,10 @@
 					unset( $_REQUEST['undeleted'] );
 				}
 				
-				if ( $messages )
+				if ( $messages ) {
 					echo join( ' ', $messages );
+				}
+				
 				unset( $messages );
 				
 				$_SERVER['REQUEST_URI'] = remove_query_arg( array( 'locked', 'skipped', 'updated', 'deleted', 'trashed', 'untrashed' ), $_SERVER['REQUEST_URI'] );

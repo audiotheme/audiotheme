@@ -2,9 +2,8 @@
 function audiotheme_all_venues_screen_setup() {
 	get_current_screen()->add_help_tab( array(
 		'id' => 'overview',
-		'title' => __( 'Overview' ),
-		'content' =>
-			'<p>' . __( 'This screen provides access to all of your venues. You can customize the display of this screen to suit your workflow.' ) . '</p>'
+		'title' => __( 'Overview', 'audiotheme' ),
+		'content' => '<p>' . __( 'This screen provides access to all of your venues. You can customize the display of this screen to suit your workflow.', 'audiotheme' ) . '</p>'
 	) );
 	
 	$post_type_object = get_post_type_object( 'audiotheme_venue' );
@@ -126,8 +125,8 @@ function audiotheme_edit_venue_submit_meta_box( $post ) {
 						$delete_args['action'] = 'delete';
 						$delete_args['venue_id'] = $post->ID;
 						$delete_url = get_audiotheme_venues_admin_url( $delete_args );
-						$delete_url_onclick = " onclick=\"return confirm('" . esc_js( sprintf( __( 'Are you sure you want to delete this %s?' ), strtolower( $post_type_object->labels->singular_name ) ) ) . "');\"";
-						echo sprintf( '<a href="%s" class="submitdelete deletion"%s>%s</a>', wp_nonce_url( $delete_url, 'delete-venue_' . $post->ID ), $delete_url_onclick, esc_html( __( 'Delete Permanently' ) ) );
+						$delete_url_onclick = " onclick=\"return confirm('" . esc_js( sprintf( __( 'Are you sure you want to delete this %s?', 'audiotheme' ), strtolower( $post_type_object->labels->singular_name ) ) ) . "');\"";
+						echo sprintf( '<a href="%s" class="submitdelete deletion"%s>%s</a>', wp_nonce_url( $delete_url, 'delete-venue_' . $post->ID ), $delete_url_onclick, esc_html( __( 'Delete Permanently', 'audiotheme' ) ) );
 					}
 					?>
 				</div>

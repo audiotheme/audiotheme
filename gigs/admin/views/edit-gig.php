@@ -1,39 +1,39 @@
 <div id="gig-ui">
 	<table id="gig-fields">
 		<tr>
-			<th><label for="gig-date">Date</label></th>
+			<th><label for="gig-date"><?php _e( 'Date', 'themeit' ) ?></label></th>
 			<td><input type="text" name="gig_date" id="gig-date" placeholder="MM/DD/YYY" value="<?php echo esc_attr( $gig_date ); ?>" autocomplete="off"></td>
 		</tr>
 		<tr>
-			<th><label for="gig-time">Time</label></th>
+			<th><label for="gig-time"><?php _e( 'Time', 'audiotheme' ) ?></label></th>
 			<td><input type="text" name="gig_time" id="gig-time" placeholder="HH:MM" value="<?php echo esc_attr( $gig_time ); ?>"></td>
 		</tr>
 		<tr>
-			<th><label for="gig-venue">Venue</label></th>
+			<th><label for="gig-venue"><?php _e( 'Venue', 'audiotheme' ) ?></label></th>
 			<?php // TODO: consider refactoring to use a dropdown for data integrity? ?>
 			<td><input type="text" name="gig_venue" id="gig-venue" value="<?php echo esc_html( $gig_venue ); ?>"></td>
 		</tr>
 		<!--<tr>
-			<th><label for="gig_price">Price</label></th>
+			<th><label for="gig_price"><?php _e( 'Price', 'audiotheme' ) ?></label></th>
 			<td><input type="text" name="gig_price" value=""></td>
 		</tr>
 		<tr>
-			<th><label for="gig-tickets-url">Tickets URL</label></th>
+			<th><label for="gig-tickets-url"><?php _e( 'Tickets URL', 'audiotheme' ) ?></label></th>
 			<td><input type="text" name="gig_tickets_url" value="" class="widefat"></td>
 		</tr>-->
 		<tr>
-			<th>Notes</th>
+			<th><?php _e( 'Notes', 'audiotheme' ) ?></th>
 			<td><textarea name="excerpt" id="excerpt" cols="76" rows="3"></textarea></td>
 		</tr>
 	</table>
 </div>
 
 <?php
-/*
-TODO: set transient whenever a gig is saved so the date and time fields can be automatically adjusted
-the date field will automatically show the next day
-the time field will have the same value as the previously saved time
-*/
+/**
+ * TODO: set transient whenever a gig is saved so the date and time fields can be automatically adjusted.
+ * The date field will automatically show the next day
+ * The time field will have the same value as the previously saved time
+ */
 ?>
 <script type="text/javascript">
 jQuery('#gig-ui').insertBefore('#postdivrich');
