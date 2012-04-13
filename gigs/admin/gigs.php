@@ -77,8 +77,8 @@ function audiotheme_gigs_admin_menu_highlight( $parent_file ) {
 function audiotheme_all_gigs_screen_setup() {
 	get_current_screen()->add_help_tab( array(
 		'id' => 'overview',
-		'title' => __( 'Overview', 'audiotheme' ),
-		'content' => '<p>' . __( 'This screen provides access to all of your gigs. You can customize the display of this screen to suit your workflow.', 'audiotheme' ) . '</p>'
+		'title' => __( 'Overview', 'audiotheme-i18n' ),
+		'content' => '<p>' . __( 'This screen provides access to all of your gigs. You can customize the display of this screen to suit your workflow.', 'audiotheme-i18n' ) . '</p>'
 	) );
 	
 	$post_type_object = get_post_type_object( 'audiotheme_gig' );

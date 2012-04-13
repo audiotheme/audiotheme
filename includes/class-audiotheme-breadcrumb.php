@@ -45,7 +45,7 @@ class AudioTheme_Breadcrumb {
 
 		/** Default arguments **/
 		$this->args = array(
-			'home'						=> __( 'Home', 'audiotheme' ),
+			'home'						=> __( 'Home', 'audiotheme-i18n' ),
 			'sep'						=> ' / ',
 			'list_sep'					=> ', ',
 			'prefix'					=> '<div class="breadcrumb">',
@@ -54,15 +54,15 @@ class AudioTheme_Breadcrumb {
 			'heirarchial_categories'	=> true,
 			'display'					=> true,
 			'labels' => array(
-				'prefix'	=> __( 'You are here: ', 'audiotheme' ),
-				'author'	=> __( 'Archives for ', 'audiotheme' ),
-				'category'	=> __( 'Archives for ', 'audiotheme' ),
-				'tag'		=> __( 'Archives for ', 'audiotheme' ),
-				'date'		=> __( 'Archives for ', 'audiotheme' ),
-				'search'	=> __( 'Search for ', 'audiotheme' ),
-				'tax'		=> __( 'Archives for ', 'audiotheme' ),
-				'post_type'	=> __( 'Archives for ', 'audiotheme' ),
-				'404'		=> __( 'Not found: ', 'audiotheme' )
+				'prefix'	=> __( 'You are here: ', 'audiotheme-i18n' ),
+				'author'	=> __( 'Archives for ', 'audiotheme-i18n' ),
+				'category'	=> __( 'Archives for ', 'audiotheme-i18n' ),
+				'tag'		=> __( 'Archives for ', 'audiotheme-i18n' ),
+				'date'		=> __( 'Archives for ', 'audiotheme-i18n' ),
+				'search'	=> __( 'Search for ', 'audiotheme-i18n' ),
+				'tax'		=> __( 'Archives for ', 'audiotheme-i18n' ),
+				'post_type'	=> __( 'Archives for ', 'audiotheme-i18n' ),
+				'404'		=> __( 'Not found: ', 'audiotheme-i18n' )
 			)
 		);
 
@@ -109,7 +109,7 @@ class AudioTheme_Breadcrumb {
 	function get_home_crumb() {
 
 		$url = 'page' == $this->on_front ? get_permalink( get_option( 'page_on_front' ) ) : trailingslashit( home_url() );
-		$crumb = ( is_home() && is_front_page() ) ? $this->args['home'] : $this->get_breadcrumb_link( $url, sprintf( __( 'View %s', 'audiotheme' ), $this->args['home'] ), $this->args['home'] );
+		$crumb = ( is_home() && is_front_page() ) ? $this->args['home'] : $this->get_breadcrumb_link( $url, sprintf( __( 'View %s', 'audiotheme-i18n' ), $this->args['home'] ), $this->args['home'] );
 
 		return apply_filters( 'audiotheme_home_crumb', $crumb, $this->args );
 
@@ -201,7 +201,7 @@ class AudioTheme_Breadcrumb {
 				$crumbs = array( );
 				foreach ( $ancestors as $ancestor ) {
 					array_unshift( $crumbs, $this->get_breadcrumb_link(
-									get_permalink( $ancestor ), sprintf( __( 'View %s', 'audiotheme' ), get_the_title( $ancestor ) ), get_the_title( $ancestor )
+									get_permalink( $ancestor ), sprintf( __( 'View %s', 'audiotheme-i18n' ), get_the_title( $ancestor ) ), get_the_title( $ancestor )
 							)
 					);
 				}
@@ -235,32 +235,32 @@ class AudioTheme_Breadcrumb {
 
 		if ( is_category() ) {
 			$crumb = $this->args['labels']['category'] . $this->get_term_parents( get_query_var( 'cat' ), 'category' );
-			$crumb .= edit_term_link( __( '(Edit)', 'audiotheme' ), ' ', '', null, false );
+			$crumb .= edit_term_link( __( '(Edit)', 'audiotheme-i18n' ), ' ', '', null, false );
 		}
 		elseif ( is_tag() ) {
 			$crumb = $this->args['labels']['tag'] . single_term_title( '', false );
-			$crumb .= edit_term_link( __( '(Edit)', 'audiotheme' ), ' ', '', null, false );
+			$crumb .= edit_term_link( __( '(Edit)', 'audiotheme-i18n' ), ' ', '', null, false );
 		}
 		elseif ( is_tax() ) {
 			$term = $wp_query->get_queried_object();
 			$crumb = $this->args['labels']['tax'] . $this->get_term_parents( $term->term_id, $term->taxonomy );
-			$crumb .= edit_term_link( __( '(Edit)', 'audiotheme' ), ' ', '', null, false );
+			$crumb .= edit_term_link( __( '(Edit)', 'audiotheme-i18n' ), ' ', '', null, false );
 		}
 		elseif ( is_year() ) {
 			$crumb = $this->args['labels']['date'] . get_query_var( 'year' );
 		}
 		elseif ( is_month() ) {
 			$crumb = $this->get_breadcrumb_link(
-							get_year_link( get_query_var( 'year' ) ), sprintf( __( 'View archives for %s', 'audiotheme' ), get_query_var( 'year' ) ), get_query_var( 'year' ), $this->args['sep']
+							get_year_link( get_query_var( 'year' ) ), sprintf( __( 'View archives for %s', 'audiotheme-i18n' ), get_query_var( 'year' ) ), get_query_var( 'year' ), $this->args['sep']
 			);
 			$crumb .= $this->args['labels']['date'] . single_month_title( ' ', false );
 		}
 		elseif ( is_day() ) {
 			$crumb = $this->get_breadcrumb_link(
-							get_year_link( get_query_var( 'year' ) ), sprintf( __( 'View archives for %s', 'audiotheme' ), get_query_var( 'year' ) ), get_query_var( 'year' ), $this->args['sep']
+							get_year_link( get_query_var( 'year' ) ), sprintf( __( 'View archives for %s', 'audiotheme-i18n' ), get_query_var( 'year' ) ), get_query_var( 'year' ), $this->args['sep']
 			);
 			$crumb .= $this->get_breadcrumb_link(
-							get_month_link( get_query_var( 'year' ), get_query_var( 'monthnum' ) ), sprintf( __( 'View archives for %s %s', 'audiotheme' ), $wp_locale->get_month( get_query_var( 'monthnum' ) ), get_query_var( 'year' ) ), $wp_locale->get_month( get_query_var( 'monthnum' ) ), $this->args['sep']
+							get_month_link( get_query_var( 'year' ), get_query_var( 'monthnum' ) ), sprintf( __( 'View archives for %s %s', 'audiotheme-i18n' ), $wp_locale->get_month( get_query_var( 'monthnum' ) ), get_query_var( 'year' ) ), $wp_locale->get_month( get_query_var( 'monthnum' ) ), $this->args['sep']
 			);
 			$crumb .= $this->args['labels']['date'] . get_query_var( 'day' ) . date( 'S', mktime( 0, 0, 0, 1, get_query_var( 'day' ) ) );
 		}
@@ -292,7 +292,7 @@ class AudioTheme_Breadcrumb {
 			if ( $this->args['heirarchial_attachments'] ) { // if showing attachment parent
 				$attachment_parent = get_post( $post->post_parent );
 				$crumb = $this->get_breadcrumb_link(
-								get_permalink( $post->post_parent ), sprintf( __( 'View %s', 'audiotheme' ), $attachment_parent->post_title ), $attachment_parent->post_title, $this->args['sep']
+								get_permalink( $post->post_parent ), sprintf( __( 'View %s', 'audiotheme-i18n' ), $attachment_parent->post_title ), $attachment_parent->post_title, $this->args['sep']
 				);
 			}
 			$crumb .= single_post_title( '', false );
@@ -306,7 +306,7 @@ class AudioTheme_Breadcrumb {
 				if ( ! $this->args['heirarchial_categories'] ) { // Don't show parent categories (unless the post happen to be explicitely in them)
 					foreach ( $categories as $category ) {
 						$crumbs[] = $this->get_breadcrumb_link(
-										get_category_link( $category->term_id ), sprintf( __( 'View all posts in %s', 'audiotheme' ), $category->name ), $category->name
+										get_category_link( $category->term_id ), sprintf( __( 'View all posts in %s', 'audiotheme-i18n' ), $category->name ), $category->name
 						);
 					}
 					$crumb = join( $this->args['list_sep'], $crumbs ) . $this->args['sep'];
@@ -324,7 +324,7 @@ class AudioTheme_Breadcrumb {
 			$post_type = get_query_var( 'post_type' );
 			$post_type_object = get_post_type_object( $post_type );
 
-			$crumb = $this->get_breadcrumb_link( get_post_type_archive_link( $post_type ), sprintf( __( 'View all %s', 'audiotheme' ), $post_type_object->labels->name ), $post_type_object->labels->name );
+			$crumb = $this->get_breadcrumb_link( get_post_type_archive_link( $post_type ), sprintf( __( 'View all %s', 'audiotheme-i18n' ), $post_type_object->labels->name ), $post_type_object->labels->name );
 
 			$crumb .= $this->args['sep'] . single_post_title( '', false );
 		}
@@ -383,7 +383,7 @@ class AudioTheme_Breadcrumb {
 		}
 
 		if ( $link && !is_wp_error( get_term_link( get_term( $parent->term_id, $taxonomy ), $taxonomy ) ) ) {
-			$chain[] = $this->get_breadcrumb_link( get_term_link( get_term( $parent->term_id, $taxonomy ), $taxonomy ), sprintf( __( 'View all items in %s', 'audiotheme' ), $parent->name ), $parent->name );
+			$chain[] = $this->get_breadcrumb_link( get_term_link( get_term( $parent->term_id, $taxonomy ), $taxonomy ), sprintf( __( 'View all items in %s', 'audiotheme-i18n' ), $parent->name ), $parent->name );
 		} else {
 			$chain[] = $parent->name;
 		}

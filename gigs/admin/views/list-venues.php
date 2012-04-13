@@ -13,7 +13,7 @@
 			<p>
 				<?php
 				$messages = array(
-					1 => __( 'Venue added.', 'audiotheme' )
+					1 => __( 'Venue added.', 'audiotheme-i18n' )
 				);
 				
 				if ( ! empty( $_REQUEST['message'] ) && isset( $messages[ $_REQUEST['message'] ] ) ) {

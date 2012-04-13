@@ -28,7 +28,7 @@ function get_audiotheme_category_list() {
 	// Pull all the categories into an array
 	$list = array();  
 	$categories = get_categories();
-	$list[''] = __( 'Select a category:', 'audiotheme' );
+	$list[''] = __( 'Select a category:', 'audiotheme-i18n' );
 	
 	foreach ( (array) $categories as $category )
 	    $list[$category->cat_ID] = $category->cat_name;

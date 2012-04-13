@@ -1,28 +1,28 @@
 <div id="gig-ui">
 	<table id="gig-fields">
 		<tr>
-			<th><label for="gig-date"><?php _e( 'Date', 'audiotheme' ) ?></label></th>
+			<th><label for="gig-date"><?php _e( 'Date', 'audiotheme-i18n' ) ?></label></th>
 			<td><input type="text" name="gig_date" id="gig-date" placeholder="MM/DD/YYY" value="<?php echo esc_attr( $gig_date ); ?>" autocomplete="off"></td>
 		</tr>
 		<tr>
-			<th><label for="gig-time"><?php _e( 'Time', 'audiotheme' ) ?></label></th>
+			<th><label for="gig-time"><?php _e( 'Time', 'audiotheme-i18n' ) ?></label></th>
 			<td><input type="text" name="gig_time" id="gig-time" placeholder="HH:MM" value="<?php echo esc_attr( $gig_time ); ?>"></td>
 		</tr>
 		<tr>
-			<th><label for="gig-venue"><?php _e( 'Venue', 'audiotheme' ) ?></label></th>
+			<th><label for="gig-venue"><?php _e( 'Venue', 'audiotheme-i18n' ) ?></label></th>
 			<?php // TODO: consider refactoring to use a dropdown for data integrity? ?>
 			<td><input type="text" name="gig_venue" id="gig-venue" value="<?php echo esc_html( $gig_venue ); ?>"></td>
 		</tr>
 		<!--<tr>
-			<th><label for="gig_price"><?php _e( 'Price', 'audiotheme' ) ?></label></th>
+			<th><label for="gig_price"><?php _e( 'Price', 'audiotheme-i18n' ) ?></label></th>
 			<td><input type="text" name="gig_price" value=""></td>
 		</tr>
 		<tr>
-			<th><label for="gig-tickets-url"><?php _e( 'Tickets URL', 'audiotheme' ) ?></label></th>
+			<th><label for="gig-tickets-url"><?php _e( 'Tickets URL', 'audiotheme-i18n' ) ?></label></th>
 			<td><input type="text" name="gig_tickets_url" value="" class="widefat"></td>
 		</tr>-->
 		<tr>
-			<th><?php _e( 'Notes', 'audiotheme' ) ?></th>
+			<th><?php _e( 'Notes', 'audiotheme-i18n' ) ?></th>
 			<td><textarea name="excerpt" id="excerpt" cols="76" rows="3"></textarea></td>
 		</tr>
 	</table>

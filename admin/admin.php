@@ -38,8 +38,8 @@ function audiotheme_admin_setup() {
 	
 	if ( current_theme_supports( 'audiotheme-options' ) ) {
 		$options = AudioTheme_Options::get_instance();
-		$panel = $options->add_panel( 'theme-options', __( 'Theme Options', 'audiotheme' ), array(
-			'menu_title' => __( 'Theme Options', 'audiotheme' ),
+		$panel = $options->add_panel( 'theme-options', __( 'Theme Options', 'audiotheme-i18n' ), array(
+			'menu_title' => __( 'Theme Options', 'audiotheme-i18n' ),
 			'option_group' => 'audiotheme_options',
 			'option_name' => array( 'audiotheme_options' ),
 			'show_in_menu' => 'themes.php'
@@ -49,7 +49,7 @@ function audiotheme_admin_setup() {
 
 
 function audiotheme_admin_menu() {
-	add_menu_page( __( 'Discography', 'audiotheme' ), __( 'Discography', 'audiotheme' ), 'edit_posts', 'edit.php?post_type=audiotheme_record', NULL, NULL, 7 );
+	add_menu_page( __( 'Discography', 'audiotheme-i18n' ), __( 'Discography', 'audiotheme-i18n' ), 'edit_posts', 'edit.php?post_type=audiotheme_record', NULL, NULL, 7 );
 }
 
 
@@ -71,9 +71,9 @@ function audiotheme_enqueue_admin_scripts() {
  * @since 1.0
  */
 function audiotheme_meta_boxes() {
-	add_meta_box( 'audiotheme-record-meta', __( 'Record Details', 'audiotheme' ), 'audiotheme_record_meta_cb', 'audiotheme_record', 'normal', 'high' );
-	add_meta_box( 'audiotheme-track-meta', __( 'Track Details', 'audiotheme' ), 'audiotheme_track_meta_cb', 'audiotheme_track', 'normal', 'high' );
-	add_meta_box( 'audiotheme-video-meta', __( 'Video Library: Add Video URL', 'audiotheme' ), 'audiotheme_video_meta_cb', 'audiotheme_video', 'side', 'high' );
+	add_meta_box( 'audiotheme-record-meta', __( 'Record Details', 'audiotheme-i18n' ), 'audiotheme_record_meta_cb', 'audiotheme_record', 'normal', 'high' );
+	add_meta_box( 'audiotheme-track-meta', __( 'Track Details', 'audiotheme-i18n' ), 'audiotheme_track_meta_cb', 'audiotheme_track', 'normal', 'high' );
+	add_meta_box( 'audiotheme-video-meta', __( 'Video Library: Add Video URL', 'audiotheme-i18n' ), 'audiotheme_video_meta_cb', 'audiotheme_video', 'side', 'high' );
 }
 
 
@@ -89,8 +89,8 @@ function audiotheme_edit_user_contact_info( $contactmethods ) {
 	unset( $contactmethods['jabber'] );
 	
 	// Add Contact Options
-	$contactmethods['twitter'] = __( 'Twitter <span class="description">(username)</span>', 'audiotheme' );
-	$contactmethods['facebook'] = __( 'Facebook  <span class="description">(link)</span>', 'audiotheme' );
+	$contactmethods['twitter'] = __( 'Twitter <span class="description">(username)</span>', 'audiotheme-i18n' );
+	$contactmethods['facebook'] = __( 'Facebook  <span class="description">(link)</span>', 'audiotheme-i18n' );
 	
 	return $contactmethods;
 }

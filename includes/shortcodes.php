@@ -21,7 +21,7 @@ add_shortcode( 'footer_backtotop', 'audiotheme_footer_backtotop_shortcode' );
 function audiotheme_footer_backtotop_shortcode( $atts ) {
 
 	$defaults = array( 
-		'text'     => __( 'Return to top of page', 'audiotheme' ),
+		'text'     => __( 'Return to top of page', 'audiotheme-i18n' ),
 		'href'     => '#top',
 		'nofollow' => true,
 		'before'   => '',
@@ -104,7 +104,7 @@ add_shortcode( 'footer_luke_mcdonald_link', 'audiotheme_footer_luke_mcdonald_lin
 function audiotheme_footer_luke_mcdonald_link_shortcode( $atts ) {
 
 	$defaults = array( 
-		'before' => __( 'by ', 'audiotheme' ),
+		'before' => __( 'by ', 'audiotheme-i18n' ),
 		'after'  => ''
 	 );
 	$atts = shortcode_atts( $defaults, $atts );
@@ -133,7 +133,7 @@ add_shortcode( 'footer_shaken_stirred_link', 'audiotheme_footer_shaken_stirred_l
 function audiotheme_footer_shaken_stirred_link_shortcode( $atts ) {
 
 	$defaults = array( 
-		'before' => __( 'by ', 'audiotheme' ),
+		'before' => __( 'by ', 'audiotheme-i18n' ),
 		'after'  => ''
 	);
 	
@@ -163,7 +163,7 @@ add_shortcode( 'footer_blazersix_link', 'audiotheme_footer_blazersix_link_shortc
 function audiotheme_footer_blazersix_link_shortcode( $atts ) {
 
 	$defaults = array( 
-		'before' => __( 'by ', 'audiotheme' ),
+		'before' => __( 'by ', 'audiotheme-i18n' ),
 		'after'  => ''
 	 );
 	$atts = shortcode_atts( $defaults, $atts );
@@ -192,7 +192,7 @@ add_shortcode( 'footer_wap8_link', 'audiotheme_footer_wap8_link_shortcode' );
 function audiotheme_footer_wap8_link_shortcode( $atts ) {
 
 	$defaults = array( 
-		'before' => __( 'by ', 'audiotheme' ),
+		'before' => __( 'by ', 'audiotheme-i18n' ),
 		'after'  => ''
 	);
 	
@@ -261,12 +261,12 @@ function audiotheme_footer_loginout_shortcode( $atts ) {
 	if ( ! is_user_logged_in() )
 		$link = sprintf( '<a href="%1$s">%2$s</a>', 
 			esc_url( wp_login_url( $atts['redirect'] ) ),
-			esc_html( __( 'Log in', 'audiotheme' ) )
+			esc_html( __( 'Log in', 'audiotheme-i18n' ) )
 		);
 	else
 		$link = sprintf( '<a href="%1$s">%2$s</a>',
 			esc_url( wp_logout_url( $atts['redirect'] ) ),
-			esc_html( __( 'Log out', 'audiotheme' ) )
+			esc_html( __( 'Log out', 'audiotheme-i18n' ) )
 		);
 
 	$output = $atts['before'] . apply_filters( 'loginout', $link ) . $atts['after'];

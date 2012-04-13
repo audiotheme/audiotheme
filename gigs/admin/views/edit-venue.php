@@ -22,8 +22,8 @@
 			<p>
 				<?php
 				$messages = array(
-					1 => __( 'Venue added.', 'audiotheme' ),
-					2 => __( 'Venue updated.', 'audiotheme' )
+					1 => __( 'Venue added.', 'audiotheme-i18n' ),
+					2 => __( 'Venue updated.', 'audiotheme-i18n' )
 				);
 				
 				if ( ! empty( $_REQUEST['message'] ) && isset( $messages[ $_REQUEST['message'] ] ) ) {
@@ -63,35 +63,35 @@
 						<div class="inside">
 							<table class="form-table" >
 								<tr>
-									<th><label for="venue-name"><?php _e( 'Name', 'audiotheme' ) ?></label></th>
+									<th><label for="venue-name"><?php _e( 'Name', 'audiotheme-i18n' ) ?></label></th>
 									<td><input type="text" name="audiotheme_venue[name]" id="venue-name" class="regular-text" value="<?php echo esc_attr( $name ); ?>"></td>
 								</tr>
 								<tr>
-									<th><label for="venue-address"><?php _e( 'Address', 'audiotheme' ) ?></label></th>
+									<th><label for="venue-address"><?php _e( 'Address', 'audiotheme-i18n' ) ?></label></th>
 									<td><textarea name="audiotheme_venue[address]" id="venue-address" cols="30" rows="2"><?php echo esc_textarea( $address ); ?></textarea></td>
 								</tr>
 								<tr>
-									<th><label for="venue-city"><?php _e( 'City', 'audiotheme' ) ?></label></th>
+									<th><label for="venue-city"><?php _e( 'City', 'audiotheme-i18n' ) ?></label></th>
 									<td><input type="text" name="audiotheme_venue[city]" id="venue-city" class="regular-text" value="<?php echo esc_attr( $city ); ?>"></td>
 								</tr>
 								<tr>
-									<th><label for="venue-state"><?php _e( 'State', 'audiotheme' ) ?></label></th>
+									<th><label for="venue-state"><?php _e( 'State', 'audiotheme-i18n' ) ?></label></th>
 									<td><input type="text" name="audiotheme_venue[state]" id="venue-state" class="regular-text" value="<?php echo esc_attr( $state ); ?>"></td>
 								</tr>
 								<tr>
-									<th><label for="venue-postal-code"><?php _e( 'Postal Code', 'audiotheme' ) ?></label></th>
+									<th><label for="venue-postal-code"><?php _e( 'Postal Code', 'audiotheme-i18n' ) ?></label></th>
 									<td><input type="text" name="audiotheme_venue[postal_code]" id="venue-postal-code" class="regular-text" value="<?php echo esc_attr( $postal_code ); ?>"></td>
 								</tr>
 								<tr>
-									<th><label for="venue-country"><?php _e( 'Country', 'audiotheme' ) ?></label></th>
+									<th><label for="venue-country"><?php _e( 'Country', 'audiotheme-i18n' ) ?></label></th>
 									<td><input type="text" name="audiotheme_venue[country]" id="venue-country" class="regular-text" value="<?php echo esc_attr( $country ); ?>"></td>
 								</tr>
 								<tr>
-									<th><label for="venue-website"><?php _e( 'Website', 'audiotheme' ) ?></label></th>
+									<th><label for="venue-website"><?php _e( 'Website', 'audiotheme-i18n' ) ?></label></th>
 									<td><input type="text" name="audiotheme_venue[website]" id="venue-website" class="regular-text" value="<?php echo esc_url( $website ); ?>"></td>
 								</tr>
 								<tr>
-									<th><label for="venue-phone"><?php _e( 'Phone', 'audiotheme' ) ?></label></th>
+									<th><label for="venue-phone"><?php _e( 'Phone', 'audiotheme-i18n' ) ?></label></th>
 									<td><input type="text" name="audiotheme_venue[phone]" id="venue-phone" class="regular-text" value="<?php echo esc_attr( $phone ); ?>"></td>
 								</tr>
 							</table>
@@ -104,7 +104,7 @@
 				
 				<div id="postbox-container-1" class="postbox-container">
 					<?php
-					add_meta_box( 'venuesubmitdiv', __( 'Save', 'audiotheme' ), 'audiotheme_edit_venue_submit_meta_box', 'gigs_page_venue', 'side', 'high' );
+					add_meta_box( 'venuesubmitdiv', __( 'Save', 'audiotheme-i18n' ), 'audiotheme_edit_venue_submit_meta_box', 'gigs_page_venue', 'side', 'high' );
 					
 					do_meta_boxes( 'gigs_page_venue', 'side', get_post( $ID ) );
 					?>

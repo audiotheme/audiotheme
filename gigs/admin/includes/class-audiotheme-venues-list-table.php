@@ -114,7 +114,7 @@ class AudioTheme_Venues_List_Table extends WP_List_Table {
 	
 	function get_bulk_actions() {
 		$actions = array(
-			'delete' => __( 'Delete Permanently', 'audiotheme' )
+			'delete' => __( 'Delete Permanently', 'audiotheme-i18n' )
 		);
 		
 		return $actions;
@@ -177,10 +177,10 @@ class AudioTheme_Venues_List_Table extends WP_List_Table {
 					$deleted = 0;
 					foreach ( $post_ids as $post_id ) {
 						if ( ! current_user_can( $post_type_object->cap->delete_post, $post_id ) )
-							wp_die( __( 'You are not allowed to delete this item.', 'audiotheme' ) );
+							wp_die( __( 'You are not allowed to delete this item.', 'audiotheme-i18n' ) );
 						
 						if ( ! wp_delete_post( $post_id ) )
-							wp_die( __( 'Error in deleting…', 'audiotheme' ) );
+							wp_die( __( 'Error in deleting…', 'audiotheme-i18n' ) );
 						$deleted++;
 					}
 					$sendback = add_query_arg( 'deleted', $deleted, $sendback );
@@ -217,8 +217,8 @@ class AudioTheme_Venues_List_Table extends WP_List_Table {
 		$delete_args['action'] = 'delete';
 		$delete_args['venue_id'] = $item->ID;
 		$delete_url = get_audiotheme_venues_admin_url( $delete_args );
-		$delete_url_onclick = " onclick=\"return confirm('" . esc_js( sprintf( __( 'Are you sure you want to delete this %s?', 'audiotheme' ), strtolower( $post_type_object->labels->singular_name ) ) ) . "');\"";
-		$actions['delete'] = sprintf( '<a href="%s"%s>%s</a>', wp_nonce_url( $delete_url, 'delete-venue_' . $item->ID ), $delete_url_onclick, __( 'Delete', 'audiotheme' ) );
+		$delete_url_onclick = " onclick=\"return confirm('" . esc_js( sprintf( __( 'Are you sure you want to delete this %s?', 'audiotheme-i18n' ), strtolower( $post_type_object->labels->singular_name ) ) ) . "');\"";
+		$actions['delete'] = sprintf( '<a href="%s"%s>%s</a>', wp_nonce_url( $delete_url, 'delete-venue_' . $item->ID ), $delete_url_onclick, __( 'Delete', 'audiotheme-i18n' ) );
 		
 		$out.= $this->row_actions( $actions );
 		

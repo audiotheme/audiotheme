@@ -243,7 +243,7 @@ function audiotheme_human_time_diff( $older_date, $newer_date = false ) {
 	$since = absint( $newer_date - $older_date );
 
 	if ( ! $since )
-		return '0 ' . _x( 'seconds', 'time difference', 'audiotheme' );
+		return '0 ' . _x( 'seconds', 'time difference', 'audiotheme-i18n' );
 
 	// Hold units of time in seconds, and their pluralised strings ( not translated yet )
 	$units = array( 
@@ -266,7 +266,7 @@ function audiotheme_human_time_diff( $older_date, $newer_date = false ) {
 	}
 
 	// Translate unit string, and add to the output
-	$output = sprintf( translate_nooped_plural( $units[$i][1], $count, 'audiotheme' ), $count );
+	$output = sprintf( translate_nooped_plural( $units[$i][1], $count, 'audiotheme-i18n' ), $count );
 
 	// Note the next unit
 	$ii = $i + 1;
@@ -279,7 +279,7 @@ function audiotheme_human_time_diff( $older_date, $newer_date = false ) {
 		if ( ( $count2 = floor( ( $since - ( $seconds * $count ) ) / $seconds2 ) ) != 0 )
 
 			// Add translated separator string, and translated unit string
-			$output .= sprintf( ' %s ' . translate_nooped_plural( $units[$ii][1], $count2, 'audiotheme' ),	_x( 'and', 'separator in time difference', 'audiotheme' ),	$count2	 );
+			$output .= sprintf( ' %s ' . translate_nooped_plural( $units[$ii][1], $count2, 'audiotheme-i18n' ),	_x( 'and', 'separator in time difference', 'audiotheme-i18n' ),	$count2	 );
 
 	}
 

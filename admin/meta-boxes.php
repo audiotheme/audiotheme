@@ -7,7 +7,7 @@
 function audiotheme_record_meta_cb( $post ) {
 	// Nonce to verify intention later
 	wp_nonce_field( 'save_audiotheme_record_meta', 'audiotheme_record_nonce' );
-	audiotheme_meta_field( $post, 'text', '_tracks', __( 'Tracks', 'audiotheme' ), __( 'For development. Comma separated list of track ID\'s', 'audiotheme' ) );
+	audiotheme_meta_field( $post, 'text', '_tracks', __( 'Tracks', 'audiotheme-i18n' ), __( 'For development. Comma separated list of track ID\'s', 'audiotheme-i18n' ) );
 }
 
 /**
@@ -41,9 +41,9 @@ function audiotheme_track_meta_cb( $post ){
 	// Nonce to verify intention later
 	wp_nonce_field( 'save_audiotheme_track_meta', 'audiotheme_track_nonce' );
 	
-	audiotheme_meta_field( $post, 'url', '_track_file_url', __( 'Audio file URL', 'audiotheme' ) );
-	audiotheme_meta_field( $post, 'text', '_artist', __( 'Artist', 'audiotheme' ) );
-	audiotheme_meta_field( $post, 'text', '_track_link', __( 'Download Link', 'audiotheme' ), __( 'A link to download or purchase the track. Leave this empty if you don\'t want users to download the track.', 'audiotheme' ) );
+	audiotheme_meta_field( $post, 'url', '_track_file_url', __( 'Audio file URL', 'audiotheme-i18n' ) );
+	audiotheme_meta_field( $post, 'text', '_artist', __( 'Artist', 'audiotheme-i18n' ) );
+	audiotheme_meta_field( $post, 'text', '_track_link', __( 'Download Link', 'audiotheme-i18n' ), __( 'A link to download or purchase the track. Leave this empty if you don\'t want users to download the track.', 'audiotheme-i18n' ) );
 }
 
 /**
@@ -90,11 +90,11 @@ function audiotheme_video_meta_cb( $post ) {
 
 	?>
 	<p>
-		<?php _e( 'Enter a video URL from one of the WordPress', 'audiotheme' ) ?> <a href="http://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F" target="_blank"><?php _e( 'supported video services.', 'audiotheme' ); ?></a>
+		<?php _e( 'Enter a video URL from one of the WordPress', 'audiotheme-i18n' ) ?> <a href="http://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F" target="_blank"><?php _e( 'supported video services.', 'audiotheme-i18n' ); ?></a>
 	</p>
 	
 	<p>
-		<input type="text" name="_video_url" value="<?php echo esc_url( $video ); ?>" id="audiotheme-video-url" class="widefat" placeholder="<?php _e( 'Video URL', 'audiotheme' ); ?>">
+		<input type="text" name="_video_url" value="<?php echo esc_url( $video ); ?>" id="audiotheme-video-url" class="widefat" placeholder="<?php _e( 'Video URL', 'audiotheme-i18n' ); ?>">
 	</p>
 	
 	<div id="audiotheme-video-preview">
