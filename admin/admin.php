@@ -4,10 +4,10 @@
  *
  * @since 1.0
  */
-include AUDIOTHEME_DIR . 'admin/functions.php';
-include AUDIOTHEME_DIR . 'admin/meta-boxes.php';
-include AUDIOTHEME_DIR . 'admin/options.php';
-include AUDIOTHEME_DIR . 'admin/post-type-screens.php';
+require( AUDIOTHEME_DIR . 'admin/functions.php' );
+require( AUDIOTHEME_DIR . 'admin/meta-boxes.php' );
+require( AUDIOTHEME_DIR . 'admin/options.php' );
+require( AUDIOTHEME_DIR . 'admin/post-type-screens.php' );
 
 
 /**

@@ -8,9 +8,6 @@ Author: AudioTheme
 Author URI: http://AudioTheme.com
 License: GPLv2
 
-Text Domain: audiotheme
-Domain Path: /languages/
-
 Copyright 2012 AudioTheme
 
 This program is free software; you can redistribute it and/or modify 
@@ -45,10 +42,10 @@ define( 'AUDIOTHEME_URI', get_template_directory_uri() . '/audiotheme/' );
  *
  * @since 1.0
  */
-include AUDIOTHEME_DIR . 'includes/general-template.php';
-include AUDIOTHEME_DIR . 'includes/functions.php';
-include AUDIOTHEME_DIR . 'includes/formatting.php';
-include AUDIOTHEME_DIR . 'includes/media.php';
+require( AUDIOTHEME_DIR . 'includes/general-template.php' );
+require( AUDIOTHEME_DIR . 'includes/functions.php' );
+require( AUDIOTHEME_DIR . 'includes/formatting.php' );
+require( AUDIOTHEME_DIR . 'includes/media.php' );
 
 
 /**
@@ -59,16 +56,16 @@ include AUDIOTHEME_DIR . 'includes/media.php';
 add_action( 'after_setup_theme', 'audiotheme_setup' );
 function audiotheme_setup() {
 	/* Include Shortcodes */
-	include AUDIOTHEME_DIR . 'includes/default-filters.php';
-	include AUDIOTHEME_DIR . 'includes/shortcodes.php';
+	require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
+	require( AUDIOTHEME_DIR . 'includes/shortcodes.php' );
 	
 	/* Include Admin functionality */
 	if ( is_admin() ) {
-		include AUDIOTHEME_DIR . 'admin/admin.php';
+		require( AUDIOTHEME_DIR . 'admin/admin.php' );
 	}
 	
 	/* Include Gigs CPT functionality */
-	include AUDIOTHEME_DIR . 'gigs/gigs.php';
+	require( AUDIOTHEME_DIR . 'gigs/gigs.php' );
 	
 	add_action( 'init', 'audiotheme_init' );
 	add_action( 'init', 'audiotheme_register_scripts' );

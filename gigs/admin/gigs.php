@@ -86,7 +86,7 @@ function audiotheme_all_gigs_screen_setup() {
 	add_screen_option( 'per_page', array( 'label' => $title, 'default' => 20 ) );
 	
 	
-	include_once AUDIOTHEME_DIR . 'gigs/admin/includes/class-audiotheme-gigs-list-table.php';
+	require_once( AUDIOTHEME_DIR . 'gigs/admin/includes/class-audiotheme-gigs-list-table.php' );
 	
 	$gigs_list_table = new AudioTheme_Gigs_List_Table();
 	$gigs_list_table->process_actions();
@@ -98,7 +98,7 @@ function audiotheme_all_gigs_screen() {
 	$gigs_list_table = new AudioTheme_Gigs_List_Table();
 	$gigs_list_table->prepare_items();
 	
-	include AUDIOTHEME_DIR . 'gigs/admin/views/list-gigs.php';
+	require( AUDIOTHEME_DIR . 'gigs/admin/views/list-gigs.php' );
 }
 
 
@@ -151,7 +151,7 @@ function audiotheme_edit_gig_fields() {
 	
 	$gig_venue = ( isset( $gig->venue->name ) ) ? $gig->venue->name : '';
 	
-	include AUDIOTHEME_DIR . 'gigs/admin/views/edit-gig.php';
+	require( AUDIOTHEME_DIR . 'gigs/admin/views/edit-gig.php' );
 }
 
 

@@ -64,10 +64,10 @@ function audiotheme_gigs_init() {
  *
  * @since 1.0
  */
-include AUDIOTHEME_DIR . 'gigs/general-template.php';
+require( AUDIOTHEME_DIR . 'gigs/general-template.php' );
 
 if ( is_admin() ) {
-	include AUDIOTHEME_DIR . 'gigs/admin/gigs.php';
-	include AUDIOTHEME_DIR . 'gigs/admin/venues.php';
+	require( AUDIOTHEME_DIR . 'gigs/admin/gigs.php' );
+	require( AUDIOTHEME_DIR . 'gigs/admin/venues.php' );
 }
 ?>

@@ -8,7 +8,7 @@
  * @since 1.0
  */
 function get_audiotheme_theme_option( $key, $default = false, $option_name = '' ) {
-	$option_name = ( empty( $option_name ) ) ? henly_get_theme_options_id() : $option_name;
+	$option_name = ( empty( $option_name ) ) ? 'audiotheme_options' : $option_name;
 	
 	$options = get_option( $option_name );
 	
