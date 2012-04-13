@@ -139,7 +139,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 						$preview_button = __( 'Preview', 'audiotheme' );
 					}
 					?>
-					<a class="preview button" href="<?php echo esc_url( $preview_link ); ?>" target="wp-preview" id="post-preview" tabindex="4"><?php esc_html( $preview_button ); ?></a>
+					<a class="preview button" href="<?php echo esc_url( $preview_link ); ?>" target="wp-preview" id="post-preview" tabindex="4"><?php echo esc_html( $preview_button ); ?></a>
 					<input type="hidden" name="wp-preview" id="wp-preview" value="">
 				</div>
 				

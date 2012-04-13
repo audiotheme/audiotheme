@@ -4,7 +4,7 @@
  *
  */
 ?>
-<div class="wrap" id="venue-edit">
+<div class="wrap columns-2" id="venue-edit">
 	<div id="icon-venues" class="icon32"><br></div>
 	<h2><?php
 		if ( 'edit' == $action ) {
@@ -51,18 +51,10 @@
 		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
 		?>
 		
-		<div id="poststuff" class="has-right-sidebar">
-			
-			<div id="side-info-column" class="inner-sidebar">
-				<?php
-				add_meta_box( 'venuesubmitdiv', __( 'Save', 'audiotheme' ), 'audiotheme_edit_venue_submit_meta_box', 'gigs_page_venue', 'side', 'high' );
+		<div id="poststuff">
+			<div id="post-body" class="metabox-holder columns-2">
 				
-				do_meta_boxes( 'gigs_page_venue', 'side', get_post( $ID ) );
-				?>
-			</div>
 			
-			
-			<div id="post-body">
 				<div id="post-body-content">
 					
 					<div id="venuediv" class="stuffbox">
@@ -106,15 +98,21 @@
 						</div>
 					</div>
 					
-					
-					<?php
-					do_meta_boxes( 'gigs_page_venue', 'normal', '' );
-					
-					#vd( get_current_screen() );
-					?>
+					<?php do_meta_boxes( 'gigs_page_venue', 'normal', '' ); ?>
 				</div><!--end div#post-body-content-->
+				
+				
+				<div id="postbox-container-1" class="postbox-container">
+					<?php
+					add_meta_box( 'venuesubmitdiv', __( 'Save', 'audiotheme' ), 'audiotheme_edit_venue_submit_meta_box', 'gigs_page_venue', 'side', 'high' );
+					
+					do_meta_boxes( 'gigs_page_venue', 'side', get_post( $ID ) );
+					?>
+				</div>
+				
+				
 			</div><!--end div#post-body-->
-			
+			<br class="clear" />
 		</div><!--end div#poststuff-->
 	</form>
 </div><!--end div.wrap-->
