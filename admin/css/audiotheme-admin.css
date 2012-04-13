@@ -14,10 +14,10 @@
 #adminmenu #menu-posts-audiotheme_gallery.wp-has-current-submenu div.wp-menu-image { background: url("../images/menu-record.png") no-repeat scroll 5px -26px;}
 #adminmenu #menu-posts-audiotheme_gallery div.wp-menu-image img { display: none;}
 
-#adminmenu #menu-posts-audiotheme_record div.wp-menu-image { background: url("../images/menu-record.png") no-repeat scroll 5px 6px transparent;}
-#adminmenu #menu-posts-audiotheme_record:hover div.wp-menu-image,
-#adminmenu #menu-posts-audiotheme_record.wp-has-current-submenu div.wp-menu-image { background: url("../images/menu-record.png") no-repeat scroll 5px -26px;}
-#adminmenu #menu-posts-audiotheme_record div.wp-menu-image img { display: none;}
+#adminmenu #toplevel_page_edit-post_type-audiotheme_record div.wp-menu-image { background: url("../images/menu-record.png") no-repeat scroll 5px 6px transparent;}
+#adminmenu #toplevel_page_edit-post_type-audiotheme_record:hover div.wp-menu-image,
+#adminmenu #toplevel_page_edit-post_type-audiotheme_record.wp-has-current-submenu div.wp-menu-image { background: url("../images/menu-record.png") no-repeat scroll 5px -26px;}
+#adminmenu #toplevel_page_edit-post_type-audiotheme_record div.wp-menu-image img { display: none;}
 
 #adminmenu #menu-posts-audiotheme_video div.wp-menu-image { background: url("../images/menu-record.png") no-repeat scroll 5px 6px transparent;}
 #adminmenu #menu-posts-audiotheme_video:hover div.wp-menu-image,
