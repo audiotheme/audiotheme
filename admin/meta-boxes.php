@@ -50,11 +50,13 @@ function audiotheme_record_save( $post_id ) {
 	// Save metadata
 	audiotheme_update_post_meta( $post_id, array( '_url' ), 'text' );
 	
-	if ( isset( $_POST['_tracks'] ) ):
-            update_post_meta( $post_id, '_tracks', $_POST['_tracks'] ); 
-    endif;
-    
-    //print_r($_POST['_tracks']);
+	// Save track list
+	if ( isset( $_POST['_tracks'] ) ){
+        update_post_meta( $post_id, '_tracks', $_POST['_tracks'] ); 
+    } else {
+        delete_post_meta( $post_id, '_tracks' ); 
+    }
+
 }
 
 /**
