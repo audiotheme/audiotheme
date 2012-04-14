@@ -1,17 +1,38 @@
 <?php
 /**
- * Metabox Callback
+ * Record - Metabox Callback
  *
  * @since 1.0
  */
 function audiotheme_record_meta_cb( $post ) {
 	// Nonce to verify intention later
 	wp_nonce_field( 'save_audiotheme_record_meta', 'audiotheme_record_nonce' );
-	audiotheme_meta_field( $post, 'text', '_tracks', __( 'Tracks', 'audiotheme-i18n' ), __( 'For development. Comma separated list of track ID\'s', 'audiotheme-i18n' ) );
+	//audiotheme_meta_field( $post, 'text', '_tracks', __( 'Tracks', 'audiotheme-i18n' ), __( 'For development. Comma separated list of track ID\'s', 'audiotheme-i18n' ) );
+	audiotheme_meta_field( $post, 'url', '_url', __( 'Record Link', 'audiotheme-i18n' ), __( 'Provide a link to purchase or download this record', 'audiotheme-i18n' ) );
+    ?>
+    
+    <p><strong>Tracks</strong></p>
+    <ul class="select-list">
+        <?php
+        $tracks_value = get_post_meta( $post->ID, '_tracks', true );
+        $tracks = get_audiotheme_tracks_list();    
+        
+        print_r( $tracks_value );
+        
+        foreach($tracks as $id => $title){
+        ?>
+            <li>
+                <input type="checkbox" value="<?php echo $id; ?>" name="_tracks[]" id="track_<?php echo $id; ?>" <?php if( in_array( $id, $tracks_value ) ){ echo 'checked="checked"'; } ?> /> 
+                <label for="track_<?php echo $id; ?>"><?php echo $title; ?></label>
+            </li>
+        <?php } ?>
+    </ul>
+    
+    <?php
 }
 
 /**
- * Save Metabox Values
+ * Record - Save Metabox Values
  *
  * @since 1.0
  */
@@ -29,11 +50,17 @@ function audiotheme_record_save( $post_id ) {
 		return;
 	
 	// Save metadata
-	audiotheme_update_post_meta( $post_id, array( '_tracks' ), 'text' );
+	audiotheme_update_post_meta( $post_id, array( '_url' ), 'text' );
+	
+	if ( isset( $_POST['_tracks'] ) ):
+            update_post_meta( $post_id, '_tracks', $_POST['_tracks'] ); 
+    endif;
+    
+    //print_r($_POST['_tracks']);
 }
 
 /**
- * Metabox Callback
+ * Track - Metabox Callback
  *
  * @since 1.0
  */
@@ -47,7 +74,7 @@ function audiotheme_track_meta_cb( $post ){
 }
 
 /**
- * Save Metabox Values
+ * Track - Save Metabox Values
  *
  * @since 1.0
  */

@@ -21,8 +21,8 @@ function get_audiotheme_theme_option( $key, $default = false, $option_name = '' 
  * Utility function to get the category list and 
  * return array of category ID and Name.
  *
- * @retunr Array Category ID and Name
- * @since 2.0
+ * @return Array Category ID and Name
+ * @since 1.0
  */
 function get_audiotheme_category_list() {
 	// Pull all the categories into an array
@@ -37,6 +37,26 @@ function get_audiotheme_category_list() {
 }
 
 /**
+ * Get Tracks List
+ *
+ * Utility function to get the tracks list and 
+ * return array of track ID and Name.
+ *
+ * @return Array Track ID and Name
+ * @since 1.0
+ */
+function get_audiotheme_tracks_list() {
+	// Pull all the tracks into an array
+	$list = array();  
+	$tracks = get_posts( array( 'post_type' => 'audiotheme_track' ) );
+	
+	foreach ( (array) $tracks as $tracks )
+	    $list[$tracks->ID] = $tracks->post_title;
+	
+	return $list;
+}
+
+/**
  * Record's track ID's
  *
  * @since 1.0
@@ -45,12 +65,19 @@ function get_audiotheme_category_list() {
 function get_audiotheme_tracks( $record_id ){
     $tracks = get_post_meta( $record_id, '_tracks', true );
     if( !$tracks ){
-        $tracks = array();
-    } else {
-        $tracks = explode( ',', $tracks );
+        $tracks = false;
     }
     
     return $tracks;
+}
+
+/**
+ * Track file
+ *
+ * @since 1.0
+ */
+function get_audiotheme_record_custom_url( $record_id ){
+   return get_post_meta( $record_id, '_url', true );
 }
 
 /**
@@ -70,4 +97,5 @@ function get_audiotheme_track_file( $track_id ){
 function get_audiotheme_track_artist( $track_id ){
     return get_post_meta( $track_id, '_artist', true );
 }
+
 ?>
