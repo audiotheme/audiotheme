@@ -65,6 +65,7 @@ function audiotheme_setup() {
 	}
 	
 	/* Include Gigs CPT functionality */
+	require( AUDIOTHEME_DIR . 'discography/discography.php' );
 	require( AUDIOTHEME_DIR . 'gigs/gigs.php' );
 	
 	add_action( 'init', 'audiotheme_init' );
@@ -104,58 +105,6 @@ function audiotheme_init() {
 		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' )
 	) );
 	
-	register_post_type( 'audiotheme_record', array(
-		'capability_type'        => 'post',
-		'has_archive'            => false,
-		'hierarchical'           => false,
-		'labels'                 => array(
-			'name'               => _x( 'Records', 'post type general name', 'audiotheme-i18n' ),
-			'singular_name'      => _x( 'Record', 'post type singular name', 'audiotheme-i18n' ),
-			'add_new'            => _x( 'Add New', 'record', 'audiotheme-i18n' ),
-			'add_new_item'       => __( 'Add New Record', 'audiotheme-i18n' ),
-			'edit_item'          => __( 'Edit Record', 'audiotheme-i18n' ),
-			'new_item'           => __( 'New Record', 'audiotheme-i18n' ),
-			'view_item'          => __( 'View Record', 'audiotheme-i18n' ),
-			'search_items'       => __( 'Search Records', 'audiotheme-i18n' ),
-			'not_found'          => __( 'No records found', 'audiotheme-i18n' ),
-			'not_found_in_trash' => __( 'No records found in Trash', 'audiotheme-i18n' ),
-			'all_items'          => __( 'Records', 'audiotheme-i18n' )
-		),
-		'menu_position'          => 7,
-		'public'                 => true,
-		'publicly_queryable'     => true,
-		'rewrite'                => false, //array( 'slug' => 'record', 'with_front' => false ),
-		'show_ui'                => true,
-		'show_in_menu'           => true,
-		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' ),
-		'taxonomies'             => array( 'post_tag' )
-	) );
-	
-	register_post_type( 'audiotheme_track', array(
-		'capability_type'        => 'post',
-		'has_archive'            => false,
-		'hierarchical'           => false,
-		'labels'                 => array(
-			'name'               => _x( 'Tracks', 'post type general name', 'audiotheme-i18n' ),
-			'singular_name'      => _x( 'Track', 'post type singular name', 'audiotheme-i18n' ),
-			'add_new'            => _x( 'Add New', 'track', 'audiotheme-i18n' ),
-			'add_new_item'       => __( 'Add New Track', 'audiotheme-i18n' ),
-			'edit_item'          => __( 'Edit Track', 'audiotheme-i18n' ),
-			'new_item'           => __( 'New Track', 'audiotheme-i18n' ),
-			'view_item'          => __( 'View Track', 'audiotheme-i18n' ),
-			'search_items'       => __( 'Search Tracks', 'audiotheme-i18n' ),
-			'not_found'          => __( 'No tracks found', 'audiotheme-i18n' ),
-			'not_found_in_trash' => __( 'No tracks found in Trash', 'audiotheme-i18n' ),
-			'all_items'          => __( 'Tracks', 'audiotheme-i18n' )
-		),
-		'public'                 => true,
-		'publicly_queryable'     => true,
-		'rewrite'                => false, //array( 'slug' => 'record/%audiotheme_record%', 'with_front' => false ),
-		'show_ui'                => true,
-		'show_in_menu'           => 'edit.php?post_type=audiotheme_record',
-		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' )
-	) );
-	
 	register_post_type( 'audiotheme_video', array(
 		'capability_type'        => 'post',
 		'has_archive'            => false,
@@ -184,33 +133,6 @@ function audiotheme_init() {
 	) );
 	
 	
-	register_taxonomy( 'audiotheme_record_type', 'audiotheme_record', array(
-		'args'                           => array( 'orderby' => 'term_order' ),
-		'hierarchical'                   => true,
-		'labels'                         => array(
-			'name'                       => _x( 'Record Types', 'taxonomy general name', 'audiotheme-i18n' ),
-			'singular_name'              => _x( 'Record Type', 'taxonomy singular name', 'audiotheme-i18n' ),
-			'search_items'               => __( 'Search Record Types', 'audiotheme-i18n' ),
-			'popular_items'              => __( 'Popular Record Types', 'audiotheme-i18n' ),
-			'all_items'                  => __( 'All Record Types', 'audiotheme-i18n' ),
-			'parent_item'                => __( 'Parent Record Type', 'audiotheme-i18n' ),
-			'parent_item_colon'          => __( 'Parent Record Type:', 'audiotheme-i18n' ),
-			'edit_item'                  => __( 'Edit Record Type', 'audiotheme-i18n' ),
-			'view_item'                  => __( 'View Record Type', 'audiotheme-i18n' ),
-			'update_item'                => __( 'Update Record Type', 'audiotheme-i18n' ),
-			'add_new_item'               => __( 'Add New Record Type', 'audiotheme-i18n' ),
-			'new_item_name'              => __( 'New Record Type Name', 'audiotheme-i18n' ),
-			'separate_items_with_commas' => __( 'Separate record types with commas', 'audiotheme-i18n' ),
-			'add_or_remove_items'        => __( 'Add or remove record types', 'audiotheme-i18n' ),
-			'choose_from_most_used'      => __( 'Choose from most used record types', 'audiotheme-i18n' )
-		),
-		'public'                         => true,
-		'query_var'                      => true,
-		'rewrite'                        => false, //array( 'slug' => 'records/type', 'with_front' => false ),
-		'show_ui'                        => true,
-		'show_in_nav_menus'              => true
-	) );
-	
 	register_taxonomy( 'audiotheme_video_type', 'audiotheme_video', array(
 		'args'                           => array( 'orderby' => 'term_order' ),
 		'hierarchical'                   => true,
@@ -237,21 +159,6 @@ function audiotheme_init() {
 		'show_ui'                        => true,
 		'show_in_nav_menus'              => true
 	) );
-	
-	#add_rewrite_tag( '%audiotheme_record%', '([^/]+)' );
-	add_filter( 'generate_rewrite_rules', 'audiotheme_generate_rewrite_rules' );
-}
-
-/**
- * Custom Rewrite Rules
- *
- * @since 1.0
- */
-function audiotheme_generate_rewrite_rules( $wp_rewrite ) {
-	$new_rules['record/([^/]+)/([^/]+)?$'] = 'index.php?audiotheme_record=$matches[1]&audiotheme_track=$matches[2]';
-	$new_rules['record/([^/]+)/?$'] = 'index.php?audiotheme_record=$matches[1]';
-	
-	$wp_rewrite->rules = array_merge( $new_rules, $wp_rewrite->rules );
 }
 
 /**
