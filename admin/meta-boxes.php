@@ -17,8 +17,6 @@ function audiotheme_record_meta_cb( $post ) {
         $tracks_value = get_post_meta( $post->ID, '_tracks', true );
         $tracks = get_audiotheme_tracks_list();    
         
-        print_r( $tracks_value );
-        
         foreach($tracks as $id => $title){
         ?>
             <li>
