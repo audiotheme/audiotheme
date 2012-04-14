@@ -14,7 +14,7 @@ function audiotheme_record_meta_cb( $post ) {
     <p><strong>Tracks</strong></p>
     <ul class="select-list">
         <?php
-        $tracks_value = get_post_meta( $post->ID, '_tracks', true );
+        $tracks_value = (array) get_post_meta( $post->ID, '_tracks', true );
         $tracks = get_audiotheme_tracks_list();    
         
         foreach($tracks as $id => $title){

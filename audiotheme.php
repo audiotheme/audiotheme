@@ -78,7 +78,6 @@ function audiotheme_setup() {
  * @since 1.0
  */
 function audiotheme_init() {
-
 	register_post_type( 'audiotheme_gallery', array(
 		'capability_type'        => 'post',
 		'has_archive'            => false,
@@ -99,7 +98,7 @@ function audiotheme_init() {
 		'menu_position'          => 9,
 		'public'                 => true,
 		'publicly_queryable'     => true,
-		'rewrite'                => array( 'slug' => 'galleries', 'with_front' => false ),
+		'rewrite'                => array( 'slug' => 'gallery', 'with_front' => false ),
 		'show_ui'                => true,
 		'show_in_menu'           => true,
 		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' )
@@ -125,7 +124,7 @@ function audiotheme_init() {
 		'menu_position'          => 7,
 		'public'                 => true,
 		'publicly_queryable'     => true,
-		'rewrite'                => array( 'slug' => 'records', 'with_front' => false ),
+		'rewrite'                => false, //array( 'slug' => 'record', 'with_front' => false ),
 		'show_ui'                => true,
 		'show_in_menu'           => true,
 		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' ),
@@ -151,7 +150,7 @@ function audiotheme_init() {
 		),
 		'public'                 => true,
 		'publicly_queryable'     => true,
-		'rewrite'                => array( 'slug' => 'records', 'with_front' => false ),
+		'rewrite'                => false, //array( 'slug' => 'record/%audiotheme_record%', 'with_front' => false ),
 		'show_ui'                => true,
 		'show_in_menu'           => 'edit.php?post_type=audiotheme_record',
 		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' )
@@ -207,7 +206,7 @@ function audiotheme_init() {
 		),
 		'public'                         => true,
 		'query_var'                      => true,
-		'rewrite'                        => array( 'slug' => 'records/type', 'with_front' => false ),
+		'rewrite'                        => false, //array( 'slug' => 'records/type', 'with_front' => false ),
 		'show_ui'                        => true,
 		'show_in_nav_menus'              => true
 	) );
@@ -234,11 +233,25 @@ function audiotheme_init() {
 		),
 		'public'                         => true,
 		'query_var'                      => true,
-		'rewrite'                        => array( 'slug' => 'records/type', 'with_front' => false ),
+		'rewrite'                        => array( 'slug' => 'videos/type', 'with_front' => false ),
 		'show_ui'                        => true,
 		'show_in_nav_menus'              => true
 	) );
 	
+	#add_rewrite_tag( '%audiotheme_record%', '([^/]+)' );
+	add_filter( 'generate_rewrite_rules', 'audiotheme_generate_rewrite_rules' );
+}
+
+/**
+ * Custom Rewrite Rules
+ *
+ * @since 1.0
+ */
+function audiotheme_generate_rewrite_rules( $wp_rewrite ) {
+	$new_rules['record/([^/]+)/([^/]+)?$'] = 'index.php?audiotheme_record=$matches[1]&audiotheme_track=$matches[2]';
+	$new_rules['record/([^/]+)/?$'] = 'index.php?audiotheme_record=$matches[1]';
+	
+	$wp_rewrite->rules = array_merge( $new_rules, $wp_rewrite->rules );
 }
 
 /**
