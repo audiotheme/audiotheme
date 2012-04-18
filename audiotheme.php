@@ -167,9 +167,11 @@ function audiotheme_init() {
  * @since 1.0
  */
 function audiotheme_register_scripts() {
+	wp_register_script( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/js/audiotheme-admin.js', array( 'jquery-ui-sortable' ) );
+	
 	// Related: http://core.trac.wordpress.org/ticket/18909
 	wp_register_style( 'jquery-ui-theme-smoothness', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/smoothness/jquery-ui.css' );
-	wp_register_style( 'jquery-ui-theme-audiotheme', AUDIOTHEME_URI . 'includes/css/jquery-ui-audiotheme.css', array( 'jquery-ui-theme-smoothness' ) );
+	wp_register_style( 'jquery-ui-theme-audiotheme', AUDIOTHEME_URI . 'admin/css/jquery-ui-audiotheme.css', array( 'jquery-ui-theme-smoothness' ) );
 	
 	wp_register_style( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/css/audiotheme-admin.css' );
 }

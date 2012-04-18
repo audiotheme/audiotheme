@@ -1,121 +1,116 @@
 <?php
+/**
+ * Load Discography Admin
+ *
+ * @since 1.0
+ */
 add_action( 'init', 'audiotheme_load_discography_admin' );
 function audiotheme_load_discography_admin() {
-	if ( ! empty( $_POST ) ) {
-		#vd( $_POST );
-		#exit;
-	}
-	
 	if ( isset( $_POST['audiotheme_discography_rewrite_base'] ) ) {
 		update_option( 'audiotheme_discography_rewrite_base', $_POST['audiotheme_discography_rewrite_base'] );
 	}
 	
-	add_action( 'save_post', 'audiotheme_record_save_hook' );
+	add_action( 'admin_menu', 'audiotheme_discography_admin_menu' );
 	add_action( 'admin_init', 'audiotheme_discography_admin_init' );
+	add_action( 'load-themes.php', 'audiotheme_discography_setup' );
+	add_filter( 'post_updated_messages', 'audiotheme_discography_post_updated_messages' );
+	
+	/* Records */
+	require( AUDIOTHEME_DIR . 'discography/admin/record.php' );
+	
+	add_action( 'save_post', 'audiotheme_record_save_hook' );
+	// All Records Screen
+	add_filter( 'parse_query', 'audiotheme_records_admin_query' );
+	add_filter( 'manage_edit-audiotheme_record_columns', 'audiotheme_record_columns' );
+	add_action( 'manage_edit-audiotheme_record_sortable_columns', 'audiotheme_record_sortable_columns' );
+	add_action( 'manage_pages_custom_column', 'audiotheme_record_display_column', 10, 2 );
+	
+	/* Tracks */
+	require( AUDIOTHEME_DIR . 'discography/admin/track.php' );
+	
+	add_action( 'save_post', 'audiotheme_track_save_hook' );
+	add_action( 'wp_unique_post_slug', 'audiotheme_track_unique_slug', 10, 5 );
+	// All Tracks Screen
+	add_filter( 'parse_query', 'audiotheme_tracks_admin_query' );
+	add_action( 'restrict_manage_posts', 'audiotheme_tracks_filters' );
+	add_filter( 'manage_edit-audiotheme_track_columns', 'audiotheme_track_columns' );
+	add_action( 'manage_edit-audiotheme_track_sortable_columns', 'audiotheme_track_sortable_columns' );
+	add_action( 'manage_posts_custom_column', 'audiotheme_track_display_column', 10, 2 );
 }
 
-function audiotheme_record_save_hook( $post_id ) {
-	// Let's not auto save the data
-	if( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || wp_is_post_revision( $post_id ) )
-		return; 
-
-	// Check our nonce
-	#if( ! isset( $_POST['audiotheme_record_nonce'] ) || ! wp_verify_nonce( $_POST['audiotheme_record_nonce'], 'save_audiotheme_record_meta' ) )
-		#return;
-	
-	if ( 'audiotheme_record' != get_post_type( $post_id ) )
-		return false;
-
-	// Make sure the current user can edit the post
-	if( ! current_user_can( 'edit_post' ) )
-		return;
-	
-	$current_user = wp_get_current_user();
-	
-	update_post_meta( $post_id, '_release_year', $_POST['release_year'] );
-	update_post_meta( $post_id, '_genre', $_POST['genre'] );
-	update_post_meta( $post_id, '_purchase_url', $_POST['purchase_url'] );
-	
-	if ( ! empty( $_POST['audiotheme_tracks'] ) ) {
-		$i = 0;
-		foreach ( $_POST['audiotheme_tracks'] as $track_data ) {
-			$default_data = array( 'artist' => '', 'post_id' => '', 'title' => '' );
-			$track_data = wp_parse_args( $track_data, $default_data );
-			
-			if ( ! empty( $track_data['title'] ) ) {
-				$data = array();
-				$track_id = 0;
-				
-				$data['post_title'] = $track_data['title'];
-				$data['post_status'] = 'publish';
-				$data['post_parent'] = $post_id;
-				$data['menu_order'] = $i;
-				$data['post_type'] = 'audiotheme_track';
-				
-				if ( empty( $track_data['post_id'] ) ) {
-					$track_id = wp_insert_post( $data );
-				} else {
-					$track_id = absint( $track_data['post_id'] );
-					$data['ID'] = $track_id;
-					$data['post_author'] = $current_user->ID;
-					
-					wp_update_post( $data );
+/**
+ * Add Discography Data
+ *
+ * Runs anytime themes.php is visited to ensure record types exist.
+ *
+ * @since 1.0
+ */
+function audiotheme_discography_setup() {
+	if ( taxonomy_exists( 'audiotheme_record_type' ) ) {
+		$record_types = get_audiotheme_record_type_slugs();
+		if ( $record_types ) {
+			foreach( $record_types as $type_slug ) {
+				if ( ! term_exists( $type_slug, 'audiotheme_record_type' ) ) {
+					wp_insert_term( $type_slug, 'audiotheme_record_type', array( 'slug' => $type_slug ) );
 				}
-				
-				if ( ! empty( $track_id ) && ! is_wp_error( $track_id ) ) {
-					update_post_meta( $track_id, '_artist', $track_data['artist'] );
-				}
-				
-				$i++;
-			} elseif ( ! empty( $track_data['post_id'] ) ) {
-				update( absint( $track_data['post_id'] ), '_artist', $track_data['artist'] );
 			}
 		}
 	}
 }
 
-function audiotheme_edit_record_meta_boxes( $post ) {
-	remove_meta_box( 'submitdiv', 'audiotheme_record', 'side' );
-	add_meta_box( 'submitdiv', 'Publish', 'audiotheme_post_submit_meta_box', 'audiotheme_record', 'side', 'high', array(
-		'force_delete' => false,
-		'show_publish_date' => false,
-		'show_statuses' => array(),
-		'show_visibility' => false
-	) );
-	
-	add_meta_box( 'audiotheme-record-details', __( 'Record Details', 'audiotheme-i18n' ), 'audiotheme_record_details_meta_box', 'audiotheme_record', 'side', 'high' );
-	
-	add_action( 'edit_form_advanced', 'audiotheme_edit_record_tracklist' );
+/**
+ * Discography Admin Menu
+ *
+ * @since 1.0
+ */
+function audiotheme_discography_admin_menu() {
+	add_menu_page( __( 'Discography', 'audiotheme-i18n' ), __( 'Discography', 'audiotheme-i18n' ), 'edit_posts', 'edit.php?post_type=audiotheme_record', NULL, NULL, 7 );
 }
 
-function audiotheme_edit_record_tracklist() {
-	global $post, $wpdb;
+/**
+ * Discography Post Type Update Messages
+ *
+ * @since 1.0
+ */
+function audiotheme_discography_post_updated_messages( $messages ) {
+	global $post, $post_ID;
 	
-	$tracks = get_posts( 'post_type=audiotheme_track&post_parent=' . $post->ID . '&orderby=menu_order&order=ASC&numberposts=-1' );
+	$messages['audiotheme_record'] = array(
+		0 => '',
+		1 => sprintf( __( 'Record updated. <a href="%s">View Record</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
+		2 => __( 'Custom field updated.', 'audiotheme-i18n' ),
+		3 => __( 'Custom field deleted.', 'audiotheme-i18n' ),
+		4 => __( 'Record updated.', 'audiotheme-i18n' ),
+		5 => isset( $_GET['revision'] ) ? sprintf( __( 'Record restored to revision from %s', 'audiotheme-i18n' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6 => sprintf( __( 'Record published. <a href="%s">View Record</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
+		7 => __( 'Record saved.', 'audiotheme-i18n' ),
+		8 => sprintf( __( 'Record submitted. <a target="_blank" href="%s">Preview Record</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+		9 => sprintf( __( 'Record scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Record</a>', 'audiotheme-i18n' ), date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
+		10 => sprintf( __( 'Record draft updated. <a target="_blank" href="%s">Preview Record</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+	);
 	
-	require( AUDIOTHEME_DIR . 'discography/admin/views/edit-record-tracklist.php' );
+	$messages['audiotheme_track'] = array(
+		0 => '',
+		1 => sprintf( __( 'Track updated. <a href="%s">View Track</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
+		2 => __( 'Custom field updated.', 'audiotheme-i18n' ),
+		3 => __( 'Custom field deleted.', 'audiotheme-i18n' ),
+		4 => __( 'Track updated.', 'audiotheme-i18n' ),
+		5 => isset( $_GET['revision'] ) ? sprintf( __( 'Track restored to revision from %s', 'audiotheme-i18n' ), wp_post_revision_title( ( int ) $_GET['revision'], false ) ) : false,
+		6 => sprintf( __( 'Track published. <a href="%s">View Track</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
+		7 => __( 'Track saved.', 'audiotheme-i18n' ),
+		8 => sprintf( __( 'Track submitted. <a target="_blank" href="%s">Preview Track</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+		9 => sprintf( __( 'Track scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Track</a>', 'audiotheme-i18n' ), date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
+		10 => sprintf( __( 'Track draft updated. <a target="_blank" href="%s">Preview Track</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+	);
+
+	return $messages;
 }
 
-function audiotheme_record_details_meta_box( $post ) {
-	?>
-	<p>
-		<label for="record-year">Release Year:</label>
-		<input type="text" name="release_year" id="record-year" value="<?php echo esc_attr( get_post_meta( $post->ID, '_release_year', true ) ) ; ?>" class="widefat">
-	</p>
-	<p>
-		<label for="record-genre">Genre:</label>
-		<input type="text" name="genre" id="record-genere" value="<?php echo esc_attr( get_post_meta( $post->ID, '_genre', true ) ) ; ?>" class="widefat">
-	</p>
-	<p>
-		<label for="record-purchase-url">Purchase URL:</label>
-		<input type="url" name="purchase_url" id="record-purchase-url" value="<?php echo esc_url( get_post_meta( $post->ID, '_purchase_url', true ) ) ; ?>" class="widefat">
-	</p>
-	<?php
-}
-
-
-
-
+/**
+ * Register Discography Rewrite Base Setting
+ *
+ * @since 1.0
+ */
 function audiotheme_discography_admin_init() {
 	add_settings_field(
 		'audiotheme_discography_rewrite_base',
@@ -126,6 +121,11 @@ function audiotheme_discography_admin_init() {
 	);
 }
 
+/**
+ * Callback for Displaying Discography Rewrite Base
+ *
+ * @since 1.0
+ */
 function audiotheme_discography_rewrite_base_settings_field() {
 	$discography_base = get_option( 'audiotheme_discography_rewrite_base' );
 	?>

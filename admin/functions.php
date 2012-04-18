@@ -10,7 +10,7 @@ function audiotheme_update_post_meta( $post_id, $fields_array = null, $type = 't
              if ( isset( $_POST[$field] ) ):
              
                 if ( $type == 'url' ){
-                    update_post_meta( $post_id, $field, esc_url( $_POST[$field], array( 'http', 'https' ) ) );
+                    update_post_meta( $post_id, $field, esc_url_raw( $_POST[$field], array( 'http', 'https' ) ) );
                 } else {
                     update_post_meta( $post_id, $field, strip_tags( $_POST[$field] ) ); 
                 }

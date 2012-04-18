@@ -1,6 +1,14 @@
+body.audiotheme_track h2 a,
+body.edit-audiotheme_track h2 a,
+body.edit-audiotheme_track select[name="m"] { display: none;}
+
 .audiotheme-field label { display: block;  margin-bottom: 3px;  font-weight: bold;}
 .audiotheme-field input[type="text"], .audiotheme-field input[type="url"], .audiotheme-field input[type="date"] { margin-bottom: 3px; width: 100%;}
 
+.audiotheme-meta-field { clear: both;}
+.audiotheme-meta-field input.widefat { margin-bottom: 3px;}
+.audiotheme-meta-field-upload input.widefat { margin-bottom: 8px;}
+.audiotheme-meta-field-upload .button { float: right;}
 
 #icon-gigs { background: transparent url(../images/icon32-gigs.png) no-repeat scroll 1px 2px;}
 
