@@ -94,6 +94,29 @@ function audiotheme_record_sortable_columns( $columns ) {
 }
 
 /**
+ * Remove Quick Edit from Record List Table
+ *
+ * @since 1.0
+ */
+function audiotheme_record_list_table_actions( $actions, $post ) {
+	if ( 'audiotheme_record' == get_post_type( $post ) ) {
+		unset( $actions['inline hide-if-no-js'] );
+	}
+	
+	return $actions;
+}
+
+/**
+ * Remove Bulk Edit from Record List Table
+ *
+ * @since 1.0
+ */
+function audiotheme_record_list_table_bulk_actions( $actions ) {
+	unset( $actions['edit'] );
+	return $actions;
+}
+
+/**
  * Custom Rules for Saving a Record
  *
  * Creates and updates child tracks and save additional record meta. 

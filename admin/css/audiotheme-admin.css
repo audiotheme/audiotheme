@@ -1,3 +1,6 @@
+body.edit-audiotheme_record select[name="m"],
+body.edit-audiotheme_record #post-query-submit { display: none;}
+
 body.audiotheme_track h2 a,
 body.edit-audiotheme_track h2 a,
 body.edit-audiotheme_track select[name="m"] { display: none;}

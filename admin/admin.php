@@ -22,8 +22,6 @@ function audiotheme_admin_setup() {
 	add_action( 'save_post', 'audiotheme_video_save' );
 	add_action( 'wp_ajax_audiotheme_get_video_data', 'audiotheme_get_video_data' );
 	
-	add_action( 'admin_menu', 'audiotheme_admin_menu' );
-	
 	add_action( 'admin_enqueue_scripts', 'audiotheme_enqueue_admin_scripts' );
 	add_action( 'add_meta_boxes', 'audiotheme_meta_boxes' );
 	add_action( 'admin_body_class', 'audiotheme_admin_body_class' );
@@ -43,10 +41,6 @@ function audiotheme_admin_setup() {
 			'show_in_menu' => 'themes.php'
 		) );
 	}
-}
-
-function audiotheme_admin_menu() {
-	
 }
 
 /**
@@ -70,6 +64,11 @@ function audiotheme_meta_boxes() {
 	add_meta_box( 'audiotheme-video-meta', __( 'Video Library: Add Video URL', 'audiotheme-i18n' ), 'audiotheme_video_meta_cb', 'audiotheme_video', 'side', 'high' );
 }
 
+/**
+ * Enqueue Admin Scripts
+ *
+ * @since 1.0
+ */
 function audiotheme_admin_body_class( $class ) {
 	return ' ' . sanitize_html_class( get_current_screen()->id );
 }

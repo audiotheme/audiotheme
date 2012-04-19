@@ -24,6 +24,8 @@ function audiotheme_load_discography_admin() {
 	add_filter( 'manage_edit-audiotheme_record_columns', 'audiotheme_record_columns' );
 	add_action( 'manage_edit-audiotheme_record_sortable_columns', 'audiotheme_record_sortable_columns' );
 	add_action( 'manage_pages_custom_column', 'audiotheme_record_display_column', 10, 2 );
+	add_filter( 'bulk_actions-edit-audiotheme_record', 'audiotheme_record_list_table_bulk_actions' );
+	add_action( 'page_row_actions', 'audiotheme_record_list_table_actions', 10, 2 );
 	
 	/* Tracks */
 	require( AUDIOTHEME_DIR . 'discography/admin/track.php' );
@@ -36,6 +38,8 @@ function audiotheme_load_discography_admin() {
 	add_filter( 'manage_edit-audiotheme_track_columns', 'audiotheme_track_columns' );
 	add_action( 'manage_edit-audiotheme_track_sortable_columns', 'audiotheme_track_sortable_columns' );
 	add_action( 'manage_posts_custom_column', 'audiotheme_track_display_column', 10, 2 );
+	add_filter( 'bulk_actions-edit-audiotheme_track', 'audiotheme_track_list_table_bulk_actions' );
+	add_action( 'page_row_actions', 'audiotheme_track_list_table_actions', 10, 2 );
 }
 
 /**

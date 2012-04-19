@@ -91,33 +91,6 @@ function audiotheme_tracks_admin_query( $wp_query ) {
 }
 
 /**
- * Custom Track Filter Dropdowns
- *
- * @since 1.0
- */
-function audiotheme_tracks_filters() {
-	global $wpdb;
-	
-	$records = $wpdb->get_results( "SELECT ID, post_title FROM $wpdb->posts WHERE post_type='audiotheme_record' AND post_status!='auto-draft' ORDER BY post_title ASC" );
-	?>
-	<select name="post_parent">
-		<option value="0"><?php _e( 'View all records', 'audiotheme-i18n' ); ?></option>
-		<?php
-		if ( $records ) {
-			foreach ( $records as $record ) {
-				echo printf( '<option value="%1$d"%2$s>%3$s</option>',
-					$record->ID,
-					selected( $_GET['post_parent'], $record->ID, false ),
-					esc_html( $record->post_title )
-				);
-			}
-		}
-		?>
-	</select>
-	<?php
-}
-
-/**
  * Register Track Columns
  *
  * @since 1.0
@@ -168,7 +141,61 @@ function audiotheme_track_sortable_columns( $columns ) {
 }
 
 /**
- * Custom Rules for Saving a Tracking
+ * Remove Quick Edit from Track List Table
+ *
+ * @since 1.0
+ */
+function audiotheme_track_list_table_actions( $actions, $post ) {
+	if ( 'audiotheme_track' == get_post_type( $post ) ) {
+		unset( $actions['inline hide-if-no-js'] );
+	}
+	
+	return $actions;
+}
+
+/**
+ * Remove Bulk Edit from Track List Table
+ *
+ * @since 1.0
+ */
+function audiotheme_track_list_table_bulk_actions( $actions ) {
+	unset( $actions['edit'] );
+	return $actions;
+}
+
+/**
+ * Custom Track Filter Dropdowns
+ *
+ * @since 1.0
+ */
+function audiotheme_tracks_filters() {
+	global $wpdb;
+	
+	$screen = get_current_screen();
+	
+	if ( 'edit-audiotheme_track' == $screen->id ) {
+		$records = $wpdb->get_results( "SELECT ID, post_title FROM $wpdb->posts WHERE post_type='audiotheme_record' AND post_status!='auto-draft' ORDER BY post_title ASC" );
+		?>
+		<select name="post_parent">
+			<option value="0"><?php _e( 'View all records', 'audiotheme-i18n' ); ?></option>
+			<?php
+			if ( $records ) {
+				foreach ( $records as $record ) {
+					echo printf( '<option value="%1$d"%2$s>%3$s</option>',
+						$record->ID,
+						selected( $_GET['post_parent'], $record->ID, false ),
+						esc_html( $record->post_title )
+					);
+				}
+			}
+			?>
+		</select>
+		<?php
+	}
+}
+
+/**
+ * Custom Rules for Saving a Track
  *
  * Updates track meta data.
  *
@@ -241,28 +268,14 @@ function audiotheme_track_details_meta_box( $post ) {
 		$tb_args = array( 'post_id' => $post->ID, 'type' => 'audio', 'TB_iframe' => true, 'width' => 640, 'height' => 750 );
 		$tb_url = add_query_arg( $tb_args, admin_url( 'media-upload.php' ) );
 		?>
-		<a href="<?php echo esc_url( $tb_url ); ?>" title="<?php _e( 'Choose a MP3', 'audiotheme-i18n' ); ?>" id="audiotheme-upload-mp3-button" class="button thickbox audiotheme-meta-button"><?php _e( 'Upload MP3', 'audiotheme-18n' ); ?></a>
+		<a href="<?php echo esc_url( $tb_url ); ?>" title="<?php _e( 'Choose a MP3', 'audiotheme-i18n' ); ?>" id="audiotheme-upload-mp3-button" class="button thickbox audiotheme-meta-button" data-insert-field="track-file-url" data-insert-button-text="Use MP3"><?php _e( 'Upload MP3', 'audiotheme-18n' ); ?></a>
 	</p>
 	<p class="audiotheme-meta-field">
 		<label for="track-purchase-url">Purchase URL:</label><br>
 		<input type="url" name="purchase_url" id="track-purchase-url" value="<?php echo esc_url( get_post_meta( $post->ID, '_purchase_url', true ) ) ; ?>" class="widefat">
 	</p>
 	<script>
-	var tbField = null,
-		original_send_to_editor = window.send_to_editor;
 	
-	jQuery('#audiotheme-upload-mp3-button').click(function(e) {
-		e.preventDefault();
-		
-		tbField = 'track-file-url';
-		window.send_to_editor = function(html) {
-			var src = (0 === html.indexOf('<a')) ? jQuery(html).attr('href') : jQuery(html).find('a').attr('href');
-			jQuery('input#' + tbField).val(src).closest('td').find('img').attr('src', src);
-			tb_remove();
-			tbField = null;
-			window.send_to_editor = original_send_to_editor;
-		}
-	});
 	</script>
 	<?php
 }

@@ -124,16 +124,7 @@ class AudioTheme_Options {
 		.js .tab-panel-active { display: block;}
 		</style>
 		<script>
-		var tbField = null;
-		
 		jQuery(function($) {
-			window.send_to_editor = function(html) {
-				var src = (0 === html.indexOf('<img')) ? $(html).attr('src') : $(html).find('img').attr('src');
-				$('input#' + tbField).val(src).closest('td').find('img').attr('src', src);
-				tb_remove();
-				tbField = null;
-			}
-			
 			var updateTabs = function() {
 				var hash = window.location.hash,
 					refererField = $('input[name="_wp_http_referer"]');
@@ -348,9 +339,9 @@ class AudioTheme_Options {
 		$class = ( isset( $class ) ) ? $class : 'regular-text';
 		echo '<input type="text" name="' . esc_attr( $name_attr ) . '" id="' . esc_attr( $field_id ) . '" value="' . esc_url( $value ) . '" class="' . esc_attr( $class ) . '">';
 		$tb_args = array( 'post_id' => 0, 'type' => 'image', 'TB_iframe' => true, 'width' => 640, 'height' => 750 );
-		echo '<a href="' . add_query_arg( $tb_args, admin_url( 'media-upload.php' ) ) . '" title="Choose an Image" class="button thickbox" onclick="tbField=\'' . esc_attr( $field_id ) . '\'; return false;">Choose Image</a>';
+		echo '<a href="' . add_query_arg( $tb_args, admin_url( 'media-upload.php' ) ) . '" title="Choose an Image" class="button thickbox" data-insert-field="' . esc_attr( $field_id ) . '" data-insert-button-text="Use This Image">Choose Image</a>';
 		echo ( isset( $description ) ) ? '<span class="description">' . $description . '</span>' : '';
-		echo '<br><img src="' . esc_url( $value ) . '">';
+		#echo '<br><img src="' . esc_url( $value ) . '">';
 	}
 }
 ?>

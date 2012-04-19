@@ -36,6 +36,7 @@
 						);
 					}
 					?>
+					<a class="meta-repeater-remove-item show-on-add"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/delete.png" width="16" height="16" alt="Delete Item" title="Delete Item" class="icon-delete" /></a>
 				</td>
 			</tr>
 		<?php endforeach; ?>
@@ -51,6 +52,7 @@
 .meta-repeater .column-action a { cursor: pointer;}
 .meta-repeater .column-action .meta-repeater-remove-item { opacity: .2;}
 .meta-repeater .column-action .meta-repeater-remove-item:hover { opacity: 1;}
+.meta-repeater .show-on-add { display: none;}
 
 .meta-repeater .ui-sortable-helper { }
 .meta-repeater .ui-sortable-helper td { border-top-width: 0; border-bottom-width: 0;}
