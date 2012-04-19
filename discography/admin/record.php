@@ -76,7 +76,11 @@ function audiotheme_record_display_column( $column_name, $post_id ) {
 			echo get_post_meta( $post_id, '_release_year', true );
 			break;
 		case 'track_count' :
-			echo get_post_meta( $post_id, '_track_count', true );
+			$args = array(
+				'post_type' => 'audiotheme_track',
+				'post_parent' => $post_id
+			);
+			printf( '<a href="%s">%s</a>', add_query_arg( $args, admin_url( 'edit.php' ) ), get_post_meta( $post_id, '_track_count', true ) );
 			break;
 	}
 }

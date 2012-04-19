@@ -109,8 +109,10 @@ jQuery(function($) {
 				});
 				
 				repeater.on('click', '.meta-repeater-remove-item', function(e) {
+					var repeater = $(this).closest('.meta-repeater');
 					e.preventDefault();
-					$(this).closest('.meta-repeater-item').remove().closest('.meta-repeater').metaRepeater('updateIndex');
+					$(this).closest('.meta-repeater-item').remove();
+					repeater.metaRepeater('updateIndex');
 				});
 				
 				repeater.on('blur', 'input', function() {

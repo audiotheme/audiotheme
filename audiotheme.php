@@ -107,7 +107,7 @@ function audiotheme_init() {
 	
 	register_post_type( 'audiotheme_video', array(
 		'capability_type'        => 'post',
-		'has_archive'            => false,
+		'has_archive'            => true,
 		'hierarchical'           => false,
 		'labels'                 => array(
 			'name'               => _x( 'Videos', 'post type general name', 'audiotheme-i18n' ),
