@@ -6,6 +6,8 @@ function audiotheme_load_gigs_admin() {
 	add_filter( 'set-screen-option', 'audiotheme_gigs_screen_options', 10, 3 );
 	add_action( 'save_post', 'audiotheme_gig_save_hook' );
 	add_filter( 'get_edit_post_link', 'get_audiotheme_venue_edit_link', 10, 2 );
+	
+	add_action( 'before_delete_post', 'audiotheme_gig_before_delete_hook' );
 }
 
 function audiotheme_gigs_admin_menu() {
@@ -156,9 +158,27 @@ function audiotheme_edit_gig_fields() {
 
 
 /**
+ * Update Venue Gig Count on Gig Delete
+ *
+ * Determines if a venue's gig_count meta field needs to be updated
+ * when a gig is deleted.
+ *
+ * @since 1.0
+ */
+function audiotheme_gig_before_delete_hook( $post_id ) {
+	if ( 'audiotheme_gig' == get_post_type( $post_id ) ) {
+		$gig = get_audiotheme_gig( $post_id );
+		if ( isset( $gig->venue->ID ) ) {
+			$count = get_audiotheme_venue_gig_count( $gig->venue->ID );
+			update_audiotheme_venue_gig_count( $gig->venue->ID, --$count );
+		}
+	}
+}
+
+/**
  * Process and save gig info when an audiotheme_gig CPT is saved
  *
- * 
+ * @since 1.0
  */
 function audiotheme_gig_save_hook( $gig_id ) {
 	global $wpdb;

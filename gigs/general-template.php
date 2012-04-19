@@ -17,10 +17,17 @@ function get_audiotheme_gig( $gig_id ) {
 		$post->gig_time = mysql2date( get_option( 'time_format' ), $post->gig_datetime );
 	}
 	
+	$venues = get_posts( array(
+		'post_type' => 'audiotheme_venue',
+		'connected_type' => 'audiotheme_venue_to_gig',
+		'connected_items' => $post->ID,
+		'nopaging' => true,
+		'suppress_filters' => false
+	) );
+	
 	$post->venue = NULL;
-	$venue_id = get_post_meta( $gig_id, 'venue_id', true );
-	if ( $venue_id ) {
-		$post->venue = get_audiotheme_venue( $venue_id );
+	if ( ! empty( $venues ) ) {
+		$post->venue = get_audiotheme_venue( $venues[0]->ID );
 	}
 	
 	return $post;
@@ -49,21 +56,18 @@ function get_audiotheme_gig_admin_url( $args = '' ) {
 /**
  * Update a gig's venue and the gig count for any modified venues
  *
- * The venue name is stored for sorting purposes on the All Gigs admin screen. The venue_id
- * should always be used for retrieving any venue information, including the venue name.
- *
  * @since 1.0
  */
 function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
-	$old_venue_id = get_post_meta( $gig_id, 'venue_id', true );
+	$gig = get_audiotheme_gig( $gig_id ); // retrieve current venue info
 	$venue_name = trim( stripslashes( $venue_name ) );
 	
 	if ( empty( $venue_name ) ) {
-		update_post_meta( $gig_id, 'venue', '' ); // meta entry has to be present for sorting functionality to work
-		delete_post_meta( $gig_id, 'venue_id' );
-	} else {
-		$new_venue = get_audiotheme_venue_by( 'name', $venue_name );
+		p2p_delete_connections( 'audiotheme_venue_to_gig', array( 'to' => $gig_id ) );
+	} elseif ( ! isset( $gig->venue->name ) || $venue_name != $gig->venue->name ) {
+		p2p_delete_connections( 'audiotheme_venue_to_gig', array( 'to' => $gig_id ) );
 		
+		$new_venue = get_audiotheme_venue_by( 'name', $venue_name );
 		if ( ! $new_venue ) {
 			$new_venue = array(
 				'name' => $venue_name,
@@ -72,19 +76,23 @@ function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
 			
 			$venue_id = save_audiotheme_venue( $new_venue );
 			if ( $venue_id ) {
-				update_post_meta( $gig_id, 'venue', $venue_name );
-				update_post_meta( $gig_id, 'venue_id', $venue_id );
+				p2p_create_connection( 'audiotheme_venue_to_gig', array(
+					'from' => $venue_id,
+					'to' => $gig_id
+				) );
 			}
 		} else {
-			update_post_meta( $gig_id, 'venue', $new_venue->name );
-			update_post_meta( $gig_id, 'venue_id', $new_venue->ID );
+			p2p_create_connection( 'audiotheme_venue_to_gig', array(
+				'from' => $new_venue->ID,
+				'to' => $gig_id
+			) );
 			
 			update_audiotheme_venue_gig_count( $new_venue->ID );
 		}
 	}
 	
-	if ( $old_venue ) {
-		update_audiotheme_venue_gig_count( $old_venue_id );
+	if ( isset( $gig->venue->ID ) ) {
+		update_audiotheme_venue_gig_count( $gig->venue->ID );
 	}
 }
 
@@ -163,7 +171,7 @@ function get_default_audiotheme_venue_properties() {
 }
 
 /**
- * Retrieve a single gig by it's ID
+ * Get the base admin panel URL for adding a venue
  *
  * @since 1.0
  */
@@ -201,7 +209,7 @@ function get_audiotheme_venues_admin_url( $args = '' ) {
 }
 
 /**
- * Get the admin panel URL for adding/editing a venue
+ * Get the admin panel URL for editing a venue
  *
  * @since 1.0
  */
@@ -223,7 +231,7 @@ function get_audiotheme_venue_edit_link( $admin_url, $post_id ) {
  *
  * @since 1.0
  */
-function get_unique_audiotheme_venue_name( $name, $venue_id=0 ) {
+function get_unique_audiotheme_venue_name( $name, $venue_id = 0 ) {
 	global $wpdb;
 	
 	$suffix = 2;
@@ -326,18 +334,20 @@ function save_audiotheme_venue( $data ) {
 }
 
 /**
- * Delete a venue
+ * Update the number of gigs at a particular venue
  *
  * @since 1.0
  */
-function delete_audiotheme_venue( $venue_id ) {
+function get_audiotheme_venue_gig_count( $venue_id ) {
 	global $wpdb;
+
+	$sql = $wpdb->prepare( "SELECT count( * )
+		FROM $wpdb->p2p
+		WHERE p2p_type='audiotheme_venue_to_gig' AND p2p_from=%d",
+		$venue_id );
+	$count = $wpdb->get_var( $sql );
 	
-	// delete meta relationships
-	$venue = get_audiotheme_venue( $venue_id );
-	$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->postmeta WHERE ( meta_key='venue' AND meta_value=%s ) OR ( meta_key='venue_id' AND meta_value=%d )", $venue->name, $venue->ID ) );
-	
-	wp_delete_post( $venue_id, true );
+	return ( empty( $count ) ) ? 0 : $count;
 }
 
 /**
@@ -350,9 +360,8 @@ function update_audiotheme_venue_gig_count( $venue_id, $count = 0 ) {
 	
 	if ( ! $count ) {
 		$sql = $wpdb->prepare( "SELECT count( * )
-			FROM $wpdb->posts p
-			INNER JOIN $wpdb->postmeta pm ON p.ID=pm.post_id
-			WHERE p.post_type='audiotheme_gig' AND pm.meta_key='venue_id' AND pm.meta_value=%d",
+			FROM $wpdb->p2p
+			WHERE p2p_type='audiotheme_venue_to_gig' AND p2p_from=%d",
 			$venue_id );
 		$count = $wpdb->get_var( $sql );
 	}

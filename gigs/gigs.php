@@ -6,7 +6,6 @@
  */
 add_action( 'init', 'audiotheme_gigs_init' );
 function audiotheme_gigs_init() {
-	
 	register_post_type( 'audiotheme_gig', array(
 		'has_archive'            => 'tour',
 		'hierarchical'           => false,
@@ -56,6 +55,12 @@ function audiotheme_gigs_init() {
 		'supports'               => array( '' )
 	) );
 	
+	p2p_register_connection_type( array(
+        'name' => 'audiotheme_venue_to_gig',
+        'from' => 'audiotheme_venue',
+        'to' => 'audiotheme_gig',
+		'cardinality' => 'one-to-many'
+    ) );
 }
 
 

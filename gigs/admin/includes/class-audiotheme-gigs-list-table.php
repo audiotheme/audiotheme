@@ -78,10 +78,8 @@ class AudioTheme_Gigs_List_Table extends WP_List_Table {
 		
 		
 		if ( ! empty( $_REQUEST['venue'] ) ) {
-			$args['meta_query'][] = array(
-				'key' => 'venue',
-				'value' => stripslashes( urldecode( $_REQUEST['venue'] ) )
-			);
+			$args['connected_type'] = 'audiotheme_venue_to_gig';
+			$args['connected_items'] = absint( $_REQUEST['venue'] );
 		}
 		
 		
@@ -89,6 +87,9 @@ class AudioTheme_Gigs_List_Table extends WP_List_Table {
 			switch( $_REQUEST['orderby'] ) {
 				case 'title':
 					$args['orderby'] = 'title';
+					break;
+				case 'venue':
+					// handled after query
 					break;
 				default:
 					$args['meta_key'] = $_REQUEST['orderby'];
@@ -109,9 +110,16 @@ class AudioTheme_Gigs_List_Table extends WP_List_Table {
 		
 		$items = array();
 		$wp_query = new WP_Query( $args );
+		p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $wp_query );
+		
 		if ( isset( $wp_query->posts ) && count( $wp_query->posts ) ) {
 			foreach ( $wp_query->posts as $post ) {
 				$items[ $post->ID ] = get_audiotheme_gig( $post->ID );
+			}
+			
+			// Sort by venue
+			if ( ! empty( $_GET['orderby'] ) && 'venue' == $_GET['orderby'] ) {
+				$items = sort_objects( $items, array( 'venue', 'name' ), $args['order'], true, 'gig_datetime' );
 			}
 		}
 		$this->items = $items;
@@ -204,14 +212,27 @@ class AudioTheme_Gigs_List_Table extends WP_List_Table {
 	
 				$this->months_dropdown( 'audiotheme_gig' );
 				
-				$venues = $wpdb->get_col( $wpdb->prepare( "SELECT meta_value FROM $wpdb->postmeta WHERE meta_key='venue' AND meta_value!='' GROUP BY meta_value ORDER BY meta_value ASC" ) );
+				
+				$sql = $wpdb->prepare( "SELECT p.ID, p.post_title
+					FROM $wpdb->posts p	
+					INNER JOIN $wpdb->p2p p2p ON p.ID=p2p.p2p_from AND p2p.p2p_type='audiotheme_venue_to_gig'
+					WHERE p.post_type='audiotheme_venue'
+					GROUP BY p.ID
+					ORDER BY p.post_title ASC" );
+				$venues = $wpdb->get_results( $sql );
 				?>
 				<select name="venue">
 					<option value="">Show all venues</option>
 					<?php
-					$selected = ( ! empty( $_REQUEST['venue'] ) ) ? stripslashes( urldecode( $_REQUEST['venue'] ) ) : '';
-					foreach ( $venues as $venue ) {
-						echo '<option' . selected( $selected, $venue, false ) . '>' . esc_html( $venue ) . '</option>';
+					if ( $venues ) {
+						$selected = ( ! empty( $_REQUEST['venue'] ) ) ? absint( $_REQUEST['venue'] ) : '';
+						foreach ( $venues as $venue ) {
+							printf( '<option value="%s"%s>%s</option>',
+								$venue->ID,
+								selected( $selected, $venue->ID, false ),
+								esc_html( $venue->post_title )
+							);
+						}
 					}
 					?>
 				</select>
@@ -347,14 +368,14 @@ class AudioTheme_Gigs_List_Table extends WP_List_Table {
 	
 	function column_title( $item ) {
 		$statuses = get_post_statuses();
-		$status = ( 'publish' != $item->post_status && array_key_exists( $item->post_status, $statuses ) ) ? ' - <strong>' . $statuses[ $item->post_status ] . '</strong>' : '';
+		$status = ( 'publish' != $item->post_status && array_key_exists( $item->post_status, $statuses ) ) ? ' - <strong>' . esc_html( $statuses[ $item->post_status ] ) . '</strong>' : '';
 		
 		$date = ( empty( $item->gig_datetime ) ) ? __( '(no date)', 'audiotheme-i18n' ) : mysql2date( get_option( 'date_format' ), $item->gig_datetime );
 		$out = sprintf( '<strong><a href="%1$s" class="row-title">%2$s</a></strong> - %3$s%4$s<br>', 
 			esc_url( get_edit_post_link( $item->ID ) ),
 			esc_html( $date ),
 			esc_html( $item->gig_time ),
-			esc_html( $status ) 
+			$status 
 		);
 		
 		#$actions['edit'] = sprintf( '<a href="%s">Edit</a>', get_edit_post_link( $item->ID ) );

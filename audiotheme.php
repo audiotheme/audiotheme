@@ -8,6 +8,8 @@ Author: AudioTheme
 Author URI: http://AudioTheme.com
 License: GPLv2
 
+
+
 Copyright 2012 AudioTheme
 
 This program is free software; you can redistribute it and/or modify 
@@ -45,6 +47,7 @@ define( 'AUDIOTHEME_URI', get_template_directory_uri() . '/audiotheme/' );
 require( AUDIOTHEME_DIR . 'includes/general-template.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
 require( AUDIOTHEME_DIR . 'includes/formatting.php' );
+require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/media.php' );
 
 
