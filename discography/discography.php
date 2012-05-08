@@ -155,7 +155,7 @@ function audiotheme_discography_query( $query ) {
 function audiotheme_discography_permalinks( $post_link, $post, $leavename, $sample ) {
 	global $wpdb;
 	
-	$permalink = get_option('permalink_structure');
+	$permalink = get_option( 'permalink_structure' );
 	
 	if ( ! empty( $permalink ) && 'audiotheme_record' == get_post_type( $post ) ) {
 		$base = get_audiotheme_discography_rewrite_base();

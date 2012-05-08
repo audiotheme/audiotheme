@@ -87,6 +87,18 @@
 									<td><input type="text" name="audiotheme_venue[country]" id="venue-country" class="regular-text" value="<?php echo esc_attr( $country ); ?>"></td>
 								</tr>
 								<tr>
+									<th><label for="venue-timezone-string"><?php _e( 'Time zone', 'audiotheme-i18n' ) ?></label></th>
+									<td>
+										<select id="venue-timezone-string" name="audiotheme_venue[timezone_string]">
+											<?php
+											$tzstring = ( empty( $timezone_string ) ) ? get_option( 'timezone_string' ) : $timezone_string;
+											echo wp_timezone_choice( $tzstring );
+											?>
+										</select><br>
+										<span class="description">This is muy importante!</span>
+									</td>
+								</tr>
+								<tr>
 									<th><label for="venue-website"><?php _e( 'Website', 'audiotheme-i18n' ) ?></label></th>
 									<td><input type="text" name="audiotheme_venue[website]" id="venue-website" class="regular-text" value="<?php echo esc_url( $website ); ?>"></td>
 								</tr>
@@ -154,6 +166,8 @@ jQuery(function($) {
 			
 			if ('' == $country.val())
 				$country.val(ui.item.countryName);
+			
+			$('#venue-timezone-string option[value="' + ui.item.timezone + '"]').attr('selected','selected');
 		}
 	});
 });

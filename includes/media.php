@@ -167,7 +167,7 @@ function audiotheme_oembed_html( $html, $url, $attr, $post_id ) {
 	foreach( $players as $player ) {
 		if( false !== strpos( $url, $player ) ) {
 			if ( false !== strpos( $url, 'youtube' ) && false !== strpos( $html, '<iframe' ) && false === strpos( $html, 'wmode' ) ) {
-				$html = preg_replace( '|https?://[^"]+|im', add_query_arg( 'wmode', 'opaque', '$0' ), $html );
+				$html = preg_replace_callback( '|https?://[^"]+|im', 'audiotheme_oembed_youtube_wmode_parameter', $html );
 			}
 		
 			$html = '<div class="audiotheme-video">' . $html . '</div>';
@@ -180,4 +180,8 @@ function audiotheme_oembed_html( $html, $url, $attr, $post_id ) {
 	}
 	
 	return $html;
+}
+
+function audiotheme_oembed_youtube_wmode_parameter( $matches ) {
+	return add_query_arg( 'wmode', 'transparent', $matches[0] );
 }

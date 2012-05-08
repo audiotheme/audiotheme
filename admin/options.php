@@ -219,10 +219,10 @@ class AudioTheme_Options {
 			$tab_id = key( (array) $panel->tabs );
 		}
 		
-		extract( wp_parse_args( array(
+		extract( wp_parse_args( $args, array(
 			'callback' => '__return_false',
 			'settings_section' => ( $panel->panel_id == $tab_id ) ?  $panel->panel_id : $panel->panel_id . '-' . $tab_id
-		), $args ) );
+		) ) );
 		
 		$title = ( 0 === strpos( $section_id, '_default' ) ) ? '' : $title;
 		

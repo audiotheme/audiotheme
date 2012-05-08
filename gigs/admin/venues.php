@@ -196,4 +196,14 @@ function ajax_get_audiotheme_venue_matches() {
 	echo json_encode( $venues );
 	exit;
 }
+
+add_action( 'wp_ajax_ajax_is_new_audiotheme_venue', 'ajax_is_new_audiotheme_venue' );
+function ajax_is_new_audiotheme_venue() {
+	global $wpdb;
+	
+	$venue = $wpdb->get_col( $wpdb->prepare( "SELECT post_title FROM $wpdb->posts WHERE post_type='audiotheme_venue' AND post_title=%s ORDER BY post_title ASC LIMIT 1", stripslashes( $_GET['name'] ) ) );
+	
+	echo json_encode( $venue );
+	exit;
+}
 ?>

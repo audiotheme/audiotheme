@@ -374,7 +374,7 @@ class AudioTheme_Gigs_List_Table extends WP_List_Table {
 		$out = sprintf( '<strong><a href="%1$s" class="row-title">%2$s</a></strong> - %3$s%4$s<br>', 
 			esc_url( get_edit_post_link( $item->ID ) ),
 			esc_html( $date ),
-			esc_html( $item->gig_time ),
+			esc_html( empty( $item->gig_time ) ? 'TBD' : $item->gig_time ),
 			$status 
 		);
 		

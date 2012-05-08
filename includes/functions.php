@@ -153,7 +153,7 @@ endif;
  */
 if ( ! function_exists( 'vd' ) ) :
 function vd( $var ) {
-	echo '<pre>'; print_r( $var ); echo '</pre>';
+	echo '<pre style="font-size: 12px; text-align: left">'; print_r( $var ); echo '</pre>';
 }
 endif;
 ?>
