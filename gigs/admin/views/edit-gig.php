@@ -6,13 +6,17 @@
 		</tr>
 		<tr>
 			<th><label for="gig-time"><?php _e( 'Time', 'audiotheme-i18n' ) ?></label></th>
-			<td><input type="text" name="gig_time" id="gig-time" placeholder="HH:MM" value="<?php echo esc_attr( $gig_time ); ?>"></td>
+			<td>
+				<input type="text" name="gig_time" id="gig-time" placeholder="HH:MM" value="<?php echo esc_attr( $gig_time ); ?>" style="vertical-align: middle">
+				<label for="gig-time" id="gig-time-select"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/clock.png" width="16" height="16" style="vertical-align: middle"></label>
+			</td>
 		</tr>
 		<tr>
 			<th><label for="gig-venue"><?php _e( 'Venue', 'audiotheme-i18n' ) ?></label></th>
 			<?php // TODO: consider refactoring to use a dropdown for data integrity? ?>
 			<td>
 				<input type="text" name="gig_venue" id="gig-venue" value="<?php echo esc_html( $gig_venue ); ?>">
+				<label for="gig-venue" id="gig-venue-select">Select</label>
 				<select name="audiotheme_venue[timezone_string]" id="gig-venue-timezone">
 					<?php
 					$tzstring = ( empty( $timezone_string ) ) ? get_option( 'timezone_string' ) : $timezone_string;
@@ -21,14 +25,6 @@
 				</select>
 			</td>
 		</tr>
-		<!--<tr>
-			<th><label for="gig_price"><?php _e( 'Price', 'audiotheme-i18n' ) ?></label></th>
-			<td><input type="text" name="gig_price" value=""></td>
-		</tr>
-		<tr>
-			<th><label for="gig-tickets-url"><?php _e( 'Tickets URL', 'audiotheme-i18n' ) ?></label></th>
-			<td><input type="text" name="gig_tickets_url" value="" class="large-text"></td>
-		</tr>-->
 		<tr>
 			<th><?php _e( 'Note', 'audiotheme-i18n' ) ?></th>
 			<td>
@@ -56,7 +52,11 @@ jQuery(function($) {
 		
 		$this.next('.ui-timepicker-list').width( $this.outerWidth() );
 	});
+	$('#gig-time-select').on('click', function(e) {
+		$('#gig-time').focus();
+	});
 	//$('#gig-time').timepicker({ show24Hours: false, step: 15 });
+	
 	$('#gig-venue').autocomplete({
 		change: function() {
 			var $this = $(this);
@@ -95,7 +95,12 @@ jQuery(function($) {
 				success: function( data ) { response( data ); }
 			});
 		},
-		minLength: 2
+		minLength: 0
+	});
+	
+	$('#gig-venue-select').on('click', function(e) {
+		e.preventDefault();
+		$('#gig-venue').focus().autocomplete('search','');
 	});
 });
 </script>
@@ -104,11 +109,11 @@ jQuery(function($) {
 
 #gig-date { }
 #gig-ui { margin-bottom: 15px;}
-#gig-ui input { padding: 3px 8px; font-size: 1.5em;}
+#gig-ui input { padding: 3px 8px; font-size: 1.5em; vertical-align: middle;}
 #gig-ui input::-webkit-input-placeholder { padding: 3px 0;}
 #gig-ui input:-moz-placeholder { }
 #gig-ui select { padding: 5px 5px 5px 8px; font-size: 1.2em;}
-#gig-ui .ui-datepicker-trigger { cursor: pointer; margin: 0 0 0 5px; vertical-align: text-bottom;}
+#gig-ui .ui-datepicker-trigger { cursor: pointer; margin: 0 0 0 5px; vertical-align: middle;}
 
 #gig-venue-timezone { display: none;}
 

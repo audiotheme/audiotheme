@@ -128,6 +128,8 @@ function audiotheme_edit_gig_meta_boxes( $post ) {
 		'show_visibility' => false
 	) );
 	
+	add_meta_box( 'audiotheme-gig-tickets', __( 'Tickets', 'audiotheme-i18n' ), 'audiotheme_gig_tickets_meta_box', 'audiotheme_gig', 'side', 'default' );
+	
 	add_action( 'edit_form_advanced', 'audiotheme_edit_gig_fields' );
 }
 
@@ -150,8 +152,6 @@ function audiotheme_edit_gig_fields() {
 			$gig_time = date( get_option( 'time_format' ), $timestamp );
 		} else {
 			// no values allowed other than valid times
-			// empty value defaults to TBA
-			// TODO: make TBA an option or i18n
 			$gig_time = '';
 		}
 	}
@@ -159,6 +159,24 @@ function audiotheme_edit_gig_fields() {
 	$gig_venue = ( isset( $gig->venue->name ) ) ? $gig->venue->name : '';
 	
 	require( AUDIOTHEME_DIR . 'gigs/admin/views/edit-gig.php' );
+}
+
+/**
+ * Gig Tickets Meta Box
+ *
+ * @since 1.0
+ */
+function audiotheme_gig_tickets_meta_box( $post ) {
+	?>
+	<p class="audiotheme-meta-field">
+		<label for="gig-tickets-price">Price:</label><br>
+		<input type="text" name="gig_tickets_price" id="gig-tickets-price" value="<?php echo esc_attr( get_post_meta( $post->ID, 'tickets_price', true ) ) ; ?>" class="large-text">
+	</p>
+	<p class="audiotheme-meta-field">
+		<label for="gig-tickets-url">Tickets URL:</label><br>
+		<input type="url" name="gig_tickets_url" id="gig-tickets-url" value="<?php echo esc_attr( get_post_meta( $post->ID, 'tickets_url', true ) ) ; ?>" class="large-text">
+	</p>
+	<?php
 }
 
 
@@ -241,6 +259,8 @@ function audiotheme_gig_save_hook( $gig_id ) {
 				zeroise( $t['second'], 2 ) );
 		}
 		update_post_meta( $gig_id, 'gig_time', $time );
+		update_post_meta( $gig_id, 'tickets_price', $_POST['gig_tickets_price'] );
+		update_post_meta( $gig_id, 'tickets_url', $_POST['gig_tickets_url'] );
 	}
 }
 

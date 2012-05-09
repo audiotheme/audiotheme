@@ -16,6 +16,8 @@ function get_audiotheme_gig( $post = null ) {
 	
 	$post->gig_datetime = get_post_meta( $gig_id, 'gig_datetime', true );
 	$post->gig_time = '';
+	$post->tickets_price = get_post_meta( $gig_id, 'tickets_price', true );
+	$post->tickets_url = get_post_meta( $gig_id, 'tickets_url', true );
 	
 	// determine the gig time
 	$gig_time = get_post_meta( $post->ID, 'gig_time', true );

@@ -1,11 +1,12 @@
 .ui-widget { font-family: sans-serif; font-size: 12px;}
 
 
-.ui-autocomplete { padding: 4px 0;}
+.ui-autocomplete { overflow-y: auto; overflow-x: hidden; padding: 4px 0; max-height: 150px;}
 .ui-autocomplete .ui-menu-item { }
 .ui-autocomplete .ui-menu-item a { cursor: pointer; line-height: 18px; background-image: none; border-radius: 0;}
 .ui-autocomplete .ui-menu-item a.ui-state-hover,
 .ui-autocomplete .ui-menu-item a.ui-state-active { margin: 0; background: #eaf2fa; border-width: 0;}
+.ui-autocomplete.ui-widget-content { background: #fff;}
 .ui-autocomplete-loading { background: url('../../../../../wp-admin/images/wpspin_light.gif') right center no-repeat;}
 
 
