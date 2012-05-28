@@ -64,8 +64,20 @@ function audiotheme_video_columns( $columns ) {
  */
 function audiotheme_display_custom_column( $column_name, $post_id ) {
 
-	switch ( $column_name ) {
+	global $post;
 	
+	/* Get the post edit link for the post. */
+	$edit_link = get_edit_post_link( $post->ID );
+	
+	switch ( $column_name ) {
+		case 'image' :
+			printf( '<a href="%1$s" title="%2$s">%3$s</a>', 
+				esc_url( $edit_link ),
+				esc_attr( $post->post_title ),
+				get_the_post_thumbnail( $post->ID, array( 60, 60 ), array( 'title' => trim( strip_tags(  $post->post_title ) ) ) )
+			);
+			break;
+			
 		case 'video_type' :
 			$taxonomy = 'audiotheme_video_type';
 			$post_type = get_post_type( $post_id );
