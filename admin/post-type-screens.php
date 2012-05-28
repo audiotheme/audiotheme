@@ -46,6 +46,7 @@ function audiotheme_post_updated_messages( $messages ) {
 function audiotheme_video_columns( $columns ) {
 	$columns = array(
 		'cb'         => '<input type="checkbox">',
+		'image'      => __( 'Image', 'audiotheme-i18n' ),
 		'title'      => _x( 'Video', 'column name', 'audiotheme-i18n' ),
 		'author'     => __( 'Author', 'audiotheme-i18n' ),
 		'video_type' => __( 'Type', 'audiotheme-i18n' ),
@@ -62,7 +63,9 @@ function audiotheme_video_columns( $columns ) {
  * @since 1.0
  */
 function audiotheme_display_custom_column( $column_name, $post_id ) {
+
 	switch ( $column_name ) {
+	
 		case 'video_type' :
 			$taxonomy = 'audiotheme_video_type';
 			$post_type = get_post_type( $post_id );
