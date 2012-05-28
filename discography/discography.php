@@ -5,7 +5,9 @@
  * @since 1.0
  */
 add_action( 'init', 'audiotheme_discography_init' );
+
 function audiotheme_discography_init() {
+
 	register_post_type( 'audiotheme_record', array(
 		'capability_type'        => 'post',
 		'has_archive'            => get_audiotheme_discography_rewrite_base(),
@@ -91,6 +93,7 @@ function audiotheme_discography_init() {
 	add_filter( 'generate_rewrite_rules', 'audiotheme_discography_generate_rewrite_rules' );
 	add_action( 'pre_get_posts', 'audiotheme_discography_query' );
 	add_filter( 'post_type_link', 'audiotheme_discography_permalinks', 10, 4 );
+	
 }
 
 /**
@@ -99,8 +102,10 @@ function audiotheme_discography_init() {
  * @since 1.0
  */
 function get_audiotheme_discography_rewrite_base() {
+
 	$base = get_option( 'audiotheme_discography_rewrite_base' );
 	return ( empty( $base ) ) ? 'record' : $base;
+	
 }
 
 /**
@@ -109,6 +114,7 @@ function get_audiotheme_discography_rewrite_base() {
  * @since 1.0
  */
 function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
+
 	$base = get_audiotheme_discography_rewrite_base();
 	
 	$new_rules[ $base .'/([^/]+)/track/([^/]+)?$'] = 'index.php?audiotheme_record=$matches[1]&audiotheme_track=$matches[2]';
@@ -116,6 +122,7 @@ function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
 	$new_rules[ $base . '/?$' ] = 'index.php?post_type=audiotheme_record';
 	
 	$wp_rewrite->rules = array_merge( $new_rules, $wp_rewrite->rules );
+	
 }
 
 /**
@@ -124,6 +131,7 @@ function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
  * @since 1.0
  */
 function audiotheme_discography_query( $query ) {
+
 	global $wpdb;
 	
 	// Sort records by release year
@@ -145,6 +153,7 @@ function audiotheme_discography_query( $query ) {
 			set_query_var( 'post_parent', absint( $_GET['post_parent'] ) );
 		}
 	}
+	
 }
 
 /**
@@ -153,6 +162,7 @@ function audiotheme_discography_query( $query ) {
  * @since 1.0
  */
 function audiotheme_discography_permalinks( $post_link, $post, $leavename, $sample ) {
+	
 	global $wpdb;
 	
 	$permalink = get_option( 'permalink_structure' );
@@ -175,6 +185,7 @@ function audiotheme_discography_permalinks( $post_link, $post, $leavename, $samp
 	}
 	
 	return $post_link;
+	
 }
 
 /**
@@ -185,6 +196,8 @@ function audiotheme_discography_permalinks( $post_link, $post, $leavename, $samp
 require( AUDIOTHEME_DIR . 'discography/general-template.php' );
 
 if ( is_admin() ) {
+
 	require( AUDIOTHEME_DIR . 'discography/admin/discography.php' );
+	
 }
 ?>

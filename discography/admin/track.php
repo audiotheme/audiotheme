@@ -234,6 +234,7 @@ function audiotheme_track_save_hook( $post_id ) {
  */
 function audiotheme_edit_track_meta_boxes( $post ) {
 	remove_meta_box( 'submitdiv', 'audiotheme_track', 'side' );
+	
 	add_meta_box( 
 		'submitdiv', 
 		__( 'Publish', 'audiotheme-i18n' ), 
@@ -293,11 +294,11 @@ function audiotheme_track_details_meta_box( $post ) {
 		
 		$tb_url = add_query_arg( $tb_args, admin_url( 'media-upload.php' ) );
 		?>
-		<a href="<?php echo esc_url( $tb_url ); ?>" title="<?php _e( 'Choose a MP3', 'audiotheme-i18n' ); ?>" id="audiotheme-upload-mp3-button" class="button thickbox audiotheme-meta-button" data-insert-field="track-file-url" data-insert-button-text="Use MP3"><?php _e( 'Upload MP3', 'audiotheme-18n' ); ?></a>
+		<a href="<?php echo esc_url( $tb_url ); ?>" title="<?php _e( 'Choose a MP3', 'audiotheme-i18n' ); ?>" id="audiotheme-upload-mp3-button" class="button thickbox audiotheme-meta-button" data-insert-field="track-file-url" data-insert-button-text="<?php _e( 'Use MP3', 'audiotheme-i18n' ) ?>"><?php _e( 'Upload MP3', 'audiotheme-i18n' ); ?></a>
 	</p>
 	
 	<p class="audiotheme-meta-field">
-		<label for="track-purchase-url"><?php _e( 'Purchase URL:', 'audiotheme-i18n' ) ?></label><br>
+		<label for="track-purchase-url"><?php _e( 'Purchase URL:', 'audiotheme-i18n' ) ?></label>
 		<input type="url" name="purchase_url" id="track-purchase-url" value="<?php echo esc_url( get_post_meta( $post->ID, '_purchase_url', true ) ) ; ?>" class="widefat">
 	</p>
 
