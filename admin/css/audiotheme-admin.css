@@ -18,6 +18,10 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 .audiotheme-meta-field input.widefat { margin-bottom: 3px; }
 .audiotheme-meta-field-upload input.widefat { margin-bottom: 8px; }
 
+/* All Items table */
+.wp-list-table .column-image { width: 80px; text-align: center; }
+.wp-list-table .column-image img { max-width: 80px; max-height: 60px; }
+
 /* Screen Icons */
 #icon-gigs { background: transparent url(../images/icons32.png) no-repeat -13px -6px;}
 #icon-venues { background: transparent url(../images/icons32.png) no-repeat -73px -6px;}
