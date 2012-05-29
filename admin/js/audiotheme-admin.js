@@ -84,6 +84,7 @@ jQuery(function($) {
 					axis: 'y',
 					forceHelperSize: true,
 					forcePlaceholderSize: true,
+					placeholder: 'meta-repeater-placeholder',
 					helper: function(e, ui) {
 						var $helper = ui.clone();
 						$helper.children().each(function(index) {
@@ -98,6 +99,11 @@ jQuery(function($) {
 					},
 					update: function(e, ui) {
 						repeater.metaRepeater('updateIndex');
+					},
+					change: function() {
+						repeater_id = $( '#' + repeater.attr('id') );
+						$('.meta-repeater-sort-warning', repeater_id).fadeIn('slow');
+						console.log(repeater.attr('id'));
 					}
 				});
 				

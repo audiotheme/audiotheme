@@ -303,7 +303,13 @@ function audiotheme_record_details_meta_box( $post ) {
 		</thead>
 		<tfoot>
 			<tr>
-				<td colspan="2"><a class="button meta-repeater-add-item">Add URL</a></td>
+				<td colspan="2">
+					<a class="button meta-repeater-add-item">Add URL</a>
+					<?php printf( '<span class="meta-repeater-sort-warning" style="display: none;">%1$s <br /><em>%2$s</em></span>',
+						esc_html__( 'The order has been changed.', 'audiotheme-i18n' ),
+						esc_html__( 'Save your changes.', 'audiotheme-i18n' )
+					); ?>
+				</td>
 			</tr>
 		</tfoot>
 		<tbody class="meta-repeater-items">
@@ -335,11 +341,13 @@ function audiotheme_record_details_meta_box( $post ) {
 	#audiotheme-record-types li input { vertical-align: middle;}
 	#audiotheme-record-types li label { margin: 0; font-weight: normal;}
 	#audiotheme-record-types ul { margin-top: 3px; margin-bottom: 0;}
-	
+		
 	#record-purchase-urls { width: 100%; border-spacing: 0;}
 	#record-purchase-urls td { padding: 0 0 5px 0;}
 	#record-purchase-urls th { text-align: left;}
-	#record-purchase-urls tfoot td { padding-top: 5px; text-align: right;}
+	#record-purchase-urls tfoot td { padding-top: 5px; }
+	#record-purchase-urls tfoot td a { float: right }
+	#record-purchase-urls tfoot td .meta-repeater-sort-warning { color: red }
 	#record-purchase-urls .column-action { padding: 0 0 0 5px;}
 	</style>
 	<?php

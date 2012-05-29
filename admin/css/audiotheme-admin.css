@@ -14,7 +14,7 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 .audiotheme-meta-field * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 .audiotheme-meta-field label { font-weight: bold; margin: 0 0 3px; display: inline-block; }
 .audiotheme-meta-field input[type="checkbox"] + label,
-.audiotheme-meta-field input[type="radio"] + label { font-weight: normal }
+.audiotheme-meta-field input[type="radio"] + label { font-weight: normal; vertical-align: middle; }
 .audiotheme-meta-field input.widefat { margin-bottom: 3px; }
 .audiotheme-meta-field-upload input.widefat { margin-bottom: 8px; }
 

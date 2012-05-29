@@ -6,6 +6,17 @@
 		</tr>
 	</thead>
 	
+	<tfoot>
+	    <tr class="meta-repeater-sort-warning" style="display: none;">
+	    	<td colspan="5">
+	    		<?php printf( '<span>%1$s <em>%2$s</em></span>',
+	    			esc_html__( 'The order has been changed.', 'audiotheme-i18n' ),
+	    			esc_html__( 'Save your changes.', 'audiotheme-i18n' )
+	    		); ?>
+	    	</td>
+	    </tr>
+	</tfoot>
+	
 	<tbody class="meta-repeater-items">
 		<?php foreach( $tracks as $key => $track ) : ?>
 			<tr class="meta-repeater-item">
@@ -65,6 +76,9 @@
 
 .meta-repeater .ui-sortable-helper { background: #F9F9F9; border-top: 1px solid #DFDFDF; border-bottom: 1px solid #DFDFDF; }
 .meta-repeater .ui-sortable-helper td { border-top-width: 0; border-bottom-width: 0;}
+
+.meta-repeater-sort-warning td { color: red; border-top: 1px solid #DFDFDF; border-bottom: none; padding: 10px }
+
 
 #record-tracklist { margin-bottom: 20px;}
 #record-tracklist input:focus { border-color: #DFDFDF; }
