@@ -41,6 +41,10 @@ function audiotheme_admin_setup() {
 			'show_in_menu' => 'themes.php'
 		) );
 	}
+	
+	if ( current_theme_supports( 'audiotheme-automatic-updates' ) ) {
+		include( AUDIOTHEME_DIR . 'admin/update.php' );
+	}
 }
 
 /**
