@@ -234,15 +234,32 @@ function audiotheme_track_save_hook( $post_id ) {
  */
 function audiotheme_edit_track_meta_boxes( $post ) {
 	remove_meta_box( 'submitdiv', 'audiotheme_track', 'side' );
-	add_meta_box( 'submitdiv', 'Publish', 'audiotheme_post_submit_meta_box', 'audiotheme_track', 'side', 'high', array(
-		'force_delete' => false,
-		'show_publish_date' => false,
-		'show_statuses' => array(),
-		'show_visibility' => false
-	) );
 	
-	add_meta_box( 'audiotheme-track-details', __( 'Track Details', 'audiotheme-i18n' ), 'audiotheme_track_details_meta_box', 'audiotheme_track', 'side', 'high' );
+	add_meta_box( 
+		'submitdiv', 
+		__( 'Publish', 'audiotheme-i18n' ), 
+		'audiotheme_post_submit_meta_box', 
+		'audiotheme_track', 
+		'side', 
+		'high', 
+		array(
+			'force_delete'      => false,
+			'show_publish_date' => false,
+			'show_statuses'     => array(),
+			'show_visibility'   => false
+		) 
+	);
+	
+	add_meta_box( 
+		'audiotheme-track-details', 
+		__( 'Track Details', 'audiotheme-i18n' ), 
+		'audiotheme_track_details_meta_box', 
+		'audiotheme_track', 
+		'side', 
+		'high' 
+	);
 }
+
 
 /**
  * Track Details Meta Box
@@ -253,30 +270,38 @@ function audiotheme_track_details_meta_box( $post ) {
 	// Nonce to verify intention later
 	wp_nonce_field( 'update-track_' . $post->ID, 'audiotheme_track_nonce' );
 	?>
+	
 	<p class="audiotheme-meta-field">
-		<label for="track-artist">Artist:</label><br>
+		<label for="track-artist"><?php _e( 'Artist:', 'audiotheme-i18n' ) ?></label>
 		<input type="text" name="artist" id="track-artist" value="<?php echo esc_attr( get_post_meta( $post->ID, '_artist', true ) ) ; ?>" class="widefat">
 	</p>
+	
 	<p class="audiotheme-meta-field audiotheme-meta-field-upload">
-		<label for="track-file-url">Audio File URL:</label><br>
+		<label for="track-file-url"><?php _e( 'Audio File URL:', 'audiotheme-i18n' ) ?></label>
 		<input type="url" name="file_url" id="track-file-url" value="<?php echo esc_attr( get_post_meta( $post->ID, '_track_file_url', true ) ) ; ?>" class="widefat">
 		
 		<input type="checkbox" name="allow_download" id="track-allow-download" value="1"<?php checked( get_post_meta( $post->ID, '_allow_download', true ) ); ?>>
-		<label for="track-allow-download">Allow downloads?</label>
+		<label for="track-allow-download"><?php _e( 'Allow downloads?', 'audiotheme-i18n' ) ?></label>
 		
 		<?php
-		$tb_args = array( 'post_id' => $post->ID, 'type' => 'audio', 'TB_iframe' => true, 'width' => 640, 'height' => 750 );
+		$tb_args = array( 
+			'post_id' => $post->ID, 
+			'type' => 'audio', 
+			'TB_iframe' => true, 
+			'width' => 640, 
+			'height' => 750 
+		);
+		
 		$tb_url = add_query_arg( $tb_args, admin_url( 'media-upload.php' ) );
 		?>
-		<a href="<?php echo esc_url( $tb_url ); ?>" title="<?php _e( 'Choose a MP3', 'audiotheme-i18n' ); ?>" id="audiotheme-upload-mp3-button" class="button thickbox audiotheme-meta-button" data-insert-field="track-file-url" data-insert-button-text="Use MP3"><?php _e( 'Upload MP3', 'audiotheme-18n' ); ?></a>
+		<a href="<?php echo esc_url( $tb_url ); ?>" title="<?php _e( 'Choose a MP3', 'audiotheme-i18n' ); ?>" id="audiotheme-upload-mp3-button" class="button thickbox audiotheme-meta-button" data-insert-field="track-file-url" data-insert-button-text="<?php _e( 'Use MP3', 'audiotheme-i18n' ) ?>"><?php _e( 'Upload MP3', 'audiotheme-i18n' ); ?></a>
 	</p>
+	
 	<p class="audiotheme-meta-field">
-		<label for="track-purchase-url">Purchase URL:</label><br>
+		<label for="track-purchase-url"><?php _e( 'Purchase URL:', 'audiotheme-i18n' ) ?></label>
 		<input type="url" name="purchase_url" id="track-purchase-url" value="<?php echo esc_url( get_post_meta( $post->ID, '_purchase_url', true ) ) ; ?>" class="widefat">
 	</p>
-	<script>
-	
-	</script>
+
 	<?php
 }
 ?>

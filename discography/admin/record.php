@@ -37,6 +37,7 @@ function audiotheme_records_admin_query( $wp_query ) {
 function audiotheme_record_columns( $columns ) {
 	$columns = array(
 		'cb'           => '<input type="checkbox">',
+		'image'        => __( 'Image', 'audiotheme-i18n' ),
 		'title'        => _x( 'Record', 'column_name', 'audiotheme-i18n' ),
 		'release_year' => __( 'Released', 'audiotheme-i18n' ),
 		'record_type'  => __( 'Type', 'audiotheme-i18n' ),
@@ -53,7 +54,21 @@ function audiotheme_record_columns( $columns ) {
  * @since 1.0
  */
 function audiotheme_record_display_column( $column_name, $post_id ) {
+
+	global $post;
+	
+	/* Get the post edit link for the post. */
+	$edit_link = get_edit_post_link( $post->ID );
+	
 	switch ( $column_name ) {
+		case 'image' :
+			printf( '<a href="%1$s" title="%2$s">%3$s</a>', 
+				esc_url( $edit_link ),
+				esc_attr( $post->post_title ),
+				get_the_post_thumbnail( $post->ID, array( 60, 60 ), array( 'title' => trim( strip_tags(  $post->post_title ) ) ) )
+			);
+			break;
+			
 		case 'record_type' :
 			$taxonomy = 'audiotheme_record_type';
 			$post_type = get_post_type( $post_id );
@@ -72,9 +87,11 @@ function audiotheme_record_display_column( $column_name, $post_id ) {
 				}
 			}
 			break;
+			
 		case 'release_year' :
 			echo get_post_meta( $post_id, '_release_year', true );
 			break;
+			
 		case 'track_count' :
 			$args = array(
 				'post_type' => 'audiotheme_track',
@@ -82,7 +99,9 @@ function audiotheme_record_display_column( $column_name, $post_id ) {
 			);
 			printf( '<a href="%s">%s</a>', add_query_arg( $args, admin_url( 'edit.php' ) ), get_post_meta( $post_id, '_track_count', true ) );
 			break;
+			
 	}
+	
 }
 
 /**
@@ -247,6 +266,7 @@ function audiotheme_edit_record_tracklist() {
 	require( AUDIOTHEME_DIR . 'discography/admin/views/edit-record-tracklist.php' );
 }
 
+
 /**
  * Record Details Meta Box
  *
@@ -268,26 +288,25 @@ function audiotheme_record_details_meta_box( $post ) {
 	$record_types = get_audiotheme_record_type_strings();
 	$selected_types = wp_get_object_terms( $post->ID, 'audiotheme_record_type', array( 'fields' => 'slugs' ) );
 	if ( $record_types ) { ?>
-		<div id="audiotheme-record-types">
-			<label>Record Type</label>
-			<ul>
+		<p id="audiotheme-record-types" class="audiotheme-meta-field">
+			<label><?php _e( 'Record Type', '' ) ?></label><br />
 				<?php
 				foreach ( $record_types as $slug => $name ) {
-					echo sprintf( '<li><input type="radio" name="record_type[]" id="%1$s" value="%1$s"%2$s> <label for="%1$s">%3$s</label></li>',
+					echo sprintf( '<input type="radio" name="record_type[]" id="%1$s" value="%1$s"%2$s> <label for="%1$s">%3$s</label><br />',
 						esc_attr( $slug ),
 						checked( in_array( $slug, $selected_types ), true, false ),
 						esc_attr( $name ) );
 				}
 				?>
-			</ul>
-		</div>
+		</p>
 		<?php
 	}
 	?>
+
 	<table class="meta-repeater" id="record-purchase-urls">
 		<thead>
 			<tr>
-				<th colspan="2">Purchase Links</th>
+				<th colspan="2"><?php _e( 'Purchase Links', 'audiotheme_i18n' ) ?></th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -309,13 +328,15 @@ function audiotheme_record_details_meta_box( $post ) {
 			<?php endforeach; ?>
 		</tbody>
 	</table>
+	
 	<script type="text/javascript">
 	jQuery(function($) {
 		$('#record-purchase-urls').metaRepeater();
 	});
 	</script>
+	
 	<style type="text/css">
-	#audiotheme-record-details label { font-weight: bold;}
+	#audiotheme-record-details label { }
 	
 	#audiotheme-record-types { margin: 1em 0;}
 	#audiotheme-record-types li { margin: 0; vertical-align: middle;}
