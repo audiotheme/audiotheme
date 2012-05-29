@@ -29,7 +29,7 @@ function audiotheme_admin_setup() {
 	
 	add_filter( 'post_updated_messages', 'audiotheme_post_updated_messages' );
 	add_filter( 'manage_edit-audiotheme_video_columns', 'audiotheme_video_columns' );
-	//add_action( 'manage_pages_custom_column', 'audiotheme_display_custom_column', 10, 2 );
+	add_action( 'manage_pages_custom_column', 'audiotheme_display_custom_column', 10, 2 );
 	add_action( 'manage_posts_custom_column', 'audiotheme_display_custom_column', 10, 2 );
 	
 	if ( current_theme_supports( 'audiotheme-options' ) ) {

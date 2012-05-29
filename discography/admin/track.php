@@ -278,7 +278,7 @@ function audiotheme_track_details_meta_box( $post ) {
 	
 	<p class="audiotheme-meta-field audiotheme-meta-field-upload">
 		<label for="track-file-url"><?php _e( 'Audio File URL:', 'audiotheme-i18n' ) ?></label>
-		<input type="url" name="file_url" id="track-file-url" value="<?php echo esc_attr( get_post_meta( $post->ID, '_track_file_url', true ) ) ; ?>" class="widefat">
+		<input type="url" name="file_url" id="track-file-url" value="<?php echo esc_attr( get_post_meta( $post->ID, '_file_url', true ) ) ; ?>" class="widefat">
 		
 		<input type="checkbox" name="allow_download" id="track-allow-download" value="1"<?php checked( get_post_meta( $post->ID, '_allow_download', true ) ); ?>>
 		<label for="track-allow-download"><?php _e( 'Allow downloads?', 'audiotheme-i18n' ) ?></label>
