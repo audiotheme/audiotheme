@@ -103,7 +103,6 @@ jQuery(function($) {
 					change: function() {
 						repeater_id = $( '#' + repeater.attr('id') );
 						$('.meta-repeater-sort-warning', repeater_id).fadeIn('slow');
-						console.log(repeater.attr('id'));
 					}
 				});
 				
