@@ -35,8 +35,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @since 1.0
  */
 define( 'AUDIOTHEME_VERSION', 1.0 );
-define( 'AUDIOTHEME_DIR', get_template_directory() . '/audiotheme/' );
-define( 'AUDIOTHEME_URI', get_template_directory_uri() . '/audiotheme/' );
+
+if ( ! defined( 'AUDIOTHEME_DIR' ) )
+    define( 'AUDIOTHEME_DIR', get_template_directory() . '/audiotheme/' );
+if ( ! defined( 'AUDIOTHEME_URI' ) )
+    define( 'AUDIOTHEME_URI', get_template_directory_uri() . '/audiotheme/' );
 
 
 /**
