@@ -43,7 +43,9 @@ function audiotheme_admin_setup() {
 	}
 	
 	if ( current_theme_supports( 'audiotheme-automatic-updates' ) ) {
-		include( AUDIOTHEME_DIR . 'admin/update.php' );
+		include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-upgrader.php' );
+		$support = get_theme_support( 'audiotheme-automatic-updates' );
+		new AudioTheme_Upgrader( $support[0] );
 	}
 }
 
