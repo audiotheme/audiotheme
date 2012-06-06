@@ -106,7 +106,7 @@ jQuery(function($) {
 					}
 				});
 				
-				repeater.data('itemIndex', firstItem.siblings().length).data('itemTemplate', firstItem.clone());
+				repeater.data('itemIndex', repeater.find('.meta-repeater-item').length).data('itemTemplate', firstItem.clone());
 				
 				repeater.find('.meta-repeater-add-item').on('click', function(e) {
 					e.preventDefault();
@@ -133,10 +133,10 @@ jQuery(function($) {
 				itemIndex = repeater.data('itemIndex'),
 				itemTemplate = repeater.data('itemTemplate');
 			
-			repeater.find('.meta-repeater-items').append(itemTemplate.clone()).children(':last-child').find('.clear-on-add').val('').each(function(e) {
+			repeater.find('.meta-repeater-items').append(itemTemplate.clone()).children(':last-child').find('input,select,textarea').each(function(e) {
 				var $this = $(this);
 				$this.attr('name', $this.attr('name').replace('[0]', '[' + itemIndex + ']') );
-			}).end().find('.remove-on-add').remove().end().find('.show-on-add').show();
+			}).end().find('.clear-on-add').val('').end().find('.remove-on-add').remove().end().find('.show-on-add').show();
 			
 			repeater.data('itemIndex', itemIndex+1 ).metaRepeater('updateIndex');
 		},

@@ -1,4 +1,23 @@
 <?php
+function get_audiotheme_record_link_sources() {
+	$default_sources = array(
+		'amazonmp3' => array(
+			'name' => 'Amazon MP3',
+			'icon' => ''
+		),
+		'cdbaby' => array(
+			'name' => 'CD Baby',
+			'icon' => ''
+		),
+		'itunes' => array(
+			'name' => 'iTunes',
+			'icon' => ''
+		)
+	);
+	
+	return apply_filters( 'audiotheme_record_link_sources', $default_sources );
+}
+
 function get_audiotheme_record_type_strings() {
 	$strings = array(
 		'record-type-album'  => _x( 'Album',  'Record type', 'audiotheme-i18n' ),

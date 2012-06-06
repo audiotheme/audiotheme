@@ -162,15 +162,16 @@ function audiotheme_record_save_hook( $post_id ) {
 	}
 	
 	// Update purchase urls
-	$purchase_urls = array();
-	if ( isset( $_POST['purchase_urls'] ) && is_array( $_POST['purchase_urls'] ) ) {
-		foreach( $_POST['purchase_urls'] as $url ) {
-			if ( ! empty( $url ) ) {
-				$purchase_urls[] = esc_url_raw( $url );
+	$record_links = array();
+	if ( isset( $_POST['record_links'] ) && is_array( $_POST['record_links'] ) ) {
+		foreach( $_POST['record_links'] as $link ) {
+			if ( ! empty( $link['id'] ) && ! empty( $link['url'] ) ) {
+				$link['url'] = esc_url_raw( $link['url'] );
+				$record_links[] = $link;
 			}
 		}
 	}
-	update_post_meta( $post_id, '_purchase_urls', $purchase_urls );
+	update_post_meta( $post_id, '_record_links', $record_links );
 	
 	// Update record type
 	$record_types = ( empty( $_POST['record_type'] ) ) ? '' : $_POST['record_type'];
@@ -269,11 +270,11 @@ function audiotheme_record_details_meta_box( $post ) {
 	wp_nonce_field( 'update-record_' . $post->ID, 'audiotheme_record_nonce' );
 	?>
 	<p class="audiotheme-meta-field">
-		<label for="record-year">Release Year</label>
+		<label for="record-year"><?php _e( 'Release Year', 'audiotheme-i18n' ); ?></label>
 		<input type="text" name="release_year" id="record-year" value="<?php echo esc_attr( get_post_meta( $post->ID, '_release_year', true ) ) ; ?>" class="widefat">
 	</p>
 	<p class="audiotheme-meta-field">
-		<label for="record-genre">Genre</label>
+		<label for="record-genre"><?php _e( 'Genre', 'audiotheme-i18n' ); ?></label>
 		<input type="text" name="genre" id="record-genre" value="<?php echo esc_attr( get_post_meta( $post->ID, '_genre', true ) ) ; ?>" class="widefat">
 	</p>
 	<?php
@@ -281,7 +282,7 @@ function audiotheme_record_details_meta_box( $post ) {
 	$selected_types = wp_get_object_terms( $post->ID, 'audiotheme_record_type', array( 'fields' => 'slugs' ) );
 	if ( $record_types ) { ?>
 		<p id="audiotheme-record-types" class="audiotheme-meta-field">
-			<label><?php _e( 'Record Type', '' ) ?></label><br />
+			<label><?php _e( 'Type', 'audiotheme-i18n' ) ?></label><br />
 				<?php
 				foreach ( $record_types as $slug => $name ) {
 					echo sprintf( '<input type="radio" name="record_type[]" id="%1$s" value="%1$s"%2$s> <label for="%1$s">%3$s</label><br />',
@@ -295,10 +296,10 @@ function audiotheme_record_details_meta_box( $post ) {
 	}
 	?>
 
-	<table class="meta-repeater" id="record-purchase-urls">
+	<table class="meta-repeater" id="record-links">
 		<thead>
 			<tr>
-				<th colspan="2"><?php _e( 'Purchase Links', 'audiotheme_i18n' ) ?></th>
+				<th colspan="2"><?php _e( 'Links', 'audiotheme_i18n' ); ?></th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -314,13 +315,29 @@ function audiotheme_record_details_meta_box( $post ) {
 		</tfoot>
 		<tbody class="meta-repeater-items">
 			<?php
-			$purchase_urls = (array) get_post_meta( $post->ID, '_purchase_urls', true );
-			$purchase_urls = ( empty( $purchase_urls ) ) ? array( '' ) : $purchase_urls;
+			$record_links = (array) get_post_meta( $post->ID, '_record_links', true );
+			$record_links = ( empty( $record_links ) ) ? array( '' ) : $record_links;
 			
-			foreach( $purchase_urls as $url ) :
+			$record_link_sources = get_audiotheme_record_link_sources();
+			
+			foreach( $record_links as $i => $link ) :
 				?>
 				<tr class="meta-repeater-item">
-					<td><input type="text" name="purchase_urls[]" value="<?php echo esc_url( $url ); ?>" class="widefat"></td>
+					<td>
+						<select name="record_links[<?php echo $i; ?>][id]" class="clear-on-add">
+							<option value=""></option>
+							<?php
+							foreach ( $record_link_sources as $id => $source ) {
+								printf( '<option value="%1$s"%2$s>%3$s</option>',
+									esc_attr( $id ),
+									selected( $link['id'], $id, false ),
+									esc_html( $source['name'] )
+								);
+							}
+							?>
+						</select>
+					</td>
+					<td><input type="text" name="record_links[<?php echo $i; ?>][url]" value="<?php echo esc_url_raw( $link['url'] ); ?>" placeholder="URL" class="widefat clear-on-add"></td>
 					<td class="column-action"><a class="meta-repeater-remove-item"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/delete.png" width="16" height="16" alt="Delete Item" title="Delete Item" class="icon-delete" /></a></td>
 				</tr>
 			<?php endforeach; ?>
@@ -329,7 +346,7 @@ function audiotheme_record_details_meta_box( $post ) {
 	
 	<script type="text/javascript">
 	jQuery(function($) {
-		$('#record-purchase-urls').metaRepeater();
+		$('#record-links').metaRepeater();
 	});
 	</script>
 	
@@ -342,13 +359,13 @@ function audiotheme_record_details_meta_box( $post ) {
 	#audiotheme-record-types li label { margin: 0; font-weight: normal;}
 	#audiotheme-record-types ul { margin-top: 3px; margin-bottom: 0;}
 		
-	#record-purchase-urls { width: 100%; border-spacing: 0;}
-	#record-purchase-urls td { padding: 0 0 5px 0;}
-	#record-purchase-urls th { text-align: left;}
-	#record-purchase-urls tfoot td { padding-top: 5px; }
-	#record-purchase-urls tfoot td a { float: right }
-	#record-purchase-urls tfoot td .meta-repeater-sort-warning { color: red }
-	#record-purchase-urls .column-action { padding: 0 0 0 5px;}
+	#record-links { width: 100%; border-spacing: 0;}
+	#record-links td { padding: 0 0 5px 0;}
+	#record-links th { text-align: left;}
+	#record-links tfoot td { padding-top: 5px; }
+	#record-links tfoot td a { float: right }
+	#record-links tfoot td .meta-repeater-sort-warning { color: red }
+	#record-links .column-action { padding: 0 0 0 5px;}
 	</style>
 	<?php
 }
