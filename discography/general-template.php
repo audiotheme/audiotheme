@@ -1,18 +1,9 @@
 <?php
 function get_audiotheme_record_link_sources() {
 	$default_sources = array(
-		'amazonmp3' => array(
-			'name' => 'Amazon MP3',
-			'icon' => ''
-		),
-		'cdbaby' => array(
-			'name' => 'CD Baby',
-			'icon' => ''
-		),
-		'itunes' => array(
-			'name' => 'iTunes',
-			'icon' => ''
-		)
+		'Amazon MP3' => array( 'icon' => '' ),
+		'CD Baby' => array( 'icon' => '' ),
+		'iTunes' => array( 'icon' => '' )
 	);
 	
 	return apply_filters( 'audiotheme_record_link_sources', $default_sources );

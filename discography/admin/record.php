@@ -165,7 +165,7 @@ function audiotheme_record_save_hook( $post_id ) {
 	$record_links = array();
 	if ( isset( $_POST['record_links'] ) && is_array( $_POST['record_links'] ) ) {
 		foreach( $_POST['record_links'] as $link ) {
-			if ( ! empty( $link['id'] ) && ! empty( $link['url'] ) ) {
+			if ( ! empty( $link['name'] ) && ! empty( $link['url'] ) ) {
 				$link['url'] = esc_url_raw( $link['url'] );
 				$record_links[] = $link;
 			}
@@ -237,6 +237,8 @@ function audiotheme_edit_record_meta_boxes( $post ) {
 	add_meta_box( 'audiotheme-record-details', __( 'Record Details', 'audiotheme-i18n' ), 'audiotheme_record_details_meta_box', 'audiotheme_record', 'side', 'high' );
 	
 	add_action( 'edit_form_advanced', 'audiotheme_edit_record_tracklist' );
+	
+	wp_enqueue_script( 'jquery-ui-autocomplete' );
 }
 
 /**
@@ -318,25 +320,10 @@ function audiotheme_record_details_meta_box( $post ) {
 			$record_links = (array) get_post_meta( $post->ID, '_record_links', true );
 			$record_links = ( empty( $record_links ) ) ? array( '' ) : $record_links;
 			
-			$record_link_sources = get_audiotheme_record_link_sources();
-			
 			foreach( $record_links as $i => $link ) :
 				?>
 				<tr class="meta-repeater-item">
-					<td>
-						<select name="record_links[<?php echo $i; ?>][id]" class="clear-on-add">
-							<option value=""></option>
-							<?php
-							foreach ( $record_link_sources as $id => $source ) {
-								printf( '<option value="%1$s"%2$s>%3$s</option>',
-									esc_attr( $id ),
-									selected( $link['id'], $id, false ),
-									esc_html( $source['name'] )
-								);
-							}
-							?>
-						</select>
-					</td>
+					<td><input type="text" name="record_links[<?php echo $i; ?>][name]" value="<?php echo esc_attr( $link['name'] ); ?>" placeholder="Text" class="record-link-name clear-on-add" style="width: 8em"></td>
 					<td><input type="text" name="record_links[<?php echo $i; ?>][url]" value="<?php echo esc_url_raw( $link['url'] ); ?>" placeholder="URL" class="widefat clear-on-add"></td>
 					<td class="column-action"><a class="meta-repeater-remove-item"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/delete.png" width="16" height="16" alt="Delete Item" title="Delete Item" class="icon-delete" /></a></td>
 				</tr>
@@ -344,14 +331,28 @@ function audiotheme_record_details_meta_box( $post ) {
 		</tbody>
 	</table>
 	
+	<?php
+	$record_link_sources = get_audiotheme_record_link_sources();
+	$record_link_source_names = array_keys( $record_link_sources );
+	sort( $record_link_source_names );
+	?>
 	<script type="text/javascript">
 	jQuery(function($) {
-		$('#record-links').metaRepeater();
+		$('#record-links').metaRepeater().on('focus', 'input.record-link-name', function() {
+			var $this = $(this);
+			
+			if ( ! $this.hasClass('ui-autocomplete-input')) {
+				$this.autocomplete({
+					source: <?php echo json_encode( $record_link_source_names ); ?>,
+					minLength: 0
+				});
+			}
+		});
 	});
 	</script>
 	
 	<style type="text/css">
-	#audiotheme-record-details label { }
+	.ui-autocomplete { overflow-y: auto; overflow-x: hidden; max-height: 180px;}
 	
 	#audiotheme-record-types { margin: 1em 0;}
 	#audiotheme-record-types li { margin: 0; vertical-align: middle;}
