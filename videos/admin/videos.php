@@ -1,4 +1,89 @@
 <?php
+add_action( 'init', 'audiotheme_load_videos_admin' );
+
+function audiotheme_load_videos_admin() {
+	add_action( 'add_meta_boxes', 'audiotheme_video_meta_boxes' );
+	add_filter( 'post_updated_messages', 'audiotheme_video_post_updated_messages' );
+	add_filter( 'manage_edit-audiotheme_video_columns', 'audiotheme_video_columns' );
+	add_action( 'manage_posts_custom_column', 'audiotheme_video_display_column', 10, 2 );
+}
+
+function audiotheme_video_post_updated_messages( $messages ) {
+	global $post, $post_ID;
+	
+	$messages['audiotheme_video'] = array(
+		0 => '',
+		1 => sprintf( __( 'Video updated. <a href="%s">View Video</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
+		2 => __( 'Custom field updated.', 'audiotheme-i18n' ),
+		3 => __( 'Custom field deleted.', 'audiotheme-i18n' ),
+		4 => __( 'Video updated.', 'audiotheme-i18n' ),
+		5 => isset( $_GET['revision'] ) ? sprintf( __( 'Video restored to revision from %s', 'audiotheme-i18n' ), wp_post_revision_title( ( int ) $_GET['revision'], false ) ) : false,
+		6 => sprintf( __( 'Video published. <a href="%s">View Video</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
+		7 => __( 'Video saved.', 'audiotheme-i18n' ),
+		8 => sprintf( __( 'Video submitted. <a target="_blank" href="%s">Preview Video</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+		9 => sprintf( __( 'Video scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Video</a>', 'audiotheme-i18n' ), date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
+		10 => sprintf( __( 'Video draft updated. <a target="_blank" href="%s">Preview Video</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+	);
+
+	return $messages;
+}
+
+/**
+ * Register Video Columns
+ *
+ * @since 1.0
+ */
+function audiotheme_video_columns( $columns ) {
+	$columns = array(
+		'cb'         => '<input type="checkbox">',
+		'image'      => __( 'Image', 'audiotheme-i18n' ),
+		'title'      => _x( 'Video', 'column name', 'audiotheme-i18n' ),
+		'author'     => __( 'Author', 'audiotheme-i18n' ),
+		'video_type' => __( 'Type', 'audiotheme-i18n' ),
+		'tags'       => __( 'Tags', 'audiotheme-i18n' ),
+		'date'       => __( 'Date', 'audiotheme-i18n' )
+	);
+	
+	return $columns;
+}
+
+/**
+ * Display Custom Video Columns
+ *
+ * @since 1.0
+ */
+function audiotheme_video_display_column( $column_name, $post_id ) {
+	switch ( $column_name ) {
+		case 'video_type' :
+			$taxonomy = 'audiotheme_video_type';
+			$post_type = get_post_type( $post_id );
+			$video_types = get_the_terms( $post_id, $taxonomy );
+			
+			if( ! empty( $video_types ) ) {
+				foreach ( $video_types as $video_type ) {
+					$post_terms[] = sprintf( '<a href="%1$s">%2$s</a>',
+						esc_url( sprintf( 'edit.php?post_type=%1$s&%2$s=%3$s', $post_type, $taxonomy, $video_type->slug ) ),
+						esc_html( sanitize_term_field( 'name', $video_type->name, $video_type->term_id, $taxonomy, 'edit' ) )
+					);
+				}
+				
+				echo join( ', ', $post_terms );
+			} else {
+				echo '<em>' . __( 'No video types.', 'audiotheme-i18n' ) . '</em>';
+			}
+			break;
+	}
+}
+
+/**
+ * Add Video Meta Boxes
+ *
+ * @since 1.0
+ */
+function audiotheme_video_meta_boxes() {
+	add_meta_box( 'audiotheme-video-meta', __( 'Video Library: Add Video URL', 'audiotheme-i18n' ), 'audiotheme_video_meta_cb', 'audiotheme_video', 'side', 'high' );
+}
+
 /**
  * Video Metabox Callback
  *

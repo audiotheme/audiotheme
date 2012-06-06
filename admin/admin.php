@@ -5,9 +5,7 @@
  * @since 1.0
  */
 require( AUDIOTHEME_DIR . 'admin/functions.php' );
-require( AUDIOTHEME_DIR . 'admin/meta-boxes.php' );
 require( AUDIOTHEME_DIR . 'admin/options.php' );
-require( AUDIOTHEME_DIR . 'admin/post-type-screens.php' );
 
 /**
  * Admin Setup
@@ -23,12 +21,9 @@ function audiotheme_admin_setup() {
 	add_action( 'wp_ajax_audiotheme_get_video_data', 'audiotheme_get_video_data' );
 	
 	add_action( 'admin_enqueue_scripts', 'audiotheme_enqueue_admin_scripts' );
-	add_action( 'add_meta_boxes', 'audiotheme_meta_boxes' );
 	add_action( 'admin_body_class', 'audiotheme_admin_body_class' );
 	add_filter( 'user_contactmethods', 'audiotheme_edit_user_contact_info' );
 	
-	add_filter( 'post_updated_messages', 'audiotheme_post_updated_messages' );
-	add_filter( 'manage_edit-audiotheme_video_columns', 'audiotheme_video_columns' );
 	add_action( 'manage_pages_custom_column', 'audiotheme_display_custom_column', 10, 2 );
 	add_action( 'manage_posts_custom_column', 'audiotheme_display_custom_column', 10, 2 );
 	
@@ -62,15 +57,6 @@ function audiotheme_enqueue_admin_scripts() {
 }
 
 /**
- * Add Meta Boxes
- *
- * @since 1.0
- */
-function audiotheme_meta_boxes() {
-	add_meta_box( 'audiotheme-video-meta', __( 'Video Library: Add Video URL', 'audiotheme-i18n' ), 'audiotheme_video_meta_cb', 'audiotheme_video', 'side', 'high' );
-}
-
-/**
  * Enqueue Admin Scripts
  *
  * @since 1.0
@@ -80,7 +66,26 @@ function audiotheme_admin_body_class( $class ) {
 }
 
 /**
- * Enqueue Admin Scripts
+ * Custom Post Type Columns
+ *
+ * @since 1.0
+ */
+function audiotheme_display_custom_column( $column_name, $post_id ) {
+	global $post;
+	
+	switch ( $column_name ) {
+		case 'image' :
+			printf( '<a href="%1$s" title="%2$s">%3$s</a>', 
+				esc_url( get_edit_post_link( $post_id ) ),
+				esc_attr( $post->post_title ),
+				get_the_post_thumbnail( $post->ID, array( 60, 60 ), array( 'title' => trim( strip_tags(  $post->post_title ) ) ) )
+			);
+			break;
+	}
+}
+
+/**
+ * Custom User Contact Fields
  *
  * @since 1.0
  */
