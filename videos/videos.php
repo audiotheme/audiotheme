@@ -63,6 +63,14 @@ function audiotheme_videos_init() {
 	) );
 }
 
+
+/**
+ * Video Inclusions
+ *
+ * @since 1.0
+ */
+require( AUDIOTHEME_DIR . 'videos/general-template.php' );
+
 if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'videos/admin/videos.php' );
 }
