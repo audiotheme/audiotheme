@@ -45,23 +45,24 @@ function the_audiotheme_post_video( $size = array( 'width' => 640 ), $attr = '' 
  * @since 1.0.0
  *
  * @param int $post_id Optional. Post ID.
- * @param array $size Optional. Image size.  Defaults to 640 width.
+ * @param array $args Optional. (width, height, discover)
+ * @param array $query_args Optional. Provider specific parameters.
  * @param string|array $attr Optional. Query string or array of attributes.
  */
-function get_the_audiotheme_post_video( $post_id = null, $size = array( 'width' => 640 ), $attr = '' ) {
+function get_the_audiotheme_post_video( $post_id = null, $args = array(), $query_args = array() ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-	$post_video_url = get_audiotheme_post_video_url( $post_id );
-	$size = apply_filters( 'audiotheme_post_video_size', $size );
+	$video_url = get_audiotheme_post_video_url( $post_id );
 	
-	$size = wp_parse_args( $size, $args );
+	$args = wp_parse_args( $args, array(
+		'discover' => ( apply_filters( 'embed_oembed_discover', false ) && author_can( $post_id, 'unfiltered_html' ) )
+	);
 	
-	if ( $post_video_url ) {
-	    $html = wp_oembed_get( esc_url( $post_video_url ), $size );
-	} else {
-	    $html = '';
+	$html = '';
+	if ( $video_url ) {
+		$html = wp_oembed_get( add_query_arg( $query_args, $video_url ), $args );
 	}
 	
-	return apply_filters( 'audiotheme_post_video_html', $html, $post_id, $post_video_url, $size, $attr );
+	return apply_filters( 'audiotheme_post_video_html', $html, $post_id, $video_url $args, $query_args );
 
 }
 

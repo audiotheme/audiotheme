@@ -9,7 +9,7 @@ add_action( 'init', 'audiotheme_galleries_init' );
 function audiotheme_galleries_init() {
 	register_post_type( 'audiotheme_gallery', array(
 		'capability_type'        => 'post',
-		'has_archive'            => false,
+		'has_archive'            => true,
 		'hierarchical'           => false,
 		'labels'                 => array(
 			'name'               => _x( 'Galleries', 'post type general name', 'audiotheme-i18n' ),
