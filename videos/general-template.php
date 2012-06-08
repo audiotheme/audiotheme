@@ -53,16 +53,16 @@ function get_the_audiotheme_post_video( $post_id = null, $args = array(), $query
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
 	$video_url = get_audiotheme_post_video_url( $post_id );
 	
-	$args = wp_parse_args( $args, array(
-		'discover' => ( apply_filters( 'embed_oembed_discover', false ) && author_can( $post_id, 'unfiltered_html' ) )
+	$args = wp_parse_args( $args, array( 'discover' => apply_filters( 'embed_oembed_discover', false ) && author_can( $post_id, 'unfiltered_html' ) )
 	);
 	
 	$html = '';
+	
 	if ( $video_url ) {
 		$html = wp_oembed_get( add_query_arg( $query_args, $video_url ), $args );
 	}
 	
-	return apply_filters( 'audiotheme_post_video_html', $html, $post_id, $video_url $args, $query_args );
+	return apply_filters( 'audiotheme_post_video_html', $html, $post_id, $video_url, $args, $query_args );
 
 }
 
