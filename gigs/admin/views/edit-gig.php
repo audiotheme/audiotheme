@@ -28,7 +28,7 @@
 		<tr>
 			<th><?php _e( 'Note', 'audiotheme-i18n' ) ?></th>
 			<td>
-				<textarea name="excerpt" id="excerpt" cols="76" rows="3"></textarea><br>
+				<textarea name="excerpt" id="excerpt" cols="76" rows="3"><?php echo esc_textarea( $post->post_excerpt ); ?></textarea><br>
 				<span class="description">A description of the gig to display within the list of gigs. Who's the opening act, special guests, etc? Keep it short.</span>
 			</td>
 		</tr>
