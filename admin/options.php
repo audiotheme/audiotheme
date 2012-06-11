@@ -242,10 +242,10 @@ class AudioTheme_Options {
 		$field_types = array(
 			'checkbox',
 			'html',
+			'image',
 			'select',
 			'text',
-			'textarea',
-			'thickbox_image'
+			'textarea'
 		);
 		
 		$callback = ( in_array( $type, $field_types ) ) ? array( &$this, 'option_' . $type . '_field' ) : $type;
