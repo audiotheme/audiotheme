@@ -2,12 +2,12 @@
 	<table id="gig-fields">
 		<tr>
 			<th><label for="gig-date"><?php _e( 'Date', 'audiotheme-i18n' ) ?></label></th>
-			<td><input type="text" name="gig_date" id="gig-date" placeholder="MM/DD/YYY" value="<?php echo esc_attr( $gig_date ); ?>" autocomplete="off"></td>
+			<td><input type="text" name="gig_date" id="gig-date" value="<?php echo esc_attr( $gig_date ); ?>" placeholder="MM/DD/YYY" autocomplete="off" tabindex="2"></td>
 		</tr>
 		<tr>
 			<th><label for="gig-time"><?php _e( 'Time', 'audiotheme-i18n' ) ?></label></th>
 			<td>
-				<input type="text" name="gig_time" id="gig-time" placeholder="HH:MM" value="<?php echo esc_attr( $gig_time ); ?>" style="vertical-align: middle">
+				<input type="text" name="gig_time" id="gig-time" value="<?php echo esc_attr( $gig_time ); ?>" placeholder="HH:MM" tabindex="2" style="vertical-align: middle">
 				<label for="gig-time" id="gig-time-select"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/clock.png" width="16" height="16" style="vertical-align: middle"></label>
 			</td>
 		</tr>
@@ -15,7 +15,7 @@
 			<th><label for="gig-venue"><?php _e( 'Venue', 'audiotheme-i18n' ) ?></label></th>
 			<?php // TODO: consider refactoring to use a dropdown for data integrity? ?>
 			<td>
-				<input type="text" name="gig_venue" id="gig-venue" value="<?php echo esc_html( $gig_venue ); ?>">
+				<input type="text" name="gig_venue" id="gig-venue" value="<?php echo esc_html( $gig_venue ); ?>" tabindex="2">
 				<label for="gig-venue" id="gig-venue-select">Select</label>
 				<select name="audiotheme_venue[timezone_string]" id="gig-venue-timezone">
 					<?php
@@ -28,7 +28,7 @@
 		<tr>
 			<th><?php _e( 'Note', 'audiotheme-i18n' ) ?></th>
 			<td>
-				<textarea name="excerpt" id="excerpt" cols="76" rows="3"><?php echo esc_textarea( $post->post_excerpt ); ?></textarea><br>
+				<textarea name="excerpt" id="excerpt" cols="76" rows="3" tabindex="2"><?php echo esc_textarea( $post->post_excerpt ); ?></textarea><br>
 				<span class="description">A description of the gig to display within the list of gigs. Who's the opening act, special guests, etc? Keep it short.</span>
 			</td>
 		</tr>

@@ -304,6 +304,22 @@ class AudioTheme_Options {
 		echo ( isset( $output ) ) ? $output : '';
 	}
 	
+	function option_image_field( $args ) {
+		extract( $args );
+		
+		$field_types = array( 'thickbox_image' ); // whitelist the allowed field types
+		$type = ( ! isset( $type ) || ! in_array( $field_types ) ) ? 'thickbox_image' : $type;
+		
+		if ( 'thickbox_image' == $type ) {
+			$class = ( isset( $class ) ) ? $class : 'regular-text';
+			echo '<input type="text" name="' . esc_attr( $name_attr ) . '" id="' . esc_attr( $field_id ) . '" value="' . esc_url( $value ) . '" class="' . esc_attr( $class ) . '">';
+			$tb_args = array( 'post_id' => 0, 'type' => 'image', 'TB_iframe' => true, 'width' => 640, 'height' => 750 );
+			echo '<a href="' . add_query_arg( $tb_args, admin_url( 'media-upload.php' ) ) . '" title="Choose an Image" class="button thickbox" data-insert-field="' . esc_attr( $field_id ) . '" data-insert-button-text="Use This Image">Choose Image</a>';
+		}
+		
+		echo ( isset( $description ) ) ? '<span class="description">' . $description . '</span>' : '';
+	}
+	
 	function option_select_field( $args ) {
 		extract( $args );
 		
@@ -331,17 +347,6 @@ class AudioTheme_Options {
 		$rows = ( isset( $rows ) ) ? intval( $rows ) : 4;
 		echo '<textarea name="' . $name_attr . '" id="' . $field_id . '" rows="' . $rows . '" class="' . $class . '">'. esc_textarea( $value ) .'</textarea>';
 		echo ( isset( $description ) ) ? '<span class="description">' . $description . '</span>' : '';
-	}
-	
-	function option_thickbox_image_field( $args ) {
-		extract( $args );
-		
-		$class = ( isset( $class ) ) ? $class : 'regular-text';
-		echo '<input type="text" name="' . esc_attr( $name_attr ) . '" id="' . esc_attr( $field_id ) . '" value="' . esc_url( $value ) . '" class="' . esc_attr( $class ) . '">';
-		$tb_args = array( 'post_id' => 0, 'type' => 'image', 'TB_iframe' => true, 'width' => 640, 'height' => 750 );
-		echo '<a href="' . add_query_arg( $tb_args, admin_url( 'media-upload.php' ) ) . '" title="Choose an Image" class="button thickbox" data-insert-field="' . esc_attr( $field_id ) . '" data-insert-button-text="Use This Image">Choose Image</a>';
-		echo ( isset( $description ) ) ? '<span class="description">' . $description . '</span>' : '';
-		#echo '<br><img src="' . esc_url( $value ) . '">';
 	}
 }
 ?>
