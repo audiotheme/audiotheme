@@ -204,7 +204,7 @@ class AudioTheme_Options {
 		return $options;
 	}
 	
-	function add_tab( $tab_id, $title, $panel_id=NULL ) {
+	function add_tab( $tab_id, $title, $panel_id = NULL ) {
 		$panel_id = ( empty( $panel_id ) ) ? $this->current_panel : $panel_id;
 		
 		$this->panels[ $panel_id ]->tabs[ $tab_id ] = $title;
@@ -212,7 +212,7 @@ class AudioTheme_Options {
 		return $tab_id;
 	}
 	
-	function add_section( $section_id, $title=NULL, $tab_id=NULL, $args = array() ) {
+	function add_section( $section_id, $title = NULL, $tab_id = NULL, $args = array() ) {
 		$panel = $this->panels[ $this->current_panel ];
 		
 		if ( empty( $tab_id ) || ! array_key_exists( $tab_id, $panel->tabs ) ) {
@@ -236,7 +236,7 @@ class AudioTheme_Options {
 	/**
 	 * If the 'field_id' and 'option_name' argument are equal, the option will be stored as a string in the database.
 	 */
-	function add_field( $type, $id, $label, $section_id=NULL, $args = array() ) {
+	function add_field( $type, $id, $label, $section_id = NULL, $args = array() ) {
 		$panel = $this->panels[ $this->current_panel ];
 		
 		$field_types = array(
@@ -264,6 +264,7 @@ class AudioTheme_Options {
 		
 		// create default name and value attributes; callbacks don't have to use these if they're not pertinent
 		$options = get_option( $args['option_name'] );
+		
 		if ( $id == $args['option_name'] ) {
 			$args['name_attr'] = $args['option_name'];
 			$args['value'] = ( isset( $args['default_value'] ) ) ? $args['default_value'] : '';
@@ -283,8 +284,8 @@ class AudioTheme_Options {
 	
 	
 	/**
-	* Option Field Rendering
-	*/
+	 * Option Field Rendering
+	 */
 	
 	function option_checkbox_field( $args ) {
 		extract( $args );

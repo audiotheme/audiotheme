@@ -50,6 +50,7 @@ function the_audiotheme_post_video( $size = array( 'width' => 640 ), $attr = '' 
  * @param string|array $attr Optional. Query string or array of attributes.
  */
 function get_the_audiotheme_post_video( $post_id = null, $args = array(), $query_args = array() ) {
+	
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
 	$video_url = get_audiotheme_post_video_url( $post_id );
 	

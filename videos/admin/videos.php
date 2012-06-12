@@ -98,7 +98,7 @@ function audiotheme_video_meta_boxes() {
 function audiotheme_video_meta_cb( $post ) {
 
 	// Store the saved values
-	$video = get_post_meta( $post->ID, '_video_url', true );
+	$video = get_audiotheme_post_video_url( $post->ID );
 
 	// Nonce to verify intention later
 	wp_nonce_field( 'save_audiotheme_video_meta', 'audiotheme_video_nonce' );
@@ -113,16 +113,16 @@ function audiotheme_video_meta_cb( $post ) {
 	</p>
 	
 	<div id="audiotheme-video-preview">
-		<?php if( $video ) echo wp_oembed_get( $video, array( 'width' => 258 ) ); ?>
+		<?php if( $video ) the_audiotheme_post_video( array( 'width' => 258 ) ); ?>
 	</div>
 	
 	<p>
-		<input type="button" id="button-get-video-data" class="button" value="Get Thumbnail" style="vertical-align: middle">
+		<input type="button" id="button-get-video-data" class="button" value="<?php _e( 'Get Thumbnail', 'audiotheme-i18n' ) ?>" style="vertical-align: middle">
 		<img src="<?php echo esc_url( admin_url( 'images/wpspin_light.gif' ) ); ?>" alt="" id="get-video-data-indicator" class="ajax-indicator">
 	</p>
 	
 	<style type="text/css">
-	#audiotheme-video-preview iframe { background: url(<?php echo admin_url( 'images/wpspin_light.gif' ) ?>) center center no-repeat;}
+	#audiotheme-video-preview iframe { background: url(<?php echo esc_url( admin_url( 'images/wpspin_light.gif' ) ) ?>) center center no-repeat;}
 	.ajax-indicator { display: none; margin: 0 0 0 5px; vertical-align: middle;}
 	</style>
 	

@@ -69,7 +69,7 @@ function audiotheme_videos_init() {
  *
  * @since 1.0
  */
-require( AUDIOTHEME_DIR . 'videos/general-template.php' );
+require( AUDIOTHEME_DIR . 'videos/post-video-template.php' );
 
 if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'videos/admin/videos.php' );
