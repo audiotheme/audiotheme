@@ -104,7 +104,7 @@ function audiotheme_discography_init() {
 function get_audiotheme_discography_rewrite_base() {
 
 	$base = get_option( 'audiotheme_discography_rewrite_base' );
-	return ( empty( $base ) ) ? 'record' : $base;
+	return ( empty( $base ) ) ? 'music' : $base;
 	
 }
 
