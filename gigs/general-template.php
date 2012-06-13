@@ -118,6 +118,7 @@ function get_audiotheme_gig_link( $post = null, $args = array() ) {
 		'after_link' => '</span>'
 	);
 	$args = wp_parse_args( $args, $defaults );
+	extract( $args );
 	
 	$html = $before;
 	$html.= '<a href="' . esc_url( get_permalink( $gig->ID ) ) . '" class="url uid" itemprop="url">';

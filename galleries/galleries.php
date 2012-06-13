@@ -27,6 +27,7 @@ function audiotheme_galleries_init() {
 		'menu_position'          => 9,
 		'public'                 => true,
 		'publicly_queryable'     => true,
+		'register_meta_box_cb'   => 'audiotheme_edit_gallery_meta_boxes',
 		'rewrite'                => array( 'slug' => 'gallery', 'with_front' => false ),
 		'show_ui'                => true,
 		'show_in_menu'           => true,

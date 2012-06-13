@@ -24,4 +24,26 @@ function audiotheme_gallery_post_updated_messages( $messages ) {
 
 	return $messages;
 }
+
+function audiotheme_edit_gallery_meta_boxes( $post ) {
+	add_action( 'edit_form_advanced', 'audiotheme_edit_gallery_iframe' );
+}
+
+function audiotheme_edit_gallery_iframe() {
+	global $post;
+	
+	$iframe_src = add_query_arg( 'post_id', $post->ID, admin_url( 'media-upload.php' ) );
+	echo '<div id="gallery-ui">';
+		printf( '<iframe src="%1$s" width="100%%" height="360"></iframe>', esc_url( $iframe_src ) );
+	echo '</div>';
+	?>
+	<script>
+	jQuery('#gallery-ui').insertBefore('#postdivrich');
+	</script>
+	<style type="text/css">
+	#gallery-ui { margin-bottom: 15px;}
+	#gallery-ui iframe { }
+	</style>
+	<?php
+}
 ?>
