@@ -1,8 +1,8 @@
 <table class="widefat meta-repeater" id="record-tracklist">
 	<thead>
 		<tr>
-			<th colspan="4"><h3><span>Tracks</span></h3></th>
-			<th class="column-action"><a class="button meta-repeater-add-item">Add Track</a></th>
+			<th colspan="4"><h3><span><?php _e( 'Tracks', 'audiotheme-i18n' ) ?></span></h3></th>
+			<th class="column-action"><a class="button meta-repeater-add-item"><?php _e( 'Add Track', 'audiotheme-i18n' ) ?></a></th>
 		</tr>
 	</thead>
 	
@@ -24,8 +24,8 @@
 					<input type="hidden" name="audiotheme_tracks[<?php echo $key; ?>][post_id]" value="<?php echo $track->ID; ?>" class="clear-on-add">
 					<span class="meta-repeater-index"><?php echo $key + 1 . '.'; ?></span>
 				</td>
-				<td><input type="text" name="audiotheme_tracks[<?php echo $key; ?>][title]" placeholder="Title" value="<?php echo esc_attr( $track->post_title ); ?>" class="widefat clear-on-add"></td>
-				<td><input type="text" name="audiotheme_tracks[<?php echo $key; ?>][artist]" placeholder="Artist" value="<?php echo esc_attr( get_post_meta( $track->ID, '_artist', true ) ); ?>" class="widefat"></td>
+				<td><input type="text" name="audiotheme_tracks[<?php echo $key; ?>][title]" placeholder="<?php _e( 'Title', 'audiotheme-i18n' ) ?>" value="<?php echo esc_attr( $track->post_title ); ?>" class="widefat clear-on-add"></td>
+				<td><input type="text" name="audiotheme_tracks[<?php echo $key; ?>][artist]" placeholder="<?php _e( 'Artist', 'audiotheme-i18n' ) ?>" value="<?php echo esc_attr( get_post_meta( $track->ID, '_artist', true ) ); ?>" class="widefat"></td>
 				<td class="column-track-info">
 					<?php
 					if ( $track->ID && audiotheme_track_has_download( $track->ID ) ) {
@@ -48,7 +48,7 @@
 						);
 					}
 					?>
-					<a class="meta-repeater-remove-item show-on-add"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/delete.png" width="16" height="16" alt="Delete Item" title="Delete Item" class="icon-delete" /></a>
+					<a class="meta-repeater-remove-item show-on-add"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/delete.png" width="16" height="16" alt="<?php _e( 'Delete Item', 'audiotheme-i18n' ) ?>" title="<?php _e( 'Delete Item', 'audiotheme-i18n' ) ?>" class="icon-delete" /></a>
 				</td>
 			</tr>
 		<?php endforeach; ?>
