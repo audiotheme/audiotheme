@@ -89,7 +89,7 @@ function audiotheme_record_display_column( $column_name, $post_id ) {
 				'post_type' => 'audiotheme_track',
 				'post_parent' => $post_id
 			);
-			printf( '<a href="%s">%s</a>', add_query_arg( $args, admin_url( 'edit.php' ) ), get_post_meta( $post_id, '_track_count', true ) );
+			printf( '<a href="%s">%s</a>', add_query_arg( $args, esc_url( admin_url( 'edit.php' ) ) ), get_post_meta( $post_id, '_track_count', true ) );
 			break;
 			
 	}
@@ -227,7 +227,7 @@ function audiotheme_record_save_hook( $post_id ) {
  */
 function audiotheme_edit_record_meta_boxes( $post ) {
 	remove_meta_box( 'submitdiv', 'audiotheme_record', 'side' );
-	add_meta_box( 'submitdiv', 'Publish', 'audiotheme_post_submit_meta_box', 'audiotheme_record', 'side', 'high', array(
+	add_meta_box( 'submitdiv', __( 'Publish', 'audiotheme-i18n' ), 'audiotheme_post_submit_meta_box', 'audiotheme_record', 'side', 'high', array(
 		'force_delete' => false,
 		'show_publish_date' => false,
 		'show_statuses' => array(),
@@ -307,7 +307,7 @@ function audiotheme_record_details_meta_box( $post ) {
 		<tfoot>
 			<tr>
 				<td colspan="2">
-					<a class="button meta-repeater-add-item">Add URL</a>
+					<a class="button meta-repeater-add-item"><?php _e( 'Add URL', 'audiotheme-i18n' ) ?></a>
 					<?php printf( '<span class="meta-repeater-sort-warning" style="display: none;">%1$s <br /><em>%2$s</em></span>',
 						esc_html__( 'The order has been changed.', 'audiotheme-i18n' ),
 						esc_html__( 'Save your changes.', 'audiotheme-i18n' )
@@ -323,9 +323,9 @@ function audiotheme_record_details_meta_box( $post ) {
 			foreach( $record_links as $i => $link ) :
 				?>
 				<tr class="meta-repeater-item">
-					<td><input type="text" name="record_links[<?php echo $i; ?>][name]" value="<?php echo esc_attr( $link['name'] ); ?>" placeholder="Text" class="record-link-name clear-on-add" style="width: 8em"></td>
+					<td><input type="text" name="record_links[<?php echo $i; ?>][name]" value="<?php echo esc_attr( $link['name'] ); ?>" placeholder="<?php _e( 'Text', 'audiotheme-i18n' ) ?>" class="record-link-name clear-on-add" style="width: 8em"></td>
 					<td><input type="text" name="record_links[<?php echo $i; ?>][url]" value="<?php echo esc_url_raw( $link['url'] ); ?>" placeholder="URL" class="widefat clear-on-add"></td>
-					<td class="column-action"><a class="meta-repeater-remove-item"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/delete.png" width="16" height="16" alt="Delete Item" title="Delete Item" class="icon-delete" /></a></td>
+					<td class="column-action"><a class="meta-repeater-remove-item"><img src="<?php echo esc_url( AUDIOTHEME_URI . '/admin/images/delete.png' ); ?>" width="16" height="16" alt="<?php _e( 'Delete Item', 'audiotheme-i18n' ) ?>" title="<?php _e( 'Delete Item', 'audiotheme-i18n' ) ?>" class="icon-delete" /></a></td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>

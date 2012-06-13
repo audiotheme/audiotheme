@@ -194,7 +194,6 @@ function audiotheme_discography_permalinks( $post_link, $post, $leavename, $samp
  * @since 1.0
  */
 require( AUDIOTHEME_DIR . 'discography/general-template.php' );
-require( AUDIOTHEME_DIR . 'discography/track-file-template.php' );
 
 if ( is_admin() ) {
 
