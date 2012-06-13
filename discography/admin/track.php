@@ -97,10 +97,13 @@ function audiotheme_tracks_admin_query( $wp_query ) {
  */
 function audiotheme_track_columns( $columns ) {
 	$columns = array(
-		'cb'           => '<input type="checkbox">',
-		'title'        => _x( 'Title', 'column_name', 'audiotheme-i18n' ),
-		'artist'       => __( 'Artist', 'audiotheme-i18n' ),
-		'record'       => __( 'Record', 'audiotheme-i18n' )
+		'cb'       => '<input type="checkbox">',
+		'title'    => _x( 'Title', 'column_name', 'audiotheme-i18n' ),
+		'artist'   => __( 'Artist', 'audiotheme-i18n' ),
+		'record'   => __( 'Record', 'audiotheme-i18n' ),
+		'file'     => __( 'Audio File', 'audiotheme-i18n' ),
+		'download' => __( 'Downloadable', 'audiotheme-i18n' ),
+		'purchase' => __( 'Purchase URL', 'audiotheme-i18n' )
 	);
 	
 	return $columns;
@@ -125,6 +128,35 @@ function audiotheme_track_display_column( $column_name, $post_id ) {
 				apply_filters( 'the_title', $record->post_title )
 			);
 			break;
+		case 'file' :
+			$url = get_audiotheme_track_file_url( $post_id );
+			
+			if ( $url ) {
+				printf( '<a href="%1$s" target="_blank">%2$s</a>',
+					esc_url( $url ),
+					__( 'Link', 'audiotheme-i18n' )
+				);
+			} else {
+				echo '&mdash;';
+			}
+			
+			break;
+		case 'download' :
+			echo audiotheme_track_has_download( $post_id ) ? __( 'Yes', 'audiotheme-i18n' ) : __( 'No', 'audiotheme-i18n' );
+			break;
+		case 'purchase' :
+			$url = get_audiotheme_track_purchase_url( $post_id );
+			
+			if ( $url ) {
+				printf( '<a href="%1$s" target="_blank">%2$s</a>',
+					esc_url( $url ),
+					__( 'Link', 'audiotheme-i18n' )
+				);
+			} else {
+				echo '&mdash;';
+			}
+			
+			break;
 	}
 }
 
@@ -136,6 +168,7 @@ function audiotheme_track_display_column( $column_name, $post_id ) {
 function audiotheme_track_sortable_columns( $columns ) {
 	$columns['artist'] = 'artist';
 	$columns['track_count'] = 'tracks';
+	$columns['download'] = 'download';
 	
 	return $columns;
 }
@@ -182,7 +215,7 @@ function audiotheme_tracks_filters() {
 			if ( $records ) {
 				foreach ( $records as $record ) {
 					echo printf( '<option value="%1$d"%2$s>%3$s</option>',
-						$record->ID,
+						esc_attr( $record->ID ),
 						selected( $_GET['post_parent'], $record->ID, false ),
 						esc_html( $record->post_title )
 					);

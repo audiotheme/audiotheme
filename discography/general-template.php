@@ -123,4 +123,32 @@ function get_audiotheme_track_file_url( $post_id = null ) {
 }
 
 
+/**
+ * Check if post has an purchase url supplied.
+ *
+ * @since 1.0.0
+ *
+ * @param int $post_id Optional. Post ID.
+ * @return bool Whether post has an video url supplied.
+ */
+function has_audiotheme_track_purchase_url( $post_id = null ) {
+	return (bool) get_audiotheme_track_purchase_url( $post_id );
+}
+
+
+/**
+ * Retrieve Track Purchase URL.
+ *
+ * @since 1.0.0
+ *
+ * @param int $post_id Optional. Post ID.
+ * @return string
+ */
+function get_audiotheme_track_purchase_url( $post_id = null ) {
+	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
+	return get_post_meta( $post_id, '_purchase_url', true );
+}
+
+
+
 ?>
