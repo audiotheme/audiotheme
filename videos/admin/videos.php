@@ -113,7 +113,7 @@ function audiotheme_video_meta_cb( $post ) {
 	</p>
 	
 	<div id="audiotheme-video-preview">
-		<?php if( $video ) the_audiotheme_post_video( array( 'width' => 258 ) ); ?>
+		<?php if( $video ) echo get_the_audiotheme_post_video( $post->ID, array( 'width' => 258 ) ); ?>
 	</div>
 	
 	<p>
