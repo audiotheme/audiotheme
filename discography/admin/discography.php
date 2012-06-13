@@ -134,7 +134,7 @@ function audiotheme_discography_rewrite_base_settings_field() {
 	$discography_base = get_option( 'audiotheme_discography_rewrite_base' );
 	?>
 	<input type="text" name="audiotheme_discography_rewrite_base" id="audiotheme-discography-rewrite-base" value="<?php echo esc_attr( $discography_base ); ?>" class="regular-text code">
-	<span class="description"><?php _e( 'Default is <code>record</code>.', 'audiotheme-i18n' ); ?></span>
+	<span class="description"><?php _e( 'Default is <code>music</code>.', 'audiotheme-i18n' ); ?></span>
 	<?php
 }
 ?>
