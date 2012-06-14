@@ -24,11 +24,12 @@ function audiotheme_gigs_init() {
 			'all_items'          => __( 'All Gigs', 'audiotheme-i18n' ),
 			'menu_name'          => __( 'Gigs', 'audiotheme-i18n' )
 		),
-		'menu_position'          => 6,
+		'menu_position'          => 512,
 		'public'                 => true,
 		'register_meta_box_cb'   => 'audiotheme_edit_gig_meta_boxes',
 		'rewrite'                => false,
 		'show_in_menu'           => 'gigs',
+		'show_in_nav_menus'      => false,
 		'supports'               => array( 'title', 'editor', 'thumbnail', '' )
 	) );
 	

@@ -27,6 +27,9 @@ function audiotheme_admin_setup() {
 	add_action( 'manage_pages_custom_column', 'audiotheme_display_custom_column', 10, 2 );
 	add_action( 'manage_posts_custom_column', 'audiotheme_display_custom_column', 10, 2 );
 	
+	add_filter( 'custom_menu_order', '__return_true' );
+	add_filter( 'menu_order', 'audiotheme_admin_menu_order', 999 );
+	
 	if ( current_theme_supports( 'audiotheme-options' ) ) {
 		$options = AudioTheme_Options::get_instance();
 		$panel = $options->add_panel( 'theme-options', __( 'Theme Options', 'audiotheme-i18n' ), array(
@@ -54,6 +57,76 @@ function audiotheme_admin_setup() {
 function audiotheme_enqueue_admin_scripts() {
 	wp_enqueue_script( 'audiotheme-admin' );
 	wp_enqueue_style( 'audiotheme-admin' );
+	
+	add_meta_box( 'add-audiotheme-archive-links', __( 'AudioTheme Pages', 'audiotheme-i18n' ), 'audiotheme_nav_menu_item_link_meta_box', 'nav-menus', 'side', 'default' );
+}
+
+function audiotheme_nav_menu_item_link_meta_box( $object, $post_type ) {
+	global $_nav_menu_placeholder, $nav_menu_selected_id;
+	
+	$post_type_name = 'audiotheme_archive_pages';
+
+	$db_fields = false;
+	$walker = new Walker_Nav_Menu_Checklist( $db_fields );
+
+	$current_tab = 'all';
+	if ( isset( $_REQUEST[ $post_type_name . '-tab' ] ) && in_array( $_REQUEST[ $post_type_name . '-tab' ], array( 'all', 'search' ) ) ) {
+		$current_tab = $_REQUEST[ $post_type_name . '-tab' ];
+	}
+
+	$removed_args = array(
+		'action',
+		'customlink-tab',
+		'edit-menu-item',
+		'menu-item',
+		'page-tab',
+		'_wpnonce',
+	);
+	?>
+	<div id="posttype-<?php echo $post_type_name; ?>" class="posttypediv">
+		<ul id="posttype-<?php echo $post_type_name; ?>-tabs" class="posttype-tabs add-menu-item-tabs">
+			<li class="tabs"><a class="nav-tab-link" href="<?php if ( $nav_menu_selected_id ) echo esc_url( add_query_arg( $post_type_name . '-tab', 'all', remove_query_arg( $removed_args ) ) ); ?>#<?php echo $post_type_name; ?>-all"><?php _e('View All'); ?></a></li>
+		</ul>
+
+		<div id="<?php echo $post_type_name; ?>-all" class="tabs-panel tabs-panel-view-all tabs-panel-active">
+			<ul id="<?php echo $post_type_name; ?>checklist" class="list:<?php echo $post_type_name?> categorychecklist form-no-clear">
+				<?php
+				$args['walker'] = $walker;
+				
+				$posts = apply_filters( 'nav_menu_items_' . $post_type_name, array(), $args, $post_type );
+				$posts = sort_objects( $posts, 'post_title', 'asc', false );
+				
+				$checkbox_items = walk_nav_menu_tree( array_map( 'wp_setup_nav_menu_item', $posts ), 0, (object) $args );
+				if ( 'all' == $current_tab && ! empty( $_REQUEST['selectall'] ) ) {
+					$checkbox_items = preg_replace( '/(type=(.)checkbox(\2))/', '$1 checked=$2checked$2', $checkbox_items );
+				}
+
+				echo $checkbox_items;
+				?>
+			</ul>
+		</div><!-- /.tabs-panel -->
+
+		<p class="button-controls">
+			<span class="list-controls">
+				<a href="<?php
+					echo esc_url( add_query_arg(
+						array(
+							$post_type_name . '-tab' => 'all',
+							'selectall' => 1,
+						),
+						remove_query_arg( $removed_args )
+					));
+				?>#posttype-<?php echo $post_type_name; ?>" class="select-all"><?php _e( 'Select All' ); ?></a>
+			</span>
+
+			<span class="add-to-menu">
+				<img class="waiting" src="<?php echo esc_url( admin_url( 'images/wpspin_light.gif' ) ); ?>" alt="" />
+				<input type="submit"<?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu" value="<?php esc_attr_e( 'Add to Menu' ); ?>" name="add-post-type-menu-item" id="submit-posttype-<?php echo $post_type_name; ?>">
+			</span>
+		</p>
+
+	</div><!-- /.posttypediv -->
+	<?php
 }
 
 /**
@@ -100,5 +173,36 @@ function audiotheme_edit_user_contact_info( $contactmethods ) {
 	$contactmethods['facebook'] = __( 'Facebook  <span class="description">(link)</span>', 'audiotheme-i18n' );
 	
 	return $contactmethods;
+}
+
+/**
+ * Re-order the admin menu
+ *
+ * Positions AudioTheme admin menu items after Posts menu item if the
+ * Gigs menu item hasn't been modified. Should place nice with plugins.
+ *
+ * @since 1.0
+ */
+function audiotheme_admin_menu_order( $menu_order ) {
+	global $menu;
+	
+	$start_key = array_search( 'edit.php', $menu_order );
+	
+	// only try to re-order the menu items if the gigs menu hasn't been moved
+	if ( false !== $start_key && array_key_exists( 512, $menu ) && 'gigs' == $menu[512][2] ) {
+		$audiotheme_admin_menu_order = array( 'gigs', 'edit.php?post_type=audiotheme_record', 'edit.php?post_type=audiotheme_video', 'edit.php?post_type=audiotheme_gallery' );
+		
+		foreach ( $audiotheme_admin_menu_order as $i => $item ) {
+			$menu_key = array_search( $item, $menu_order );
+			if ( $menu_key ) {
+				$new_position = $start_key + $i + 1;
+				array_splice( $menu_order, $new_position, 0, $menu_order[ $menu_key ] ); // insert the item in it's new location
+				unset( $menu_order[ $menu_key + 1 ] ); // remove the old menu item
+				$menu_order = array_values( $menu_order ); // re-key the array
+			}
+		}
+	}
+	
+	return $menu_order;
 }
 ?>

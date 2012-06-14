@@ -24,12 +24,13 @@ function audiotheme_videos_init() {
 			'not_found_in_trash' => __( 'No videos found in Trash', 'audiotheme-i18n' ),
 			'all_items'          => __( 'Videos', 'audiotheme-i18n' )
 		),
-		'menu_position'          => 8,
+		'menu_position'          => 514,
 		'public'                 => true,
 		'publicly_queryable'     => true,
 		'rewrite'                => array( 'slug' => 'videos', 'with_front' => false ),
 		'show_ui'                => true,
 		'show_in_menu'           => true,
+		'show_in_nav_menus'      => false,
 		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' ),
 		'taxonomies'             => array( 'post_tag' )
 	) );
@@ -59,7 +60,7 @@ function audiotheme_videos_init() {
 		'query_var'                      => true,
 		'rewrite'                        => array( 'slug' => 'videos/type', 'with_front' => false ),
 		'show_ui'                        => true,
-		'show_in_nav_menus'              => true
+		'show_in_nav_menus'              => false
 	) );
 }
 

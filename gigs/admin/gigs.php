@@ -11,8 +11,8 @@ function audiotheme_load_gigs_admin() {
 	add_filter( 'set-screen-option', 'audiotheme_gigs_screen_options', 10, 3 );
 	add_action( 'save_post', 'audiotheme_gig_save_hook' );
 	add_filter( 'get_edit_post_link', 'get_audiotheme_venue_edit_link', 10, 2 );
-	
 	add_action( 'before_delete_post', 'audiotheme_gig_before_delete_hook' );
+	add_filter( 'nav_menu_items_audiotheme_archive_pages', 'audiotheme_gigs_archive_menu_item' );
 }
 
 function audiotheme_gigs_admin_menu() {
@@ -30,7 +30,7 @@ function audiotheme_gigs_admin_menu() {
 	
 	remove_submenu_page( 'gigs', 'edit.php?post_type=audiotheme_gig' );
 	
-	$all_gigs_hook = add_menu_page( $gig_object->labels->name, $gig_object->labels->menu_name, 'edit_posts', 'gigs', 'audiotheme_all_gigs_screen', NULL, 6 );
+	$all_gigs_hook = add_menu_page( $gig_object->labels->name, $gig_object->labels->menu_name, 'edit_posts', 'gigs', 'audiotheme_all_gigs_screen', NULL, 512 );
 		add_submenu_page( 'gigs', $gig_object->labels->name, $gig_object->labels->all_items, 'edit_posts', 'gigs', 'audiotheme_all_gigs_screen' );
 		$edit_gig_hook = add_submenu_page( 'gigs', $gig_object->labels->add_new_item, $gig_object->labels->add_new_item, 'edit_posts', 'post-new.php?post_type=audiotheme_gig' );
 		$all_venues_hook = add_submenu_page( 'gigs', $venue_object->labels->name, $venue_object->labels->menu_name, 'edit_posts', 'venues', 'audiotheme_all_venues_screen' );
@@ -290,5 +290,32 @@ function audiotheme_gigs_rewrite_base_settings_field() {
 	<input type="text" name="audiotheme_gigs_rewrite_base" id="audiotheme-gigs-rewrite-base" value="<?php echo esc_attr( $gigs_base ); ?>" class="regular-text code">
 	<span class="description"><?php _e( 'Default is <code>shows</code>.', 'audiotheme-i18n' ); ?></span>
 	<?php
+}
+
+function audiotheme_gigs_archive_menu_item( $posts ) {
+	global $_nav_menu_placeholder;
+	$_nav_menu_placeholder = ( 0 > $_nav_menu_placeholder ) ? intval( $_nav_menu_placeholder ) - 1 : -1;
+	
+	$permalink = get_option( 'permalink_structure' );
+	if ( ! empty( $permalink ) ) {
+		$url = home_url( sprintf( '/%s/', get_audiotheme_gigs_rewrite_base() ) );
+	} else {
+		$url = add_query_arg( 'post_type', 'audiotheme_gig', home_url( '/' ) );
+	}
+	
+	array_unshift( $posts, (object) array(
+		'_add_to_top' => false,
+		'ID' => 0,
+		'object_id' => $_nav_menu_placeholder,
+		'post_content' => '',
+		'post_excerpt' => '',
+		'post_parent' => '',
+		'post_title' => _x( 'Gigs', 'nav menu archive label' ),
+		'post_type' => 'nav_menu_item',
+		'type' => 'custom',
+		'url' => $url
+	) );
+	
+	return $posts;
 }
 ?>

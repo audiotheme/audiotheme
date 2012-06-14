@@ -24,13 +24,14 @@ function audiotheme_galleries_init() {
 			'not_found_in_trash' => __( 'No galleries found in Trash', 'audiotheme-i18n' ),
 			'all_items'          => __( 'All Galleries', 'audiotheme-i18n' )
 		),
-		'menu_position'          => 9,
+		'menu_position'          => 515,
 		'public'                 => true,
 		'publicly_queryable'     => true,
 		'register_meta_box_cb'   => 'audiotheme_edit_gallery_meta_boxes',
 		'rewrite'                => array( 'slug' => 'gallery', 'with_front' => false ),
 		'show_ui'                => true,
 		'show_in_menu'           => true,
+		'show_in_nav_menus'     => false,
 		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' )
 	) );
 }
