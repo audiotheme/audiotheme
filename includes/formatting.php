@@ -49,11 +49,11 @@ function audiotheme_truncate_phrase( $phrase, $max_characters ) {
  *
  * @since 1.0
  */
-function audiotheme_get_the_content_limit( $max_char = 55, $more_link_text = '(more...)', $stripteaser = 0 ) {
+function audiotheme_get_the_content_limit( $max_char = 155, $more_link_text = '(more...)', $stripteaser = 0 ) {
 	$content = get_the_content( '', $stripteaser );
 
 	// Strip tags and shortcodes
-	$content = strip_tags( strip_shortcodes( $content ), apply_filters( 'get_the_content_limit_allowedtags', '<script>,<style>' ) );
+	$content = strip_tags( strip_shortcodes( $content ), apply_filters( 'audiotheme_get_the_content_limit_allowedtags', '<script>,<style>' ) );
 
 	// Inline styles/scripts
 	$content = trim( preg_replace( '#<( s( cript|tyle ) ).*?</\1>#si', '', $content ) );
@@ -63,7 +63,7 @@ function audiotheme_get_the_content_limit( $max_char = 55, $more_link_text = '(m
 
 	// More Link?
 	if ( $more_link_text ) {
-		$link = apply_filters( 'get_the_content_more_link', sprintf( '%s <a href="%s" class="more-link">%s</a>', g_ent( '&hellip;' ), get_permalink(), $more_link_text ), $more_link_text );
+		$link = apply_filters( 'audiotheme_get_the_content_more_link', sprintf( '%s <a href="%s" class="more-link">%s</a>', g_ent( '&hellip;' ), get_permalink(), $more_link_text ), $more_link_text );
 
 		$output = sprintf( '<p>%s %s</p>', $content, $link );
 	}
@@ -71,7 +71,7 @@ function audiotheme_get_the_content_limit( $max_char = 55, $more_link_text = '(m
 		$output = sprintf( '<p>%s</p>', $content );
 	}
 
-	return apply_filters( 'get_the_content_limit', $output, $content, $link, $max_char );
+	return apply_filters( 'audiotheme_get_the_content_limit', $output, $content, $link, $max_char );
 }
 
 
@@ -84,9 +84,9 @@ function audiotheme_get_the_content_limit( $max_char = 55, $more_link_text = '(m
  *
  * @since 1.0
  */
-function audiotheme_the_content_limit( $max_char, $more_link_text = '( more... )', $stripteaser = 0 ) {
-	$content = get_the_content_limit( $max_char, $more_link_text, $stripteaser );
-	echo apply_filters( 'the_content_limit', $content );
+function audiotheme_the_content_limit( $max_char = 155, $more_link_text = '( more... )', $stripteaser = 0 ) {
+	$content = audiotheme_get_the_content_limit( $max_char, $more_link_text, $stripteaser );
+	echo apply_filters( 'audiotheme_the_content_limit', $content );
 }
 
 
