@@ -25,7 +25,6 @@
  * @return string
  */
 function audiotheme_truncate_phrase( $phrase, $max_characters ) {
-
 	$phrase = trim( $phrase );
 
 	if ( strlen( $phrase ) > $max_characters ) {
@@ -50,8 +49,7 @@ function audiotheme_truncate_phrase( $phrase, $max_characters ) {
  *
  * @since 1.0
  */
-function audiotheme_get_the_content_limit( $max_char, $more_link_text = '(more...)', $stripteaser = 0 ) {
-
+function audiotheme_get_the_content_limit( $max_char = 55, $more_link_text = '(more...)', $stripteaser = 0 ) {
 	$content = get_the_content( '', $stripteaser );
 
 	// Strip tags and shortcodes
@@ -74,15 +72,23 @@ function audiotheme_get_the_content_limit( $max_char, $more_link_text = '(more..
 	}
 
 	return apply_filters( 'get_the_content_limit', $output, $content, $link, $max_char );
-
 }
 
-function audiotheme_the_content_limit( $max_char, $more_link_text = '( more... )', $stripteaser = 0 ) {
 
+/**
+ * The Content with Limit
+ *
+ * This function uses audiotheme_get_the_content_limit()
+ * and echos back the result. The result is the content
+ * without tags or shortcodes
+ *
+ * @since 1.0
+ */
+function audiotheme_the_content_limit( $max_char, $more_link_text = '( more... )', $stripteaser = 0 ) {
 	$content = get_the_content_limit( $max_char, $more_link_text, $stripteaser );
 	echo apply_filters( 'the_content_limit', $content );
-
 }
+
 
 /**
  * Rel No-Follow
@@ -116,7 +122,6 @@ function audiotheme_rel_nofollow( $xhtml ) {
  * @since 1.0
  */
 function audiotheme_strip_attr( $xhtml, $elements, $attributes, $two_passes = true ) {
-
 	// Cache elements pattern
 	$elements_pattern = join( '|', $elements );
 
@@ -135,11 +140,11 @@ function audiotheme_strip_attr( $xhtml, $elements, $attributes, $two_passes = tr
 	// First pass
 	$xhtml = preg_replace( $patterns, '$1$2', $xhtml );
 
-	if ( $two_passes ) // Second pass
+	// Second pass
+	if ( $two_passes ) 
 		$xhtml = preg_replace( $patterns, '$1$2', $xhtml );
 
 	return $xhtml;
-
 }
 
 
@@ -159,14 +164,12 @@ function audiotheme_strip_attr( $xhtml, $elements, $attributes, $two_passes = tr
  * @since 1.0
  */
 function audiotheme_tweet_linkify( $tweet ) {
-
 	$tweet = preg_replace( "#( ^|[\n ] )( [\w]+?://[\w]+[^ \"\n\r\t< ]* )#", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $tweet );
 	$tweet = preg_replace( "#( ^|[\n ] )( ( www|ftp )\.[^ \"\t\n\r< ]* )#", "\\1<a href=\"http://\\2\" target=\"_blank\">\\2</a>", $tweet );
 	$tweet = preg_replace( "/@( \w+ )/", "<a href=\"http://www.twitter.com/\\1\" target=\"_blank\">@\\1</a>", $tweet );
 	$tweet = preg_replace( "/#( \w+ )/", "<a href=\"http://search.twitter.com/search?q=\\1\" target=\"_blank\">#\\1</a>", $tweet );
 
 	return $tweet;
-
 }
 
 
@@ -179,10 +182,9 @@ function audiotheme_tweet_linkify( $tweet ) {
  * @since 1.0
  */
 function g_ent( $text = '' ) {
-
 	return apply_filters( 'g_ent', $text );
-
 }
+
 
 /**
  * This function returns an array of allowed tags for output formatting.
@@ -191,7 +193,6 @@ function g_ent( $text = '' ) {
  * @since 1.6
  */
 function audiotheme_formatting_allowedtags() {
-
 	return apply_filters( 'audiotheme_formatting_allowedtags', array( 
 		//	<p>, <span>, <div>
 		'p' => array( 'align' => array(), 'class' => array(), 'style' => array() ),
@@ -212,8 +213,8 @@ function audiotheme_formatting_allowedtags() {
 		'blockquote' => array(),
 		'br' => array()
 	 ) );
-
 }
+
 
 /**
  * Calculate the time difference - a replacement for human_time_diff() until it
@@ -228,14 +229,13 @@ function audiotheme_formatting_allowedtags() {
  *  - 4 days
  *  - 4 weeks and 6 days
  *
- * @since 1.7
+ * @since 1.0
  *
  * @param $older_date int Unix timestamp of date you want to calculate the time since for
  * @param $newer_date int Unix timestamp of date to compare older date to. Default false ( current time )
  * @return str The time difference
  */
 function audiotheme_human_time_diff( $older_date, $newer_date = false ) {
-
 	// If no newer date is given, assume now
 	$newer_date = $newer_date ? $newer_date : time();
 
@@ -284,5 +284,6 @@ function audiotheme_human_time_diff( $older_date, $newer_date = false ) {
 	}
 
 	return $output;
-
 }
+
+?>
