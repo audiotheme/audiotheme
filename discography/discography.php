@@ -37,7 +37,7 @@ function audiotheme_discography_init() {
 	
 	register_post_type( 'audiotheme_track', array(
 		'capability_type'        => 'post',
-		'has_archive'            => false,
+		'has_archive'            => true,
 		'hierarchical'           => false,
 		'labels'                 => array(
 			'name'               => _x( 'Tracks', 'post type general name', 'audiotheme-i18n' ),
@@ -57,7 +57,7 @@ function audiotheme_discography_init() {
 		'register_meta_box_cb'   => 'audiotheme_edit_track_meta_boxes',
 		'rewrite'                => false,
 		'show_ui'                => true,
-		'show_in_menu'           => 'edit.php?post_type=audiotheme_record', // TODO: set to false before release?
+		'show_in_menu'           => 'edit.php?post_type=audiotheme_record',
 		'show_in_nav_menus'      => false,
 		'supports'               => array( 'title', 'editor' )
 	) );
@@ -113,6 +113,7 @@ function get_audiotheme_discography_rewrite_base() {
 function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
 	$base = get_audiotheme_discography_rewrite_base();
 	
+	$new_rules[ $base . '/tracks/?$' ] = 'index.php?post_type=audiotheme_track';
 	$new_rules[ $base .'/([^/]+)/track/([^/]+)?$'] = 'index.php?audiotheme_record=$matches[1]&audiotheme_track=$matches[2]';
 	$new_rules[ $base . '/([^/]+)/?$'] = 'index.php?audiotheme_record=$matches[1]';
 	$new_rules[ $base . '/?$' ] = 'index.php?post_type=audiotheme_record';
