@@ -32,7 +32,7 @@ function audiotheme_video_post_updated_messages( $messages ) {
 /**
  * Register Video Columns
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_video_columns( $columns ) {
 	$columns = array(
@@ -51,7 +51,7 @@ function audiotheme_video_columns( $columns ) {
 /**
  * Display Custom Video Columns
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_video_display_column( $column_name, $post_id ) {
 	switch ( $column_name ) {
@@ -79,7 +79,7 @@ function audiotheme_video_display_column( $column_name, $post_id ) {
 /**
  * Add Video Meta Boxes
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_video_meta_boxes() {
 	add_meta_box( 'audiotheme-video-meta', __( 'Video Library: Add Video URL', 'audiotheme-i18n' ), 'audiotheme_video_meta_cb', 'audiotheme_video', 'side', 'high' );
@@ -88,7 +88,7 @@ function audiotheme_video_meta_boxes() {
 /**
  * Video Metabox Callback
  *
- * @since 1.0
+ * @since 1.0.0
  *
  * @TODO Move css and javascript to external files
  * @TODO The thumbnail should be sufficient for a preview, 
@@ -160,7 +160,7 @@ function audiotheme_video_meta_cb( $post ) {
 /**
  * Get Video Data
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_get_video_data() {
 	global $post_ID;
@@ -183,7 +183,7 @@ function audiotheme_get_video_data() {
 /**
  * Parse Video oEmbed Data
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_oembed_dataparse( $return, $data, $url ) {
 	global $post_ID;
@@ -223,7 +223,7 @@ function audiotheme_oembed_dataparse( $return, $data, $url ) {
 /**
  * Add Video Thumbnail
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_add_video_thumbnail( $attachment_id ) {
 	global $post_ID;
@@ -233,7 +233,7 @@ function audiotheme_add_video_thumbnail( $attachment_id ) {
 /**
  * Save Video Metabox Values
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_video_save( $id ) {
 	// Let's not auto save the data

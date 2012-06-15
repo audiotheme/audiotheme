@@ -164,7 +164,7 @@ function audiotheme_edit_gig_fields() {
 /**
  * Gig Tickets Meta Box
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_gig_tickets_meta_box( $post ) {
 	?>
@@ -186,7 +186,7 @@ function audiotheme_gig_tickets_meta_box( $post ) {
  * Determines if a venue's gig_count meta field needs to be updated
  * when a gig is deleted.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_gig_before_delete_hook( $post_id ) {
 	if ( 'audiotheme_gig' == get_post_type( $post_id ) ) {
@@ -201,7 +201,7 @@ function audiotheme_gig_before_delete_hook( $post_id ) {
 /**
  * Process and save gig info when an audiotheme_gig CPT is saved
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_gig_save_hook( $gig_id ) {
 	global $wpdb;
@@ -267,7 +267,7 @@ function audiotheme_gig_save_hook( $gig_id ) {
 /**
  * Register Gigs Rewrite Base Setting
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_gigs_admin_init() {
 	add_settings_field(
@@ -282,7 +282,7 @@ function audiotheme_gigs_admin_init() {
 /**
  * Callback for Displaying Gigs Rewrite Base
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_gigs_rewrite_base_settings_field() {
 	$gigs_base = get_option( 'audiotheme_gigs_rewrite_base' );

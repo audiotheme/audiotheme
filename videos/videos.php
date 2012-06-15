@@ -2,7 +2,7 @@
 /**
  * Videos Init
  *
- * @since 1.0
+ * @since 1.0.0
  */
 add_action( 'init', 'audiotheme_videos_init' );
 
@@ -68,7 +68,7 @@ function audiotheme_videos_init() {
 /**
  * Video Inclusions
  *
- * @since 1.0
+ * @since 1.0.0
  */
 require( AUDIOTHEME_DIR . 'videos/post-video-template.php' );
 

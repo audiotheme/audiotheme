@@ -2,7 +2,7 @@
 /**
  * Discography Init
  *
- * @since 1.0
+ * @since 1.0.0
  */
 add_action( 'init', 'audiotheme_discography_init' );
 
@@ -98,7 +98,7 @@ function audiotheme_discography_init() {
 /**
  * Get Discography Rewrite Base
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_discography_rewrite_base() {
 	$base = get_option( 'audiotheme_discography_rewrite_base' );
@@ -108,7 +108,7 @@ function get_audiotheme_discography_rewrite_base() {
 /**
  * Add Discography Rewrite Rules
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
 	$base = get_audiotheme_discography_rewrite_base();
@@ -124,7 +124,7 @@ function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
 /**
  * Filter Discography Requests
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_discography_query( $query ) {
 	global $wpdb;
@@ -153,7 +153,7 @@ function audiotheme_discography_query( $query ) {
 /**
  * Discography Permalinks
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_discography_permalinks( $post_link, $post, $leavename, $sample ) {
 	global $wpdb;
@@ -183,7 +183,7 @@ function audiotheme_discography_permalinks( $post_link, $post, $leavename, $samp
 /**
  * Discography Inclusions
  *
- * @since 1.0
+ * @since 1.0.0
  */
 require( AUDIOTHEME_DIR . 'discography/general-template.php' );
 

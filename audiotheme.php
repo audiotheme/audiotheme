@@ -32,9 +32,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * Define Constants
  *
- * @since 1.0
+ * @since 1.0.0
  */
-define( 'AUDIOTHEME_VERSION', 1.0 );
+define( 'AUDIOTHEME_VERSION', '1.0.0' );
 
 if ( ! defined( 'AUDIOTHEME_DIR' ) )
     define( 'AUDIOTHEME_DIR', get_template_directory() . '/audiotheme/' );
@@ -45,7 +45,7 @@ if ( ! defined( 'AUDIOTHEME_URI' ) )
 /**
  * General Inclusions
  *
- * @since 1.0
+ * @since 1.0.0
  */
 require( AUDIOTHEME_DIR . 'includes/general-template.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
@@ -57,7 +57,7 @@ require( AUDIOTHEME_DIR . 'includes/media.php' );
 /**
  * AudioTheme Setup
  *
- * @since 1.0
+ * @since 1.0.0
  */
 add_action( 'after_setup_theme', 'audiotheme_setup' );
 function audiotheme_setup() {
@@ -84,7 +84,7 @@ function audiotheme_setup() {
 /**
  * AudioTheme Init
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_init() {
 	
@@ -93,7 +93,7 @@ function audiotheme_init() {
 /**
  * Register Scripts
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_register_scripts() {
 	wp_register_script( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/js/audiotheme-admin.js', array( 'jquery-ui-sortable' ) );

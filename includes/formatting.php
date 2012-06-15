@@ -18,7 +18,7 @@
  * If the first $max_characters of the string do contain a space
  * character, an empty string will be returned.
  *
- * @since 1.0
+ * @since 1.0.0
  *
  * @param string $phrase A string to be shortened.
  * @param integer $max_characters The maximum number of characters to return.
@@ -47,7 +47,7 @@ function audiotheme_truncate_phrase( $phrase, $max_characters ) {
  * limits the output to $max_char characters,
  * and appends an ellipses and more link to the end.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_get_the_content_limit( $max_char = 155, $more_link_text = '(more...)', $stripteaser = 0 ) {
 	$content = get_the_content( '', $stripteaser );
@@ -82,7 +82,7 @@ function audiotheme_get_the_content_limit( $max_char = 155, $more_link_text = '(
  * and echos back the result. The result is the content
  * without tags or shortcodes
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_the_content_limit( $max_char = 155, $more_link_text = '( more... )', $stripteaser = 0 ) {
 	$content = audiotheme_get_the_content_limit( $max_char, $more_link_text, $stripteaser );
@@ -93,7 +93,7 @@ function audiotheme_the_content_limit( $max_char = 155, $more_link_text = '( mor
 /**
  * Rel No-Follow
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_rel_nofollow( $xhtml ) {
 	$xhtml = audiotheme_strip_attr( $xhtml, array( 'a' ), array( 'rel' ) );
@@ -119,7 +119,7 @@ function audiotheme_rel_nofollow( $xhtml ) {
  *
  * @return string
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_strip_attr( $xhtml, $elements, $attributes, $two_passes = true ) {
 	// Cache elements pattern
@@ -161,7 +161,7 @@ function audiotheme_strip_attr( $xhtml, $elements, $attributes, $two_passes = tr
  *
  * @return string
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_tweet_linkify( $tweet ) {
 	$tweet = preg_replace( "#( ^|[\n ] )( [\w]+?://[\w]+[^ \"\n\r\t< ]* )#", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $tweet );
@@ -179,7 +179,7 @@ function audiotheme_tweet_linkify( $tweet ) {
  * This is a helper function. It passes text through the g_ent filter
  * so that entities can be converted on-the-fly.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function g_ent( $text = '' ) {
 	return apply_filters( 'g_ent', $text );
@@ -229,7 +229,7 @@ function audiotheme_formatting_allowedtags() {
  *  - 4 days
  *  - 4 weeks and 6 days
  *
- * @since 1.0
+ * @since 1.0.0
  *
  * @param $older_date int Unix timestamp of date you want to calculate the time since for
  * @param $newer_date int Unix timestamp of date to compare older date to. Default false ( current time )

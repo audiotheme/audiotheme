@@ -2,7 +2,7 @@
 /**
  * Load Discography Admin
  *
- * @since 1.0
+ * @since 1.0.0
  */
 add_action( 'init', 'audiotheme_load_discography_admin' );
 function audiotheme_load_discography_admin() {
@@ -48,7 +48,7 @@ function audiotheme_load_discography_admin() {
  *
  * Runs anytime themes.php is visited to ensure record types exist.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_discography_setup() {
 	if ( taxonomy_exists( 'audiotheme_record_type' ) ) {
@@ -66,7 +66,7 @@ function audiotheme_discography_setup() {
 /**
  * Discography Admin Menu
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_discography_admin_menu() {
 	add_menu_page( __( 'Discography', 'audiotheme-i18n' ), __( 'Discography', 'audiotheme-i18n' ), 'edit_posts', 'edit.php?post_type=audiotheme_record', NULL, NULL, 513 );
@@ -75,7 +75,7 @@ function audiotheme_discography_admin_menu() {
 /**
  * Discography Post Type Update Messages
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_discography_post_updated_messages( $messages ) {
 	global $post, $post_ID;
@@ -114,7 +114,7 @@ function audiotheme_discography_post_updated_messages( $messages ) {
 /**
  * Register Discography Rewrite Base Setting
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_discography_admin_init() {
 	add_settings_field(
@@ -129,7 +129,7 @@ function audiotheme_discography_admin_init() {
 /**
  * Callback for Displaying Discography Rewrite Base
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_discography_rewrite_base_settings_field() {
 	$discography_base = get_option( 'audiotheme_discography_rewrite_base' );

@@ -5,7 +5,7 @@
  * This function redirects the user to an admin page, and adds query args
  * to the URL string for alerts, etc.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_admin_redirect( $page, $query_args = array() ) {
 
@@ -29,7 +29,7 @@ function audiotheme_admin_redirect( $page, $query_args = array() ) {
  *
  * Detect Plugin from a list of constants, classes or functions added by plugins.
  *
- * @since 1.0
+ * @since 1.0.0
  *
  * @param array $plugins Array of Array for constants, classes and / or functions to check for plugin existence.
  * @return boolean True if plugin exists or false if plugin constant, class or function not detected.
@@ -70,7 +70,7 @@ function audiotheme_detect_plugin( $plugins ) {
  *
  * Ex: sort_objects( $gigs, array( 'venue', 'name' ), 'asc', true, 'gig_datetime' );
  *
- * @since 1.0
+ * @since 1.0.0
  */
 if ( ! function_exists( 'sort_objects' ) && ! class_exists( 'Sort_Objects' ) ) :
 function sort_objects( $objects, $orderby, $order = 'ASC', $unique = true, $fallback = NULL ) {
@@ -147,7 +147,7 @@ endif;
  *
  * Don't want vd in production code.
  *
- * @since 1.0
+ * @since 1.0.0
  *
  * @param mixed $var
  */

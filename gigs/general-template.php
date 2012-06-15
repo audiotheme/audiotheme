@@ -5,7 +5,7 @@
  * If the $post parameter is omitted get_post() defaults to the current
  * post in the WordPress Loop.
  *
- * @since 1.0
+ * @since 1.0.0
  *
  * @param int|object $post Optional post ID or object. Default is global $post object.
  * @return object Post with additional gig info.
@@ -52,7 +52,7 @@ function get_audiotheme_gig( $post = null ) {
  * If the title is empty, attempt to construct one from the venue name
  * or fallback to the gig date.
  *
- * @since 1.0
+ * @since 1.0.0
  *
  * @param int|object $post Optional post ID or object. Default is global $post object.
  * @return object Gig title.
@@ -76,7 +76,7 @@ function get_audiotheme_gig_title( $post = null ) {
 /**
  * Display or retrieve the link to the current gig
  *
- * @since 1.0
+ * @since 1.0.0
  *
  * @param array $args Optional. Passed to get_audiotheme_gig_link()
  * @param bool $echo Optional. Default to true. Whether to display or return.
@@ -102,7 +102,7 @@ function the_audiotheme_gig_link( $args = array(), $echo = true ) {
  * 'after_link' - Default is '</span>' (string). The html or text to append to each
  *      link inside the <a> tag.
  *
- * @since 1.0
+ * @since 1.0.0
  *
  * @param int|object $post Optional post ID or object. Default is global $post object.
  * @param array $args Optional. Override the defaults and modify the output structure.
@@ -134,7 +134,7 @@ function get_audiotheme_gig_link( $post = null, $args = array() ) {
  *
  * If the time hasn't been saved for a gig, will return date only.
  *
- * @since 1.0
+ * @since 1.0.0
  *
  * @param int|object $post Optional post ID or object. Default is global $post object.
  * @return string MySQL date or datetime.
@@ -174,7 +174,7 @@ function get_audiotheme_gig_gmt_date( $post = null ) {
  * 'empty_time' - Default is '' (string). The text to display if the time doesn't exist.
  * 'translate' - Default is 'false' (bool). Whether to translate the time string.
  *
- * @since 1.0
+ * @since 1.0.0
  *
  * @param string $d Optional. PHP date format.
  * @param string $t Optional. PHP time format.
@@ -222,7 +222,7 @@ function get_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null,
 /**
  * Display or retrieve the current gig's description
  *
- * @since 1.0
+ * @since 1.0.0
  *
  * @param string $before Optional. Content to prepend to the description.
  * @param string $after Optional. Content to append to the description.
@@ -244,7 +244,7 @@ function the_audiotheme_gig_description( $before = '', $after = '', $echo = true
 /**
  * Retrieve a gig's description
  *
- * @since 1.0
+ * @since 1.0.0
  *
  * @param int|object $post Optional post ID or object. Default is global $post object.
  * @return string
@@ -258,7 +258,7 @@ function get_audiotheme_gig_description( $post = 0 ) {
 /**
  * Whether a gig has a venue
  *
- * @since 1.0
+ * @since 1.0.0
  *
  * @param int|object $post Optional post ID or object. Default is global $post object.
  * @return bool
@@ -272,7 +272,7 @@ function audiotheme_gig_has_venue( $post = null ) {
 /**
  * Get the admin panel URL for gigs
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_gig_admin_url( $args = '' ) {
 	$admin_url = admin_url( 'admin.php?page=gigs' );
@@ -291,7 +291,7 @@ function get_audiotheme_gig_admin_url( $args = '' ) {
 /**
  * Update a gig's venue and the gig count for any modified venues
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
 	$gig = get_audiotheme_gig( $gig_id ); // retrieve current venue info
@@ -346,7 +346,7 @@ function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
 /**
  * Retrieve a venue by its ID
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_venue( $venue_id ) {
 	$post = get_post( $venue_id );
@@ -374,7 +374,7 @@ function get_audiotheme_venue( $venue_id ) {
  *
  * The only field currently supported is the venue name.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_venue_by( $field, $value ) {
 	global $wpdb;
@@ -395,7 +395,7 @@ function get_audiotheme_venue_by( $field, $value ) {
  *
  * Useful for whitelisting data in other API methods.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function get_default_audiotheme_venue_properties() {
 	$args = array(
@@ -421,7 +421,7 @@ function get_default_audiotheme_venue_properties() {
 /**
  * Display or retrieve the link to the current venue's website
  *
- * @since 1.0
+ * @since 1.0.0
  *
  * @param array $args Optional. Passed to get_audiotheme_venue_link()
  * @param bool $echo Optional. Default to true. Whether to display or return.
@@ -452,7 +452,7 @@ function the_audiotheme_gig_venue_link( $args = array(), $echo = true ) {
  * 'after_link' - Default is '</span>' (string). The html or text to append to each
  *      link inside the <a> tag.
  *
- * @since 1.0
+ * @since 1.0.0
  *
  * @param int $venue_id
  * @param array $args Optional. Override the defaults and modify the output structure.
@@ -484,7 +484,7 @@ function get_audiotheme_venue_link( $venue_id, $args = array() ) {
 /**
  * Display or retrieve the current venue in vCard markup
  *
- * @since 1.0
+ * @since 1.0.0
  *
  * @param array $args Optional. Passed to get_audiotheme_venue_vcard()
  * @param bool $echo Optional. Default to true. Whether to display or return.
@@ -510,7 +510,7 @@ function the_audiotheme_gig_venue_vcard( $args = array(), $echo = true ) {
  * The defaults for overwriting are:
  * 'container' - Default is 'dd' (string). The html or text to wrap the vCard.
  *
- * @since 1.0
+ * @since 1.0.0
  *
  * @param int $venue_id
  * @param array $args Optional. Override the defaults and modify the output structure.
@@ -557,7 +557,7 @@ function get_audiotheme_venue_vcard( $venue_id, $args = array() ) {
 /**
  * Get the base admin panel URL for adding a venue
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_venue_admin_url( $args = '' ) {
 	$admin_url = admin_url( 'admin.php?page=venue' );
@@ -576,7 +576,7 @@ function get_audiotheme_venue_admin_url( $args = '' ) {
 /**
  * Get the admin panel URL for viewing all venues
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_venues_admin_url( $args = '' ) {
 	$admin_url = admin_url( 'admin.php?page=venues' );
@@ -595,7 +595,7 @@ function get_audiotheme_venues_admin_url( $args = '' ) {
 /**
  * Get the admin panel URL for editing a venue
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_venue_edit_link( $admin_url, $post_id ) {
 	if ( 'audiotheme_venue' == get_post_type( $post_id ) ) {
@@ -613,7 +613,7 @@ function get_audiotheme_venue_edit_link( $admin_url, $post_id ) {
 /**
  * Return a unique venue name
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function get_unique_audiotheme_venue_name( $name, $venue_id = 0 ) {
 	global $wpdb;
@@ -632,7 +632,7 @@ function get_unique_audiotheme_venue_name( $name, $venue_id = 0 ) {
  * Accepts an array of properties, whitelists them and then saves. Will update values if the ID isn't 0.
  * Sets all post meta fields upon initial save, even if empty.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function save_audiotheme_venue( $data ) {
 	global $wpdb;
@@ -720,7 +720,7 @@ function save_audiotheme_venue( $data ) {
 /**
  * Update the number of gigs at a particular venue
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_venue_gig_count( $venue_id ) {
 	global $wpdb;
@@ -737,7 +737,7 @@ function get_audiotheme_venue_gig_count( $venue_id ) {
 /**
  * Update the number of gigs at a particular venue
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function update_audiotheme_venue_gig_count( $venue_id, $count = 0 ) {
 	global $wpdb;

@@ -12,7 +12,7 @@ wp_oembed_add_provider( 'http://rd.io/*', 'http://www.rdio.com/api/oembed/' );
 /**
  * Pulls an attachment ID from a post, if one exists
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_get_image_id( $num = 0 ) {
 	global $post;
@@ -38,7 +38,7 @@ function audiotheme_get_image_id( $num = 0 ) {
 /**
  * Pulls an image from the media gallery and returns it
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_get_image( $args = array() ) {
 	global $post;
@@ -95,7 +95,7 @@ function audiotheme_get_image( $args = array() ) {
 /**
  * Pulls an image from media gallery and echoes it
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_image( $args = array() ) {
 	$image = audiotheme_get_image( $args );
@@ -111,7 +111,7 @@ function audiotheme_image( $args = array() ) {
  *
  * Pulls additional image sizes
  *
- * @since 1.0
+ * @since 1.0.0
  * @return array
  */
 function audiotheme_get_additional_image_sizes() {
@@ -128,7 +128,7 @@ function audiotheme_get_additional_image_sizes() {
  *
  * Pulls all image sizes
  *
- * @since 1.0.2
+ * @since 1.0.0.2
  * @return array
  */
 function audiotheme_get_image_sizes() {
@@ -158,7 +158,7 @@ function audiotheme_get_image_sizes() {
  * Adds a wrapper to videos from the whitelisted services and attempts to add
  * the wmode parameter to YouTube videos and flash embeds.
  *
- * @since 1.0
+ * @since 1.0.0
  * @return string
  */
 function audiotheme_oembed_html( $html, $url, $attr, $post_id ) {

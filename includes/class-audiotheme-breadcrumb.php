@@ -11,14 +11,14 @@
  * Private properties will be set to private when WordPress requires PHP 5.2.
  * If you change a private property expect that change to break AudioTheme in the future.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 class AudioTheme_Breadcrumb {
 
 	/**
 	 * Settings array, a merge of provided values and defaults. Private.
 	 *
- 	 * @since 1.0
+ 	 * @since 1.0.0
 	 *
 	 * @var array
 	 */
@@ -27,7 +27,7 @@ class AudioTheme_Breadcrumb {
 	/**
 	 * Cache get_option call. Private.
 	 *
- 	 * @since 1.0
+ 	 * @since 1.0.0
 	 *
 	 * @var string
 	 */
@@ -36,7 +36,7 @@ class AudioTheme_Breadcrumb {
 	/**
 	 * Constructor. Set up cacheable values and settings.
 	 *
- 	 * @since 1.0
+ 	 * @since 1.0.0
 	 *
 	 * @param array $args
 	 */
@@ -71,7 +71,7 @@ class AudioTheme_Breadcrumb {
 	/**
 	 * Return the final completed breadcrumb in markup wrapper. Public.
 	 *
- 	 * @since 1.0
+ 	 * @since 1.0.0
 	 *
 	 * @return string HTML markup
 	 */
@@ -87,7 +87,7 @@ class AudioTheme_Breadcrumb {
 	/**
 	 * Echo the final completed breadcrumb in markup wrapper. Public.
 	 *
- 	 * @since 1.0
+ 	 * @since 1.0.0
 	 *
 	 * @return string HTML markup
 	 */
@@ -102,7 +102,7 @@ class AudioTheme_Breadcrumb {
 	 *
 	 * Default is Home, linked on all occasions except when is_home() is true.
 	 *
- 	 * @since 1.0
+ 	 * @since 1.0.0
 	 *
 	 * @return string HTML markup
 	 */
@@ -121,7 +121,7 @@ class AudioTheme_Breadcrumb {
 	 * Defaults to the home crumb (later removed as a duplicate). If using a
 	 * static front page, then the title of the Page is returned.
 	 *
- 	 * @since 1.0
+ 	 * @since 1.0.0
 	 *
 	 * @return string HTML markup
 	 */
@@ -138,7 +138,7 @@ class AudioTheme_Breadcrumb {
 	/**
 	 * Return search results page breadcrumb. Private.
 	 *
- 	 * @since 1.0
+ 	 * @since 1.0.0
 	 *
 	 * @return string HTML markup
 	 */
@@ -153,7 +153,7 @@ class AudioTheme_Breadcrumb {
 	/**
 	 * Return 404 (page not found) breadcrumb. Private.
 	 *
- 	 * @since 1.0
+ 	 * @since 1.0.0
 	 *
 	 * @return string HTML markup
 	 */
@@ -173,7 +173,7 @@ class AudioTheme_Breadcrumb {
 	 * @global mixed $wp_query
 	 * @return string HTML markup
 	 *
- 	 * @since 1.0
+ 	 * @since 1.0.0
 	 */
 	function get_page_crumb() {
 
@@ -227,7 +227,7 @@ class AudioTheme_Breadcrumb {
 	 * @todo Heirarchial, and multiple, cats and taxonomies
 	 * @todo redirect taxonomies to plural pages.
 	 *
- 	 * @since 1.0
+ 	 * @since 1.0.0
 	 */
 	function get_archive_crumb() {
 
@@ -278,7 +278,7 @@ class AudioTheme_Breadcrumb {
 	/**
 	 * Get single breadcrumb, including any parent crumbs. Private.
 	 *
- 	 * @since 1.0
+ 	 * @since 1.0.0
 	 *
 	 * @global mixed $post Current post object
 	 * @return string HTML markup
@@ -338,7 +338,7 @@ class AudioTheme_Breadcrumb {
 	 *
 	 * @return string HTML markup
 	 *
- 	 * @since 1.0
+ 	 * @since 1.0.0
 	 */
 	function build_crumbs() {
 
@@ -417,7 +417,7 @@ class AudioTheme_Breadcrumb {
 /**
  * Helper function for the AudioTheme Breadcrumb Class
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_breadcrumb( $args = array() ) {
 
@@ -436,7 +436,7 @@ add_action('audiotheme_before_loop', 'audiotheme_do_breadcrumbs');
  * Display Breadcrumbs above the Loop
  * Concedes priority to popular breadcrumb plugins
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_do_breadcrumbs() {
 

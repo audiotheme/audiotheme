@@ -5,7 +5,7 @@
  * Tracks should always be associated with a record so their
  * slugs only need to be unique within the context of a record.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_track_unique_slug( $slug, $post_ID, $post_status, $post_type, $post_parent ) {
 	global $wpdb, $wp_rewrite;
@@ -60,7 +60,7 @@ function audiotheme_track_unique_slug( $slug, $post_ID, $post_status, $post_type
 /**
  * Custom Sorting on All Tracks Screen
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_tracks_admin_query( $wp_query ) {
 	if ( isset( $_GET['post_type'] ) && 'audiotheme_track' == $_GET['post_type'] ) {
@@ -93,7 +93,7 @@ function audiotheme_tracks_admin_query( $wp_query ) {
 /**
  * Register Track Columns
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_track_columns( $columns ) {
 	$columns = array(
@@ -112,7 +112,7 @@ function audiotheme_track_columns( $columns ) {
 /**
  * Display Custom Track Columns
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_track_display_column( $column_name, $post_id ) {
 	switch ( $column_name ) {
@@ -163,7 +163,7 @@ function audiotheme_track_display_column( $column_name, $post_id ) {
 /**
  * Register Sortable Track Columns
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_track_sortable_columns( $columns ) {
 	$columns['artist'] = 'artist';
@@ -176,7 +176,7 @@ function audiotheme_track_sortable_columns( $columns ) {
 /**
  * Remove Quick Edit from Track List Table
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_track_list_table_actions( $actions, $post ) {
 	if ( 'audiotheme_track' == get_post_type( $post ) ) {
@@ -189,7 +189,7 @@ function audiotheme_track_list_table_actions( $actions, $post ) {
 /**
  * Remove Bulk Edit from Track List Table
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_track_list_table_bulk_actions( $actions ) {
 	unset( $actions['edit'] );
@@ -199,7 +199,7 @@ function audiotheme_track_list_table_bulk_actions( $actions ) {
 /**
  * Custom Track Filter Dropdowns
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_tracks_filters() {
 	global $wpdb;
@@ -232,7 +232,7 @@ function audiotheme_tracks_filters() {
  *
  * Updates track meta data.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_track_save_hook( $post_id ) {
 	global $wpdb;
@@ -263,7 +263,7 @@ function audiotheme_track_save_hook( $post_id ) {
 /**
  * Register Track Meta Boxes
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_edit_track_meta_boxes( $post ) {
 	remove_meta_box( 'submitdiv', 'audiotheme_track', 'side' );
@@ -297,7 +297,7 @@ function audiotheme_edit_track_meta_boxes( $post ) {
 /**
  * Track Details Meta Box
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_track_details_meta_box( $post ) {
 	// Nonce to verify intention later

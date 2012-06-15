@@ -2,7 +2,7 @@
 /**
  * Galleries Init
  *
- * @since 1.0
+ * @since 1.0.0
  */
 add_action( 'init', 'audiotheme_galleries_init' );
 

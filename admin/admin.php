@@ -2,7 +2,7 @@
 /**
  * Admin Inclusions
  *
- * @since 1.0
+ * @since 1.0.0
  */
 require( AUDIOTHEME_DIR . 'admin/functions.php' );
 require( AUDIOTHEME_DIR . 'admin/options.php' );
@@ -10,7 +10,7 @@ require( AUDIOTHEME_DIR . 'admin/options.php' );
 /**
  * Admin Setup
  *
- * @since 1.0
+ * @since 1.0.0
  */
 add_action( 'init', 'audiotheme_admin_setup' );
 
@@ -52,7 +52,7 @@ function audiotheme_admin_setup() {
  *
  * Should be loaded on every admin request
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_enqueue_admin_scripts() {
 	wp_enqueue_script( 'audiotheme-admin' );
@@ -132,7 +132,7 @@ function audiotheme_nav_menu_item_link_meta_box( $object, $post_type ) {
 /**
  * Enqueue Admin Scripts
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_admin_body_class( $class ) {
 	return ' ' . sanitize_html_class( get_current_screen()->id );
@@ -141,7 +141,7 @@ function audiotheme_admin_body_class( $class ) {
 /**
  * Custom Post Type Columns
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_display_custom_column( $column_name, $post_id ) {
 	global $post;
@@ -160,7 +160,7 @@ function audiotheme_display_custom_column( $column_name, $post_id ) {
 /**
  * Custom User Contact Fields
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_edit_user_contact_info( $contactmethods ) {
 	// Remove contact options
@@ -181,7 +181,7 @@ function audiotheme_edit_user_contact_info( $contactmethods ) {
  * Positions AudioTheme admin menu items after Posts menu item if the
  * Gigs menu item hasn't been modified. Should place nice with plugins.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_admin_menu_order( $menu_order ) {
 	global $menu;

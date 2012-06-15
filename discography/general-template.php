@@ -6,7 +6,7 @@
  * The options listed here show up as suggestions when the user types.
  *
  * @return array
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_record_link_sources() {
 	$default_sources = array(
@@ -28,7 +28,7 @@ function get_audiotheme_record_link_sources() {
  * List of default record types to better define the record, much like a post format.
  *
  * @return array
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_record_type_strings() {
 	$strings = array(
@@ -45,7 +45,7 @@ function get_audiotheme_record_type_strings() {
  * Gets and sets an array of available record type slugs from record type strings.
  *
  * @return array
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_record_type_slugs() {
 	$slugs = array_keys( get_audiotheme_record_type_strings() );
@@ -59,7 +59,7 @@ function get_audiotheme_record_type_slugs() {
  * Sets default value of record type if option is not set.
  *
  * @return array
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_record_type_string( $slug ) {
 	$strings = get_audiotheme_record_type_slugs();
@@ -75,7 +75,7 @@ function get_audiotheme_record_type_string( $slug ) {
 /**
  * Check if post has an file url supplied.
  *
- * @since 1.0.0
+ * @since 1.0.0.0
  *
  * @param int $post_id Optional. Post ID.
  * @return bool Whether post has an video url supplied.
@@ -99,7 +99,7 @@ function audiotheme_track_has_download( $post_id ) {
 /**
  * Check if post has an file url supplied.
  *
- * @since 1.0.0
+ * @since 1.0.0.0
  *
  * @param int $post_id Optional. Post ID.
  * @return bool Whether post has an video url supplied.
@@ -112,7 +112,7 @@ function has_audiotheme_track_file( $post_id = null ) {
 /**
  * Retrieve Track File URL.
  *
- * @since 1.0.0
+ * @since 1.0.0.0
  *
  * @param int $post_id Optional. Post ID.
  * @return string
@@ -126,7 +126,7 @@ function get_audiotheme_track_file_url( $post_id = null ) {
 /**
  * Check if post has an purchase url supplied.
  *
- * @since 1.0.0
+ * @since 1.0.0.0
  *
  * @param int $post_id Optional. Post ID.
  * @return bool Whether post has an video url supplied.
@@ -139,7 +139,7 @@ function has_audiotheme_track_purchase_url( $post_id = null ) {
 /**
  * Retrieve Track Purchase URL.
  *
- * @since 1.0.0
+ * @since 1.0.0.0
  *
  * @param int $post_id Optional. Post ID.
  * @return string

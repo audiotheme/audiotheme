@@ -2,7 +2,7 @@
 /**
  * Gigs Init
  *
- * @since 1.0
+ * @since 1.0.0
  */
 add_action( 'init', 'audiotheme_gigs_init' );
 
@@ -73,7 +73,7 @@ function audiotheme_gigs_init() {
 /**
  * Get Gigs Rewrite Base
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_gigs_rewrite_base() {
 	$base = get_option( 'audiotheme_gigs_rewrite_base' );
@@ -100,7 +100,7 @@ function get_audiotheme_gigs_rewrite_base() {
  *     /base/YYYY/page/2/
  *     etc.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_gig_generate_rewrite_rules( $wp_rewrite ) {
 	$base = get_audiotheme_gigs_rewrite_base();
@@ -120,7 +120,7 @@ function audiotheme_gig_generate_rewrite_rules( $wp_rewrite ) {
 /**
  * Filter Gigs Requests
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_gig_query( $query ) {
 	// Sort records by release year
@@ -186,7 +186,7 @@ function audiotheme_gig_query( $query ) {
  * Caches gig-venue connections and reroutes feed requests to
  * the appropriate template for processing.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_gig_template_redirect() {
 	global $wp_query;
@@ -222,7 +222,7 @@ function audiotheme_gig_template_redirect() {
 /**
  * Gig Permalinks
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
 	global $wpdb;
@@ -247,7 +247,7 @@ function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
 /**
  * Gig Inclusions
  *
- * @since 1.0
+ * @since 1.0.0
  */
 require( AUDIOTHEME_DIR . 'gigs/general-template.php' );
 

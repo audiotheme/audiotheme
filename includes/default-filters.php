@@ -16,7 +16,7 @@ if ( ! is_admin() ) {
  * Adds class hooks to various nav menu items since child pseudo selectors
  * aren't supported in all browsers.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_nav_menu_classes( $items, $menu, $args ) {
 	$classes = array();
@@ -52,7 +52,7 @@ function audiotheme_nav_menu_classes( $items, $menu, $args ) {
  * Adds a class to a nav menu item generated from the item's title.
  * Allows for targeting individual items by name.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_nav_menu_name_class( $classes, $item ) {
 	$new_classes[] = sanitize_html_class( 'menu-item-' . sanitize_title_with_dashes( $item->title ) );
@@ -66,7 +66,7 @@ function audiotheme_nav_menu_name_class( $classes, $item ) {
  * Stores information about the order of pages in a global variable to be accessed
  * by audiotheme_page_list_classes().
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_page_list( $pages ) {
 	global $audiotheme_page_depth_classes;
@@ -97,7 +97,7 @@ function audiotheme_page_list( $pages ) {
  * when nav menus haven't been assigned. Mimics the classes added to nav menus
  * for consistent behavior.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_page_list_classes( $class, $page ) {
 	global $audiotheme_page_depth_classes;
@@ -119,7 +119,7 @@ function audiotheme_page_list_classes( $class, $page ) {
  * Adds a class to widgets containing it's position in the sidebar it belongs to
  * and adds a special class to the last widget.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_widget_count_class( $params ) {
 	$class = '';

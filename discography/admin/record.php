@@ -2,7 +2,7 @@
 /**
  * Custom Sorting on All Records Screen
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_records_admin_query( $wp_query ) {
 	if ( is_admin() && isset( $_GET['post_type'] ) && 'audiotheme_record' == $_GET['post_type'] ) {
@@ -32,7 +32,7 @@ function audiotheme_records_admin_query( $wp_query ) {
 /**
  * Register Record Columns
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_record_columns( $columns ) {
 	$columns = array(
@@ -51,7 +51,7 @@ function audiotheme_record_columns( $columns ) {
 /**
  * Display Custom Record Columns
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_record_display_column( $column_name, $post_id ) {
 
@@ -99,7 +99,7 @@ function audiotheme_record_display_column( $column_name, $post_id ) {
 /**
  * Register Sortable Record Columns
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_record_sortable_columns( $columns ) {
 	$columns['release_year'] = 'release_year';
@@ -111,7 +111,7 @@ function audiotheme_record_sortable_columns( $columns ) {
 /**
  * Remove Quick Edit from Record List Table
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_record_list_table_actions( $actions, $post ) {
 	if ( 'audiotheme_record' == get_post_type( $post ) ) {
@@ -124,7 +124,7 @@ function audiotheme_record_list_table_actions( $actions, $post ) {
 /**
  * Remove Bulk Edit from Record List Table
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_record_list_table_bulk_actions( $actions ) {
 	unset( $actions['edit'] );
@@ -136,7 +136,7 @@ function audiotheme_record_list_table_bulk_actions( $actions ) {
  *
  * Creates and updates child tracks and save additional record meta. 
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_record_save_hook( $post_id ) {
 	global $wpdb;
@@ -223,7 +223,7 @@ function audiotheme_record_save_hook( $post_id ) {
 /**
  * Register Record Meta Boxes
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_edit_record_meta_boxes( $post ) {
 	remove_meta_box( 'submitdiv', 'audiotheme_record', 'side' );
@@ -244,7 +244,7 @@ function audiotheme_edit_record_meta_boxes( $post ) {
 /**
  * Tracklist Editor
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_edit_record_tracklist() {
 	global $post, $wpdb;
@@ -265,7 +265,7 @@ function audiotheme_edit_record_tracklist() {
 /**
  * Record Details Meta Box
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_record_details_meta_box( $post ) {
 	// Nonce to verify intention later

@@ -2,7 +2,7 @@
 /**
  * Update post meta shortcut
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_update_post_meta( $post_id, $fields_array = null, $type = 'text' ){
     if ( is_array( $fields_array ) ):
@@ -24,7 +24,7 @@ function audiotheme_update_post_meta( $post_id, $fields_array = null, $type = 't
 /**
  * Meta fields shortcut
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function audiotheme_meta_field( $post, $type = 'text', $field, $label = false, $desc = false ) { 
     $value = get_post_meta( $post->ID, $field, true ); ?>

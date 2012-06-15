@@ -13,7 +13,7 @@ add_shortcode( 'footer_backtotop', 'audiotheme_footer_backtotop_shortcode' );
 /**
  * This function produces the "Return to Top" link
  * 
- * @since 1.0
+ * @since 1.0.0
  * 
  * @param array $atts Shortcode attributes
  * @return string 
@@ -42,7 +42,7 @@ add_shortcode( 'footer_copyright', 'audiotheme_footer_copyright_shortcode' );
 /**
  * Adds the visual copyright notice
  * 
- * @since 1.0
+ * @since 1.0.0
  *
  * @param array $atts Shortcode attributes
  * @return string
@@ -71,7 +71,7 @@ add_shortcode( 'footer_audiotheme_link', 'audiotheme_footer_audiotheme_link_shor
 /**
  * Adds the link to audiotheme page on AudioTheme website
  * 
- * @since 1.0
+ * @since 1.0.0
  *
  * @param array $atts Shortcode attributes
  * @return string
@@ -96,7 +96,7 @@ add_shortcode( 'footer_luke_mcdonald_link', 'audiotheme_footer_luke_mcdonald_lin
 /**
  * Adds the link to Luke McDonald home page
  * 
- * @since 1.0
+ * @since 1.0.0
  *
  * @param array $atts Shortcode attributes
  * @return string
@@ -125,7 +125,7 @@ add_shortcode( 'footer_shaken_stirred_link', 'audiotheme_footer_shaken_stirred_l
 /**
  * Adds the link to Shaken & Stirred Web (Sawyer Hollenshead) home page
  * 
- * @since 1.0
+ * @since 1.0.0
  *
  * @param array $atts Shortcode attributes
  * @return string
@@ -155,7 +155,7 @@ add_shortcode( 'footer_blazersix_link', 'audiotheme_footer_blazersix_link_shortc
 /**
  * Adds the link to Blazer Six home page
  * 
- * @since 1.0
+ * @since 1.0.0
  *
  * @param array $atts Shortcode attributes
  * @return string
@@ -184,7 +184,7 @@ add_shortcode( 'footer_wap8_link', 'audiotheme_footer_wap8_link_shortcode' );
 /**
  * Adds the link to We Are Pixel 8 home page
  * 
- * @since 1.0
+ * @since 1.0.0
  *
  * @param array $atts Shortcode attributes
  * @return string
@@ -214,7 +214,7 @@ add_shortcode( 'footer_wordpress_link', 'audiotheme_footer_wordpress_link_shortc
 /**
  * Adds link to WordPress
  * 
- * @since 1.0
+ * @since 1.0.0
  *
  * @param array $atts Shortcode attributes
  * @return string

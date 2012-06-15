@@ -5,7 +5,7 @@
  * Function called to get a Theme Option. 
  * The option defaults to false unless otherwise set.
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_theme_option( $key, $default = false, $option_name = '' ) {
 	$option_name = ( empty( $option_name ) ) ? 'audiotheme_options' : $option_name;
@@ -22,7 +22,7 @@ function get_audiotheme_theme_option( $key, $default = false, $option_name = '' 
  * return array of category ID and Name.
  *
  * @return Array Category ID and Name
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_category_list() {
 	// Pull all the categories into an array
@@ -43,7 +43,7 @@ function get_audiotheme_category_list() {
  * return array of track ID and Name.
  *
  * @return Array Track ID and Name
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_tracks_list() {
 	// Pull all the tracks into an array
@@ -59,7 +59,7 @@ function get_audiotheme_tracks_list() {
 /**
  * Record's track ID's
  *
- * @since 1.0
+ * @since 1.0.0
  * @return array
  */
 function get_audiotheme_tracks( $record_id ){
@@ -74,7 +74,7 @@ function get_audiotheme_tracks( $record_id ){
 /**
  * Track file
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_record_custom_url( $record_id ){
    return get_post_meta( $record_id, '_url', true );
@@ -83,7 +83,7 @@ function get_audiotheme_record_custom_url( $record_id ){
 /**
  * Track file
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_track_file( $track_id ){
    return get_post_meta( $track_id, '_track_file_url', true );
@@ -92,7 +92,7 @@ function get_audiotheme_track_file( $track_id ){
 /**
  * Track artist
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function get_audiotheme_track_artist( $track_id ){
     return get_post_meta( $track_id, '_artist', true );
