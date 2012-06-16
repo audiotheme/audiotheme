@@ -150,5 +150,33 @@ function get_audiotheme_track_purchase_url( $post_id = null ) {
 }
 
 
+/**
+ * Check if record has a release year supplied.
+ *
+ * @since 1.0.0.0
+ *
+ * @param int $post_id Optional. Post ID.
+ * @return bool Whether post has an video url supplied.
+ */
+function has_audiotheme_record_release_year( $post_id = null ) {
+	return (bool) get_audiotheme_record_release_year( $post_id );
+}
+
+
+/**
+ * Retrieve Record Release Year.
+ *
+ * @since 1.0.0.0
+ *
+ * @param int $post_id Optional. Post ID.
+ * @return string
+ */
+function get_audiotheme_record_release_year( $post_id = null ) {
+	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
+	return get_post_meta( $post_id, '_release_year', true );
+}
+
+
+
 
 ?>
