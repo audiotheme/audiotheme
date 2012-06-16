@@ -423,7 +423,7 @@ function audiotheme_breadcrumb( $args = array() ) {
 
 	global $_audiotheme_breadcrumb;
 
-	if ( !$_audiotheme_breadcrumb ) {
+	if ( ! $_audiotheme_breadcrumb ) {
 		$_audiotheme_breadcrumb = new AudioTheme_Breadcrumb;
 	}
 
@@ -441,11 +441,11 @@ add_action('audiotheme_before_loop', 'audiotheme_do_breadcrumbs');
 function audiotheme_do_breadcrumbs() {
 
 	// Conditional Checks
-	if ( ( is_front_page() || is_home() ) && ! audiotheme_get_option( 'breadcrumb_home' ) ) return;
-	if ( is_single() && ! audiotheme_get_option( 'breadcrumb_single' ) ) return;
-	if ( is_page() && ! audiotheme_get_option( 'breadcrumb_page' ) ) return;
-	if ( ( is_archive() || is_search() ) && ! AudioTheme_get_option( 'breadcrumb_archive' ) ) return;
-	if ( is_404() && ! audiotheme_get_option( 'breadcrumb_404' ) ) return;
+	if ( ( is_front_page() || is_home() ) && ! get_audiotheme_theme_option( 'breadcrumb_home' ) ) return;
+	if ( is_single() && ! get_audiotheme_theme_option( 'breadcrumb_single' ) ) return;
+	if ( is_page() && ! get_audiotheme_theme_option( 'breadcrumb_page' ) ) return;
+	if ( ( is_archive() || is_search() ) && ! get_audiotheme_theme_option( 'breadcrumb_archive' ) ) return;
+	if ( is_404() && ! get_audiotheme_theme_option( 'breadcrumb_404' ) ) return;
 
 	if ( function_exists( 'bcn_display' ) ) {
 		echo '<div class="breadcrumb">'; bcn_display(); echo '</div>';
