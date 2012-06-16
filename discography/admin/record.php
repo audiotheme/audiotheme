@@ -81,7 +81,7 @@ function audiotheme_record_display_column( $column_name, $post_id ) {
 			break;
 			
 		case 'release_year' :
-			echo get_post_meta( $post_id, '_release_year', true );
+			echo get_audiotheme_record_release_year( $post_id );
 			break;
 			
 		case 'track_count' :
@@ -273,7 +273,7 @@ function audiotheme_record_details_meta_box( $post ) {
 	?>
 	<p class="audiotheme-meta-field">
 		<label for="record-year"><?php _e( 'Release Year', 'audiotheme-i18n' ); ?></label>
-		<input type="text" name="release_year" id="record-year" value="<?php echo esc_attr( get_post_meta( $post->ID, '_release_year', true ) ) ; ?>" class="widefat">
+		<input type="text" name="release_year" id="record-year" value="<?php echo esc_attr( get_audiotheme_record_release_year( $post->ID ) ) ; ?>" class="widefat">
 	</p>
 	<p class="audiotheme-meta-field">
 		<label for="record-genre"><?php _e( 'Genre', 'audiotheme-i18n' ); ?></label>
