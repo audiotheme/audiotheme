@@ -29,6 +29,7 @@ function audiotheme_gallery_post_updated_messages( $messages ) {
 
 function audiotheme_edit_gallery_meta_boxes( $post ) {
 	add_action( 'edit_form_advanced', 'audiotheme_gallery_media_iframe' );
+	remove_action( 'media_buttons', 'media_buttons' );
 }
 
 function audiotheme_gallery_media_iframe() {
@@ -63,9 +64,18 @@ function audiotheme_gallery_media_iframe() {
 function audiotheme_gallery_media_iframe_load() {
     global $pagenow;
 	
-	// TODO: some of these actions need to be attached after an image is uploaded, too
-	if ( isset( $_REQUEST['context'] ) && 'embed' == $_REQUEST['context'] && ! empty( $_REQUEST['post_id'] ) && 'media-upload.php' == $pagenow ) {
-		if ( 'audiotheme_gallery' == get_post_type( $_REQUEST['post_id'] ) ) {
+	$is_embed_context = 'media-upload.php' == $pagenow && isset( $_REQUEST['context'] ) && 'embed' == $_REQUEST['context'] && ! empty( $_REQUEST['post_id'] );
+	$is_async_fetch = 'async-upload.php' == $pagenow && isset( $_REQUEST['fetch'] ) && '1' == $_REQUEST['fetch'] && ! empty( $_REQUEST['attachment_id'] );
+	
+	if ( $is_embed_context || $is_async_fetch ) {
+		if ( $is_embed_context ) {
+			$post_id = intval( $_REQUEST['post_id'] );
+		} elseif ( $is_async_fetch ) {
+			$attachment = get_post( intval( $_REQUEST['attachment_id'] ) );
+			$post_id = $attachment->post_parent;
+		}
+		
+		if ( 'audiotheme_gallery' == get_post_type( $post_id ) ) {
 			add_filter( 'media_upload_tabs', 'audiotheme_gallery_media_upload_tabs', 9 );
 			add_action( 'admin_head-media-upload-popup', 'audiotheme_gallery_media_styles' );
 			add_filter( 'media_upload_form_url', 'audiotheme_gallery_medial_upload_form_url' );
