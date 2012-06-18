@@ -679,7 +679,7 @@ function save_audiotheme_venue( $data ) {
 			$venue['ID'] = $venue_id;
 			wp_update_post( $venue );
 			
-			// update the gig metadta, too
+			// update the gig metadata, too
 			$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->postmeta pm, $wpdb->postmeta pm2
 				SET pm2.meta_value=%s
 				WHERE pm.meta_key='venue_id' AND pm.meta_value=%d AND pm.post_id=pm2.post_id AND pm2.meta_key='venue'",

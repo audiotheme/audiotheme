@@ -1,7 +1,7 @@
 <table class="widefat meta-repeater" id="record-tracklist">
 	<thead>
 		<tr>
-			<th colspan="4"><h3><span><?php _e( 'Tracks', 'audiotheme-i18n' ) ?></span></h3></th>
+			<th colspan="4"><?php _e( 'Tracks', 'audiotheme-i18n' ) ?></th>
 			<th class="column-action"><a class="button meta-repeater-add-item"><?php _e( 'Add Track', 'audiotheme-i18n' ) ?></a></th>
 		</tr>
 	</thead>
@@ -57,31 +57,28 @@
 
 
 <style type="text/css">
-.meta-repeater thead th h3 { padding: 0 3px !important; }
-
 .meta-repeater tbody tr { cursor: move; width: 100%; }
 .meta-repeater tbody tr:last-child td { border-bottom: none; }
-.meta-repeater tbody td { padding: 10px; }
-.meta-repeater tbody td.track-number { width: 2em; text-align: right; vertical-align: middle; }
+.meta-repeater tbody tr.meta-repeater-active-item td { background: #ececec; border-top-color: #eee;}
+.meta-repeater tbody td { padding: 7px; }
+.meta-repeater tbody td.track-number { width: 2em; text-align: right; vertical-align: middle;}
 
-.meta-repeater .column-action { width: 16px; cursor: auto; text-align: right; vertical-align: middle; }
-.meta-repeater .column-action a { cursor: pointer; font-family: sans-serif; }
+.meta-repeater .column-action { width: 16px; cursor: auto; text-align: right; vertical-align: middle;}
+.meta-repeater .column-action a { cursor: pointer; font-family: sans-serif;}
 .meta-repeater .column-action .meta-repeater-remove-item { opacity: .2;}
 .meta-repeater .column-action .meta-repeater-remove-item:hover { opacity: 1;}
 
-.meta-repeater .column-track-info { font-size: 16px; vertical-align: middle; }
-.meta-repeater .column-track-info span { padding: 0 3px }
+.meta-repeater .column-track-info { font-size: 16px; vertical-align: middle;}
+.meta-repeater .column-track-info span { padding: 0 3px;}
 
-.meta-repeater .show-on-add { display: none; }
+.meta-repeater .show-on-add { display: none;}
 
-.meta-repeater .ui-sortable-helper { background: #F9F9F9; border-top: 1px solid #DFDFDF; border-bottom: 1px solid #DFDFDF; }
+.meta-repeater .ui-sortable-helper { background: #f9f9f9; border-top: 1px solid #dfdfdf; border-bottom: 1px solid #dfdfdf;}
 .meta-repeater .ui-sortable-helper td { border-top-width: 0; border-bottom-width: 0;}
 
-.meta-repeater-sort-warning td { color: red; border-top: 1px solid #DFDFDF; border-bottom: none; padding: 10px }
-
+.meta-repeater-sort-warning td { padding: 10px; color: #ff0000; border-top: 1px solid #dfdfdf; border-bottom: none;}
 
 #record-tracklist { margin-bottom: 20px;}
-#record-tracklist input:focus { border-color: #DFDFDF; }
 </style>
 
 <script type="text/javascript">
