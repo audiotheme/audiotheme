@@ -1,6 +1,12 @@
 # Getting Started
 
-Add the '/audiotheme/' directory inside your theme and then place the following code in your functions.php
+Place the framework folder in your theme folder:
+
+`git clone git@github.com:thelukemcdonald/audiotheme-framework.git --recursive`
+
+You can rename the framework folder to something simpler like "audiotheme"
+
+In your functions.php
 
 ```php
 <?php
