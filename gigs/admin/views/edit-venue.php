@@ -57,7 +57,7 @@
 			
 				<div id="post-body-content">
 					
-					<div id="venuediv" class="postbox">
+					<div id="venuediv" class="stuffbox">
 						<h3><?php echo $post_type_object->labels->singular_name; ?></h3>
 						
 						<div class="inside">
