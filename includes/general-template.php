@@ -50,8 +50,8 @@ function get_audiotheme_tracks_list() {
 	$list = array();  
 	$tracks = get_posts( array( 'post_type' => 'audiotheme_track' ) );
 	
-	foreach ( (array) $tracks as $tracks )
-	    $list[$tracks->ID] = $tracks->post_title;
+	foreach ( (array) $tracks as $track )
+	    $list[$track->ID] = $track->post_title;
 	
 	return $list;
 }
@@ -63,7 +63,13 @@ function get_audiotheme_tracks_list() {
  * @return array
  */
 function get_audiotheme_tracks( $record_id ){
-    $tracks = get_post_meta( $record_id, '_tracks', true );
+	$args=array(
+	  'post_parent' => $record_id,
+	  'post_type' => 'audiotheme_track',
+	  'numberposts' => -1
+	);
+	$tracks = get_posts($args);
+
     if( !$tracks ){
         $tracks = false;
     }
@@ -86,7 +92,7 @@ function get_audiotheme_record_custom_url( $record_id ){
  * @since 1.0.0
  */
 function get_audiotheme_track_file( $track_id ){
-   return get_post_meta( $track_id, '_track_file_url', true );
+   return get_post_meta( $track_id, '_file_url', true );
 }
 
 /**
