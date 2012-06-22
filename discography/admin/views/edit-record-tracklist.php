@@ -28,7 +28,7 @@
 				<td><input type="text" name="audiotheme_tracks[<?php echo $key; ?>][artist]" placeholder="<?php _e( 'Artist', 'audiotheme-i18n' ) ?>" value="<?php echo esc_attr( get_post_meta( $track->ID, '_artist', true ) ); ?>" class="widefat"></td>
 				<td class="column-track-info">
 					<?php
-					if ( $track->ID && audiotheme_track_has_download( $track->ID ) ) {
+					if ( $track->ID && has_audiotheme_track_download( $track->ID ) ) {
 						echo '<span class="has-download remove-on-add">&darr;</span>';
 					}
 					

@@ -73,33 +73,127 @@ function get_audiotheme_record_type_string( $slug ) {
 
 
 /**
- * Check if post has an file url supplied.
+ * Get Record Release Year.
  *
- * @since 1.0.0.0
+ * @since 1.0.0
  *
  * @param int $post_id Optional. Post ID.
- * @return bool Whether post has an video url supplied.
+ * @return string
  */
-function audiotheme_track_has_download( $post_id ) {
-	$return = false;
-	
-	$allow_download = get_post_meta( $post_id, '_allow_download', true );
-	
-	if ( $allow_download ) {
-		$file_url = get_audiotheme_track_file_url( $post_id );
-		if ( $file_url && false === strpos( $file_url, 'spotify:' ) ) {
-			$return = $file_url;
-		}
-	}
-	
-	return apply_filters( 'audiotheme_track_download_url', $return, $post_id );
+function get_audiotheme_record_release_year( $post_id = null ) {
+	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
+	return get_post_meta( $post_id, '_release_year', true );
 }
 
- 
+
 /**
- * Check if post has an file url supplied.
+ * Get Record Artist
  *
- * @since 1.0.0.0
+ * @since 1.0.0
+ *
+ * @param int $post_id Optional. Post ID.
+ * @return string
+ */
+function get_audiotheme_record_artist( $post_id = null ) {
+	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
+	return get_post_meta( $post_id, '_artist', true );
+}
+
+
+/**
+ * Get Record Link
+ *
+ * @since 1.0.0
+ *
+ * @param int $post_id Optional. Post ID.
+ * @return string
+ */
+function get_audiotheme_record_links( $post_id = null ) {
+	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
+	return get_post_meta( $post_id, '_record_links', true );
+}
+
+
+/**
+ * Get Record Genre
+ *
+ * @since 1.0.0
+ *
+ * @param int $post_id Optional. Post ID.
+ * @return string
+ */
+function get_audiotheme_record_genre( $post_id = null ) {
+	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
+	return get_post_meta( $post_id, '_genre', true );
+}
+
+
+/**
+ * Get Record Custom URL
+ *
+ * @since 1.0.0
+ * @param int $post_id. Post ID.
+ * @return string
+ */
+function get_audiotheme_record_custom_url( $post_id ) {
+   return get_post_meta( $post_id, '_url', true );
+}
+
+
+/**
+ * Get Tracks List
+ *
+ * Utility function to get the tracks list and 
+ * return array of track ID and Name.
+ *
+ * @return Array Track ID and Name
+ * @since 1.0.0
+ */
+function get_audiotheme_tracks_list() {
+	$list = array();  
+	
+	$args = array(
+		'post_type' => 'audiotheme_track'
+	);
+	
+	$tracks = get_posts( $args );
+	
+	foreach ( (array) $tracks as $track ) {
+	    $list[$track->ID] = $track->post_title;
+	}
+	
+	return $list;
+}
+
+
+/**
+ * Get Tracks
+ *
+ * @since 1.0.0
+ * @param int $post_id Optional. Post ID.
+ * @return array
+ */
+function get_audiotheme_tracks( $post_id ) {
+	$args = array(
+		'post_parent' => absint( $post_id ),
+		'post_type'   => 'audiotheme_track',
+		'numberposts' => -1
+	);
+	
+	$tracks = get_posts( $args );
+
+    if ( ! $tracks ) {
+        $tracks = false;
+    }
+    
+    return $tracks;
+}
+
+
+/**
+ * Has Track File URL
+ *
+ * @since 1.0.0
  *
  * @param int $post_id Optional. Post ID.
  * @return bool Whether post has an video url supplied.
@@ -110,9 +204,59 @@ function has_audiotheme_track_file( $post_id = null ) {
 
 
 /**
- * Retrieve Track File URL.
+ * Has Track Download
  *
- * @since 1.0.0.0
+ * @since 1.0.0
+ *
+ * @param int $post_id Optional. Post ID.
+ * @return bool Whether post has an video url supplied.
+ */
+function has_audiotheme_track_download( $post_id = null ) {
+	$return = false;
+	
+	$allow_download = get_post_meta( $post_id, '_allow_download', true );
+	
+	if ( $allow_download ) {
+		$file_url = get_audiotheme_track_file_url( $post_id );
+		
+		if ( $file_url && false === strpos( $file_url, 'spotify:' ) ) {
+			$return = $file_url;
+		}
+	}
+	
+	return apply_filters( 'audiotheme_track_download_url', $return, $post_id );
+}
+
+
+/**
+ * Has Track Purchase URL
+ *
+ * @since 1.0.0
+ *
+ * @param int $post_id Optional. Post ID.
+ * @return bool Whether post has an video url supplied.
+ */
+function has_audiotheme_track_purchase_url( $post_id = null ) {
+	return (bool) get_audiotheme_track_purchase_url( $post_id );
+}
+
+
+/**
+ * Get Track Artist
+ *
+ * @since 1.0.0
+ * @param int $post_id. Post ID.
+ * @return string
+ */
+function get_audiotheme_track_artist( $post_id ) {
+    return get_post_meta( $post_id, '_artist', true );
+}
+
+
+/**
+ * Get Track File URL.
+ *
+ * @since 1.0.0
  *
  * @param int $post_id Optional. Post ID.
  * @return string
@@ -124,22 +268,9 @@ function get_audiotheme_track_file_url( $post_id = null ) {
 
 
 /**
- * Check if post has an purchase url supplied.
+ * Get Track Purchase URL.
  *
- * @since 1.0.0.0
- *
- * @param int $post_id Optional. Post ID.
- * @return bool Whether post has an video url supplied.
- */
-function has_audiotheme_track_purchase_url( $post_id = null ) {
-	return (bool) get_audiotheme_track_purchase_url( $post_id );
-}
-
-
-/**
- * Retrieve Track Purchase URL.
- *
- * @since 1.0.0.0
+ * @since 1.0.0
  *
  * @param int $post_id Optional. Post ID.
  * @return string
@@ -148,97 +279,5 @@ function get_audiotheme_track_purchase_url( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
 	return get_post_meta( $post_id, '_purchase_url', true );
 }
-
-
-/**
- * Check if record has a release year supplied.
- *
- * @since 1.0.0.0
- *
- * @param int $post_id Optional. Post ID.
- * @return bool Whether post has an video url supplied.
- */
-function has_audiotheme_record_release_year( $post_id = null ) {
-	return (bool) get_audiotheme_record_release_year( $post_id );
-}
-
-
-/**
- * Retrieve Record Release Year.
- *
- * @since 1.0.0.0
- *
- * @param int $post_id Optional. Post ID.
- * @return string
- */
-function get_audiotheme_record_release_year( $post_id = null ) {
-	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-	return get_post_meta( $post_id, '_release_year', true );
-}
-
-/**
- * Get Tracks List
- *
- * Utility function to get the tracks list and 
- * return array of track ID and Name.
- *
- * @return Array Track ID and Name
- * @since 1.0.0.0
- */
-function get_audiotheme_tracks_list() {
-	// Pull all the tracks into an array
-	$list = array();  
-	$tracks = get_posts( array( 'post_type' => 'audiotheme_track' ) );
-	
-	foreach ( (array) $tracks as $track )
-	    $list[$track->ID] = $track->post_title;
-	
-	return $list;
-}
-
-/**
- * Record's track ID's
- *
- * @since 1.0.0.0
- * @param int $post_id Optional. Post ID.
- * @return array
- */
-function get_audiotheme_tracks( $record_id ){
-	$args=array(
-	  'post_parent' => $record_id,
-	  'post_type' => 'audiotheme_track',
-	  'numberposts' => -1
-	);
-	$tracks = get_posts($args);
-
-    if( !$tracks ){
-        $tracks = false;
-    }
-    
-    return $tracks;
-}
-
-/**
- * Track file
- *
- * @since 1.0.0.0
- * @param int $post_id. Post ID.
- * @return string
- */
-function get_audiotheme_record_custom_url( $record_id ){
-   return get_post_meta( $record_id, '_url', true );
-}
-
-/**
- * Track artist
- *
- * @since 1.0.0.0
- * @param int $post_id. Post ID.
- * @return string
- */
-function get_audiotheme_track_artist( $track_id ){
-    return get_post_meta( $track_id, '_artist', true );
-}
-
 
 ?>

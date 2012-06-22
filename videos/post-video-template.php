@@ -2,7 +2,7 @@
 /**
  * Check if post has an video url supplied.
  *
- * @since 1.0.0.0
+ * @since 1.0.0
  *
  * @param int $post_id Optional. Post ID.
  * @return bool Whether post has an video url supplied.
@@ -15,7 +15,7 @@ function has_audiotheme_post_video( $post_id = null ) {
 /**
  * Retrieve Post Video URL.
  *
- * @since 1.0.0.0
+ * @since 1.0.0
  *
  * @param int $post_id Optional. Post ID.
  * @return string
@@ -29,7 +29,7 @@ function get_audiotheme_post_video_url( $post_id = null ) {
 /**
  * Display Post Video.
  *
- * @since 1.0.0.0
+ * @since 1.0.0
  *
  * @param array $size Optional. Video size.  Defaults to 640 width.
  * @param string|array $attr Optional. Query string or array of attributes.
@@ -42,7 +42,7 @@ function the_audiotheme_post_video( $size = array( 'width' => 640 ), $attr = '' 
 /**
  * Retrieve Post Video.
  *
- * @since 1.0.0.0
+ * @since 1.0.0
  *
  * @param int $post_id Optional. Post ID.
  * @param array $args Optional. (width, height, discover)

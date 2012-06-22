@@ -155,7 +155,7 @@ function audiotheme_record_save_hook( $post_id ) {
 	$current_user = wp_get_current_user();
 	
 	// Whitelisted fields
-	$fields = array( 'genre', 'release_year' );
+	$fields = array( 'release_year', 'artist', 'genre' );
 	foreach( $fields as $field ) {
 		$value = ( empty( $_POST[ $field ] ) ) ? '' : $_POST[ $field ];
 		update_post_meta( $post_id, '_' . $field, $value );
@@ -276,8 +276,12 @@ function audiotheme_record_details_meta_box( $post ) {
 		<input type="text" name="release_year" id="record-year" value="<?php echo esc_attr( get_audiotheme_record_release_year( $post->ID ) ) ; ?>" class="widefat">
 	</p>
 	<p class="audiotheme-meta-field">
+		<label for="record-artist"><?php _e( 'Artist', 'audiotheme-i18n' ); ?></label>
+		<input type="text" name="artist" id="record-artist" value="<?php echo esc_attr( get_audiotheme_record_artist( $post->ID ) ) ; ?>" class="widefat">
+	</p>
+	<p class="audiotheme-meta-field">
 		<label for="record-genre"><?php _e( 'Genre', 'audiotheme-i18n' ); ?></label>
-		<input type="text" name="genre" id="record-genre" value="<?php echo esc_attr( get_post_meta( $post->ID, '_genre', true ) ) ; ?>" class="widefat">
+		<input type="text" name="genre" id="record-genre" value="<?php echo esc_attr( get_audiotheme_record_genre( $post->ID ) ) ; ?>" class="widefat">
 	</p>
 	<?php
 	$record_types = get_audiotheme_record_type_strings();
@@ -317,7 +321,7 @@ function audiotheme_record_details_meta_box( $post ) {
 		</tfoot>
 		<tbody class="meta-repeater-items">
 			<?php
-			$record_links = (array) get_post_meta( $post->ID, '_record_links', true );
+			$record_links = (array) get_audiotheme_record_links( $post->ID );
 			$record_links = ( empty( $record_links ) ) ? array( '' ) : $record_links;
 			
 			foreach( $record_links as $i => $link ) :

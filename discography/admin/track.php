@@ -142,7 +142,7 @@ function audiotheme_track_display_column( $column_name, $post_id ) {
 			
 			break;
 		case 'download' :
-			echo audiotheme_track_has_download( $post_id ) ? __( 'Yes', 'audiotheme-i18n' ) : __( 'No', 'audiotheme-i18n' );
+			echo has_audiotheme_track_download( $post_id ) ? __( 'Yes', 'audiotheme-i18n' ) : __( 'No', 'audiotheme-i18n' );
 			break;
 		case 'purchase' :
 			$url = get_audiotheme_track_purchase_url( $post_id );
