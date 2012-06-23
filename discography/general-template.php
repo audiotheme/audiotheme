@@ -73,7 +73,7 @@ function get_audiotheme_record_type_string( $slug ) {
 
 
 /**
- * Get Record Release Year.
+ * Get Record Release Year
  *
  * @since 1.0.0
  *
@@ -184,7 +184,8 @@ function is_audiotheme_track_downloadable( $post_id = null ) {
  * @param int $post_id. Post ID.
  * @return string
  */
-function get_audiotheme_track_artist( $post_id ) {
+function get_audiotheme_track_artist( $post_id = null ) {
+	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
     return get_post_meta( $post_id, '_artist', true );
 }
 
