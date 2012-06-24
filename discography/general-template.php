@@ -135,7 +135,9 @@ function get_audiotheme_record_genre( $post_id = null ) {
  * @param int $post_id Post ID.
  * @return array
  */
-function get_audiotheme_record_tracks( $post_id ) {
+function get_audiotheme_record_tracks( $post_id = null ) {
+	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
+	
 	$args = array(
 		'post_parent' => absint( $post_id ),
 		'post_type'   => 'audiotheme_track',
