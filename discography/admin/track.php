@@ -119,6 +119,32 @@ function audiotheme_track_display_column( $column_name, $post_id ) {
 		case 'artist' :
 			echo get_post_meta( $post_id, '_artist', true );
 			break;
+			
+		case 'download' :
+			if ( is_audiotheme_track_downloadable( $post_id ) ) {
+				echo '<img src="' . AUDIOTHEME_URI . 'admin/images/download.png" width="16" height="16">';	
+			}
+			break;
+			
+		case 'file' :
+			$url = get_audiotheme_track_file_url( $post_id );
+			if ( $url ) {
+				printf( '<a href="%1$s" target="_blank">%2$s</a>',
+					esc_url( $url ),
+					'<img src="' . AUDIOTHEME_URI . 'admin/images/music-note.png" width="16" height="16">'
+				);
+			}
+			break;
+			
+		case 'purchase' :
+			$url = get_audiotheme_track_purchase_url( $post_id );
+			if ( $url ) {
+				printf( '<a href="%1$s" target="_blank"><img src="' . AUDIOTHEME_URI . 'admin/images/link.png" width="16" height="16"></a>',
+					esc_url( $url )
+				);
+			}
+			break;
+			
 		case 'record' :
 			$track = get_post( $post_id );
 			$record = get_post( $track->post_parent );
@@ -127,35 +153,6 @@ function audiotheme_track_display_column( $column_name, $post_id ) {
 				get_edit_post_link( $record->ID ),
 				apply_filters( 'the_title', $record->post_title )
 			);
-			break;
-		case 'file' :
-			$url = get_audiotheme_track_file_url( $post_id );
-			
-			if ( $url ) {
-				printf( '<a href="%1$s" target="_blank">%2$s</a>',
-					esc_url( $url ),
-					__( 'Link', 'audiotheme-i18n' )
-				);
-			} else {
-				echo '&mdash;';
-			}
-			
-			break;
-		case 'download' :
-			echo is_audiotheme_track_downloadable( $post_id ) ? __( 'Yes', 'audiotheme-i18n' ) : __( 'No', 'audiotheme-i18n' );
-			break;
-		case 'purchase' :
-			$url = get_audiotheme_track_purchase_url( $post_id );
-			
-			if ( $url ) {
-				printf( '<a href="%1$s" target="_blank">%2$s</a>',
-					esc_url( $url ),
-					__( 'Link', 'audiotheme-i18n' )
-				);
-			} else {
-				echo '&mdash;';
-			}
-			
 			break;
 	}
 }

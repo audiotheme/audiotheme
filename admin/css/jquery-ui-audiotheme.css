@@ -1,13 +1,22 @@
 .ui-widget { font-family: sans-serif; font-size: 12px;}
 
 
-.ui-autocomplete { overflow-y: auto; overflow-x: hidden; padding: 4px 0; max-height: 150px;}
-.ui-autocomplete .ui-menu-item { }
-.ui-autocomplete .ui-menu-item a { cursor: pointer; line-height: 18px; background-image: none; border-radius: 0;}
-.ui-autocomplete .ui-menu-item a.ui-state-hover,
-.ui-autocomplete .ui-menu-item a.ui-state-active { margin: 0; background: #eaf2fa; border-width: 0;}
-.ui-autocomplete.ui-widget-content { background: #fff;}
-.ui-autocomplete-loading { background: url('../../../../../wp-admin/images/wpspin_light.gif') right center no-repeat;}
+ul.ui-autocomplete { overflow-y: auto; overflow-x: hidden; z-index: 10000; position: absolute; list-style: none; margin: 0; padding: 4px 0; max-height: 150px; background: #efefef; border: 1px solid #bbb;
+	-khtml-border-bottom-right-radius: 3px; -khtml-border-bottom-left-radius: 3px;
+	-moz-border-radius-bottomright: 3px; -moz-border-radius-bottomleft: 3px;
+	-webkit-border-bottom-right-radius: 3px; -webkit-border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px; border-bottom-left-radius: 3px;}
+ul.ui-autocomplete li.ui-menu-item { margin-bottom: 0; text-align: left; white-space: nowrap;}
+ul.ui-autocomplete li.ui-menu-item a { display: block; padding: 4px 10px; height: 100%;}
+ul.ui-autocomplete li.ui-menu-item a.ui-state-hover { cursor: pointer; margin: 0; background: #ddd; border-width: 0;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	border-radius: 0;}
+ul.ui-autocomplete-input.open {
+	-khtml-border-bottom-right-radius: 0; -khtml-border-bottom-left-radius: 0;
+	-moz-border-radius-bottomright: 0; -moz-border-radius-bottomleft: 0;
+	-webkit-border-bottom-right-radius: 0; -webkit-border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0; border-bottom-left-radius: 0;}
 
 
 .ui-datepicker { padding: 10px 10px 0 10px;}
@@ -18,16 +27,22 @@
 .ui-state-default,
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default { background: #fff; border-width: 0;
-	 border-radius: 2px;}
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;}
 .ui-state-default:hover { background: #eee;}
 .ui-datepicker-current-day .ui-state-active { background: #ccc;}
 #ui-datepicker-div { display: none;}
 
 
-.ui-timepicker-list { overflow-y: auto; margin: 0; padding: 0; height: 150px; width: 6.5em; background: #fff; border: 1px solid #ddd;
+.ui-timepicker-list { overflow-y: auto; margin: 0; padding: 4px 0; height: 150px; width: 6.5em; background: #efefef; border: 1px solid #bbb;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	border-radius: 4px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 	box-sizing: border-box;}
-.ui-timepicker-list li { cursor: pointer; white-space: nowrap; list-style: none; margin: 0; padding: .2em .4em; color: #222; line-height: 18px;}
+.ui-timepicker-list li { cursor: pointer; list-style: none; margin: 0; padding: 4px 10px; color: #222; line-height: 18px; white-space: nowrap;}
 .ui-timepicker-selected,
 .ui-timepicker-list li:hover,
-.ui-timepicker-selected:hover { color: #222; background: #eaf2fa;}
+.ui-timepicker-selected:hover { background-color: #ddd;}

@@ -1,14 +1,14 @@
 <table class="widefat meta-repeater" id="record-tracklist">
 	<thead>
 		<tr>
-			<th colspan="4"><?php _e( 'Tracks', 'audiotheme-i18n' ) ?></th>
+			<th colspan="5"><?php _e( 'Tracks', 'audiotheme-i18n' ) ?></th>
 			<th class="column-action"><a class="button meta-repeater-add-item"><?php _e( 'Add Track', 'audiotheme-i18n' ) ?></a></th>
 		</tr>
 	</thead>
 	
 	<tfoot>
 	    <tr class="meta-repeater-sort-warning" style="display: none;">
-	    	<td colspan="5">
+	    	<td colspan="6">
 	    		<?php printf( '<span>%1$s <em>%2$s</em></span>',
 	    			esc_html__( 'The order has been changed.', 'audiotheme-i18n' ),
 	    			esc_html__( 'Save your changes.', 'audiotheme-i18n' )
@@ -26,14 +26,33 @@
 				</td>
 				<td><input type="text" name="audiotheme_tracks[<?php echo $key; ?>][title]" placeholder="<?php _e( 'Title', 'audiotheme-i18n' ) ?>" value="<?php echo esc_attr( $track->post_title ); ?>" class="widefat clear-on-add"></td>
 				<td><input type="text" name="audiotheme_tracks[<?php echo $key; ?>][artist]" placeholder="<?php _e( 'Artist', 'audiotheme-i18n' ) ?>" value="<?php echo esc_attr( get_post_meta( $track->ID, '_artist', true ) ); ?>" class="widefat"></td>
+				<td>
+					<?php
+					$field_id = 'track-file-url-' . $key;
+					
+					$tb_args = array( 
+						'post_id' => $post->ID, 
+						'type' => 'audio', 
+						'TB_iframe' => true, 
+						'width' => 640, 
+						'height' => 750 
+					);
+					
+					$tb_url = add_query_arg( $tb_args, admin_url( 'media-upload.php' ) );
+					?>
+					<div class="audiotheme-input-append">
+						<input type="text" name="audiotheme_tracks[<?php echo $key; ?>][file_url]" id="<?php echo $field_id; ?>" placeholder="<?php _e( 'File URL', 'audiotheme-i18n' ) ?>" value="<?php echo esc_attr( get_post_meta( $track->ID, '_file_url', true ) ); ?>" class="widefat clear-on-add">
+						<a href="<?php echo esc_url( $tb_url ); ?>" title="<?php _e( 'Choose a MP3', 'audiotheme-i18n' ); ?>" class="thickbox audiotheme-input-append-trigger" data-insert-field="<?php echo $field_id; ?>" data-insert-button-text="<?php _e( 'Use MP3', 'audiotheme-i18n' ) ?>"><img src="<?php echo AUDIOTHEME_URI; ?>admin/images/music-note.png" width="12" height="12"></a>
+					</div>
+				</td>
 				<td class="column-track-info">
 					<?php
 					if ( $track->ID && is_audiotheme_track_downloadable( $track->ID ) ) {
-						echo '<span class="has-download remove-on-add">&darr;</span>';
+						echo '<span class="has-download remove-on-add"><img src="' . AUDIOTHEME_URI . 'admin/images/download.png" width="12" height="12"></span>';
 					}
 					
 					if ( $track->ID && $purchase_url = get_post_meta( $track->ID, '_purchase_url', true ) ) {
-						echo '<span class="has-purchase-url remove-on-add">$</span>';
+						echo '<span class="has-purchase-url remove-on-add"><img src="' . AUDIOTHEME_URI . 'admin/images/buy.png" width="12" height="12"></span>';
 					}
 					?>
 					&nbsp;
@@ -68,7 +87,7 @@
 .meta-repeater .column-action .meta-repeater-remove-item { opacity: .2;}
 .meta-repeater .column-action .meta-repeater-remove-item:hover { opacity: 1;}
 
-.meta-repeater .column-track-info { font-size: 16px; vertical-align: middle;}
+.meta-repeater .column-track-info { width: 48px; font-size: 12px; vertical-align: middle;}
 .meta-repeater .column-track-info span { padding: 0 3px;}
 
 .meta-repeater .show-on-add { display: none;}
@@ -79,6 +98,9 @@
 .meta-repeater-sort-warning td { padding: 10px; color: #ff0000; border-top: 1px solid #dfdfdf; border-bottom: none;}
 
 #record-tracklist { margin-bottom: 20px;}
+#record-tracklist .audiotheme-input-append { overflow: hidden; width: 100%;}
+#record-tracklist .audiotheme-input-append input { float: left; padding-right: 34px;}
+#record-tracklist .audiotheme-input-append-trigger { float: left; margin: 0 0 0 -30px; width: 30px; height: 23px; line-height: 23px; border-left-width: 1px;}
 </style>
 
 <script type="text/javascript">

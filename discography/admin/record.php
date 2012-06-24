@@ -207,9 +207,10 @@ function audiotheme_record_save_hook( $post_id ) {
 				$i++;
 			}
 			
-			// Update track artist
+			// Update track artist and file url
 			if ( ! empty( $track_id ) && ! is_wp_error( $track_id ) ) {
 				update_post_meta( $track_id, '_artist', $track_data['artist'] );
+				update_post_meta( $track_id, '_file_url', $track_data['file_url'] );
 			}
 		}
 		
@@ -325,6 +326,7 @@ function audiotheme_record_details_meta_box( $post ) {
 			$record_links = ( empty( $record_links ) ) ? array( '' ) : $record_links;
 			
 			foreach( $record_links as $i => $link ) :
+				$link = wp_parse_args( $link, array( 'name' => '', 'url' => '' ) );
 				?>
 				<tr class="meta-repeater-item">
 					<td><input type="text" name="record_links[<?php echo $i; ?>][name]" value="<?php echo esc_attr( $link['name'] ); ?>" placeholder="<?php _e( 'Text', 'audiotheme-i18n' ) ?>" class="record-link-name clear-on-add" style="width: 8em"></td>

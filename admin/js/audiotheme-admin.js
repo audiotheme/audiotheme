@@ -1,3 +1,14 @@
+jQuery(function($) {
+	$('.audiotheme-pre-postarea').insertBefore('#postdivrich');
+	
+	$('.audiotheme-input-append input').on('focus', function() {
+		$(this).parent().addClass('focused');
+	}).on('blur', function() {
+		$(this).parent().removeClass('focused');
+	});
+});
+
+
 /**
  * Media Popup Helper
  *
@@ -63,6 +74,7 @@ jQuery(function($) {
 		}
 	});
 });
+
 
 /**
  * Meta Repeater
@@ -136,6 +148,12 @@ jQuery(function($) {
 			repeater.find('.meta-repeater-items').append(itemTemplate.clone()).children(':last-child').find('input,select,textarea').each(function(e) {
 				var $this = $(this);
 				$this.attr('name', $this.attr('name').replace('[0]', '[' + itemIndex + ']') );
+				if ('undefined' != typeof $this.attr('id')) {
+					$this.attr('id', $this.attr('id').replace('0', itemIndex) );
+				}
+			}).end().find('.thickbox').each(function(e) {
+				var $this = $(this);
+				$this.attr('data-insert-field', $this.attr('data-insert-field').replace('0', itemIndex) );
 			}).end().find('.clear-on-add').val('').end().find('.remove-on-add').remove().end().find('.show-on-add').show();
 			
 			repeater.data('itemIndex', itemIndex+1 ).metaRepeater('updateIndex');

@@ -232,7 +232,7 @@ class AudioTheme_Venues_List_Table extends WP_List_Table {
 				$admin_url = get_audiotheme_gig_admin_url( array( 'post_type' => 'audiotheme_gig', 'post_status' => 'any', 'venue' => $item->ID ) );
 				return ( empty( $count ) ) ? $count : sprintf( '<a href="%s">%d</a>', $admin_url, $count );
 			case 'website':
-				return ( ! empty( $item->website ) ) ? sprintf( ' <a href="%s" class="venue-website-link" target="_blank"><img src="' . AUDIOTHEME_URI . 'admin/images/link.png" width="16" height="16" alt="Visit venue website"></a>', esc_url( $item->website ) ) : '';
+				return ( ! empty( $item->website ) ) ? sprintf( ' <a href="%s" class="venue-website-link" target="_blank"><img src="' . AUDIOTHEME_URI . 'admin/images/link.png" width="16" height="16" alt="%s"></a>', esc_url( $item->website ), esc_attr( __( 'Visit venue website', 'audiotheme-i18n' ) ) ) : '';
 			default:
 				return ( isset( $item->{$column_name} ) ) ? $item->{$column_name} : '';
 		}

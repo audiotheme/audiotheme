@@ -172,13 +172,3 @@ jQuery(function($) {
 	});
 });
 </script>
-
-<style type="text/css">
-.wrap h2 { margin-bottom: 20px;}
-
-#venue-edit .form-table { margin: 5px 0;}
-#venue-edit .form-table td,
-#venue-edit .form-table th { padding: 5px 10px;}
-#venue-edit .form-table th { width: 120px;}
-#venue-edit .form-table textarea#venue-address { width: 25em;}
-</style>

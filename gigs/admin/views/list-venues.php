@@ -91,12 +91,3 @@ jQuery(function($) {
 	});
 });
 </script>
-<style type="text/css">
-.form-wrap .form-field { margin: 0; padding-bottom: 0;}
-p.search-box { margin-bottom: 8px;}
-
-.column-website { width: 4em;}
-.column-website a span.audiotheme-column-icon { width: 16px; text-indent: -9999px; background: url("<?php echo AUDIOTHEME_URI . 'admin/images/link.png'; ?>") 0 0 no-repeat;}
-.fixed .column-gigs { width: 5em; text-align: center;}
-.venue-website-link img { }
-</style>
