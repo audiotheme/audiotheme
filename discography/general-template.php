@@ -141,6 +141,8 @@ function get_audiotheme_record_tracks( $post_id = null ) {
 	$args = array(
 		'post_parent' => absint( $post_id ),
 		'post_type'   => 'audiotheme_track',
+		'orderby'     => 'menu_order',
+		'order'       => 'ASC',
 		'numberposts' => -1
 	);
 	

@@ -250,7 +250,8 @@ function audiotheme_edit_record_meta_boxes( $post ) {
 function audiotheme_edit_record_tracklist() {
 	global $post, $wpdb;
 	
-	$tracks = get_posts( 'post_type=audiotheme_track&post_parent=' . $post->ID . '&orderby=menu_order&order=ASC&numberposts=-1' );
+	$tracks = get_audiotheme_record_tracks( $post->ID );
+	
 	if ( empty( $tracks ) ) {
 		$track = new stdClass();
 		$track->ID = '';
