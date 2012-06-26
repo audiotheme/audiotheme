@@ -38,6 +38,9 @@ function audiotheme_admin_setup() {
 			'option_name' => array( 'audiotheme_options' ),
 			'show_in_menu' => 'themes.php'
 		) );
+		
+		add_action( 'update_option_audiotheme_options', 'audiotheme_options_update', 10, 2 );
+		add_action( 'admin_init', 'audiotheme_default_options' );
 	}
 	
 	if ( current_theme_supports( 'audiotheme-automatic-updates' ) ) {
@@ -45,6 +48,51 @@ function audiotheme_admin_setup() {
 		$support = get_theme_support( 'audiotheme-automatic-updates' );
 		new AudioTheme_Upgrader( $support[0] );
 	}
+}
+
+function audiotheme_default_options() {
+	$options = AudioTheme_Options::get_instance();
+	
+	$htaccess_file = get_home_path() . '.htaccess';
+	$htaccess_contents = file_get_contents( $htaccess_file );
+	
+	// check to see if htaccess is writable
+	if ( ! is_writable( $htaccess_file ) ) {
+		$args['description'] = 'Your <code>.htaccess</code> file isn\'t writable.';	
+		$args['disabled'] = true;
+	}
+	
+	// check to see if rule exists outside of AudioTheme markers
+	$directive = 'Options All -Indexes';
+	$rules = extract_from_markers( $htaccess_file, 'AudioTheme' );
+	if ( false !== strpos( $htaccess_contents, $directive ) && ! in_array( $directive, $rules ) ) {
+		$args['description'] = 'Directory browsing already appears to be disabled in your <code>.htaccess</code>.';
+		$args['disabled'] = true;
+	}
+	
+	$args['field_label'] = 'Disable directory browsing?';
+	$options->add_field( 'checkbox', 'disable_directory_browsing', __( 'Directory Browsing', 'audiotheme' ), '_default', $args );	
+}
+
+function audiotheme_options_update( $oldvalue, $newvalue ) {
+	audiotheme_save_htaccess();
+}
+
+function audiotheme_save_htaccess() {
+	$home_path = get_home_path();
+	$htaccess_file = $home_path . '.htaccess';
+	
+	if ( ( ! file_exists( $htaccess_file ) && is_writable( $home_path ) ) || is_writable( $htaccess_file ) ) {
+		$htaccess_contents = file_get_contents( $htaccess_file );
+		
+		$directive = 'Options All -Indexes';
+		$rules = array();
+		if ( get_audiotheme_theme_option( 'disable_directory_browsing' ) && false === strpos( $htaccess_contents, $directive ) ) {
+			$rules[] = $directive;
+		}
+		
+		return insert_with_markers( $htaccess_file, 'AudioTheme', $rules );
+	}	
 }
 
 /**

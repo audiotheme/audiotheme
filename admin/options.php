@@ -20,7 +20,7 @@ class AudioTheme_Options {
 	}
 	
 	function setup() {
-		// let's us register panels in admin_menu and still have their menu item show up
+		// lets us register panels in admin_menu and still have their menu item show up
 		add_action( 'admin_menu', array( __CLASS__, 'admin_menu' ), 20 );
 	}
 	
@@ -293,8 +293,9 @@ class AudioTheme_Options {
 		$field_label = ( isset( $field_label ) ) ? $field_label : '';
 		$field_value = ( isset( $field_value ) ) ? $field_value : 1;
 		$checked = checked( $value, $field_value, false );
+		$disabled = ( isset( $disabled ) && $disabled ) ? ' disabled="disabled"' : '';
 		
-		echo '<input type="checkbox" name="' . esc_attr( $name_attr ) . '" id="' . esc_attr( $field_id ) . '" value="' . esc_attr( $field_value ) . '"' . $checked . '>';
+		echo '<input type="checkbox" name="' . esc_attr( $name_attr ) . '" id="' . esc_attr( $field_id ) . '" value="' . esc_attr( $field_value ) . '"' . $checked . $disabled . '>';
 		echo ' <label for="' . esc_attr( $field_id ) . '">' . $field_label . '</label>';
 		echo ( isset( $description ) ) ? '<br><span class="description">' . $description . '</span>' : '';
 	}
