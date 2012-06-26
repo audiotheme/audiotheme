@@ -167,9 +167,9 @@ function get_audiotheme_record_tracks( $post_id = null ) {
 function is_audiotheme_track_downloadable( $post_id = null ) {
 	$return = false;
 	
-	$allow_download = get_post_meta( $post_id, '_allow_download', true );
+	$is_downloadable = get_post_meta( $post_id, '_audiotheme_is_downloadable', true );
 	
-	if ( $allow_download ) {
+	if ( $is_downloadable ) {
 		$file_url = get_audiotheme_track_file_url( $post_id );
 		
 		if ( $file_url ) {

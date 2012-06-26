@@ -253,8 +253,8 @@ function audiotheme_track_save_hook( $post_id ) {
 		update_post_meta( $post_id, '_' . $field, $value );
 	}
 	
-	$allow_download = ( empty( $_POST['allow_download'] ) ) ? NULL : 1;
-	update_post_meta( $post_id, '_allow_download', $allow_download );
+	$is_downloadable = ( empty( $_POST['is_downloadable'] ) ) ? NULL : 1;
+	update_post_meta( $post_id, '_audiotheme_is_downloadable', $is_downloadable );
 }
 
 /**
@@ -310,8 +310,8 @@ function audiotheme_track_details_meta_box( $post ) {
 		<label for="track-file-url"><?php _e( 'Audio File URL:', 'audiotheme-i18n' ) ?></label>
 		<input type="url" name="file_url" id="track-file-url" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_file_url', true ) ) ; ?>" class="widefat">
 		
-		<input type="checkbox" name="allow_download" id="track-allow-download" value="1"<?php checked( get_post_meta( $post->ID, '_allow_download', true ) ); ?>>
-		<label for="track-allow-download"><?php _e( 'Allow downloads?', 'audiotheme-i18n' ) ?></label>
+		<input type="checkbox" name="is_downloadable" id="track-is-downlodable" value="1"<?php checked( get_post_meta( $post->ID, '_audiotheme_is_downloadable', true ) ); ?>>
+		<label for="track-is-downloadable"><?php _e( 'Allow downloads?', 'audiotheme-i18n' ) ?></label>
 		
 		<?php
 		$tb_args = array( 
