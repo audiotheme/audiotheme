@@ -82,7 +82,7 @@ function get_audiotheme_record_type_string( $slug ) {
  */
 function get_audiotheme_record_release_year( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-	return get_post_meta( $post_id, '_release_year', true );
+	return get_post_meta( $post_id, '_audiotheme_release_year', true );
 }
 
 
@@ -124,7 +124,7 @@ function get_audiotheme_record_links( $post_id = null ) {
  */
 function get_audiotheme_record_genre( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-	return get_post_meta( $post_id, '_genre', true );
+	return get_post_meta( $post_id, '_audiotheme_genre', true );
 }
 
 
