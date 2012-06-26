@@ -58,7 +58,7 @@ function audiotheme_default_options() {
 	
 	// check to see if htaccess is writable
 	if ( ! is_writable( $htaccess_file ) ) {
-		$args['description'] = 'Your <code>.htaccess</code> file isn\'t writable.';	
+		$args['description'] = __( 'Your <code>.htaccess</code> file isn\'t writable.', 'audiotheme-i18n' );	
 		$args['disabled'] = true;
 	}
 	
@@ -66,11 +66,11 @@ function audiotheme_default_options() {
 	$directive = 'Options All -Indexes';
 	$rules = extract_from_markers( $htaccess_file, 'AudioTheme' );
 	if ( false !== strpos( $htaccess_contents, $directive ) && ! in_array( $directive, $rules ) ) {
-		$args['description'] = 'Directory browsing already appears to be disabled in your <code>.htaccess</code>.';
+		$args['description'] = __( 'Directory browsing already appears to be disabled in your <code>.htaccess</code>.', 'audiotheme-i18n' );
 		$args['disabled'] = true;
 	}
 	
-	$args['field_label'] = 'Disable directory browsing?';
+	$args['field_label'] = __( 'Disable directory browsing?', 'audiotheme-i18n' );
 	$options->add_field( 'checkbox', 'disable_directory_browsing', __( 'Directory Browsing', 'audiotheme' ), '_default', $args );	
 }
 

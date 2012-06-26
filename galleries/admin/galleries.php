@@ -40,7 +40,7 @@ function audiotheme_gallery_media_iframe() {
 		'tab' => 'gallery',
 		'context' => 'embed'
 	), admin_url( 'media-upload.php' ) );
-	echo '<div id="gallery-ui">';
+	echo '<div id="gallery-ui" class="audiotheme-pre-postarea">';
 		printf( '<iframe id="audiotheme-gallery-iframe" src="%1$s" width="100%%" height="360" frameborder="0" border="0"></iframe>', esc_url( $iframe_src ) );
 	echo '</div>';
 	?>
@@ -48,16 +48,33 @@ function audiotheme_gallery_media_iframe() {
 	var win = window.dialogArguments || opener || parent || top,
 		galleryFrame = jQuery('#audiotheme-gallery-iframe').attr('scrolling', 'no');
 	
-	jQuery('#gallery-ui').insertBefore('#postdivrich');
-	
+	/**
+	 * The media iframe keeps track of its height and tells the parent when it needs
+	 * to be resized.
+	 */
 	win.audiotheme_resize_gallery_iframe = function( height ) {
 		galleryFrame.height( height );
 	}
+	
+	/**
+	 * When the post publish/update button is pressed, it sets the "#audiotheme-update-gallery"
+	 * field value to 1 in the media iframe and prevents the form from being submitted. When the
+	 * media iframe is saved, it resubmits the post form and allows it to be saved.
+	 */
+	jQuery(function($) {
+		$('form#post').submit(function() {
+			var updateFlag = galleryFrame.contents().find('#audiotheme-update-gallery');
+			
+			if ('1' != updateFlag.val()) {
+				updateFlag.val(1);
+				galleryFrame.contents().find('.media-upload-form').submit();
+				return false;
+			}
+			
+			return true;
+		});
+	});
 	</script>
-	<style type="text/css">
-	#gallery-ui { margin-bottom: 15px;}
-	#gallery-ui iframe { }
-	</style>
 	<?php
 }
 
@@ -78,7 +95,7 @@ function audiotheme_gallery_media_iframe_load() {
 		if ( 'audiotheme_gallery' == get_post_type( $post_id ) ) {
 			add_filter( 'media_upload_tabs', 'audiotheme_gallery_media_upload_tabs', 9 );
 			add_action( 'admin_head-media-upload-popup', 'audiotheme_gallery_media_styles' );
-			add_filter( 'media_upload_form_url', 'audiotheme_gallery_medial_upload_form_url' );
+			add_filter( 'media_upload_form_url', 'audiotheme_gallery_media_upload_form_url' );
 			add_filter( 'attachment_fields_to_edit', 'audiotheme_gallery_media_item_fields', 20, 2 );
 			add_filter( 'get_media_item_args', 'audiotheme_gallery_media_item_args' );
 		}
@@ -95,6 +112,7 @@ function audiotheme_gallery_media_upload_tabs( $tabs ) {
 }
 
 function audiotheme_gallery_media_styles() {
+	$update_gallery_value = ( isset( $_POST['audiotheme_update_gallery'] ) && 1 == $_POST['audiotheme_update_gallery'] ) ? 1 : 0;
 	?>
 	<style type="text/css">
 	body { min-width: 300px;}
@@ -116,6 +134,7 @@ function audiotheme_gallery_media_styles() {
 	.media-item .describe textarea { width: 100%;}
 	.media-upload-form { margin-left: 0; margin-right: 0;}
 	</style>
+	
 	<script>
 	jQuery(function($) {
 		var win = window.dialogArguments || opener || parent || top,
@@ -123,6 +142,17 @@ function audiotheme_gallery_media_styles() {
 			lastHeight = document.body.scrollHeight;
 		
 		$('#gallery-settings').hide();
+		$('.media-title').text('<?php echo esc_js( __( 'Add images from your computer', 'audiotheme-i18n' ) ); ?>');
+		if ($('#sidemenu').children('li').length < 2) {
+			$('#media-upload-header').hide();	
+		}
+		
+		$('form.media-upload-form').prepend('<input type="hidden" name="audiotheme_update_gallery" id="audiotheme-update-gallery" value="<?php echo $update_gallery_value; ?>">');
+		<?php
+		if ( $update_gallery_value ) {
+			echo "$('form#post', window.parent.document).submit();";
+		}
+		?>
 		
 		setInterval( function() {
 			var currentHeight = mediaForm.offset().top + mediaForm.height();
@@ -137,7 +167,7 @@ function audiotheme_gallery_media_styles() {
 	<?php
 }
 
-function audiotheme_gallery_medial_upload_form_url( $url ) {
+function audiotheme_gallery_media_upload_form_url( $url ) {
 	return add_query_arg( 'context', 'embed', $url );
 }
 
