@@ -250,7 +250,7 @@ function audiotheme_track_save_hook( $post_id ) {
 	$fields = array( 'artist', 'file_url', 'purchase_url' );
 	foreach( $fields as $field ) {
 		$value = ( empty( $_POST[ $field ] ) ) ? '' : $_POST[ $field ];
-		update_post_meta( $post_id, '_' . $field, $value );
+		update_post_meta( $post_id, '_audiotheme_' . $field, $value );
 	}
 	
 	$is_downloadable = ( empty( $_POST['is_downloadable'] ) ) ? NULL : 1;
