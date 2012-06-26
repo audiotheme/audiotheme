@@ -126,7 +126,7 @@ function audiotheme_gig_query( $query ) {
 	// Sort records by release year
 	$orderby = get_query_var( 'orderby' );
 	if ( is_main_query() && is_post_type_archive( 'audiotheme_gig' ) && empty( $orderby ) && ! is_admin() ) {
-		set_query_var( 'meta_key', 'gig_datetime' );
+		set_query_var( 'meta_key', '_audiotheme_gig_datetime' );
 		set_query_var( 'orderby', 'meta_value' );
 		set_query_var( 'order', 'asc' );
 		
@@ -154,7 +154,7 @@ function audiotheme_gig_query( $query ) {
 			
 			if ( isset( $start ) && isset( $end ) ) {
 				$meta_query[] = array(
-					'key' => 'gig_datetime',
+					'key' => '_audiotheme_gig_datetime',
 					'value' => array( $start, $end ),
 					'compare' => 'BETWEEN',
 					'type' => 'DATETIME'
@@ -167,7 +167,7 @@ function audiotheme_gig_query( $query ) {
 		} else {
 			// Only show upcoming gigs
 			$meta_query[] = array(
-				'key' => 'gig_datetime',
+				'key' => '_audiotheme_gig_datetime',
 				'value' => current_time( 'mysql' ),
 				'compare' => '>=',
 				'type' => 'DATETIME'
@@ -232,7 +232,7 @@ function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
 	if ( ! empty( $permalink ) && 'audiotheme_gig' == get_post_type( $post ) ) {
 		$base = get_audiotheme_gigs_rewrite_base();
 		$slug = ( $leavename ) ? '%postname%' : $post->post_name;
-		$gig_date = get_post_meta( $post->ID, 'gig_datetime', true );
+		$gig_date = get_post_meta( $post->ID, '_audiotheme_gig_datetime', true );
 		$gig_date = ( empty( $gig_date ) ) ? time() : strtotime( $gig_date );
 		
 		$post_link = home_url( sprintf( '/%s/%s/',

@@ -51,7 +51,7 @@ class AudioTheme_Gigs_List_Table extends WP_List_Table {
 		
 		if ( empty( $_REQUEST['m'] ) && ( 'upcoming' == $this->current_view || 'past' == $this->current_view ) ) {
 			$args['meta_query'][] = array(
-				'key' => 'gig_datetime',
+				'key' => '_audiotheme_gig_datetime',
 				'value' => ( isset( $_REQUEST['gig_date'] ) ) ? urldecode( $_REQUEST['gig_date'] ) : current_time( 'mysql' ),
 				'compare' => ( isset( $_REQUEST['compare'] ) ) ? urldecode( $_REQUEST['compare'] ) : '>=',
 				'type' => 'DATETIME'
@@ -67,7 +67,7 @@ class AudioTheme_Gigs_List_Table extends WP_List_Table {
 			$end = sprintf( '%s 23:59:59', date( 'Y-m-t', mktime( 0, 0, 0, $m, 1, $y ) ) );
 			
 			$args['meta_query'][] = array(
-				'key' => 'gig_datetime',
+				'key' => '_audiotheme_gig_datetime',
 				'value' => array( $start, $end ),
 				'compare' => 'BETWEEN',
 				'type' => 'DATETIME'
@@ -92,12 +92,12 @@ class AudioTheme_Gigs_List_Table extends WP_List_Table {
 					// handled after query
 					break;
 				default:
-					$args['meta_key'] = $_REQUEST['orderby'];
+					$args['meta_key'] = '_audiotheme_' . $_REQUEST['orderby'];
 					$args['orderby'] = 'meta_value';
 					break;
 			}
 		} else {
-			$args['meta_key'] = 'gig_datetime';
+			$args['meta_key'] = '_audiotheme_gig_datetime';
 			$args['orderby'] = 'meta_value';
 		}
 		
@@ -166,7 +166,7 @@ class AudioTheme_Gigs_List_Table extends WP_List_Table {
 		$class = ( 'upcoming' == $this->current_view ) ? ' class="current"' : '';
 		$upcoming_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*)
 			FROM $wpdb->posts p, $wpdb->postmeta pm
-			WHERE p.post_type='audiotheme_gig' AND p.post_status!='auto-draft' AND p.ID=pm.post_id AND pm.meta_key='gig_datetime' AND pm.meta_value>=%s",
+			WHERE p.post_type='audiotheme_gig' AND p.post_status!='auto-draft' AND p.ID=pm.post_id AND pm.meta_key='_audiotheme_gig_datetime' AND pm.meta_value>=%s",
 			current_time( 'mysql' ) ) );
 		$status_links['upcoming'] = sprintf( '<a href="%s"%s>%s <span class="count">(%d)</span></a>', $base_url, $class, 'Upcoming', $upcoming_count );
 		
@@ -174,7 +174,7 @@ class AudioTheme_Gigs_List_Table extends WP_List_Table {
 		$past_url = add_query_arg( array( 'gig_date' => current_time( 'mysql' ), 'compare' => '<' ), $base_url );
 		$past_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*)
 			FROM $wpdb->posts p, $wpdb->postmeta pm
-			WHERE p.post_type='audiotheme_gig' AND p.post_status!='auto-draft' AND p.ID=pm.post_id AND pm.meta_key='gig_datetime' AND pm.meta_value<%s",
+			WHERE p.post_type='audiotheme_gig' AND p.post_status!='auto-draft' AND p.ID=pm.post_id AND pm.meta_key='_audiotheme_gig_datetime' AND pm.meta_value<%s",
 			current_time( 'mysql' ) ) );
 		$status_links['past'] = sprintf( '<a href="%s"%s>%s <span class="count">(%d)</span></a>', $past_url, $class, 'Past', $past_count );
 		
@@ -445,7 +445,7 @@ class AudioTheme_Gigs_List_Table extends WP_List_Table {
 		
 		$months = $wpdb->get_results( $wpdb->prepare( "SELECT DISTINCT YEAR( meta_value ) AS year, MONTH( meta_value ) AS month
 			FROM $wpdb->posts p, $wpdb->postmeta pm
-			WHERE p.post_type='audiotheme_gig' AND p.post_status!='auto-draft' AND p.ID=pm.post_id AND pm.meta_key='gig_datetime'
+			WHERE p.post_type='audiotheme_gig' AND p.post_status!='auto-draft' AND p.ID=pm.post_id AND pm.meta_key='_audiotheme_gig_datetime'
 			ORDER BY meta_value DESC" ) );
 		
 		$month_count = count( $months );

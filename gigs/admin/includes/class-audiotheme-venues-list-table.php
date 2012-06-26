@@ -38,18 +38,18 @@ class AudioTheme_Venues_List_Table extends WP_List_Table {
 		if ( isset( $_REQUEST['orderby'] ) ) {
 			switch( $_REQUEST['orderby'] ) {
 				case 'gigs':
-					$args['meta_key'] = 'gig_count';
+					$args['meta_key'] = '_audiotheme_gig_count';
 					$args['orderby'] = 'meta_value_num';
 					break;
 				case 'city':
-				case 'contact':
+				case 'contact_name':
 				case 'contact_phone':
 				case 'contact_email':
 				case 'country':
 				case 'phone':
 				case 'state':
 				case 'website':
-					$args['meta_key'] = $_REQUEST['orderby'];
+					$args['meta_key'] = '_audiotheme_' . $_REQUEST['orderby'];
 					$args['orderby'] = 'meta_value';
 					break;
 			}
@@ -228,7 +228,7 @@ class AudioTheme_Venues_List_Table extends WP_List_Table {
 	function column_default( $item, $column_name ) {
 		switch($column_name){
 			case 'gigs':
-				$count = get_post_meta( $item->ID, 'gig_count', true );
+				$count = get_post_meta( $item->ID, '_audiotheme_gig_count', true );
 				$admin_url = get_audiotheme_gig_admin_url( array( 'post_type' => 'audiotheme_gig', 'post_status' => 'any', 'venue' => $item->ID ) );
 				return ( empty( $count ) ) ? $count : sprintf( '<a href="%s">%d</a>', $admin_url, $count );
 			case 'website':

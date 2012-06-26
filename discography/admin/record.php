@@ -171,7 +171,7 @@ function audiotheme_record_save_hook( $post_id ) {
 			}
 		}
 	}
-	update_post_meta( $post_id, '_record_links', $record_links );
+	update_post_meta( $post_id, '_audiotheme_record_links', $record_links );
 	
 	// Update record type
 	$record_types = ( empty( $_POST['record_type'] ) ) ? '' : $_POST['record_type'];
@@ -179,7 +179,7 @@ function audiotheme_record_save_hook( $post_id ) {
 	
 	// Update tracklist
 	if ( ! empty( $_POST['audiotheme_tracks'] ) ) {
-		$i = 0;
+		$i = 1;
 		foreach ( $_POST['audiotheme_tracks'] as $track_data ) {
 			$default_data = array( 'artist' => '', 'post_id' => '', 'title' => '' );
 			$track_data = wp_parse_args( $track_data, $default_data );
@@ -209,8 +209,8 @@ function audiotheme_record_save_hook( $post_id ) {
 			
 			// Update track artist and file url
 			if ( ! empty( $track_id ) && ! is_wp_error( $track_id ) ) {
-				update_post_meta( $track_id, '_artist', $track_data['artist'] );
-				update_post_meta( $track_id, '_file_url', $track_data['file_url'] );
+				update_post_meta( $track_id, '_audiotheme_artist', $track_data['artist'] );
+				update_post_meta( $track_id, '_audiotheme_file_url', $track_data['file_url'] );
 			}
 		}
 		

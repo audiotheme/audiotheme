@@ -96,7 +96,7 @@ function get_audiotheme_record_release_year( $post_id = null ) {
  */
 function get_audiotheme_record_artist( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-	return get_post_meta( $post_id, '_artist', true );
+	return get_post_meta( $post_id, '_audiotheme_artist', true );
 }
 
 
@@ -110,7 +110,7 @@ function get_audiotheme_record_artist( $post_id = null ) {
  */
 function get_audiotheme_record_links( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-	return get_post_meta( $post_id, '_record_links', true );
+	return get_post_meta( $post_id, '_audiotheme_record_links', true );
 }
 
 
@@ -190,7 +190,7 @@ function is_audiotheme_track_downloadable( $post_id = null ) {
  */
 function get_audiotheme_track_artist( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-    return get_post_meta( $post_id, '_artist', true );
+    return get_post_meta( $post_id, '_audiotheme_artist', true );
 }
 
 
@@ -204,7 +204,7 @@ function get_audiotheme_track_artist( $post_id = null ) {
  */
 function get_audiotheme_track_file_url( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-	return get_post_meta( $post_id, '_file_url', true );
+	return get_post_meta( $post_id, '_audiotheme_file_url', true );
 }
 
 
@@ -218,7 +218,7 @@ function get_audiotheme_track_file_url( $post_id = null ) {
  */
 function get_audiotheme_track_purchase_url( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-	return get_post_meta( $post_id, '_purchase_url', true );
+	return get_post_meta( $post_id, '_audiotheme_purchase_url', true );
 }
 
 ?>

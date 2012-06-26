@@ -14,13 +14,13 @@ function get_audiotheme_gig( $post = null ) {
 	$post = &get_post( $post );
 	$gig_id = $post->ID;
 	
-	$post->gig_datetime = get_post_meta( $gig_id, 'gig_datetime', true );
+	$post->gig_datetime = get_post_meta( $gig_id, '_audiotheme_gig_datetime', true );
 	$post->gig_time = '';
-	$post->tickets_price = get_post_meta( $gig_id, 'tickets_price', true );
-	$post->tickets_url = get_post_meta( $gig_id, 'tickets_url', true );
+	$post->tickets_price = get_post_meta( $gig_id, '_audiotheme_tickets_price', true );
+	$post->tickets_url = get_post_meta( $gig_id, '_audiotheme_tickets_url', true );
 	
 	// determine the gig time
-	$gig_time = get_post_meta( $post->ID, 'gig_time', true );
+	$gig_time = get_post_meta( $post->ID, '_audiotheme_gig_time', true );
 	$t = date_parse( $gig_time );
 	if ( empty( $t['errors'] ) ) {
 		$post->gig_time = mysql2date( get_option( 'time_format' ), $post->gig_datetime );
@@ -60,7 +60,7 @@ function get_audiotheme_gig( $post = null ) {
 function get_audiotheme_gig_title( $post = null ) {
 	$gig = get_audiotheme_gig( $post );
 
-	$title = ( empty( $post->post_title ) ) ? '' : $post->post_title;
+	$title = ( empty( $gig->post_title ) ) ? '' : $gig->post_title;
 	
 	if ( empty( $title ) ) {
 		if ( ! empty( $gig->venue->name ) ) {
@@ -352,7 +352,12 @@ function get_audiotheme_venue( $venue_id ) {
 	$post = get_post( $venue_id );
 	
 	$defaults = get_default_audiotheme_venue_properties();
-	$properties = wp_parse_args( (array) get_post_custom( $venue_id ), $defaults );
+	$meta = (array) get_post_custom( $venue_id );
+	foreach( $meta as $key => $val ) {
+		$meta[ str_replace( '_audiotheme_', '', $key ) ] = $val;
+		unset( $meta[ $key ] );	
+	}
+	$properties = wp_parse_args( $meta, $defaults );
 	
 	foreach( $properties as $key => $prop ) {
 		if ( ! array_key_exists( $key, $defaults ) ) {
@@ -680,11 +685,12 @@ function save_audiotheme_venue( $data ) {
 			wp_update_post( $venue );
 			
 			// update the gig metadata, too
-			$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->postmeta pm, $wpdb->postmeta pm2
+			// TODO: check this out
+			/*$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->postmeta pm, $wpdb->postmeta pm2
 				SET pm2.meta_value=%s
 				WHERE pm.meta_key='venue_id' AND pm.meta_value=%d AND pm.post_id=pm2.post_id AND pm2.meta_key='venue'",
 				$venue['post_title'],
-				$venue_id ) );
+				$venue_id ) );*/
 		}
 	}
 	
@@ -705,6 +711,7 @@ function save_audiotheme_venue( $data ) {
 		unset( $data['name'] );
 		
 		foreach ( $data as $key => $val ) {
+			$key = '_audiotheme_' . $key;
 			update_post_meta( $venue_id, $key, $val );
 		}
 		
@@ -750,6 +757,6 @@ function update_audiotheme_venue_gig_count( $venue_id, $count = 0 ) {
 		$count = $wpdb->get_var( $sql );
 	}
 	
-	update_post_meta( $venue_id, 'gig_count', absint( $count ) );
+	update_post_meta( $venue_id, '_audiotheme_gig_count', absint( $count ) );
 }
 ?>

@@ -8,7 +8,7 @@ foreach ( $wp_query->posts as $post ) {
 	$event->description = $post->post_excerpt;
 	$event->url = get_permalink( $post->ID );
 	$event->start->date = get_audiotheme_gig_time( 'Y-m-d' );
-	$event->start->time = get_post_meta( $post->ID, 'gig_time', true );
+	$event->start->time = get_post_meta( $post->ID, '_audiotheme_gig_time', true );
 	$event->start->datetime = get_audiotheme_gig_time( 'c', '', true );
 	
 	if ( ! empty( $post->venue ) ) {

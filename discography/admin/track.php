@@ -68,7 +68,7 @@ function audiotheme_tracks_admin_query( $wp_query ) {
 		if ( ! empty( $_GET['orderby'] ) && in_array( $_GET['orderby'], $sortable_keys ) ) {
 			switch ( $_GET['orderby'] ) {
 				case 'artist' :
-					$meta_key = '_artist';
+					$meta_key = '_audiotheme_artist';
 					break;
 			}
 			
@@ -117,7 +117,7 @@ function audiotheme_track_columns( $columns ) {
 function audiotheme_track_display_column( $column_name, $post_id ) {
 	switch ( $column_name ) {
 		case 'artist' :
-			echo get_post_meta( $post_id, '_artist', true );
+			echo get_post_meta( $post_id, '_audiotheme_artist', true );
 			break;
 			
 		case 'download' :
@@ -303,12 +303,12 @@ function audiotheme_track_details_meta_box( $post ) {
 	
 	<p class="audiotheme-meta-field">
 		<label for="track-artist"><?php _e( 'Artist:', 'audiotheme-i18n' ) ?></label>
-		<input type="text" name="artist" id="track-artist" value="<?php echo esc_attr( get_post_meta( $post->ID, '_artist', true ) ) ; ?>" class="widefat">
+		<input type="text" name="artist" id="track-artist" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_artist', true ) ) ; ?>" class="widefat">
 	</p>
 	
 	<p class="audiotheme-meta-field audiotheme-meta-field-upload">
 		<label for="track-file-url"><?php _e( 'Audio File URL:', 'audiotheme-i18n' ) ?></label>
-		<input type="url" name="file_url" id="track-file-url" value="<?php echo esc_attr( get_post_meta( $post->ID, '_file_url', true ) ) ; ?>" class="widefat">
+		<input type="url" name="file_url" id="track-file-url" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_file_url', true ) ) ; ?>" class="widefat">
 		
 		<input type="checkbox" name="allow_download" id="track-allow-download" value="1"<?php checked( get_post_meta( $post->ID, '_allow_download', true ) ); ?>>
 		<label for="track-allow-download"><?php _e( 'Allow downloads?', 'audiotheme-i18n' ) ?></label>
@@ -329,7 +329,7 @@ function audiotheme_track_details_meta_box( $post ) {
 	
 	<p class="audiotheme-meta-field">
 		<label for="track-purchase-url"><?php _e( 'Purchase URL:', 'audiotheme-i18n' ) ?></label>
-		<input type="url" name="purchase_url" id="track-purchase-url" value="<?php echo esc_url( get_post_meta( $post->ID, '_purchase_url', true ) ) ; ?>" class="widefat">
+		<input type="url" name="purchase_url" id="track-purchase-url" value="<?php echo esc_url( get_post_meta( $post->ID, '_audiotheme_purchase_url', true ) ) ; ?>" class="widefat">
 	</p>
 
 	<?php

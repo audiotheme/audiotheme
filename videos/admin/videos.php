@@ -191,8 +191,8 @@ function audiotheme_oembed_dataparse( $return, $data, $url ) {
 	// Support for any oEmbed providers that respond with thumbnail_url
 	if( isset( $data->thumbnail_url ) ) {
 		
-		$current_source = get_post_meta( $post_ID, '_thumbnail_source', true );
-		$current_source_id = get_post_meta( $post_ID, '_thumbnail_source_id', true );
+		$current_source = get_post_meta( $post_ID, '_audiotheme_thumbnail_source', true );
+		$current_source_id = get_post_meta( $post_ID, '_audiotheme_thumbnail_source_id', true );
 		
 		if ( ! get_post_thumbnail_id( $post_ID ) && $data->thumbnail_url == $current_source ) {
 			
@@ -210,8 +210,8 @@ function audiotheme_oembed_dataparse( $return, $data, $url ) {
 			if ( $thumbnail_id = get_post_thumbnail_id( $post_ID ) ) {
 				
 				// store source so we don't copy the same image on repeated requests
-				update_post_meta( $post_ID, '_thumbnail_source', $data->thumbnail_url, true );
-				update_post_meta( $post_ID, '_thumbnail_source_id', $thumbnail_id, true );
+				update_post_meta( $post_ID, '_audiotheme_thumbnail_source', $data->thumbnail_url, true );
+				update_post_meta( $post_ID, '_audiotheme_thumbnail_source_id', $thumbnail_id, true );
 			
 			}
 		}
@@ -250,7 +250,7 @@ function audiotheme_video_save( $id ) {
 
 	// Make sure we get a clean url here with esc_url
 	if( isset( $_POST['_video_url'] ) )
-		update_post_meta( $id, '_video_url', esc_url( $_POST['_video_url'], array( 'http', 'https' ) ) );
+		update_post_meta( $id, '_audiotheme_video_url', esc_url( $_POST['_video_url'], array( 'http', 'https' ) ) );
 }
 
 function audiotheme_video_archive_menu_item( $posts ) {

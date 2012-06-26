@@ -25,7 +25,7 @@
 					<span class="meta-repeater-index"><?php echo $key + 1 . '.'; ?></span>
 				</td>
 				<td><input type="text" name="audiotheme_tracks[<?php echo $key; ?>][title]" placeholder="<?php _e( 'Title', 'audiotheme-i18n' ) ?>" value="<?php echo esc_attr( $track->post_title ); ?>" class="widefat clear-on-add"></td>
-				<td><input type="text" name="audiotheme_tracks[<?php echo $key; ?>][artist]" placeholder="<?php _e( 'Artist', 'audiotheme-i18n' ) ?>" value="<?php echo esc_attr( get_post_meta( $track->ID, '_artist', true ) ); ?>" class="widefat"></td>
+				<td><input type="text" name="audiotheme_tracks[<?php echo $key; ?>][artist]" placeholder="<?php _e( 'Artist', 'audiotheme-i18n' ) ?>" value="<?php echo esc_attr( get_post_meta( $track->ID, '_audiotheme_artist', true ) ); ?>" class="widefat"></td>
 				<td>
 					<?php
 					$field_id = 'track-file-url-' . $key;
@@ -41,7 +41,7 @@
 					$tb_url = add_query_arg( $tb_args, admin_url( 'media-upload.php' ) );
 					?>
 					<div class="audiotheme-input-append">
-						<input type="text" name="audiotheme_tracks[<?php echo $key; ?>][file_url]" id="<?php echo $field_id; ?>" placeholder="<?php _e( 'File URL', 'audiotheme-i18n' ) ?>" value="<?php echo esc_attr( get_post_meta( $track->ID, '_file_url', true ) ); ?>" class="widefat clear-on-add">
+						<input type="text" name="audiotheme_tracks[<?php echo $key; ?>][file_url]" id="<?php echo $field_id; ?>" placeholder="<?php _e( 'File URL', 'audiotheme-i18n' ) ?>" value="<?php echo esc_attr( get_post_meta( $track->ID, '_audiotheme_file_url', true ) ); ?>" class="widefat clear-on-add">
 						<a href="<?php echo esc_url( $tb_url ); ?>" title="<?php _e( 'Choose a MP3', 'audiotheme-i18n' ); ?>" class="thickbox audiotheme-input-append-trigger" data-insert-field="<?php echo $field_id; ?>" data-insert-button-text="<?php _e( 'Use MP3', 'audiotheme-i18n' ) ?>"><img src="<?php echo AUDIOTHEME_URI; ?>admin/images/music-note.png" width="12" height="12"></a>
 					</div>
 				</td>
@@ -51,7 +51,7 @@
 						echo '<span class="has-download remove-on-add"><img src="' . AUDIOTHEME_URI . 'admin/images/download.png" width="12" height="12"></span>';
 					}
 					
-					if ( $track->ID && $purchase_url = get_post_meta( $track->ID, '_purchase_url', true ) ) {
+					if ( $track->ID && $purchase_url = get_post_meta( $track->ID, '_audiotheme_purchase_url', true ) ) {
 						echo '<span class="has-purchase-url remove-on-add"><img src="' . AUDIOTHEME_URI . 'admin/images/buy.png" width="12" height="12"></span>';
 					}
 					?>

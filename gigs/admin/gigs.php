@@ -170,11 +170,11 @@ function audiotheme_gig_tickets_meta_box( $post ) {
 	?>
 	<p class="audiotheme-meta-field">
 		<label for="gig-tickets-price">Price:</label><br>
-		<input type="text" name="gig_tickets_price" id="gig-tickets-price" value="<?php echo esc_attr( get_post_meta( $post->ID, 'tickets_price', true ) ) ; ?>" class="large-text">
+		<input type="text" name="gig_tickets_price" id="gig-tickets-price" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_tickets_price', true ) ) ; ?>" class="large-text">
 	</p>
 	<p class="audiotheme-meta-field">
 		<label for="gig-tickets-url">Tickets URL:</label><br>
-		<input type="url" name="gig_tickets_url" id="gig-tickets-url" value="<?php echo esc_attr( get_post_meta( $post->ID, 'tickets_url', true ) ) ; ?>" class="large-text">
+		<input type="url" name="gig_tickets_url" id="gig-tickets-url" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_tickets_url', true ) ) ; ?>" class="large-text">
 	</p>
 	<?php
 }
@@ -235,7 +235,7 @@ function audiotheme_gig_save_hook( $gig_id ) {
 				zeroise( $dt['minute'], 2 ),
 				zeroise( $dt['second'], 2 ) );
 			
-			update_post_meta( $gig_id, 'gig_datetime', $datetime );
+			update_post_meta( $gig_id, '_audiotheme_gig_datetime', $datetime );
 			
 			// If the post name is empty, default it to the date
 			$post = get_post( $gig_id );
@@ -246,7 +246,7 @@ function audiotheme_gig_save_hook( $gig_id ) {
 				) );
 			}
 		} else {
-			update_post_meta( $gig_id, 'gig_datetime', '' );
+			update_post_meta( $gig_id, '_audiotheme_gig_datetime', '' );
 		}
 		
 		// Store time separately to check for empty values, TBA, etc.
@@ -258,9 +258,9 @@ function audiotheme_gig_save_hook( $gig_id ) {
 				zeroise( $t['minute'], 2 ),
 				zeroise( $t['second'], 2 ) );
 		}
-		update_post_meta( $gig_id, 'gig_time', $time );
-		update_post_meta( $gig_id, 'tickets_price', $_POST['gig_tickets_price'] );
-		update_post_meta( $gig_id, 'tickets_url', $_POST['gig_tickets_url'] );
+		update_post_meta( $gig_id, '_audiotheme_gig_time', $time );
+		update_post_meta( $gig_id, '_audiotheme_tickets_price', $_POST['gig_tickets_price'] );
+		update_post_meta( $gig_id, '_audiotheme_tickets_url', $_POST['gig_tickets_url'] );
 	}
 }
 

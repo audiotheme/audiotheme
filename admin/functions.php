@@ -7,12 +7,15 @@
 function audiotheme_update_post_meta( $post_id, $fields_array = null, $type = 'text' ){
     if ( is_array( $fields_array ) ):
         foreach ( $fields_array as $field ) {
-             if ( isset( $_POST[$field] ) ):
-             
+             if ( isset( $_POST[ $field ] ) ):
+             	if ( 0 !== strpos( $field, '_audiotheme_' ) ) {
+					$field = '_audiotheme_' . $field;	
+				}
+				
                 if ( $type == 'url' ){
-                    update_post_meta( $post_id, $field, esc_url_raw( $_POST[$field], array( 'http', 'https' ) ) );
+                    update_post_meta( $post_id, $field, esc_url_raw( $_POST[ $field ], array( 'http', 'https' ) ) );
                 } else {
-                    update_post_meta( $post_id, $field, strip_tags( $_POST[$field] ) ); 
+                    update_post_meta( $post_id, $field, strip_tags( $_POST[ $field ] ) ); 
                 }
              
             endif;
@@ -27,7 +30,11 @@ function audiotheme_update_post_meta( $post_id, $fields_array = null, $type = 't
  * @since 1.0.0
  */
 function audiotheme_meta_field( $post, $type = 'text', $field, $label = false, $desc = false ) { 
-    $value = get_post_meta( $post->ID, $field, true ); ?>
+    if ( 0 !== strpos( $field, '_audiotheme_' ) ) {
+		$field = '_audiotheme_' . $field;	
+	}
+	
+	$value = get_post_meta( $post->ID, $field, true ); ?>
     
     <p class="audiotheme-field">
         <?php

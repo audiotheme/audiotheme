@@ -22,7 +22,7 @@ function has_audiotheme_post_video( $post_id = null ) {
  */
 function get_audiotheme_post_video_url( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-	return get_post_meta( $post_id, '_video_url', true );
+	return get_post_meta( $post_id, '_audiotheme_video_url', true );
 }
 
 
