@@ -11,7 +11,7 @@
 function get_audiotheme_record_link_sources() {
 	$default_sources = array(
 		'7digital'   => array( 'icon' => '' ),
-		'Amazon MP3' => array( 'icon' => '' ),
+		'Amazon'     => array( 'icon' => '' ),
 		'Bandcamp'   => array( 'icon' => '' ),
 		'CD Baby'    => array( 'icon' => '' ),
 		'Google'     => array( 'icon' => '' ),
