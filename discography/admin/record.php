@@ -10,11 +10,11 @@ function audiotheme_records_admin_query( $wp_query ) {
 		if ( ! empty( $_GET['orderby'] ) && in_array( $_GET['orderby'], $sortable_keys ) ) {
 			switch ( $_GET['orderby'] ) {
 				case 'release_year' :
-					$meta_key = '_release_year';
+					$meta_key = '_audiotheme_release_year';
 					$orderby = 'meta_value_num';
 					break;
 				case 'tracks' :
-					$meta_key = '_track_count';
+					$meta_key = '_audiotheme_track_count';
 					$orderby = 'meta_value_num';
 					break;
 			}
@@ -89,7 +89,7 @@ function audiotheme_record_display_column( $column_name, $post_id ) {
 				'post_type' => 'audiotheme_track',
 				'post_parent' => $post_id
 			);
-			printf( '<a href="%s">%s</a>', add_query_arg( $args, esc_url( admin_url( 'edit.php' ) ) ), get_post_meta( $post_id, '_track_count', true ) );
+			printf( '<a href="%s">%s</a>', add_query_arg( $args, esc_url( admin_url( 'edit.php' ) ) ), get_post_meta( $post_id, '_audiotheme_track_count', true ) );
 			break;
 			
 	}
@@ -217,7 +217,7 @@ function audiotheme_record_save_hook( $post_id ) {
 		// Update track count
 		$track_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->posts WHERE post_type='audiotheme_track' AND post_parent=%d", $post_id ) );
 		$track_count = ( empty( $track_count ) ) ? 0 : absint( $track_count );
-		update_post_meta( $post_id, '_track_count', $track_count );
+		update_post_meta( $post_id, '_audiotheme_track_count', $track_count );
 	}
 }
 
