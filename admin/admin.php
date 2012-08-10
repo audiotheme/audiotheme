@@ -20,6 +20,9 @@ function audiotheme_admin_setup() {
 	add_action( 'save_post', 'audiotheme_video_save' );
 	add_action( 'wp_ajax_audiotheme_get_video_data', 'audiotheme_get_video_data' );
 	
+	add_action( 'admin_init', 'audiotheme_register_directory_browsing_setting' );
+	add_action( 'update_option_audiotheme_disable_directory_browsing', 'audiotheme_disable_directory_browsing_option_update', 10, 2 );
+	
 	add_action( 'admin_enqueue_scripts', 'audiotheme_enqueue_admin_scripts' );
 	add_action( 'admin_body_class', 'audiotheme_admin_body_class' );
 	add_filter( 'user_contactmethods', 'audiotheme_edit_user_contact_info' );
@@ -39,8 +42,8 @@ function audiotheme_admin_setup() {
 			'show_in_menu' => 'themes.php'
 		) );
 		
-		add_action( 'update_option_audiotheme_options', 'audiotheme_options_update', 10, 2 );
-		add_action( 'admin_init', 'audiotheme_default_options' );
+		//add_action( 'update_option_audiotheme_options', 'audiotheme_options_update', 10, 2 );
+		//add_action( 'admin_init', 'audiotheme_default_options' );
 	}
 	
 	if ( current_theme_supports( 'audiotheme-automatic-updates' ) ) {
@@ -50,31 +53,27 @@ function audiotheme_admin_setup() {
 	}
 }
 
-function audiotheme_default_options() {
-	$options = AudioTheme_Options::get_instance();
+function audiotheme_register_directory_browsing_setting() {
+	register_setting( 'privacy', 'audiotheme_disable_directory_browsing' );
 	
-	$htaccess_file = get_home_path() . '.htaccess';
-	$htaccess_contents = file_get_contents( $htaccess_file );
-	
-	// check to see if htaccess is writable
-	if ( ! is_writable( $htaccess_file ) ) {
-		$args['description'] = __( 'Your <code>.htaccess</code> file isn\'t writable.', 'audiotheme-i18n' );	
-		$args['disabled'] = true;
-	}
-	
-	// check to see if rule exists outside of AudioTheme markers
-	$directive = 'Options All -Indexes';
-	$rules = extract_from_markers( $htaccess_file, 'AudioTheme' );
-	if ( false !== strpos( $htaccess_contents, $directive ) && ! in_array( $directive, $rules ) ) {
-		$args['description'] = __( 'Directory browsing already appears to be disabled in your <code>.htaccess</code>.', 'audiotheme-i18n' );
-		$args['disabled'] = true;
-	}
-	
-	$args['field_label'] = __( 'Disable directory browsing?', 'audiotheme-i18n' );
-	$options->add_field( 'checkbox', 'disable_directory_browsing', __( 'Directory Browsing', 'audiotheme' ), '_default', $args );	
+	add_settings_field(
+		'audiotheme_disable_directory_browsing',
+		'<label for="audiotheme-disable-directory-browsing">' . __( 'Directory Browsing', 'audiotheme-i18n' ) . '</label>',
+		'audiotheme_disable_directory_browsing_setting_field',
+		'privacy',
+		'default'
+	);
 }
 
-function audiotheme_options_update( $oldvalue, $newvalue ) {
+function audiotheme_disable_directory_browsing_setting_field() {
+	$disable_browsing = get_option( 'audiotheme_disable_directory_browsing' );
+	?>
+	<input type="checkbox" name="audiotheme_disable_directory_browsing" id="audiotheme-disable-directory-browsing" value="1"<?php checked( $disable_browsing, true ); ?>>
+	<label for="audiotheme-disable-directory-browsing"><?php _e( 'Disable directory browsing?', 'audiotheme-i18n' ); ?></label>
+	<?php
+}
+
+function audiotheme_disable_directory_browsing_option_update( $oldvalue, $newvalue ) {
 	audiotheme_save_htaccess();
 }
 
@@ -87,7 +86,7 @@ function audiotheme_save_htaccess() {
 		
 		$directive = 'Options All -Indexes';
 		$rules = array();
-		if ( get_audiotheme_theme_option( 'disable_directory_browsing' ) && false === strpos( $htaccess_contents, $directive ) ) {
+		if ( get_option( 'audiotheme_disable_directory_browsing' ) && false === strpos( $htaccess_contents, $directive ) ) {
 			$rules[] = $directive;
 		}
 		
