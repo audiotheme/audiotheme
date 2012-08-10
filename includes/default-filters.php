@@ -22,6 +22,9 @@ if ( ! is_admin() ) {
 function audiotheme_nav_menu_classes( $items, $menu, $args ) {
 	$classes = array();
 	$first_top = -1;
+	$is_audiotheme_post_type = is_singular( array( 'audiotheme_gallery', 'audiotheme_gig', 'audiotheme_record', 'audiotheme_track', 'audiotheme_video' ) );
+	$post_type_archive_link = get_post_type_archive_link( get_post_type() );
+	
 	foreach ( $items as $key => $item ) {
 		if ( 0 == $item->menu_item_parent ) {
 			$first_top = ( -1 == $first_top ) ? $key : $first_top;
@@ -32,6 +35,11 @@ function audiotheme_nav_menu_classes( $items, $menu, $args ) {
 				$items[ $key ]->classes[] = 'first-child-item';
 			}
 			$classes['last-child-items'][ $item->menu_item_parent ] = $key;
+		}
+		
+		// Add 'current-menu-parent' class to CPT archive links when viewing a singular template
+		if ( $is_audiotheme_post_type && $post_type_archive_link == $item->url ) {
+			$items[ $key ]->classes[] = 'current-menu-parent';
 		}
 	}
 	
