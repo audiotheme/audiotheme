@@ -1,4 +1,17 @@
 <?php
+function get_audiotheme_gigs_url() {
+	$permalink = get_option( 'permalink_structure' );
+	
+	if ( empty( $permalink ) ) {
+		$url = add_query_arg( 'post_type', 'audiotheme_gig', home_url( '/' ) );
+	} else {
+		$base = get_audiotheme_gigs_rewrite_base();
+		$url = home_url( '/' . $base . '/' );
+	}
+	
+	return $url;
+}
+
 /**
  * Retrieve a gig object with associated venue
  *
@@ -241,6 +254,29 @@ function the_audiotheme_gig_description( $before = '', $after = '', $echo = true
 		return $html;
 }
 
+function get_audiotheme_gig_location( $post = null ) {
+	$gig = get_audiotheme_gig( $post );
+	
+	$location = '';
+	if ( audiotheme_gig_has_venue( $gig ) ) {
+		$venue = get_audiotheme_venue( $gig->venue->ID );
+		
+		$location = '';
+		$location.= ( empty( $venue->city ) ) ? '' : '<span class="locality">' . $venue->city . '</span>';
+		$location.= ( ! empty( $location ) && ! empty( $venue->state ) ) ? '<span class="sep sep-region">,</span> ' : '';
+		$location.= ( empty( $venue->state ) ) ? '' : '<span class="region">' . $venue->state . '</span>';
+		
+		if ( ! empty( $venue->country ) ) {
+			$country_class = esc_attr( 'country-name-' . sanitize_title_with_dashes( $venue->country ) );
+			
+			$location.= ( ! empty( $location ) ) ? '<span class="sep sep-country-name ' . $country_class . '">,</span> ' : '';
+			$location.= ( empty( $venue->country ) ) ? '' : '<span class="county-name ' . $country_class . '">' . $venue->country . '</span>';
+		}
+	}
+	
+	return $location;
+}
+
 /**
  * Retrieve a gig's description
  *
@@ -253,6 +289,18 @@ function get_audiotheme_gig_description( $post = 0 ) {
 	$gig = get_audiotheme_gig( $post );
 	
 	return $gig->post_excerpt;
+}
+
+function get_audiotheme_gig_tickets_price( $post = 0 ) {
+	$gig = get_audiotheme_gig( $post );
+	
+	return get_post_meta( $gig->ID, '_audiotheme_tickets_price', true );
+}
+
+function get_audiotheme_gig_tickets_url( $post = 0 ) {
+	$gig = get_audiotheme_gig( $post );
+	
+	return get_post_meta( $gig->ID, '_audiotheme_tickets_url', true );
 }
 
 /**

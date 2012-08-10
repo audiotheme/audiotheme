@@ -44,7 +44,7 @@ function get_audiotheme_venue_vcard_rss( $venue_id, $args = array() ) {
 function get_audiotheme_venue_location_ical( $venue_id ) {
 	$venue = get_audiotheme_venue( $venue_id );
 	
-	$output.= $venue->name;
+	$output = $venue->name;
 	
 	$address = array();
 	if ( ! empty( $venue->address ) ) {
@@ -76,8 +76,8 @@ function get_audiotheme_venue_location_ical( $venue_id ) {
 
 if ( ! function_exists( 'escape_ical_text' ) ) :
 function escape_ical_text( $text ) {
-	$search = array( ';', ',', "\n", "\r", '\\' );
-	$replace = array ( '\;', '\,', ' ', ' ', '\\\\' );
+	$search = array( '\\', ';', ',', "\n", "\r" );
+	$replace = array( '\\\\', '\;', '\,', ' ', ' ' );
 	
 	return str_replace( $search, $replace, $text );
 }

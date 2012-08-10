@@ -1,18 +1,5 @@
 <?php  
 /**
- * Check if post has an video url supplied.
- *
- * @since 1.0.0
- *
- * @param int $post_id Optional. Post ID.
- * @return bool Whether post has an video url supplied.
- */
-function has_audiotheme_post_video( $post_id = null ) {
-	return (bool) get_audiotheme_post_video_url( $post_id );
-}
-
-
-/**
  * Retrieve Post Video URL.
  *
  * @since 1.0.0
@@ -25,7 +12,6 @@ function get_audiotheme_post_video_url( $post_id = null ) {
 	return get_post_meta( $post_id, '_audiotheme_video_url', true );
 }
 
-
 /**
  * Display Post Video.
  *
@@ -37,7 +23,6 @@ function get_audiotheme_post_video_url( $post_id = null ) {
 function the_audiotheme_post_video( $args = array(), $query_args = array() ) {
 	echo get_the_audiotheme_post_video( get_the_ID(), $args, $query_args );
 }
-
 
 /**
  * Retrieve Post Video.

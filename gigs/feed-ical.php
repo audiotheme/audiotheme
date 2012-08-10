@@ -4,14 +4,15 @@ header( 'Content-Disposition: attachment; filename="audiotheme-gigs.ics"' );
 ?>
 BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:AudioTheme <?php echo AUDIOTHEME_VERSION; ?>
+PRODID:-//AudioTheme <?php echo AUDIOTHEME_VERSION; ?>
+
 <?php
 foreach ( $wp_query->posts as $post ) {
 	$post = get_audiotheme_gig( $post );
 	
 	echo "BEGIN:VEVENT\n";
-	echo "UID:" . get_the_guid() . "\n";
-	echo "URL:" . get_permalink() . "\n";
+	echo "UID:" . get_the_guid( $post->ID ) . "\n";
+	echo "URL:" . get_permalink( $post->ID ) . "\n";
 	
 	$date = get_audiotheme_gig_time( 'Ymd', '', true );
 	$time = get_audiotheme_gig_time( '', 'His', true );

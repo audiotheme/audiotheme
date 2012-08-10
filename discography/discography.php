@@ -59,7 +59,7 @@ function audiotheme_discography_init() {
 		'show_ui'                => true,
 		'show_in_menu'           => 'edit.php?post_type=audiotheme_record',
 		'show_in_nav_menus'      => false,
-		'supports'               => array( 'title', 'editor' )
+		'supports'               => array( 'title', 'editor', 'thumbnail' )
 	) );
 	
 	register_taxonomy( 'audiotheme_record_type', 'audiotheme_record', array(
@@ -93,6 +93,7 @@ function audiotheme_discography_init() {
 	add_filter( 'generate_rewrite_rules', 'audiotheme_discography_generate_rewrite_rules' );
 	add_action( 'pre_get_posts', 'audiotheme_discography_query' );
 	add_filter( 'post_type_link', 'audiotheme_discography_permalinks', 10, 4 );
+	add_filter( 'post_type_archive_link', 'audiotheme_discography_archive_link', 10, 2 );
 }
 
 /**
@@ -130,17 +131,17 @@ function audiotheme_discography_query( $query ) {
 	global $wpdb;
 	
 	// Sort records by release year
-	$orderby = get_query_var( 'orderby' );
-	if ( is_main_query() && is_post_type_archive( 'audiotheme_record' ) && empty( $orderby ) && ! is_admin() ) {
+	$orderby = $query->get( 'orderby' );
+	if ( $query->is_main_query() && is_post_type_archive( 'audiotheme_record' ) && empty( $orderby ) && ! is_admin() ) {
 		$query->set( 'meta_key', '_audiotheme_release_year' );
 		$query->set( 'orderby', 'meta_value_number' );
 		$query->set( 'order', 'desc' );
 	}
 	
 	// Limit requests for single tracks to the context of the parent record
-	if ( is_main_query() && is_single() && 'audiotheme_track' == get_query_var( 'post_type' ) && ! is_admin() ) {
+	if ( $query->is_main_query() && is_single() && 'audiotheme_track' == $query->get( 'post_type' ) && ! is_admin() ) {
 		if ( get_option('permalink_structure') ) {
-			$record_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type='audiotheme_record' AND post_name=%s LIMIT 1", get_query_var( 'audiotheme_record' ) ) );
+			$record_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type='audiotheme_record' AND post_name=%s LIMIT 1", $query->get( 'audiotheme_record' ) ) );
 			if ( $record_id ) {
 				$query->set( 'post_parent', $record_id );
 			}
@@ -178,6 +179,16 @@ function audiotheme_discography_permalinks( $post_link, $post, $leavename, $samp
 	}
 	
 	return $post_link;
+}
+
+function audiotheme_discography_archive_link( $link, $post_type ) {
+	$permalink = get_option( 'permalink_structure' );
+	if ( ! empty( $permalink ) && ( 'audiotheme_record' == $post_type || 'audiotheme_track' == $post_type ) ) {
+		$base = get_audiotheme_discography_rewrite_base();
+		$link = home_url( '/' . $base . '/' );
+	}
+	
+	return $link;
 }
 
 /**

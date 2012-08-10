@@ -10,12 +10,12 @@
  */
 function get_audiotheme_record_link_sources() {
 	$default_sources = array(
-		'7digital'   => array( 'icon' => '' ),
-		'Amazon'     => array( 'icon' => '' ),
-		'Bandcamp'   => array( 'icon' => '' ),
-		'CD Baby'    => array( 'icon' => '' ),
-		'Google'     => array( 'icon' => '' ),
-		'iTunes'     => array( 'icon' => '' )
+		'7digital' => array( 'icon' => '' ),
+		'Amazon'   => array( 'icon' => '' ),
+		'Bandcamp' => array( 'icon' => '' ),
+		'CD Baby'  => array( 'icon' => '' ),
+		'Google'   => array( 'icon' => '' ),
+		'iTunes'   => array( 'icon' => '' )
 	);
 	
 	return apply_filters( 'audiotheme_record_link_sources', $default_sources );
@@ -42,14 +42,14 @@ function get_audiotheme_record_type_strings() {
 /**
  * Get Record Type Slugs
  *
- * Gets and sets an array of available record type slugs from record type strings.
+ * Gets an array of available record type slugs from record type strings.
  *
  * @return array
  * @since 1.0.0
  */
 function get_audiotheme_record_type_slugs() {
 	$slugs = array_keys( get_audiotheme_record_type_strings() );
-	return array_combine( $slugs, $slugs );
+	return $slugs;
 }
 
 
@@ -62,13 +62,35 @@ function get_audiotheme_record_type_slugs() {
  * @since 1.0.0
  */
 function get_audiotheme_record_type_string( $slug ) {
-	$strings = get_audiotheme_record_type_slugs();
+	$strings = get_audiotheme_record_type_strings();
 	
 	if ( ! $slug ) {
 		return $strings['record-type-album'];
 	} else {
 		return ( isset( $strings[ $slug ] ) ) ? $strings[ $slug ] : '';
 	}
+}
+
+
+/**
+ * Get Record Type
+ *
+ * @since 1.0.0
+ *
+ * @param int $post_id Optional. Post ID.
+ * @return string
+ */
+function get_audiotheme_record_type( $post_id = null ) {
+	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
+	
+	$type = get_the_terms( $post_id, 'audiotheme_record_type' );
+
+	if ( empty( $type ) )
+		return false;
+
+	$type = array_shift( $type );
+
+	return $type->slug;
 }
 
 

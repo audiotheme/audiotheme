@@ -68,6 +68,7 @@ function audiotheme_gigs_init() {
 	add_action( 'pre_get_posts', 'audiotheme_gig_query' );
 	add_action( 'template_redirect', 'audiotheme_gig_template_redirect' );
 	add_filter( 'post_type_link', 'audiotheme_gig_permalink', 10, 4 );
+	add_filter( 'post_type_archive_link', 'audiotheme_gigs_archive_link', 10, 2 );
 }
 
 /**
@@ -124,29 +125,28 @@ function audiotheme_gig_generate_rewrite_rules( $wp_rewrite ) {
  */
 function audiotheme_gig_query( $query ) {
 	// Sort records by release year
-	$orderby = get_query_var( 'orderby' );
-	if ( is_main_query() && is_post_type_archive( 'audiotheme_gig' ) && empty( $orderby ) && ! is_admin() ) {
-		set_query_var( 'meta_key', '_audiotheme_gig_datetime' );
-		set_query_var( 'orderby', 'meta_value' );
-		set_query_var( 'order', 'asc' );
-		
+	$orderby = $query->get( 'orderby' );
+	if ( $query->is_main_query() && is_post_type_archive( 'audiotheme_gig' ) && empty( $orderby ) && ! is_admin() ) {
+		$query->set( 'meta_key', '_audiotheme_gig_datetime' );
+		$query->set( 'orderby', 'meta_value' );
+		$query->set( 'order', 'asc' );
 		
 		if ( is_date() ) {
 			if ( is_day() ) {
-				$d = absint( get_query_var( 'day' ) );
-				$m = absint( get_query_var( 'monthnum' ) );
-				$y = absint( get_query_var( 'year' ) );
+				$d = absint( $query->get( 'day' ) );
+				$m = absint( $query->get( 'monthnum' ) );
+				$y = absint( $query->get( 'year' ) );
 				
 				$start = sprintf( '%s-%s-%s 00:00:00', $y, zeroise( $m, 2 ), zeroise( $d, 2 ) );
 				$end = sprintf( '%s-%s-%s 23:59:59', $y, zeroise( $m, 2 ), zeroise( $d, 2 ) );
 			} elseif ( is_month() ) {
-				$m = absint( get_query_var( 'monthnum' ) );
-				$y = absint( get_query_var( 'year' ) );
+				$m = absint( $query->get( 'monthnum' ) );
+				$y = absint( $query->get( 'year' ) );
 				
 				$start = sprintf( '%s-%s-01 00:00:00', $y, zeroise( $m, 2 ) );
 				$end = sprintf( '%s 23:59:59', date( 'Y-m-t', mktime( 0, 0, 0, $m, 1, $y ) ) );
 			} elseif ( is_year() ) {
-				$y = absint( get_query_var( 'year' ) );
+				$y = absint( $query->get( 'year' ) );
 				
 				$start = sprintf( '%s-01-01 00:00:00', $y );
 				$end = sprintf( '%s-12-31 23:59:59', $y );
@@ -160,9 +160,9 @@ function audiotheme_gig_query( $query ) {
 					'type' => 'DATETIME'
 				);
 				
-				set_query_var( 'day', null );
-				set_query_var( 'monthnum', null );
-				set_query_var( 'year', null );
+				$query->set( 'day', null );
+				$query->set( 'monthnum', null );
+				$query->set( 'year', null );
 			}
 		} else {
 			// Only show upcoming gigs
@@ -175,7 +175,7 @@ function audiotheme_gig_query( $query ) {
 		}
 		
 		if ( isset( $meta_query ) ) {
-			set_query_var( 'meta_query', $meta_query );
+			$query->set( 'meta_query', $meta_query );
 		}
 	}
 }
@@ -195,8 +195,8 @@ function audiotheme_gig_template_redirect() {
 		p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $GLOBALS['wp_query'] );
 	}
 	
-	$type = get_query_var( 'feed' );
-	if ( is_feed() && 'audiotheme_gig' == get_query_var( 'post_type' ) ) {
+	$type = $wp_query->get( 'feed' );
+	if ( is_feed() && 'audiotheme_gig' == $wp_query->get( 'post_type' ) ) {
 		p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $wp_query );
 		
 		require( AUDIOTHEME_DIR . 'gigs/feed.php' );
@@ -225,27 +225,37 @@ function audiotheme_gig_template_redirect() {
  * @since 1.0.0
  */
 function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
-	global $wpdb;
-	
-	$permalink = get_option( 'permalink_structure' );
-	
-	if ( ! empty( $permalink ) && 'audiotheme_gig' == get_post_type( $post ) ) {
-		$base = get_audiotheme_gigs_rewrite_base();
-		$slug = ( $leavename ) ? '%postname%' : $post->post_name;
-		$gig_date = get_post_meta( $post->ID, '_audiotheme_gig_datetime', true );
-		$gig_date = ( empty( $gig_date ) ) ? time() : strtotime( $gig_date );
+	if ( ! empty( $post->post_name ) ) {
+		$permalink = get_option( 'permalink_structure' );
 		
-		$post_link = home_url( sprintf( '/%s/%s/',
-			$base,
-			$slug
-		) );
+		if ( ! empty( $permalink ) && 'audiotheme_gig' == get_post_type( $post ) ) {
+			$base = get_audiotheme_gigs_rewrite_base();
+			$slug = ( $leavename ) ? '%postname%' : $post->post_name;
+			$gig_date = get_post_meta( $post->ID, '_audiotheme_gig_datetime', true );
+			$gig_date = ( empty( $gig_date ) ) ? time() : strtotime( $gig_date );
+			
+			$post_link = home_url( sprintf( '/%s/%s/',
+				$base,
+				$slug
+			) );
+		}
 	}
 	
 	return $post_link;
 }
 
+function audiotheme_gigs_archive_link( $link, $post_type ) {
+	$permalink = get_option( 'permalink_structure' );
+	if ( ! empty( $permalink ) && 'audiotheme_gig' == $post_type ) {
+		$base = get_audiotheme_gigs_rewrite_base();
+		$link = home_url( '/' . $base . '/' );
+	}
+	
+	return $link;
+}
+
 /**
- * Gig Inclusions
+ * Gig Includes
  *
  * @since 1.0.0
  */

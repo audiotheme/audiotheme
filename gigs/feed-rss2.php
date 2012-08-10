@@ -1,5 +1,8 @@
 <?php header( 'Content-Type: ' . feed_content_type( 'rss-http' ) . '; charset=' . get_option( 'blog_charset' ), true ); ?>
-<?xml version="1.0" encoding="<?php echo get_option( 'blog_charset' ); ?>"?>
+<?php
+// Servers with short tags enabled get confused if we don't output this with PHP
+echo '<?xml version="1.0" encoding="' . get_option( 'blog_charset' ) . '"?>';
+?>
 <rss version="2.0"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
 	xmlns:dc="http://purl.org/dc/elements/1.1/"

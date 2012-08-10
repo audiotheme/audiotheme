@@ -1,7 +1,6 @@
 <?php
 class AudioTheme_Options {
 	private static $instance;
-	
 	private static $current_panel;
 	private static $panels;
 	private static $sections;
@@ -11,20 +10,23 @@ class AudioTheme_Options {
 		self::$sections = array();
 	}
 	
-	static function get_instance() {
-		if ( NULL == self::$instance ) {
+	public static function get_instance() {
+		if ( null == self::$instance ) {
 			self::$instance = new self;
 		}
 		
 		return self::$instance;
 	}
 	
-	function setup() {
-		// lets us register panels in admin_menu and still have their menu item show up
+	public static function setup() {
+		// Lower priority lets us register our panels in admin_menu hook and still have the menu item show up
 		add_action( 'admin_menu', array( __CLASS__, 'admin_menu' ), 20 );
 	}
 	
-	function admin_menu() {
+	/**
+	 * Register Option Screens and Menu Items
+	 */
+	public static function admin_menu() {
 		$options = self::get_instance();
 		
 		if ( ! empty( $options->panels ) ) {
@@ -36,29 +38,78 @@ class AudioTheme_Options {
 				}
 				
 				add_action( 'load-' . $pagehook, array( __CLASS__, 'options_screen_load' ) );
+				add_action( 'admin_notices', array( __CLASS__, 'admin_notices' ) );
 				
-				// register settings before fields are added in admin_init
+				// Register settings before fields are added in admin_init
 				$option_names = (array) $panel->option_name;
 				foreach ( $option_names as $name ) {
-					register_setting( $panel->option_group, $name ); // option_group, option_name, sanitize_callback
+					register_setting( $panel->option_group, $name );
+					add_filter( 'sanitize_option_' . $name, array( __CLASS__, 'sanitize_option' ), 10, 2 );
 				}
 				
+				// @TODO: http://make.wordpress.org/themes/2011/07/01/wordpress-3-2-fixing-the-edit_theme_optionsmanage_options-bug/
 				#add_filter( 'option_page_capability_' . $panel->option_group, array( __CLASS__, 'option_page_capability' ) );
 			}
 		}
 	}
 	
-	// http://make.wordpress.org/themes/2011/07/01/wordpress-3-2-fixing-the-edit_theme_optionsmanage_options-bug/
-	function option_page_capability() {
+	public static function option_page_capability() {
 		return 'publish_pages';
 	}
 	
-	function options_screen_load() {
+	/**
+	 * Enqueue Thickbox Functionality
+	 *
+	 * Used for selecting media files.
+	 */
+	public static function options_screen_load() {
 		add_thickbox();
 		wp_enqueue_script( 'media-upload' );
 	}
 	
-	function options_screen() {
+	/**
+	 * Output Error Messages
+	 *
+	 * Outputs any error messages added when options are saved. Adds a data
+	 * attribute to the error message so it can be associated it with a 
+	 * specific field.
+	 */
+	public static function admin_notices() {
+		global $plugin_page;
+		
+		$panel = self::get_panel( $plugin_page );
+		
+		if ( $panel ) {
+			$updated = true;
+			$option_names = (array) $panel->option_name;
+			foreach ( $option_names as $name ) {
+				$errors = get_settings_errors( $name, false );
+				if ( is_array( $errors ) ) {
+					foreach ( $errors as $key => $details ) {
+						printf( '<div id="%1$s" class="%2$s" data-field-id="%3$s"><p><strong>%4$s</strong></p></div>',
+							'setting-error-' . str_replace( ':', '-', $details['code'] ),
+							$details['type'] . ' settings-error inline',
+							end( explode( ':', $details['code'] ) ),
+							$details['message']
+						);
+					}
+					$updated = false;
+				}
+			}
+			
+			if ( $updated && isset( $_REQUEST['settings-updated'] ) )  {
+				echo '<div class="updated fade"><p><strong>Options saved.</strong></p></div>';
+			}
+		}
+	}
+	
+	/**
+	 * Render Option Screen
+	 *
+	 * Renders the tabs and fields, including CSS and javascript for tabbed
+	 * panels and attaching error messages to fields and their parent tabs.
+	 */
+	public static function options_screen() {
 		global $plugin_page, $wp_settings_sections;
 		
 		$panel = self::get_panel( $plugin_page );
@@ -75,16 +126,11 @@ class AudioTheme_Options {
 				echo '</h2>';
 				
 				
-				if ( isset( $_REQUEST['settings-updated'] ) )  {
-					echo '<div class="updated fade"><p><strong>Options saved.</strong></p></div>';
-				}
-				
-				
 				if ( empty( $wp_settings_sections ) || ! isset( $wp_settings_sections[ $panel->panel_id ] ) ) {
 					$wp_settings_sections[ $panel->panel_id ] = array();
 				}
 				
-				// prepend a default section so a section doesn't have to be created before adding options
+				// Prepend a default section so a section doesn't have to be created before adding options
 				if ( ! isset( $wp_settings_sections[ $panel->panel_id ]['_default'] ) ) {
 					$wp_settings_sections[ $panel->panel_id ] = array_merge( array(
 						'_default' => array(
@@ -112,55 +158,195 @@ class AudioTheme_Options {
 				?>
 				
 				<p class="submit">
-					<button type="submit" class="button-primary">Save Options</button>
+					<input type="submit" value="Save Options" class="button-primary">
 				</p>
 			</form>
 		</div><!--end div.wrap-->
 		
 		<style type="text/css">
-		.form-table td img { margin: 10px 0 0 0; max-width: 300px; height: auto; vertical-align: top;}
 		.form-table td .button.thickbox { margin-left: 5px;}
 		.js .tab-panel { display: none;}
 		.js .tab-panel-active { display: block;}
+		
+		/* TODO: colors could be improved */
+		h2.nav-tab-wrapper a.nav-tab.has-error { background: #fff6f6; border-color: #eedddd;}
+		h2.nav-tab-wrapper a.nav-tab-active.has-error { color: #464646; background: #fff; border-color: #ccc; border-bottom-color: #fff;}
+		.form-table tr.settings-error td input { background-color: #fff6f6; border-color: #ee9999;}
+		.form-table tr.settings-error th label { color: #cc0000; font-weight: bold;}
 		</style>
 		<script>
 		jQuery(function($) {
-			var updateTabs = function() {
-				var hash = window.location.hash,
-					refererField = $('input[name="_wp_http_referer"]');
-				
-				$('.nav-tab-wrapper .nav-tab').removeClass('nav-tab-active').filter('[href="' + hash + '"]').addClass('nav-tab-active');
-				$('.tab-panel').removeClass('tab-panel-active').filter(hash).addClass('tab-panel-active').trigger('showTabPanel');
-				
-				if ( $('.nav-tab-wrapper .nav-tab-active').length < 1 ) {
-					var href = $('.nav-tab-wrapper .nav-tab:eq(0)').addClass('nav-tab-active').attr('href');
-					$('.tab-panel').removeClass('tab-panel-active').filter(href).addClass('tab-panel-active');
-				}
-				
-				// makes /wp-admin/options.php redirect to the appropriate tab
-				if ( -1 == refererField.val().indexOf('#') ) {
-					refererField.val( refererField.val() + hash );
-				} else {
-					refererField.val( refererField.val().replace(/#.*/, hash) );
-				}
-			}
+			var errors = $('div.settings-error'),
+				updateTabs = function() {
+					var hash = window.location.hash,
+						refererField = $('input[name="_wp_http_referer"]');
+					
+					$('.nav-tab-wrapper .nav-tab').removeClass('nav-tab-active').filter('[href="' + hash + '"]').addClass('nav-tab-active');
+					$('.tab-panel').removeClass('tab-panel-active').filter(hash).addClass('tab-panel-active').trigger('showTabPanel');
+					
+					if ( $('.nav-tab-wrapper .nav-tab-active').length < 1 ) {
+						var href = $('.nav-tab-wrapper .nav-tab:eq(0)').addClass('nav-tab-active').attr('href');
+						$('.tab-panel').removeClass('tab-panel-active').filter(href).addClass('tab-panel-active');
+					}
+					
+					// Makes wp-admin/options.php redirect to the appropriate tab
+					if ( -1 == refererField.val().indexOf('#') ) {
+						refererField.val( refererField.val() + hash );
+					} else {
+						refererField.val( refererField.val().replace(/#.*/, hash) );
+					}
+				};
 			
 			$(window).on('hashchange', updateTabs);
 			updateTabs();
+			
+			if ( errors.length ) {
+				errors.each(function() {
+					var $self = $(this),
+						field = $( '#' + $self.data('field-id') ),
+						tabPanel = field.closest('div.tab-panel');
+					
+					field.closest('tr').addClass('settings-error'); // Add .settings-error class to field container
+					$('a.nav-tab[href="#' + tabPanel.attr('id') + '"]', 'h2.nav-tab-wrapper').addClass('has-error'); // Add .has-error class to tabs with errors
+					$self.prependTo(tabPanel); // Prepend errors to the tab panel containing the field
+				});
+			}
 		});
 		</script>
 		<?php
 	}
 	
+	/**
+	 * Default Option Sanitization Callback
+	 *
+	 * When options are registered using this class, they'll automatically be
+	 * passed through this sanitization callback. The callback checks to see
+	 * if any sanitization or validation routines have been registered for the
+	 * field, and if so, calls them and adds any resulting errors.
+	 *
+	 * If an field fails a validation routine, this function attempts to
+	 * revert to the old value, otherwise, it discards the new value.
+	 */
+	public static function sanitize_option( $value, $option ) {
+		global $wp_settings_fields;
+		
+		foreach ( $wp_settings_fields as $sections ) {
+			foreach ( $sections as $section ) {
+				foreach ( $section as $field_name => $field ) {
+					if ( is_array( $value ) && ! array_key_exists( $field_name, $value ) )
+						continue;
+					
+					if ( isset( $field['args']['option_name'] ) && $option == $field['args']['option_name'] ) {
+						$value = self::sanitize_field( $field, $value );
+						
+						if ( ! self::validate_field( $field, $option, $value ) ) {
+							// Maintain existing value
+							$current_value = get_option( $option );
+							if ( is_array( $value ) ) {
+								$value[ $field_name ] = ( isset( $current_value[ $field_name ] ) ) ? $current_value[ $field_name ] : '';
+							} else {
+								$value = $current_value;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return $value;
+	}
 	
 	/**
-	* Helper Methods
-	*/
+	 * Run Field Sanitization Callbacks
+	 *
+	 * Looks for registered sanitization callbacks for a field and runs them.
+	 * Sanitization callbacks must return a value.
+	 *
+	 * Accepts a comma delimited string or array of function names and
+	 * executes them in order. If a function doesn't exist, such as a custom
+	 * callback, it will be skipped.
+	 */
+	public static function sanitize_field( $field, $option_value ) {
+		if ( ! empty( $field['args']['sanitize'] ) ) {
+			$sanitize = $field['args']['sanitize'];
+			if ( is_string( $sanitize ) ) {
+				$sanitize = array_map( 'trim', explode( ',', $sanitize ) );
+			}
+			
+			if ( is_array( $sanitize ) ) {
+				foreach ( $sanitize as $func ) {
+					if ( function_exists( $func ) ) {
+						if ( is_array( $option_value ) ) {
+							$option_value[ $field['id'] ] = call_user_func( $func, $option_value[ $field['id'] ] );
+						} else {
+							$option_value = call_user_func( $func, $option_value );
+						}
+					}
+				}
+			}
+		}
+		
+		return $option_value;
+	}
 	
-	function add_panel( $panel_id, $title, $args=array() ) {
+	/**
+	 * Run Field Validation Callbacks
+	 *
+	 * Looks for registered validation callbacks for a field and runs them.
+	 * Validation callbacks should return true, false, or a WP_Error object.
+	 *
+	 * Accepts a comma delimited string or array of function names and
+	 * executes them in order. If a function doesn't exist, such as a custom
+	 * callback, it will be skipped.
+	 *
+	 * If an array is passed, the keys should be the validation functions and
+	 * the values should be error messages. If a validation callback returns a
+	 * WP_Error object, the error message will overload any others. If an
+	 * error message isn't registered, a default message will be shown.
+	 */
+	public static function validate_field( $field, $option_name, $option_value ) {
+		if ( ! empty( $field['args']['validate'] ) ) {
+			$validate = $field['args']['validate'];
+			if ( is_string( $validate ) ) {
+				$validate = array_flip( array_map( 'trim', explode( ',', $validate ) ) );
+			}
+			
+			if ( is_array( $validate ) ) {
+				foreach ( $validate as $func => $error_msg ) {
+					$error_msg = ( is_string( $error_msg ) ) ? $error_msg : 'It appears there was a problem with a value entered.';
+					if ( function_exists( $func ) ) {
+						$value = ( is_array( $option_value ) ) ? $option_value[ $field['id'] ] : $option_value;
+						$is_valid = call_user_func( $func, $value );
+						
+						// Used for adding data attributes to the error notice to highlight tabs and fields needing attention
+						$error_code = str_replace( array( '[', ']' ), array( ':', '' ), $field['args']['name_attr'] );
+						if ( ! $is_valid || is_wp_error( $is_valid ) ) {
+							$error_msg = ( is_wp_error( $is_valid ) ) ? $is_valid->get_error_message() : $error_msg;
+							
+							add_settings_error( $option_name, $error_code, $error_msg );
+							
+							return false; // Only show one message per field
+						}
+					}
+				}
+			}
+		}
+		
+		return true;
+	}
+	
+	
+	/**
+	 * Add an Option Panel
+	 *
+	 * A panel is a custom screen consisting of tabs and sections of options.
+	 *
+	 * @TODO: finish implementing additional $args
+	 */
+	public function add_panel( $panel_id, $title, $args=array() ) {
 		$default_options_id = str_replace( '-', '_', sanitize_title_with_dashes( $panel_id ) );
 		
-		$defaults = array(
+		$args = (object) wp_parse_args( $args, array(
 			'capability' => 'manage_options',
 			'menu_icon' => null,
 			'menu_position' => null,
@@ -173,12 +359,10 @@ class AudioTheme_Options {
 			'screen_icon' => null,
 			'show_in_menu' => '',
 			'tabs' => array( $panel_id => $title )
-		);
+		) );
 		
-		$args = (object) wp_parse_args( $args, $defaults );
-		
-		// make the option_name parameter an array so multiple option_names can be used in a single panel
-		// the first option_name registered for a panel will be used as the default
+		// Make the option_name parameter an array so multiple option_names can be used in a single panel
+		// The first option_name registered for a panel will be used as the default
 		$args->option_name = (array) $args->option_name;
 		
 		$this->current_panel = $panel_id;
@@ -187,7 +371,12 @@ class AudioTheme_Options {
 		return self::get_instance();
 	}
 	
-	function get_panel( $panel_id ) {
+	/**
+	 * Get a Panel
+	 *
+	 * Return the specified panel for making changes or displaying.
+	 */
+	public function get_panel( $panel_id ) {
 		$options = self::get_instance();
 		
 		if ( isset( $options->panels[ $panel_id ] ) ) {
@@ -197,14 +386,24 @@ class AudioTheme_Options {
 		return false;
 	}
 	
-	function set_panel( $panel_id ) {
+	/**
+	 * Set the Current Panel
+	 *
+	 * Sets the current panel so tabs, sections, and fields can be added.
+	 */
+	public function set_panel( $panel_id ) {
 		$options = self::get_instance();
 		$options->current_panel = $panel_id;
 		
 		return $options;
 	}
 	
-	function add_tab( $tab_id, $title, $panel_id = NULL ) {
+	/**
+	 * Add a Tab
+	 *
+	 * Adds a tab to a panel.
+	 */
+	public function add_tab( $tab_id, $title, $panel_id = null ) {
 		$panel_id = ( empty( $panel_id ) ) ? $this->current_panel : $panel_id;
 		
 		$this->panels[ $panel_id ]->tabs[ $tab_id ] = $title;
@@ -212,7 +411,12 @@ class AudioTheme_Options {
 		return $tab_id;
 	}
 	
-	function add_section( $section_id, $title = NULL, $tab_id = NULL, $args = array() ) {
+	/**
+	 * Add a Section
+	 *
+	 * Add a settings section to a tab.
+	 */
+	public function add_section( $section_id, $title = null, $tab_id = null, $args = array() ) {
 		$panel = $this->panels[ $this->current_panel ];
 		
 		if ( empty( $tab_id ) || ! array_key_exists( $tab_id, $panel->tabs ) ) {
@@ -232,11 +436,15 @@ class AudioTheme_Options {
 		return $section_id;
 	}
 	
-	
 	/**
-	 * If the 'field_id' and 'option_name' argument are equal, the option will be stored as a string in the database.
+	 * Add a Field
+	 *
+	 * Adds a field to a settings section.
+	 *
+	 * If the 'field_id' and 'option_name' argument are equal, the option will
+	 * be stored as a string in the database.
 	 */
-	function add_field( $type, $id, $label, $section_id = NULL, $args = array() ) {
+	public function add_field( $type, $id, $label, $section_id = null, $args = array() ) {
 		$panel = $this->panels[ $this->current_panel ];
 		
 		$field_types = array(
@@ -262,13 +470,13 @@ class AudioTheme_Options {
 			unset( $args['label_for'] );
 		}
 		
-		// create default name and value attributes; callbacks don't have to use these if they're not pertinent
+		// Create default name and value attributes; callbacks don't have to use these if they're not pertinent
 		$options = get_option( $args['option_name'] );
 		
 		if ( $id == $args['option_name'] ) {
 			$args['name_attr'] = $args['option_name'];
 			$args['value'] = ( isset( $args['default_value'] ) ) ? $args['default_value'] : '';
-			if ( NULL !== $options ) {
+			if ( null !== $options ) {
 				$args['value'] = $options;
 			}
 		} else {
@@ -280,14 +488,14 @@ class AudioTheme_Options {
 		}
 		
 		add_settings_field( $id, $label, $callback, $settings_section, $section_id, $args );
+		
+		return $this;
 	}
 	
-	
 	/**
-	 * Option Field Rendering
+	 * Render a Checkbox Field
 	 */
-	
-	function option_checkbox_field( $args ) {
+	public function option_checkbox_field( $args ) {
 		extract( $args );
 		
 		$field_label = ( isset( $field_label ) ) ? $field_label : '';
@@ -300,13 +508,21 @@ class AudioTheme_Options {
 		echo ( isset( $description ) ) ? '<br><span class="description">' . $description . '</span>' : '';
 	}
 	
-	function option_html_field( $args ) {
+	/**
+	 * Output HTML
+	 */
+	public function option_html_field( $args ) {
 		extract( $args );
 		
 		echo ( isset( $output ) ) ? $output : '';
 	}
 	
-	function option_image_field( $args ) {
+	/**
+	 * Render an Image Field
+	 *
+	 * Defaults to using Thickbox for selecting an image URL.
+	 */
+	public function option_image_field( $args ) {
 		extract( $args );
 		
 		$field_types = array( 'thickbox_image' ); // whitelist the allowed field types
@@ -322,7 +538,10 @@ class AudioTheme_Options {
 		echo ( isset( $description ) ) ? '<span class="description">' . $description . '</span>' : '';
 	}
 	
-	function option_select_field( $args ) {
+	/**
+	 * Render a Select Field
+	 */
+	public function option_select_field( $args ) {
 		extract( $args );
 		
 		$field_value = ( isset( $field_value ) ) ? (array) $field_value : array( '' );
@@ -334,7 +553,10 @@ class AudioTheme_Options {
 		echo ( isset( $description ) ) ? '<br><span class="description">' . $description . '</span>' : '';
 	}
 	
-	function option_text_field( $args ) {
+	/**
+	 * Render a Text Field
+	 */
+	public function option_text_field( $args ) {
 		extract( $args );
 		
 		$class = ( isset( $class ) ) ? $class : 'regular-text';
@@ -342,7 +564,10 @@ class AudioTheme_Options {
 		echo ( isset( $description ) ) ? '<span class="description">' . $description . '</span>' : '';
 	}
 	
-	function option_textarea_field( $args ) {
+	/**
+	 * Render a Textarea Field
+	 */
+	public function option_textarea_field( $args ) {
 		extract( $args );
 		
 		$class = ( isset( $class ) ) ? $class : 'large-text';
