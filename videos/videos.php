@@ -66,7 +66,7 @@ function audiotheme_videos_init() {
 
 
 /**
- * Video Inclusions
+ * Video Includes
  *
  * @since 1.0.0
  */

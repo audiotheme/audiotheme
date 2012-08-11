@@ -14,26 +14,4 @@ function get_audiotheme_theme_option( $key, $default = false, $option_name = '' 
 	
 	return ( isset( $options[ $key ] ) ) ? $options[ $key ] : $default;
 }
-
-/**
- * Get Category List
- *
- * Utility function to get the category list and 
- * return array of category ID and Name.
- *
- * @return Array Category ID and Name
- * @since 1.0.0
- */
-function get_audiotheme_category_list() {
-	// Pull all the categories into an array
-	$list = array();  
-	$categories = get_categories();
-	$list[''] = __( 'Select a category:', 'audiotheme-i18n' );
-	
-	foreach ( (array) $categories as $category )
-	    $list[$category->cat_ID] = $category->cat_name;
-	
-	return $list;
-}
-
 ?>

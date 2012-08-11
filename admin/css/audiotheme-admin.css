@@ -27,15 +27,19 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 
 .audiotheme-pre-postarea { margin-bottom: 20px;}
 .audiotheme-pre-postarea input { padding: 3px 8px; font-size: 1.5em; vertical-align: middle; height: 30px; }
+.audiotheme-pre-postarea input:-moz-placeholder,
+.audiotheme-pre-postarea textarea:-moz-placeholder { color: #a9a9a9;}
 .audiotheme-pre-postarea input::-webkit-input-placeholder { padding: 3px 0;}
-.audiotheme-pre-postarea input:-moz-placeholder { }
 .audiotheme-pre-postarea select { padding: 5px 5px 5px 8px; font-size: 1.2em;}
 
 .audiotheme-input-append { display: inline-block;}
 .audiotheme-input-append input { margin-right: 0;
-	-webkit-border-top-right-radius: 0; -webkit-border-bottom-right-radius: 0;
-	-moz-border-radius-topright: 0; -moz-border-radius-bottomright: 0;
-	border-top-right-radius: 0; border-bottom-right-radius: 0;}
+	-webkit-border-top-right-radius: 0;
+	-webkit-border-bottom-right-radius: 0;
+	-moz-border-radius-topright: 0;
+	-moz-border-radius-bottomright: 0;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;}
 .audiotheme-input-append .audiotheme-input-append-trigger,
 .audiotheme-input-append button.ui-datepicker-trigger { cursor: pointer; display: inline-block; margin: 0; padding: 0; width: 30px; height: 30px; line-height: 30px; text-align: center; vertical-align: middle;
 	background-color: #f1f1f1; /* Fallback */
@@ -47,9 +51,12 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 	background-image: linear-gradient(top, #f9f9f9, #ececec); /* proposed W3C Markup */
 	border: 1px solid #dfdfdf;
 	border-left-width: 0;
-	-webkit-border-top-right-radius: 3px; -webkit-border-bottom-right-radius: 3px;
-	-moz-border-radius-topright: 3px; -moz-border-radius-bottomright: 3px;
-	border-top-right-radius: 3px; border-bottom-right-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	-moz-border-radius-topright: 3px;
+	-moz-border-radius-bottomright: 3px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;}
@@ -119,6 +126,20 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 #gig-fields { width: 100%; max-width: 600px;}
 #gig-fields th { padding-right: 20px; width: 20%; font-size: 1.2em; font-weight: normal; text-align: left;}
 #gig-venue-timezone { display: none;}
+
+
+/* Options Screens
+-------------------------------------------------------------- */
+
+.audiotheme-options .form-table td .button.thickbox { margin-left: 5px;}
+.js .audiotheme-options .tab-panel { display: none;}
+.js .audiotheme-options .tab-panel-active { display: block;}
+
+/* Error related styles; TODO: colors could be improved */
+.audiotheme-options h2.nav-tab-wrapper a.nav-tab.has-error { background: #fff6f6; border-color: #eedddd;}
+.audiotheme-options h2.nav-tab-wrapper a.nav-tab-active.has-error { color: #464646; background: #fff; border-color: #ccc; border-bottom-color: #fff;}
+.audiotheme-options .form-table tr.settings-error td input { background-color: #fff6f6; border-color: #ee9999;}
+.audiotheme-options .form-table tr.settings-error th label { color: #cc0000; font-weight: bold;}
 
 
 /* Venue Screens

@@ -43,13 +43,12 @@ if ( ! defined( 'AUDIOTHEME_URI' ) )
 
 
 /**
- * General Inclusions
+ * General Includes
  *
  * @since 1.0.0
  */
 require( AUDIOTHEME_DIR . 'includes/general-template.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
-require( AUDIOTHEME_DIR . 'includes/formatting.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/media.php' );
 
@@ -61,9 +60,7 @@ require( AUDIOTHEME_DIR . 'includes/media.php' );
  */
 add_action( 'after_setup_theme', 'audiotheme_setup' );
 function audiotheme_setup() {
-	/* Include Shortcodes */
 	require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
-	require( AUDIOTHEME_DIR . 'includes/shortcodes.php' );
 	
 	/* Include Admin functionality */
 	if ( is_admin() ) {

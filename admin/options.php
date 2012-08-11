@@ -65,6 +65,7 @@ class AudioTheme_Options {
 	public static function options_screen_load() {
 		add_thickbox();
 		wp_enqueue_script( 'media-upload' );
+		wp_enqueue_style( 'audiotheme-admin' );
 	}
 	
 	/**
@@ -114,7 +115,7 @@ class AudioTheme_Options {
 		
 		$panel = self::get_panel( $plugin_page );
 		?>
-		<div class="wrap">
+		<div class="wrap audiotheme-options">
 			<form action="options.php" method="post">
 				<?php
 				screen_icon();
@@ -163,17 +164,6 @@ class AudioTheme_Options {
 			</form>
 		</div><!--end div.wrap-->
 		
-		<style type="text/css">
-		.form-table td .button.thickbox { margin-left: 5px;}
-		.js .tab-panel { display: none;}
-		.js .tab-panel-active { display: block;}
-		
-		/* TODO: colors could be improved */
-		h2.nav-tab-wrapper a.nav-tab.has-error { background: #fff6f6; border-color: #eedddd;}
-		h2.nav-tab-wrapper a.nav-tab-active.has-error { color: #464646; background: #fff; border-color: #ccc; border-bottom-color: #fff;}
-		.form-table tr.settings-error td input { background-color: #fff6f6; border-color: #ee9999;}
-		.form-table tr.settings-error th label { color: #cc0000; font-weight: bold;}
-		</style>
 		<script>
 		jQuery(function($) {
 			var errors = $('div.settings-error'),

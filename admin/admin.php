@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Inclusions
+ * Admin Includes
  *
  * @since 1.0.0
  */
@@ -210,12 +210,7 @@ function audiotheme_display_custom_column( $column_name, $post_id ) {
  * @since 1.0.0
  */
 function audiotheme_edit_user_contact_info( $contactmethods ) {
-	// Remove contact options
-	unset( $contactmethods['aim'] );
-	unset( $contactmethods['yim'] );
-	unset( $contactmethods['jabber'] );
-	
-	// Add Contact Options
+	// Add contact options
 	$contactmethods['twitter'] = __( 'Twitter <span class="description">(username)</span>', 'audiotheme-i18n' );
 	$contactmethods['facebook'] = __( 'Facebook  <span class="description">(link)</span>', 'audiotheme-i18n' );
 	

@@ -192,7 +192,7 @@ function audiotheme_discography_archive_link( $link, $post_type ) {
 }
 
 /**
- * Discography Inclusions
+ * Discography Includes
  *
  * @since 1.0.0
  */
