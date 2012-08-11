@@ -1,10 +1,4 @@
 <?php
-add_action( 'widgets_init', 'audiotheme_register_widget_record' );
-function audiotheme_register_widget_record() {
-	register_widget( 'Audiotheme_Widget_Record' );
-}
-
-
 class Audiotheme_Widget_Record extends WP_Widget {
 	function __construct() {
 		$widget_ops = array( 'classname' => 'widget_audiotheme_record', 'description' => __( 'Display a selected record' ) );

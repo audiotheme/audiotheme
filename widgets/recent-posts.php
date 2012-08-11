@@ -1,11 +1,5 @@
 <?php
-add_action( 'widgets_init', 'blazersix_register_recent_posts_widget' );
-function blazersix_register_recent_posts_widget() {
-	register_widget( 'Blazer_Six_Widget_Recent_Posts' );
-}
-
-
-class Blazer_Six_Widget_Recent_Posts extends WP_Widget {
+class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 	function __construct() {
 		$widget_ops = array( 'classname' => 'widget_recent_posts', 'description' => __( 'Display a list of recent posts' ) );
 		$control_ops = array();
@@ -18,7 +12,7 @@ class Blazer_Six_Widget_Recent_Posts extends WP_Widget {
 	}
 
 	function widget( $args, $instance ) {
-		$cache = (array) wp_cache_get( 'blazersix_widget_recent_posts' );
+		$cache = (array) wp_cache_get( 'audiotheme_widget_recent_posts' );
 		
 		if ( isset( $cache[ $this->id ] ) ) {
 			echo $cache[ $this->id ];
@@ -61,8 +55,8 @@ class Blazer_Six_Widget_Recent_Posts extends WP_Widget {
 					'ignore_sticky_posts' => true
 				) ) );
 				
-				$date_format = apply_filters( 'blazersix_widget_recent_posts_date_format', get_option( 'date_format' ) );
-				$excerpt_length = apply_filters( 'blazersix_widget_recent_posts_excerpt_length', 100, $instance );
+				$date_format = apply_filters( 'audiotheme_widget_recent_posts_date_format', get_option( 'date_format' ) );
+				$excerpt_length = apply_filters( 'audiotheme_widget_recent_posts_excerpt_length', 100, $instance );
 				
 				if ( $loop->have_posts() ) :
 					while ( $loop->have_posts() ) :
@@ -81,12 +75,12 @@ class Blazer_Six_Widget_Recent_Posts extends WP_Widget {
 									get_the_time( $date_format )
 								);
 								
-								$output.= apply_filters( 'blazersix_widget_recent_posts_date_html', $date_html, $instance );
+								$output.= apply_filters( 'audiotheme_widget_recent_posts_date_html', $date_html, $instance );
 							}
 							
 							if ( isset( $instance['show_excerpts'] ) && $instance['show_excerpts'] == '1' ) {
 								$excerpt = wpautop( wp_html_excerpt( get_the_excerpt(), $excerpt_length ) . '...' );
-								$output.= apply_filters( 'blazersix_widget_recent_posts_excerpt', $excerpt, $loop->post, $instance );
+								$output.= apply_filters( 'audiotheme_widget_recent_posts_excerpt', $excerpt, $loop->post, $instance );
 							}
 						$output.= '</li>';
 					endwhile;
@@ -98,10 +92,10 @@ class Blazer_Six_Widget_Recent_Posts extends WP_Widget {
 		
 		$instance['date_format'] = $date_format;
 		$instance['excerpt_length'] = $excerpt_length;
-		$output = apply_filters( 'blazersix_widget_recent_posts_html', $output, $instance, $loop );
+		$output = apply_filters( 'audiotheme_widget_recent_posts_html', $output, $instance, $loop );
 		
 		$cache[ $this->id ] = $output;
-		wp_cache_set( 'blazersix_widget_recent_posts', $cache );
+		wp_cache_set( 'audiotheme_widget_recent_posts', $cache );
 		echo $output;
 	}
 
@@ -115,7 +109,7 @@ class Blazer_Six_Widget_Recent_Posts extends WP_Widget {
 		));
 		
 		$post_types = get_post_types( array( 'public' => true ), 'objects' );
-		$post_types = apply_filters( 'blazersix_widget_recent_posts_post_types', $post_types );
+		$post_types = apply_filters( 'audiotheme_widget_recent_posts_post_types', $post_types );
 		
 		$title = wp_strip_all_tags( $instance['title'] );
 		$number = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
@@ -130,7 +124,7 @@ class Blazer_Six_Widget_Recent_Posts extends WP_Widget {
 			<label for="<?php echo $this->get_field_id( 'show_feed_link' ); ?>">Show feed link in title?</label>
 		</p>
 		
-		<?php if ( apply_filters( 'blazersix_widget_recent_posts_show_post_type_dropdown', false ) ) : ?>
+		<?php if ( apply_filters( 'audiotheme_widget_recent_posts_show_post_type_dropdown', false ) ) : ?>
 			<p>
 				<label for="<?php echo $this->get_field_id( 'post_type' ); ?>">Post Type:</label>
 				<select name="<?php echo $this->get_field_name( 'post_type' ); ?>" id="<?php echo $this->get_field_id( 'post_type' ); ?>">
@@ -182,7 +176,7 @@ class Blazer_Six_Widget_Recent_Posts extends WP_Widget {
 	}
 	
 	function flush_cache() {
-		wp_cache_delete( 'blazersix_widget_recent_posts' );
+		wp_cache_delete( 'audiotheme_widget_recent_posts' );
 	}
 }
 ?>

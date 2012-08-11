@@ -1,10 +1,4 @@
 <?php
-add_action( 'widgets_init', 'audiotheme_register_upcoming_gigs_widget' );
-function audiotheme_register_upcoming_gigs_widget() {
-	register_widget( 'Audiotheme_Widget_Upcoming_Gigs' );
-}
-
-
 class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 	function __construct() {
 		$widget_ops = array( 'classname' => 'widget_audiotheme_upcoming_gigs', 'description' => __( 'Display a list of upcoming gigs' ) );

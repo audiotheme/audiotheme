@@ -25,10 +25,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
-/* Exit if accessed directly */
-if ( ! defined( 'ABSPATH' ) ) exit;
-
-
 /**
  * Define Constants
  *
@@ -51,6 +47,7 @@ require( AUDIOTHEME_DIR . 'includes/general-template.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/media.php' );
+require( AUDIOTHEME_DIR . 'widgets/widgets.php' );
 
 
 /**
@@ -75,6 +72,7 @@ function audiotheme_setup() {
 	
 	add_action( 'init', 'audiotheme_init' );
 	add_action( 'init', 'audiotheme_register_scripts' );
+	add_action( 'widgets_init', 'audiotheme_widgets_init' );
 }
 
 

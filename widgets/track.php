@@ -1,10 +1,4 @@
 <?php
-add_action( 'widgets_init', 'audiotheme_register_widget_track' );
-function audiotheme_register_widget_track() {
-	register_widget( 'Audiotheme_Widget_Track' );
-}
-
-
 class Audiotheme_Widget_Track extends WP_Widget {
 	function __construct() {
 		$widget_ops = array( 'classname' => 'widget_audiotheme_track', 'description' => __( 'Display a selected track' ) );

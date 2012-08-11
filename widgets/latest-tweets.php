@@ -1,10 +1,4 @@
 <?php
-add_action( 'widgets_init', 'audiotheme_register_latest_tweets_widget' );
-function audiotheme_register_latest_tweets_widget() {
-	register_widget( 'Audiotheme_Widget_Latest_Tweets' );
-}
-
-
 class Audiotheme_Widget_Latest_Tweets extends WP_Widget {
 	var $transient_key;
 	var $transient_key_error;

@@ -1,10 +1,4 @@
 <?php
-add_action( 'widgets_init', 'audiotheme_register_widget_video' );
-function audiotheme_register_widget_video() {
-	register_widget( 'Audiotheme_Widget_Video' );
-}
-
-
 class Audiotheme_Widget_Video extends WP_Widget {
 	function __construct() {
 		$widget_ops = array( 'classname' => 'widget_audiotheme_video', 'description' => __( 'Display a video' ) );
