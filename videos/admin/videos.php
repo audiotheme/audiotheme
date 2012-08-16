@@ -36,13 +36,13 @@ function audiotheme_video_post_updated_messages( $messages ) {
  */
 function audiotheme_video_columns( $columns ) {
 	$columns = array(
-		'cb'         => '<input type="checkbox">',
-		'image'      => __( 'Image', 'audiotheme-i18n' ),
-		'title'      => _x( 'Video', 'column name', 'audiotheme-i18n' ),
-		'author'     => __( 'Author', 'audiotheme-i18n' ),
-		'video_type' => __( 'Type', 'audiotheme-i18n' ),
-		'tags'       => __( 'Tags', 'audiotheme-i18n' ),
-		'date'       => __( 'Date', 'audiotheme-i18n' )
+		'cb'               => '<input type="checkbox">',
+		'audiotheme_image' => __( 'Image', 'audiotheme-i18n' ),
+		'title'            => _x( 'Video', 'column name', 'audiotheme-i18n' ),
+		'author'           => __( 'Author', 'audiotheme-i18n' ),
+		'video_type'       => __( 'Type', 'audiotheme-i18n' ),
+		'tags'             => __( 'Tags', 'audiotheme-i18n' ),
+		'date'             => __( 'Date', 'audiotheme-i18n' )
 	);
 	
 	return $columns;

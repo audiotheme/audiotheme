@@ -195,7 +195,7 @@ function audiotheme_display_custom_column( $column_name, $post_id ) {
 	global $post;
 	
 	switch ( $column_name ) {
-		case 'image' :
+		case 'audiotheme_image' :
 			printf( '<a href="%1$s" title="%2$s">%3$s</a>', 
 				esc_url( get_edit_post_link( $post_id ) ),
 				esc_attr( $post->post_title ),

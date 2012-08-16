@@ -36,13 +36,13 @@ function audiotheme_records_admin_query( $wp_query ) {
  */
 function audiotheme_record_columns( $columns ) {
 	$columns = array(
-		'cb'           => '<input type="checkbox">',
-		'image'        => __( 'Image', 'audiotheme-i18n' ),
-		'title'        => _x( 'Record', 'column_name', 'audiotheme-i18n' ),
-		'release_year' => __( 'Released', 'audiotheme-i18n' ),
-		'record_type'  => __( 'Type', 'audiotheme-i18n' ),
-		'tags'         => __( 'Tags', 'audiotheme-i18n' ),
-		'track_count'  => __( 'Tracks', 'audiotheme-i18n' )
+		'cb'               => '<input type="checkbox">',
+		'audiotheme_image' => __( 'Image', 'audiotheme-i18n' ),
+		'title'            => _x( 'Record', 'column_name', 'audiotheme-i18n' ),
+		'release_year'     => __( 'Released', 'audiotheme-i18n' ),
+		'record_type'      => __( 'Type', 'audiotheme-i18n' ),
+		'tags'             => __( 'Tags', 'audiotheme-i18n' ),
+		'track_count'      => __( 'Tracks', 'audiotheme-i18n' )
 	);
 	
 	return $columns;
