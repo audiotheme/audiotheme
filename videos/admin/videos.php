@@ -6,7 +6,7 @@ function audiotheme_load_videos_admin() {
 	add_filter( 'post_updated_messages', 'audiotheme_video_post_updated_messages' );
 	add_filter( 'manage_edit-audiotheme_video_columns', 'audiotheme_video_columns' );
 	add_action( 'manage_posts_custom_column', 'audiotheme_video_display_column', 10, 2 );
-	add_filter( 'nav_menu_items_audiotheme_archive_pages', 'audiotheme_video_archive_menu_item' );
+	add_filter( 'audiotheme_nav_menu_archive_items', 'audiotheme_video_archive_menu_item' );
 }
 
 function audiotheme_video_post_updated_messages( $messages ) {
@@ -253,30 +253,18 @@ function audiotheme_video_save( $id ) {
 		update_post_meta( $id, '_audiotheme_video_url', esc_url( $_POST['_video_url'], array( 'http', 'https' ) ) );
 }
 
-function audiotheme_video_archive_menu_item( $posts ) {
-	global $_nav_menu_placeholder;
-	$_nav_menu_placeholder = ( 0 > $_nav_menu_placeholder ) ? intval( $_nav_menu_placeholder ) - 1 : -1;
+/**
+ * Video Archive Nav Menu Item
+ *
+ * @since 1.0.0
+ */
+function audiotheme_video_archive_menu_item( $items ) {
+	$items[] = array(
+		'title' => _x( 'Videos', 'nav menu archive label' ),
+		'post_type' => 'audiotheme_video',
+		'url'   => get_post_type_archive_link( 'audiotheme_video' )
+	);
 	
-	$permalink = get_option( 'permalink_structure' );
-	if ( ! empty( $permalink ) ) {
-		$url = home_url( '/videos/' );
-	} else {
-		$url = add_query_arg( 'post_type', 'audiotheme_video', home_url( '/' ) );
-	}
-	
-	array_unshift( $posts, (object) array(
-		'_add_to_top' => false,
-		'ID' => 0,
-		'object_id' => $_nav_menu_placeholder,
-		'post_content' => '',
-		'post_excerpt' => '',
-		'post_parent' => '',
-		'post_title' => _x( 'Videos', 'nav menu archive label' ),
-		'post_type' => 'nav_menu_item',
-		'type' => 'custom',
-		'url' => $url
-	) );
-	
-	return $posts;
+	return $items;
 }
 ?>

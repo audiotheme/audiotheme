@@ -37,7 +37,7 @@ function audiotheme_discography_init() {
 	
 	register_post_type( 'audiotheme_track', array(
 		'capability_type'        => 'post',
-		'has_archive'            => true,
+		'has_archive'            => false,
 		'hierarchical'           => false,
 		'labels'                 => array(
 			'name'               => _x( 'Tracks', 'post type general name', 'audiotheme-i18n' ),

@@ -12,7 +12,7 @@ function audiotheme_load_gigs_admin() {
 	add_action( 'save_post', 'audiotheme_gig_save_hook' );
 	add_filter( 'get_edit_post_link', 'get_audiotheme_venue_edit_link', 10, 2 );
 	add_action( 'before_delete_post', 'audiotheme_gig_before_delete_hook' );
-	add_filter( 'nav_menu_items_audiotheme_archive_pages', 'audiotheme_gigs_archive_menu_item' );
+	add_filter( 'audiotheme_nav_menu_archive_items', 'audiotheme_gigs_archive_menu_item' );
 }
 
 function audiotheme_gigs_admin_menu() {
@@ -292,30 +292,19 @@ function audiotheme_gigs_rewrite_base_settings_field() {
 	<?php
 }
 
-function audiotheme_gigs_archive_menu_item( $posts ) {
-	global $_nav_menu_placeholder;
-	$_nav_menu_placeholder = ( 0 > $_nav_menu_placeholder ) ? intval( $_nav_menu_placeholder ) - 1 : -1;
+
+/**
+ * Gig Archive Nav Menu Item
+ *
+ * @since 1.0.0
+ */
+function audiotheme_gigs_archive_menu_item( $items ) {
+	$items[] = array(
+		'title' => _x( 'Gigs', 'nav menu archive label' ),
+		'post_type' => 'audiotheme_gig',
+		'url'   => get_post_type_archive_link( 'audiotheme_gig' )
+	);
 	
-	$permalink = get_option( 'permalink_structure' );
-	if ( ! empty( $permalink ) ) {
-		$url = home_url( sprintf( '/%s/', get_audiotheme_gigs_rewrite_base() ) );
-	} else {
-		$url = add_query_arg( 'post_type', 'audiotheme_gig', home_url( '/' ) );
-	}
-	
-	array_unshift( $posts, (object) array(
-		'_add_to_top' => false,
-		'ID' => 0,
-		'object_id' => $_nav_menu_placeholder,
-		'post_content' => '',
-		'post_excerpt' => '',
-		'post_parent' => '',
-		'post_title' => _x( 'Gigs', 'nav menu archive label' ),
-		'post_type' => 'nav_menu_item',
-		'type' => 'custom',
-		'url' => $url
-	) );
-	
-	return $posts;
+	return $items;
 }
 ?>

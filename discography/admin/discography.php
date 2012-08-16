@@ -14,7 +14,7 @@ function audiotheme_load_discography_admin() {
 	add_action( 'admin_init', 'audiotheme_discography_admin_init' );
 	add_action( 'load-themes.php', 'audiotheme_discography_setup' );
 	add_filter( 'post_updated_messages', 'audiotheme_discography_post_updated_messages' );
-	add_filter( 'nav_menu_items_audiotheme_archive_pages', 'audiotheme_record_archive_menu_item' );
+	add_filter( 'audiotheme_nav_menu_archive_items', 'audiotheme_record_archive_menu_item' );
 	
 	/* Records */
 	require( AUDIOTHEME_DIR . 'discography/admin/record.php' );
@@ -139,30 +139,18 @@ function audiotheme_discography_rewrite_base_settings_field() {
 	<?php
 }
 
-function audiotheme_record_archive_menu_item( $posts ) {
-	global $_nav_menu_placeholder;
-	$_nav_menu_placeholder = ( 0 > $_nav_menu_placeholder ) ? intval( $_nav_menu_placeholder ) - 1 : -1;
+/**
+ * Discography Archive Nav Menu Item
+ *
+ * @since 1.0.0
+ */
+function audiotheme_record_archive_menu_item( $items ) {
+	$items[] = array(
+		'title' => _x( 'Discography', 'nav menu archive label' ),
+		'post_type' => 'audiotheme_record',
+		'url'   => get_post_type_archive_link( 'audiotheme_record' )
+	);
 	
-	$permalink = get_option( 'permalink_structure' );
-	if ( ! empty( $permalink ) ) {
-		$url = home_url( sprintf( '/%s/', get_audiotheme_discography_rewrite_base() ) );
-	} else {
-		$url = add_query_arg( 'post_type', 'audiotheme_record', home_url( '/' ) );
-	}
-	
-	array_unshift( $posts, (object) array(
-		'_add_to_top' => false,
-		'ID' => 0,
-		'object_id' => $_nav_menu_placeholder,
-		'post_content' => '',
-		'post_excerpt' => '',
-		'post_parent' => '',
-		'post_title' => _x( 'Discography', 'nav menu archive label' ),
-		'post_type' => 'nav_menu_item',
-		'type' => 'custom',
-		'url' => $url
-	) );
-	
-	return $posts;
+	return $items;
 }
 ?>

@@ -108,64 +108,65 @@ function audiotheme_enqueue_admin_scripts() {
 	add_meta_box( 'add-audiotheme-archive-links', __( 'AudioTheme Pages', 'audiotheme-i18n' ), 'audiotheme_nav_menu_item_link_meta_box', 'nav-menus', 'side', 'default' );
 }
 
-function audiotheme_nav_menu_item_link_meta_box( $object, $post_type ) {
+/**
+ * Nav Menu Meta Box for AudioTheme CPT Archives
+ *
+ * Adds a meta box to the nav menu screen for listing AudioTheme CPT archive
+ * pages and allowing them to be easily included in nav menus. The CPTs should
+ * hook into the `nav_menu_items_audiotheme_archive_pages` filter to add an
+ * item to the list.
+ *
+ * @todo At some point, it would be nice to have these menu items
+ * automatically reflect the post type archive link as it's changed without
+ * worrying about the URL input, but the only way to currently do it requires
+ * making the 'type' argument an empty string and that seems awfully flimsy.
+ * 
+ * @link http://codeseekah.com/2012/03/01/custom-post-type-archives-in-wordpress-menus-2/
+ *
+ * @since 1.0.0
+ */
+function audiotheme_nav_menu_item_link_meta_box( $object, $box ) {
 	global $_nav_menu_placeholder, $nav_menu_selected_id;
+	$_nav_menu_placeholder = ( 0 > $_nav_menu_placeholder ) ? intval( $_nav_menu_placeholder ) : -1;
 	
 	$post_type_name = 'audiotheme_archive_pages';
-
-	$db_fields = false;
-	$walker = new Walker_Nav_Menu_Checklist( $db_fields );
-
-	$current_tab = 'all';
-	if ( isset( $_REQUEST[ $post_type_name . '-tab' ] ) && in_array( $_REQUEST[ $post_type_name . '-tab' ], array( 'all', 'search' ) ) ) {
-		$current_tab = $_REQUEST[ $post_type_name . '-tab' ];
-	}
-
-	$removed_args = array(
-		'action',
-		'customlink-tab',
-		'edit-menu-item',
-		'menu-item',
-		'page-tab',
-		'_wpnonce',
-	);
 	?>
 	<div id="posttype-<?php echo $post_type_name; ?>" class="posttypediv">
-		<ul id="posttype-<?php echo $post_type_name; ?>-tabs" class="posttype-tabs add-menu-item-tabs">
-			<li class="tabs"><a class="nav-tab-link" href="<?php if ( $nav_menu_selected_id ) echo esc_url( add_query_arg( $post_type_name . '-tab', 'all', remove_query_arg( $removed_args ) ) ); ?>#<?php echo $post_type_name; ?>-all"><?php _e('View All'); ?></a></li>
-		</ul>
-
-		<div id="<?php echo $post_type_name; ?>-all" class="tabs-panel tabs-panel-view-all tabs-panel-active">
+		<div id="<?php echo $post_type_name; ?>-all" class="tabs-panel tabs-panel-active">
 			<ul id="<?php echo $post_type_name; ?>checklist" class="list:<?php echo $post_type_name?> categorychecklist form-no-clear">
 				<?php
-				$args['walker'] = $walker;
+				// Hooks returning items should return them as an array with 'title' and 'url' arguments
+				// array( 'title' => 'Custom Title', 'url' => 'Custom URL' ) 
+				$items = apply_filters( 'audiotheme_nav_menu_archive_items', array(), $box );
 				
-				$posts = apply_filters( 'nav_menu_items_' . $post_type_name, array(), $args, $post_type );
-				$posts = sort_objects( $posts, 'post_title', 'asc', false );
-				
-				$checkbox_items = walk_nav_menu_tree( array_map( 'wp_setup_nav_menu_item', $posts ), 0, (object) $args );
-				if ( 'all' == $current_tab && ! empty( $_REQUEST['selectall'] ) ) {
-					$checkbox_items = preg_replace( '/(type=(.)checkbox(\2))/', '$1 checked=$2checked$2', $checkbox_items );
+				if ( $items ) {
+					// Transform the item array into a format expected by the nav walker
+					foreach ( $items as $key => $item ) {
+						$_nav_menu_placeholder --;
+						
+						$items[ $key ] = (object) array(
+							'ID'           => 0,
+							'object'       => '',
+							'object_id'    => $_nav_menu_placeholder,
+							'post_title'   => $item['title'],
+							'post_type'    => 'nav_menu_item',
+							'post_content' => '',
+							'post_excerpt' => '',
+							'type'         => 'custom',
+							'url'          => $item['url']
+						);
+					}
+					
+					$items = sort_objects( $items, 'post_title', 'asc', false );
 				}
-
-				echo $checkbox_items;
+				
+				$args['walker'] = new Walker_Nav_Menu_Checklist( false );
+				echo walk_nav_menu_tree( array_map( 'wp_setup_nav_menu_item', $items ), 0, (object) $args );
 				?>
 			</ul>
 		</div><!-- /.tabs-panel -->
 
 		<p class="button-controls">
-			<span class="list-controls">
-				<a href="<?php
-					echo esc_url( add_query_arg(
-						array(
-							$post_type_name . '-tab' => 'all',
-							'selectall' => 1,
-						),
-						remove_query_arg( $removed_args )
-					));
-				?>#posttype-<?php echo $post_type_name; ?>" class="select-all"><?php _e( 'Select All' ); ?></a>
-			</span>
-
 			<span class="add-to-menu">
 				<img class="waiting" src="<?php echo esc_url( admin_url( 'images/wpspin_light.gif' ) ); ?>" alt="" />
 				<input type="submit"<?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu" value="<?php esc_attr_e( 'Add to Menu' ); ?>" name="add-post-type-menu-item" id="submit-posttype-<?php echo $post_type_name; ?>">
@@ -177,7 +178,7 @@ function audiotheme_nav_menu_item_link_meta_box( $object, $post_type ) {
 }
 
 /**
- * Enqueue Admin Scripts
+ * Add Current Screen ID as CSS Class to <body>
  *
  * @since 1.0.0
  */
