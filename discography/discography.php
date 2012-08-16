@@ -196,7 +196,7 @@ function audiotheme_discography_archive_link( $link, $post_type ) {
  *
  * @since 1.0.0
  */
-require( AUDIOTHEME_DIR . 'discography/general-template.php' );
+require( AUDIOTHEME_DIR . 'discography/post-template.php' );
 
 if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'discography/admin/discography.php' );

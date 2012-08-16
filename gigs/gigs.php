@@ -259,7 +259,7 @@ function audiotheme_gigs_archive_link( $link, $post_type ) {
  *
  * @since 1.0.0
  */
-require( AUDIOTHEME_DIR . 'gigs/general-template.php' );
+require( AUDIOTHEME_DIR . 'gigs/post-template.php' );
 
 if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'gigs/admin/gigs.php' );
