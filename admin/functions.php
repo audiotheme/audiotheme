@@ -1,10 +1,11 @@
 <?php
 /**
- * Customizable submit meta box
+ * Customizable Submit Meta Box
  *
  * @see post_submit_meta_box()
- *
- * TODO: add alert when deleting a post?
+ * 
+ * @since 1.0.0
+ * @todo: add alert when deleting a post
  */
 function audiotheme_post_submit_meta_box( $post, $metabox ) {
 	global $action;

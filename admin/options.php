@@ -1,5 +1,5 @@
 <?php
-class AudioTheme_Options {
+class Audiotheme_Options {
 	private static $instance;
 	private static $current_panel;
 	private static $panels;

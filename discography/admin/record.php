@@ -30,7 +30,7 @@ function audiotheme_records_admin_query( $wp_query ) {
 }
 
 /**
- * Register Record Columns
+ * Register Record List Columns
  *
  * @since 1.0.0
  */
@@ -54,11 +54,7 @@ function audiotheme_record_columns( $columns ) {
  * @since 1.0.0
  */
 function audiotheme_record_display_column( $column_name, $post_id ) {
-
 	global $post;
-	
-	/* Get the post edit link for the post. */
-	$edit_link = get_edit_post_link( $post->ID );
 	
 	switch ( $column_name ) {
 		case 'record_type' :
@@ -89,11 +85,13 @@ function audiotheme_record_display_column( $column_name, $post_id ) {
 				'post_type' => 'audiotheme_track',
 				'post_parent' => $post_id
 			);
-			printf( '<a href="%s">%s</a>', add_query_arg( $args, esc_url( admin_url( 'edit.php' ) ) ), get_post_meta( $post_id, '_audiotheme_track_count', true ) );
+
+			printf( '<a href="%s">%s</a>',
+				add_query_arg( $args, esc_url( admin_url( 'edit.php' ) ) ),
+				get_post_meta( $post_id, '_audiotheme_track_count', true )
+			);
 			break;
-			
 	}
-	
 }
 
 /**
@@ -128,13 +126,14 @@ function audiotheme_record_list_table_actions( $actions, $post ) {
  */
 function audiotheme_record_list_table_bulk_actions( $actions ) {
 	unset( $actions['edit'] );
+
 	return $actions;
 }
 
 /**
  * Custom Rules for Saving a Record
  *
- * Creates and updates child tracks and save additional record meta. 
+ * Creates and updates child tracks and saves additional record meta. 
  *
  * @since 1.0.0
  */
@@ -263,7 +262,6 @@ function audiotheme_edit_record_tracklist() {
 	require( AUDIOTHEME_DIR . 'discography/admin/views/edit-record-tracklist.php' );
 }
 
-
 /**
  * Record Details Meta Box
  *
@@ -314,10 +312,12 @@ function audiotheme_record_details_meta_box( $post ) {
 			<tr>
 				<td colspan="2">
 					<a class="button meta-repeater-add-item"><?php _e( 'Add URL', 'audiotheme-i18n' ) ?></a>
-					<?php printf( '<span class="meta-repeater-sort-warning" style="display: none;">%1$s <br /><em>%2$s</em></span>',
+					<?php
+					printf( '<span class="meta-repeater-sort-warning" style="display: none;">%1$s <br /><em>%2$s</em></span>',
 						esc_html__( 'The order has been changed.', 'audiotheme-i18n' ),
 						esc_html__( 'Save your changes.', 'audiotheme-i18n' )
-					); ?>
+					);
+					?>
 				</td>
 			</tr>
 		</tfoot>
@@ -331,7 +331,7 @@ function audiotheme_record_details_meta_box( $post ) {
 				?>
 				<tr class="meta-repeater-item">
 					<td><input type="text" name="record_links[<?php echo $i; ?>][name]" value="<?php echo esc_attr( $link['name'] ); ?>" placeholder="<?php _e( 'Text', 'audiotheme-i18n' ) ?>" class="record-link-name clear-on-add" style="width: 8em"></td>
-					<td><input type="text" name="record_links[<?php echo $i; ?>][url]" value="<?php echo esc_url_raw( $link['url'] ); ?>" placeholder="URL" class="widefat clear-on-add"></td>
+					<td><input type="text" name="record_links[<?php echo $i; ?>][url]" value="<?php echo esc_url( $link['url'] ); ?>" placeholder="URL" class="widefat clear-on-add"></td>
 					<td class="column-action"><a class="meta-repeater-remove-item"><img src="<?php echo esc_url( AUDIOTHEME_URI . '/admin/images/delete.png' ); ?>" width="16" height="16" alt="<?php _e( 'Delete Item', 'audiotheme-i18n' ) ?>" title="<?php _e( 'Delete Item', 'audiotheme-i18n' ) ?>" class="icon-delete" /></a></td>
 				</tr>
 			<?php endforeach; ?>

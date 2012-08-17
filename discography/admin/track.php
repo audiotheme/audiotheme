@@ -2,8 +2,8 @@
 /**
  * Ensure Track Slugs are Unique
  *
- * Tracks should always be associated with a record so their
- * slugs only need to be unique within the context of a record.
+ * Tracks should always be associated with a record so their slugs only need
+ * to be unique within the context of a record.
  *
  * @since 1.0.0
  */
@@ -300,7 +300,6 @@ function audiotheme_track_details_meta_box( $post ) {
 	// Nonce to verify intention later
 	wp_nonce_field( 'update-track_' . $post->ID, 'audiotheme_track_nonce' );
 	?>
-	
 	<p class="audiotheme-meta-field">
 		<label for="track-artist"><?php _e( 'Artist:', 'audiotheme-i18n' ) ?></label>
 		<input type="text" name="artist" id="track-artist" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_artist', true ) ) ; ?>" class="widefat">

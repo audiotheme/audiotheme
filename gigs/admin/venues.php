@@ -13,7 +13,7 @@ function audiotheme_all_venues_screen_setup() {
 	
 	require( AUDIOTHEME_DIR . 'gigs/admin/includes/class-audiotheme-venues-list-table.php' );
 	
-	$venues_list_table = new AudioTheme_Venues_List_Table();
+	$venues_list_table = new Audiotheme_Venues_List_Table();
 	$venues_list_table->process_actions();
 	
 	wp_enqueue_script( 'jquery-ui-autocomplete' );
@@ -23,7 +23,7 @@ function audiotheme_all_venues_screen_setup() {
 }
 
 function audiotheme_all_venues_screen() {
-	$venues_list_table = new AudioTheme_Venues_List_Table();
+	$venues_list_table = new Audiotheme_Venues_List_Table();
 	$venues_list_table->prepare_items();
 	
 	
@@ -50,7 +50,6 @@ function audiotheme_all_venues_screen() {
 function audiotheme_all_venues_notices() {
 	
 }
-
 
 function audiotheme_edit_venue_screen_setup() {
 	audiotheme_edit_venue_screen_process_actions();
@@ -109,7 +108,7 @@ function audiotheme_edit_venue_notes_meta_box( $post, $args ) {
 function audiotheme_edit_venue_submit_meta_box( $post ) {
 	$post = ( empty( $post ) ) ? get_default_post_to_edit( 'audiotheme_venue' ) : $post;
 	
-	// TODO: improve capabiity handling and cleanup
+	// TODO: improve capability handling and cleanup
 	$post_type = $post->post_type;
 	$post_type_object = get_post_type_object( $post_type );
 	$can_publish = current_user_can( $post_type_object->cap->publish_posts );

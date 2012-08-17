@@ -31,8 +31,7 @@ function audiotheme_discography_init() {
 		'rewrite'                => false,
 		'show_ui'                => true,
 		'show_in_menu'           => true,
-		'supports'               => array( 'title', 'editor', 'thumbnail' ),
-		#'taxonomies'             => array( 'post_tag' )
+		'supports'               => array( 'title', 'editor', 'thumbnail' )
 	) );
 	
 	register_post_type( 'audiotheme_track', array(
@@ -89,7 +88,6 @@ function audiotheme_discography_init() {
 		'show_in_nav_menus'              => false
 	) );
 	
-	#add_rewrite_tag( '%audiotheme_record%', '([^/]+)' );
 	add_filter( 'generate_rewrite_rules', 'audiotheme_discography_generate_rewrite_rules' );
 	add_action( 'pre_get_posts', 'audiotheme_discography_query' );
 	add_filter( 'post_type_link', 'audiotheme_discography_permalinks', 10, 4 );

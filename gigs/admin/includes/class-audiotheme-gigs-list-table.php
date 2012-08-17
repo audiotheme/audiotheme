@@ -4,7 +4,7 @@ if( ! class_exists( 'WP_List_Table' ) ) {
 }
 
 
-class AudioTheme_Gigs_List_Table extends WP_List_Table {
+class Audiotheme_Gigs_List_Table extends WP_List_Table {
 	var $current_view;
 	
 	function __construct(){

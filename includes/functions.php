@@ -16,7 +16,7 @@ function sort_objects( $objects, $orderby, $order = 'ASC', $unique = true, $fall
 	
 	usort( $objects, array( new Sort_Objects( $orderby, $order, $fallback ), 'sort' ) );
 	
-	// use object ids as the array keys
+	// Use object ids as the array keys
 	if ( $unique && count( $objects ) && isset( $objects[0]->ID ) ) {
 		$objects = array_combine( wp_list_pluck( $objects, 'ID' ), $objects );
 	}
@@ -24,7 +24,7 @@ function sort_objects( $objects, $orderby, $order = 'ASC', $unique = true, $fall
 	return $objects;
 }
 
-class Sort_Objects {
+class Audiotheme_Sort_Objects {
 	var $fallback, $order, $orderby;
 	
 	// Fallback is limited to working with properties of the parent object

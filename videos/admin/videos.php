@@ -1,4 +1,9 @@
 <?php
+/**
+ * Load Galleries Admin
+ *
+ * @since 1.0.0
+ */
 add_action( 'init', 'audiotheme_load_videos_admin' );
 
 function audiotheme_load_videos_admin() {
@@ -9,20 +14,25 @@ function audiotheme_load_videos_admin() {
 	add_filter( 'audiotheme_nav_menu_archive_items', 'audiotheme_video_archive_menu_item' );
 }
 
+/**
+ * Video Update Messages
+ *
+ * @since 1.0.0
+ */
 function audiotheme_video_post_updated_messages( $messages ) {
 	global $post, $post_ID;
 	
 	$messages['audiotheme_video'] = array(
-		0 => '',
-		1 => sprintf( __( 'Video updated. <a href="%s">View Video</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
-		2 => __( 'Custom field updated.', 'audiotheme-i18n' ),
-		3 => __( 'Custom field deleted.', 'audiotheme-i18n' ),
-		4 => __( 'Video updated.', 'audiotheme-i18n' ),
-		5 => isset( $_GET['revision'] ) ? sprintf( __( 'Video restored to revision from %s', 'audiotheme-i18n' ), wp_post_revision_title( ( int ) $_GET['revision'], false ) ) : false,
-		6 => sprintf( __( 'Video published. <a href="%s">View Video</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
-		7 => __( 'Video saved.', 'audiotheme-i18n' ),
-		8 => sprintf( __( 'Video submitted. <a target="_blank" href="%s">Preview Video</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
-		9 => sprintf( __( 'Video scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Video</a>', 'audiotheme-i18n' ), date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
+		0  => '',
+		1  => sprintf( __( 'Video updated. <a href="%s">View Video</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
+		2  => __( 'Custom field updated.', 'audiotheme-i18n' ),
+		3  => __( 'Custom field deleted.', 'audiotheme-i18n' ),
+		4  => __( 'Video updated.', 'audiotheme-i18n' ),
+		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Video restored to revision from %s', 'audiotheme-i18n' ), wp_post_revision_title( ( int ) $_GET['revision'], false ) ) : false,
+		6  => sprintf( __( 'Video published. <a href="%s">View Video</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
+		7  => __( 'Video saved.', 'audiotheme-i18n' ),
+		8  => sprintf( __( 'Video submitted. <a target="_blank" href="%s">Preview Video</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+		9  => sprintf( __( 'Video scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Video</a>', 'audiotheme-i18n' ), date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
 		10 => sprintf( __( 'Video draft updated. <a target="_blank" href="%s">Preview Video</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
 	);
 
@@ -70,7 +80,7 @@ function audiotheme_video_display_column( $column_name, $post_id ) {
 				
 				echo join( ', ', $post_terms );
 			} else {
-				echo '<em>' . __( 'No video types.', 'audiotheme-i18n' ) . '</em>';
+				echo __( 'No video types.', 'audiotheme-i18n' );
 			}
 			break;
 	}
@@ -90,20 +100,18 @@ function audiotheme_video_meta_boxes() {
  *
  * @since 1.0.0
  *
- * @TODO Move css and javascript to external files
- * @TODO The thumbnail should be sufficient for a preview, 
+ * @todo Move css and javascript to external files
+ * @todo The thumbnail should be sufficient for a preview, 
  *       but an error message if the video isn't embeddable 
  *       would be helfpul, else show video preview if URL is set.
  *
  */
 function audiotheme_video_meta_cb( $post ) {
-
 	// Store the saved values
 	$video = get_audiotheme_post_video_url( $post->ID );
 
 	// Nonce to verify intention later
 	wp_nonce_field( 'save_audiotheme_video_meta', 'audiotheme_video_nonce' );
-
 	?>
 	<p>
 		<?php _e( 'Enter a video URL from one of the WordPress', 'audiotheme-i18n' ) ?> <a href="http://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F" target="_blank"><?php _e( 'supported video services.', 'audiotheme-i18n' ); ?></a>

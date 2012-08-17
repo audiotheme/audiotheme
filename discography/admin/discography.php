@@ -5,7 +5,9 @@
  * @since 1.0.0
  */
 add_action( 'init', 'audiotheme_load_discography_admin' );
+
 function audiotheme_load_discography_admin() {
+	// TODO: Add a nonce for security
 	if ( isset( $_POST['audiotheme_discography_rewrite_base'] ) ) {
 		update_option( 'audiotheme_discography_rewrite_base', $_POST['audiotheme_discography_rewrite_base'] );
 	}
@@ -16,10 +18,11 @@ function audiotheme_load_discography_admin() {
 	add_filter( 'post_updated_messages', 'audiotheme_discography_post_updated_messages' );
 	add_filter( 'audiotheme_nav_menu_archive_items', 'audiotheme_record_archive_menu_item' );
 	
-	/* Records */
+	// Records
 	require( AUDIOTHEME_DIR . 'discography/admin/record.php' );
-	
+		
 	add_action( 'save_post', 'audiotheme_record_save_hook' );
+	
 	// All Records Screen
 	add_filter( 'parse_query', 'audiotheme_records_admin_query' );
 	add_filter( 'manage_edit-audiotheme_record_columns', 'audiotheme_record_columns' );
@@ -28,11 +31,12 @@ function audiotheme_load_discography_admin() {
 	add_filter( 'bulk_actions-edit-audiotheme_record', 'audiotheme_record_list_table_bulk_actions' );
 	add_action( 'page_row_actions', 'audiotheme_record_list_table_actions', 10, 2 );
 	
-	/* Tracks */
+	// Tracks
 	require( AUDIOTHEME_DIR . 'discography/admin/track.php' );
 	
 	add_action( 'save_post', 'audiotheme_track_save_hook' );
 	add_action( 'wp_unique_post_slug', 'audiotheme_track_unique_slug', 10, 5 );
+	
 	// All Tracks Screen
 	add_filter( 'parse_query', 'audiotheme_tracks_admin_query' );
 	add_action( 'restrict_manage_posts', 'audiotheme_tracks_filters' );
@@ -46,7 +50,8 @@ function audiotheme_load_discography_admin() {
 /**
  * Add Discography Data
  *
- * Runs anytime themes.php is visited to ensure record types exist.
+ * Ensures the record type taxonomies exist. Runs anytime themes.php is
+ * visited to ensure record types exist.
  *
  * @since 1.0.0
  */
@@ -69,11 +74,11 @@ function audiotheme_discography_setup() {
  * @since 1.0.0
  */
 function audiotheme_discography_admin_menu() {
-	add_menu_page( __( 'Discography', 'audiotheme-i18n' ), __( 'Discography', 'audiotheme-i18n' ), 'edit_posts', 'edit.php?post_type=audiotheme_record', NULL, NULL, 513 );
+	add_menu_page( __( 'Discography', 'audiotheme-i18n' ), __( 'Discography', 'audiotheme-i18n' ), 'edit_posts', 'edit.php?post_type=audiotheme_record', null, null, 513 );
 }
 
 /**
- * Discography Post Type Update Messages
+ * Discography Update Messages
  *
  * @since 1.0.0
  */
@@ -81,30 +86,30 @@ function audiotheme_discography_post_updated_messages( $messages ) {
 	global $post, $post_ID;
 	
 	$messages['audiotheme_record'] = array(
-		0 => '',
-		1 => sprintf( __( 'Record updated. <a href="%s">View Record</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
-		2 => __( 'Custom field updated.', 'audiotheme-i18n' ),
-		3 => __( 'Custom field deleted.', 'audiotheme-i18n' ),
-		4 => __( 'Record updated.', 'audiotheme-i18n' ),
-		5 => isset( $_GET['revision'] ) ? sprintf( __( 'Record restored to revision from %s', 'audiotheme-i18n' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-		6 => sprintf( __( 'Record published. <a href="%s">View Record</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
-		7 => __( 'Record saved.', 'audiotheme-i18n' ),
-		8 => sprintf( __( 'Record submitted. <a target="_blank" href="%s">Preview Record</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
-		9 => sprintf( __( 'Record scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Record</a>', 'audiotheme-i18n' ), date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
+		0  => '',
+		1  => sprintf( __( 'Record updated. <a href="%s">View Record</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
+		2  => __( 'Custom field updated.', 'audiotheme-i18n' ),
+		3  => __( 'Custom field deleted.', 'audiotheme-i18n' ),
+		4  => __( 'Record updated.', 'audiotheme-i18n' ),
+		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Record restored to revision from %s', 'audiotheme-i18n' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6  => sprintf( __( 'Record published. <a href="%s">View Record</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
+		7  => __( 'Record saved.', 'audiotheme-i18n' ),
+		8  => sprintf( __( 'Record submitted. <a target="_blank" href="%s">Preview Record</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+		9  => sprintf( __( 'Record scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Record</a>', 'audiotheme-i18n' ), date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
 		10 => sprintf( __( 'Record draft updated. <a target="_blank" href="%s">Preview Record</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
 	);
 	
 	$messages['audiotheme_track'] = array(
-		0 => '',
-		1 => sprintf( __( 'Track updated. <a href="%s">View Track</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
-		2 => __( 'Custom field updated.', 'audiotheme-i18n' ),
-		3 => __( 'Custom field deleted.', 'audiotheme-i18n' ),
-		4 => __( 'Track updated.', 'audiotheme-i18n' ),
-		5 => isset( $_GET['revision'] ) ? sprintf( __( 'Track restored to revision from %s', 'audiotheme-i18n' ), wp_post_revision_title( ( int ) $_GET['revision'], false ) ) : false,
-		6 => sprintf( __( 'Track published. <a href="%s">View Track</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
-		7 => __( 'Track saved.', 'audiotheme-i18n' ),
-		8 => sprintf( __( 'Track submitted. <a target="_blank" href="%s">Preview Track</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
-		9 => sprintf( __( 'Track scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Track</a>', 'audiotheme-i18n' ), date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
+		0  => '',
+		1  => sprintf( __( 'Track updated. <a href="%s">View Track</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
+		2  => __( 'Custom field updated.', 'audiotheme-i18n' ),
+		3  => __( 'Custom field deleted.', 'audiotheme-i18n' ),
+		4  => __( 'Track updated.', 'audiotheme-i18n' ),
+		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Track restored to revision from %s', 'audiotheme-i18n' ), wp_post_revision_title( ( int ) $_GET['revision'], false ) ) : false,
+		6  => sprintf( __( 'Track published. <a href="%s">View Track</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
+		7  => __( 'Track saved.', 'audiotheme-i18n' ),
+		8  => sprintf( __( 'Track submitted. <a target="_blank" href="%s">Preview Track</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+		9  => sprintf( __( 'Track scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Track</a>', 'audiotheme-i18n' ), date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
 		10 => sprintf( __( 'Track draft updated. <a target="_blank" href="%s">Preview Track</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
 	);
 
@@ -146,9 +151,9 @@ function audiotheme_discography_rewrite_base_settings_field() {
  */
 function audiotheme_record_archive_menu_item( $items ) {
 	$items[] = array(
-		'title' => _x( 'Discography', 'nav menu archive label' ),
+		'title'     => _x( 'Discography', 'nav menu archive label' ),
 		'post_type' => 'audiotheme_record',
-		'url'   => get_post_type_archive_link( 'audiotheme_record' )
+		'url'       => get_post_type_archive_link( 'audiotheme_record' )
 	);
 	
 	return $items;

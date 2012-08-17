@@ -16,6 +16,7 @@ wp_oembed_add_provider( 'http://rd.io/*', 'http://www.rdio.com/api/oembed/' );
  * the wmode parameter to YouTube videos and flash embeds.
  *
  * @since 1.0.0
+ * 
  * @return string
  */
 function audiotheme_oembed_html( $html, $url, $attr, $post_id ) {

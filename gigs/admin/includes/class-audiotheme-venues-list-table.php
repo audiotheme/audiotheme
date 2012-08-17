@@ -4,7 +4,7 @@ if( ! class_exists( 'WP_List_Table' ) ) {
 }
 
 
-class AudioTheme_Venues_List_Table extends WP_List_Table {
+class Audiotheme_Venues_List_Table extends WP_List_Table {
 	function __construct() {
 		parent::__construct( array(
 			'singular' => 'venue',

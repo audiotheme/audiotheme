@@ -9,10 +9,12 @@
 	<tfoot>
 	    <tr class="meta-repeater-sort-warning" style="display: none;">
 	    	<td colspan="6">
-	    		<?php printf( '<span>%1$s <em>%2$s</em></span>',
+	    		<?php
+	    		printf( '<span>%1$s <em>%2$s</em></span>',
 	    			esc_html__( 'The order has been changed.', 'audiotheme-i18n' ),
 	    			esc_html__( 'Save your changes.', 'audiotheme-i18n' )
-	    		); ?>
+	    		);
+	    		?>
 	    	</td>
 	    </tr>
 	</tfoot>

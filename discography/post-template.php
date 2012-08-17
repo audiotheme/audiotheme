@@ -2,11 +2,13 @@
 /**
  * Record Link Sources
  *
- * List of default resources in which records can be purchased.
- * The options listed here show up as suggestions when the user types.
+ * List of default outlets from which records can be purchased. The options
+ * listed here show up as suggestions when the user types.
  *
- * @return array
  * @since 1.0.0
+ * 
+ * @todo Create an interface for registering new sources and icons.
+ * @return array
  */
 function get_audiotheme_record_link_sources() {
 	$default_sources = array(
@@ -25,10 +27,12 @@ function get_audiotheme_record_link_sources() {
 /**
  * Record Type Strings
  *
- * List of default record types to better define the record, much like a post format.
+ * List of default record types to better define the record, much like a post
+ * format.
  *
- * @return array
  * @since 1.0.0
+ * 
+ * @return array A list of record types.
  */
 function get_audiotheme_record_type_strings() {
 	$strings = array(
@@ -44,8 +48,9 @@ function get_audiotheme_record_type_strings() {
  *
  * Gets an array of available record type slugs from record type strings.
  *
- * @return array
  * @since 1.0.0
+ * 
+ * @return array List of record type slugs.
  */
 function get_audiotheme_record_type_slugs() {
 	$slugs = array_keys( get_audiotheme_record_type_strings() );
@@ -58,8 +63,10 @@ function get_audiotheme_record_type_slugs() {
  *
  * Sets default value of record type if option is not set.
  *
- * @return array
  * @since 1.0.0
+ * 
+ * @param string A record type slug.
+ * @return string A record type label.
  */
 function get_audiotheme_record_type_string( $slug ) {
 	$strings = get_audiotheme_record_type_strings();
@@ -154,6 +161,7 @@ function get_audiotheme_record_genre( $post_id = null ) {
  * Get Tracks
  *
  * @since 1.0.0
+ * 
  * @param int $post_id Post ID.
  * @return array
  */
@@ -207,6 +215,7 @@ function is_audiotheme_track_downloadable( $post_id = null ) {
  * Get Track Artist
  *
  * @since 1.0.0
+ * 
  * @param int $post_id. Post ID.
  * @return string
  */
@@ -242,5 +251,4 @@ function get_audiotheme_track_purchase_url( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
 	return get_post_meta( $post_id, '_audiotheme_purchase_url', true );
 }
-
 ?>

@@ -58,9 +58,9 @@ function audiotheme_gigs_init() {
 	) );
 	
 	p2p_register_connection_type( array(
-        'name' => 'audiotheme_venue_to_gig',
-        'from' => 'audiotheme_venue',
-        'to' => 'audiotheme_gig',
+        'name'        => 'audiotheme_venue_to_gig',
+        'from'        => 'audiotheme_venue',
+        'to'          => 'audiotheme_gig',
 		'cardinality' => 'one-to-many'
     ) );
 	
@@ -94,7 +94,7 @@ function get_audiotheme_gigs_rewrite_base() {
  * /base/%postname%/
  * /base/
  *
- * @TODO:
+ * @todo
  *     /base/tour/%tourname%/
  *     /base/past/page/2/
  *     /base/past/
@@ -231,13 +231,8 @@ function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
 		if ( ! empty( $permalink ) && 'audiotheme_gig' == get_post_type( $post ) ) {
 			$base = get_audiotheme_gigs_rewrite_base();
 			$slug = ( $leavename ) ? '%postname%' : $post->post_name;
-			$gig_date = get_post_meta( $post->ID, '_audiotheme_gig_datetime', true );
-			$gig_date = ( empty( $gig_date ) ) ? time() : strtotime( $gig_date );
 			
-			$post_link = home_url( sprintf( '/%s/%s/',
-				$base,
-				$slug
-			) );
+			$post_link = home_url( sprintf( '/%s/%s/', $base, $slug ) );
 		}
 	}
 	

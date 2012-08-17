@@ -15,7 +15,7 @@ require( AUDIOTHEME_DIR . 'admin/options.php' );
 add_action( 'init', 'audiotheme_admin_setup' );
 
 function audiotheme_admin_setup() {
-	AudioTheme_Options::setup();
+	Audiotheme_Options::setup();
 	
 	add_action( 'save_post', 'audiotheme_video_save' );
 	add_action( 'wp_ajax_audiotheme_get_video_data', 'audiotheme_get_video_data' );
@@ -24,6 +24,7 @@ function audiotheme_admin_setup() {
 	add_action( 'update_option_audiotheme_disable_directory_browsing', 'audiotheme_disable_directory_browsing_option_update', 10, 2 );
 	
 	add_action( 'admin_enqueue_scripts', 'audiotheme_enqueue_admin_scripts' );
+	add_action( 'admin_head-nav-menus.php', 'audiotheme_nav_menu_admin_head');
 	add_action( 'admin_body_class', 'audiotheme_admin_body_class' );
 	add_filter( 'user_contactmethods', 'audiotheme_edit_user_contact_info' );
 	
@@ -34,25 +35,36 @@ function audiotheme_admin_setup() {
 	add_filter( 'menu_order', 'audiotheme_admin_menu_order', 999 );
 	
 	if ( current_theme_supports( 'audiotheme-options' ) ) {
-		$options = AudioTheme_Options::get_instance();
-		$panel = $options->add_panel( 'theme-options', __( 'Theme Options', 'audiotheme-i18n' ), array(
-			'menu_title' => __( 'Theme Options', 'audiotheme-i18n' ),
-			'option_group' => 'audiotheme_options',
-			'option_name' => array( 'audiotheme_options' ),
-			'show_in_menu' => 'themes.php'
-		) );
-		
-		//add_action( 'update_option_audiotheme_options', 'audiotheme_options_update', 10, 2 );
-		//add_action( 'admin_init', 'audiotheme_default_options' );
+		$options = Audiotheme_Options::get_instance();
+		$panel = $options->add_panel(
+			'theme-options',
+			__( 'Theme Options', 'audiotheme-i18n' ),
+			array(
+				'menu_title'   => __( 'Theme Options', 'audiotheme-i18n' ),
+				'option_group' => 'audiotheme_options',
+				'option_name'  => array( 'audiotheme_options' ),
+				'show_in_menu' => 'themes.php'
+			)
+		);
 	}
 	
 	if ( current_theme_supports( 'audiotheme-automatic-updates' ) ) {
 		include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-upgrader.php' );
 		$support = get_theme_support( 'audiotheme-automatic-updates' );
-		new AudioTheme_Upgrader( $support[0] );
+		new Audiotheme_Upgrader( $support[0] );
 	}
 }
 
+/**
+ * Register Directory Browsing Settings
+ *
+ * Registers a setting on the Privacy screen to disable directory browsing so
+ * the uploads folder can't be accessed directly.
+ *
+ * @since 1.0.0
+ * @todo Only show if using Apache.
+ * @todo Error message of .htaccess isn't writable.
+ */
 function audiotheme_register_directory_browsing_setting() {
 	register_setting( 'privacy', 'audiotheme_disable_directory_browsing' );
 	
@@ -65,6 +77,11 @@ function audiotheme_register_directory_browsing_setting() {
 	);
 }
 
+/**
+ * Display Directory Browsing Setting
+ * 
+ * @since 1.0.0
+ */
 function audiotheme_disable_directory_browsing_setting_field() {
 	$disable_browsing = get_option( 'audiotheme_disable_directory_browsing' );
 	?>
@@ -73,10 +90,26 @@ function audiotheme_disable_directory_browsing_setting_field() {
 	<?php
 }
 
+/**
+ * Update Directory Browsing
+ * 
+ * Whenever the directory browsing setting is updated, update .htaccess
+ * 
+ * @since 1.0.0
+ */
 function audiotheme_disable_directory_browsing_option_update( $oldvalue, $newvalue ) {
 	audiotheme_save_htaccess();
 }
 
+/**
+ * Save .htacess
+ * 
+ * Updates the .htaccess file.
+ * 
+ * @see save_mod_rewrite_rules()
+ * 
+ * @since 1.0.0
+ * */
 function audiotheme_save_htaccess() {
 	$home_path = get_home_path();
 	$htaccess_file = $home_path . '.htaccess';
@@ -104,7 +137,17 @@ function audiotheme_save_htaccess() {
 function audiotheme_enqueue_admin_scripts() {
 	wp_enqueue_script( 'audiotheme-admin' );
 	wp_enqueue_style( 'audiotheme-admin' );
-	
+}
+
+/**
+ * Register Nave Menu Meta Box
+ * 
+ * Registers the meta box for adding AudioTheme CPT archive links to nav
+ * menus.
+ * 
+ * @since 1.0.0
+ */
+function audiotheme_nav_menu_admin_head() {
 	add_meta_box( 'add-audiotheme-archive-links', __( 'AudioTheme Pages', 'audiotheme-i18n' ), 'audiotheme_nav_menu_item_link_meta_box', 'nav-menus', 'side', 'default' );
 }
 
@@ -189,6 +232,9 @@ function audiotheme_admin_body_class( $class ) {
 /**
  * Custom Post Type Columns
  *
+ * This hook is run for all custom columns, so the column name is prefixed to
+ * prevent potential conflicts.
+ * 
  * @since 1.0.0
  */
 function audiotheme_display_custom_column( $column_name, $post_id ) {
@@ -221,8 +267,8 @@ function audiotheme_edit_user_contact_info( $contactmethods ) {
 /**
  * Re-order the admin menu
  *
- * Positions AudioTheme admin menu items after Posts menu item if the
- * Gigs menu item hasn't been modified. Should place nice with plugins.
+ * Positions AudioTheme admin menu items after Posts menu item if the Gigs
+ * menu item position hasn't been modified. Should play nice with plugins.
  *
  * @since 1.0.0
  */

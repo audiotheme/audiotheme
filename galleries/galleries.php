@@ -31,10 +31,17 @@ function audiotheme_galleries_init() {
 		'rewrite'                => array( 'slug' => 'gallery', 'with_front' => false ),
 		'show_ui'                => true,
 		'show_in_menu'           => true,
-		'show_in_nav_menus'     => false,
+		'show_in_nav_menus'      => false,
 		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' )
 	) );
 }
+
+/**
+ * Gallery Includes
+ *
+ * @since 1.0.0
+ */
+require( AUDIOTHEME_DIR . 'galleries/post-template.php' );
 
 if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'galleries/admin/galleries.php' );

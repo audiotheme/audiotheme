@@ -2,6 +2,7 @@
 add_action( 'init', 'audiotheme_load_gigs_admin' );
 
 function audiotheme_load_gigs_admin() {
+	// TODO: Add a nonce here for security
 	if ( isset( $_POST['audiotheme_gigs_rewrite_base'] ) ) {
 		update_option( 'audiotheme_gigs_rewrite_base', $_POST['audiotheme_gigs_rewrite_base'] );
 	}
@@ -24,13 +25,12 @@ function audiotheme_gigs_admin_menu() {
 		exit;
 	}
 	
-	
 	$gig_object = get_post_type_object( 'audiotheme_gig' );
 	$venue_object = get_post_type_object( 'audiotheme_venue' );
 	
 	remove_submenu_page( 'gigs', 'edit.php?post_type=audiotheme_gig' );
 	
-	$all_gigs_hook = add_menu_page( $gig_object->labels->name, $gig_object->labels->menu_name, 'edit_posts', 'gigs', 'audiotheme_all_gigs_screen', NULL, 512 );
+	$all_gigs_hook = add_menu_page( $gig_object->labels->name, $gig_object->labels->menu_name, 'edit_posts', 'gigs', 'audiotheme_all_gigs_screen', null, 512 );
 		add_submenu_page( 'gigs', $gig_object->labels->name, $gig_object->labels->all_items, 'edit_posts', 'gigs', 'audiotheme_all_gigs_screen' );
 		$edit_gig_hook = add_submenu_page( 'gigs', $gig_object->labels->add_new_item, $gig_object->labels->add_new_item, 'edit_posts', 'post-new.php?post_type=audiotheme_gig' );
 		$all_venues_hook = add_submenu_page( 'gigs', $venue_object->labels->name, $venue_object->labels->menu_name, 'edit_posts', 'venues', 'audiotheme_all_venues_screen' );
@@ -41,12 +41,6 @@ function audiotheme_gigs_admin_menu() {
 	add_action( 'load-' . $edit_gig_hook, 'audiotheme_edit_gig_screen_setup' );
 	add_action( 'load-' . $all_venues_hook, 'audiotheme_all_venues_screen_setup' );
 	add_action( 'load-' . $edit_venue_hook, 'audiotheme_edit_venue_screen_setup' );
-	
-	/*$current_page_hook = get_plugin_page_hook( $plugin_page, $pagenow );
-	if ( $current_page_hook == $all_hook ) {
-		wp_enqueue_script( 'jquery-ui-autocomplete' );
-		wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
-	}*/
 }
 
 function audiotheme_gigs_screen_options( $return, $option, $value ) {
@@ -92,22 +86,20 @@ function audiotheme_all_gigs_screen_setup() {
 	$title = $post_type_object->labels->name;
 	add_screen_option( 'per_page', array( 'label' => $title, 'default' => 20 ) );
 	
-	
 	require_once( AUDIOTHEME_DIR . 'gigs/admin/includes/class-audiotheme-gigs-list-table.php' );
 	
-	$gigs_list_table = new AudioTheme_Gigs_List_Table();
+	$gigs_list_table = new Audiotheme_Gigs_List_Table();
 	$gigs_list_table->process_actions();
 }
 
 function audiotheme_all_gigs_screen() {
 	$post_type_object = get_post_type_object( 'audiotheme_gig' );
 	
-	$gigs_list_table = new AudioTheme_Gigs_List_Table();
+	$gigs_list_table = new Audiotheme_Gigs_List_Table();
 	$gigs_list_table->prepare_items();
 	
 	require( AUDIOTHEME_DIR . 'gigs/admin/views/list-gigs.php' );
 }
-
 
 /**
  * Add New & Edit Screen
@@ -178,7 +170,6 @@ function audiotheme_gig_tickets_meta_box( $post ) {
 	</p>
 	<?php
 }
-
 
 /**
  * Update Venue Gig Count on Gig Delete
@@ -291,7 +282,6 @@ function audiotheme_gigs_rewrite_base_settings_field() {
 	<span class="description"><?php _e( 'Default is <code>shows</code>.', 'audiotheme-i18n' ); ?></span>
 	<?php
 }
-
 
 /**
  * Gig Archive Nav Menu Item
