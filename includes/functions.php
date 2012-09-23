@@ -14,7 +14,7 @@ function sort_objects( $objects, $orderby, $order = 'ASC', $unique = true, $fall
 		return false;
 	}
 	
-	usort( $objects, array( new Sort_Objects( $orderby, $order, $fallback ), 'sort' ) );
+	usort( $objects, array( new Audiotheme_Sort_Objects( $orderby, $order, $fallback ), 'sort' ) );
 	
 	// Use object ids as the array keys
 	if ( $unique && count( $objects ) && isset( $objects[0]->ID ) ) {

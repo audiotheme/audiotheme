@@ -61,17 +61,19 @@ require( AUDIOTHEME_DIR . 'videos/videos.php' );
  * @since 1.0.0
  */
 function audiotheme_setup() {
-	/* Default Filters */
+	// Default filters
 	add_filter( 'nav_menu_css_class', 'audiotheme_nav_menu_name_class', 1, 2 );
 	add_filter( 'get_pages', 'audiotheme_page_list' );
 	add_filter( 'page_css_class', 'audiotheme_page_list_classes', 10, 2 );
 	add_filter( 'dynamic_sidebar_params', 'audiotheme_widget_count_class' );
-	add_filter( 'embed_oembed_html', 'audiotheme_oembed_html', 10, 4 );
-	add_filter( 'embed_handler_html', 'audiotheme_oembed_html', 10, 4 );
-
+	
 	if ( ! is_admin() ) {
 		add_filter( 'wp_get_nav_menu_items', 'audiotheme_nav_menu_classes', 1, 3 );
 	}
+	
+	// Media filters
+	add_filter( 'embed_oembed_html', 'audiotheme_oembed_html', 10, 4 );
+	add_filter( 'embed_handler_html', 'audiotheme_oembed_html', 10, 4 );
 	
 	add_action( 'init', 'audiotheme_register_scripts' );
 	add_action( 'widgets_init', 'audiotheme_widgets_init' );
