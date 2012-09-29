@@ -315,13 +315,15 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
  */
 function audiotheme_admin_spinner( $args = array() ) {
 	$args = wp_parse_args( $args, array(
-		'id' => ''
+		'id' => '',
+		'class' => 'ajax-loading'
 	) );
 	
 	if ( version_compare( get_bloginfo( 'version' ), '3.5-beta-1', '<' ) ) {
-		printf( '<img src="%s" class="ajax-loading" id="%s" alt="">',
+		printf( '<img src="%1$s" id="%2$s" class="%3$s" alt="">',
 			esc_url( admin_url( 'images/wpspin_light.gif' ) ),
-			esc_attr( $args['id'] )
+			esc_attr( $args['id'] ),
+			esc_attr( $args['class'] )
 		);
 	} else {
 		echo '<span class="spinner"></span>';

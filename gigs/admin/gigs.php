@@ -105,8 +105,6 @@ function audiotheme_all_gigs_screen() {
  * Add New & Edit Screen
  */
 function audiotheme_edit_gig_meta_boxes( $post ) {
-	wp_dequeue_script( 'autosave' );
-	
 	wp_enqueue_script( 'jquery-ui-autocomplete' );
 	wp_enqueue_script( 'jquery-ui-datepicker' );
 	wp_enqueue_script( 'jquery-ui-timepicker', AUDIOTHEME_URI . 'includes/js/jquery.timepicker.js', array( 'jquery' ) );

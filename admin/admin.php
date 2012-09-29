@@ -212,8 +212,9 @@ function audiotheme_nav_menu_item_link_meta_box( $object, $box ) {
 
 		<p class="button-controls">
 			<span class="add-to-menu">
-				<img class="waiting" src="<?php echo esc_url( admin_url( 'images/wpspin_light.gif' ) ); ?>" alt="" />
-				<input type="submit"<?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu" value="<?php esc_attr_e( 'Add to Menu' ); ?>" name="add-post-type-menu-item" id="submit-posttype-<?php echo $post_type_name; ?>">
+				
+				<input type="submit"<?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e( 'Add to Menu' ); ?>" name="add-post-type-menu-item" id="submit-posttype-<?php echo $post_type_name; ?>">
+				<?php audiotheme_admin_spinner( array( 'class' => 'waiting' ) ); ?>
 			</span>
 		</p>
 

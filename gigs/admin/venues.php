@@ -132,7 +132,7 @@ function audiotheme_edit_venue_submit_meta_box( $post ) {
 			<?php endif; ?>
 			
 			<div id="publishing-action">
-				<img src="<?php echo esc_url( admin_url( 'images/wpspin_light.gif' ) ); ?>" class="ajax-loading" id="ajax-loading" alt="">
+				<?php audiotheme_admin_spinner( array( 'id' => 'ajax-loading' ) ); ?>
 				<?php
 				if ( ! in_array( $post->post_status, array( 'publish', 'future', 'private' ) ) || 0 == $post->ID ) {
 					?>
@@ -142,13 +142,32 @@ function audiotheme_edit_venue_submit_meta_box( $post ) {
 				} else {
 					?>
 					<input type="hidden" name="original_publish" id="original_publish" value="<?php esc_attr_e( 'Update' ) ?>">
-					<input type="submit" name="save" id="publish" class="button-primary" accesskey="p" value="<?php esc_attr_e( 'Update' ) ?>">
+					<input type="submit" name="save" id="publish" class="button-primary button-large" accesskey="p" value="<?php esc_attr_e( 'Update' ) ?>">
 				<?php } ?>
 			</div><!--end div#publishing-action-->
 			
 			<div class="clear"></div>
 		</div><!--end div#major-publishing-actions-->
 	</div><!--end div#submitpost-->
+	
+	<script type="text/javascript">
+	jQuery(function($) {
+		$('input[type="submit"], a.submitdelete').click(function(){
+			window.onbeforeunload = null;
+			$(':button, :submit', '#submitpost').each(function(){
+				var t = $(this);
+				if ( t.hasClass('button-primary') )
+					t.addClass('button-primary-disabled');
+				else
+					t.addClass('button-disabled');
+			});
+			if ( $(this).attr('id') == 'publish' )
+				$('#major-publishing-actions .spinner').show();
+			else
+				$('#minor-publishing .spinner').show();
+		});
+	});
+	</script>
 	<?php
 }
 
