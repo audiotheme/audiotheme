@@ -5,7 +5,6 @@
  * @see post_submit_meta_box()
  * 
  * @since 1.0.0
- * @todo Add an alert when deleting a post.
  * @todo "misc-pub-section-last" and "button-highlighed" classes can be removed when < 3.5 support is ended.
  */
 function audiotheme_post_submit_meta_box( $post, $metabox ) {

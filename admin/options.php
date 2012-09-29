@@ -25,6 +25,8 @@ class Audiotheme_Options {
 	
 	/**
 	 * Register Option Screens and Menu Items
+	 *
+	 * @todo http://make.wordpress.org/themes/2011/07/01/wordpress-3-2-fixing-the-edit_theme_optionsmanage_options-bug/
 	 */
 	public static function admin_menu() {
 		$options = self::get_instance();
@@ -47,7 +49,6 @@ class Audiotheme_Options {
 					add_filter( 'sanitize_option_' . $name, array( __CLASS__, 'sanitize_option' ), 10, 2 );
 				}
 				
-				// @TODO: http://make.wordpress.org/themes/2011/07/01/wordpress-3-2-fixing-the-edit_theme_optionsmanage_options-bug/
 				#add_filter( 'option_page_capability_' . $panel->option_group, array( __CLASS__, 'option_page_capability' ) );
 			}
 		}
@@ -331,7 +332,7 @@ class Audiotheme_Options {
 	 *
 	 * A panel is a custom screen consisting of tabs and sections of options.
 	 *
-	 * @TODO: finish implementing additional $args
+	 * @todo Finish implementing additional $args.
 	 */
 	public function add_panel( $panel_id, $title, $args=array() ) {
 		$default_options_id = str_replace( '-', '_', sanitize_title_with_dashes( $panel_id ) );

@@ -1,13 +1,23 @@
 <?php
-wp_oembed_add_provider( 'http://soundcloud.com/*', 'http://soundcloud.com/oembed' );
-wp_oembed_add_provider( 'http://soundcloud.com/*/*', 'http://soundcloud.com/oembed' );
-wp_oembed_add_provider( 'http://soundcloud.com/*/sets/*', 'http://soundcloud.com/oembed' );
-wp_oembed_add_provider( 'http://soundcloud.com/groups/*', 'http://soundcloud.com/oembed' );
-wp_oembed_add_provider( 'http://snd.sc/*', 'http://soundcloud.com/oembed' );
-wp_oembed_add_provider( 'http://www.rdio.com/#artist/*album/*', 'http://www.rdio.com/api/oembed/' );
-wp_oembed_add_provider( 'http://www.rdio.com/artist*/album/*', 'http://www.rdio.com/api/oembed/' );
-wp_oembed_add_provider( 'http://rd.io/*', 'http://www.rdio.com/api/oembed/' );
-
+/**
+ * Custom oEmbed Providers
+ *
+ * Post content is filtered on display, so limited services should be
+ * supported by default.
+ *
+ * @since 1.0.0
+ * @todo SoundCloud can be dropped when 3.4 support is dropped.
+ * @link http://core.trac.wordpress.org/ticket/15734
+ * @link http://core.trac.wordpress.org/ticket/21635#comment:8
+ */
+function audiotheme_add_default_oembed_providers() {
+	if ( version_compare( get_bloginfo( 'version' ), '3.5-beta-1', '<' ) )
+		wp_oembed_add_provider( '#https?://(www\.)?soundcloud\.com/.*#i', 'http://soundcloud.com/oembed', true );
+	
+	#wp_oembed_add_provider( 'http://snd.sc/*', 'http://soundcloud.com/oembed' );
+	#wp_oembed_add_provider( 'http://www.rdio.com/#artist/*album/*', 'http://www.rdio.com/api/oembed/' );
+	#wp_oembed_add_provider( 'http://rd.io/*', 'http://www.rdio.com/api/oembed/' );
+}
 
 /**
  * Filter oEmbed HTML
@@ -16,6 +26,9 @@ wp_oembed_add_provider( 'http://rd.io/*', 'http://www.rdio.com/api/oembed/' );
  * the wmode parameter to YouTube videos and flash embeds.
  *
  * @since 1.0.0
+ * @todo Remove the preg_replace_callback() when WP 3.5 support is dropped and
+ *       use the filter introduced in ticket 16996.
+ * @link http://core.trac.wordpress.org/ticket/16996
  * 
  * @return string
  */
