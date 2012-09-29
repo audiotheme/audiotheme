@@ -1,4 +1,5 @@
 <div id="gig-ui" class="audiotheme-pre-postarea">
+	<?php wp_nonce_field( 'save-gig_' . $post->ID, 'audiotheme_save_gig_nonce' ); ?>
 	<table id="gig-fields">
 		<tr>
 			<th><label for="gig-date"><?php _e( 'Date', 'audiotheme-i18n' ) ?></label></th>
@@ -18,7 +19,6 @@
 		</tr>
 		<tr>
 			<th><label for="gig-venue"><?php _e( 'Venue', 'audiotheme-i18n' ) ?></label></th>
-			<?php // TODO: consider refactoring to use a dropdown for data integrity? ?>
 			<td>
 				<div class="audiotheme-input-append">
 					<input type="text" name="gig_venue" id="gig-venue" value="<?php echo esc_html( $gig_venue ); ?>" tabindex="2"><label for="gig-venue" id="gig-venue-select" class="audiotheme-input-append-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/arrow-down.png" width="12" height="12" title="<?php esc_attr_e( 'Select Venue', 'audiotheme-i18n' ); ?>" alt="<?php esc_attr_e( 'Select Venue', 'audiotheme-i18n' ); ?>"></label>

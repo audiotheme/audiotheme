@@ -114,13 +114,13 @@ function audiotheme_video_meta_cb( $post ) {
 	$video = get_audiotheme_post_video_url( $post->ID );
 
 	// Nonce to verify intention later
-	wp_nonce_field( 'save_audiotheme_video_meta', 'audiotheme_video_nonce' );
+	wp_nonce_field( 'save-video-meta_' . $post->ID, 'audiotheme_save_video_meta_nonce' );
 	?>
 	<p>
 		<?php _e( 'Enter a video URL from one of the WordPress', 'audiotheme-i18n' ) ?> <a href="http://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F" target="_blank"><?php _e( 'supported video services.', 'audiotheme-i18n' ); ?></a>
 	</p>
 	
-	<p>
+	<p class="audiotheme-meta-field">
 		<input type="text" name="_video_url" value="<?php echo esc_url( $video ); ?>" id="audiotheme-video-url" class="widefat" placeholder="<?php _e( 'Video URL', 'audiotheme-i18n' ); ?>">
 	</p>
 	
@@ -248,16 +248,16 @@ function audiotheme_add_video_thumbnail( $attachment_id ) {
  */
 function audiotheme_video_save( $id ) {
 	// Let's not auto save the data
-	if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+	if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || wp_is_post_revision( $id ) )
 		return; 
 
 	// Check our nonce
-	if( ! isset( $_POST['audiotheme_video_nonce'] ) || ! wp_verify_nonce( $_POST['audiotheme_video_nonce'], 'save_audiotheme_video_meta' ) )
+	if( ! isset( $_POST['audiotheme_save_video_meta_nonce'] ) || ! wp_verify_nonce( $_POST['audiotheme_save_video_meta_nonce'], 'save-video-meta_' . $id ) )
 		return;
 
-	// Make sure we get a clean url here with esc_url
+	// Make sure we get a clean url here with esc_url_raw
 	if( isset( $_POST['_video_url'] ) )
-		update_post_meta( $id, '_audiotheme_video_url', esc_url( $_POST['_video_url'], array( 'http', 'https' ) ) );
+		update_post_meta( $id, '_audiotheme_video_url', esc_url_raw( $_POST['_video_url'] ) );
 }
 
 /**
@@ -269,7 +269,7 @@ function audiotheme_video_archive_menu_item( $items ) {
 	$items[] = array(
 		'title' => _x( 'Videos', 'nav menu archive label' ),
 		'post_type' => 'audiotheme_video',
-		'url'   => get_post_type_archive_link( 'audiotheme_video' )
+		'url' => get_post_type_archive_link( 'audiotheme_video' )
 	);
 	
 	return $items;

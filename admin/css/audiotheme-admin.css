@@ -19,6 +19,7 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 .audiotheme-meta-field input[type="checkbox"] + label,
 .audiotheme-meta-field input[type="radio"] + label { font-weight: normal; vertical-align: middle; }
 .audiotheme-meta-field input.widefat { margin-bottom: 3px; }
+.audiotheme-meta-field input:-moz-placeholder { color: #a9a9a9;}
 .audiotheme-meta-field-upload input.widefat { margin-bottom: 8px; }
 
 

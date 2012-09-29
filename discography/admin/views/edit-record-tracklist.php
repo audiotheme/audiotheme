@@ -78,7 +78,7 @@
 
 
 <style type="text/css">
-.meta-repeater input:-moz-placeholder { color: #aaa;}
+.meta-repeater input:-moz-placeholder { color: #a9a9a9;}
 .meta-repeater tbody tr { cursor: move; width: 100%; }
 .meta-repeater tbody tr:last-child td { border-bottom: none; }
 .meta-repeater tbody td { padding: 7px; }

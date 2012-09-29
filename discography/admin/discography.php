@@ -7,8 +7,7 @@
 add_action( 'init', 'audiotheme_load_discography_admin' );
 
 function audiotheme_load_discography_admin() {
-	// TODO: Add a nonce for security
-	if ( isset( $_POST['audiotheme_discography_rewrite_base'] ) ) {
+	if ( isset( $_POST['audiotheme_discography_rewrite_base_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_discography_rewrite_base_nonce'], 'save-discography-rewrite-base' ) ) {
 		update_option( 'audiotheme_discography_rewrite_base', $_POST['audiotheme_discography_rewrite_base'] );
 	}
 	
@@ -138,6 +137,7 @@ function audiotheme_discography_admin_init() {
  */
 function audiotheme_discography_rewrite_base_settings_field() {
 	$discography_base = get_option( 'audiotheme_discography_rewrite_base' );
+	wp_nonce_field( 'save-discography-rewrite-base', 'audiotheme_discography_rewrite_base_nonce' );
 	?>
 	<input type="text" name="audiotheme_discography_rewrite_base" id="audiotheme-discography-rewrite-base" value="<?php echo esc_attr( $discography_base ); ?>" class="regular-text code">
 	<span class="description"><?php _e( 'Default is <code>music</code>.', 'audiotheme-i18n' ); ?></span>

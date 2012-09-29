@@ -2,8 +2,7 @@
 add_action( 'init', 'audiotheme_load_gigs_admin' );
 
 function audiotheme_load_gigs_admin() {
-	// TODO: Add a nonce here for security
-	if ( isset( $_POST['audiotheme_gigs_rewrite_base'] ) ) {
+	if ( isset( $_POST['audiotheme_gigs_rewrite_base_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_gigs_rewrite_base_nonce'], 'save-gigs-rewrite-base' ) ) {
 		update_option( 'audiotheme_gigs_rewrite_base', $_POST['audiotheme_gigs_rewrite_base'] );
 	}
 	
@@ -198,9 +197,8 @@ function audiotheme_gig_save_hook( $gig_id ) {
 	if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || wp_is_post_revision( $gig_id ) )
 		return;
 	
-	// TODO: verify nonce
-	#if( ! isset( $_POST['audiotheme_gig_nonce'] ) || ! wp_verify_nonce( $_POST['audiotheme_gig_nonce'], 'save-gig-meta' ) )
-		#return;
+	if( ! isset( $_POST['audiotheme_save_gig_nonce'] ) || ! wp_verify_nonce( $_POST['audiotheme_save_gig_nonce'], 'save-gig_' . $gig_id ) )
+		return;
 	
 	if ( 'audiotheme_gig' != get_post_type( $gig_id ) )
 		return false;
@@ -209,7 +207,7 @@ function audiotheme_gig_save_hook( $gig_id ) {
 	if ( isset( $_POST['gig_date'] ) && isset( $_POST['gig_time'] ) && current_user_can( $post_type_object->cap->edit_post, $gig_id ) ) {
 		$venue = set_audiotheme_gig_venue( $gig_id, $_POST['gig_venue'] );
 		
-		// TODO: return error if invalid date
+		// @todo Return error if invalid date
 		$dt = date_parse( $_POST['gig_date'] . ' ' . $_POST['gig_time'] );
 		
 		// Date and time are always stored local to the venue
@@ -275,6 +273,7 @@ function audiotheme_gigs_admin_init() {
  */
 function audiotheme_gigs_rewrite_base_settings_field() {
 	$gigs_base = get_option( 'audiotheme_gigs_rewrite_base' );
+	wp_nonce_field( 'save-gigs-rewrite-base', 'audiotheme_gigs_rewrite_base_nonce' );
 	?>
 	<input type="text" name="audiotheme_gigs_rewrite_base" id="audiotheme-gigs-rewrite-base" value="<?php echo esc_attr( $gigs_base ); ?>" class="regular-text code">
 	<span class="description"><?php _e( 'Default is <code>shows</code>.', 'audiotheme-i18n' ); ?></span>
