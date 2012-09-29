@@ -11,7 +11,10 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 .audiotheme-field input[type="date"] { margin-bottom: 3px; width: 100%;}
 
 .audiotheme-meta-field { clear: both;  }
+/*
+@todo How does this effect < 3.5?
 .audiotheme-meta-field * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+*/
 .audiotheme-meta-field label { font-weight: bold; margin: 0 0 3px; display: inline-block; }
 .audiotheme-meta-field input[type="checkbox"] + label,
 .audiotheme-meta-field input[type="radio"] + label { font-weight: normal; vertical-align: middle; }

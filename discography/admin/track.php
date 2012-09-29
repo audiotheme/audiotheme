@@ -6,38 +6,45 @@
  * to be unique within the context of a record.
  *
  * @since 1.0.0
+ * @todo Remove the "unsuffix" code once < 3.5 is supported.
  */
-function audiotheme_track_unique_slug( $slug, $post_ID, $post_status, $post_type, $post_parent ) {
+function audiotheme_track_unique_slug( $slug, $post_ID, $post_status, $post_type, $post_parent, $original_slug = null ) {
 	global $wpdb, $wp_rewrite;
 	
 	if ( 'audiotheme_track' == $post_type ) {
+		$slug = $original_slug;
+		
 		$feeds = $wp_rewrite->feeds;
 		if ( ! is_array( $feeds ) )
 			$feeds = array();
 		
-		// Did we get suffixed?! If so, try to get the original slug
-		$suffix = end( explode( '-', $slug ) );
-		if ( is_numeric( $suffix ) && $suffix > 1 ) {
-			$old_slug = $slug;
-			$check_sql = "SELECT post_name FROM $wpdb->posts WHERE post_name=%s AND post_type=%s AND ID!=%d LIMIT 1";
-			
-			do {
-				$prev_post_name = substr( $slug, 0, ( strlen( $suffix ) + 1 ) * -1 ); // remove the suffix
-				$prev_post_name = ( 1 === --$suffix ) ? $prev_post_name : $prev_post_name . '-' . $suffix; // append the new suffix
-				$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $prev_post_name, $post_type, $post_parent, $post_ID ) );
-				if ( $post_name_check ) {
-					$old_slug = $prev_post_name; // store the match
+		// Original slug will only be populated in 3.5 or greater
+		// This conditional block can be removed when support is dropped for versions lower than 3.5
+		if ( empty( $original_slug ) ) {
+			// Did we get suffixed?! If so, try to get the original slug
+			// This should only work against the default uniqueness algorithm
+			$suffix = end( explode( '-', $slug ) );
+			if ( is_numeric( $suffix ) && $suffix > 1 ) {
+				$old_slug = $slug;
+				$check_sql = "SELECT post_name FROM $wpdb->posts WHERE post_name=%s AND post_type=%s AND ID!=%d LIMIT 1";
+				
+				do {
+					$prev_post_name = substr( $slug, 0, ( strlen( $suffix ) + 1 ) * -1 ); // remove the suffix
+					$prev_post_name = ( 1 === --$suffix ) ? $prev_post_name : $prev_post_name . '-' . $suffix; // append the new suffix
+					$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $prev_post_name, $post_type, $post_parent, $post_ID ) );
+					if ( $post_name_check ) {
+						$old_slug = $prev_post_name; // store the match
+					}
+				} while( $post_name_check && $suffix > 1 );
+				
+				// Suffixes due to $post_name_check have been removed
+				// Now we need to make sure the previous possible match wasn't suffixed due to matching a feed or filter
+				if ( in_array( $prev_post_name, $feeds ) || apply_filters( 'wp_unique_post_slug_is_bad_flat_slug', false, $prev_post_name, $post_type ) ) {
+					$old_slug = $prev_post_name;
 				}
-			} while( $post_name_check && $suffix > 1 );
-			
-			// Suffixes due to $post_name_check have been removed
-			// Now we need to make sure the previous possible match wasn't suffixed due to matching a feed or filter
-			if ( in_array( $prev_post_name, $feeds ) || apply_filters( 'wp_unique_post_slug_is_bad_flat_slug', false, $prev_post_name, $post_type ) ) {
-				$old_slug = $prev_post_name;
+				$slug = $old_slug;
 			}
-			$slug = $old_slug;
 		}
-		
 		
 		// Make sure the track slug is unique within the context of the record only
 		$check_sql = "SELECT post_name FROM $wpdb->posts WHERE post_name=%s AND post_type=%s AND post_parent=%d AND ID!=%d LIMIT 1";
@@ -295,6 +302,7 @@ function audiotheme_edit_track_meta_boxes( $post ) {
  * Track Details Meta Box
  *
  * @since 1.0.0
+ * @todo Consider appending the "Upload MP3" button to the field.
  */
 function audiotheme_track_details_meta_box( $post ) {
 	// Nonce to verify intention later
@@ -323,7 +331,13 @@ function audiotheme_track_details_meta_box( $post ) {
 		
 		$tb_url = add_query_arg( $tb_args, admin_url( 'media-upload.php' ) );
 		?>
-		<a href="<?php echo esc_url( $tb_url ); ?>" title="<?php _e( 'Choose a MP3', 'audiotheme-i18n' ); ?>" id="audiotheme-upload-mp3-button" class="button thickbox audiotheme-meta-button" data-insert-field="track-file-url" data-insert-button-text="<?php _e( 'Use MP3', 'audiotheme-i18n' ) ?>"><?php _e( 'Upload MP3', 'audiotheme-i18n' ); ?></a>
+		<a href="<?php echo esc_url( $tb_url ); ?>"
+		   title="<?php _e( 'Choose a MP3', 'audiotheme-i18n' ); ?>"
+		   id="audiotheme-upload-mp3-button"
+		   class="button thickbox audiotheme-meta-button"
+		   data-insert-field="track-file-url"
+		   data-insert-button-text="<?php _e( 'Use MP3', 'audiotheme-i18n' ) ?>"
+		   style="float: right"><?php _e( 'Upload MP3', 'audiotheme-i18n' ); ?></a>
 	</p>
 	
 	<p class="audiotheme-meta-field">

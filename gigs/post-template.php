@@ -40,7 +40,7 @@ function get_audiotheme_gig( $post = null ) {
 	}
 	
 	$post->venue = NULL;
-	if ( isset( $post->connected[0]->ID ) ) {
+	if ( isset( $post->connected[0] ) && isset( $post->connected[0]->ID ) ) {
 		$post->venue = get_audiotheme_venue( $post->connected[0]->ID );
 	} elseif ( ! isset( $post->connected ) ) {
 		$venues = get_posts( array(

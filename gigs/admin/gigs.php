@@ -207,8 +207,8 @@ function audiotheme_gig_save_hook( $gig_id ) {
 	if ( 'audiotheme_gig' != get_post_type( $gig_id ) )
 		return false;
 	
-	
-	if ( isset( $_POST['gig_date'] ) && isset( $_POST['gig_time'] ) && current_user_can( 'edit_post' ) ) {
+	$post_type_object = get_post_type_object( 'audiotheme_gig' );
+	if ( isset( $_POST['gig_date'] ) && isset( $_POST['gig_time'] ) && current_user_can( $post_type_object->cap->edit_post, $gig_id ) ) {
 		$venue = set_audiotheme_gig_venue( $gig_id, $_POST['gig_venue'] );
 		
 		// TODO: return error if invalid date

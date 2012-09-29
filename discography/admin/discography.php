@@ -35,7 +35,7 @@ function audiotheme_load_discography_admin() {
 	require( AUDIOTHEME_DIR . 'discography/admin/track.php' );
 	
 	add_action( 'save_post', 'audiotheme_track_save_hook' );
-	add_action( 'wp_unique_post_slug', 'audiotheme_track_unique_slug', 10, 5 );
+	add_action( 'wp_unique_post_slug', 'audiotheme_track_unique_slug', 10, 6 );
 	
 	// All Tracks Screen
 	add_filter( 'parse_query', 'audiotheme_tracks_admin_query' );

@@ -5,7 +5,8 @@
  * @see post_submit_meta_box()
  * 
  * @since 1.0.0
- * @todo: add alert when deleting a post
+ * @todo Add an alert when deleting a post.
+ * @todo "misc-pub-section-last" and "button-highlighed" classes can be removed when < 3.5 support is ended.
  */
 function audiotheme_post_submit_meta_box( $post, $metabox ) {
 	global $action;
@@ -32,31 +33,24 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 		
 		<div id="minor-publishing">
 		
-			<?php 
-			/**
-			 * Submit button
-			 *
-			 * Hidden submit button early on so that the browser chooses 
-			 * the right button when form is submitted with Return key 
-			 */
-			?>
+			<?php // Hidden submit button early on so that the browser chooses the right button when form is submitted with Return key ?>
 			<div style="display: none"><?php submit_button( __( 'Save', 'audiotheme-i18n' ), 'button', 'save' ); ?></div>
 			
 			
 			<?php
 			/**
 			 * Save/Preview buttons
-			 *
 			 */
 			?>
 			<div id="minor-publishing-actions">
 				<div id="save-action">
 					<?php if ( 'publish' != $post->post_status && 'future' != $post->post_status && 'pending' != $post->post_status ) { ?>
-						<input type="submit" name="save" id="save-post" value="<?php esc_attr_e('Save Draft'); ?>" tabindex="4" class="button button-highlighted" <?php if ( 'private' == $post->post_status ) { echo 'style="display: none"'; } ?>>
+						<input type="submit" name="save" id="save-post" value="<?php esc_attr_e('Save Draft'); ?>" class="button button-highlighted" <?php if ( 'private' == $post->post_status ) { echo 'style="display: none"'; } ?>>
 					<?php } elseif ( 'pending' == $post->post_status && $can_publish ) { ?>
-						<input type="submit" name="save" id="save-post" value="<?php esc_attr_e('Save as Pending'); ?>" tabindex="4" class="button button-highlighted">
+						<input type="submit" name="save" id="save-post" value="<?php esc_attr_e('Save as Pending'); ?>" class="button button-highlighted">
 					<?php } ?>
-					<img src="<?php echo esc_url( admin_url( 'images/wpspin_light.gif' ) ); ?>" class="ajax-loading" id="draft-ajax-loading" alt="">
+					
+					<?php audiotheme_admin_spinner( array( 'id' => 'draft-ajax-loading' ) ); ?>
 				</div>
 				
 				<div id="preview-action">
@@ -65,15 +59,12 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 						$preview_link = get_permalink( $post->ID );
 						$preview_button = __( 'Preview Changes', 'audiotheme-i18n' );
 					} else {
-						$preview_link = get_permalink( $post->ID );
-						if ( is_ssl() ) {
-							$preview_link = str_replace( 'http://', 'https://', $preview_link );
-						}
+						$preview_link = set_url_scheme( get_permalink( $post->ID ) );
 						$preview_link = apply_filters( 'preview_post_link', add_query_arg( 'preview', 'true', $preview_link ) );
 						$preview_button = __( 'Preview', 'audiotheme-i18n' );
 					}
 					?>
-					<a class="preview button" href="<?php echo esc_url( $preview_link ); ?>" target="wp-preview" id="post-preview" tabindex="4"><?php echo esc_html( $preview_button ); ?></a>
+					<a class="preview button" href="<?php echo esc_url( $preview_link ); ?>" target="wp-preview" id="post-preview"><?php echo esc_html( $preview_button ); ?></a>
 					<input type="hidden" name="wp-preview" id="wp-preview" value="">
 				</div>
 				
@@ -86,10 +77,8 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 				<?php
 				/**
 				 * Post status
-				 *
 				 */
 				if ( false !== $show_statuses ) : ?>
-				
 					<div class="misc-pub-section<?php if( ! $can_publish || ( ! $show_visibility && ! $show_publish_date ) ) { echo ' misc-pub-section-last'; } ?>">
 						<label for="post_status"><?php _e( 'Status:' ) ?></label>
 						<span id="post-status-display">
@@ -116,11 +105,11 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 						</span>
 						
 						<?php if ( 'publish' == $post->post_status || 'private' == $post->post_status || ( $can_publish && count( $show_statuses ) ) ) { ?>
-							<a href="#post_status" class="edit-post-status hide-if-no-js" tabindex="4" <?php if ( 'private' == $post->post_status ) { echo 'style="display: none"'; } ?>><?php _e( 'Edit', 'audiotheme-i18n' ) ?></a>
+							<a href="#post_status" class="edit-post-status hide-if-no-js" <?php if ( 'private' == $post->post_status ) { echo 'style="display: none"'; } ?>><?php _e( 'Edit', 'audiotheme-i18n' ) ?></a>
 							
 							<div id="post-status-select" class="hide-if-js">
 								<input type="hidden" name="hidden_post_status" id="hidden_post_status" value="<?php echo esc_attr( ( 'auto-draft' == $post->post_status ) ? 'draft' : $post->post_status ); ?>">
-								<select name="post_status" id="post_status" tabindex="4">
+								<select name="post_status" id="post_status">
 									<?php if ( 'publish' == $post->post_status ) : ?>
 										<option value="publish" <?php selected( $post->post_status, 'publish' ); ?>><?php _e( 'Published', 'audiotheme-i18n' ) ?></option>
 									<?php elseif ( 'private' == $post->post_status ) : ?>
@@ -153,7 +142,6 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 				<?php
 				/**
 				 * Visibility
-				 *
 				 */
 				if ( $show_visibility ) : ?>
 					<div class="misc-pub-section" id="visibility">
@@ -193,7 +181,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 								
 								<?php if ( 'post' == $post_type && current_user_can( 'edit_others_posts' ) ) : ?>
 									<span id="sticky-span">
-										<input type="checkbox" name="sticky" id="sticky" value="sticky" <?php checked( is_sticky( $post->ID ) ); ?> tabindex="4">
+										<input type="checkbox" name="sticky" id="sticky" value="sticky" <?php checked( is_sticky( $post->ID ) ); ?>>
 										<label for="sticky" class="selectit"><?php _e( 'Stick this post to the front page', 'audiotheme-i18n' ); ?></label>
 										<br>
 									</span>
@@ -253,8 +241,8 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 					if ( $can_publish ) : // Contributors don't get to choose the date of publish ?>
 						<div class="misc-pub-section curtime misc-pub-section-last">
 							<span id="timestamp"><?php printf( $stamp, $date ); ?></span>
-							<a href="#edit_timestamp" class="edit-timestamp hide-if-no-js" tabindex='4'><?php _e( 'Edit', 'audiotheme-i18n' ) ?></a>
-							<div id="timestampdiv" class="hide-if-js"><?php touch_time( ( $action == 'edit' ), 1, 4 ); ?></div>
+							<a href="#edit_timestamp" class="edit-timestamp hide-if-no-js"><?php _e( 'Edit', 'audiotheme-i18n' ) ?></a>
+							<div id="timestampdiv" class="hide-if-js"><?php touch_time( ( 'edit' == $action ), 1 ); ?></div>
 						</div>
 					<?php
 					endif;
@@ -269,7 +257,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 		
 		<div id="major-publishing-actions">
 			<?php do_action( 'post_submitbox_start' ); ?>
-			<?php #echo '<pre>'; print_r( $post ); echo '</pre>'; ?>
+			
 			<?php if ( 'auto-draft' != $post->post_status ) : ?>
 				<div id="delete-action">
 					<?php
@@ -288,25 +276,25 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 			<?php endif; ?>
 			
 			<div id="publishing-action">
-				<img src="<?php echo esc_url( admin_url( 'images/wpspin_light.gif' ) ); ?>" class="ajax-loading" id="ajax-loading" alt="">
+				<?php audiotheme_admin_spinner( array( 'id' => 'ajax-loading' ) ); ?>
 				<?php
 				if ( ! in_array( $post->post_status, array( 'publish', 'future', 'private' ) ) || 0 == $post->ID ) {
 					if ( $can_publish ) :
 						if ( ! empty( $post->post_date_gmt ) && time() < strtotime( $post->post_date_gmt . ' +0000' ) ) : ?>
 							<input type="hidden" name="original_publish" id="original_publish" value="<?php esc_attr_e( 'Schedule', 'audiotheme-i18n' ); ?>">
-							<?php submit_button( __( 'Schedule', 'audiotheme-i18n' ), 'primary', 'publish', false, array( 'tabindex' => '5', 'accesskey' => 'p' ) ); ?>
+							<?php submit_button( __( 'Schedule', 'audiotheme-i18n' ), 'primary', 'publish', false, array( 'accesskey' => 'p' ) ); ?>
 						<?php else : ?>
 							<input type="hidden" name="original_publish" id="original_publish" value="<?php esc_attr_e( 'Publish', 'audiotheme-i18n' ) ?>">
-							<?php submit_button( __( 'Publish', 'audiotheme-i18n' ), 'primary', 'publish', false, array( 'tabindex' => '5', 'accesskey' => 'p' ) ); ?>
+							<?php submit_button( __( 'Publish', 'audiotheme-i18n' ), 'primary button-large', 'publish', false, array( 'accesskey' => 'p' ) ); ?>
 						<?php endif; ?>
 					<?php else : ?>
 						<input type="hidden" name="original_publish" id="original_publish" value="<?php esc_attr_e( 'Submit for Review', 'audiotheme-i18n' ) ?>">
 						<?php
-						submit_button( __( 'Submit for Review', 'audiotheme-i18n' ), 'primary', 'publish', false, array( 'tabindex' => '5', 'accesskey' => 'p' ) );
+						submit_button( __( 'Submit for Review', 'audiotheme-i18n' ), 'primary button-large', 'publish', false, array( 'accesskey' => 'p' ) );
 					endif;
 				} else { ?>
 					<input type="hidden" name="original_publish" id="original_publish" value="<?php esc_attr_e( 'Update', 'audiotheme-i18n' ) ?>">
-					<input type="submit" name="save" id="publish" class="button-primary" tabindex="5" accesskey="p" value="<?php esc_attr_e( 'Update', 'audiotheme-i18n' ) ?>">
+					<input type="submit" name="save" id="publish" class="button-primary button-large" accesskey="p" value="<?php esc_attr_e( 'Update', 'audiotheme-i18n' ) ?>">
 				<?php } ?>
 			</div><!--end div#publishing-action-->
 			
@@ -314,5 +302,29 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 		</div><!--end div#major-publishing-actions-->
 	</div><!--end div#submitpost-->
 	<?php
+}
+
+/**
+ * Backwards compatible AJAX spinner
+ * 
+ * Displays the correct AJAX spinner depending on the version of WordPress.
+ *
+ * @since 1.0.0
+ *
+ * @param array $args Array of args to modify output.
+ */
+function audiotheme_admin_spinner( $args = array() ) {
+	$args = wp_parse_args( $args, array(
+		'id' => ''
+	) );
+	
+	if ( version_compare( get_bloginfo( 'version' ), '3.5-beta-1', '<' ) ) {
+		printf( '<img src="%s" class="ajax-loading" id="%s" alt="">',
+			esc_url( admin_url( 'images/wpspin_light.gif' ) ),
+			esc_attr( $args['id'] )
+		);
+	} else {
+		echo '<span class="spinner"></span>';
+	}
 }
 ?>

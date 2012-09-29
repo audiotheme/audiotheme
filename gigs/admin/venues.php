@@ -120,7 +120,7 @@ function audiotheme_edit_venue_submit_meta_box( $post ) {
 			<?php if ( 'auto-draft' != $post->post_status && 'draft' != $post->post_status ) : ?>
 				<div id="delete-action">
 					<?php
-					if ( current_user_can( 'delete_post', $post ) ) {
+					if ( current_user_can( $post_type_object->cap->delete_post, $post->ID ) ) {
 						$delete_args['action'] = 'delete';
 						$delete_args['venue_id'] = $post->ID;
 						$delete_url = get_audiotheme_venues_admin_url( $delete_args );

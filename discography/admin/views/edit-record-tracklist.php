@@ -81,7 +81,6 @@
 .meta-repeater input:-moz-placeholder { color: #aaa;}
 .meta-repeater tbody tr { cursor: move; width: 100%; }
 .meta-repeater tbody tr:last-child td { border-bottom: none; }
-.meta-repeater tbody tr.meta-repeater-active-item td { background: #ececec; border-top-color: #eee;}
 .meta-repeater tbody td { padding: 7px; }
 .meta-repeater tbody td.track-number { width: 2em; text-align: right; vertical-align: middle;}
 
@@ -95,10 +94,11 @@
 
 .meta-repeater .show-on-add { display: none;}
 
-.meta-repeater .ui-sortable-helper { background: #f9f9f9; border-top: 1px solid #dfdfdf; border-bottom: 1px solid #dfdfdf;}
-.meta-repeater .ui-sortable-helper td { border-top-width: 0; border-bottom-width: 0;}
-
 .meta-repeater-sort-warning td { padding: 10px; color: #ff0000; border-top: 1px solid #dfdfdf; border-bottom: none;}
+
+#record-tracklist.meta-repeater tbody tr.meta-repeater-active-item td { background: #ececec; border-top-color: #eee;}
+#record-tracklist.meta-repeater .ui-sortable-helper { background: #f9f9f9; border-top: 1px solid #dfdfdf; border-bottom: 1px solid #dfdfdf;}
+#record-tracklist.meta-repeater .ui-sortable-helper td { border-top-width: 0; border-bottom-width: 0;}
 
 #record-tracklist { margin-bottom: 20px;}
 #record-tracklist .audiotheme-input-append { overflow: hidden; width: 100%;}

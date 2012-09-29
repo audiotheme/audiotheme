@@ -7,6 +7,9 @@
 add_action( 'init', 'audiotheme_load_videos_admin' );
 
 function audiotheme_load_videos_admin() {
+	add_action( 'save_post', 'audiotheme_video_save' );
+	add_action( 'wp_ajax_audiotheme_get_video_data', 'audiotheme_get_video_data' );
+	
 	add_action( 'add_meta_boxes', 'audiotheme_video_meta_boxes' );
 	add_filter( 'post_updated_messages', 'audiotheme_video_post_updated_messages' );
 	add_filter( 'manage_edit-audiotheme_video_columns', 'audiotheme_video_columns' );
@@ -250,10 +253,6 @@ function audiotheme_video_save( $id ) {
 
 	// Check our nonce
 	if( ! isset( $_POST['audiotheme_video_nonce'] ) || ! wp_verify_nonce( $_POST['audiotheme_video_nonce'], 'save_audiotheme_video_meta' ) )
-		return;
-
-	// Make sure the current user can edit the post
-	if( !current_user_can( 'edit_post' ) )
 		return;
 
 	// Make sure we get a clean url here with esc_url

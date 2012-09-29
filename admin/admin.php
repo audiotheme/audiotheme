@@ -16,10 +16,7 @@ add_action( 'init', 'audiotheme_admin_setup' );
 
 function audiotheme_admin_setup() {
 	Audiotheme_Options::setup();
-	
-	add_action( 'save_post', 'audiotheme_video_save' );
-	add_action( 'wp_ajax_audiotheme_get_video_data', 'audiotheme_get_video_data' );
-	
+		
 	add_action( 'admin_init', 'audiotheme_register_directory_browsing_setting' );
 	add_action( 'update_option_audiotheme_disable_directory_browsing', 'audiotheme_disable_directory_browsing_option_update', 10, 2 );
 	
@@ -63,16 +60,20 @@ function audiotheme_admin_setup() {
  *
  * @since 1.0.0
  * @todo Only show if using Apache.
- * @todo Error message of .htaccess isn't writable.
+ * @todo Error message if .htaccess isn't writable.
+ * @todo Remove group comparison after < 3.5 support is dropped.
  */
 function audiotheme_register_directory_browsing_setting() {
-	register_setting( 'privacy', 'audiotheme_disable_directory_browsing' );
+	// Privacy settings group was deprecated in 3.5
+	$group = ( version_compare( get_bloginfo( 'version' ), '3.5-beta-1', '<' ) ) ? 'privacy' : 'reading';
+	
+	register_setting( $group, 'audiotheme_disable_directory_browsing' );
 	
 	add_settings_field(
 		'audiotheme_disable_directory_browsing',
 		'<label for="audiotheme-disable-directory-browsing">' . __( 'Directory Browsing', 'audiotheme-i18n' ) . '</label>',
 		'audiotheme_disable_directory_browsing_setting_field',
-		'privacy',
+		$group,
 		'default'
 	);
 }
