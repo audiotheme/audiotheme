@@ -1,6 +1,5 @@
 <?php
 class Audiotheme_Updater {
-	private static $instance;
 	private static $remote_api_url;
 	private static $request_data;
 	private static $response_key;
@@ -85,52 +84,46 @@ class Audiotheme_Updater {
 	}
 	
 	function check_for_update() {
-
 		$theme = wp_get_theme( self::$theme_slug );
 		
 		$update_data = get_transient( self::$response_key );
 		if ( false === $update_data ) {
-			$failed = false;
-			
-			$api_params = array( 
-				'edd_action' => 'get_version',
-				'license' => self::$license_key, 
-				'name' => self::$item_name,
-				'slug' => self::$theme_slug,
-				'author' => self::$author
-			);
-
-			$response = wp_remote_post( self::$remote_api_url, array( 'timeout' => 5, 'body' => $api_params ) );
-			
-			// make sure the response was successful
-			if ( is_wp_error( $response ) || 200 != wp_remote_retrieve_response_code( $response ) ) {
-				$failed = true;
+			// Don't check for an update if the license key hasn't been validated.
+			// Prevents unncessary calls to the API.
+			// @todo Update the option name if refactored.
+			if ( 'valid' == get_option( 'audiotheme_license_key_status' ) ) {
+				$api_params = array( 
+					'edd_action' => 'get_version',
+					'license' => self::$license_key, 
+					'name' => self::$item_name,
+					'slug' => self::$theme_slug,
+					'author' => self::$author
+				);
+				
+				$response = wp_remote_post( self::$remote_api_url, array( 'timeout' => 5, 'body' => $api_params ) );
+				
+				// Make sure the response was successful
+				if ( ! is_wp_error( $response ) && 200 == wp_remote_retrieve_response_code( $response ) ) {
+					$update_data = json_decode( wp_remote_retrieve_body( $response ) );
+					
+					// @todo Temporary workaround for the server not sending a URL
+					if ( ! isset( $update_data->url ) && isset( $update_data->homepage ) ) {
+						$update_data->url = $update_data->homepage;
+					}
+				}
 			}
 			
-			$update_data = json_decode( wp_remote_retrieve_body( $response ) );
-			
-			// @todo temporary workaround for the server not sending a URL
-			if ( ! isset( $update_data->url ) && isset( $update_data->homepage ) ) {
-				$update_data->url = $update_data->homepage;
-			}
-
-			if ( ! is_object( $update_data ) ) {
-				$failed = true;
-			}
-			
-			// if the response failed, try again in 30 minutes
-			if ( $failed ) {
+			// If the response failed, try again in 30 minutes
+			if ( ! isset( $update_data ) || ! is_object( $update_data ) ) {
 				$data = new stdClass;
 				$data->new_version = $theme->get( 'Version' );
 				set_transient( self::$response_key, $data, strtotime( '+30 minutes' ) );
 				return false;
 			}
 			
-			// if the status is 'ok', return the update arguments
-			if ( ! $failed ) {
-				$update_data->sections = maybe_unserialize( $update_data->sections );
-				set_transient( self::$response_key, $update_data, strtotime( '+12 hours' ) );
-			}
+			// If the response was good, cache it
+			$update_data->sections = maybe_unserialize( $update_data->sections );
+			set_transient( self::$response_key, $update_data, strtotime( '+12 hours' ) );
 		}
 		
 		if ( version_compare( $theme->get( 'Version' ), $update_data->new_version, '>=' ) ) {

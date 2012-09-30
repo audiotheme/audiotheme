@@ -52,7 +52,7 @@ function audiotheme_admin_setup() {
 			$support = get_theme_support( 'audiotheme-automatic-updates' );
 			Audiotheme_Updater::setup( $support[0] );
 			
-			add_action( 'update_option_audiotheme_options', 'audiotheme_default_options_update', 10, 2 );
+			add_action( 'pre_update_option_audiotheme_options', 'audiotheme_default_options_update', 10, 2 );
 			add_action( 'admin_init', 'audiotheme_default_options', 9 ); // Will appear before options registered in the theme
 			add_action( 'load-appearance_page_theme-options', 'audiotheme_license_status_error' );
 		}
@@ -76,25 +76,34 @@ function audiotheme_default_options() {
 /**
  * Execute additional functionality when options are updated
  *
- * Hooks into the 'update_option_{$option}' action. Will only be executed if an option value is changed.
+ * Hooks into the 'pre_update_option_{$option}' action so the license can be
+ * checked even if a field hasn't been changed.
  *
- * Currently it will activate and check license key status so visual feedback can be provided.
+ * Currently it will activate and check license key status so visual feedback
+ * can be provided.
  *
  * @since 1.0.0
  * @todo The status option should be unique per theme.
+ * @todo When a key expires, or if it's deactivated on the server, there's no
+ *       way to notify the user. The server should return the license status
+ *       with an update check.
  */
-function audiotheme_default_options_update( $oldvalue, $newvalue ) {
+function audiotheme_default_options_update( $newvalue, $oldvalue ) {
 	if ( isset( $newvalue['license_key'] ) ) {
-		if ( isset( $oldvalue['license_key'] ) && $oldvalue['license_key'] != $newvalue['license_key'] && ! empty( $newvalue['license_key'] ) ) {
+		$license_status = get_option( 'audiotheme_license_key_status' );
+		$license_key_changed = ( isset( $oldvalue['license_key'] ) && $oldvalue['license_key'] != $newvalue['license_key'] ) ? true : false;
+		
+		// Only hit the API if the license key field changed or the current license status is somehow empty
+		// If a change is made at the server level, the user would have to make a modification to their key to recognize it
+		if ( ( $license_key_changed && ! empty( $newvalue['license_key'] ) ) || empty( $license_status ) ) {
 			// Check the license to see if it's active, if not, activate it
 			$status = Audiotheme_Updater::check_license_status( $newvalue['license_key'] );
 			if ( 'invalid' == $status ) {
 				$status = Audiotheme_Updater::activate_license( $newvalue['license_key'] );
 			}
-			
 			update_option( 'audiotheme_license_key_status', $status );
-		} else {
-			delete_option( 'audiotheme_license_key_status' );
+		} elseif ( empty( $newvalue['license_key'] ) ) {
+			update_option( 'audiotheme_license_key_status', '' );
 		}
 	}
 	
@@ -110,7 +119,7 @@ function audiotheme_default_options_update( $oldvalue, $newvalue ) {
 function audiotheme_license_status_error() {
 	$license_status = get_option( 'audiotheme_license_key_status' );
 	if ( $license_status && 'valid' !== $license_status ) {
-		add_settings_error( 'audiotheme_options', 'license_key', 'Invalid license key.' );
+		add_settings_error( 'audiotheme_options', 'license_key', __( 'Invalid license key.', 'audiotheme-i18n' ) );
 	}
 }
 
