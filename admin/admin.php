@@ -31,12 +31,7 @@ function audiotheme_admin_setup() {
 	add_filter( 'custom_menu_order', '__return_true' );
 	add_filter( 'menu_order', 'audiotheme_admin_menu_order', 999 );
 	
-	if ( current_theme_supports( 'audiotheme-automatic-updates' ) ) {
-		include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater.php' );
-		$support = get_theme_support( 'audiotheme-automatic-updates' );
-		Audiotheme_Updater::setup( $support[0] );
-	}
-	
+	// @todo Consider registering the theme option name with the theme slug for uniqueness
 	if ( current_theme_supports( 'audiotheme-options' ) ) {
 		$options = Audiotheme_Options::get_instance();
 		$panel = $options->add_panel(
@@ -50,12 +45,25 @@ function audiotheme_admin_setup() {
 			)
 		);
 		
-		add_action( 'update_option_audiotheme_options', 'audiotheme_default_options_update', 10, 2 );
-		add_action( 'admin_init', 'audiotheme_default_options', 9 );
-		add_action( 'load-appearance_page_theme-options', 'audiotheme_license_status_error' );
+		// Automatic updates require support for 'audiotheme-options' to be enabled
+		// Otherwise, the license key functionality needs to be added in custom hooks
+		if ( current_theme_supports( 'audiotheme-automatic-updates' ) ) {
+			include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater.php' );
+			$support = get_theme_support( 'audiotheme-automatic-updates' );
+			Audiotheme_Updater::setup( $support[0] );
+			
+			add_action( 'update_option_audiotheme_options', 'audiotheme_default_options_update', 10, 2 );
+			add_action( 'admin_init', 'audiotheme_default_options', 9 ); // Will appear before options registered in the theme
+			add_action( 'load-appearance_page_theme-options', 'audiotheme_license_status_error' );
+		}
 	}
 }
 
+/**
+ * Register default options
+ *
+ * @since 1.0.0
+ */
 function audiotheme_default_options() {
 	$options = Audiotheme_Options::get_instance();
 	
@@ -65,6 +73,16 @@ function audiotheme_default_options() {
 		) );
 }
 
+/**
+ * Execute additional functionality when options are updated
+ *
+ * Hooks into the 'update_option_{$option}' action. Will only be executed if an option value is changed.
+ *
+ * Currently it will activate and check license key status so visual feedback can be provided.
+ *
+ * @since 1.0.0
+ * @todo The status option should be unique per theme.
+ */
 function audiotheme_default_options_update( $oldvalue, $newvalue ) {
 	if ( isset( $newvalue['license_key'] ) ) {
 		if ( isset( $oldvalue['license_key'] ) && $oldvalue['license_key'] != $newvalue['license_key'] && ! empty( $newvalue['license_key'] ) ) {
@@ -83,6 +101,12 @@ function audiotheme_default_options_update( $oldvalue, $newvalue ) {
 	return $newvalue;
 }
 
+/**
+ * Show an error on the default theme options if the license key is invalid.
+ *
+ * @since 1.0.0
+ * @todo Update the option name if refactored.
+ */
 function audiotheme_license_status_error() {
 	$license_status = get_option( 'audiotheme_license_key_status' );
 	if ( $license_status && 'valid' !== $license_status ) {
