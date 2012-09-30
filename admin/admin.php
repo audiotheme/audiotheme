@@ -31,6 +31,12 @@ function audiotheme_admin_setup() {
 	add_filter( 'custom_menu_order', '__return_true' );
 	add_filter( 'menu_order', 'audiotheme_admin_menu_order', 999 );
 	
+	if ( current_theme_supports( 'audiotheme-automatic-updates' ) ) {
+		include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater.php' );
+		$support = get_theme_support( 'audiotheme-automatic-updates' );
+		Audiotheme_Updater::setup( $support[0] );
+	}
+	
 	if ( current_theme_supports( 'audiotheme-options' ) ) {
 		$options = Audiotheme_Options::get_instance();
 		$panel = $options->add_panel(
@@ -43,12 +49,44 @@ function audiotheme_admin_setup() {
 				'show_in_menu' => 'themes.php'
 			)
 		);
+		
+		add_action( 'update_option_audiotheme_options', 'audiotheme_default_options_update', 10, 2 );
+		add_action( 'admin_init', 'audiotheme_default_options', 9 );
+		add_action( 'load-appearance_page_theme-options', 'audiotheme_license_status_error' );
+	}
+}
+
+function audiotheme_default_options() {
+	$options = Audiotheme_Options::get_instance();
+	
+	$section = $options->add_section( 'general', 'General Settings', '' );
+		$options->add_field( 'text', 'license_key', __( 'License Key', 'audiotheme-i18n' ), $section, array(
+			'description' => ( 'valid' == get_option( 'audiotheme_license_key_status' ) ) ? ' <span style="color: green; font-style: normal">OK</span>' : ''
+		) );
+}
+
+function audiotheme_default_options_update( $oldvalue, $newvalue ) {
+	if ( isset( $newvalue['license_key'] ) ) {
+		if ( isset( $oldvalue['license_key'] ) && $oldvalue['license_key'] != $newvalue['license_key'] && ! empty( $newvalue['license_key'] ) ) {
+			// Check the license to see if it's active, if not, activate it
+			$status = Audiotheme_Updater::check_license_status( $newvalue['license_key'] );
+			if ( 'invalid' == $status ) {
+				$status = Audiotheme_Updater::activate_license( $newvalue['license_key'] );
+			}
+			
+			update_option( 'audiotheme_license_key_status', $status );
+		} else {
+			delete_option( 'audiotheme_license_key_status' );
+		}
 	}
 	
-	if ( current_theme_supports( 'audiotheme-automatic-updates' ) ) {
-		include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-upgrader.php' );
-		$support = get_theme_support( 'audiotheme-automatic-updates' );
-		new Audiotheme_Upgrader( $support[0] );
+	return $newvalue;
+}
+
+function audiotheme_license_status_error() {
+	$license_status = get_option( 'audiotheme_license_key_status' );
+	if ( $license_status && 'valid' !== $license_status ) {
+		add_settings_error( 'audiotheme_options', 'license_key', 'Invalid license key.' );
 	}
 }
 

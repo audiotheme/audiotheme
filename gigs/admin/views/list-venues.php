@@ -76,7 +76,6 @@ jQuery(function($) {
 							timezone: item.timezone.timeZoneId
 						}
 					}));
-					console.log(data);
 				}
 			});
 		},

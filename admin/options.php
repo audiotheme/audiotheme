@@ -215,7 +215,7 @@ class Audiotheme_Options {
 	 * if any sanitization or validation routines have been registered for the
 	 * field, and if so, calls them and adds any resulting errors.
 	 *
-	 * If an field fails a validation routine, this function attempts to
+	 * If a field fails a validation routine, this function attempts to
 	 * revert to the old value, otherwise, it discards the new value.
 	 */
 	public static function sanitize_option( $value, $option ) {
@@ -248,7 +248,7 @@ class Audiotheme_Options {
 	}
 	
 	/**
-	 * Run Field Sanitization Callbacks
+	 * Execute Field Sanitization Callbacks
 	 *
 	 * Looks for registered sanitization callbacks for a field and runs them.
 	 * Sanitization callbacks must return a value.
@@ -281,7 +281,7 @@ class Audiotheme_Options {
 	}
 	
 	/**
-	 * Run Field Validation Callbacks
+	 * Execute Field Validation Callbacks
 	 *
 	 * Looks for registered validation callbacks for a field and runs them.
 	 * Validation callbacks should return true, false, or a WP_Error object.
