@@ -152,12 +152,15 @@ function audiotheme_video_after_title() {
 	?>
 	<div class="audiotheme-edit-after-title" style="position: relative">
 		<p>
-			<label for="audiotheme-video-url" class="screen-reader-text">Video URL:</label>
+			<label for="audiotheme-video-url" class="screen-reader-text"><?php _e( 'Video URL:', 'audiotheme-i18n' ); ?></label>
 			<input type="text" name="_video_url" id="audiotheme-video-url" value="<?php echo esc_url( $video ); ?>" placeholder="<?php esc_attr_e( 'Video URL', 'audiotheme-i18n' ); ?>" class="widefat"><br>
 			
 			<span class="description">
-				Enter a video URL from one of the
-				<a href="http://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F" target="_blank">supported video services</a>.
+				<?php
+				printf( __( 'Enter a video URL from one of the %s.', 'audiotheme-i18n' ),
+					'<a href="http://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F" target="_blank">' . __( 'supported video services', 'audiotheme-i18n' ) . '</a>'
+				);
+				?>
 			</span>
 		</p>
 		
@@ -166,7 +169,7 @@ function audiotheme_video_after_title() {
 			if( $video ) {
 				echo get_the_audiotheme_post_video( $post->ID, array( 'width' => 600 ) );
 			} else {
-				echo 'Save the video after entering a URL to preview it.';
+				_e( 'Save the video after entering a URL to preview it.', 'audiotheme-i18n' );
 			}
 			?>
 		</div>
