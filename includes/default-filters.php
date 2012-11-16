@@ -1,6 +1,14 @@
 <?php
 /**
- * Nav Menu Item Classes
+ * Defines default filters for modifying WordPress behavior.
+ *
+ * Not all of the default hooks are found in this file.
+ *
+ * @package AudioTheme_Framework
+ */
+
+/**
+ * Add helpful nav menu item classes.
  *
  * Adds class hooks to various nav menu items since child pseudo selectors
  * aren't supported in all browsers.
@@ -25,7 +33,7 @@ function audiotheme_nav_menu_classes( $items, $menu, $args ) {
 			$classes['last-child-items'][ $item->menu_item_parent ] = $key;
 		}
 		
-		// Add 'current-menu-parent' class to CPT archive links when viewing a singular template
+		// Add 'current-menu-parent' class to CPT archive links when viewing a singular template.
 		if ( $is_audiotheme_post_type && $post_type_archive_link == $item->url ) {
 			$items[ $key ]->classes[] = 'current-menu-parent';
 		}
@@ -44,10 +52,10 @@ function audiotheme_nav_menu_classes( $items, $menu, $args ) {
 }
 
 /**
- * Nav Menu Item Title Class
+ * Add class to nav menu items based on their title.
  *
- * Adds a class to a nav menu item generated from the item's title.
- * Allows for targeting individual items by name.
+ * Adds a class to a nav menu item generated from the item's title, so
+ * individual items can be targeted by name.
  *
  * @since 1.0.0
  */
@@ -58,12 +66,13 @@ function audiotheme_nav_menu_name_class( $classes, $item ) {
 }
 
 /**
- * Page List Class Helper
+ * Page list class helper.
  *
- * Stores information about the order of pages in a global variable to be accessed
- * by audiotheme_page_list_classes().
+ * Stores information about the order of pages in a global variable to be
+ * accessed by audiotheme_page_list_classes().
  *
  * @since 1.0.0
+ * @see audiotheme_page_list_classes()
  */
 function audiotheme_page_list( $pages ) {
 	global $audiotheme_page_depth_classes;
@@ -88,7 +97,7 @@ function audiotheme_page_list( $pages ) {
 }
 
 /**
- * Page List Item Classes
+ * Add classes to items in a page list.
  *
  * Adds a classes to items in wp_list_pages(), which serves as a fallback
  * when nav menus haven't been assigned. Mimics the classes added to nav menus
@@ -111,10 +120,10 @@ function audiotheme_page_list_classes( $class, $page ) {
 }
 
 /**
- * Nav Menu Item Title Class
+ * Add widget count classes so they can be targeted based on their position.
  *
- * Adds a class to widgets containing it's position in the sidebar it belongs to
- * and adds a special class to the last widget.
+ * Adds a class to widgets containing it's position in the sidebar it belongs
+ * to and adds a special class to the last widget.
  *
  * @since 1.0.0
  */

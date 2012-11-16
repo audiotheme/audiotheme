@@ -1,14 +1,27 @@
 <?php
 /**
- * Videos Init
+ * Set up video-related functionality in the AudioTheme framework.
  *
- * @since 1.0.0
+ * @package AudioTheme_Framework
+ * @subpackage Videos
+ */
+
+/**
+ * Load videos on init.
  */
 add_action( 'init', 'audiotheme_videos_init' );
 
+/**
+ * Register video post type and taxonomy and attach hooks to load related
+ * functionality.
+ *
+ * @since 1.0.0
+ * @uses register_post_type()
+ * @uses register_taxonomy()
+ */
 function audiotheme_videos_init() {
+	// Register the video custom post type.
 	register_post_type( 'audiotheme_video', array(
-		'capability_type'        => 'post',
 		'has_archive'            => true,
 		'hierarchical'           => false,
 		'labels'                 => array(
@@ -22,11 +35,14 @@ function audiotheme_videos_init() {
 			'search_items'       => __( 'Search Videos', 'audiotheme-i18n' ),
 			'not_found'          => __( 'No videos found', 'audiotheme-i18n' ),
 			'not_found_in_trash' => __( 'No videos found in Trash', 'audiotheme-i18n' ),
-			'all_items'          => __( 'Videos', 'audiotheme-i18n' )
+			'all_items'          => __( 'Videos', 'audiotheme-i18n' ),
+			'menu_name'          => __( 'Videos', 'audiotheme-i18n' ),
+			'name_admin_bar'     => _x( 'Video', 'add new on admin bar', 'audiotheme-i18n' )
 		),
 		'menu_position'          => 514,
 		'public'                 => true,
 		'publicly_queryable'     => true,
+		'register_meta_box_cb'   => 'audiotheme_video_meta_boxes',
 		'rewrite'                => array( 'slug' => 'videos', 'with_front' => false ),
 		'show_ui'                => true,
 		'show_in_menu'           => true,
@@ -35,9 +51,8 @@ function audiotheme_videos_init() {
 		'taxonomies'             => array( 'post_tag' )
 	) );
 	
-	
+	// Register the video type custom taxonomy.
 	register_taxonomy( 'audiotheme_video_type', 'audiotheme_video', array(
-		'args'                           => array( 'orderby' => 'term_order' ),
 		'hierarchical'                   => true,
 		'labels'                         => array(
 			'name'                       => _x( 'Video Types', 'taxonomy general name', 'audiotheme-i18n' ),
@@ -54,24 +69,27 @@ function audiotheme_videos_init() {
 			'new_item_name'              => __( 'New Video Type Name', 'audiotheme-i18n' ),
 			'separate_items_with_commas' => __( 'Separate video types with commas', 'audiotheme-i18n' ),
 			'add_or_remove_items'        => __( 'Add or remove video types', 'audiotheme-i18n' ),
-			'choose_from_most_used'      => __( 'Choose from most used video types', 'audiotheme-i18n' )
+			'choose_from_most_used'      => __( 'Choose from most used video types', 'audiotheme-i18n' ),
+			'menu_name'                  => __( 'Video Types', 'audiotheme-i18n' ),
 		),
 		'public'                         => true,
 		'query_var'                      => true,
 		'rewrite'                        => array( 'slug' => 'videos/type', 'with_front' => false ),
+		'show_admin_column'              => false,
+		'show_in_nav_menus'              => false,
 		'show_ui'                        => true,
-		'show_in_nav_menus'              => false
+		'show_tagcloud'                  => false
 	) );
 }
 
-
 /**
- * Video Includes
- *
- * @since 1.0.0
+ * Load the video template API.
  */
 require( AUDIOTHEME_DIR . 'videos/post-template.php' );
 
+/**
+ * Load the admin interface elements and functionality for videos.
+ */
 if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'videos/admin/videos.php' );
 }

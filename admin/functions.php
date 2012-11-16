@@ -309,23 +309,32 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
  * Displays the correct AJAX spinner depending on the version of WordPress.
  *
  * @since 1.0.0
+ * @todo Most styles and scripts will need similar classes. Use spinner?
  *
  * @param array $args Array of args to modify output.
+ * @return void|string Echoes spinner HTML or returns it.
  */
 function audiotheme_admin_spinner( $args = array() ) {
 	$args = wp_parse_args( $args, array(
 		'id' => '',
-		'class' => 'ajax-loading'
+		'class' => 'ajax-loading',
+		'echo' => true
 	) );
 	
-	if ( version_compare( get_bloginfo( 'version' ), '3.5-beta-1', '<' ) ) {
-		printf( '<img src="%1$s" id="%2$s" class="%3$s" alt="">',
+	if ( audiotheme_version_compare( 'wp', '3.5-beta-1', '<' ) ) {
+		$spinner = sprintf( '<img src="%1$s" id="%2$s" class="spinner %3$s" alt="">',
 			esc_url( admin_url( 'images/wpspin_light.gif' ) ),
 			esc_attr( $args['id'] ),
 			esc_attr( $args['class'] )
 		);
 	} else {
-		echo '<span class="spinner"></span>';
+		$spinner = sprintf( '<span id="%1$s" class="spinner"></span>', esc_attr( $args['id'] ) );
+	}
+	
+	if ( $args['echo'] ) {
+		echo $spinner;
+	} else {
+		return $spinner;
 	}
 }
 ?>

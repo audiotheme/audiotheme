@@ -1,9 +1,16 @@
 <?php
 /**
- * AudioTheme Theme Option
+ * General template tags that can go anywhere in a template.
  *
- * Function called to get a Theme Option. The returned value defaults to false
- * unless otherwise set.
+ * @package AudioTheme_Framework
+ * @subpackage Template
+ */
+
+/**
+ * Returns a theme option.
+ *
+ * Function called to get a theme option. The returned value defaults to false
+ * unless a default is passed.
  *
  * @since 1.0.0
  * 

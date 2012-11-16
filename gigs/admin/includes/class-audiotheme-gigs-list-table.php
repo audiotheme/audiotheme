@@ -119,7 +119,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 			
 			// Sort by venue
 			if ( ! empty( $_GET['orderby'] ) && 'venue' == $_GET['orderby'] ) {
-				$items = sort_objects( $items, array( 'venue', 'name' ), $args['order'], true, 'gig_datetime' );
+				$items = audiotheme_sort_objects( $items, array( 'venue', 'name' ), $args['order'], true, 'gig_datetime' );
 			}
 		}
 		$this->items = $items;
@@ -212,14 +212,12 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 	
 				$this->months_dropdown( 'audiotheme_gig' );
 				
-				
-				$sql = $wpdb->prepare( "SELECT p.ID, p.post_title
+				$venues = $wpdb->get_results( "SELECT p.ID, p.post_title
 					FROM $wpdb->posts p	
 					INNER JOIN $wpdb->p2p p2p ON p.ID=p2p.p2p_from AND p2p.p2p_type='audiotheme_venue_to_gig'
 					WHERE p.post_type='audiotheme_venue'
 					GROUP BY p.ID
 					ORDER BY p.post_title ASC" );
-				$venues = $wpdb->get_results( $sql );
 				?>
 				<select name="venue">
 					<option value="">Show all venues</option>
@@ -443,10 +441,10 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 	function months_dropdown( $post_type ) {
 		global $wpdb, $wp_locale;
 		
-		$months = $wpdb->get_results( $wpdb->prepare( "SELECT DISTINCT YEAR( meta_value ) AS year, MONTH( meta_value ) AS month
+		$months = $wpdb->get_results( "SELECT DISTINCT YEAR( meta_value ) AS year, MONTH( meta_value ) AS month
 			FROM $wpdb->posts p, $wpdb->postmeta pm
 			WHERE p.post_type='audiotheme_gig' AND p.post_status!='auto-draft' AND p.ID=pm.post_id AND pm.meta_key='_audiotheme_gig_datetime'
-			ORDER BY meta_value DESC" ) );
+			ORDER BY meta_value DESC" );
 		
 		$month_count = count( $months );
 		

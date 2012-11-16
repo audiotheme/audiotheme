@@ -1,14 +1,27 @@
 <?php
 /**
- * Gigs Init
+ * Set up gig-related functionality in the AudioTheme framework.
  *
- * @since 1.0.0
+ * @package AudioTheme_Framework
+ * @subpackage Gigs
+ */
+
+/**
+ * Load gigs on init.
  */
 add_action( 'init', 'audiotheme_gigs_init' );
 
+/**
+ * Register gig and venue post types and attach hooks to load related
+ * functionality.
+ * 
+ * @since 1.0.0
+ * @uses register_post_type()
+ */
 function audiotheme_gigs_init() {
+	// Register Gig custom post type.
 	register_post_type( 'audiotheme_gig', array(
-		'has_archive'            => get_audiotheme_gigs_rewrite_base(),
+		'has_archive'            => audiotheme_gigs_rewrite_base(),
 		'hierarchical'           => false,
 		'labels'                 => array(
 			'name'               => _x( 'Gigs', 'post type general name', 'audiotheme-i18n' ),
@@ -22,7 +35,8 @@ function audiotheme_gigs_init() {
 			'not_found'          => __( 'No gigs found', 'audiotheme-i18n' ),
 			'not_found_in_trash' => __( 'No gigs found in Trash', 'audiotheme-i18n' ),
 			'all_items'          => __( 'All Gigs', 'audiotheme-i18n' ),
-			'menu_name'          => __( 'Gigs', 'audiotheme-i18n' )
+			'menu_name'          => __( 'Gigs', 'audiotheme-i18n' ),
+			'name_admin_bar'     => _x( 'Gigs', 'add new on admin bar', 'audiotheme-i18n' )
 		),
 		'menu_position'          => 512,
 		'public'                 => true,
@@ -30,9 +44,10 @@ function audiotheme_gigs_init() {
 		'rewrite'                => false,
 		'show_in_menu'           => 'gigs',
 		'show_in_nav_menus'      => false,
-		'supports'               => array( 'title', 'editor', 'thumbnail', '' )
+		'supports'               => array( 'title', 'editor', 'thumbnail' )
 	) );
 	
+	// Register Venue custom post type.
 	register_post_type( 'audiotheme_venue', array(
 		'has_archive'            => false,
 		'hierarchical'           => false,
@@ -48,7 +63,8 @@ function audiotheme_gigs_init() {
 			'not_found'          => __( 'No venues found', 'audiotheme-i18n' ),
 			'not_found_in_trash' => __( 'No venues found in Trash', 'audiotheme-i18n' ),
 			'all_items'          => __( 'All Venues', 'audiotheme-i18n' ),
-			'menu_name'          => __( 'Venues', 'audiotheme-i18n' )
+			'menu_name'          => __( 'Venues', 'audiotheme-i18n' ),
+			'name_admin_bar'     => _x( 'Venues', 'add new on admin bar', 'audiotheme-i18n' )
 		),
 		'public'                 => false,
 		'publicly_queryable'     => false,
@@ -57,6 +73,7 @@ function audiotheme_gigs_init() {
 		'supports'               => array( '' )
 	) );
 	
+	// Register the relationship between gigs and venues.
 	p2p_register_connection_type( array(
         'name'        => 'audiotheme_venue_to_gig',
         'from'        => 'audiotheme_venue',
@@ -64,25 +81,35 @@ function audiotheme_gigs_init() {
 		'cardinality' => 'one-to-many'
     ) );
 	
+	// Hook into rewrite generation filter and add custom rewrite rules.
 	add_filter( 'generate_rewrite_rules', 'audiotheme_gig_generate_rewrite_rules' );
+	
+	// Filter the query to make sure gigs are returned in a logical way.
 	add_action( 'pre_get_posts', 'audiotheme_gig_query' );
+
+	// Makes sure the correct template is loaded depending on the request.
 	add_action( 'template_redirect', 'audiotheme_gig_template_redirect' );
+
+	// Filter default permalinks to return the custom format.
 	add_filter( 'post_type_link', 'audiotheme_gig_permalink', 10, 4 );
 	add_filter( 'post_type_archive_link', 'audiotheme_gigs_archive_link', 10, 2 );
 }
 
 /**
- * Get Gigs Rewrite Base
+ * Get the gigs rewrite base.
+ *
+ * The rewrite base can be set on the Permalinks settings page within the
+ * dashboard. If it's left empty, it will default to 'shows'.
  *
  * @since 1.0.0
  */
-function get_audiotheme_gigs_rewrite_base() {
+function audiotheme_gigs_rewrite_base() {
 	$base = get_option( 'audiotheme_gigs_rewrite_base' );
 	return ( empty( $base ) ) ? 'shows' : $base;
 }
 
 /**
- * Add Gig Rewrite Rules
+ * Add custom gig rewrite rules.
  *
  * /base/YYYY/MM/DD/(feed|ical|json)/
  * /base/YYYY/MM/DD/
@@ -94,17 +121,19 @@ function get_audiotheme_gigs_rewrite_base() {
  * /base/%postname%/
  * /base/
  *
- * @todo
- *     /base/tour/%tourname%/
- *     /base/past/page/2/
- *     /base/past/
- *     /base/YYYY/page/2/
- *     etc.
+ * @todo /base/tour/%tourname%/
+ *       /base/past/page/2/
+ *       /base/past/
+ *       /base/YYYY/page/2/
+ *       etc.
  *
  * @since 1.0.0
+ * @see audiotheme_gigs_rewrite_base()
+ *
+ * @param object $wp_rewrite The main rewrite object. Passed by reference.
  */
 function audiotheme_gig_generate_rewrite_rules( $wp_rewrite ) {
-	$base = get_audiotheme_gigs_rewrite_base();
+	$base = audiotheme_gigs_rewrite_base();
 	
 	$new_rules[ $base . '/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/(feed|ical|json)/?$' ] = 'index.php?post_type=audiotheme_gig&year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]';
 	$new_rules[ $base . '/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/?$' ] = 'index.php?post_type=audiotheme_gig&year=$matches[1]&monthnum=$matches[2]&day=$matches[3]';
@@ -119,14 +148,20 @@ function audiotheme_gig_generate_rewrite_rules( $wp_rewrite ) {
 }
 
 /**
- * Filter Gigs Requests
+ * Filter gigs requests.
+ *
+ * Automatically sorts gigs in ascending order by the gig date, but limits to
+ * showing upcoming gigs unless a specific date range is requested (year,
+ * month, day).
  *
  * @since 1.0.0
+ * 
+ * @param object $query The main WP_Query object. Passed by reference.
  */
 function audiotheme_gig_query( $query ) {
-	// Sort records by release year
 	$orderby = $query->get( 'orderby' );
-	if ( $query->is_main_query() && is_post_type_archive( 'audiotheme_gig' ) && empty( $orderby ) && ! is_admin() ) {
+	
+	if ( ! is_admin() && $query->is_main_query() && empty( $orderby ) && is_post_type_archive( 'audiotheme_gig' ) ) {
 		$query->set( 'meta_key', '_audiotheme_gig_datetime' );
 		$query->set( 'orderby', 'meta_value' );
 		$query->set( 'order', 'asc' );
@@ -165,7 +200,7 @@ function audiotheme_gig_query( $query ) {
 				$query->set( 'year', null );
 			}
 		} else {
-			// Only show upcoming gigs
+			// Only show upcoming gigs.
 			$meta_query[] = array(
 				'key' => '_audiotheme_gig_datetime',
 				'value' => current_time( 'mysql' ),
@@ -181,12 +216,14 @@ function audiotheme_gig_query( $query ) {
 }
 
 /**
- * Gig feeds and connections
+ * Gig feeds and venue connections.
  *
- * Caches gig-venue connections and reroutes feed requests to
+ * Caches gig->venue connections and reroutes feed requests to
  * the appropriate template for processing.
  *
  * @since 1.0.0
+ * @uses $wp_query
+ * @uses p2p_type()->each_connected()
  */
 function audiotheme_gig_template_redirect() {
 	global $wp_query;
@@ -212,7 +249,7 @@ function audiotheme_gig_template_redirect() {
 				load_template( AUDIOTHEME_DIR . 'gigs/feed-json.php' );
 				break;
 			default:
-				$message = sprintf( __( 'ERROR: %s is not a valid feed template.' ), esc_html( $type ) );
+				$message = sprintf( __( 'ERROR: %s is not a valid feed template.', 'audiotheme-i18n' ), esc_html( $type ) );
 				wp_die( $message, '', array( 'response' => 404 ) );
 		}
 		exit;
@@ -220,16 +257,27 @@ function audiotheme_gig_template_redirect() {
 }
 
 /**
- * Gig Permalinks
+ * Filter gig permalinks to match the custom rewrite rules.
+ *
+ * Allows the standard WordPress API function get_permalink() to return the
+ * correct URL when used with a gig post type.
  *
  * @since 1.0.0
+ * @see get_post_permalink()
+ * @see audiotheme_gigs_rewrite_base()
+ *
+ * @param string $post_link The default gig URL.
+ * @param object $post_link The gig to get the permalink for.
+ * @param bool $leavename Whether to keep the post name.
+ * @param bool $sample Is it a sample permalink.
+ * @return string The gig permalink.
  */
 function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
 	if ( ! empty( $post->post_name ) ) {
 		$permalink = get_option( 'permalink_structure' );
 		
 		if ( ! empty( $permalink ) && 'audiotheme_gig' == get_post_type( $post ) ) {
-			$base = get_audiotheme_gigs_rewrite_base();
+			$base = audiotheme_gigs_rewrite_base();
 			$slug = ( $leavename ) ? '%postname%' : $post->post_name;
 			
 			$post_link = home_url( sprintf( '/%s/%s/', $base, $slug ) );
@@ -239,10 +287,19 @@ function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
 	return $post_link;
 }
 
+/**
+ * Retrieve the permalink for the gigs archive.
+ *
+ * @since 1.0.0
+ * @uses audiotheme_gigs_rewrite_base()
+ * 
+ * @param string $link The default archive URL.
+ * @param string $post_type Post type.
+ * @return string The gig archive URL.
+ */
 function audiotheme_gigs_archive_link( $link, $post_type ) {
-	$permalink = get_option( 'permalink_structure' );
-	if ( ! empty( $permalink ) && 'audiotheme_gig' == $post_type ) {
-		$base = get_audiotheme_gigs_rewrite_base();
+	if ( 'audiotheme_gig' == $post_type && get_option( 'permalink_structure' ) ) {
+		$base = audiotheme_gigs_rewrite_base();
 		$link = home_url( '/' . $base . '/' );
 	}
 	
@@ -250,12 +307,13 @@ function audiotheme_gigs_archive_link( $link, $post_type ) {
 }
 
 /**
- * Gig Includes
- *
- * @since 1.0.0
+ * Load the gig template API.
  */
 require( AUDIOTHEME_DIR . 'gigs/post-template.php' );
 
+/**
+ * Load the admin interface and functionality for gigs and venues.
+ */
 if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'gigs/admin/gigs.php' );
 	require( AUDIOTHEME_DIR . 'gigs/admin/venues.php' );

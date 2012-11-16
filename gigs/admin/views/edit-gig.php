@@ -1,4 +1,4 @@
-<div id="gig-ui" class="audiotheme-pre-postarea">
+<div id="gig-ui" class="audiotheme-edit-after-title">
 	<?php wp_nonce_field( 'save-gig_' . $post->ID, 'audiotheme_save_gig_nonce' ); ?>
 	<table id="gig-fields">
 		<tr>

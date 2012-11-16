@@ -9,7 +9,7 @@ class Audiotheme_Updater {
 	private static $version;
 	private static $author;
 	
-	function setup( $args = array() ) {
+	public static function setup( $args = array() ) {
 		$theme_slug = ( isset( $args['theme_slug'] ) && ! empty( $args['theme_slug'] ) ) ? $args['theme_slug'] : get_template();
 		$theme = wp_get_theme( $theme_slug );
 		
@@ -39,12 +39,12 @@ class Audiotheme_Updater {
 		add_action( 'load-themes.php', array( __CLASS__, 'load_themes_screen' ) );
 	}
 	
-	function load_themes_screen() {
+	public static function load_themes_screen() {
 		add_thickbox();
 		add_action( 'admin_notices', array( __CLASS__, 'update_nag' ) );
 	}
 	
-	function update_nag() {
+	public static function update_nag() {
 		$theme = wp_get_theme( self::$theme_slug );
 		
 		$api_response = get_transient( self::$response_key );
@@ -71,7 +71,7 @@ class Audiotheme_Updater {
 		}
 	}
 	
-	function theme_update_transient( $value ) {
+	public static function theme_update_transient( $value ) {
 		$update_data = self::check_for_update();
 		if ( $update_data ) {
 			$value->response[ self::$theme_slug ] = $update_data;
@@ -79,11 +79,11 @@ class Audiotheme_Updater {
 		return $value;
 	}
 	
-	function delete_theme_update_transient() {
+	public static function delete_theme_update_transient() {
 		delete_transient( self::$response_key );
 	}
 	
-	function check_for_update() {
+	public static function check_for_update() {
 		$theme = wp_get_theme( self::$theme_slug );
 		
 		$update_data = get_transient( self::$response_key );
@@ -133,7 +133,7 @@ class Audiotheme_Updater {
 		return (array) $update_data;
 	}
 	
-	function activate_license( $license ) {
+	public static function activate_license( $license ) {
 		$api_params = array( 
 			'edd_action' => 'activate_license', 
 			'license' => $license,
@@ -149,7 +149,7 @@ class Audiotheme_Updater {
 		return $license_data->license;
 	}
 	
-	function check_license_status( $license ) {
+	public static function check_license_status( $license ) {
 		$api_params = array( 
 			'edd_action' => 'check_license', 
 			'license' => $license,

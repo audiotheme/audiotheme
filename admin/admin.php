@@ -31,6 +31,9 @@ function audiotheme_admin_setup() {
 	add_filter( 'custom_menu_order', '__return_true' );
 	add_filter( 'menu_order', 'audiotheme_admin_menu_order', 999 );
 	
+	// Fires new action hooks in older versions for backwards compatibility.
+	add_action( 'edit_form_advanced', 'audiotheme_edit_form_compat_actions' );
+	
 	// @todo Consider registering the theme option name with the theme slug for uniqueness
 	if ( current_theme_supports( 'audiotheme-options' ) ) {
 		$options = Audiotheme_Options::get_instance();
@@ -136,7 +139,7 @@ function audiotheme_license_status_error() {
  */
 function audiotheme_register_directory_browsing_setting() {
 	// Privacy settings group was deprecated in 3.5
-	$group = ( version_compare( get_bloginfo( 'version' ), '3.5-beta-1', '<' ) ) ? 'privacy' : 'reading';
+	$group = ( audiotheme_version_compare( 'wp', '3.5-beta-1', '<' ) ) ? 'privacy' : 'reading';
 	
 	register_setting( $group, 'audiotheme_disable_directory_browsing' );
 	
@@ -272,7 +275,7 @@ function audiotheme_nav_menu_item_link_meta_box( $object, $box ) {
 						);
 					}
 					
-					$items = sort_objects( $items, 'post_title', 'asc', false );
+					$items = audiotheme_sort_objects( $items, 'post_title', 'asc', false );
 				}
 				
 				$args['walker'] = new Walker_Nav_Menu_Checklist( false );

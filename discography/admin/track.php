@@ -260,7 +260,7 @@ function audiotheme_track_save_hook( $post_id ) {
 		update_post_meta( $post_id, '_audiotheme_' . $field, $value );
 	}
 	
-	$is_downloadable = ( empty( $_POST['is_downloadable'] ) ) ? NULL : 1;
+	$is_downloadable = ( empty( $_POST['is_downloadable'] ) ) ? null : 1;
 	update_post_meta( $post_id, '_audiotheme_is_downloadable', $is_downloadable );
 }
 

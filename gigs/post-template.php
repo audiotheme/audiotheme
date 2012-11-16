@@ -5,7 +5,7 @@ function get_audiotheme_gigs_url() {
 	if ( empty( $permalink ) ) {
 		$url = add_query_arg( 'post_type', 'audiotheme_gig', home_url( '/' ) );
 	} else {
-		$base = get_audiotheme_gigs_rewrite_base();
+		$base = audiotheme_gigs_rewrite_base();
 		$url = home_url( '/' . $base . '/' );
 	}
 	
@@ -39,7 +39,7 @@ function get_audiotheme_gig( $post = null ) {
 		$post->gig_time = mysql2date( get_option( 'time_format' ), $post->gig_datetime );
 	}
 	
-	$post->venue = NULL;
+	$post->venue = null;
 	if ( isset( $post->connected[0] ) && isset( $post->connected[0]->ID ) ) {
 		$post->venue = get_audiotheme_venue( $post->connected[0]->ID );
 	} elseif ( ! isset( $post->connected ) ) {

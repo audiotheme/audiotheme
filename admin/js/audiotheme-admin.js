@@ -1,6 +1,4 @@
 jQuery(function($) {
-	$('.audiotheme-pre-postarea').insertBefore('#postdivrich');
-	
 	$('.audiotheme-input-append input').on('focus', function() {
 		$(this).parent().addClass('focused');
 	}).on('blur', function() {

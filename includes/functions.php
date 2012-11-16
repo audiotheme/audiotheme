@@ -1,22 +1,77 @@
 <?php
 /**
- * Sort an Array of Objects
+ * Generic utility functions.
  *
- * Crazyness!
+ * @package AudioTheme_Framework
+ */
+
+/**
+ * Compare two version numbers.
+ *
+ * This function abstracts the logic for determining the current version
+ * number for various packages, so the only version number that needs to be
+ * known is the one to compare against.
+ * 
+ * Basically serves as a wrapper for the native PHP version_compare()
+ * function, but allows a known package to be passed as the first parameter.
+ *
+ * @since 1.0.0
+ * @see PHP docs for version_compare()
+ * @uses version_compare()
+ *
+ * @param string $version A package identifier or version number to compare against.
+ * @param string $version2 The version number to compare to.
+ * @param string $operator Optional. Relationship to test. <, lt, <=, le, >, gt, >=, ge, ==, =, eq, !=, <>, ne
+ * @return mixed True or false if operator is supplied. -1, 0, or 1 if operator is empty.
+ */
+function audiotheme_version_compare( $version, $version2, $operator = null ) {
+	switch( $version ) {
+		case 'audiotheme' :
+			$version = AUDIOTHEME_VERSION;
+			break;
+		case 'php' :
+			$version = phpversion();
+			break;
+		case 'stylesheet' : // Child theme if it exists, otherwise same as template.
+			$theme = wp_get_theme();
+			$version = $theme->get( 'Version' );
+			break;
+		case 'template' : // Parent theme.
+			$theme = wp_get_theme( get_template() );
+			$version = $theme->get( 'Version' );
+			break;
+		case 'wp' :
+			$version = get_bloginfo( 'version' );
+			break;
+	}
+	
+	return version_compare( $version, $version2, $operator );
+}
+
+/**
+ * Sort an array of objects by an objects properties.
  *
  * Ex: sort_objects( $gigs, array( 'venue', 'name' ), 'asc', true, 'gig_datetime' );
  *
  * @since 1.0.0
+ * @uses Audiotheme_Sort_Objects
+ * @todo Hasn't been tested extensively.
+ * 
+ * @param array $objects An array of objects to sort.
+ * @param string $orderby The object property to sort on.
+ * @param string $order The sort order; ASC or DESC.
+ * @param bool $unique Optional. If the objects have an ID property, it will be used for the array keys, thus they'll unique. Defaults to true.
+ * @param string $fallback Optional. Comma-delimited string of properties to sort on if $orderby property is equal.
+ * @return array The array of sorted objects.
  */
-if ( ! function_exists( 'sort_objects' ) && ! class_exists( 'Sort_Objects' ) ) :
-function sort_objects( $objects, $orderby, $order = 'ASC', $unique = true, $fallback = NULL ) {
+function audiotheme_sort_objects( $objects, $orderby, $order = 'ASC', $unique = true, $fallback = null ) {
 	if ( ! is_array( $objects ) ) {
 		return false;
 	}
 	
 	usort( $objects, array( new Audiotheme_Sort_Objects( $orderby, $order, $fallback ), 'sort' ) );
 	
-	// Use object ids as the array keys
+	// Use object ids as the array keys.
 	if ( $unique && count( $objects ) && isset( $objects[0]->ID ) ) {
 		$objects = array_combine( wp_list_pluck( $objects, 'ID' ), $objects );
 	}
@@ -24,11 +79,17 @@ function sort_objects( $objects, $orderby, $order = 'ASC', $unique = true, $fall
 	return $objects;
 }
 
+/**
+ * Object list sorting class.
+ *
+ * @since 1.0.0
+ * @access private
+ */
 class Audiotheme_Sort_Objects {
 	var $fallback, $order, $orderby;
 	
-	// Fallback is limited to working with properties of the parent object
-	function __construct( $orderby, $order, $fallback = NULL ) {
+	// Fallback is limited to working with properties of the parent object.
+	function __construct( $orderby, $order, $fallback = null ) {
 		$this->order = ( 'desc' == strtolower( $order ) ) ? 'DESC' : 'ASC';
 		$this->orderby = $orderby;
 		$this->fallback = $fallback;
@@ -47,8 +108,6 @@ class Audiotheme_Sort_Objects {
 				$b_value = ( isset( $b_value->$prop ) ) ? $b_value->$prop : '';
 			}
 		}
-		
-		#echo $a_value . ' - ' . $b_value . '<br>';
 		
 		if ( $a_value == $b_value ) {
 			if ( ! empty( $this->fallback ) ) {
@@ -76,12 +135,9 @@ class Audiotheme_Sort_Objects {
 		}
 	}
 }
-endif;
 
 /**
- * Echo a variable for debugging
- *
- * Don't want vd in production code.
+ * Display a variable for debugging.
  *
  * @since 1.0.0
  *

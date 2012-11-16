@@ -104,9 +104,9 @@ function audiotheme_all_gigs_screen() {
  * Add New & Edit Screen
  */
 function audiotheme_edit_gig_meta_boxes( $post ) {
+	wp_enqueue_script( 'jquery-timepicker' );
 	wp_enqueue_script( 'jquery-ui-autocomplete' );
 	wp_enqueue_script( 'jquery-ui-datepicker' );
-	wp_enqueue_script( 'jquery-ui-timepicker', AUDIOTHEME_URI . 'includes/js/jquery.timepicker.js', array( 'jquery' ) );
 	wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
 	
 	remove_meta_box( 'submitdiv', 'audiotheme_gig', 'side' );
@@ -119,7 +119,7 @@ function audiotheme_edit_gig_meta_boxes( $post ) {
 	
 	add_meta_box( 'audiotheme-gig-tickets', __( 'Tickets', 'audiotheme-i18n' ), 'audiotheme_gig_tickets_meta_box', 'audiotheme_gig', 'side', 'default' );
 	
-	add_action( 'edit_form_advanced', 'audiotheme_edit_gig_fields' );
+	add_action( 'edit_form_after_title', 'audiotheme_edit_gig_fields' );
 }
 
 function audiotheme_edit_gig_fields() {
