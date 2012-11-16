@@ -14,14 +14,23 @@
  * @since 1.0.0
  */
 function audiotheme_edit_form_compat_actions() {
-	// If this version of WordPress doesn't have the edit_form_after_title action,
-	// execute it in the edit_form_advanced action and move the content up using javascript.
 	if ( ! did_action( 'edit_form_after_title' ) ) {
 		do_action( 'edit_form_after_title' );
 		?>
 		<script type="text/javascript">
 		jQuery(function($) {
 			$('.audiotheme-edit-after-title').insertBefore('#postdivrich');
+		});
+		</script>
+		<?php
+	}
+	
+	if ( ! did_action( 'edit_form_after_editor' ) ) {
+		do_action( 'edit_form_after_editor' );
+		?>
+		<script type="text/javascript">
+		jQuery(function($) {
+			jQuery('.audiotheme-edit-after-editor').appendTo('#post-body-content');
 		});
 		</script>
 		<?php

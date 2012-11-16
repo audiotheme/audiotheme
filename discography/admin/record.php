@@ -236,7 +236,7 @@ function audiotheme_edit_record_meta_boxes( $post ) {
 	
 	add_meta_box( 'audiotheme-record-details', __( 'Record Details', 'audiotheme-i18n' ), 'audiotheme_record_details_meta_box', 'audiotheme_record', 'side', 'high' );
 	
-	add_action( 'edit_form_advanced', 'audiotheme_edit_record_tracklist' );
+	add_action( 'edit_form_after_editor', 'audiotheme_edit_record_tracklist' );
 	
 	wp_enqueue_script( 'jquery-ui-autocomplete' );
 }

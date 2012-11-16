@@ -1,4 +1,4 @@
-<table class="widefat meta-repeater" id="record-tracklist">
+<table id="record-tracklist" class="meta-repeater audiotheme-edit-after-editor widefat">
 	<thead>
 		<tr>
 			<th colspan="5"><?php _e( 'Tracks', 'audiotheme-i18n' ) ?></th>
@@ -100,13 +100,11 @@
 #record-tracklist.meta-repeater .ui-sortable-helper { background: #f9f9f9; border-top: 1px solid #dfdfdf; border-bottom: 1px solid #dfdfdf;}
 #record-tracklist.meta-repeater .ui-sortable-helper td { border-top-width: 0; border-bottom-width: 0;}
 
-#record-tracklist { margin-bottom: 20px;}
 #record-tracklist .audiotheme-input-append { overflow: hidden; width: 100%;}
 #record-tracklist .audiotheme-input-append input { float: left; padding-right: 34px;}
 #record-tracklist .audiotheme-input-append-trigger { float: left; margin: 0 0 0 -30px; width: 30px; height: 23px; line-height: 23px; border-left-width: 1px;}
 </style>
 
 <script type="text/javascript">
-jQuery('#record-tracklist').appendTo('#post-body-content');
 jQuery(function($) { $('#record-tracklist').metaRepeater(); });
 </script>
