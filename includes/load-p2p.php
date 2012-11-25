@@ -9,7 +9,7 @@
 /**
  * scbFramework.
  */
-require( AUDIOTHEME_DIR . 'includes/scb/load.php' );
+require( AUDIOTHEME_DIR . 'includes/lib/scb/load.php' );
 
 /**
  *
@@ -52,7 +52,7 @@ function audiotheme_p2p_load_core() {
 	);
 	
 	foreach ( $p2p_files as $file ) {
-		require AUDIOTHEME_DIR . 'includes/p2p/' . $file . '.php';
+		require AUDIOTHEME_DIR . 'includes/lib/p2p/' . $file . '.php';
 	}
 	
 	// @todo Can't use activation hook.
