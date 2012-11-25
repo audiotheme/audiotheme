@@ -135,9 +135,10 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 #gig-venue-timezone { display: none;}
 
 
-/* Options Screens
+/* Settings Screens
 -------------------------------------------------------------- */
 
+.audiotheme-settings-screen h2.nav-tab-wrapper { margin-bottom: 12px;}
 .audiotheme-settings-screen .form-table td .button.thickbox { margin-left: 5px;}
 
 /* Hide extra tab panels if javascript is enabled and the screen has tabs. */

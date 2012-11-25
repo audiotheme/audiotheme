@@ -375,7 +375,7 @@ class Audiotheme_Settings {
 		if ( in_array( $type, $field_types ) ) {
 			$default_field_callback = array( $this, 'render_' . $type . '_field' );
 		} else {
-			$default_field_callback = 'audiotheme_settings_render_field-' . sanitize_key( $type );
+			$default_field_callback = sanitize_key( $type );
 		}
 		
 		// These can be overridden in the $args parameter.
@@ -682,6 +682,63 @@ class Audiotheme_Settings {
 	}
 	
 	/**
+	 * Determine which classes to apply to a field.
+	 *
+	 * The first parameter consists of classes that should always be aded. The
+	 * second parameter contains the setting field's registered properties. If
+	 * a class name(s) has been set, it will be used in place of any optional
+	 * classes passed as the third parameter. If it hasn't been set, then the
+	 * optional classes will be used instead.
+	 *
+	 * @since 1.0.0
+	 * 
+	 * @param array|string Array of classes or string separated by spaces.
+	 * @param array $args Setting field arguments.
+	 * @param array|string $optional_classes Optional. Array of classes or string separated by spaces.
+	 */
+	public function get_field_class( $classes, $args, $optional_classes = '' ) {
+		// Split default classes into an array.
+		if ( ! empty( $classes ) && ! is_array( $classes ) ) {
+			$classes = preg_split( '#\s+#', $classes );
+		}
+		
+		$add_classes = array();
+		if ( isset( $args['class'] ) && ! empty( $args['class'] ) ) {
+			$add_classes = $args['class'];
+		} elseif ( ! empty( $optional_classes ) ) {
+			$add_classes = $optional_classes;
+		}
+		
+		if ( ! empty( $add_classes ) && ! is_array( $add_classes ) ) {
+			// Split the add-on classes into an array.
+			$add_classes = preg_split( '#\s+#', $add_classes );
+		}
+		
+		// Merge the classes and sanitize them.
+		$classes = array_map( 'sanitize_html_class', array_merge( $classes, $add_classes ) );
+		
+		return join( ' ', $classes );
+	}
+	
+	/**
+	 * Return the field description from a list of field arguments.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Setting field arguments.
+	 * @return string Description markup.
+	 */
+	public function get_field_description( $args ) {
+		$description = '';
+		
+		if ( isset( $args['description'] ) && ! empty( $args['description'] ) ) {
+			$description = ' <span class="audiotheme-settings-description description">' . $args['description'] . '</span>';
+		}
+		
+		return $description;
+	}
+	
+	/**
 	 * Register the Customizer sections, settings, and controls.
 	 *
 	 * Should be called by a hook attached to the 'customize_register' action
@@ -804,65 +861,6 @@ class Audiotheme_Settings {
 				}
 			}
 		}
-	}
-	
-	/**
-	 * Helper method to determine which classes to apply to a field.
-	 *
-	 * The first parameter consists of classes that should always be aded. The
-	 * second parameter contains the setting field's registered properties. If
-	 * a class name(s) has been set, it will be used in place of any optional
-	 * classes passed as the third parameter. If it hasn't been set, then the
-	 * optional classes will be used instead.
-	 *
-	 * @access protected
-	 * @since 1.0.0
-	 * 
-	 * @param array|string Array of classes or string separated by spaces.
-	 * @param array $args Setting field arguments.
-	 * @param array|string $optional_classes Optional. Array of classes or string separated by spaces.
-	 */
-	protected function get_field_class( $classes, $args, $optional_classes = '' ) {
-		// Split default classes into an array.
-		if ( ! empty( $classes ) && ! is_array( $classes ) ) {
-			$classes = preg_split( '#\s+#', $classes );
-		}
-		
-		$add_classes = array();
-		if ( isset( $args['class'] ) && ! empty( $args['class'] ) ) {
-			$add_classes = $args['class'];
-		} elseif ( ! empty( $optional_classes ) ) {
-			$add_classes = $optional_classes;
-		}
-		
-		if ( ! empty( $add_classes ) && ! is_array( $add_classes ) ) {
-			// Split the add-on classes into an array.
-			$add_classes = preg_split( '#\s+#', $add_classes );
-		}
-		
-		// Merge the classes and sanitize them.
-		$classes = array_map( 'sanitize_html_class', array_merge( $classes, $add_classes ) );
-		
-		return join( ' ', $classes );
-	}
-	
-	/**
-	 * Return the field description from a list of field arguments.
-	 *
-	 * @access protected
-	 * @since 1.0.0
-	 *
-	 * @param array $args Setting field arguments.
-	 * @return string Description markup.
-	 */
-	protected function get_field_description( $args ) {
-		$description = '';
-		
-		if ( isset( $args['description'] ) && ! empty( $args['description'] ) ) {
-			$description = ' <span class="audiotheme-settings-description description">' . $args['description'] . '</span>';
-		}
-		
-		return $description;
 	}
 	
 	/**
