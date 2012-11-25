@@ -5,18 +5,19 @@
  * @since 1.0.0
  */
 require( AUDIOTHEME_DIR . 'admin/functions.php' );
-require( AUDIOTHEME_DIR . 'admin/options.php' );
+require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-settings.php' );
+require( AUDIOTHEME_DIR . 'admin/includes/settings-screens.php' );
 
 /**
  * Admin Setup
  *
  * @since 1.0.0
  */
-add_action( 'init', 'audiotheme_admin_setup' );
+add_action( 'after_setup_theme', 'audiotheme_admin_setup' );
 
-function audiotheme_admin_setup() {
-	Audiotheme_Options::setup();
-		
+function audiotheme_admin_setup() {	
+	add_action( 'init', 'audiotheme_settings_init' );
+	
 	add_action( 'admin_init', 'audiotheme_register_directory_browsing_setting' );
 	add_action( 'update_option_audiotheme_disable_directory_browsing', 'audiotheme_disable_directory_browsing_option_update', 10, 2 );
 	
@@ -34,32 +35,20 @@ function audiotheme_admin_setup() {
 	// Fires new action hooks in older versions for backwards compatibility.
 	add_action( 'edit_form_advanced', 'audiotheme_edit_form_compat_actions' );
 	
-	// @todo Consider registering the theme option name with the theme slug for uniqueness
-	if ( current_theme_supports( 'audiotheme-options' ) ) {
-		$options = Audiotheme_Options::get_instance();
-		$panel = $options->add_panel(
-			'theme-options',
-			__( 'Theme Options', 'audiotheme-i18n' ),
-			array(
-				'menu_title'   => __( 'Theme Options', 'audiotheme-i18n' ),
-				'option_group' => 'audiotheme_options',
-				'option_name'  => array( 'audiotheme_options' ),
-				'show_in_menu' => 'themes.php'
-			)
-		);
+	
+	// @todo Reimplement the license key functionality.
+	
+	// Automatic updates require support for 'audiotheme-theme-options' to be enabled
+	// Otherwise, the license key functionality needs to be added in custom hooks
+	/*if ( current_theme_supports( 'audiotheme-automatic-updates' ) ) {
+		include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater.php' );
+		$support = get_theme_support( 'audiotheme-automatic-updates' );
+		Audiotheme_Updater::setup( $support[0] );
 		
-		// Automatic updates require support for 'audiotheme-options' to be enabled
-		// Otherwise, the license key functionality needs to be added in custom hooks
-		if ( current_theme_supports( 'audiotheme-automatic-updates' ) ) {
-			include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater.php' );
-			$support = get_theme_support( 'audiotheme-automatic-updates' );
-			Audiotheme_Updater::setup( $support[0] );
-			
-			add_action( 'pre_update_option_audiotheme_options', 'audiotheme_default_options_update', 10, 2 );
-			add_action( 'admin_init', 'audiotheme_default_options', 9 ); // Will appear before options registered in the theme
-			add_action( 'load-appearance_page_theme-options', 'audiotheme_license_status_error' );
-		}
-	}
+		add_action( 'pre_update_option_audiotheme_options', 'audiotheme_default_options_update', 10, 2 );
+		add_action( 'admin_init', 'audiotheme_default_settings', 9 ); // Will appear before options registered in the theme
+		add_action( 'load-appearance_page_audiotheme-theme-options', 'audiotheme_license_status_error' );
+	}*/
 }
 
 /**
@@ -67,11 +56,11 @@ function audiotheme_admin_setup() {
  *
  * @since 1.0.0
  */
-function audiotheme_default_options() {
-	$options = Audiotheme_Options::get_instance();
+function audiotheme_default_settings() {
+	$settings = Audiotheme_Settings::instance();
 	
-	$section = $options->add_section( 'general', 'General Settings', '' );
-		$options->add_field( 'text', 'license_key', __( 'License Key', 'audiotheme-i18n' ), $section, array(
+	$section = $settings->add_section( 'general', 'General Settings', '' );
+		$settings->add_field( 'text', 'license_key', __( 'License Key', 'audiotheme-i18n' ), $section, array(
 			'description' => ( 'valid' == get_option( 'audiotheme_license_key_status' ) ) ? ' <span style="color: green; font-style: normal">OK</span>' : ''
 		) );
 }

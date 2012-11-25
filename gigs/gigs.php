@@ -229,7 +229,7 @@ function audiotheme_gig_template_redirect() {
 	global $wp_query;
 	
 	if ( is_post_type_archive( 'audiotheme_gig' ) ) {
-		p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $GLOBALS['wp_query'] );
+		p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $wp_query );
 	}
 	
 	$type = $wp_query->get( 'feed' );

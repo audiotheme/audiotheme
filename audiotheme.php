@@ -1,6 +1,8 @@
 <?php
 /**
- * AudioTheme Framework
+ * Plugin Name: AudioTheme Framework
+ * Plugin URI: http://audiotheme.com/
+ * Description: AudioTheme framework plugin.
  * Version: 1.0.0
  * Author: AudioTheme
  * Author URI: http://audiotheme.com
@@ -42,10 +44,10 @@ define( 'AUDIOTHEME_VERSION', '1.0.0' );
  * child theme, these constants will need to be defined beforehand.
  */
 if ( ! defined( 'AUDIOTHEME_DIR' ) )
-    define( 'AUDIOTHEME_DIR', get_template_directory() . '/audiotheme/' );
+    define( 'AUDIOTHEME_DIR', plugin_dir_path( __FILE__ ) );
 
 if ( ! defined( 'AUDIOTHEME_URI' ) )
-    define( 'AUDIOTHEME_URI', get_template_directory_uri() . '/audiotheme/' );
+    define( 'AUDIOTHEME_URI', plugin_dir_url( __FILE__ ) );
 
 /**
  * Begin setting up the framework during the after_setup_theme action.
@@ -60,10 +62,11 @@ add_action( 'after_setup_theme', 'audiotheme_setup' );
  */
 require( AUDIOTHEME_DIR . 'includes/compat.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
-require( AUDIOTHEME_DIR . 'includes/general-template.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
+require( AUDIOTHEME_DIR . 'includes/general-template.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/media.php' );
+require( AUDIOTHEME_DIR . 'includes/options.php' );
 require( AUDIOTHEME_DIR . 'widgets/widgets.php' );
 
 /**

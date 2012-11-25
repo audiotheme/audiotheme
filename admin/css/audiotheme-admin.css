@@ -138,15 +138,17 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 /* Options Screens
 -------------------------------------------------------------- */
 
-.audiotheme-options .form-table td .button.thickbox { margin-left: 5px;}
-.js .audiotheme-options .tab-panel { display: none;}
-.js .audiotheme-options .tab-panel-active { display: block;}
+.audiotheme-settings-screen .form-table td .button.thickbox { margin-left: 5px;}
 
-/* Error related styles; TODO: colors could be improved */
-.audiotheme-options h2.nav-tab-wrapper a.nav-tab.has-error { background: #fff6f6; border-color: #eedddd;}
-.audiotheme-options h2.nav-tab-wrapper a.nav-tab-active.has-error { color: #464646; background: #fff; border-color: #ccc; border-bottom-color: #fff;}
-.audiotheme-options .form-table tr.settings-error td input { background-color: #fff6f6; border-color: #ee9999;}
-.audiotheme-options .form-table tr.settings-error th label { color: #cc0000; font-weight: bold;}
+/* Hide extra tab panels if javascript is enabled and the screen has tabs. */
+.js .audiotheme-settings-screen-has-tabs .tab-panel { display: none;}
+.js .audiotheme-settings-screen-has-tabs .tab-panel-active { display: block;}
+
+/* Error related styles; @todo Colors could be improved. */
+.audiotheme-settings-screen h2.nav-tab-wrapper a.nav-tab.audiotheme-settings-tab-has-error { background: #fff6f6; border-color: #eedddd;}
+.audiotheme-settings-screen h2.nav-tab-wrapper a.nav-tab-active.audiotheme-settings-tab-has-error { color: #464646; background: #fff; border-color: #ccc; border-bottom-color: #fff;}
+.audiotheme-settings-screen .form-table tr.audiotheme-settings-error td input { background-color: #fff6f6; border-color: #ee9999;}
+.audiotheme-settings-screen .form-table tr.audiotheme-settings-error th label { color: #cc0000; font-weight: bold;}
 
 
 /* Venue Screens

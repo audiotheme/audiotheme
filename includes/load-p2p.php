@@ -9,54 +9,53 @@
 /**
  * scbFramework.
  */
-$scb_classes = array(
-    'scbUtil', 'scbOptions', 'scbForms', 'scbTable',
-    'scbWidget', 'scbAdminPage', 'scbBoxesPage',
-    'scbCron', 'scbHooks',
-);
-
-foreach ( $scb_classes as $class_name ) {
-    if ( ! class_exists( $class_name ) ) {
-        include AUDIOTHEME_DIR . 'includes/scb/' . substr( $class_name, 3 ) . '.php';
-    }
-}
-
-if ( ! function_exists( 'scb_init' ) ) :
-function scb_init( $callback ) {
-    call_user_func( $callback );
-}
-endif;
+require( AUDIOTHEME_DIR . 'includes/scb/load.php' );
 
 /**
- * Posts 2 Posts core.
+ *
+ */
+scb_init( 'audiotheme_p2p_init' );
+
+/**
+ * 
+ *
+ * This doesn't actually occur during the init hook.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_p2p_init() {
+	add_action( 'plugins_loaded', 'audiotheme_p2p_load_core', 20 );
+}
+
+/**
+ * Load Posts 2 Posts core.
  *
  * Requires the scbFramework.
  *
  * Posts 2 Posts requires two custom database tables to store post
  * relationships and relationship metadata. If an alternative version of the
- * library doesn't exist, the tables are created after the theme is switched.
- * If a theme is previewed or customized before it's activated, the tables
- * won't exist and any functionality relying on P2P won't work.
+ * library doesn't exist, the tables are created on admin init.
  *
- * @todo Remove the reliance on the after_switch_theme hook so the tables can
- *       be installed whenever the are needed (but not before the theme is
- *       activated).
- * @todo Consider creating a plugin for cleaning up the database after an
- *       AudioTheme is no longer in use.
+ * @since 1.0.0
  */
-if ( ! function_exists( 'p2p_register_connection_type' ) ) {
-    define( 'P2P_TEXTDOMAIN', 'audiotheme-18n' );
+function audiotheme_p2p_load_core() {
+	if ( function_exists( 'p2p_register_connection_type' ) ) {
+		return;
+	}
+	
+	define( 'P2P_TEXTDOMAIN', 'audiotheme-i18n' );
 	
 	$p2p_files = array(
-        'storage', 'query', 'query-post', 'query-user', 'url-query',
-        'util', 'side', 'list', 'type-factory', 'type', 'directed-type',
-        'api', 'extra'
-    );
+		'storage', 'query', 'query-post', 'query-user', 'url-query',
+		'util', 'side', 'type-factory', 'type', 'directed-type', 'indeterminate-type',
+		'api', 'item', 'list', 'extra'
+	);
 	
-    foreach ( $p2p_files as $file ) {
-        require AUDIOTHEME_DIR . 'includes/p2p/' . $file . '.php';
-    }
+	foreach ( $p2p_files as $file ) {
+		require AUDIOTHEME_DIR . 'includes/p2p/' . $file . '.php';
+	}
 	
-    add_action( 'after_switch_theme', array( 'P2P_Storage', 'install' ) );
+	// @todo Can't use activation hook.
+	add_action( 'admin_init', array( 'P2P_Storage', 'install' ) );
 }
 ?>
