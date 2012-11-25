@@ -668,13 +668,13 @@ class Audiotheme_Settings {
 		$value = get_audiotheme_option( $option_name, $key, $default  );
 		$value = maybe_serialize( $value );
 		
-		printf( '<input type="text" name="%s" id="%s" value="%s" disabled="disabled" class="audiotheme-settings-hidden-field">',
+		printf( '<input type="hidden" name="%s" id="%s" value="%s" class="audiotheme-settings-hidden-field">',
 			esc_attr( $field_name ),
 			esc_attr( $field_id ),
 			esc_attr( $value )
 		);
 		
-		printf( '<br><span class="description">%s.</span>',
+		printf( '<span class="description">%s.</span>',
 			sprintf( __( 'Change this setting in the %s', 'audiotheme-i18n' ),
 				sprintf( '<a href="%s">%s</a>', admin_url( 'customize.php' ), __( 'theme customizer', 'audiotheme-i18n' ) )
 			)
