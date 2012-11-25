@@ -1,6 +1,6 @@
 [submodule "includes/scb"]
-	path = includes/scb
+	path = includes/lib/scb
 	url = https://github.com/scribu/wp-scb-framework.git
 [submodule "includes/p2p"]
-	path = includes/p2p
+	path = includes/lib/p2p
 	url = https://github.com/AppThemes/wp-posts-to-posts-core.git
