@@ -668,10 +668,16 @@ class Audiotheme_Settings {
 		$value = get_audiotheme_option( $option_name, $key, $default  );
 		$value = maybe_serialize( $value );
 		
-		printf( '<input type="text" name="%s" id="%s" value="%s" class="audiotheme-settings-hidden-field">',
+		printf( '<input type="text" name="%s" id="%s" value="%s" disabled="disabled" class="audiotheme-settings-hidden-field">',
 			esc_attr( $field_name ),
 			esc_attr( $field_id ),
 			esc_attr( $value )
+		);
+		
+		printf( '<br><span class="description">%s.</span>',
+			sprintf( __( 'Change this setting in the %s', 'audiotheme-i18n' ),
+				sprintf( '<a href="%s">%s</a>', admin_url( 'customize.php' ), __( 'theme customizer', 'audiotheme-i18n' ) )
+			)
 		);
 	}
 	
@@ -780,6 +786,9 @@ class Audiotheme_Settings {
 								
 								add_settings_field( $setting['key'], $setting['label'], $setting['field_callback'], $setting['wp_settings_section'], $setting['section'], $args );
 							}
+						} elseif ( 'audiotheme-theme-options' == $tab_id && '_default' == $section_id ) {
+							// Make sure the default theme options section gets registered for any customizer settings to be synced.
+							add_settings_section( '_default', '', '__return_false', 'audiotheme-theme-options' );
 						}
 					}
 					

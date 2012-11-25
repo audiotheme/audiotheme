@@ -447,6 +447,7 @@ function audiotheme_settings_sanitize_field( $field, $option_value ) {
  * error message isn't registered, a default message will be shown.
  *
  * @since 1.0.0
+ * @todo Don't validate Customizer only settings on the theme options screen.
  *
  * @param array $field Settings field properties.
  * @param mixed $option_value The option name.
