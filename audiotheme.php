@@ -54,10 +54,8 @@ if ( ! defined( 'AUDIOTHEME_URI' ) )
  *
  * Ideally all functionality should be loaded via hooks so it can be disabled
  * or replaced by a theme or plugin if necessary.
- *
- * @todo Rework the loading order using 'plugins_loaded'.
  */
-add_action( 'after_setup_theme', 'audiotheme_setup' );
+add_action( 'plugins_loaded', 'audiotheme_load' );
 
 /**
  * Load additional helper functions and libraries.
@@ -92,7 +90,7 @@ require( AUDIOTHEME_DIR . 'videos/videos.php' );
  *
  * @since 1.0.0
  */
-function audiotheme_setup() {
+function audiotheme_load() {
 	// Default filters.
 	add_filter( 'nav_menu_css_class', 'audiotheme_nav_menu_name_class', 1, 2 );
 	add_filter( 'get_pages', 'audiotheme_page_list' );
@@ -117,22 +115,10 @@ function audiotheme_setup() {
  *
  * @since 1.0.0
  * @link http://core.trac.wordpress.org/ticket/18909
- *
- * @todo Make protocol relative. See wp-includes/script-loader.php
- * @link http://core.trac.wordpress.org/ticket/16560
  */
 function audiotheme_register_scripts() {
 	wp_register_script( 'jquery-fitvids', AUDIOTHEME_URI . 'includes/js/jquery.fitvids.js', array( 'jquery' ), '1.0' );
 	wp_register_script( 'jquery-placeholder', AUDIOTHEME_URI . 'includes/js/jquery.placeholder.min.js', array( 'jquery' ), '2.0.7' );
 	wp_register_script( 'jquery-timepicker', AUDIOTHEME_URI . 'includes/js/jquery.timepicker.min.js', array( 'jquery' ) );
-	
-	// @todo Move these to admin/admin.php
-	if ( is_admin() ) {
-		wp_register_script( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/js/audiotheme-admin.js', array( 'jquery-ui-sortable' ) );
-
-		wp_register_style( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/css/audiotheme-admin.css' );
-		wp_register_style( 'jquery-ui-theme-smoothness', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/smoothness/jquery-ui.css' );
-		wp_register_style( 'jquery-ui-theme-audiotheme', AUDIOTHEME_URI . 'admin/css/jquery-ui-audiotheme.css', array( 'jquery-ui-theme-smoothness' ) );
-	}
 }
 ?>

@@ -198,7 +198,7 @@ class Audiotheme_Widget_Latest_Tweets extends WP_Widget {
 					}
 				}
 			}
-			usort( $entities, array( &$this, 'sort_tweet_entities' ) );
+			usort( $entities, array( $this, 'sort_tweet_entities' ) );
 			
 			$shift = 0;
 			foreach( $entities as $entity ) {

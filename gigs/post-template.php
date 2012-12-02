@@ -24,7 +24,7 @@ function get_audiotheme_gigs_url() {
  * @return object Post with additional gig info.
  */
 function get_audiotheme_gig( $post = null ) {
-	$post = &get_post( $post );
+	$post = get_post( $post );
 	$gig_id = $post->ID;
 	
 	$post->gig_datetime = get_post_meta( $gig_id, '_audiotheme_gig_datetime', true );

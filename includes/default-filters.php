@@ -1,8 +1,6 @@
 <?php
 /**
- * Defines default filters for modifying WordPress behavior.
- *
- * Not all of the default hooks are found in this file.
+ * Define some default filters for modifying WordPress behavior.
  *
  * @package AudioTheme_Framework
  */
@@ -66,7 +64,7 @@ function audiotheme_nav_menu_name_class( $classes, $item ) {
 }
 
 /**
- * Page list class helper.
+ * Page list CSS class helper.
  *
  * Stores information about the order of pages in a global variable to be
  * accessed by audiotheme_page_list_classes().

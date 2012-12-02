@@ -1,15 +1,9 @@
 <?php
 /**
- * 
+ * Generic utility functions for us in the admin.
+ *
+ * @package AudioTheme_Framework
  */
-function audiotheme_image_size_names() {
-	return apply_filters( 'image_size_names_choose', array(
-		'thumbnail' => __( 'Thumbnail', 'audiotheme-i18n' ),
-		'medium'    => __( 'Medium', 'audiotheme-i18n' ),
-		'large'     => __( 'Large', 'audiotheme-i18n' ),
-		'full'      => __( 'Full Size', 'audiotheme-i18n' )
-	) );
-}
 
 /**
  * Customizable submit meta box.
@@ -17,7 +11,6 @@ function audiotheme_image_size_names() {
  * @see post_submit_meta_box()
  * 
  * @since 1.0.0
- * @todo "misc-pub-section-last" and "button-highlighed" classes can be removed when < 3.5 support is ended.
  */
 function audiotheme_post_submit_meta_box( $post, $metabox ) {
 	global $action;
@@ -56,9 +49,9 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 			<div id="minor-publishing-actions">
 				<div id="save-action">
 					<?php if ( 'publish' != $post->post_status && 'future' != $post->post_status && 'pending' != $post->post_status ) { ?>
-						<input type="submit" name="save" id="save-post" value="<?php esc_attr_e('Save Draft'); ?>" class="button button-highlighted" <?php if ( 'private' == $post->post_status ) { echo 'style="display: none"'; } ?>>
+						<input type="submit" name="save" id="save-post" value="<?php esc_attr_e('Save Draft'); ?>" class="button" <?php if ( 'private' == $post->post_status ) { echo 'style="display: none"'; } ?>>
 					<?php } elseif ( 'pending' == $post->post_status && $can_publish ) { ?>
-						<input type="submit" name="save" id="save-post" value="<?php esc_attr_e('Save as Pending'); ?>" class="button button-highlighted">
+						<input type="submit" name="save" id="save-post" value="<?php esc_attr_e('Save as Pending'); ?>" class="button">
 					<?php } ?>
 					
 					<?php audiotheme_admin_spinner( array( 'id' => 'draft-ajax-loading' ) ); ?>
@@ -90,7 +83,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 				 * Post status
 				 */
 				if ( false !== $show_statuses ) : ?>
-					<div class="misc-pub-section<?php if( ! $can_publish || ( ! $show_visibility && ! $show_publish_date ) ) { echo ' misc-pub-section-last'; } ?>">
+					<div class="misc-pub-section">
 						<label for="post_status"><?php _e( 'Status:' ) ?></label>
 						<span id="post-status-display">
 							<?php
@@ -250,7 +243,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 					}
 					
 					if ( $can_publish ) : // Contributors don't get to choose the date of publish ?>
-						<div class="misc-pub-section curtime misc-pub-section-last">
+						<div class="misc-pub-section curtime">
 							<span id="timestamp"><?php printf( $stamp, $date ); ?></span>
 							<a href="#edit_timestamp" class="edit-timestamp hide-if-no-js"><?php _e( 'Edit', 'audiotheme-i18n' ) ?></a>
 							<div id="timestampdiv" class="hide-if-js"><?php touch_time( ( 'edit' == $action ), 1 ); ?></div>

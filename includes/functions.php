@@ -6,6 +6,27 @@
  */
 
 /**
+ * Get localized image size names.
+ *
+ * The 'image_size_names_choose' filter exists in core and should be
+ * hooked by plugin authors to provide localized labels for custom image
+ * sizes added using add_image_size().
+ *
+ * @see image_size_input_fields()
+ * @see http://core.trac.wordpress.org/ticket/20663
+ *
+ * @since 1.0.0
+ */
+function audiotheme_image_size_names() {
+	return apply_filters( 'image_size_names_choose', array(
+		'thumbnail' => __( 'Thumbnail', 'audiotheme-i18n' ),
+		'medium'    => __( 'Medium', 'audiotheme-i18n' ),
+		'large'     => __( 'Large', 'audiotheme-i18n' ),
+		'full'      => __( 'Full Size', 'audiotheme-i18n' )
+	) );
+}
+
+/**
  * Compare two version numbers.
  *
  * This function abstracts the logic for determining the current version
@@ -148,4 +169,173 @@ function vd( $var ) {
 	echo '<pre style="font-size: 12px; text-align: left">'; print_r( $var ); echo '</pre>';
 }
 endif;
+
+/**
+ * Remove a portion of an associative array, optionally replace it with something else
+ * and maintain the keys.
+ *
+ * Can produce unexpected behavior with numeric indexes. Use array_splice() if
+ * keys don't need to be preserved, although exact behavior of offset and
+ * length is not duplicated.
+ *
+ * @version 1.0.0
+ * @see array_splice()
+ *
+ * @param array $input The input array.
+ * @param int $offset The position to start from.
+ * @param int $length Optional. The number of elements to remove. Defaults to 0.
+ * @param mixed $replacement Optional. Item(s) to replace removed elements.
+ * @param string $primary Optiona. input|replacement Defaults to input. Which array should take precedence if there is a key collision.
+ * @return array The modified array.
+ */
+function audiotheme_array_asplice( $input, $offset, $length = 0, $replacement = null, $primary = 'input' ) {
+	$input = (array) $input;
+	$replacement = (array) $replacement;
+	
+	$start = array_slice( $input, 0, $offset, true );
+	// $remove = array_slice( $input, $offset, $length, true );
+	$end = array_slice( $input, $offset + $length, null, true );
+	
+	// Discard elements in $replacement whose keys match keys in $input.
+	if ( 'input' == $primary ) {
+		$replacement = array_diff_key( $replacement, $input );
+	}
+	
+	// Discard elements in $start and $end whose keys match keys in $replacement.
+	// Could change the size of $input, so this is done after slicing the start and end.
+	elseif ( 'replacement' == $primary ) {
+		$start = array_diff_key( $start, $replacement );
+		$end = array_diff_key( $end, $replacement );
+	}
+	
+	// Which is faster?
+	// return $start + $replacement + $end;
+	return array_merge( $start, $replacement, $end );
+}
+
+/**
+ * Insert an element(s) after a particular value if it exists in an array.
+ *
+ * @version  1.0.0
+ * @uses audiotheme_array_find()
+ * @uses audiotheme_array_asplice()
+ * 
+ * @param array $input The input array.
+ * @param mixed $needle Value to insert new elements after.
+ * @param mixed $insert The element(s) to insert.
+ * @return array|bool Modified array or false if $needle couldn't be found.
+ */
+function audiotheme_array_insert_after( $input, $needle, $insert ) {
+	$input = (array) $input;
+	$insert = (array) $insert;
+	
+	$position = audiotheme_array_find( $needle, $input );
+	if ( false === $position ) {
+		return false;
+	}
+	
+	return audiotheme_array_asplice( $input, $position + 1, 0, $insert );
+}
+
+/**
+ * Insert an element(s) after a certain key if it exists in an array.
+ *
+ * Use array_splice() if keys don't need to be maintained.
+ *
+ * @version 1.0.0
+ * @uses audiotheme_array_key_find()
+ * @uses audiotheme_array_asplice()
+ *
+ * @param array $input The input array.
+ * @param mixed $needle Value to insert new elements after.
+ * @param mixed $insert The element(s) to insert.
+ * @return array|bool Modified array or false if $needle couldn't be found.
+ */
+function audiotheme_array_insert_after_key( $input, $needle, $insert ) {
+	$input = (array) $input;
+	$insert = (array) $insert;
+	
+	$position = audiotheme_array_key_find( $needle, $input );
+	if ( false === $position ) {
+		return false;
+	}
+	
+	return audiotheme_array_asplice( $input, $position + 1, 0, $insert );
+}
+
+/**
+ * Find the position (not index) of a value in an array.
+ *
+ * @version 1.0.0
+ * @see array_search()
+ * @uses audiotheme_array_key_find()
+ *
+ * @param mixed $needle The value to search for.
+ * @param array $haystack The array to search.
+ * @param bool $strict Whether to search for identical (types) values.
+ * @return int|bool Position of the first matching element or false if not found.
+ */
+function audiotheme_array_find( $needle, $haystack, $strict = false ) {
+	if ( ! is_array( $haystack ) ) {
+		return false;
+	}
+	
+	$key = array_search( $needle, $haystack, $strict );
+	
+	return ( $key ) ? audiotheme_array_key_find( $key, $haystack ) : false;
+}
+
+/**
+ * Find the position (not index) of a key in an array.
+ *
+ * @version 1.0.0
+ * @see array_key_exists()
+ *
+ * @param $key string|int The key to search for.
+ * @param $search The array to search.
+ * @return int|bool Position of the key or false if not found.
+ */
+function audiotheme_array_key_find( $key, $search ) {
+	$key = ( is_int( $key ) ) ? $key : (string) $key;
+	
+	if ( ! is_array( $search ) ) {
+		return false;
+	}
+	
+	$keys = array_keys( $search );
+	
+	return array_search( $key, $keys );
+}
+
+/**
+ * Use an ordered array to sort another array (the $order array values match
+ * $input's keys).
+ *
+ * @version 1.0.0
+ * @todo Implement a parameter to dictate how to sort the diff.
+ *
+ * @param array $array The array to sort.
+ * @param array $order Array used for sorting. Values should match keys in $array.
+ * @param string $keep_diff Optional. Whether to keep the difference of the two arrays if they don't exactly match and where to place the difference.
+ * @return array The sorted array.
+ */
+function audiotheme_array_sort_array( $array, $order, $keep_diff = 'bottom' ) {
+	$order = array_flip( $order );
+	
+	// The difference should be tacked back on after sorting.
+	if ( 'discard' !== $keep_diff ) {
+		$diff = array_diff_key( $array, $order );
+	}
+	
+	$sorted = array();
+	foreach ( $order as $key => $val ) {
+		$sorted[ $key ] = $array[ $key ];
+	}
+	
+	if ( 'discard' !== $keep_diff ) {
+		$sorted = ( 'top' == $keep_diff ) ? $diff + $sorted : $sorted + $diff;
+	}
+	
+	return $sorted;
+}
 ?>

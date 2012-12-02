@@ -23,8 +23,8 @@ function audiotheme_load_videos_admin() {
 	add_action( 'wp_ajax_audiotheme_get_video_oembed_data', 'audiotheme_ajax_get_video_oembed_data' );
 	
 	add_filter( 'post_updated_messages', 'audiotheme_video_post_updated_messages' );
-	add_filter( 'manage_edit-audiotheme_video_columns', 'audiotheme_video_columns' );
-	add_action( 'manage_posts_custom_column', 'audiotheme_video_display_column', 10, 2 );
+	add_filter( 'manage_edit-audiotheme_video_columns', 'audiotheme_video_register_columns' );
+	// add_action( 'manage_posts_custom_column', 'audiotheme_video_display_column', 10, 2 );
 	add_filter( 'audiotheme_nav_menu_archive_items', 'audiotheme_video_archive_menu_item' );
 	
 	wp_register_script( 'audiotheme-video-edit', AUDIOTHEME_URI . 'videos/admin/js/video-edit.js', array( 'jquery' ) );
@@ -69,58 +69,19 @@ function audiotheme_video_post_updated_messages( $messages ) {
 /**
  * Register video columns.
  *
- * Any additional filters to add or remove columns should set a lower priority
- * since this filter is replacing the $columns variable instead of modifying
- * it. May need to modify this in the future if it becomes problematic.
- *
  * @since 1.0.0
  *
  * @param array $columns An array of the column names to display.
  * @return array The filtered array of column names.
  */
-function audiotheme_video_columns( $columns ) {
-	$columns = array(
-		'cb'               => '<input type="checkbox">',
-		'audiotheme_image' => _x( 'Image', 'column name', 'audiotheme-i18n' ),
-		'title'            => _x( 'Video', 'column name', 'audiotheme-i18n' ),
-		'author'           => _x( 'Author', 'column name', 'audiotheme-i18n' ),
-		'video_type'       => _x( 'Type', 'column name', 'audiotheme-i18n' ),
-		'tags'             => _x( 'Tags', 'column name', 'audiotheme-i18n' ),
-		'date'             => _x( 'Date', 'column name', 'audiotheme-i18n' )
-	);
+function audiotheme_video_register_columns( $columns ) {
+	// Register an image column and insert it after the checkbox column.
+	$image_column = array( 'audiotheme_image' => _x( 'Image', 'column name', 'audiotheme-i18n' ) );
+	$columns = audiotheme_array_insert_after_key( $columns, 'cb', $image_column );
+	
+	$columns['taxonomy-audiotheme_video_type'] = _x( 'Types', 'column name', 'audiotheme-i18n' );
 	
 	return $columns;
-}
-
-/**
- * Display custom video columns.
- *
- * @since 1.0.0
- *
- * @param string $column_id The id of the column to display.
- * @param int $post_id Post ID.
- */
-function audiotheme_video_display_column( $column_name, $post_id ) {
-	switch ( $column_name ) {
-		case 'video_type' :
-			$taxonomy = 'audiotheme_video_type';
-			$post_type = get_post_type( $post_id );
-			$video_types = get_the_terms( $post_id, $taxonomy );
-			
-			if( ! empty( $video_types ) ) {
-				foreach ( $video_types as $video_type ) {
-					$post_terms[] = sprintf( '<a href="%1$s">%2$s</a>',
-						esc_url( sprintf( 'edit.php?post_type=%1$s&%2$s=%3$s', $post_type, $taxonomy, $video_type->slug ) ),
-						esc_html( sanitize_term_field( 'name', $video_type->name, $video_type->term_id, $taxonomy, 'edit' ) )
-					);
-				}
-				
-				echo join( ', ', $post_terms );
-			} else {
-				echo '—';
-			}
-			break;
-	}
 }
 
 /**

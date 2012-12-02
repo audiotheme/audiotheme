@@ -25,11 +25,11 @@ require( AUDIOTHEME_DIR . 'widgets/video.php' );
 function audiotheme_widgets_init() {
 	$widgets = array(
 		'latest-tweets' => 'Audiotheme_Widget_Latest_Tweets',
-		'recent-posts' => 'Audiotheme_Widget_Recent_Posts',
-		'record' => 'Audiotheme_Widget_Record',
-		'track' => 'Audiotheme_Widget_Track',
+		'recent-posts'  => 'Audiotheme_Widget_Recent_Posts',
+		'record'        => 'Audiotheme_Widget_Record',
+		'track'         => 'Audiotheme_Widget_Track',
 		'upcoming-gigs' => 'Audiotheme_Widget_Upcoming_Gigs',
-		'video' => 'Audiotheme_Widget_Video'
+		'video'         => 'Audiotheme_Widget_Video'
 	);
 	
 	if ( $support = get_theme_support( 'audiotheme-widgets' ) ) {

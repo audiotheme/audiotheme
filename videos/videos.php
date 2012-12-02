@@ -75,7 +75,7 @@ function audiotheme_videos_init() {
 		'public'                         => true,
 		'query_var'                      => true,
 		'rewrite'                        => array( 'slug' => 'videos/type', 'with_front' => false ),
-		'show_admin_column'              => false,
+		'show_admin_column'              => true,
 		'show_in_nav_menus'              => false,
 		'show_ui'                        => true,
 		'show_tagcloud'                  => false

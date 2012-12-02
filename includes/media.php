@@ -17,10 +17,6 @@
  * @link http://core.trac.wordpress.org/ticket/21635#comment:8
  */
 function audiotheme_add_default_oembed_providers() {
-	if ( audiotheme_version_compare( 'wp', '3.5-beta-1', '<' ) ) {
-		wp_oembed_add_provider( '#https?://(www\.)?soundcloud\.com/.*#i', 'http://soundcloud.com/oembed', true );
-	}
-	
 	#wp_oembed_add_provider( 'http://snd.sc/*', 'http://soundcloud.com/oembed' );
 	#wp_oembed_add_provider( 'http://www.rdio.com/#artist/*album/*', 'http://www.rdio.com/api/oembed/' );
 	#wp_oembed_add_provider( 'http://rd.io/*', 'http://www.rdio.com/api/oembed/' );
@@ -33,9 +29,6 @@ function audiotheme_add_default_oembed_providers() {
  * attempts to add the wmode parameter to YouTube videos and flash embeds.
  *
  * @since 1.0.0
- * @todo Remove the preg_replace_callback() when WP3.4 support is dropped and
- *       use the filter introduced in ticket #16996.
- * @link http://core.trac.wordpress.org/ticket/16996
  * 
  * @return string Embed HTML with wrapper.
  */
