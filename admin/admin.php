@@ -4,6 +4,7 @@
  *
  * @since 1.0.0
  */
+require( AUDIOTHEME_DIR . 'admin/dashboard.php' );
 require( AUDIOTHEME_DIR . 'admin/functions.php' );
 require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-settings.php' );
 require( AUDIOTHEME_DIR . 'admin/includes/settings-screens.php' );
@@ -18,6 +19,7 @@ add_action( 'after_setup_theme', 'audiotheme_admin_setup' );
 function audiotheme_admin_setup() {
 	add_action( 'init', 'audiotheme_admin_init' );
 	add_action( 'init', 'audiotheme_settings_init' );
+	add_action( 'init', 'audiotheme_dashboard_init', 9 );
 	
 	add_action( 'admin_init', 'audiotheme_register_directory_browsing_setting' );
 	add_action( 'update_option_audiotheme_disable_directory_browsing', 'audiotheme_disable_directory_browsing_option_update', 10, 2 );
