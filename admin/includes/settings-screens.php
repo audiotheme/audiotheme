@@ -1,17 +1,18 @@
 <?php
 /**
- * API methods and hooks for working with and displaying AudioTheme settings screens.
+ * API methods and hooks for working with and displaying AudioTheme settings
+ * screens.
  *
  * Theme Options support is added in 'after_setup_theme' using
  * add_theme_support().
  * 
  * The AudioTheme Settings API is loaded on 'init'. It fires a custom action
  * called 'audiotheme_register_settings', which is where any settings should
- * be registered to ensure they're available to the Customizer and the
+ * be registered to ensure they're available to the Theme Customizer and the
  * WordPress Settings API.
  *
  * The 'customizer_register' action is fired during 'wp_loaded', which occurs
- * right after 'init'. Customizer settings are registered here.
+ * right after 'init'. Theme Customizer settings are registered here.
  *
  * Settings screens menu items are added during 'admin_menu'.
  *
@@ -120,12 +121,17 @@ function audiotheme_settings_init() {
 }
 
 /**
- * Register Customizer settings.
+ * Register Theme Customizer settings.
  *
  * @since 1.0.0
  * @uses Audiotheme_Settings::register_customizer_settings()
  */
 function audiotheme_settings_register_customizer_settings( $wp_customize ) {
+	// Include custom Theme Customizer controls.
+	require( AUDIOTHEME_DIR . 'admin/includes/settings-theme-customizer-controls.php' );
+	
+	do_action( 'audiotheme_settings_before_customizer' );
+	
 	$settings = Audiotheme_Settings::instance();
 	$settings->register_customizer_settings( $wp_customize );
 }
@@ -196,9 +202,14 @@ function audiotheme_settings_register_wp_settings_api() {
  * @todo Update for 3.5.
  */
 function audiotheme_settings_screen_load() {
+	wp_enqueue_media();
+	
 	add_thickbox();
 	wp_enqueue_script( 'media-upload' );
+	wp_enqueue_script( 'wp-color-picker' );
+	
 	wp_enqueue_style( 'audiotheme-admin' );
+	wp_enqueue_style( 'wp-color-picker' );
 }
 
 /**
@@ -301,6 +312,9 @@ function audiotheme_settings_display_screen() {
 			$tabPanels = $('.tab-panel'),
 			$refererField = $('input[name="_wp_http_referer"]'),
 			updateTabs;
+		
+		$('.audiotheme-settings-color').wpColorPicker({ palettes: false }); // Initialize color fields.
+		$('.audiotheme-settings-hidden-field').closest('tr').hide(); // Hide hidden setting rows.
 			
 		updateTabs = function() {
 			var hash = window.location.hash;
@@ -322,10 +336,7 @@ function audiotheme_settings_display_screen() {
 		};
 		
 		updateTabs();
-		$(window).on('hashchange', updateTabs);
-		
-		// Hide hidden setting rows.
-		$('input.audiotheme-settings-hidden-field').closest('tr').hide();
+		$(window).on('hashchange', updateTabs);		
 		
 		if ( errors.length ) {
 			errors.each( function() {
@@ -458,7 +469,7 @@ function audiotheme_settings_sanitize_field( $field, $option_value ) {
  * error message isn't registered, a default message will be shown.
  *
  * @since 1.0.0
- * @todo Don't validate Customizer only settings on the theme options screen.
+ * @todo Don't validate Theme Customizer only settings on the theme options screen.
  *
  * @param array $field Settings field properties.
  * @param mixed $option_value The option name.

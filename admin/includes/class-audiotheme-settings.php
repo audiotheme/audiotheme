@@ -1,10 +1,7 @@
 <?php
 /**
- * Singleton class to abstract the WordPress Settings API and Customizer to
- * provide a generic API for interacting with them.
- *
- * Settings are stored in a private variables when they're added so they can be displayed when appropriate.
- * Customizer settings have to be added earlier in the workflow than regular settings, which can't even be registered until later.
+ * Class to abstract and extend the WordPress Settings API and Theme
+ * Customizer and provide a generic API for interacting with them.
  *
  * @package AudioTheme_Framework
  * @subpackage Settings
@@ -13,8 +10,6 @@
  * @link http://core.trac.wordpress.org/ticket/18285
  * 
  * @todo Implement a 'file' field type callback.
- * @todo Implement a 'color' field type callback.
- * @todo Implement a Customizer 'textarea' control.
  */
 class Audiotheme_Settings {
 	/**
@@ -77,7 +72,7 @@ class Audiotheme_Settings {
 	/**
 	 * Constructor to setup intial member variables.
 	 *
-	 * Registers the special Customizer screen object when initialized.
+	 * Registers the special Theme Customizer screen object when initialized.
 	 *
 	 * @since 1.0.0
 	 * @see Audiotheme_Settings::instance();
@@ -249,9 +244,9 @@ class Audiotheme_Settings {
 	/**
 	 * Sets the current tab.
 	 *
-	 * Will also set the current section to '_default' if not on the
-	 * Customizer screen, otherwise accounts for the Customizer not having
-	 * tabs.
+	 * Will also set the current section to '_default' if not on the Theme
+	 * Customizer screen, otherwise accounts for the Theme Customizer not
+	 * having tabs.
 	 *
 	 * @since 1.0.0
 	 *
@@ -295,7 +290,7 @@ class Audiotheme_Settings {
 				'callback'            => '__return_false', // To display a description on a settings screen.
 				'wp_settings_section' => $this->get_wp_settings_section_id( $screen->screen_id, $tab_id ),
 				
-				// Customizer-specific arguments.
+				// Theme Customizer-specific arguments.
 				'description'         => '',
 				'capability'          => '',
 			) );
@@ -317,7 +312,7 @@ class Audiotheme_Settings {
 	 * Sets the current section.
 	 *
 	 * If the section doesn't exist, will set it as '_default', unless the
-	 * current screen is the Customizer, then no sanitization is done.
+	 * current screen is the Theme Customizer, then no sanitization is done.
 	 *
 	 * @since 1.0.0
 	 *
@@ -371,7 +366,7 @@ class Audiotheme_Settings {
 		$id = ( $key == $option_name ) ? $key : $option_name . '[' . $id . ']';
 		
 		// Determine the default callback for rendering the field.
-		$field_types = array( 'checkbox', 'html', 'image', 'radio', 'select', 'text', 'textarea' );
+		$field_types = array( 'checkbox', 'color', 'html', 'image', 'radio', 'select', 'text', 'textarea' );
 		if ( in_array( $type, $field_types ) ) {
 			$default_field_callback = array( $this, 'render_' . $type . '_field' );
 		} else {
@@ -441,7 +436,7 @@ class Audiotheme_Settings {
 				// 'capability'  => 'edit_theme_options',
 			) );
 			
-			// The customizer arguments will be merged with the top level setting arguments later. These keys should not be overridden.
+			// The Theme Customizer arguments will be merged with the top level setting arguments later. These keys should not be overridden.
 			$customizer = array_diff_key( $customizer, array_flip( array( 'id', 'key', 'option_name' ) ) );
 			
 			$setting['customizer'] = $customizer;
@@ -496,6 +491,29 @@ class Audiotheme_Settings {
 	}
 	
 	/**
+	 * Callback to render a color field.
+	 * 
+	 * @since 1.0.0
+	 * @todo Use 'choices' arg to add palettes.
+	 *
+	 * @param array $args Setting field arguments.
+	 */
+	public function render_color_field( $args ) {
+		extract( $args );
+		
+		$value = get_audiotheme_option( $option_name, $key, $default  );
+		
+		printf( '<input type="text" name="%1$s" id="%2$s" value="%3$s" data-default-color="%3$s" class="%4$s">',
+			esc_attr( $field_name ),
+			esc_attr( $field_id ),
+			esc_attr( $value ),
+			$this->get_field_class( 'audiotheme-settings-color', $args, '' )
+		);
+		
+		echo $this->get_field_description( $args );
+	}
+	
+	/**
 	 * Callback to output HTML.
 	 * 
 	 * @since 1.0.0
@@ -512,7 +530,7 @@ class Audiotheme_Settings {
 	 * Defaults to using thickbox for selecting an image URL.
 	 *
 	 * @since 1.0.0
-	 * @todo Allow for overriding the various labels and text.
+	 * @todo Allow for overriding the various labels.
 	 * @todo Add support for the WordPress 3.5 media manager.
 	 *
 	 * @param array $args Setting field arguments.
@@ -522,10 +540,10 @@ class Audiotheme_Settings {
 		
 		$value = get_audiotheme_option( $option_name, $key, $default  );
 		
-		$controls = array( 'thickbox_image' ); // Whitelist the allowed image controls.
-		$control = ( ! isset( $control ) || ! in_array( $control ) ) ? 'thickbox_image' : $control;
+		$controls = array( 'media_frame', 'thickbox' ); // Whitelist the allowed image controls.
+		$control = ( ! isset( $control ) || ! in_array( $control ) ) ? 'thickbox' : $control;
 		
-		if ( 'thickbox_image' == $control ) {
+		if ( 'thickbox' == $control ) {
 			printf( '<input type="text" name="%s" id="%s" value="%s" class="%s">',
 				esc_attr( $field_name ),
 				esc_attr( $field_id ),
@@ -535,6 +553,7 @@ class Audiotheme_Settings {
 			
 			$tb_args = array( 'post_id' => 0, 'type' => 'image', 'TB_iframe' => true, 'width' => 640, 'height' => 750 );
 			$tb_url = add_query_arg( $tb_args, admin_url( 'media-upload.php' ) );
+			
 			printf( '<a href="%s" title="%s" class="button thickbox" data-insert-field="%s" data-insert-button-text="%s">%s</a>',
 				esc_url( $tb_url ),
 				esc_attr( __( 'Choose an Image', 'audiotheme-i18n' ) ),
@@ -543,6 +562,26 @@ class Audiotheme_Settings {
 				esc_attr( __( 'Choose Image', 'audiotheme-i18n' ) )
 			);
 		}
+		
+		/*
+		if ( 'media_frame' == $control ) {
+			$has_image = ( empty( $value ) ) ? '' : ' has-image';
+			echo '<span class="' . $this->get_field_class( 'audiotheme-media-control', $args ) . $has_image . '"';
+				echo 'data-title="' . __( 'Choose an Image', 'audiotheme-i18n' ) . '"';
+				echo 'data-update-text="' . __( 'Update Image', 'audiotheme-i18n' ) . '"';
+			echo '>';
+			
+			printf( '<input type="text" name="%s" id="%s" value="%s" class="audiotheme-media-control-target regular-text">',
+				esc_attr( $field_name ),
+				esc_attr( $field_id ),
+				esc_attr( $value )
+			);
+			
+			echo '<a class="button audiotheme-media-control-choose">' . __( 'Choose Image', 'audiotheme-i18n' ) . '</a>';
+			
+			echo '</span>';
+		}
+		*/
 		
 		echo $this->get_field_description( $args );
 	}
@@ -655,7 +694,7 @@ class Audiotheme_Settings {
 	}
 	
 	/**
-	 * Callback to render a hidden field to store a customizer setting.
+	 * Callback to render a hidden field to store a Theme Customizer setting.
 	 * 
 	 * @since 1.0.0
 	 * @todo Figure out if this will work for non-scalar values.
@@ -739,7 +778,7 @@ class Audiotheme_Settings {
 	}
 	
 	/**
-	 * Register the Customizer sections, settings, and controls.
+	 * Register the Theme Customizer sections, settings, and controls.
 	 *
 	 * Should be called by a hook attached to the 'customize_register' action
 	 * and pass the manager object directly.
@@ -753,20 +792,20 @@ class Audiotheme_Settings {
 	 * @param  WP_Customize_Manager $manager [description]
 	 */
 	public function register_customizer_settings( $manager ) {
-		// Register Customizer sections.
+		// Register Theme Customizer sections.
 		$sections = $this->screens['customizer']->tabs['customizer']['sections'];
 		foreach ( $sections as $section_id => $section_args ) {
 			$manager->add_section( $section_id, $section_args );
 		}
 		
-		// Find Customizer settings in the $settings member variable.
+		// Find Theme Customizer settings in the $settings member variable.
 		$settings = wp_list_filter( $this->settings, array( 'screen' => 'customizer' ) );
 		$theme_options_settings = wp_list_filter( $this->settings, array( 'screen' => 'audiotheme-theme-options', 'show_in_customizer' => true ) );
 		$settings = array_merge( $settings, $theme_options_settings );
 		
 		if ( ! empty( $settings ) ) {
 			foreach ( $settings as $setting ) {
-				// Replace standard args with Customizer args.
+				// Replace standard args with Theme Customizer args.
 				$args = wp_parse_args( $setting['customizer'], $setting );
 				unset( $args['customizer'] );
 				
@@ -794,9 +833,9 @@ class Audiotheme_Settings {
 	 * using the WordPress Settings API. For cases where the priority is the
 	 * same, the title or label property will be used for sorting.
 	 *
-	 * Any Customizer only settings are output as hidden setting fields on the
-	 * Theme Options screen so that their values aren't blanked out whenever
-	 * the screen is saved.
+	 * Any Theme Customizer only settings are output as hidden setting fields
+	 * on the Theme Options screen so that their values aren't blanked out
+	 * whenever the screen is saved.
 	 *
 	 * @since 1.0.0
 	 * @uses add_settings_section()
@@ -844,7 +883,7 @@ class Audiotheme_Settings {
 								add_settings_field( $setting['key'], $setting['label'], $setting['field_callback'], $setting['wp_settings_section'], $setting['section'], $args );
 							}
 						} elseif ( 'audiotheme-theme-options' == $tab_id && '_default' == $section_id ) {
-							// Make sure the default theme options section gets registered for any customizer settings to be synced.
+							// Make sure the default theme options section gets registered for any Theme Customizer settings to be synced.
 							add_settings_section( '_default', '', '__return_false', 'audiotheme-theme-options' );
 						}
 					}
@@ -864,20 +903,20 @@ class Audiotheme_Settings {
 	}
 	
 	/**
-	 * Get a customizer control from the setting field type.
+	 * Get a Theme Customizer control from the setting field type.
 	 *
 	 * Provides an action for returning custom controls.
 	 *
 	 * @access protected
 	 * @since  1.0.0
 	 * 
-	 * @param WP_Customizer_Manager $manager The Customizer manager object.
+	 * @param WP_Customizer_Manager $manager The Theme Customizer manager object.
 	 * @param array $args Setting field arguments.
 	 * @return string|WP_Customizer_Control|bool A control to use in the Customizer or false if unknown.
 	 */
 	protected function get_customizer_control( $manager, $args ) {
 		$simple_controls = array( 'checkbox', 'dropdown-pages', 'radio', 'select', 'text' );
-		$custom_controls = array( 'color', 'file', 'image' );
+		$custom_controls = array( 'color', 'file', 'image', 'textarea' );
 		
 		if ( in_array( $args['control'], $simple_controls ) ) {
 			return $args['control'];
@@ -894,6 +933,8 @@ class Audiotheme_Settings {
 				case 'image' :
 					$args['type'] = 'image';
 					return new WP_Customize_Image_Control( $manager, $args['key'], $args );
+				case 'textarea' :
+					return new Audiotheme_Settings_Customize_Textarea_Control( $manager, $args['key'], $args );
 				default :
 					// Allow for custom customizer controls.
 					return apply_filters( 'audiotheme_settings_customizer_control', false, $args['control'], $args );

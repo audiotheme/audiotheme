@@ -151,6 +151,8 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 .audiotheme-settings-screen .form-table tr.audiotheme-settings-error td input { background-color: #fff6f6; border-color: #ee9999;}
 .audiotheme-settings-screen .form-table tr.audiotheme-settings-error th label { color: #cc0000; font-weight: bold;}
 
+.audiotheme-settings-screen .wp-picker-holder { z-index: 99999; position: absolute;}
+
 
 /* Venue Screens
 -------------------------------------------------------------- */

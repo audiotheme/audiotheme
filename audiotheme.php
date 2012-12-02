@@ -54,6 +54,8 @@ if ( ! defined( 'AUDIOTHEME_URI' ) )
  *
  * Ideally all functionality should be loaded via hooks so it can be disabled
  * or replaced by a theme or plugin if necessary.
+ *
+ * @todo Rework the loading order using 'plugins_loaded'.
  */
 add_action( 'after_setup_theme', 'audiotheme_setup' );
 
