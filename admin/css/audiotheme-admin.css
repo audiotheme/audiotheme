@@ -11,10 +11,6 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 .audiotheme-field input[type="date"] { margin-bottom: 3px; width: 100%;}
 
 .audiotheme-meta-field { clear: both;  }
-/*
-@todo How does this effect < 3.5?
-.audiotheme-meta-field * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
-*/
 .audiotheme-meta-field label { font-weight: bold; margin: 0 0 3px; display: inline-block; }
 .audiotheme-meta-field input[type="checkbox"] + label,
 .audiotheme-meta-field input[type="radio"] + label { font-weight: normal; vertical-align: middle; }
@@ -39,7 +35,7 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 .audiotheme-edit-after-editor { margin: 20px 0 0 0;}
 .branch-3-4 .audiotheme-edit-after-editor { margin: 0 0 20px 0;}
 
-.audiotheme-input-append { display: inline-block;}
+.audiotheme-input-append { display: inline-block; vertical-align: top;}
 .audiotheme-input-append input { margin-right: 0;
 	-webkit-border-top-right-radius: 0;
 	-webkit-border-bottom-right-radius: 0;
@@ -49,34 +45,30 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 	border-bottom-right-radius: 0;}
 .audiotheme-input-append .audiotheme-input-append-trigger,
 .audiotheme-input-append button.ui-datepicker-trigger { cursor: pointer; display: inline-block; margin: 0; padding: 0; width: 30px; height: 30px; line-height: 30px; text-align: center; vertical-align: middle;
-	background-color: #f1f1f1; /* Fallback */
-	background-image: -ms-linear-gradient(top, #f9f9f9, #ececec); /* IE10 */
-	background-image: -moz-linear-gradient(top, #f9f9f9, #ececec); /* Firefox */
-	background-image: -o-linear-gradient(top, #f9f9f9, #ececec); /* Opera */
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#f9f9f9), to(#ececec)); /* old Webkit */
-	background-image: -webkit-linear-gradient(top, #f9f9f9, #ececec); /* new Webkit */
-	background-image: linear-gradient(top, #f9f9f9, #ececec); /* proposed W3C Markup */
+	background: #f3f3f3;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#f4f4f4));
+	background-image: -webkit-linear-gradient(top, #fefefe, #f4f4f4);
+	background-image:    -moz-linear-gradient(top, #fefefe, #f4f4f4);
+	background-image:      -o-linear-gradient(top, #fefefe, #f4f4f4);
+	background-image:   linear-gradient(to bottom, #fefefe, #f4f4f4);
 	border: 1px solid #dfdfdf;
 	border-left-width: 0;
-	-webkit-border-top-right-radius: 3px;
-	-webkit-border-bottom-right-radius: 3px;
-	-moz-border-radius-topright: 3px;
-	-moz-border-radius-bottomright: 3px;
-	border-top-right-radius: 3px;
-	border-bottom-right-radius: 3px;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;}
+	-webkit-border-top-right-radius: 3px; -webkit-border-bottom-right-radius: 3px;
+	-moz-border-radius-topright: 3px; -moz-border-radius-bottomright: 3px;
+	border-top-right-radius: 3px; border-bottom-right-radius: 3px;
+	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;}
 .audiotheme-input-append .audiotheme-input-append-trigger img { display: inline-block; vertical-align: text-top;}
 .audiotheme-input-append.focused .audiotheme-input-append-trigger,
-.audiotheme-input-append.focused button.ui-datepicker-trigger { border-color: #bbb;}
+.audiotheme-input-append.focused button.ui-datepicker-trigger { border-color: #bbb;
+	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+	box-shadow: 1px 1px 2px rgba(0,0,0,0.1);}
 
 
 /* Screen Icons
 -------------------------------------------------------------- */
 
-#icon-gigs { background: transparent url(../images/icons32.png) no-repeat -13px -14px;}
-#icon-venues { background: transparent url(../images/icons32.png) no-repeat -313px -14px;}
+#icon-audiotheme-gigs { background: transparent url(../images/icons32.png) no-repeat -13px -14px;}
+#icon-audiotheme-venues { background: transparent url(../images/icons32.png) no-repeat -313px -14px;}
 #icon-edit.icon32-posts-audiotheme_gallery { background: transparent url(../images/icons32.png) no-repeat -193px -14px;}
 #icon-edit.icon32-posts-audiotheme_record { background: transparent url(../images/icons32.png) no-repeat -73px -14px;}
 #icon-edit.icon32-posts-audiotheme_track { background: transparent url(../images/icons32.png) no-repeat -73px -14px;}
@@ -86,14 +78,14 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 /* Menu Icons
 -------------------------------------------------------------- */
 
-#adminmenu #toplevel_page_gigs div.wp-menu-image,
+#adminmenu #toplevel_page_audiotheme-gigs div.wp-menu-image,
 #adminmenu #menu-posts-audiotheme_gallery div.wp-menu-image,
 #adminmenu #toplevel_page_edit-post_type-audiotheme_record div.wp-menu-image,
 #adminmenu #menu-posts-audiotheme_video div.wp-menu-image { background-color: transparent; background-image: url(../images/icons16.png); background-repeat: no-repeat;}
 
-#adminmenu #toplevel_page_gigs div.wp-menu-image { background-position: 0 0;}
-#adminmenu #toplevel_page_gigs:hover div.wp-menu-image,
-#adminmenu #toplevel_page_gigs.wp-has-current-submenu div.wp-menu-image { background-position: 0 -32px;}
+#adminmenu #toplevel_page_audiotheme-gigs div.wp-menu-image { background-position: 0 0;}
+#adminmenu #toplevel_page_audiotheme-gigs:hover div.wp-menu-image,
+#adminmenu #toplevel_page_audiotheme-gigs.wp-has-current-submenu div.wp-menu-image { background-position: 0 -32px;}
 
 #adminmenu #menu-posts-audiotheme_gallery div.wp-menu-image { background-position: -90px 0;}
 #adminmenu #menu-posts-audiotheme_gallery:hover div.wp-menu-image,
@@ -107,19 +99,22 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 #adminmenu #menu-posts-audiotheme_video:hover div.wp-menu-image,
 #adminmenu #menu-posts-audiotheme_video.wp-has-current-submenu div.wp-menu-image { background-position: -60px -32px;}
 
-#adminmenu #toplevel_page_gigs div.wp-menu-image img,
+#adminmenu #toplevel_page_audiotheme-gigs div.wp-menu-image img,
 #adminmenu #menu-posts-audiotheme_gallery div.wp-menu-image img,
 #adminmenu #toplevel_page_edit-post_type-audiotheme_record div.wp-menu-image img,
 #adminmenu #menu-posts-audiotheme_video div.wp-menu-image img { display: none;}
 
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5) {
-	#adminmenu #toplevel_page_gigs div.wp-menu-image,
+@media print,
+  (-o-min-device-pixel-ratio: 5/4),
+  (-webkit-min-device-pixel-ratio: 1.25),
+  (min-resolution: 120dpi) {
+	#adminmenu #toplevel_page_audiotheme-gigs div.wp-menu-image,
 	#adminmenu #menu-posts-audiotheme_gallery div.wp-menu-image,
 	#adminmenu #toplevel_page_edit-post_type-audiotheme_record div.wp-menu-image,
 	#adminmenu #menu-posts-audiotheme_video div.wp-menu-image { background-image: url(../images/icons32.png); background-size: 180px 64px;}
 	
-	#icon-gigs,
-	#icon-venues,
+	#icon-audiotheme-gigs,
+	#icon-audiotheme-venues,
 	#icon-edit.icon32-posts-audiotheme_gallery,
 	#icon-edit.icon32-posts-audiotheme_record,
 	#icon-edit.icon32-posts-audiotheme_track,
@@ -130,8 +125,9 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 /* Gig Screens
 -------------------------------------------------------------- */
 
-#gig-fields { width: 100%; max-width: 600px;}
-#gig-fields th { padding-right: 20px; width: 20%; font-size: 1.2em; font-weight: normal; text-align: left;}
+#gig-fields { width: 100%; max-width: 700px;}
+#gig-fields select { height: 30px;}
+#gig-fields th { padding-right: 20px; width: 20%; max-width: 100px; font-size: 1.2em; font-weight: normal; text-align: left;}
 #gig-venue-timezone { display: none;}
 
 

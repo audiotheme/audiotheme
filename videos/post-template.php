@@ -1,4 +1,11 @@
-<?php  
+<?php
+/**
+ * Video template functions.
+ *
+ * @package AudioTheme_Framework
+ * @subpackage Template
+ */
+
 /**
  * Retrieve Post Video URL.
  *

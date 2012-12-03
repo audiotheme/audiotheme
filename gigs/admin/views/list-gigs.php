@@ -1,11 +1,16 @@
 <div class="wrap">
-	<div id="icon-gigs" class="icon32"><br></div>
+	<div id="icon-audiotheme-gigs" class="icon32"><br></div>
 	<h2>
-		<?php echo $post_type_object->labels->name; ?> 
-		<a href="post-new.php?post_type=audiotheme_gig" class="add-new-h2"><?php echo esc_html( $post_type_object->labels->add_new ); ?></a>
 		<?php
-		if ( ! empty( $_REQUEST['s'] ) )
-			printf( '<span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;', 'audiotheme-i18n' ) . '</span>', get_search_query() );
+		echo $post_type_object->labels->name;
+		
+		if ( current_user_can( $post_type_object->cap->create_posts ) ) {
+			printf( '<a href="post-new.php?post_type=audiotheme_gig" class="add-new-h2">%s</a>', esc_html( $post_type_object->labels->add_new ) );
+		}
+		
+		if ( ! empty( $_REQUEST['s'] ) ) {
+			printf( ' <span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;', 'audiotheme-i18n' ) . '</span>', get_search_query() );
+		}
 		?>
 	</h2>
 	
@@ -62,7 +67,7 @@
 	<form action="" method="get">
 		<?php $gigs_list_table->search_box( $post_type_object->labels->search_items, $post_type_object->name ); ?>
 		
-		<input type="hidden" name="page" value="gigs">
+		<input type="hidden" name="page" value="audiotheme-gigs">
 		<input type="hidden" name="post_status" value="<?php echo ! empty( $_REQUEST['post_status'] ) ? esc_attr( $_REQUEST['post_status'] ) : 'any'; ?>">
 		<input type="hidden" name="post_type" value="<?php echo $post_type_object->name; ?>">
 		

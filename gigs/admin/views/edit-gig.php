@@ -1,3 +1,10 @@
+<?php
+/**
+ * @todo Set a transient whenever a gig is saved so the date and time fields can be automatically adjusted.
+ * The date field will automatically show the next day
+ * The time field will have the same value as the previously saved time
+ */
+?>
 <div id="gig-ui" class="audiotheme-edit-after-title">
 	<?php wp_nonce_field( 'save-gig_' . $post->ID, 'audiotheme_save_gig_nonce' ); ?>
 	<table id="gig-fields">
@@ -5,7 +12,7 @@
 			<th><label for="gig-date"><?php _e( 'Date', 'audiotheme-i18n' ) ?></label></th>
 			<td>
 				<div class="audiotheme-input-append">
-					<input type="text" name="gig_date" id="gig-date" value="<?php echo esc_attr( $gig_date ); ?>" placeholder="MM/DD/YYY" autocomplete="off" tabindex="2">
+					<input type="text" name="gig_date" id="gig-date" value="<?php echo esc_attr( $gig_date ); ?>" placeholder="MM/DD/YYY" autocomplete="off">
 				</div>
 			</td>
 		</tr>
@@ -13,7 +20,7 @@
 			<th><label for="gig-time"><?php _e( 'Time', 'audiotheme-i18n' ) ?></label></th>
 			<td>
 				<div class="audiotheme-input-append">
-					<input type="text" name="gig_time" id="gig-time" value="<?php echo esc_attr( $gig_time ); ?>" placeholder="HH:MM" tabindex="2" style="vertical-align: middle"><label for="gig-time" id="gig-time-select" class="audiotheme-input-append-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/clock.png" width="12" height="12"></label>
+					<input type="text" name="gig_time" id="gig-time" value="<?php echo esc_attr( $gig_time ); ?>" placeholder="HH:MM" style="vertical-align: middle"><label for="gig-time" id="gig-time-select" class="audiotheme-input-append-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/clock.png" width="12" height="12"></label>
 				</div>
 			</td>
 		</tr>
@@ -21,7 +28,7 @@
 			<th><label for="gig-venue"><?php _e( 'Venue', 'audiotheme-i18n' ) ?></label></th>
 			<td>
 				<div class="audiotheme-input-append">
-					<input type="text" name="gig_venue" id="gig-venue" value="<?php echo esc_html( $gig_venue ); ?>" tabindex="2"><label for="gig-venue" id="gig-venue-select" class="audiotheme-input-append-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/arrow-down.png" width="12" height="12" title="<?php esc_attr_e( 'Select Venue', 'audiotheme-i18n' ); ?>" alt="<?php esc_attr_e( 'Select Venue', 'audiotheme-i18n' ); ?>"></label>
+					<input type="text" name="gig_venue" id="gig-venue" value="<?php echo esc_html( $gig_venue ); ?>"><label for="gig-venue" id="gig-venue-select" class="audiotheme-input-append-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/arrow-down.png" width="12" height="12" title="<?php esc_attr_e( 'Select Venue', 'audiotheme-i18n' ); ?>" alt="<?php esc_attr_e( 'Select Venue', 'audiotheme-i18n' ); ?>"></label>
 				</div>
 				
 				<select name="audiotheme_venue[timezone_string]" id="gig-venue-timezone">
@@ -35,77 +42,9 @@
 		<tr>
 			<th><?php _e( 'Note', 'audiotheme-i18n' ) ?></th>
 			<td>
-				<textarea name="excerpt" id="excerpt" cols="76" rows="3" tabindex="2"><?php echo esc_textarea( $post->post_excerpt ); ?></textarea><br>
+				<textarea name="excerpt" id="excerpt" cols="76" rows="3"><?php echo esc_textarea( $post->post_excerpt ); ?></textarea><br>
 				<span class="description">A description of the gig to display within the list of gigs. Who's the opening act, special guests, etc? Keep it short.</span>
 			</td>
 		</tr>
 	</table>
 </div>
-
-<?php
-/**
- * TODO: set transient whenever a gig is saved so the date and time fields can be automatically adjusted.
- * The date field will automatically show the next day
- * The time field will have the same value as the previously saved time
- */
-?>
-<script type="text/javascript">
-jQuery(function($) {
-	$('#gig-date').datepicker({ showOn: 'both', buttonImage: '<?php echo AUDIOTHEME_URI . 'admin/images/calendar.png'; ?>' });
-	$('#gig-time').timepicker({ 'timeFormat': '<?php echo get_option( 'time_format' ); ?>' }).on('focus', function() {
-		var $this = $(this);
-		
-		$this.next('.ui-timepicker-list').width( $this.outerWidth() );
-	});
-	$('#gig-time-select').on('click', function(e) {
-		$('#gig-time').focus();
-	});
-	//$('#gig-time').timepicker({ show24Hours: false, step: 15 });
-	
-	$('#gig-venue').autocomplete({
-		change: function() {
-			var $this = $(this);
-		
-			if ('' != $this.val()) {
-				$.ajax({
-					url: ajaxurl,
-					data: {
-						action: 'ajax_is_new_audiotheme_venue',
-						name: $this.val()
-					},
-					dataType: 'JSON',
-					success: function( data ) {
-						if ( data.length ) {
-							$('#gig-venue-timezone').hide();
-						} else {
-							$('#gig-venue-timezone').show();
-						}
-					}
-				});
-			} else {
-				$('#gig-venue-timezone').hide();
-			}
-		},
-		select: function() {
-			$('#gig-venue-timezone').hide();
-		},
-		source: function( request, response ) {
-			$.ajax({
-				url: ajaxurl,
-				data: {
-					action: 'ajax_get_audiotheme_venue_matches',
-					name: request.term
-				},
-				dataType: 'JSON',
-				success: function( data ) { response( data ); }
-			});
-		},
-		minLength: 0
-	});
-	
-	$('#gig-venue-select').on('click', function(e) {
-		e.preventDefault();
-		$('#gig-venue').focus().autocomplete('search','');
-	});
-});
-</script>

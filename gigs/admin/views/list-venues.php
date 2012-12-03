@@ -1,9 +1,18 @@
 <div class="wrap">
-	<div id="icon-venues" class="icon32"><br></div>
-	<h2><?php
+	<div id="icon-audiotheme-venues" class="icon32"><br></div>
+	<h2>
+		<?php
 		echo $post_type_object->labels->name;
-		echo sprintf( ' <a class="add-new-h2" href="%s">%s</a>', esc_url( get_audiotheme_venue_admin_url() ), esc_html( $post_type_object->labels->add_new ) );
-	?></h2>
+		
+		if ( current_user_can( $post_type_object->cap->create_posts ) ) {
+			printf( ' <a class="add-new-h2" href="%s">%s</a>', esc_url( get_audiotheme_venue_admin_url() ), esc_html( $post_type_object->labels->add_new ) );
+		}
+		
+		if ( ! empty( $_REQUEST['s'] ) ) {
+			printf( ' <span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;', 'audiotheme-i18n' ) . '</span>', get_search_query() );
+		}
+		?>
+	</h2>
 	
 	<?php
 	if ( isset( $_REQUEST['deleted'] ) || isset( $_REQUEST['message'] ) || isset( $_REQUEST['updated'] ) ) {
@@ -39,54 +48,12 @@
 			</p>
 		</div>
 	<?php } ?>
-	
 
 	<form action="" method="get">
-		<input type="hidden" name="page" value="venues">
+		<input type="hidden" name="page" value="audiotheme-venues">
 		<?php $venues_list_table->search_box( $post_type_object->labels->search_items, $post_type_object->name ); ?>
 		
 		<?php $venues_list_table->display(); ?>
 	</form>
 	
 </div><!--end div.wrap-->
-<script type="text/javascript">
-jQuery(function($) {
-	var $state = $('#venue-state'),
-		$country = $('#venue-country');
-	
-	
-	$('#venue-city').autocomplete({
-		source: function( request, response ) {
-			$.ajax({
-				url: 'http://ws.geonames.org/searchJSON',
-				data: {
-					featureClass: 'P',
-					style: 'full',
-					maxRows: 12,
-					name_startsWith: request.term
-				},
-				dataType: 'JSONP',
-				success: function( data ) {
-					response( $.map( data.geonames, function( item ) {
-						return {
-							label: item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName,
-							value: item.name,
-							adminCode: item.adminCode1,
-							countryName: item.countryName,
-							timezone: item.timezone.timeZoneId
-						}
-					}));
-				}
-			});
-		},
-		minLength: 2,
-		select: function(e, ui) {
-			if ('' == $state.val())
-				$state.val(ui.item.adminCode);
-			
-			if ('' == $country.val())
-				$country.val(ui.item.countryName);
-		}
-	});
-});
-</script>

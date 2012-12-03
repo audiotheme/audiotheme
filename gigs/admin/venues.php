@@ -1,8 +1,23 @@
 <?php
-function audiotheme_all_venues_screen_setup() {
+/**
+ * Venue-related functionality in the admin dashboard.
+ *
+ * @package AudioTheme_Framework
+ * @subpackage Gigs
+ */
+
+/**
+ * Set up the venue Manage Screen.
+ *
+ * Adds a help tab and screen option, initializes the custom post list table,
+ * and processes any actions that need to be handled.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_venues_manage_screen_setup() {
 	get_current_screen()->add_help_tab( array(
-		'id' => 'overview',
-		'title' => __( 'Overview', 'audiotheme-i18n' ),
+		'id'      => 'overview',
+		'title'   => __( 'Overview', 'audiotheme-i18n' ),
 		'content' => '<p>' . __( 'This screen provides access to all of your venues. You can customize the display of this screen to suit your workflow.', 'audiotheme-i18n' ) . '</p>'
 	) );
 	
@@ -10,22 +25,22 @@ function audiotheme_all_venues_screen_setup() {
 	$title = $post_type_object->labels->name;
 	add_screen_option( 'per_page', array( 'label' => $title, 'default' => 20 ) );
 	
-	
 	require( AUDIOTHEME_DIR . 'gigs/admin/includes/class-audiotheme-venues-list-table.php' );
 	
 	$venues_list_table = new Audiotheme_Venues_List_Table();
 	$venues_list_table->process_actions();
 	
-	wp_enqueue_script( 'jquery-ui-autocomplete' );
-	wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
-	
-	#add_action( 'admin_notices', 'audiotheme_all_venues_notices' );
+	#add_action( 'admin_notices', 'audiotheme_venues_manage_screen_notices' );
 }
 
-function audiotheme_all_venues_screen() {
+/**
+ * Display the venue Manage Screen.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_venues_manage_screen() {
 	$venues_list_table = new Audiotheme_Venues_List_Table();
 	$venues_list_table->prepare_items();
-	
 	
 	$post_type_object = get_post_type_object( 'audiotheme_venue' );
 	
@@ -47,15 +62,34 @@ function audiotheme_all_venues_screen() {
 	require( AUDIOTHEME_DIR . 'gigs/admin/views/list-venues.php' );
 }
 
-function audiotheme_all_venues_notices() {
+/**
+ *
+ */
+function audiotheme_venues_manage_screen_notices() {
 	
 }
 
-function audiotheme_edit_venue_screen_setup() {
-	audiotheme_edit_venue_screen_process_actions();
+/**
+ * Set up the venue Add/Edit Screen.
+ *
+ * Add custom meta boxes, enqueue scripts and styles and process any actions.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_venue_edit_screen_setup() {
+	audiotheme_venue_edit_screen_process_actions();
 	
-	wp_enqueue_script( 'post' );
-	wp_enqueue_script( 'jquery-ui-autocomplete' );
+	get_current_screen()->add_help_tab( array(
+		'id'      => 'customize',
+		'title'   => __( 'Customize This Screen', 'audiotheme-i18n' ),
+		'content' => '<p>' . __( 'The title field and the big Post Editing Area are fixed in place, but you can reposition all the other boxes using drag and drop. You can also minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to unhide more boxes (Excerpt, Send Trackbacks, Custom Fields, Discussion, Slug, Author) or to choose a 1- or 2-column layout for this screen.', 'audiotheme-i18n' ) . '</p>'
+	) );
+	
+	get_current_screen()->set_help_sidebar(
+		'<p><strong>' . __('For more information:') . '</strong></p>'
+	);
+	
+	wp_enqueue_script( 'audiotheme-venue-edit' );
 	wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
 	
 	$values = get_default_audiotheme_venue_properties();
@@ -64,11 +98,55 @@ function audiotheme_edit_venue_screen_setup() {
 		$values = wp_parse_args( get_object_vars( $venue_to_edit ), $values );
 	}
 	
-	add_meta_box( 'venuecontactdiv', 'Contact', 'audiotheme_edit_venue_contact_meta_box', 'gigs_page_venue', 'normal', 'core', $values );
-	add_meta_box( 'venuenotesdiv', 'Notes', 'audiotheme_edit_venue_notes_meta_box', 'gigs_page_venue', 'normal', 'core', $values );
+	add_meta_box( 'venuecontactdiv', 'Contact', 'audiotheme_venue_contact_meta_box', 'gigs_page_audiotheme-venue', 'normal', 'core', $values );
+	add_meta_box( 'venuenotesdiv', 'Notes', 'audiotheme_venue_notes_meta_box', 'gigs_page_audiotheme-venue', 'normal', 'core', $values );
+	
+	// The 'submitdiv' id prevents the meta box from being hidden.
+	add_meta_box( 'submitdiv', __( 'Save', 'audiotheme-i18n' ), 'audiotheme_venue_submit_meta_box', 'gigs_page_audiotheme-venue', 'side', 'high' );
 }
 
-function audiotheme_edit_venue_screen() {
+/**
+ * Process venue add/edit actions.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_venue_edit_screen_process_actions() {
+	$action = '';
+	if ( isset( $_POST['audiotheme_venue'] ) && isset( $_POST['audiotheme_venue_nonce'] ) ) {
+		$data = $_POST['audiotheme_venue'];
+		$nonce_action = ( empty( $data['ID'] ) ) ? 'add-venue' : 'update-venue_' . $data['ID'];
+		
+		// Should die on error.
+		if ( check_admin_referer( $nonce_action, 'audiotheme_venue_nonce' ) ) {
+			$action = ( ! empty( $data['ID'] ) ) ? 'edit' : 'add';
+		}
+	}
+	
+	// @todo Capability checks.
+	if ( ! empty( $action ) ) {
+		$venue_id = save_audiotheme_venue( $data );
+		$sendback = get_edit_post_link( $venue_id );
+			
+		if ( $venue_id && 'add' == $action ) {
+			$sendback = add_query_arg( 'message', 1, $sendback );
+		} elseif ( $venue_id && 'edit' == $action ) {
+			$sendback = add_query_arg( 'message', 2, $sendback );
+		} else {
+			// @todo Return error message.
+		}
+		
+		wp_redirect( $sendback );
+		exit;
+	}
+}
+
+/**
+ * Display the venue Add/Edit screen.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_venue_edit_screen() {
+	$screen = get_current_screen();
 	$post_type_object = get_post_type_object( 'audiotheme_venue' );
 	
 	$action = 'add';
@@ -87,12 +165,28 @@ function audiotheme_edit_venue_screen() {
 	require( AUDIOTHEME_DIR . 'gigs/admin/views/edit-venue.php' );
 }
 
-function audiotheme_edit_venue_contact_meta_box( $post, $args ) {
+/**
+ * Display venue contact information meta box.
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post $post Venue post object.
+ * @param array $args Additional args passed during meta box registration.
+ */
+function audiotheme_venue_contact_meta_box( $post, $args ) {
 	extract( $args['args'], EXTR_SKIP );
 	require( AUDIOTHEME_DIR . 'gigs/admin/views/edit-venue-contact.php' );
 }
 
-function audiotheme_edit_venue_notes_meta_box( $post, $args ) {
+/**
+ * Display venue notes meta box.
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post $post Venue post object.
+ * @param array $args Additional args passed during meta box registration.
+ */
+function audiotheme_venue_notes_meta_box( $post, $args ) {
 	extract( $args['args'], EXTR_SKIP );
 	
 	$notes = format_to_edit( $notes, user_can_richedit() );
@@ -105,10 +199,17 @@ function audiotheme_edit_venue_notes_meta_box( $post, $args ) {
 	) );
 }
 
-function audiotheme_edit_venue_submit_meta_box( $post ) {
+/**
+ * Display custom venue submit meta box.
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post $post Venue post object.
+ */
+function audiotheme_venue_submit_meta_box( $post ) {
 	$post = ( empty( $post ) ) ? get_default_post_to_edit( 'audiotheme_venue' ) : $post;
 	
-	// TODO: improve capability handling and cleanup
+	// @todo Improve capability handling and clean up.
 	$post_type = $post->post_type;
 	$post_type_object = get_post_type_object( $post_type );
 	$can_publish = current_user_can( $post_type_object->cap->publish_posts );
@@ -142,7 +243,7 @@ function audiotheme_edit_venue_submit_meta_box( $post ) {
 				} else {
 					?>
 					<input type="hidden" name="original_publish" id="original_publish" value="<?php esc_attr_e( 'Update' ) ?>">
-					<input type="submit" name="save" id="publish" class="button-primary button-large" accesskey="p" value="<?php esc_attr_e( 'Update' ) ?>">
+					<input type="submit" name="save" id="publish" class="button-primary" accesskey="p" value="<?php esc_attr_e( 'Update' ) ?>">
 				<?php } ?>
 			</div><!--end div#publishing-action-->
 			
@@ -161,67 +262,12 @@ function audiotheme_edit_venue_submit_meta_box( $post ) {
 				else
 					t.addClass('button-disabled');
 			});
+			
 			if ( $(this).attr('id') == 'publish' )
 				$('#major-publishing-actions .spinner').show();
-			else
-				$('#minor-publishing .spinner').show();
 		});
 	});
 	</script>
 	<?php
-}
-
-function audiotheme_edit_venue_screen_process_actions() {
-	$action = '';
-	if ( isset( $_POST['audiotheme_venue'] ) && isset( $_POST['audiotheme_venue_nonce'] ) ) {
-		$data = $_POST['audiotheme_venue'];
-		$nonce_action = ( empty( $data['ID'] ) ) ? 'add-venue' : 'update-venue_' . $data['ID'];
-		
-		// should die on error
-		if ( check_admin_referer( $nonce_action, 'audiotheme_venue_nonce' ) ) {
-			$action = ( ! empty( $data['ID'] ) ) ? 'edit' : 'add';
-		}
-	}
-	
-	// TODO: capability checks
-	if ( ! empty( $action ) ) {
-		$venue_id = save_audiotheme_venue( $data );
-		$sendback = get_edit_post_link( $venue_id );
-			
-		if ( $venue_id && 'add' == $action ) {
-			$sendback = add_query_arg( 'message', 1, $sendback );
-		} elseif ( $venue_id && 'edit' == $action ) {
-			$sendback = add_query_arg( 'message', 2, $sendback );
-		} else {
-			// TODO: return error message
-		}
-		
-		wp_redirect( $sendback );
-		exit;
-	}
-}
-
-
-
-
-add_action( 'wp_ajax_ajax_get_audiotheme_venue_matches', 'ajax_get_audiotheme_venue_matches' );
-function ajax_get_audiotheme_venue_matches() {
-	global $wpdb;
-	
-	$var = like_escape( stripslashes( $_GET['name'] ) ) . '%';
-	$venues = $wpdb->get_col( $wpdb->prepare( "SELECT post_title FROM $wpdb->posts WHERE post_type='audiotheme_venue' AND post_title LIKE %s ORDER BY post_title ASC", $var ) );
-	
-	echo json_encode( $venues );
-	exit;
-}
-
-add_action( 'wp_ajax_ajax_is_new_audiotheme_venue', 'ajax_is_new_audiotheme_venue' );
-function ajax_is_new_audiotheme_venue() {
-	global $wpdb;
-	
-	$venue = $wpdb->get_col( $wpdb->prepare( "SELECT post_title FROM $wpdb->posts WHERE post_type='audiotheme_venue' AND post_title=%s ORDER BY post_title ASC LIMIT 1", stripslashes( $_GET['name'] ) ) );
-	
-	echo json_encode( $venue );
-	exit;
 }
 ?>

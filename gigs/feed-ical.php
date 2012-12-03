@@ -1,4 +1,11 @@
 <?php
+/**
+ * Gigs iCal feed template.
+ *
+ * @package AudioTheme_Framework
+ * @subpackage Gigs
+ */
+
 header( 'Content-type: text/calendar' );
 header( 'Content-Disposition: attachment; filename="audiotheme-gigs.ics"' );	
 ?>

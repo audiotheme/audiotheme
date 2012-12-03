@@ -1,4 +1,5 @@
 /* @todo Need to clean up these styles. */
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { background-image: none;}
 
 .ui-widget { font-family: sans-serif; font-size: 12px;}
 
@@ -8,9 +9,10 @@ ul.ui-autocomplete { overflow-y: auto; overflow-x: hidden; z-index: 10000; posit
 	-moz-border-radius-bottomright: 3px; -moz-border-radius-bottomleft: 3px;
 	-webkit-border-bottom-right-radius: 3px; -webkit-border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px; border-bottom-left-radius: 3px;}
-ul.ui-autocomplete li.ui-menu-item { margin-bottom: 0; text-align: left; white-space: nowrap;}
-ul.ui-autocomplete li.ui-menu-item a { display: block; padding: 4px 10px; height: 100%;}
-ul.ui-autocomplete li.ui-menu-item a.ui-state-hover { cursor: pointer; margin: 0; background: #ddd; border-width: 0;
+ul.ui-autocomplete .ui-menu-item { margin-bottom: 0; text-align: left; white-space: nowrap;}
+ul.ui-autocomplete .ui-menu-item a { padding: 4px 10px; height: 100%;}
+ul.ui-autocomplete .ui-menu-item a.ui-state-focus,
+ul.ui-autocomplete .ui-menu-item a.ui-state-active { cursor: pointer; margin: 0; background: #ddd; border-width: 0;
 	-moz-border-radius: 0;
 	-webkit-border-radius: 0;
 	border-radius: 0;}
@@ -20,8 +22,6 @@ ul.ui-autocomplete-input.open {
 	-webkit-border-bottom-right-radius: 0; -webkit-border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0; border-bottom-left-radius: 0;}
 
-
-.ui-datepicker { padding: 10px 10px 0 10px;}
 .ui-datepicker-header { background: none; border-width: 0;}
 .ui-datepicker table { font-size: 12px;}
 .ui-datepicker td span,
@@ -32,7 +32,8 @@ ul.ui-autocomplete-input.open {
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	border-radius: 2px;}
-.ui-state-default:hover { background: #eee;}
+.ui-datepicker .ui-state-hover,
+.ui-datepicker .ui-datepicker-next-hover { background: #eee;}
 .ui-datepicker-current-day .ui-state-active { background: #ccc;}
 #ui-datepicker-div { display: none;}
 
@@ -48,3 +49,9 @@ ul.ui-autocomplete-input.open {
 .ui-timepicker-selected,
 .ui-timepicker-list li:hover,
 .ui-timepicker-selected:hover { background-color: #ddd;}
+
+.ui-autocomplete,
+.ui-datepicker,
+.ui-timepicker-list { padding: 10px 10px 0 10px;
+	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+	box-shadow: 1px 1px 2px rgba(0,0,0,0.1);}

@@ -1,4 +1,13 @@
 <?php
+/**
+ * Gigs JSON feed template.
+ *
+ * @package AudioTheme_Framework
+ * @subpackage Gigs
+ */
+
+@header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
+
 foreach ( $wp_query->posts as $post ) {
 	$post = get_audiotheme_gig( $post );
 	
@@ -24,6 +33,7 @@ foreach ( $wp_query->posts as $post ) {
 		$event->venue->location->country = $post->venue->country;
 		
 		$event->venue->location->timezone = $post->venue->timezone_string;
+		// @todo Attempt to add a property to display the date in UTC.
 	}
 	
 	$events[] = $event;

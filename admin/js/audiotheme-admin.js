@@ -1,3 +1,37 @@
+/**
+ * Utility to show WP pointers added via audiotheme_enqueue_pointer().
+ *
+ * @todo Add a method to hide pointers without dismissing them.
+ * @todo Consider how to create tours.
+ */
+(function($) {
+	$.fn.audiothemePointer = function( id ) {
+		return this.each(function() {
+			var $this = $(this),
+				pointer;
+			
+			if( 'undefined' !== typeof jQuery().pointer && 'undefined' !== typeof audiothemePointers ) {
+				pointer = audiothemePointers[ id ] || null;
+				
+				if ( pointer ) {
+					$this.pointer({
+						content: pointer.content,
+						position: pointer.position,
+						close: function() {
+							jQuery.post( ajaxurl, {
+								pointer: id,
+								action: 'dismiss-wp-pointer'
+							});
+							// @todo Remove the pointer from the global so it won't be shown again before a page refresh.
+						}
+					}).pointer('open');
+				}
+			}
+		});
+	}
+})(jQuery);
+
+
 jQuery(function($) {
 	$('.audiotheme-input-append input').on('focus', function() {
 		$(this).parent().addClass('focused');

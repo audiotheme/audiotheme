@@ -1,11 +1,5 @@
-<?php
-/**
- * TODO: screen help support
- *
- */
-?>
 <div class="wrap columns-2" id="venue-edit">
-	<div id="icon-venues" class="icon32"><br></div>
+	<div id="icon-audiotheme-venues" class="icon32"><br></div>
 	<h2><?php
 		if ( 'edit' == $action ) {
 			echo $post_type_object->labels->edit_item;
@@ -43,7 +37,7 @@
 	<?php } ?>
 	
 	<form action="" method="post">
-		<input type="hidden" name="page" value="venue">
+		<input type="hidden" name="page" value="audiotheme-venue">
 		<input type="hidden" name="audiotheme_venue[ID]" id="venue-id" value="<?php echo esc_attr( $ID ); ?>">
 		<?php
 		echo $nonce_field;
@@ -110,16 +104,12 @@
 						</div>
 					</div>
 					
-					<?php do_meta_boxes( 'gigs_page_venue', 'normal', '' ); ?>
+					<?php do_meta_boxes( $screen->id, 'normal', '' ); ?>
 				</div><!--end div#post-body-content-->
 				
 				
 				<div id="postbox-container-1" class="postbox-container">
-					<?php
-					add_meta_box( 'venuesubmitdiv', __( 'Save', 'audiotheme-i18n' ), 'audiotheme_edit_venue_submit_meta_box', 'gigs_page_venue', 'side', 'high' );
-					
-					do_meta_boxes( 'gigs_page_venue', 'side', get_post( $ID ) );
-					?>
+					<?php do_meta_boxes( $screen->id, 'side', get_post( $ID ) ); ?>
 				</div>
 				
 				
@@ -128,46 +118,3 @@
 		</div><!--end div#poststuff-->
 	</form>
 </div><!--end div.wrap-->
-<script type="text/javascript">
-jQuery(function($) {
-	var $state = $('#venue-state'),
-		$country = $('#venue-country');
-	
-	
-	$('#venue-city').autocomplete({
-		source: function( request, response ) {
-			$.ajax({
-				url: 'http://ws.geonames.org/searchJSON',
-				data: {
-					featureClass: 'P',
-					style: 'full',
-					maxRows: 12,
-					name_startsWith: request.term
-				},
-				dataType: 'JSONP',
-				success: function( data ) {
-					response( $.map( data.geonames, function( item ) {
-						return {
-							label: item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName,
-							value: item.name,
-							adminCode: item.adminCode1,
-							countryName: item.countryName,
-							timezone: item.timezone.timeZoneId
-						}
-					}));
-				}
-			});
-		},
-		minLength: 2,
-		select: function(e, ui) {
-			if ('' == $state.val())
-				$state.val(ui.item.adminCode);
-			
-			if ('' == $country.val())
-				$country.val(ui.item.countryName);
-			
-			$('#venue-timezone-string option[value="' + ui.item.timezone + '"]').attr('selected','selected');
-		}
-	});
-});
-</script>

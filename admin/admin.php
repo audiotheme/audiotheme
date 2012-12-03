@@ -36,6 +36,9 @@ function audiotheme_admin_setup() {
 	// Fires new action hooks in older versions for backwards compatibility.
 	add_action( 'edit_form_advanced', 'audiotheme_edit_form_compat_actions' );
 	
+	// Print javascript pointer object.
+	add_action( 'admin_print_footer_scripts', 'audiotheme_print_pointers' );
+	
 	
 	// @todo Reimplement the license key functionality.
 	
@@ -57,7 +60,7 @@ function audiotheme_admin_init() {
 	wp_register_script( 'audiotheme-settings', AUDIOTHEME_URI . 'admin/js/audiotheme-settings.js' );
 
 	wp_register_style( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/css/audiotheme-admin.css' );
-	wp_register_style( 'jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/smoothness/jquery-ui.css' );
+	wp_register_style( 'jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css' );
 	wp_register_style( 'jquery-ui-theme-audiotheme', AUDIOTHEME_URI . 'admin/css/jquery-ui-audiotheme.css', array( 'jquery-ui-theme-smoothness' ) );
 }
 
@@ -350,8 +353,8 @@ function audiotheme_admin_menu_order( $menu_order ) {
 	$start_key = array_search( 'edit.php', $menu_order );
 	
 	// Only try to re-order the menu items if the gigs menu hasn't been moved.
-	if ( false !== $start_key && array_key_exists( 512, $menu ) && 'gigs' == $menu[512][2] ) {
-		$audiotheme_admin_menu_order = array( 'gigs', 'edit.php?post_type=audiotheme_record', 'edit.php?post_type=audiotheme_video', 'edit.php?post_type=audiotheme_gallery' );
+	if ( false !== $start_key && array_key_exists( 512, $menu ) && 'audiotheme-gigs' == $menu[512][2] ) {
+		$audiotheme_admin_menu_order = array( 'audiotheme-gigs', 'edit.php?post_type=audiotheme_record', 'edit.php?post_type=audiotheme_video', 'edit.php?post_type=audiotheme_gallery' );
 		
 		foreach ( $audiotheme_admin_menu_order as $i => $item ) {
 			$menu_key = array_search( $item, $menu_order );
