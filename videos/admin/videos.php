@@ -41,7 +41,7 @@ function audiotheme_load_videos_admin() {
  * @see /wp-admin/edit-form-advanced.php
  *
  * @param array $messages The array of existing post update messages.
- * @return array An array of new video update messages.
+ * @return array
  */
 function audiotheme_video_post_updated_messages( $messages ) {
 	global $post, $post_ID;

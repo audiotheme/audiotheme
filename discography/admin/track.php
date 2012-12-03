@@ -1,12 +1,12 @@
 <?php
 /**
- * Ensure Track Slugs are Unique
+ * Ensure track slugs are unique.
  *
  * Tracks should always be associated with a record so their slugs only need
  * to be unique within the context of a record.
  *
  * @since 1.0.0
- * @todo Remove the "unsuffix" code once < 3.5 is supported.
+ * @see wp_unique_post_slug()
  */
 function audiotheme_track_unique_slug( $slug, $post_ID, $post_status, $post_type, $post_parent, $original_slug = null ) {
 	global $wpdb, $wp_rewrite;
@@ -15,38 +15,11 @@ function audiotheme_track_unique_slug( $slug, $post_ID, $post_status, $post_type
 		$slug = $original_slug;
 		
 		$feeds = $wp_rewrite->feeds;
-		if ( ! is_array( $feeds ) )
+		if ( ! is_array( $feeds ) ) {
 			$feeds = array();
-		
-		// Original slug will only be populated in 3.5 or greater
-		// This conditional block can be removed when support is dropped for versions lower than 3.5
-		if ( empty( $original_slug ) ) {
-			// Did we get suffixed?! If so, try to get the original slug
-			// This should only work against the default uniqueness algorithm
-			$suffix = end( explode( '-', $slug ) );
-			if ( is_numeric( $suffix ) && $suffix > 1 ) {
-				$old_slug = $slug;
-				$check_sql = "SELECT post_name FROM $wpdb->posts WHERE post_name=%s AND post_type=%s AND ID!=%d LIMIT 1";
-				
-				do {
-					$prev_post_name = substr( $slug, 0, ( strlen( $suffix ) + 1 ) * -1 ); // remove the suffix
-					$prev_post_name = ( 1 === --$suffix ) ? $prev_post_name : $prev_post_name . '-' . $suffix; // append the new suffix
-					$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $prev_post_name, $post_type, $post_parent, $post_ID ) );
-					if ( $post_name_check ) {
-						$old_slug = $prev_post_name; // store the match
-					}
-				} while( $post_name_check && $suffix > 1 );
-				
-				// Suffixes due to $post_name_check have been removed
-				// Now we need to make sure the previous possible match wasn't suffixed due to matching a feed or filter
-				if ( in_array( $prev_post_name, $feeds ) || apply_filters( 'wp_unique_post_slug_is_bad_flat_slug', false, $prev_post_name, $post_type ) ) {
-					$old_slug = $prev_post_name;
-				}
-				$slug = $old_slug;
-			}
 		}
 		
-		// Make sure the track slug is unique within the context of the record only
+		// Make sure the track slug is unique within the context of the record only.
 		$check_sql = "SELECT post_name FROM $wpdb->posts WHERE post_name=%s AND post_type=%s AND post_parent=%d AND ID!=%d LIMIT 1";
 		$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug, $post_type, $post_parent, $post_ID ) );
 	
@@ -65,7 +38,7 @@ function audiotheme_track_unique_slug( $slug, $post_ID, $post_status, $post_type
 }
 
 /**
- * Custom Sorting on All Tracks Screen
+ * Custom sort tracks on the Manage Tracks screen.
  *
  * @since 1.0.0
  */
@@ -86,7 +59,7 @@ function audiotheme_tracks_admin_query( $wp_query ) {
 			$wp_query->set( 'orderby', $orderby );
 			$wp_query->set( 'order', $order );
 		} elseif ( empty( $_GET['orderby'] ) ) {
-			// auto-sort tracks by title
+			// Auto-sort tracks by title.
 			$wp_query->set( 'orderby', 'title' );
 			$wp_query->set( 'order', 'asc' );
 		}
@@ -98,14 +71,17 @@ function audiotheme_tracks_admin_query( $wp_query ) {
 }
 
 /**
- * Register Track Columns
+ * Register track columns.
  *
  * @since 1.0.0
+ *
+ * @param array $columns An array of the column names to display.
+ * @return array The filtered array of column names.
  */
-function audiotheme_track_columns( $columns ) {
-	$columns = array(
-		'cb'       => '<input type="checkbox">',
-		'title'    => _x( 'Title', 'column_name', 'audiotheme-i18n' ),
+function audiotheme_track_register_columns( $columns ) {
+	$columns['title'] = _x( 'Track', 'column_name', 'audiotheme-i18n' );
+	
+	$track_columns = array(
 		'artist'   => __( 'Artist', 'audiotheme-i18n' ),
 		'record'   => __( 'Record', 'audiotheme-i18n' ),
 		'file'     => __( 'Audio File', 'audiotheme-i18n' ),
@@ -113,15 +89,37 @@ function audiotheme_track_columns( $columns ) {
 		'purchase' => __( 'Purchase URL', 'audiotheme-i18n' )
 	);
 	
+	$columns = audiotheme_array_insert_after_key( $columns, 'title', $track_columns );
+	
+	unset( $columns['date'] );
+	
 	return $columns;
 }
 
 /**
- * Display Custom Track Columns
+ * Register sortable track columns.
  *
  * @since 1.0.0
+ *
+ * @param array $columns Column query vars with their corresponding column id as the key.
  */
-function audiotheme_track_display_column( $column_name, $post_id ) {
+function audiotheme_track_register_sortable_columns( $columns ) {
+	$columns['artist'] = 'artist';
+	$columns['track_count'] = 'tracks';
+	$columns['download'] = 'download';
+	
+	return $columns;
+}
+
+/**
+ * Display custom track columns.
+ *
+ * @since 1.0.0
+ *
+ * @param string $column_id The id of the column to display.
+ * @param int $post_id Post ID.
+ */
+function audiotheme_track_display_columns( $column_name, $post_id ) {
 	switch ( $column_name ) {
 		case 'artist' :
 			echo get_post_meta( $post_id, '_audiotheme_artist', true );
@@ -165,20 +163,7 @@ function audiotheme_track_display_column( $column_name, $post_id ) {
 }
 
 /**
- * Register Sortable Track Columns
- *
- * @since 1.0.0
- */
-function audiotheme_track_sortable_columns( $columns ) {
-	$columns['artist'] = 'artist';
-	$columns['track_count'] = 'tracks';
-	$columns['download'] = 'download';
-	
-	return $columns;
-}
-
-/**
- * Remove Quick Edit from Track List Table
+ * Remove quick edit from the track list table.
  *
  * @since 1.0.0
  */
@@ -191,7 +176,7 @@ function audiotheme_track_list_table_actions( $actions, $post ) {
 }
 
 /**
- * Remove Bulk Edit from Track List Table
+ * Remove bulk edit from the track list table.
  *
  * @since 1.0.0
  */
@@ -201,7 +186,7 @@ function audiotheme_track_list_table_bulk_actions( $actions ) {
 }
 
 /**
- * Custom Track Filter Dropdowns
+ * Custom track filter dropdowns.
  *
  * @since 1.0.0
  */
@@ -232,27 +217,21 @@ function audiotheme_tracks_filters() {
 }
 
 /**
- * Custom Rules for Saving a Track
+ * Custom rules for saving a track.
  *
  * Updates track meta data.
  *
  * @since 1.0.0
  */
-function audiotheme_track_save_hook( $post_id ) {
-	global $wpdb;
+function audiotheme_track_save_post( $post_id ) {
+	$is_autosave = ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ? true : false;
+	$is_revision = wp_is_post_revision( $post_id );
+	$is_valid_nonce = ( isset( $_POST['audiotheme_track_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_track_nonce'], 'update-track_' . $post_id ) ) ? true : false;
 	
-	// Let's not auto save the data
-	if( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || wp_is_post_revision( $post_id ) )
-		return; 
-
-	// Check our nonce
-	if( ! isset( $_POST['audiotheme_track_nonce'] ) || ! wp_verify_nonce( $_POST['audiotheme_track_nonce'], 'update-track_' . $post_id ) )
+	// Bail if the data shouldn't be saved or intention can't be verified.
+	if( $is_autosave || $is_revision || ! $is_valid_nonce ) {
 		return;
-	
-	if ( 'audiotheme_track' != get_post_type( $post_id ) )
-		return false;
-	
-	$current_user = wp_get_current_user();
+	}
 	
 	$fields = array( 'artist', 'file_url', 'purchase_url' );
 	foreach( $fields as $field ) {
@@ -265,7 +244,7 @@ function audiotheme_track_save_hook( $post_id ) {
 }
 
 /**
- * Register Track Meta Boxes
+ * Register track meta boxes.
  *
  * @since 1.0.0
  */
@@ -299,10 +278,11 @@ function audiotheme_edit_track_meta_boxes( $post ) {
 
 
 /**
- * Track Details Meta Box
+ * Display track details meta box.
  *
  * @since 1.0.0
  * @todo Consider appending the "Upload MP3" button to the field.
+ * @todo Update to use 3.5 media frame.
  */
 function audiotheme_track_details_meta_box( $post ) {
 	// Nonce to verify intention later

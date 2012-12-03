@@ -81,7 +81,7 @@ function audiotheme_gigs_init() {
 		'cardinality' => 'one-to-many'
     ) );
 	
-	// Hook into rewrite generation filter and add custom rewrite rules.
+	// Hook into the rewrite generation filter and add custom rewrite rules.
 	add_filter( 'generate_rewrite_rules', 'audiotheme_gig_generate_rewrite_rules' );
 	
 	// Filter the query to make sure gigs are returned in a logical way.

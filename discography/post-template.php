@@ -1,13 +1,13 @@
 <?php
 /**
- * Record Link Sources
+ * Get record link sources.
  *
  * List of default outlets from which records can be purchased. The options
  * listed here show up as suggestions when the user types.
  *
  * @since 1.0.0
- * 
  * @todo Create an interface for registering new sources and icons.
+ *
  * @return array
  */
 function get_audiotheme_record_link_sources() {
@@ -23,16 +23,15 @@ function get_audiotheme_record_link_sources() {
 	return apply_filters( 'audiotheme_record_link_sources', $default_sources );
 }
 
-
 /**
- * Record Type Strings
+ * Get record type strings.
  *
  * List of default record types to better define the record, much like a post
  * format.
  *
  * @since 1.0.0
  * 
- * @return array A list of record types.
+ * @return array List of record types.
  */
 function get_audiotheme_record_type_strings() {
 	$strings = array(
@@ -44,7 +43,7 @@ function get_audiotheme_record_type_strings() {
 
 
 /**
- * Get Record Type Slugs
+ * Get record type slugs.
  *
  * Gets an array of available record type slugs from record type strings.
  *
@@ -59,14 +58,14 @@ function get_audiotheme_record_type_slugs() {
 
 
 /**
- * Get Record Type String
+ * Get record type string.
  *
  * Sets default value of record type if option is not set.
  *
  * @since 1.0.0
  * 
- * @param string A record type slug.
- * @return string A record type label.
+ * @param string Record type slug.
+ * @return string Record type label.
  */
 function get_audiotheme_record_type_string( $slug ) {
 	$strings = get_audiotheme_record_type_strings();
@@ -80,7 +79,7 @@ function get_audiotheme_record_type_string( $slug ) {
 
 
 /**
- * Get Record Type
+ * Get a record's type.
  *
  * @since 1.0.0
  *
@@ -102,7 +101,7 @@ function get_audiotheme_record_type( $post_id = null ) {
 
 
 /**
- * Get Record Release Year
+ * Get a record's release year.
  *
  * @since 1.0.0
  *
@@ -116,7 +115,7 @@ function get_audiotheme_record_release_year( $post_id = null ) {
 
 
 /**
- * Get Record Artist
+ * Get a record's artist.
  *
  * @since 1.0.0
  *
@@ -130,7 +129,7 @@ function get_audiotheme_record_artist( $post_id = null ) {
 
 
 /**
- * Get Record Link
+ * Get a record's links.
  *
  * @since 1.0.0
  *
@@ -144,7 +143,7 @@ function get_audiotheme_record_links( $post_id = null ) {
 
 
 /**
- * Get Record Genre
+ * Get the record genre.
  *
  * @since 1.0.0
  *
@@ -158,7 +157,7 @@ function get_audiotheme_record_genre( $post_id = null ) {
 
 
 /**
- * Get Tracks
+ * Get a record's tracks.
  *
  * @since 1.0.0
  * 
@@ -187,7 +186,7 @@ function get_audiotheme_record_tracks( $post_id = null ) {
 
 
 /**
- * Has Track Download
+ * Check if a track is downloadable.
  *
  * @since 1.0.0
  *
@@ -212,7 +211,7 @@ function is_audiotheme_track_downloadable( $post_id = null ) {
 
 
 /**
- * Get Track Artist
+ * Get a track's artist.
  *
  * @since 1.0.0
  * 
@@ -226,7 +225,7 @@ function get_audiotheme_track_artist( $post_id = null ) {
 
 
 /**
- * Get Track File URL.
+ * Get the file URL for a track.
  *
  * @since 1.0.0
  *
@@ -240,7 +239,7 @@ function get_audiotheme_track_file_url( $post_id = null ) {
 
 
 /**
- * Get Track Purchase URL.
+ * Get the purchase URL for a track.
  *
  * @since 1.0.0
  *

@@ -33,13 +33,12 @@
 
 
 jQuery(function($) {
-	$('.audiotheme-input-append input').on('focus', function() {
+	$('.wrap').on('focus', '.audiotheme-input-append input', function() {
 		$(this).parent().addClass('focused');
 	}).on('blur', function() {
 		$(this).parent().removeClass('focused');
 	});
 });
-
 
 /**
  * Media Popup Helper
@@ -107,13 +106,17 @@ jQuery(function($) {
 	});
 });
 
-
 /**
- * Meta Repeater
+ * Repeater
+ *
+ * @todo Add triggers when new items are added.
+ * @todo Convert actions (clear, remove, hide, show) to data attribute rather than classes.
  */
 (function($) {
-	// .clear-on-add will clear the value of a form element in a newly added row
-	// .remove-on-add will remove an element from a newly added row
+	// .audiotheme-clear-on-add will clear the value of a form element in a newly added row.
+	// .audiotheme-hide-on-add will hide the element in a newly added row.
+	// .audiotheme-remove-on-add will remove an element from a newly added row.
+	// .audiotheme-show-on-add will show a hidden elment in a newly added row.
 	
 	var methods = {
 		init : function( options ) {
@@ -122,13 +125,12 @@ jQuery(function($) {
 
 			return this.each(function() {
 				var repeater = $(this)
-					firstItem = repeater.find('.meta-repeater-item:eq(0)');
+					firstItem = repeater.find('.audiotheme-repeater-item:eq(0)');
 				
 				firstItem.parent().sortable({
 					axis: 'y',
 					forceHelperSize: true,
 					forcePlaceholderSize: true,
-					placeholder: 'meta-repeater-placeholder',
 					helper: function(e, ui) {
 						var $helper = ui.clone();
 						$helper.children().each(function(index) {
@@ -137,37 +139,32 @@ jQuery(function($) {
 						
 						return $helper;
 					},
-					start: function(e, ui) {
-						var colCount = ui.helper.children().length;
-						//ui.placeholder.css('visibility','visible').html('<td colspan="' + colCount + '">&nbsp;</td>');
-					},
 					update: function(e, ui) {
-						repeater.metaRepeater('updateIndex');
+						repeater.audiothemeRepeater('updateIndex');
 					},
 					change: function() {
-						repeater_id = $( '#' + repeater.attr('id') );
-						$('.meta-repeater-sort-warning', repeater_id).fadeIn('slow');
+						repeater.find('.audiotheme-repeater-sort-warning').fadeIn('slow');
 					}
 				});
 				
-				repeater.data('itemIndex', repeater.find('.meta-repeater-item').length).data('itemTemplate', firstItem.clone());
+				repeater.data('itemIndex', repeater.find('.audiotheme-repeater-item').length).data('itemTemplate', firstItem.clone());
 				
-				repeater.find('.meta-repeater-add-item').on('click', function(e) {
+				repeater.find('.audiotheme-repeater-add-item').on('click', function(e) {
 					e.preventDefault();
-					$(this).closest('.meta-repeater').metaRepeater('addItem');
+					$(this).closest('.audiotheme-repeater').audiothemeRepeater('addItem');
 				});
 				
-				repeater.on('click', '.meta-repeater-remove-item', function(e) {
-					var repeater = $(this).closest('.meta-repeater');
+				repeater.on('click', '.audiotheme-repeater-remove-item', function(e) {
+					var repeater = $(this).closest('.audiotheme-repeater');
 					e.preventDefault();
-					$(this).closest('.meta-repeater-item').remove();
-					repeater.metaRepeater('updateIndex');
+					$(this).closest('.audiotheme-repeater-item').remove();
+					repeater.audiothemeRepeater('updateIndex');
 				});
 				
-				repeater.on('blur', 'input', function() {
-					$(this).closest('.meta-repeater').find('.meta-repeater-item').removeClass('meta-repeater-active-item');
-				}).on('focus', 'input', function() {
-					$(this).closest('.meta-repeater-item').addClass('meta-repeater-active-item').siblings().removeClass('meta-repeater-active-item');
+				repeater.on('blur', 'input,select,textarea', function() {
+					$(this).closest('.audiotheme-repeater').find('.audiotheme-repeater-item').removeClass('audiotheme-repeater-active-item');
+				}).on('focus', 'input,select,textarea', function() {
+					$(this).closest('.audiotheme-repeater-item').addClass('audiotheme-repeater-active-item').siblings().removeClass('audiotheme-repeater-active-item');
 				});
 			});
 		},
@@ -177,34 +174,37 @@ jQuery(function($) {
 				itemIndex = repeater.data('itemIndex'),
 				itemTemplate = repeater.data('itemTemplate');
 			
-			repeater.find('.meta-repeater-items').append(itemTemplate.clone()).children(':last-child').find('input,select,textarea').each(function(e) {
-				var $this = $(this);
-				$this.attr('name', $this.attr('name').replace('[0]', '[' + itemIndex + ']') );
-				if ('undefined' != typeof $this.attr('id')) {
-					$this.attr('id', $this.attr('id').replace('0', itemIndex) );
-				}
-			}).end().find('.thickbox').each(function(e) {
-				var $this = $(this);
-				$this.attr('data-insert-field', $this.attr('data-insert-field').replace('0', itemIndex) );
-			}).end().find('.clear-on-add').val('').end().find('.remove-on-add').remove().end().find('.show-on-add').show();
+			repeater.find('.audiotheme-repeater-items').append(itemTemplate.clone()).
+				children(':last-child').find('input,select,textarea').each(function(e) {
+					var $this = $(this);
+					$this.attr('name', $this.attr('name').replace('[0]', '[' + itemIndex + ']') );
+				}).end().
+				find('.thickbox').each(function(e) {
+					var $this = $(this);
+					$this.attr('data-insert-field', $this.attr('data-insert-field').replace('0', itemIndex) );
+				}).end().
+				find('.audiotheme-clear-on-add').val('').end().
+				find('.audiotheme-remove-on-add').remove().end().
+				find('.audiotheme-show-on-add').show().end().
+				find('.audiotheme-hide-on-add').hide().end();
 			
-			repeater.data('itemIndex', itemIndex+1 ).metaRepeater('updateIndex');
+			repeater.data('itemIndex', itemIndex+1 ).audiothemeRepeater('updateIndex');
 		},
 			
 		updateIndex : function() {
-			$('.meta-repeater-index', this).each(function(i) {
+			$('.audiotheme-repeater-index', this).each(function(i) {
 				$(this).text(i + 1 + '.');
 			});
 		}
 	};	
 	
-	$.fn.metaRepeater = function(method) {
+	$.fn.audiothemeRepeater = function(method) {
 		if ( methods[method] ) {
 			return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
 		} else if ( typeof method === 'object' || ! method) {
 			return methods.init.apply(this, arguments);
 		} else {
-			$.error('Method ' +  method + ' does not exist on jQuery.metaRepeater');
+			$.error('Method ' +  method + ' does not exist on jQuery.audiothemeRepeater');
 		}    
 	};
 })(jQuery);

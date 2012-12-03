@@ -1,6 +1,6 @@
 <?php
 /**
- * Gig-related functionality in the admin dashboard.
+ * Gig-related admin functionality.
  *
  * @package AudioTheme_Framework
  * @subpackage Gigs
@@ -36,6 +36,7 @@ function audiotheme_gigs_admin_setup() {
 	
 	add_action( 'admin_menu', 'audiotheme_gigs_admin_menu' );
 	add_action( 'admin_init', 'audiotheme_gigs_admin_init' );
+	add_filter( 'post_updated_messages', 'audiotheme_gig_post_updated_messages' );
 	add_filter( 'audiotheme_nav_menu_archive_items', 'audiotheme_gigs_archive_menu_item' );
 	
 	// Register ajax admin actions.
@@ -88,6 +89,37 @@ function audiotheme_gigs_admin_menu() {
 	add_action( 'load-' . $edit_gig_hook, 'audiotheme_gig_edit_screen_setup' );
 	add_action( 'load-' . $manage_venues_hook, 'audiotheme_venues_manage_screen_setup' );
 	add_action( 'load-' . $edit_venue_hook, 'audiotheme_venue_edit_screen_setup' );
+}
+
+/**
+ * Gig update messages.
+ *
+ * @see /wp-admin/edit-form-advanced.php
+ *
+ * @param array $messages The array of post update messages.
+ * @return array
+ */
+function audiotheme_gig_post_updated_messages( $messages ) {
+	global $post;
+	
+	$messages['audiotheme_gig'] = array(
+		0  => '', // Unused. Messages start at index 1.
+		1  => sprintf( __( 'Gig updated. <a href="%s">View Gig</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
+		2  => __( 'Custom field updated.', 'audiotheme-i18n' ),
+		3  => __( 'Custom field deleted.', 'audiotheme-i18n' ),
+		4  => __( 'Gig updated.', 'audiotheme-i18n' ),
+		/* translators: %s: date and time of the revision */
+		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Gig restored to revision from %s', 'audiotheme-i18n' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6  => sprintf( __( 'Gig published. <a href="%s">View Gig</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
+		7  => __( 'Gig saved.', 'audiotheme-i18n' ),
+		8  => sprintf( __( 'Gig submitted. <a target="_blank" href="%s">Preview Gig</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
+		9  => sprintf( __( 'Gig scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Gig</a>', 'audiotheme-i18n' ),
+		      // translators: Publish box date format, see http://php.net/date
+		      date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
+		10 => sprintf( __( 'Gig draft updated. <a target="_blank" href="%s">Preview Gig</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
+	);
+	
+	return $messages;
 }
 
 /**
