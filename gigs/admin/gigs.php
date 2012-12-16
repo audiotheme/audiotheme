@@ -44,7 +44,7 @@ function audiotheme_gigs_admin_setup() {
 	add_action( 'wp_ajax_ajax_is_new_audiotheme_venue', 'ajax_is_new_audiotheme_venue' );
 	
 	// Register scripts.
-	wp_register_script( 'audiotheme-gig-edit', AUDIOTHEME_URI . 'gigs/admin/js/gig-edit.js', array( 'audiotheme-admin', 'jquery-timepicker', 'jquery-ui-autocomplete', 'jquery-ui-datepicker' ) );
+	wp_register_script( 'audiotheme-gig-edit', AUDIOTHEME_URI . 'gigs/admin/js/gig-edit.js', array( 'audiotheme-admin', 'audiotheme-pointer', 'jquery-timepicker', 'jquery-ui-autocomplete', 'jquery-ui-datepicker' ) );
 	wp_localize_script( 'audiotheme-gig-edit', 'audiothemeGigsL10n', array(
 		'datepickerIcon' => AUDIOTHEME_URI . 'admin/images/calendar.png',
 		'timeFormat' => get_option( 'time_format' )
@@ -240,7 +240,6 @@ function audiotheme_gig_edit_screen_setup( $post ) {
 	wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
 	
 	if ( ! is_audiotheme_pointer_dismissed( 'at100_gigvenue_tz' ) ) {
-		wp_enqueue_script( 'wp-pointer' );
 		wp_enqueue_style( 'wp-pointer' );
 		
 		$pointer  = 'Be sure to set a timezone when you add new venues so you don\'t have to worry about converting dates and times.' . "\n\n";

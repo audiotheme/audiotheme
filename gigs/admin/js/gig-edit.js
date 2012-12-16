@@ -4,6 +4,8 @@ jQuery(function($) {
 		$venue = $('#gig-venue'),
 		$venueTz = $('#gig-venue-timezone');
 	
+	$venueTz.pointer({ audiothemeId: 'at100_gigvenue_tz' });
+	
 	$date.datepicker({ showOn: 'both', buttonImage: audiothemeGigsL10n.datepickerIcon });
 	
 	$time.timepicker({
@@ -26,17 +28,17 @@ jQuery(function($) {
 					dataType: 'JSON',
 					success: function( data ) {
 						if ( data.length ) {
-							$venueTz.hide();
+							$venueTz.hide().pointer('close');
 						} else {
-							$venueTz.show().audiothemePointer( 'at100_gigvenue_tz' );
+							$venueTz.show().pointer('audiothemeOpen');
 						}
 					}
 				});
 			} else {
-				$venueTz.hide();
+				$venueTz.hide().pointer('close');
 			}
 		},
-		select: function() { $venueTz.hide(); },
+		select: function() { $venueTz.hide().pointer('close'); },
 		source: ajaxurl + '?action=ajax_get_audiotheme_venue_matches',
 		minLength: 0,
 		position:  ( 'undefined' !== typeof isRtl && isRtl ) ? { my: 'right top', at: 'right bottom', offset: '0, -1' } : { offset: '0, -1' },

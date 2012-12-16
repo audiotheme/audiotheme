@@ -57,6 +57,7 @@ function audiotheme_admin_setup() {
 
 function audiotheme_admin_init() {
 	wp_register_script( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/js/audiotheme-admin.js', array( 'jquery-ui-sortable' ) );
+	wp_register_script( 'audiotheme-pointer', AUDIOTHEME_URI . 'admin/js/audiotheme-pointer.js', array( 'wp-pointer' ) );
 	wp_register_script( 'audiotheme-settings', AUDIOTHEME_URI . 'admin/js/audiotheme-settings.js' );
 
 	wp_register_style( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/css/audiotheme-admin.css' );
