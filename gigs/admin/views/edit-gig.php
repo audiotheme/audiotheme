@@ -20,7 +20,7 @@
 			<th><label for="gig-time"><?php _e( 'Time', 'audiotheme-i18n' ) ?></label></th>
 			<td>
 				<div class="audiotheme-input-append">
-					<input type="text" name="gig_time" id="gig-time" value="<?php echo esc_attr( $gig_time ); ?>" placeholder="HH:MM" style="vertical-align: middle"><label for="gig-time" id="gig-time-select" class="audiotheme-input-append-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/clock.png" width="12" height="12"></label>
+					<input type="text" name="gig_time" id="gig-time" value="<?php echo esc_attr( $gig_time ); ?>" placeholder="HH:MM" class="ui-autocomplete-input"><label for="gig-time" id="gig-time-select" class="audiotheme-input-append-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/clock.png" width="12" height="12"></label>
 				</div>
 			</td>
 		</tr>

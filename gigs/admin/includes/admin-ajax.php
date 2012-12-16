@@ -7,7 +7,7 @@
 function ajax_get_audiotheme_venue_matches() {
 	global $wpdb;
 	
-	$var = like_escape( stripslashes( $_GET['name'] ) ) . '%';
+	$var = like_escape( stripslashes( $_GET['term'] ) ) . '%';
 	$venues = $wpdb->get_col( $wpdb->prepare( "SELECT post_title FROM $wpdb->posts WHERE post_type='audiotheme_venue' AND post_title LIKE %s ORDER BY post_title ASC", $var ) );
 	
 	wp_send_json( $venues );

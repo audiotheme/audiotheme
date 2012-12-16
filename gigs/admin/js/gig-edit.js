@@ -6,14 +6,13 @@ jQuery(function($) {
 	
 	$date.datepicker({ showOn: 'both', buttonImage: audiothemeGigsL10n.datepickerIcon });
 	
-	//$('#gig-time').timepicker({ show24Hours: false, step: 15 });
-	$time.timepicker({ 'timeFormat': audiothemeGigsL10n.timeFormat })
-		.on('focus', function() {
-			$('.ui-timepicker-list').width( $(this).outerWidth() );
-		})
-		.next().on('click', function(e) {;
-			$time.focus();
-		});
+	$time.timepicker({
+		'timeFormat': audiothemeGigsL10n.timeFormat,
+		'className': 'ui-autocomplete'
+	})
+	.on('showTimepicker', function() { $(this).addClass('open'); $('.ui-timepicker-list').width( $(this).outerWidth() ); })
+	.on('hideTimepicker', function() { $(this).removeClass('open'); })
+	.next().on('click', function(e) { $time.focus(); });
 	
 	$venue.autocomplete({
 		change: function() {
@@ -37,21 +36,12 @@ jQuery(function($) {
 				$venueTz.hide();
 			}
 		},
-		select: function() {
-			$venueTz.hide();
-		},
-		source: function( request, response ) {
-			$.ajax({
-				url: ajaxurl,
-				data: {
-					action: 'ajax_get_audiotheme_venue_matches',
-					name: request.term
-				},
-				dataType: 'JSON',
-				success: function( data ) { response( data ); }
-			});
-		},
-		minLength: 0
+		select: function() { $venueTz.hide(); },
+		source: ajaxurl + '?action=ajax_get_audiotheme_venue_matches',
+		minLength: 0,
+		position:  ( 'undefined' !== typeof isRtl && isRtl ) ? { my: 'right top', at: 'right bottom', offset: '0, -1' } : { offset: '0, -1' },
+		open: function() { $(this).addClass('open'); },
+		close: function() { $(this).removeClass('open'); }
 	});
 	
 	$('#gig-venue-select').on('click', function() {

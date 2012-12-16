@@ -35,7 +35,7 @@
 jQuery(function($) {
 	$('.wrap').on('focus', '.audiotheme-input-append input', function() {
 		$(this).parent().addClass('focused');
-	}).on('blur', function() {
+	}).on('blur', '.audiotheme-input-append input', function() {
 		$(this).parent().removeClass('focused');
 	});
 });
