@@ -3,7 +3,7 @@ class Audiotheme_Widget_Track extends WP_Widget {
 	function __construct() {
 		$widget_ops = array( 'classname' => 'widget_audiotheme_track', 'description' => __( 'Display a selected track' ) );
 		$control_ops = array();
-		$this->WP_Widget( 'audiotheme-track', 'AudioTheme: Track', $widget_ops, $control_ops );
+		$this->WP_Widget( 'audiotheme-track', 'Track (AudioTheme)', $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {

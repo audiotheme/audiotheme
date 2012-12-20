@@ -1,12 +1,12 @@
 <?php
-class Audiotheme_Widget_Latest_Tweets extends WP_Widget {
+class Audiotheme_Widget_Twitter extends WP_Widget {
 	var $transient_key;
 	var $transient_key_error;
 	
 	function __construct() {
-		$widget_ops = array( 'classname' => 'widget_audiotheme_latest_tweets', 'description' => 'Display your latest tweets' );
-		$control_ops = array( 'width' => 300 );
-		$this->WP_Widget( 'audiotheme-tweets', 'Latest Tweets', $widget_ops, $control_ops );
+		$widget_ops = array( 'classname' => 'widget_audiotheme_twitter', 'description' => 'Display your latest tweets' );
+		$control_ops = array(); // array( 'width' => 300 );
+		$this->WP_Widget( 'audiotheme-twitter', 'Twitter (AudioTheme)', $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
@@ -104,7 +104,8 @@ class Audiotheme_Widget_Latest_Tweets extends WP_Widget {
 		$instance['include_rts'] = isset( $new_instance['include_rts'] );
 		$instance['count'] = min( max( absint( $new_instance['count'] ), 1 ), 200 );
 		
-		// TODO: fetch tweets in order to discover errors and display message
+		// @todo Fetch tweets in order to discover errors and display message
+		// @todo Error messages seem to bleed into general admin notices.
 		$tweets = $this->fetch_tweets( array_merge( $instance, array( 'force_refresh' => true ) ) );
 		
 		return $instance;

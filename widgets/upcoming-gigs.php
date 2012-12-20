@@ -3,7 +3,7 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 	function __construct() {
 		$widget_ops = array( 'classname' => 'widget_audiotheme_upcoming_gigs', 'description' => __( 'Display a list of upcoming gigs' ) );
 		$control_ops = array();
-		$this->WP_Widget( 'audiotheme-upcoming-gigs', 'AudioTheme: Upcoming Gigs', $widget_ops, $control_ops );
+		$this->WP_Widget( 'audiotheme-upcoming-gigs', 'Upcoming Gigs (AudioTheme)', $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {

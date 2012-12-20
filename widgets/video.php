@@ -3,7 +3,7 @@ class Audiotheme_Widget_Video extends WP_Widget {
 	function __construct() {
 		$widget_ops = array( 'classname' => 'widget_audiotheme_video', 'description' => __( 'Display a video' ) );
 		$control_ops = array();
-		$this->WP_Widget( 'audiotheme-video', 'AudioTheme: Video', $widget_ops, $control_ops );
+		$this->WP_Widget( 'audiotheme-video', 'Video (AudioTheme)', $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
