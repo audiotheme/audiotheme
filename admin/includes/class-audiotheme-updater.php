@@ -15,12 +15,12 @@ class Audiotheme_Updater {
 		
 		$args = wp_parse_args( $args, array(
 			'remote_api_url' => 'http://audiotheme.com',
-			'request_data' => array(),
-			'theme_slug' => $theme_slug,
-			'item_name' => $theme->get( 'Name' ),
-			'license_key' => get_audiotheme_theme_option( 'license_key' ),
-			'version' => $theme->get( 'Version' ),
-			'author' => $theme->get( 'Author' )
+			'request_data'   => array(),
+			'theme_slug'     => $theme_slug,
+			'item_name'      => $theme->get( 'Name' ),
+			'license_key'    => get_audiotheme_theme_option( 'license_key' ),
+			'version'        => $theme->get( 'Version' ),
+			'author'         => $theme->get( 'Author' )
 		) );
 		extract( $args );
 		
@@ -94,10 +94,10 @@ class Audiotheme_Updater {
 			if ( 'valid' == get_option( 'audiotheme_license_key_status' ) ) {
 				$api_params = array( 
 					'edd_action' => 'get_version',
-					'license' => self::$license_key, 
-					'name' => self::$item_name,
-					'slug' => self::$theme_slug,
-					'author' => self::$author
+					'license'    => self::$license_key, 
+					'name'       => self::$item_name,
+					'slug'       => self::$theme_slug,
+					'author'     => self::$author
 				);
 				
 				$response = wp_remote_post( self::$remote_api_url, array( 'timeout' => 5, 'body' => $api_params ) );
@@ -136,8 +136,8 @@ class Audiotheme_Updater {
 	public static function activate_license( $license ) {
 		$api_params = array( 
 			'edd_action' => 'activate_license', 
-			'license' => $license,
-			'item_name' => self::$item_name
+			'license'    => $license,
+			'item_name'  => self::$item_name
 		);
 		
 		$response = wp_remote_get( add_query_arg( $api_params, self::$remote_api_url ) );
@@ -152,8 +152,8 @@ class Audiotheme_Updater {
 	public static function check_license_status( $license ) {
 		$api_params = array( 
 			'edd_action' => 'check_license', 
-			'license' => $license,
-			'item_name' => self::$item_name
+			'license'    => $license,
+			'item_name'  => self::$item_name
 		);
 		
 		$response = wp_remote_get( add_query_arg( $api_params, self::$remote_api_url ) );
