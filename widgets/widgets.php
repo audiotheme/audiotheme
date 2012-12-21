@@ -1,5 +1,12 @@
 <?php
 /**
+ * Load registered widgets.
+ *
+ * @package AudioTheme_Framework
+ * @subpackage Widgets
+ */
+
+/**
  * Widget Includes
  *
  * @since 1.0.0

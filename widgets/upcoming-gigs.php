@@ -1,50 +1,78 @@
 <?php
+/**
+ * AudioTheme record widget class.
+ *
+ * Display a list of upcoming gigs in a widget area.
+ *
+ * @todo Implement some caching.
+ *
+ * @package AudioTheme_Framework
+ * @subpackage Widgets
+ *
+ * @since 1.0.0
+ */
 class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
+	/**
+	 * Setup widget options.
+	 *
+	 * @since 1.0.0
+	 * @see WP_Widget::construct()
+	 */
 	function __construct() {
-		$widget_ops = array( 'classname' => 'widget_audiotheme_upcoming_gigs', 'description' => __( 'Display a list of upcoming gigs' ) );
-		$control_ops = array();
-		$this->WP_Widget( 'audiotheme-upcoming-gigs', 'Upcoming Gigs (AudioTheme)', $widget_ops, $control_ops );
+		$widget_options = array( 'classname' => 'widget_audiotheme_upcoming_gigs', 'description' => __( 'Display a list of upcoming gigs', 'audiotheme-i18n' ) );
+		parent::__construct( 'audiotheme-upcoming-gigs', __( 'Upcoming Gigs (AudioTheme)', 'audiotheme-i18n' ), $widget_options );
 	}
-
+	
+	/**
+	 * Default widget front end display method.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Args specific to the widget area (sidebar).
+	 * @param array $instance Widget instance settings.
+	 */
 	function widget( $args, $instance ) {
 		extract( $args );
 		
-		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? 'Upcoming Gigs' : $instance['title'], $instance, $this->id_base );
-		$instance['title_filtered'] = apply_filters( 'audiotheme_widget_title', $title, $instance, $this->id_base, $args );
+		$instance['title_raw'] = $instance['title'];
+		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Upcoming Gigs', 'audiotheme-i18n' ) : $instance['title'], $instance, $this->id_base );
+		$instance['title'] = apply_filters( 'audiotheme_widget_title', $instance['title'], $instance, $args, $this->id_base );
+		
 		$instance['date_format'] = apply_filters( 'audiotheme_widget_upcoming_gigs_date_format', get_option( 'date_format' ) );
 		$instance['number'] = ( empty( $instance['number'] ) || ! absint( $instance['number'] ) ) ? 5 : absint( $instance['number'] );
 		
 		$loop = new WP_Query( apply_filters( 'audiotheme_widget_upcoming_gigs_loop_args', array(
-			'post_type' => 'audiotheme_gig',
-			'no_found_rows' => true,
-			'post_status' => 'publish',
+			'post_type'      => 'audiotheme_gig',
+			'no_found_rows'  => true,
+			'post_status'    => 'publish',
 			'posts_per_page' => $instance['number'],
-			'meta_key' => '_audiotheme_gig_datetime',
-			'orderby' => 'meta_value',
-			'order' => 'asc',
-			'meta_query' => array(
+			'orderby'        => 'meta_value',
+			'order'          => 'asc',
+			'ignore_sticky_posts' => true,
+			'meta_query'     => array(
 				array(
-					'key' => '_audiotheme_gig_datetime',
-					'value' => current_time( 'mysql' ),
+					'key'     => '_audiotheme_gig_datetime',
+					'compare' => 'EXISTS'
+				),
+				array(
+					'key'     => '_audiotheme_gig_datetime',
+					'value'   => current_time( 'mysql' ),
 					'compare' => '>=',
-					'type' => 'DATETIME'
+					'type'    => 'DATETIME'
 				)
-			),
-			'ignore_sticky_posts' => true
+			)
 		) ) );
 		
 		p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $loop );
 		
-		
+		// Add a class with the number of gigs to display.
 		echo preg_replace( '/class="([^"]+)"/', 'class="$1 widget-items-' . $instance['number'] . '"', $before_widget );
 		
-			echo ( empty( $instance['title_filtered'] ) ) ? '' : $before_title . $instance['title_filtered'] . $after_title;
+			echo ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
 		
 			if ( $loop->have_posts() ) :
 				
 				if ( ! $output = apply_filters( 'audiotheme_widget_upcoming_gigs_output', '', $instance, $args, $loop ) ) {
-					global $post;
-					
 					while ( $loop->have_posts() ) :
 						$loop->the_post();
 							
@@ -89,26 +117,41 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 		
 		echo $after_widget;
 	}
-
+	
+	/**
+	 * Form to modify widget instance settings.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $instance Current widget instance settings.
+	 */
 	function form( $instance ) {
 		$instance = wp_parse_args( (array) $instance, array(
 			'title' => ''
-		));
+		) );
 		
 		$title = wp_strip_all_tags( $instance['title'] );
 		$number = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>">Title:</label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'audiotheme-i18n' ); ?></label>
 			<input type="text" name="<?php echo $this->get_field_name( 'title' ); ?>" id="<?php echo $this->get_field_id( 'title' ); ?>" class="widefat" value="<?php echo $title; ?>">
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'number' ); ?>">Number of gigs to show:</label>
+			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of gigs to show:', 'audiotheme-i18n' ); ?></label>
 			<input type="text" name="<?php echo $this->get_field_name( 'number' ); ?>" id="<?php echo $this->get_field_id( 'number' ); ?>" value="<?php echo $number; ?>" size="3">
 		</p>
 		<?php
 	}
 	
+	/**
+	 * Save widget settings.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $new_instance New widget settings.
+	 * @param array $old_instance Old widget settings.
+	 */
 	function update( $new_instance, $old_instance ) {
 		$instance = wp_parse_args( $new_instance, $old_instance );
 		

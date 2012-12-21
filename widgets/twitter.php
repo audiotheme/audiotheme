@@ -1,18 +1,42 @@
 <?php
+/**
+ * AudioTheme Twitter widget class.
+ *
+ * Display a list of recent tweets.
+ *
+ * @package AudioTheme_Framework
+ * @subpackage Widgets
+ *
+ * @since 1.0.0
+ */
 class Audiotheme_Widget_Twitter extends WP_Widget {
 	var $transient_key;
 	var $transient_key_error;
 	
+	/**
+	 * Setup widget options.
+	 *
+	 * @since 1.0.0
+	 * @see WP_Widget::construct()
+	 */
 	function __construct() {
-		$widget_ops = array( 'classname' => 'widget_audiotheme_twitter', 'description' => 'Display your latest tweets' );
-		$control_ops = array(); // array( 'width' => 300 );
-		$this->WP_Widget( 'audiotheme-twitter', 'Twitter (AudioTheme)', $widget_ops, $control_ops );
+		$widget_options = array( 'classname' => 'widget_audiotheme_twitter', 'description' => __( 'Display your latest tweets', 'audiotheme-i18n' ) );
+		parent::__construct( 'audiotheme-twitter', __( 'Twitter (AudioTheme)', 'audiotheme-i18n' ), $widget_options );
 	}
-
+	
+	/**
+	 * Default widget front end display method.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Args specific to the widget area (sidebar).
+	 * @param array $instance Widget instance settings.
+	 */
 	function widget( $args, $instance ) {
 		extract( $args );
 
-		$instance['title_filtered'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
+		$instance['title_raw'] = $instance['title'];
+		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
 		
 		$tweets = $this->fetch_tweets( $instance );
 		if ( is_wp_error( $tweets ) ) {
@@ -21,9 +45,9 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 		
 		echo $before_widget;
 		
-			if ( ! empty( $instance['title_filtered'] ) ) {
+			if ( ! empty( $instance['title'] ) ) {
 				echo $before_title;
-					echo $instance['title_filtered'];
+					echo $instance['title'];
 					printf( ' <a href="%s" target="_blank" title="@%s">@%s</a>',
 						esc_url( 'http://twitter.com/' . $instance['screen_name'] ),
 						esc_attr( $instance['screen_name'] ),
@@ -34,33 +58,36 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 			
 			$output = '<ul>';
 				for ( $i = 0; $i < $instance['count']; $i ++ ) {
-					if ( ! isset( $tweets[ $i ] ) )
+					if ( ! isset( $tweets[ $i ] ) ) {
 						break;
+					}
 					
-					$output.= sprintf( '<li>%1$s</li>', $tweets[ $i ]['html'] );
+					$output .= sprintf( '<li>%1$s</li>', $tweets[ $i ]['html'] );
 				}
-			$output.= '</ul>';
+			$output .= '</ul>';
 			
-			// Be sure to respect the count parameter
-			echo apply_filters( 'audiotheme_widget_latest_tweets_output', $output, $instance, $args, $tweets );
+			// Be sure to respect the count parameter.
+			echo apply_filters( 'audiotheme_widget_twitter_output', $output, $instance, $args, $tweets );
 		
 		echo $after_widget;
 	}
 	
 	/**
-	 * Widget Form
+	 * Form to modify widget instance settings.
 	 *
-	 * @TODO: intro, show profile, include time/format, include media, last successful refresh
+	 * @since 1.0.0
+	 * @todo intro, show profile, include time/format, include media, last successful refresh
+	 *
+	 * @param array $instance Current widget instance settings.
 	 */
 	function form( $instance ) {
 		$instance = wp_parse_args( (array) $instance, array(
-			'count' => 5,
+			'count'           => 5,
 			'exclude_replies' => false,
-			'include_rts' => false,
-			'screen_name' => '',
-			'title' => ''
+			'include_rts'     => false,
+			'screen_name'     => '',
+			'title'           => ''
 		) );
-		extract( $instance );
 		
 		$error = get_transient( 'audiotheme_twitter_widget_error-' . $this->number );
 		if ( ! empty( $error ) ) {
@@ -70,31 +97,39 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 		$title = wp_strip_all_tags( $instance['title'] );
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'audiotheme-i18n' ); ?></label>
 			<input type="text" name="<?php echo $this->get_field_name( 'title' ); ?>" id="<?php echo $this->get_field_id( 'title' ); ?>" value="<?php echo esc_attr( $title ); ?>" class="widefat">
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'screen_name' ); ?>"><?php _e( 'Twitter username:' ); ?></label>
-			<input type="text" name="<?php echo $this->get_field_name( 'screen_name' ); ?>" id="<?php echo $this->get_field_id( 'screen_name' ); ?>" value="<?php echo esc_attr( $screen_name ); ?>" class="widefat">
+			<label for="<?php echo $this->get_field_id( 'screen_name' ); ?>"><?php _e( 'Twitter username:', 'audiotheme-i18n' ); ?></label>
+			<input type="text" name="<?php echo $this->get_field_name( 'screen_name' ); ?>" id="<?php echo $this->get_field_id( 'screen_name' ); ?>" value="<?php echo esc_attr( $instance['screen_name'] ); ?>" class="widefat">
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'count' ); ?>"><?php _e( 'Tweets to show:' ); ?></label>
-			<input type="text" name="<?php echo $this->get_field_name( 'count' ); ?>" id="<?php echo $this->get_field_id( 'count' ); ?>" value="<?php echo esc_attr( $count ); ?>" class="small-text">
+			<label for="<?php echo $this->get_field_id( 'count' ); ?>"><?php _e( 'Tweets to show:', 'audiotheme-i18n' ); ?></label>
+			<input type="text" name="<?php echo $this->get_field_name( 'count' ); ?>" id="<?php echo $this->get_field_id( 'count' ); ?>" value="<?php echo esc_attr( $instance['count'] ); ?>" class="small-text">
 		</p>
 		<p>
-			<input type="checkbox" name="<?php echo $this->get_field_name( 'exclude_replies' ); ?>" id="<?php echo $this->get_field_id( 'exclude_replies' ); ?>" <?php checked( $exclude_replies ); ?>>
-			<label for="<?php echo $this->get_field_id( 'exclude_replies' ); ?>"><?php _e( 'Hide replies?' ); ?></label>
+			<input type="checkbox" name="<?php echo $this->get_field_name( 'exclude_replies' ); ?>" id="<?php echo $this->get_field_id( 'exclude_replies' ); ?>" <?php checked( $instance['exclude_replies'] ); ?>>
+			<label for="<?php echo $this->get_field_id( 'exclude_replies' ); ?>"><?php _e( 'Hide replies?', 'audiotheme-i18n' ); ?></label>
 		</p>
 		<p>
-			<input type="checkbox" name="<?php echo $this->get_field_name( 'include_rts' ); ?>" id="<?php echo $this->get_field_id( 'include_rts' ); ?>" <?php checked( $include_rts ); ?>>
-			<label for="<?php echo $this->get_field_id( 'include_rts' ); ?>"><?php _e( 'Include retweets?' ); ?></label>
+			<input type="checkbox" name="<?php echo $this->get_field_name( 'include_rts' ); ?>" id="<?php echo $this->get_field_id( 'include_rts' ); ?>" <?php checked( $instance['include_rts'] ); ?>>
+			<label for="<?php echo $this->get_field_id( 'include_rts' ); ?>"><?php _e( 'Include retweets?', 'audiotheme-i18n' ); ?></label>
 		</p>
 		<style type="text/css">
 		.widget .widget-inside div.error p { margin: .25em 0; padding: 2px;}
 		</style>
 		<?php
 	}
-
+	
+	/**
+	 * Save widget settings.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $new_instance New widget settings.
+	 * @param array $old_instance Old widget settings.
+	 */
 	function update( $new_instance, $old_instance ) {
 		$instance = wp_parse_args( $new_instance, $old_instance );
 		
@@ -105,92 +140,107 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 		$instance['count'] = min( max( absint( $new_instance['count'] ), 1 ), 200 );
 		
 		// @todo Fetch tweets in order to discover errors and display message
-		// @todo Error messages seem to bleed into general admin notices.
 		$tweets = $this->fetch_tweets( array_merge( $instance, array( 'force_refresh' => true ) ) );
 		
 		return $instance;
 	}
 	
+	/**
+	 * Retrieve tweets from the Twitter API.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args List of arguments to send to the Twitter API.
+	 * @return array List of Tweets.
+	 */
 	function fetch_tweets( $args ) {
 		$key = 'audiotheme_twitter_widget-' . $this->number;
 		$error = null;
 		$error_key = 'audiotheme_twitter_widget_error-' . $this->number;
 		
-		
 		if ( empty( $args['screen_name'] ) ) {
-			set_transient( $error_key, 'Twitter username cannot be empty.', 60*5 );
-			return new WP_Error( 'empty_screen_name', 'The screen name cannot be empty.' );	
+			set_transient( $error_key, __( 'Twitter username cannot be empty.', 'audiotheme-i18n' ), 60*5 );
+			return new WP_Error( 'empty_screen_name', __( 'The screen name cannot be empty.' ) );	
 		}
-		
 		
 		$tweets = get_transient( 'audiotheme_twitter_widget-' . $this->number );
 		if ( ! $tweets || ( isset( $args['force_refresh'] ) && $args['force_refresh'] ) ) {
 			$args['screen_name'] = rawurlencode( $args['screen_name'] );
 			
-			$remote_args = shortcode_atts( array(
-				'screen_name' => '',
-				'exclude_replies' => false,
+			$defaults = array(
+				'screen_name'      => '',
+				'exclude_replies'  => false,
 				'include_entities' => true,
-				'include_rts' => false,
-				'trim_user' => true
-			), $args );
+				'include_rts'      => false,
+				'trim_user'        => true
+			);
 			
+			$remote_args = wp_parse_args( $args, $defaults );
+			$remote_args = array_intersect_key( $remote_args, $defaults );
 			$remote_args['count'] = 200;
 			
 			$response = wp_remote_get( add_query_arg( $remote_args, 'http://api.twitter.com/1/statuses/user_timeline.json' ) );
 			
 			if ( 200 == wp_remote_retrieve_response_code( $response ) ) {
 				$results = json_decode( wp_remote_retrieve_body( $response ), true );
-				if ( is_array( $results ) && ! isset( $results['errors'] ) ) { // make sure there's not a twitter error
+				if ( is_array( $results ) && ! isset( $results['errors'] ) ) { // Make sure there's not a Twitter error.
 					$tweets = array();
 					foreach( $results as $tweet ) {
 						$tweets[] = array(
-							'id_str' => $tweet['id_str'],
+							'id_str'     => $tweet['id_str'],
 							'created_at' => $tweet['created_at'],
-							'html' => $this->parse_tweet( $tweet ),
-							'text' => $tweet['text']
+							'html'       => $this->parse_tweet( $tweet ),
+							'text'       => $tweet['text']
 						);
 					}
 					
 					set_transient( $key, $tweets, 60 * 15 );
-					update_option( $key, $tweets ); // update failsafe
-					delete_transient( $error_key ); // delete any existing error messages
+					update_option( $key, $tweets ); // Update fallback.
+					delete_transient( $error_key ); // Delete any existing error messages.
 				} elseif ( isset( $results['errors'] ) ) {
 					$error = $results['errors'][0]['message'];
 				} else {
-					$error = 'Unknown response format received from Twitter.';
+					$error = __( 'Unknown response format received from Twitter.', 'audiotheme-i18n' );
 				}
 			} else {
 				if ( is_wp_error( $response ) ) {
 					$error = $response->get_error_message();
 				} elseif ( $code = wp_remote_retrieve_response_code( $response ) ) {
-					$error = 'Remote response code: ' . $code;
+					$error = sprintf( __( 'Remote response code: %s', 'audiotheme-i18n' ), $code );
 				} else {
-					$error = 'Twitter did not respond. Please wait awhile and try again.';
+					$error = __( 'Twitter did not respond. Please wait awhile and try again.', 'audiotheme-i18n' );
 				}
 			}
 			
 			if ( ! empty( $error ) ) {
 				$tweets = get_option( $key );
-				set_transient( $key, $tweets, 60*5 ); // check again in 5 minutes
-				set_transient( $error_key, $error, 60*5 );
+				set_transient( $key, $tweets, 60 * 5 ); // Check again in 5 minutes.
+				set_transient( $error_key, $error, 60 * 5 );
 			}
 			
 			if ( empty( $tweets ) ) {
-				// TODO: suggested, check authorization, wait a little while
-				return new WP_Error( 'no_tweets', 'Uhh, there weren\'t any tweets.' );
+				// @todo Suggest something, check authorization, wait a little while.
+				return new WP_Error( 'no_tweets', __( "Uhh, there weren't any tweets.", 'audiotheme-i18n' ) );
 			}
 		}
 		
 		return $tweets;
 	}
 	
+	/**
+	 * Parses an individual Tweet from a Twitter API response.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $tweet Tweet respresentation from Twitter API.
+	 * @return string
+	 */
 	function parse_tweet( $tweet ) {
 		$text = $tweet['text'];
 		
 		if ( isset( $tweet['entities'] ) ) {
 			$entities = array();
-			// Flatten entity array so we can sort them by starting indice
+			// Flatten entity array so we can sort them by starting indice.
 			foreach( $tweet['entities'] as $type => $type_entities ) {
 				if ( ! empty( $type_entities ) ) {
 					foreach( $type_entities as $key => $entity ) {
@@ -212,7 +262,8 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 				
 				switch( $entity['type'] ) {
 					case 'hashtags' :
-						$replace = sprintf( '<a href="' . esc_url( 'http://twitter.com/search/#' . $entity['text'] ) . '" target="_blank">%s</a>',
+						$replace = sprintf( '<a href="%s" target="_blank">%s</a>',
+							esc_url( 'http://twitter.com/search/#' . $entity['text'] ),
 							$match
 						);
 						break;
@@ -223,7 +274,8 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 						);
 						break;
 					case 'user_mentions' :
-						$replace = sprintf( '<a href="' . esc_url( 'http://twitter.com/' . $entity['screen_name'] ) . '" target="_blank">%s</a>',
+						$replace = sprintf( '<a href="%s" target="_blank">%s</a>',
+							esc_url( 'http://twitter.com/' . $entity['screen_name'] ),
 							$match
 						);
 						break;
@@ -240,6 +292,13 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 		return $text;
 	}
 	
+	/**
+	 * Sort the entities in a Tweet based on where they occur in the Tweet.
+	 *
+	 * Entities are hashtags, urls, and user mentions.
+	 *
+	 * @since 1.0.0
+	 */
 	function sort_tweet_entities( $a, $b ) {
 		if ( $a['indices'][0] == $b['indices'][0] ) {
         	return 0;

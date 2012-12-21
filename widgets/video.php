@@ -1,20 +1,44 @@
 <?php
+/**
+ * AudioTheme video widget class.
+ *
+ * Display a selected video in a widget area.
+ *
+ * @package AudioTheme_Framework
+ * @subpackage Widgets
+ *
+ * @since 1.0.0
+ */
 class Audiotheme_Widget_Video extends WP_Widget {
+	/**
+	 * Setup widget options.
+	 *
+	 * @since 1.0.0
+	 * @see WP_Widget::construct()
+	 */
 	function __construct() {
-		$widget_ops = array( 'classname' => 'widget_audiotheme_video', 'description' => __( 'Display a video' ) );
-		$control_ops = array();
-		$this->WP_Widget( 'audiotheme-video', 'Video (AudioTheme)', $widget_ops, $control_ops );
+		$widget_options = array( 'classname' => 'widget_audiotheme_video', 'description' => __( 'Display a video', 'audiotheme-i18n' ) );
+		parent::__construct( 'audiotheme-video', __( 'Video (AudioTheme)', 'audiotheme-i18n' ), $widget_options );
 	}
-
+	
+	/**
+	 * Default widget front end display method.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Args specific to the widget area (sidebar).
+	 * @param array $instance Widget instance settings.
+	 */
 	function widget( $args, $instance ) {
 		extract( $args );
 		
-		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? get_the_title( $instance['post_id'] ) : $instance['title'], $instance, $this->id_base );
-		$instance['title_filtered'] = apply_filters( 'audiotheme_widget_title', $title, $instance, $this->id_base, $args );
+		$instance['title_raw'] = $instance['title'];
+		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? get_the_title( $instance['post_id'] ) : $instance['title'], $instance, $this->id_base );
+		$instance['title'] = apply_filters( 'audiotheme_widget_title', $instance['title'], $instance, $args, $this->id_base );
 		
 		echo $before_widget;
 		
-			echo ( empty( $instance['title_filtered'] ) ) ? '' : $before_title . $instance['title_filtered'] . $after_title;
+			echo ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
 				
 			if ( ! $output = apply_filters( 'audiotheme_widget_video_output', '', $instance, $args ) ) {
 				$post = get_post( $instance['post_id'] );
@@ -22,35 +46,48 @@ class Audiotheme_Widget_Video extends WP_Widget {
 				$image_size = apply_filters( 'audiotheme_widget_video_image_size', 'thumbnail', $instance, $args );
 				$image_size = apply_filters( 'audiotheme_widget_video_image_size-' . $args['id'], $image_size, $instance, $args );
 				
-				$output.= sprintf( '<p class="featured-image"><a href="%s">%s</a></p>',
+				$output .= sprintf( '<p class="featured-image"><a href="%s">%s</a></p>',
 					get_permalink( $post->ID ),
 					get_the_post_thumbnail( $post->ID, $image_size )
 				);
 				
-				$output.= ( isset( $instance['text'] ) && ! empty( $instance['text'] ) ) ? wpautop( $instance['text'] ) : '';
+				$output .= ( empty( $instance['text'] ) ) ? '' : wpautop( $instance['text'] );
 			}
 				
 			echo $output;
 			
 		echo $after_widget;
 	}
-
+	
+	/**
+	 * Form to modify widget instance settings.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $instance Current widget instance settings.
+	 */
 	function form( $instance ) {
 		$instance = wp_parse_args( (array) $instance, array(
 			'post_id' => '',
-			'text' => '',
-			'title' => ''
-		));
+			'text'    => '',
+			'title'   => ''
+		) );
 		
-		$videos = get_posts( 'post_type=audiotheme_video&order=asc&orderby=title&numberposts=-1' );
 		$title = wp_strip_all_tags( $instance['title'] );
+		
+		$videos = get_posts( array(
+			'post_type'      => 'audiotheme_video',
+			'orderby'        => 'title',
+			'order'          => 'asc',
+			'posts_per_page' => -1
+		) );
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'audiotheme-i18n' ); ?></label>
 			<input type="text" name="<?php echo $this->get_field_name( 'title' ); ?>" id="<?php echo $this->get_field_id( 'title' ); ?>" value="<?php echo esc_attr( $title ); ?>" class="widefat">
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'post_id' ); ?>">Video:</label>
+			<label for="<?php echo $this->get_field_id( 'post_id' ); ?>"><?php _e( 'Video:', 'audiotheme-i18n' ); ?></label>
 			<select name="<?php echo $this->get_field_name( 'post_id' ); ?>" id="<?php echo $this->get_field_id( 'post_id' ); ?>" class="widefat">
 				<?php
 				foreach ( $videos as $video ) {
@@ -64,15 +101,24 @@ class Audiotheme_Widget_Video extends WP_Widget {
 			</select>
 		</p>
 		<p>
-			<textarea class="widefat" rows="5" cols="20" id="<?php echo $this->get_field_id( 'text' ); ?>" name="<?php echo $this->get_field_name( 'text' ); ?>"><?php echo esc_textarea( $instance['text'] ); ?></textarea>
+			<textarea name="<?php echo $this->get_field_name( 'text' ); ?>" id="<?php echo $this->get_field_id( 'text' ); ?>" cols="20" rows="5" class="widefat"><?php echo esc_textarea( $instance['text'] ); ?></textarea>
 		</p>
 		<?php
 	}
 	
+	/**
+	 * Save widget settings.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $new_instance New widget settings.
+	 * @param array $old_instance Old widget settings.
+	 */
 	function update( $new_instance, $old_instance ) {
 		$instance = wp_parse_args( $new_instance, $old_instance );
 		
 		$instance['title'] = wp_strip_all_tags( $new_instance['title'] );
+		$instance['text'] = wp_kses_data( $new_instance['text'] );
 		
 		return $instance;
 	}
