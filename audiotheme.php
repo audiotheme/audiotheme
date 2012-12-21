@@ -69,6 +69,9 @@ require( AUDIOTHEME_DIR . 'includes/media.php' );
 require( AUDIOTHEME_DIR . 'includes/options.php' );
 require( AUDIOTHEME_DIR . 'widgets/widgets.php' );
 
+// @todo For testing.
+require( AUDIOTHEME_DIR . 'archive-pages.php' );
+
 /**
  * Load admin-specific functions and libraries.
  */

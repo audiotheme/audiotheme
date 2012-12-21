@@ -184,6 +184,9 @@ function audiotheme_discography_permalinks( $post_link, $post, $leavename, $samp
 	return $post_link;
 }
 
+/**
+ *
+ */
 function audiotheme_discography_archive_link( $link, $post_type ) {
 	$permalink = get_option( 'permalink_structure' );
 	if ( ! empty( $permalink ) && ( 'audiotheme_record' == $post_type || 'audiotheme_track' == $post_type ) ) {
