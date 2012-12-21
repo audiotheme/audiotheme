@@ -104,7 +104,7 @@ function audiotheme_video_meta_boxes() {
 function audiotheme_video_after_title() {
 	global $post;
 	
-	$video = get_audiotheme_post_video_url( $post->ID );
+	$video = get_audiotheme_video_url( $post->ID );
 	wp_nonce_field( 'save-video-meta_' . $post->ID, 'audiotheme_save_video_meta_nonce', false );	
 	?>
 	<div class="audiotheme-edit-after-title" style="position: relative">
@@ -124,7 +124,7 @@ function audiotheme_video_after_title() {
 		<div id="audiotheme-video-preview" class="audiotheme-video-preview<?php echo ( $video ) ? '' : ' audiotheme-video-preview-empty'; ?>">
 			<?php
 			if( $video ) {
-				echo get_the_audiotheme_post_video( $post->ID, array( 'width' => 600 ) );
+				echo get_audiotheme_video( $post->ID, array( 'width' => 600 ) );
 			} else {
 				_e( 'Save the video after entering a URL to preview it.', 'audiotheme-i18n' );
 			}
