@@ -87,7 +87,7 @@ function audiotheme_print_pointers() {
 	
 	// Output the object directly since there isn't really have a script to attach it to.
 	// CDATA and type='text/javascript' is not needed for HTML 5.
-	echo "<script type='text/javascript'>\n"; 
+	echo "<script type='text/javascript'>\n";
 	echo "/* <![CDATA[ */\n";
 	echo "var audiothemePointers = " . json_encode( $audiotheme_pointers ) . ";\n";
 	echo "/* ]]> */\n";

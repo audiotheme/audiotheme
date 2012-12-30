@@ -75,7 +75,6 @@ jQuery(function($) {
 /**
  * Repeater
  *
- * @todo Add triggers when new items are added.
  * @todo Convert actions (clear, remove, hide, show) to data attribute rather than classes.
  */
 (function($) {
@@ -86,14 +85,41 @@ jQuery(function($) {
 	
 	var methods = {
 		init : function( options ) {
-			var settings = { };
-			if (options) $.extend(settings, options);
+			var settings = {
+				items: null
+			};
+			
+			if (options)
+				$.extend(settings, options);
 
 			return this.each(function() {
-				var repeater = $(this)
-					firstItem = repeater.find('.audiotheme-repeater-item:eq(0)');
+				var repeater = $(this),
+					itemsParent = repeater.find('.audiotheme-repeater-items'),
+					itemTemplate, template;
 				
-				firstItem.parent().sortable({
+				if ( repeater.data('item-template-id') ) {
+					template = wp.media.template( repeater.data('item-template-id' ) );
+					
+					if ( settings.items ) {
+						repeater.audiothemeRepeater('clearList');
+						
+						$.each( settings.items, function( i, item ) {
+							itemsParent.append( template( item ).replace( /__i__/g, i ) );
+						});
+					}
+					
+					itemTemplate = template( {} );
+					itemTemplate = $( itemTemplate.replace( /__i__/g, '0' ) );
+				} else {
+					itemTemplate = repeater.find('.audiotheme-repeater-item:eq(0)').clone();
+				}
+				
+				repeater.data('itemIndex', repeater.find('.audiotheme-repeater-item').length || 0);
+				repeater.data('itemTemplate', itemTemplate);
+				
+				repeater.audiothemeRepeater('updateIndex');
+				
+				itemsParent.sortable({
 					axis: 'y',
 					forceHelperSize: true,
 					forcePlaceholderSize: true,
@@ -112,8 +138,6 @@ jQuery(function($) {
 						repeater.find('.audiotheme-repeater-sort-warning').fadeIn('slow');
 					}
 				});
-				
-				repeater.data('itemIndex', repeater.find('.audiotheme-repeater-item').length).data('itemTemplate', firstItem.clone());
 				
 				repeater.find('.audiotheme-repeater-add-item').on('click', function(e) {
 					e.preventDefault();
@@ -140,21 +164,33 @@ jQuery(function($) {
 				itemIndex = repeater.data('itemIndex'),
 				itemTemplate = repeater.data('itemTemplate');
 			
-			repeater.find('.audiotheme-repeater-items').append(itemTemplate.clone()).
-				children(':last-child').find('input,select,textarea').each(function(e) {
+			repeater.audiothemeRepeater('clearList');
+			
+			repeater.find('.audiotheme-repeater-items').append(itemTemplate.clone())
+				.children(':last-child').find('input,select,textarea').each(function(e) {
 					var $this = $(this);
 					$this.attr('name', $this.attr('name').replace('[0]', '[' + itemIndex + ']') );
-				}).end().
-				find('.thickbox').each(function(e) {
+				}).end()
+				.find('.thickbox').each(function(e) {
 					var $this = $(this);
 					$this.attr('data-insert-field', $this.attr('data-insert-field').replace('0', itemIndex) );
-				}).end().
-				find('.audiotheme-clear-on-add').val('').end().
-				find('.audiotheme-remove-on-add').remove().end().
-				find('.audiotheme-show-on-add').show().end().
-				find('.audiotheme-hide-on-add').hide().end();
+				}).end()
+				.find('.audiotheme-clear-on-add').val('').end()
+				.find('.audiotheme-remove-on-add').remove().end()
+				.find('.audiotheme-show-on-add').show().end()
+				.find('.audiotheme-hide-on-add').hide().end();
 			
-			repeater.data('itemIndex', itemIndex+1 ).audiothemeRepeater('updateIndex');
+			repeater.data('itemIndex', itemIndex+1).audiothemeRepeater('updateIndex');
+			
+			repeater.trigger('addItem.audiotheme', [ repeater.find('.audiotheme-repeater-items').children().last() ]);
+		},
+		
+		clearList : function() {
+			var itemsParent = $(this).find('.audiotheme-repeater-items');
+			
+			if ( itemsParent.hasClass('is-empty') ) {
+				itemsParent.removeClass('is-empty').html('');
+			}
 		},
 			
 		updateIndex : function() {

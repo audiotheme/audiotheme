@@ -155,6 +155,10 @@ function audiotheme_record_save_post( $post_id ) {
 	$is_revision = wp_is_post_revision( $post_id );
 	$is_valid_nonce = ( isset( $_POST['audiotheme_record_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_record_nonce'], 'update-record_' . $post_id ) ) ? true : false;
 	
+	if ( $is_autosave || $is_revision ) {
+		return;
+	}
+	
 	// Bail if the data shouldn't be saved or intention can't be verified.
 	if( $is_autosave || $is_revision || ! $is_valid_nonce ) {
 		return;
@@ -263,13 +267,27 @@ function audiotheme_edit_record_tracklist() {
 	
 	$tracks = get_audiotheme_record_tracks( $post->ID );
 	
-	if ( empty( $tracks ) ) {
-		$track = new stdClass();
-		$track->ID = '';
-		$track->post_title = '';
-		
-		$tracks[] = $track;
+	if ( $tracks ) {
+		foreach ( $tracks as $key => $track ) {
+			$tracks[ $key ] = array(
+				'key'          => $key,
+				'id'           => $track->ID,
+				'title'        => esc_attr( $track->post_title ),
+				'artist'       => esc_attr( get_post_meta( $track->ID, '_audiotheme_artist', true ) ),
+				'fileUrl'      => esc_attr( get_post_meta( $track->ID, '_audiotheme_file_url', true ) ),
+				'downloadable' => is_audiotheme_track_downloadable( $track->ID ),
+				'purchaseUrl'  => esc_url( get_post_meta( $track->ID, '_audiotheme_purchase_url', true ) )
+			);
+		}
 	}
+	
+	$thickbox_url = add_query_arg( array( 
+		'post_id'   => $post->ID, 
+		'type'      => 'audio', 
+		'TB_iframe' => true, 
+		'width'     => 640, 
+		'height'    => 750 
+	), admin_url( 'media-upload.php' ) );
 	
 	require( AUDIOTHEME_DIR . 'discography/admin/views/edit-record-tracklist.php' );
 }

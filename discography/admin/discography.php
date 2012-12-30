@@ -9,6 +9,7 @@
 /**
  * Include discography admin dependencies.
  */
+require( AUDIOTHEME_DIR . 'discography/admin/ajax.php' );
 require( AUDIOTHEME_DIR . 'discography/admin/record.php' );
 require( AUDIOTHEME_DIR . 'discography/admin/track.php' );
 
@@ -29,6 +30,9 @@ function audiotheme_load_discography_admin() {
 	if ( isset( $_POST['audiotheme_discography_rewrite_base_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_discography_rewrite_base_nonce'], 'save-discography-rewrite-base' ) ) {
 		update_option( 'audiotheme_discography_rewrite_base', $_POST['audiotheme_discography_rewrite_base'] );
 	}
+	
+	// Register AJAX admin actions.
+	add_action( 'wp_ajax_audiotheme_ajax_get_default_track', 'audiotheme_ajax_get_default_track' );
 	
 	// @todo Change this hook.
 	add_action( 'load-themes.php', 'audiotheme_discography_setup' );
