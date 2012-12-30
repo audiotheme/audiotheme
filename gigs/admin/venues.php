@@ -25,7 +25,7 @@ function audiotheme_venues_manage_screen_setup() {
 	$title = $post_type_object->labels->name;
 	add_screen_option( 'per_page', array( 'label' => $title, 'default' => 20 ) );
 	
-	require( AUDIOTHEME_DIR . 'gigs/admin/includes/class-audiotheme-venues-list-table.php' );
+	require( AUDIOTHEME_DIR . 'gigs/admin/class-audiotheme-venues-list-table.php' );
 	
 	$venues_list_table = new Audiotheme_Venues_List_Table();
 	$venues_list_table->process_actions();

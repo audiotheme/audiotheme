@@ -22,10 +22,10 @@ jQuery(function($) {
 				$.ajax({
 					url: ajaxurl,
 					data: {
-						action: 'ajax_is_new_audiotheme_venue',
+						action: 'audiotheme_ajax_is_new_venue',
 						name: $venue.val()
 					},
-					dataType: 'JSON',
+					dataType: 'json',
 					success: function( data ) {
 						if ( data.length ) {
 							$venueTz.hide().pointer('close');
@@ -39,7 +39,7 @@ jQuery(function($) {
 			}
 		},
 		select: function() { $venueTz.hide().pointer('close'); },
-		source: ajaxurl + '?action=ajax_get_audiotheme_venue_matches',
+		source: ajaxurl + '?action=audiotheme_ajax_get_venue_matches',
 		minLength: 0,
 		position:  ( 'undefined' !== typeof isRtl && isRtl ) ? { my: 'right top', at: 'right bottom', offset: '0, -1' } : { offset: '0, -1' },
 		open: function() { $(this).addClass('open'); },

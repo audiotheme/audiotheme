@@ -4,7 +4,7 @@
  *
  * @since 1.0.0
  */
-function ajax_get_audiotheme_venue_matches() {
+function audiotheme_ajax_get_venue_matches() {
 	global $wpdb;
 	
 	$var = like_escape( stripslashes( $_GET['term'] ) ) . '%';
@@ -18,7 +18,7 @@ function ajax_get_audiotheme_venue_matches() {
  *
  * @since 1.0.0
  */
-function ajax_is_new_audiotheme_venue() {
+function audiotheme_ajax_is_new_venue() {
 	global $wpdb;
 	
 	$venue = $wpdb->get_col( $wpdb->prepare( "SELECT post_title FROM $wpdb->posts WHERE post_type='audiotheme_venue' AND post_title=%s ORDER BY post_title ASC LIMIT 1", stripslashes( $_GET['name'] ) ) );

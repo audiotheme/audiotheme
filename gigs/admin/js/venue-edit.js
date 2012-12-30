@@ -14,7 +14,7 @@ jQuery(function($) {
 					maxRows: 12,
 					name_startsWith: request.term
 				},
-				dataType: 'JSONP',
+				dataType: 'jsonp',
 				success: function( data ) {
 					response( $.map( data.geonames, function( item ) {
 						return {

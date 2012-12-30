@@ -9,7 +9,7 @@
 /**
  * Include gig admin dependencies.
  */
-require( AUDIOTHEME_DIR . 'gigs/admin/includes/admin-ajax.php' );
+require( AUDIOTHEME_DIR . 'gigs/admin/ajax.php' );
 
 /**
  * Load gigs admin on init.
@@ -40,8 +40,8 @@ function audiotheme_gigs_admin_setup() {
 	add_filter( 'audiotheme_nav_menu_archive_items', 'audiotheme_gigs_archive_menu_item' );
 	
 	// Register ajax admin actions.
-	add_action( 'wp_ajax_ajax_get_audiotheme_venue_matches', 'ajax_get_audiotheme_venue_matches' );
-	add_action( 'wp_ajax_ajax_is_new_audiotheme_venue', 'ajax_is_new_audiotheme_venue' );
+	add_action( 'wp_ajax_audiotheme_ajax_get_venue_matches', 'audiotheme_ajax_get_venue_matches' );
+	add_action( 'wp_ajax_audiotheme_ajax_is_new_venue', 'audiotheme_ajax_is_new_venue' );
 	
 	// Register scripts.
 	wp_register_script( 'audiotheme-gig-edit', AUDIOTHEME_URI . 'gigs/admin/js/gig-edit.js', array( 'audiotheme-admin', 'audiotheme-pointer', 'jquery-timepicker', 'jquery-ui-autocomplete', 'jquery-ui-datepicker' ) );
@@ -198,7 +198,7 @@ function audiotheme_gigs_manage_screen_setup() {
 	$title = $post_type_object->labels->name;
 	add_screen_option( 'per_page', array( 'label' => $title, 'default' => 20 ) );
 	
-	require_once( AUDIOTHEME_DIR . 'gigs/admin/includes/class-audiotheme-gigs-list-table.php' );
+	require_once( AUDIOTHEME_DIR . 'gigs/admin/class-audiotheme-gigs-list-table.php' );
 	
 	$gigs_list_table = new Audiotheme_Gigs_List_Table();
 	$gigs_list_table->process_actions();
