@@ -162,23 +162,27 @@ function audiotheme_discography_query( $query ) {
 function audiotheme_discography_permalinks( $post_link, $post, $leavename, $sample ) {
 	global $wpdb;
 	
-	$permalink = get_option( 'permalink_structure' );
+	$is_draft_or_pending = isset( $post->post_status ) && in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) );
 	
-	if ( ! empty( $permalink ) && 'audiotheme_record' == get_post_type( $post ) ) {
-		$base = get_audiotheme_discography_rewrite_base();
-		$slug = ( $leavename ) ? '%postname%' : $post->post_name;
-		$post_link = home_url( sprintf( '/%s/%s/', $base, $slug ) );
-	}
-	
-	if ( ! empty( $permalink ) && 'audiotheme_track' == get_post_type( $post ) && ! empty( $post->post_parent ) ) {
-		$base = get_audiotheme_discography_rewrite_base();
-		$slug = ( $leavename ) ? '%postname%' : $post->post_name;
-		// test to see which performs better
-		#$record_slug = $wpdb->get_var( $wpdb->prepare( "SELECT post_name FROM $wpdb->posts WHERE ID=%d", $post->post_parent ) );
-		$record = get_post( $post->post_parent );
-		$post_link = home_url( sprintf( '/%s/%s/track/%s/', $base, $record->post_name, $slug ) );
-	} elseif ( empty( $permalink ) && 'audiotheme_track' == get_post_type( $post ) && ! empty( $post->post_parent ) ) {
-		$post_link = add_query_arg( 'post_parent', $post->post_parent, $post_link );
+	if ( ! $is_draft_or_pending ) {
+		$permalink = get_option( 'permalink_structure' );
+		
+		if ( ! empty( $permalink ) && 'audiotheme_record' == get_post_type( $post ) ) {
+			$base = get_audiotheme_discography_rewrite_base();
+			$slug = ( $leavename ) ? '%postname%' : $post->post_name;
+			$post_link = home_url( sprintf( '/%s/%s/', $base, $slug ) );
+		}
+		
+		if ( ! empty( $permalink ) && 'audiotheme_track' == get_post_type( $post ) && ! empty( $post->post_parent ) ) {
+			$base = get_audiotheme_discography_rewrite_base();
+			$slug = ( $leavename ) ? '%postname%' : $post->post_name;
+			// test to see which performs better
+			#$record_slug = $wpdb->get_var( $wpdb->prepare( "SELECT post_name FROM $wpdb->posts WHERE ID=%d", $post->post_parent ) );
+			$record = get_post( $post->post_parent );
+			$post_link = home_url( sprintf( '/%s/%s/track/%s/', $base, $record->post_name, $slug ) );
+		} elseif ( empty( $permalink ) && 'audiotheme_track' == get_post_type( $post ) && ! empty( $post->post_parent ) ) {
+			$post_link = add_query_arg( 'post_parent', $post->post_parent, $post_link );
+		}
 	}
 	
 	return $post_link;

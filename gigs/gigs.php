@@ -273,7 +273,9 @@ function audiotheme_gig_template_redirect() {
  * @return string The gig permalink.
  */
 function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
-	if ( ! empty( $post->post_name ) ) {
+	$is_draft_or_pending = isset( $post->post_status ) && in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) );
+	
+	if ( ! empty( $post->post_name ) && ! $is_draft_or_pending ) {
 		$permalink = get_option( 'permalink_structure' );
 		
 		if ( ! empty( $permalink ) && 'audiotheme_gig' == get_post_type( $post ) ) {
