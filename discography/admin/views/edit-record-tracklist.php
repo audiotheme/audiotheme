@@ -88,7 +88,7 @@
 
 <script type="text/javascript">
 jQuery(function($) {
-	var tracklist = <?php echo ( empty( $tracks ) ) ? null : json_encode( $tracks ); ?>;
+	var tracklist = <?php echo ( empty( $tracks ) ) ? 'null' : json_encode( $tracks ); ?>;
 	
 	// @todo Send and manage a nonce.
 	$('#record-tracklist').audiothemeRepeater({ items: tracklist })
