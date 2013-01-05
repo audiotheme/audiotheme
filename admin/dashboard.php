@@ -13,115 +13,86 @@ function audiotheme_dashboard_register_settings() {
 	$screen = add_audiotheme_settings_screen( 'audiotheme-settings', __( 'Settings', 'audiotheme-i18n' ), array(
 		'menu_title'    => __( 'Settings', 'audiotheme-i18n' ),
 		'option_group'  => 'audiotheme_options',
-		'option_name'   => array( 'audiotheme_options', 'audiotheme_licenses' ),
+		'option_name'   => array( 'audiotheme_options', 'audiotheme_licenses', 'audiotheme_page_for_discography', 'audiotheme_page_for_gigs', 'audiotheme_disable_directory_browsing' ),
 		'show_in_menu'  => 'audiotheme',
 		'capability'    => 'manage_options'
 	) );
 	
 	$screen->add_field( 'settings_info', __( 'Info' ), 'html', array(
-		'output' => 'Move the privacy option over here?<br>
-			Features should have fallbacks, CSS and JS may be able to be disabled here if the theme excplicitly removes support.'
-	) );
-	
-	$screen->add_field( 'permalinks', __( 'Permalinks' ), 'html', array(
-		'output' => 'You can customize the URLs for your gigs and discography on the <a href="' . admin_url( 'options-permalink.php' ) . '">Permalinks settings screen</a>.'
+		'output' => 'Features should have fallbacks, CSS and JS may be able to be disabled here if the theme excplicitly removes support.'
 	) );
 	
 	
-	// License Tab
-	$tab = $screen->add_tab( 'license', __( 'Licenses', 'audiotheme-i18n' ) );
-		
-		$section = $tab->add_section( 'framework_license', '', array(
-			'priority' => 0,
-			'callback' => 'audiotheme_dashboard_settings_license_section'
+	$section = $screen->add_section( 'archive_pages', __( 'AudioTheme Archive Pages' ), array(
+		'priority' => 20,
+		'callback' => 'audiotheme_dashboard_settings_archive_pages_section',
+	) );
+	
+		$pages = get_posts( array(
+			'post_type'   => 'page',
+			'post_parent' => 0,
+			'post_status' => 'publish',
+			'orderby'     => 'title',
+			'order'       => 'asc',
 		) );
+		
+		$page_choices = array( '' => '' );
+		if ( $pages ) {
+			foreach ( $pages as $page ) {
+				// @todo Exclude front page and blog page.
+				// @todo Try to filter those dropdowns to remove these pages.
+				$page_choices[ $page->ID ] = $page->post_title;
+			}
+		}
+		
+		$screen->add_field( 'audiotheme_page_for_discography', 'Discography Page', 'select', array(
+			'option_name'  => 'audiotheme_page_for_discography',
+			'default'      => absint( get_option( 'audiotheme_page_for_discography' ) ),
+			'choices'      => $page_choices,
+		) );
+		
+		$screen->add_field( 'audiotheme_page_for_gigs', 'Gigs Page', 'select', array(
+			'option_name'  => 'audiotheme_page_for_gigs',
+			'default'      => get_option( 'audiotheme_page_for_gigs' ),
+			'choices'      => $page_choices,
+		) );
+	
+	$section = $screen->add_section( 'directory_browsing', __( 'Directory Browsing' ), array(
+		'priority' => 50,
+		#'callback' => 'audiotheme_dashboard_settings_archive_pages_section',
+	) );
+	
+		$section->add_field( 'audiotheme_disable_directory_browsing', __( 'Directory Browsing' ), 'checkbox', array(
+			'option_name' => 'audiotheme_disable_directory_browsing',
+			'choices' => array(
+				'1' => 'Disable directory browsing?',
+			),
+		) );
+	
+	$section = $screen->add_section( 'license', 'License', array(
+		'priority' => 0,
+		'callback' => 'audiotheme_dashboard_settings_license_section'
+	) );
 		
 		$section->add_field( 'framework_license', __( 'Framework License Key', 'audiotheme-i18n' ), 'audiotheme_dashboard_license_input', array(
-			'priority'    => 0,
 			'option_name' => 'audiotheme_licenses',
-			'description' => '<br>I wonder if the Settings API is too plain for something like this? Need to add some help somewheres. Help tab? Link to AudioTheme.com?'
 		) );
 		
-		
-		// @todo Only register this section if the theme supports automatic updates.
-		$section = $tab->add_section( 'theme_license', __( 'Current Theme', 'audiotheme-i18n' ), array(
-			'priority' => 5,
-			// 'callback to add description'
-		) );
-		
-		// @todo The field id should incorporate the theme name.
-		$section->add_field( 'theme_license', __( 'Theme License Key', 'audiotheme-i18n' ), 'audiotheme_dashboard_license_input', array(
-			'priority'    => 0,
-			'option_name' => 'audiotheme_licenses',
-			'description' => '<br>This is the key for the currently active theme if it supports automatic updates.'
-		) );
-		
-		
-		// @todo Add a method for add-ons to easily register automatic update support.
-		$section = $tab->add_section( 'addon_licenses', __( 'Add-on Licenses', 'audiotheme-i18n' ), array(
-			'priority' => 10,
-			// 'callback to add description'
-		) );
-		
-		// @todo The field id should incorporate the add-on name.
-		$section->add_field( 'addon_license', __( 'Mobile Dashboard', 'audiotheme-i18n' ), 'audiotheme_dashboard_license_input', array(
-			'option_name' => 'audiotheme_licenses',
-			'description' => '<br>This would be a license key for an add-on.'
-		) );
-		
-		// @todo The field id should incorporate the add-on name.
-		$section->add_field( 'addon_license2', __( 'Venue Database Sync', 'audiotheme-i18n' ), 'audiotheme_dashboard_license_input', array(
-			'option_name' => 'audiotheme_licenses', 
-			'description' => '<br>This would be a license key for an add-on.'
-		) );
-		
-		// @todo The field id should incorporate the add-on name.
-		$section->add_field( 'addon_license3', __( 'Tunebox', 'audiotheme-i18n' ), 'audiotheme_dashboard_license_input', array(
-			'option_name' => 'audiotheme_licenses', 
-			'description' => '<br>This would be a license key for an add-on.'
-		) );
-		
-		// @todo The field id should incorporate the add-on name.
-		$section->add_field( 'addon_license4', __( 'Newsletter Manager', 'audiotheme-i18n' ), 'audiotheme_dashboard_license_input', array(
-			'option_name' => 'audiotheme_licenses', 
-			'description' => '<br>This would be a license key for an add-on.'
-		) );
-		
-		// @todo The field id should incorporate the add-on name.
-		$section->add_field( 'addon_license5', __( 'Bandcamp Integration', 'audiotheme-i18n' ), 'audiotheme_dashboard_license_input', array(
-			'option_name' => 'audiotheme_licenses', 
-			'description' => '<br>This would be a license key for an add-on.'
-		) );
-		
-		// @todo The field id should incorporate the add-on name.
-		$section->add_field( 'addon_license6', __( 'SoundCloud Integration', 'audiotheme-i18n' ), 'audiotheme_dashboard_license_input', array(
-			'option_name' => 'audiotheme_licenses', 
-			'description' => '<br>This would be a license key for an add-on.'
-		) );
-		
-		// @todo The field id should incorporate the add-on name.
-		$section->add_field( 'addon_license7', __( 'Instagram Integration', 'audiotheme-i18n' ), 'audiotheme_dashboard_license_input', array(
-			'option_name' => 'audiotheme_licenses', 
-			'description' => '<br>This would be a license key for an add-on.'
-		) );
-		
-		// @todo The field id should incorporate the add-on name.
-		$section->add_field( 'addon_license8', __( 'Gigs Pro', 'audiotheme-i18n' ), 'audiotheme_dashboard_license_input', array(
-			'option_name' => 'audiotheme_licenses', 
-			'description' => '<br>This would be a license key for an add-on.<br>A repeater for quickly adding multiple gigs and a calendar view.<br>Add a setlist to each gig.'
-		) );
-		
-		// @todo The field id should incorporate the add-on name.
-		$section->add_field( 'addon_license9', __( 'Multi-Artist Add-on for Labels', 'audiotheme-i18n' ), 'audiotheme_dashboard_license_input', array(
-			'option_name' => 'audiotheme_licenses', 
-			'description' => '<br>This would be a license key for an add-on. It\'s using a custom callback to render a field.'
-		) );
 	
-	// Status Tab
-	$tab = $screen->add_tab( 'info', __( 'Status', 'audiotheme-i18n' ) );
-	$tab->add_field( 'data', __( 'Installation Status', 'audiotheme-i18n' ), 'html', array(
-		'output' => 'Output the AudioTheme version, MySQL version, WordPress version, etc. for support. Maybe a field to dump a bunch of debug data for copying and pasting.'
-	) );
+	// System Tab
+	$tab = $screen->add_tab( 'info', __( 'System', 'audiotheme-i18n' ) );
+		
+		$tab->add_field( 'data', __( 'Installation Status', 'audiotheme-i18n' ), 'html', array(
+			'output' => 'Output the AudioTheme version, MySQL version, WordPress version, etc. for support. Maybe a field to dump a bunch of debug data for copying and pasting.'
+		) );
+}
+
+function audiotheme_dashboard_settings_archive_pages_section( $section ) {
+	?>
+	<p>
+		Archive pages allow you to customize your archives using a regular page. Change the title, add an intro, and even change the URL.
+	</p>
+	<?php
 }
 
 function audiotheme_dashboard_settings_license_section( $section ) {
@@ -158,7 +129,7 @@ function audiotheme_dashboard_admin_menu() {
 		'audiotheme',
 		'audiotheme_dashboard_features_screen',
 		null,
-		3 // @todo Make sure this doesn't conflict.
+		3.901
 	);
 	
 	add_submenu_page(
@@ -168,25 +139,6 @@ function audiotheme_dashboard_admin_menu() {
 		'manage_options',
 		'audiotheme',
 		'audiotheme_dashboard_features_screen'
-	);
-	
-	// Hack to get it to show in the correct position for now.
-	/*add_submenu_page(
-		'audiotheme',
-		__( 'AudioTheme Settings', 'audiotheme-i18n' ),
-		__( 'Settings', 'audiotheme-i18n' ),
-		'manage_options',
-		'audiotheme-settings',
-		'audiotheme_settings_display_screen'
-	);*/
-	
-	add_submenu_page(
-		'audiotheme',
-		__( 'Add-ons', 'audiotheme-i18n' ),
-		__( 'Add-ons', 'audiotheme-i18n' ),
-		'manage_options',
-		'audiotheme-addons',
-		'audiotheme_dashboard_addons_screen'
 	);
 	
 	add_submenu_page(
@@ -215,7 +167,51 @@ function audiotheme_dashboard_help_screen() {
 
 
 function audiotheme_dashboard_sort_menu() {
-	audiotheme_submenu_move_after( 'audiotheme-settings', 'audiotheme', 'audiotheme' );
+	global $menu;
+	
+	if ( $menu ) {
+		$separator = array( '', 'read', 'separator-before-audiotheme', '', 'wp-menu-separator' );
+		audiotheme_menu_insert_item( $separator, 'audiotheme', 'before' );
+		
+		audiotheme_menu_move_item( 'audiotheme-gigs', 'audiotheme' );
+		audiotheme_menu_move_item( 'edit.php?post_type=audiotheme_record', 'audiotheme-gigs' );
+		audiotheme_menu_move_item( 'edit.php?post_type=audiotheme_video', 'edit.php?post_type=audiotheme_record' );
+		
+		audiotheme_submenu_move_after( 'audiotheme-settings', 'audiotheme', 'audiotheme' );
+	}
+}
+
+
+
+function audiotheme_menu_insert_item( $item, $relative_slug, $position = 'after' ) {
+	global $menu;
+	
+	$relative_key = audiotheme_menu_get_item_key( $relative_slug );
+	$before = ( 'before' == $position ) ? $relative_key : $relative_key + 1;
+	
+	array_splice( $menu, $before, 0, array( $item ) );
+}
+
+function audiotheme_menu_move_item( $move_slug, $relative_slug, $position = 'after' ) {
+	global $menu;
+	
+	$move_key = audiotheme_menu_get_item_key( $move_slug );
+	$item = $menu[ $move_key ];
+	unset( $menu[ $move_key ] );
+	
+	audiotheme_menu_insert_item( $item, $relative_slug, $position );
+}
+
+function audiotheme_menu_get_item_key( $menu_slug ) {
+	global $menu;
+	
+	foreach ( $menu as $key => $item ) {
+		if ( $menu_slug == $item[2] ) {
+			return $key;
+		}
+	}
+	
+	return false;
 }
 
 function audiotheme_submenu_move_after( $move_slug, $after_slug, $menu_slug ) {

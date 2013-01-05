@@ -6,41 +6,130 @@
  */
 
 /**
+ * Helper function to enqueue a pointer.
+ *
+ * The $id will be used to reference the pointer in javascript as well as the
+ * key it's saved with in the dismissed pointers user meta. $content will be
+ * wrapped in wpautop(). Passing a pointer arg will allow the position of the
+ * pointer to be changed.
+ *
+ * @since 1.0.0
+ *
+ * @param string $id Pointer id.
+ * @param string $title Pointer title.
+ * @param string $content Pointer content.
+ * @param array $args Additional args.
+ */
+function audiotheme_enqueue_pointer( $id, $title, $content, $args = array() ) {
+	global $audiotheme_pointers;
+
+	$id = sanitize_key( $id );
+
+	$args = wp_parse_args( $args, array(
+		'position' => 'left',
+	) );
+
+	$content = sprintf( '<h3>%s</h3>%s', $title, wpautop( $content ) );
+
+	$audiotheme_pointers[ $id ] = array(
+		'id'       => $id,
+		'content'  => $content,
+		'position' => $args['position'],
+	);
+}
+
+/**
+ * Check to see if a pointer has been dismissed.
+ *
+ * @since 1.0.0
+ *
+ * @param string $id The pointer id.
+ * @return bool
+ */
+function is_audiotheme_pointer_dismissed( $id ) {
+	$dismissed = explode( ',', (string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
+
+	return in_array( $id, $dismissed );
+}
+
+/**
+ * Print enqueued pointers to a global javascript variable.
+ *
+ * Dismissed pointers are automatically removed.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_print_pointers() {
+	global $audiotheme_pointers;
+
+	if ( empty( $audiotheme_pointers ) ) {
+		return;
+	}
+
+	// Remove dismissed pointers.
+	$dismissed = explode( ',', (string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
+	$audiotheme_pointers = array_diff_key( $audiotheme_pointers, array_flip( $dismissed ) );
+
+	if ( empty( $audiotheme_pointers ) ) {
+		return;
+	}
+
+	// @see WP_Scripts::localize()
+	foreach ( (array) $audiotheme_pointers as $id => $pointer ) {
+		foreach( $pointer as $key => $value ) {
+			if ( ! is_scalar( $value ) ) {
+				continue;
+			}
+
+			$audiotheme_pointers[ $id ][ $key ] = html_entity_decode( (string) $value, ENT_QUOTES, 'UTF-8' );
+		}
+	}
+
+	// Output the object directly since there isn't really have a script to attach it to.
+	// CDATA and type='text/javascript' is not needed for HTML 5.
+	echo "<script type='text/javascript'>\n";
+	echo "/* <![CDATA[ */\n";
+	echo "var audiothemePointers = " . json_encode( $audiotheme_pointers ) . ";\n";
+	echo "/* ]]> */\n";
+	echo "</script>\n";
+}
+
+/**
  * Customizable submit meta box.
  *
  * @see post_submit_meta_box()
- * 
+ *
  * @since 1.0.0
  */
 function audiotheme_post_submit_meta_box( $post, $metabox ) {
 	global $action;
-	
+
 	$defaults = array(
 		'force_delete' => false,
 		'show_publish_date' => true,
 		'show_statuses' => array(
-			'pending' => __( 'Pending Review', 'audiotheme-i18n' )
+			'pending' => __( 'Pending Review', 'audiotheme-i18n' ),
 		),
-		'show_visibility' => true
+		'show_visibility' => true,
 	);
-	
+
 	$args = apply_filters( 'audiotheme_post_submit_meta_box_args', $metabox['args'], $post );
 	$args = wp_parse_args( $metabox['args'], $defaults );
 	extract( $args, EXTR_SKIP );
-	
+
 	$post_type = $post->post_type;
 	$post_type_object = get_post_type_object( $post_type );
 	$can_publish = current_user_can( $post_type_object->cap->publish_posts );
 	?>
-	
+
 	<div class="submitbox" id="submitpost">
-		
+
 		<div id="minor-publishing">
-		
+
 			<?php // Hidden submit button early on so that the browser chooses the right button when form is submitted with Return key ?>
 			<div style="display: none"><?php submit_button( __( 'Save', 'audiotheme-i18n' ), 'button', 'save' ); ?></div>
-			
-			
+
+
 			<?php
 			/**
 			 * Save/Preview buttons
@@ -53,10 +142,10 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 					<?php } elseif ( 'pending' == $post->post_status && $can_publish ) { ?>
 						<input type="submit" name="save" id="save-post" value="<?php esc_attr_e('Save as Pending'); ?>" class="button">
 					<?php } ?>
-					
+
 					<?php audiotheme_admin_spinner( array( 'id' => 'draft-ajax-loading' ) ); ?>
 				</div>
-				
+
 				<div id="preview-action">
 					<?php
 					if ( 'publish' == $post->post_status ) {
@@ -71,13 +160,13 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 					<a class="preview button" href="<?php echo esc_url( $preview_link ); ?>" target="wp-preview" id="post-preview"><?php echo esc_html( $preview_button ); ?></a>
 					<input type="hidden" name="wp-preview" id="wp-preview" value="">
 				</div>
-				
+
 				<div class="clear"></div>
 			</div><!--end div#minor-publishing-actions-->
-			
-			
+
+
 			<div id="misc-publishing-actions">
-				
+
 				<?php
 				/**
 				 * Post status
@@ -107,10 +196,10 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 							}
 							?>
 						</span>
-						
+
 						<?php if ( 'publish' == $post->post_status || 'private' == $post->post_status || ( $can_publish && count( $show_statuses ) ) ) { ?>
 							<a href="#post_status" class="edit-post-status hide-if-no-js" <?php if ( 'private' == $post->post_status ) { echo 'style="display: none"'; } ?>><?php _e( 'Edit', 'audiotheme-i18n' ) ?></a>
-							
+
 							<div id="post-status-select" class="hide-if-js">
 								<input type="hidden" name="hidden_post_status" id="hidden_post_status" value="<?php echo esc_attr( ( 'auto-draft' == $post->post_status ) ? 'draft' : $post->post_status ); ?>">
 								<select name="post_status" id="post_status">
@@ -121,11 +210,11 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 									<?php elseif ( 'future' == $post->post_status ) : ?>
 										<option value="future" <?php selected( $post->post_status, 'future' ); ?>><?php _e( 'Scheduled', 'audiotheme-i18n' ) ?></option>
 									<?php endif; ?>
-									
+
 									<?php if ( array_key_exists( 'pending', $show_statuses ) ) : ?>
 										<option value="pending" <?php selected( $post->post_status, 'pending' ); ?>><?php _e( 'Pending Review', 'audiotheme-i18n' ) ?></option>
 									<?php endif; ?>
-									
+
 									<?php if ( 'auto-draft' == $post->post_status ) : ?>
 										<option value="draft" <?php selected( $post->post_status, 'auto-draft' ); ?>><?php _e( 'Draft', 'audiotheme-i18n' ) ?></option>
 									<?php else : ?>
@@ -141,8 +230,8 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 					<input type="hidden" name="hidden_post_status" id="hidden_post_status" value="publish">
 					<input type="hidden" name="post_status" id="post_status" value="publish">
 				<?php endif; ?>
-				
-				
+
+
 				<?php
 				/**
 				 * Visibility
@@ -165,24 +254,24 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 							$visibility_trans = __( 'Public', 'audiotheme-i18n' );
 						}
 						?>
-						
+
 						<?php _e( 'Visibility:', 'audiotheme-i18n' ); ?>
 						<span id="post-visibility-display"><?php echo esc_html( $visibility_trans ); ?></span>
-						
+
 						<?php if ( $can_publish ) { ?>
 							<a href="#visibility" class="edit-visibility hide-if-no-js"><?php _e( 'Edit', 'audiotheme-i18n'  ); ?></a>
-							
+
 							<div id="post-visibility-select" class="hide-if-js">
 								<input type="hidden" name="hidden_post_password" id="hidden-post-password" value="<?php echo esc_attr( $post->post_password ); ?>">
 								<?php if ( 'post' == $post_type ) : ?>
 									<input type="checkbox" name="hidden_post_sticky" id="hidden-post-sticky" value="sticky" <?php checked( is_sticky( $post->ID ) ); ?> style="display: none">
 								<?php endif; ?>
 								<input type="hidden" name="hidden_post_visibility" id="hidden-post-visibility" value="<?php echo esc_attr( $visibility ); ?>">
-								
+
 								<input type="radio" name="visibility" id="visibility-radio-public" value="public" <?php checked( $visibility, 'public' ); ?>>
 								<label for="visibility-radio-public" class="selectit"><?php _e( 'Public', 'audiotheme-i18n' ); ?></label>
 								<br>
-								
+
 								<?php if ( 'post' == $post_type && current_user_can( 'edit_others_posts' ) ) : ?>
 									<span id="sticky-span">
 										<input type="checkbox" name="sticky" id="sticky" value="sticky" <?php checked( is_sticky( $post->ID ) ); ?>>
@@ -190,20 +279,20 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 										<br>
 									</span>
 								<?php endif; ?>
-								
+
 								<input type="radio" name="visibility" id="visibility-radio-password" value="password" <?php checked( $visibility, 'password' ); ?>>
 								<label for="visibility-radio-password" class="selectit"><?php _e( 'Password protected', 'audiotheme-i18n' ); ?></label><br />
-								
+
 								<span id="password-span">
 									<label for="post_password"><?php _e( 'Password:', 'audiotheme-i18n' ); ?></label>
 									<input type="text" name="post_password" id="post_password" value="<?php echo esc_attr( $post->post_password ); ?>">
 									<br>
 								</span>
-								
+
 								<input type="radio" name="visibility" id="visibility-radio-private" value="private" <?php checked( $visibility, 'private' ); ?>>
 								<label for="visibility-radio-private" class="selectit"><?php _e( 'Private', 'audiotheme-i18n' ); ?></label>
 								<br>
-								
+
 								<p>
 									<a href="#visibility" class="save-post-visibility hide-if-no-js button"><?php _e( 'OK', 'audiotheme-i18n' ); ?></a>
 									<a href="#visibility" class="cancel-post-visibility hide-if-no-js"><?php _e( 'Cancel', 'audiotheme-i18n' ); ?></a>
@@ -215,8 +304,8 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 					<input type="hidden" name="hidden_post_visibility" value="public">
 					<input type="hidden" name="visibility" value="public">
 				<?php endif; ?>
-				
-				
+
+
 				<?php
 				/**
 				 * Publish date
@@ -241,7 +330,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 						$stamp = __( 'Publish <strong>immediately</strong>', 'audiotheme-i18n' );
 						$date = date_i18n( $datef, strtotime( current_time( 'mysql' ) ) );
 					}
-					
+
 					if ( $can_publish ) : // Contributors don't get to choose the date of publish ?>
 						<div class="misc-pub-section curtime">
 							<span id="timestamp"><?php printf( $stamp, $date ); ?></span>
@@ -252,16 +341,16 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 					endif;
 				endif;
 				?>
-				
+
 				<?php do_action( 'post_submitbox_misc_actions' ); ?>
 			</div><!--end div#misc-publishing-actions-->
 			<div class="clear"></div>
 		</div><!--end div#minor-publishing-->
-		
-		
+
+
 		<div id="major-publishing-actions">
 			<?php do_action( 'post_submitbox_start' ); ?>
-			
+
 			<?php if ( 'auto-draft' != $post->post_status ) : ?>
 				<div id="delete-action">
 					<?php
@@ -278,7 +367,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 					<?php } ?>
 				</div>
 			<?php endif; ?>
-			
+
 			<div id="publishing-action">
 				<?php audiotheme_admin_spinner( array( 'id' => 'ajax-loading' ) ); ?>
 				<?php
@@ -301,7 +390,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 					<input type="submit" name="save" id="publish" class="button-primary button-large" accesskey="p" value="<?php esc_attr_e( 'Update', 'audiotheme-i18n' ) ?>">
 				<?php } ?>
 			</div><!--end div#publishing-action-->
-			
+
 			<div class="clear"></div>
 		</div><!--end div#major-publishing-actions-->
 	</div><!--end div#submitpost-->
@@ -310,7 +399,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 
 /**
  * Backwards compatible AJAX spinner
- * 
+ *
  * Displays the correct AJAX spinner depending on the version of WordPress.
  *
  * @since 1.0.0
@@ -323,9 +412,9 @@ function audiotheme_admin_spinner( $args = array() ) {
 	$args = wp_parse_args( $args, array(
 		'id' => '',
 		'class' => 'ajax-loading',
-		'echo' => true
+		'echo' => true,
 	) );
-	
+
 	if ( audiotheme_version_compare( 'wp', '3.5-beta-1', '<' ) ) {
 		$spinner = sprintf( '<img src="%1$s" id="%2$s" class="spinner %3$s" alt="">',
 			esc_url( admin_url( 'images/wpspin_light.gif' ) ),
@@ -335,11 +424,10 @@ function audiotheme_admin_spinner( $args = array() ) {
 	} else {
 		$spinner = sprintf( '<span id="%1$s" class="spinner"></span>', esc_attr( $args['id'] ) );
 	}
-	
+
 	if ( $args['echo'] ) {
 		echo $spinner;
 	} else {
 		return $spinner;
 	}
 }
-?>

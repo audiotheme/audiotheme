@@ -60,14 +60,15 @@ add_action( 'plugins_loaded', 'audiotheme_load' );
 /**
  * Load additional helper functions and libraries.
  */
-require( AUDIOTHEME_DIR . 'includes/compat.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
-require( AUDIOTHEME_DIR . 'includes/general-template.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/media.php' );
 require( AUDIOTHEME_DIR . 'includes/options.php' );
 require( AUDIOTHEME_DIR . 'widgets/widgets.php' );
+
+// @todo For testing.
+require( AUDIOTHEME_DIR . 'archive-pages.php' );
 
 /**
  * Load admin-specific functions and libraries.
@@ -80,7 +81,6 @@ if ( is_admin() ) {
  * Load AudioTheme CPTs and corresponding functionality.
  */
 require( AUDIOTHEME_DIR . 'discography/discography.php' );
-require( AUDIOTHEME_DIR . 'galleries/galleries.php' );
 require( AUDIOTHEME_DIR . 'gigs/gigs.php' );
 require( AUDIOTHEME_DIR . 'videos/videos.php' );
 
@@ -96,16 +96,16 @@ function audiotheme_load() {
 	add_filter( 'get_pages', 'audiotheme_page_list' );
 	add_filter( 'page_css_class', 'audiotheme_page_list_classes', 10, 2 );
 	add_filter( 'dynamic_sidebar_params', 'audiotheme_widget_count_class' );
-	
+
 	if ( ! is_admin() ) {
 		add_filter( 'wp_get_nav_menu_items', 'audiotheme_nav_menu_classes', 1, 3 );
 	}
-	
+
 	// Media filters.
 	add_action( 'init', 'audiotheme_add_default_oembed_providers' );
 	add_filter( 'embed_oembed_html', 'audiotheme_oembed_html', 10, 4 );
 	add_filter( 'embed_handler_html', 'audiotheme_oembed_html', 10, 4 );
-	
+
 	add_action( 'init', 'audiotheme_register_scripts' );
 	add_action( 'widgets_init', 'audiotheme_widgets_init' );
 }
@@ -117,8 +117,13 @@ function audiotheme_load() {
  * @link http://core.trac.wordpress.org/ticket/18909
  */
 function audiotheme_register_scripts() {
-	wp_register_script( 'jquery-fitvids', AUDIOTHEME_URI . 'includes/js/jquery.fitvids.js', array( 'jquery' ), '1.0' );
-	wp_register_script( 'jquery-placeholder', AUDIOTHEME_URI . 'includes/js/jquery.placeholder.min.js', array( 'jquery' ), '2.0.7' );
-	wp_register_script( 'jquery-timepicker', AUDIOTHEME_URI . 'includes/js/jquery.timepicker.min.js', array( 'jquery' ) );
+	wp_register_script( 'jquery-fitvids', AUDIOTHEME_URI . 'includes/js/jquery.fitvids.js', array( 'jquery' ), '1.0', true );
+	wp_register_script( 'jquery-jplayer', AUDIOTHEME_URI . 'includes/js/jquery.jplayer.min.js', array( 'jquery' ), '2.2.0', true );
+	wp_register_script( 'jquery-jplayer-playlist', AUDIOTHEME_URI . 'includes/js/jquery.jplayer.playlist.min.js', array( 'jquery-jplayer' ), '2.1.0', true );
+	wp_register_script( 'jquery-placeholder', AUDIOTHEME_URI . 'includes/js/jquery.placeholder.min.js', array( 'jquery' ), '2.0.7', true );
+	wp_register_script( 'jquery-timepicker', AUDIOTHEME_URI . 'includes/js/jquery.timepicker.min.js', array( 'jquery' ), true );
+
+	wp_localize_script( 'jquery-jplayer', 'AudiothemeJplayer', array(
+		'swfPath' => AUDIOTHEME_URI . 'includes/js'
+	) );
 }
-?>

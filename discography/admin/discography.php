@@ -1,58 +1,80 @@
 <?php
 /**
- * Load Discography Admin
+ * Discography-related admin functionality.
+ *
+ * @package AudioTheme_Framework
+ * @subpackage Discography.
+ */
+
+/**
+ * Include discography admin dependencies.
+ */
+require( AUDIOTHEME_DIR . 'discography/admin/ajax.php' );
+require( AUDIOTHEME_DIR . 'discography/admin/record.php' );
+require( AUDIOTHEME_DIR . 'discography/admin/track.php' );
+
+/**
+ * Load discography admin on init.
  *
  * @since 1.0.0
  */
 add_action( 'init', 'audiotheme_load_discography_admin' );
 
+/**
+ * Attach hooks for loading and managing discography in the admin dashboard.
+ *
+ * @since 1.0.0
+ */
 function audiotheme_load_discography_admin() {
+	// Update the discography rewrite base.
 	if ( isset( $_POST['audiotheme_discography_rewrite_base_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_discography_rewrite_base_nonce'], 'save-discography-rewrite-base' ) ) {
 		update_option( 'audiotheme_discography_rewrite_base', $_POST['audiotheme_discography_rewrite_base'] );
 	}
-	
+
+	// Register AJAX admin actions.
+	add_action( 'wp_ajax_audiotheme_ajax_get_default_track', 'audiotheme_ajax_get_default_track' );
+
+	// @todo Change this hook.
+	add_action( 'load-themes.php', 'audiotheme_discography_setup' );
+
 	add_action( 'admin_menu', 'audiotheme_discography_admin_menu' );
 	add_action( 'admin_init', 'audiotheme_discography_admin_init' );
-	add_action( 'load-themes.php', 'audiotheme_discography_setup' );
 	add_filter( 'post_updated_messages', 'audiotheme_discography_post_updated_messages' );
 	add_filter( 'audiotheme_nav_menu_archive_items', 'audiotheme_record_archive_menu_item' );
-	
+
 	// Records
-	require( AUDIOTHEME_DIR . 'discography/admin/record.php' );
-		
-	add_action( 'save_post', 'audiotheme_record_save_hook' );
-	
-	// All Records Screen
+	add_action( 'save_post', 'audiotheme_record_save_post' );
+
+	// Manage Records screen.
 	add_filter( 'parse_query', 'audiotheme_records_admin_query' );
-	add_filter( 'manage_edit-audiotheme_record_columns', 'audiotheme_record_columns' );
-	add_action( 'manage_edit-audiotheme_record_sortable_columns', 'audiotheme_record_sortable_columns' );
-	add_action( 'manage_pages_custom_column', 'audiotheme_record_display_column', 10, 2 );
+	add_filter( 'manage_edit-audiotheme_record_columns', 'audiotheme_record_register_columns' );
+	add_action( 'manage_edit-audiotheme_record_sortable_columns', 'audiotheme_record_register_sortable_columns' );
+	add_action( 'manage_pages_custom_column', 'audiotheme_record_display_columns', 10, 2 );
 	add_filter( 'bulk_actions-edit-audiotheme_record', 'audiotheme_record_list_table_bulk_actions' );
 	add_action( 'page_row_actions', 'audiotheme_record_list_table_actions', 10, 2 );
-	
+
 	// Tracks
-	require( AUDIOTHEME_DIR . 'discography/admin/track.php' );
-	
-	add_action( 'save_post', 'audiotheme_track_save_hook' );
+	add_action( 'save_post', 'audiotheme_track_save_post' );
 	add_action( 'wp_unique_post_slug', 'audiotheme_track_unique_slug', 10, 6 );
-	
-	// All Tracks Screen
+
+	// Manage Tracks screen.
 	add_filter( 'parse_query', 'audiotheme_tracks_admin_query' );
 	add_action( 'restrict_manage_posts', 'audiotheme_tracks_filters' );
-	add_filter( 'manage_edit-audiotheme_track_columns', 'audiotheme_track_columns' );
-	add_action( 'manage_edit-audiotheme_track_sortable_columns', 'audiotheme_track_sortable_columns' );
-	add_action( 'manage_posts_custom_column', 'audiotheme_track_display_column', 10, 2 );
+	add_filter( 'manage_edit-audiotheme_track_columns', 'audiotheme_track_register_columns' );
+	add_action( 'manage_edit-audiotheme_track_sortable_columns', 'audiotheme_track_register_sortable_columns' );
+	add_action( 'manage_posts_custom_column', 'audiotheme_track_display_columns', 10, 2 );
 	add_filter( 'bulk_actions-edit-audiotheme_track', 'audiotheme_track_list_table_bulk_actions' );
-	add_action( 'page_row_actions', 'audiotheme_track_list_table_actions', 10, 2 );
+	add_action( 'post_row_actions', 'audiotheme_track_list_table_actions', 10, 2 );
 }
 
 /**
- * Add Discography Data
+ * Add initial discography data.
  *
  * Ensures the record type taxonomies exist. Runs anytime themes.php is
  * visited to ensure record types exist.
  *
  * @since 1.0.0
+ * @todo Hook up elsewhere now that we're going the plugin route.
  */
 function audiotheme_discography_setup() {
 	if ( taxonomy_exists( 'audiotheme_record_type' ) ) {
@@ -68,7 +90,7 @@ function audiotheme_discography_setup() {
 }
 
 /**
- * Discography Admin Menu
+ * Discography admin menu.
  *
  * @since 1.0.0
  */
@@ -77,46 +99,56 @@ function audiotheme_discography_admin_menu() {
 }
 
 /**
- * Discography Update Messages
+ * Discography update messages.
  *
  * @since 1.0.0
+ * @see /wp-admin/edit-form-advanced.php
+ *
+ * @param array $messages The array of existing post update messages.
+ * @return array
  */
 function audiotheme_discography_post_updated_messages( $messages ) {
-	global $post, $post_ID;
-	
+	global $post;
+
 	$messages['audiotheme_record'] = array(
-		0  => '',
-		1  => sprintf( __( 'Record updated. <a href="%s">View Record</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
+		0  => '', // Unused. Messages start at index 1.
+		1  => sprintf( __( 'Record updated. <a href="%s">View Record</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
 		2  => __( 'Custom field updated.', 'audiotheme-i18n' ),
 		3  => __( 'Custom field deleted.', 'audiotheme-i18n' ),
 		4  => __( 'Record updated.', 'audiotheme-i18n' ),
+		/* translators: %s: date and time of the revision */
 		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Record restored to revision from %s', 'audiotheme-i18n' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-		6  => sprintf( __( 'Record published. <a href="%s">View Record</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
+		6  => sprintf( __( 'Record published. <a href="%s">View Record</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
 		7  => __( 'Record saved.', 'audiotheme-i18n' ),
-		8  => sprintf( __( 'Record submitted. <a target="_blank" href="%s">Preview Record</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
-		9  => sprintf( __( 'Record scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Record</a>', 'audiotheme-i18n' ), date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
-		10 => sprintf( __( 'Record draft updated. <a target="_blank" href="%s">Preview Record</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+		8  => sprintf( __( 'Record submitted. <a target="_blank" href="%s">Preview Record</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
+		9  => sprintf( __( 'Record scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Record</a>', 'audiotheme-i18n' ),
+		      // translators: Publish box date format, see http://php.net/date
+		      date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
+		10 => sprintf( __( 'Record draft updated. <a target="_blank" href="%s">Preview Record</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
 	);
-	
+
 	$messages['audiotheme_track'] = array(
-		0  => '',
-		1  => sprintf( __( 'Track updated. <a href="%s">View Track</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
+		0  => '', // Unused. Messages start at index 1.
+		1  => sprintf( __( 'Track updated. <a href="%s">View Track</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
 		2  => __( 'Custom field updated.', 'audiotheme-i18n' ),
 		3  => __( 'Custom field deleted.', 'audiotheme-i18n' ),
 		4  => __( 'Track updated.', 'audiotheme-i18n' ),
-		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Track restored to revision from %s', 'audiotheme-i18n' ), wp_post_revision_title( ( int ) $_GET['revision'], false ) ) : false,
-		6  => sprintf( __( 'Track published. <a href="%s">View Track</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
+		/* translators: %s: date and time of the revision */
+		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Track restored to revision from %s', 'audiotheme-i18n' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6  => sprintf( __( 'Track published. <a href="%s">View Track</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
 		7  => __( 'Track saved.', 'audiotheme-i18n' ),
-		8  => sprintf( __( 'Track submitted. <a target="_blank" href="%s">Preview Track</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
-		9  => sprintf( __( 'Track scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Track</a>', 'audiotheme-i18n' ), date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
-		10 => sprintf( __( 'Track draft updated. <a target="_blank" href="%s">Preview Track</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+		8  => sprintf( __( 'Track submitted. <a target="_blank" href="%s">Preview Track</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
+		9  => sprintf( __( 'Track scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Track</a>', 'audiotheme-i18n' ),
+		      // translators: Publish box date format, see http://php.net/date
+		      date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
+		10 => sprintf( __( 'Track draft updated. <a target="_blank" href="%s">Preview Track</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
 	);
 
 	return $messages;
 }
 
 /**
- * Register Discography Rewrite Base Setting
+ * Register discography rewrite base setting.
  *
  * @since 1.0.0
  */
@@ -131,7 +163,7 @@ function audiotheme_discography_admin_init() {
 }
 
 /**
- * Callback for Displaying Discography Rewrite Base
+ * Callback for displaying the discography rewrite base field.
  *
  * @since 1.0.0
  */
@@ -145,7 +177,7 @@ function audiotheme_discography_rewrite_base_settings_field() {
 }
 
 /**
- * Discography Archive Nav Menu Item
+ * Add the discography archive link nav menu item to the custom AudioTheme Pages nav menu meta box.
  *
  * @since 1.0.0
  */
@@ -153,9 +185,8 @@ function audiotheme_record_archive_menu_item( $items ) {
 	$items[] = array(
 		'title'     => _x( 'Discography', 'nav menu archive label' ),
 		'post_type' => 'audiotheme_record',
-		'url'       => get_post_type_archive_link( 'audiotheme_record' )
+		'url'       => get_post_type_archive_link( 'audiotheme_record' ),
 	);
-	
+
 	return $items;
 }
-?>

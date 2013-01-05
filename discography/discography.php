@@ -12,17 +12,20 @@ function audiotheme_discography_init() {
 		'has_archive'            => get_audiotheme_discography_rewrite_base(),
 		'hierarchical'           => true,
 		'labels'                 => array(
-			'name'               => _x( 'Records', 'post type general name', 'audiotheme-i18n' ),
-			'singular_name'      => _x( 'Record', 'post type singular name', 'audiotheme-i18n' ),
-			'add_new'            => _x( 'Add New', 'record', 'audiotheme-i18n' ),
+			'name'               => _x( 'Records', 'post format general name', 'audiotheme-i18n' ),
+			'singular_name'      => _x( 'Record', 'post format singular name', 'audiotheme-i18n' ),
+			'add_new'            => _x( 'Add New', 'audiotheme_record', 'audiotheme-i18n' ),
 			'add_new_item'       => __( 'Add New Record', 'audiotheme-i18n' ),
 			'edit_item'          => __( 'Edit Record', 'audiotheme-i18n' ),
 			'new_item'           => __( 'New Record', 'audiotheme-i18n' ),
 			'view_item'          => __( 'View Record', 'audiotheme-i18n' ),
 			'search_items'       => __( 'Search Records', 'audiotheme-i18n' ),
-			'not_found'          => __( 'No records found', 'audiotheme-i18n' ),
-			'not_found_in_trash' => __( 'No records found in Trash', 'audiotheme-i18n' ),
-			'all_items'          => __( 'All Records', 'audiotheme-i18n' )
+			'not_found'          => __( 'No records found.', 'audiotheme-i18n' ),
+			'not_found_in_trash' => __( 'No records found in Trash.', 'audiotheme-i18n' ),
+			'parent_item_colon'  => __( 'Parent Records:', 'audiotheme-i18n' ),
+			'all_items'          => __( 'All Records', 'audiotheme-i18n' ),
+			'menu_name'          => __( 'Records', 'audiotheme-i18n' ),
+			'name_admin_bar'     => _x( 'Record', 'add new on admin bar', 'audiotheme-i18n' ),
 		),
 		'menu_position'          => 513,
 		'public'                 => true,
@@ -31,25 +34,27 @@ function audiotheme_discography_init() {
 		'rewrite'                => false,
 		'show_ui'                => true,
 		'show_in_menu'           => true,
-		'supports'               => array( 'title', 'editor', 'thumbnail' )
+		'supports'               => array( 'title', 'editor', 'thumbnail' ),
 	) );
-	
+
 	register_post_type( 'audiotheme_track', array(
 		'capability_type'        => 'post',
 		'has_archive'            => false,
 		'hierarchical'           => false,
 		'labels'                 => array(
-			'name'               => _x( 'Tracks', 'post type general name', 'audiotheme-i18n' ),
-			'singular_name'      => _x( 'Track', 'post type singular name', 'audiotheme-i18n' ),
-			'add_new'            => _x( 'Add New', 'track', 'audiotheme-i18n' ),
+			'name'               => _x( 'Tracks', 'post format general name', 'audiotheme-i18n' ),
+			'singular_name'      => _x( 'Track', 'post format singular name', 'audiotheme-i18n' ),
+			'add_new'            => _x( 'Add New', 'audiotheme_track', 'audiotheme-i18n' ),
 			'add_new_item'       => __( 'Add New Track', 'audiotheme-i18n' ),
 			'edit_item'          => __( 'Edit Track', 'audiotheme-i18n' ),
 			'new_item'           => __( 'New Track', 'audiotheme-i18n' ),
 			'view_item'          => __( 'View Track', 'audiotheme-i18n' ),
 			'search_items'       => __( 'Search Tracks', 'audiotheme-i18n' ),
-			'not_found'          => __( 'No tracks found', 'audiotheme-i18n' ),
-			'not_found_in_trash' => __( 'No tracks found in Trash', 'audiotheme-i18n' ),
-			'all_items'          => __( 'All Tracks', 'audiotheme-i18n' )
+			'not_found'          => __( 'No tracks found.', 'audiotheme-i18n' ),
+			'not_found_in_trash' => __( 'No tracks found in Trash.', 'audiotheme-i18n' ),
+			'all_items'          => __( 'All Tracks', 'audiotheme-i18n' ),
+			'menu_name'          => __( 'Tracks', 'audiotheme-i18n' ),
+			'name_admin_bar'     => _x( 'Track', 'add new on admin bar', 'audiotheme-i18n' ),
 		),
 		'public'                 => true,
 		'publicly_queryable'     => true,
@@ -58,9 +63,9 @@ function audiotheme_discography_init() {
 		'show_ui'                => true,
 		'show_in_menu'           => 'edit.php?post_type=audiotheme_record',
 		'show_in_nav_menus'      => false,
-		'supports'               => array( 'title', 'editor', 'thumbnail' )
+		'supports'               => array( 'title', 'editor', 'thumbnail' ),
 	) );
-	
+
 	register_taxonomy( 'audiotheme_record_type', 'audiotheme_record', array(
 		'args'                           => array( 'orderby' => 'term_order' ),
 		'hierarchical'                   => true,
@@ -79,15 +84,15 @@ function audiotheme_discography_init() {
 			'new_item_name'              => __( 'New Record Type Name', 'audiotheme-i18n' ),
 			'separate_items_with_commas' => __( 'Separate record types with commas', 'audiotheme-i18n' ),
 			'add_or_remove_items'        => __( 'Add or remove record types', 'audiotheme-i18n' ),
-			'choose_from_most_used'      => __( 'Choose from most used record types', 'audiotheme-i18n' )
+			'choose_from_most_used'      => __( 'Choose from most used record types', 'audiotheme-i18n' ),
 		),
 		'public'                         => false,
 		'query_var'                      => true,
 		'rewrite'                        => false,
 		'show_ui'                        => false,
-		'show_in_nav_menus'              => false
+		'show_in_nav_menus'              => false,
 	) );
-	
+
 	add_filter( 'generate_rewrite_rules', 'audiotheme_discography_generate_rewrite_rules' );
 	add_action( 'pre_get_posts', 'audiotheme_discography_query' );
 	add_filter( 'post_type_link', 'audiotheme_discography_permalinks', 10, 4 );
@@ -111,12 +116,12 @@ function get_audiotheme_discography_rewrite_base() {
  */
 function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
 	$base = get_audiotheme_discography_rewrite_base();
-	
+
 	$new_rules[ $base . '/tracks/?$' ] = 'index.php?post_type=audiotheme_track';
 	$new_rules[ $base .'/([^/]+)/track/([^/]+)?$'] = 'index.php?audiotheme_record=$matches[1]&audiotheme_track=$matches[2]';
 	$new_rules[ $base . '/([^/]+)/?$'] = 'index.php?audiotheme_record=$matches[1]';
 	$new_rules[ $base . '/?$' ] = 'index.php?post_type=audiotheme_record';
-	
+
 	$wp_rewrite->rules = array_merge( $new_rules, $wp_rewrite->rules );
 }
 
@@ -127,7 +132,7 @@ function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
  */
 function audiotheme_discography_query( $query ) {
 	global $wpdb;
-	
+
 	// Sort records by release year
 	$orderby = $query->get( 'orderby' );
 	if ( $query->is_main_query() && is_post_type_archive( 'audiotheme_record' ) && empty( $orderby ) && ! is_admin() ) {
@@ -135,7 +140,7 @@ function audiotheme_discography_query( $query ) {
 		$query->set( 'orderby', 'meta_value_number' );
 		$query->set( 'order', 'desc' );
 	}
-	
+
 	// Limit requests for single tracks to the context of the parent record
 	if ( $query->is_main_query() && is_single() && 'audiotheme_track' == $query->get( 'post_type' ) && ! is_admin() ) {
 		if ( get_option('permalink_structure') ) {
@@ -156,36 +161,43 @@ function audiotheme_discography_query( $query ) {
  */
 function audiotheme_discography_permalinks( $post_link, $post, $leavename, $sample ) {
 	global $wpdb;
-	
-	$permalink = get_option( 'permalink_structure' );
-	
-	if ( ! empty( $permalink ) && 'audiotheme_record' == get_post_type( $post ) ) {
-		$base = get_audiotheme_discography_rewrite_base();
-		$slug = ( $leavename ) ? '%postname%' : $post->post_name;
-		$post_link = home_url( sprintf( '/%s/%s/', $base, $slug ) );
+
+	$is_draft_or_pending = isset( $post->post_status ) && in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) );
+
+	if ( ! $is_draft_or_pending ) {
+		$permalink = get_option( 'permalink_structure' );
+
+		if ( ! empty( $permalink ) && 'audiotheme_record' == get_post_type( $post ) ) {
+			$base = get_audiotheme_discography_rewrite_base();
+			$slug = ( $leavename ) ? '%postname%' : $post->post_name;
+			$post_link = home_url( sprintf( '/%s/%s/', $base, $slug ) );
+		}
+
+		if ( ! empty( $permalink ) && 'audiotheme_track' == get_post_type( $post ) && ! empty( $post->post_parent ) ) {
+			$base = get_audiotheme_discography_rewrite_base();
+			$slug = ( $leavename ) ? '%postname%' : $post->post_name;
+			$record = get_post( $post->post_parent );
+			if ( $record ) {
+				$post_link = home_url( sprintf( '/%s/%s/track/%s/', $base, $record->post_name, $slug ) );
+			}
+		} elseif ( empty( $permalink ) && 'audiotheme_track' == get_post_type( $post ) && ! empty( $post->post_parent ) ) {
+			$post_link = add_query_arg( 'post_parent', $post->post_parent, $post_link );
+		}
 	}
-	
-	if ( ! empty( $permalink ) && 'audiotheme_track' == get_post_type( $post ) && ! empty( $post->post_parent ) ) {
-		$base = get_audiotheme_discography_rewrite_base();
-		$slug = ( $leavename ) ? '%postname%' : $post->post_name;
-		// test to see which performs better
-		#$record_slug = $wpdb->get_var( $wpdb->prepare( "SELECT post_name FROM $wpdb->posts WHERE ID=%d", $post->post_parent ) );
-		$record = get_post( $post->post_parent );
-		$post_link = home_url( sprintf( '/%s/%s/track/%s/', $base, $record->post_name, $slug ) );
-	} elseif ( empty( $permalink ) && 'audiotheme_track' == get_post_type( $post ) && ! empty( $post->post_parent ) ) {
-		$post_link = add_query_arg( 'post_parent', $post->post_parent, $post_link );
-	}
-	
+
 	return $post_link;
 }
 
+/**
+ *
+ */
 function audiotheme_discography_archive_link( $link, $post_type ) {
 	$permalink = get_option( 'permalink_structure' );
 	if ( ! empty( $permalink ) && ( 'audiotheme_record' == $post_type || 'audiotheme_track' == $post_type ) ) {
 		$base = get_audiotheme_discography_rewrite_base();
 		$link = home_url( '/' . $base . '/' );
 	}
-	
+
 	return $link;
 }
 
@@ -199,4 +211,3 @@ require( AUDIOTHEME_DIR . 'discography/post-template.php' );
 if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'discography/admin/discography.php' );
 }
-?>

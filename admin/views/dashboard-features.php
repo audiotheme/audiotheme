@@ -18,7 +18,6 @@
 			<li>Gigs</li>
 			<li>Discography</li>
 			<li>Videos</li>
-			<li>Galleries (Re-evaluate for 3.5)</li>
 		</ul>
 		
 		<!--<p class="submit">

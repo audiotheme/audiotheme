@@ -21,33 +21,34 @@ function audiotheme_admin_setup() {
 	add_action( 'init', 'audiotheme_settings_init' );
 	add_action( 'init', 'audiotheme_dashboard_init', 9 );
 	
-	add_action( 'admin_init', 'audiotheme_register_directory_browsing_setting' );
+	#add_action( 'admin_init', 'audiotheme_register_directory_browsing_setting' );
+	#add_action( 'pre_update_option_audiotheme_disable_directory_browsing', 'audiotheme_disable_directory_browsing_option_update', 10, 2 );
 	add_action( 'update_option_audiotheme_disable_directory_browsing', 'audiotheme_disable_directory_browsing_option_update', 10, 2 );
-	
+
 	add_action( 'admin_enqueue_scripts', 'audiotheme_enqueue_admin_scripts' );
 	add_action( 'admin_head-nav-menus.php', 'audiotheme_nav_menu_admin_head');
 	add_action( 'admin_body_class', 'audiotheme_admin_body_class' );
 	add_filter( 'user_contactmethods', 'audiotheme_edit_user_contact_info' );
-	
+
 	add_action( 'manage_pages_custom_column', 'audiotheme_display_custom_column', 10, 2 );
 	add_action( 'manage_posts_custom_column', 'audiotheme_display_custom_column', 10, 2 );
-	
-	add_filter( 'custom_menu_order', '__return_true' );
-	add_filter( 'menu_order', 'audiotheme_admin_menu_order', 999 );
-	
-	// Fires new action hooks in older versions for backwards compatibility.
-	add_action( 'edit_form_advanced', 'audiotheme_edit_form_compat_actions' );
-	
-	
+
+	#add_filter( 'custom_menu_order', '__return_true' );
+	#add_filter( 'menu_order', 'audiotheme_admin_menu_order', 999 );
+
+	// Print javascript pointer object.
+	add_action( 'admin_print_footer_scripts', 'audiotheme_print_pointers' );
+
+
 	// @todo Reimplement the license key functionality.
-	
+
 	// Automatic updates require support for 'audiotheme-theme-options' to be enabled
 	// Otherwise, the license key functionality needs to be added in custom hooks
 	/*if ( current_theme_supports( 'audiotheme-automatic-updates' ) ) {
 		include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater.php' );
 		$support = get_theme_support( 'audiotheme-automatic-updates' );
 		Audiotheme_Updater::setup( $support[0] );
-		
+
 		add_action( 'pre_update_option_audiotheme_options', 'audiotheme_default_options_update', 10, 2 );
 		add_action( 'admin_init', 'audiotheme_default_settings', 9 ); // Will appear before options registered in the theme
 		add_action( 'load-appearance_page_audiotheme-theme-options', 'audiotheme_license_status_error' );
@@ -56,10 +57,12 @@ function audiotheme_admin_setup() {
 
 function audiotheme_admin_init() {
 	wp_register_script( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/js/audiotheme-admin.js', array( 'jquery-ui-sortable' ) );
+	wp_register_script( 'audiotheme-media', AUDIOTHEME_URI . 'admin/js/audiotheme-media.js', array( 'jquery' ) );
+	wp_register_script( 'audiotheme-pointer', AUDIOTHEME_URI . 'admin/js/audiotheme-pointer.js', array( 'wp-pointer' ) );
 	wp_register_script( 'audiotheme-settings', AUDIOTHEME_URI . 'admin/js/audiotheme-settings.js' );
 
 	wp_register_style( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/css/audiotheme-admin.css' );
-	wp_register_style( 'jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/smoothness/jquery-ui.css' );
+	wp_register_style( 'jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css' );
 	wp_register_style( 'jquery-ui-theme-audiotheme', AUDIOTHEME_URI . 'admin/css/jquery-ui-audiotheme.css', array( 'jquery-ui-theme-smoothness' ) );
 }
 
@@ -70,10 +73,10 @@ function audiotheme_admin_init() {
  */
 function audiotheme_default_settings() {
 	$settings = Audiotheme_Settings::instance();
-	
+
 	$section = $settings->add_section( 'general', 'General Settings', '' );
 		$settings->add_field( 'text', 'license_key', __( 'License Key', 'audiotheme-i18n' ), $section, array(
-			'description' => ( 'valid' == get_option( 'audiotheme_license_key_status' ) ) ? ' <span style="color: green; font-style: normal">OK</span>' : ''
+			'description' => ( 'valid' == get_option( 'audiotheme_license_key_status' ) ) ? ' <span style="color: green; font-style: normal">OK</span>' : '',
 		) );
 }
 
@@ -96,7 +99,7 @@ function audiotheme_default_options_update( $newvalue, $oldvalue ) {
 	if ( isset( $newvalue['license_key'] ) ) {
 		$license_status = get_option( 'audiotheme_license_key_status' );
 		$license_key_changed = ( isset( $oldvalue['license_key'] ) && $oldvalue['license_key'] != $newvalue['license_key'] ) ? true : false;
-		
+
 		// Only hit the API if the license key field changed or the current license status is somehow empty
 		// If a change is made at the server level, the user would have to make a modification to their key to recognize it
 		if ( ( $license_key_changed && ! empty( $newvalue['license_key'] ) ) || empty( $license_status ) ) {
@@ -110,7 +113,7 @@ function audiotheme_default_options_update( $newvalue, $oldvalue ) {
 			update_option( 'audiotheme_license_key_status', '' );
 		}
 	}
-	
+
 	return $newvalue;
 }
 
@@ -141,9 +144,9 @@ function audiotheme_license_status_error() {
 function audiotheme_register_directory_browsing_setting() {
 	// Privacy settings group was deprecated in 3.5
 	$group = ( audiotheme_version_compare( 'wp', '3.5-beta-1', '<' ) ) ? 'privacy' : 'reading';
-	
+
 	register_setting( $group, 'audiotheme_disable_directory_browsing' );
-	
+
 	add_settings_field(
 		'audiotheme_disable_directory_browsing',
 		'<label for="audiotheme-disable-directory-browsing">' . __( 'Directory Browsing', 'audiotheme-i18n' ) . '</label>',
@@ -155,7 +158,7 @@ function audiotheme_register_directory_browsing_setting() {
 
 /**
  * Display Directory Browsing Setting
- * 
+ *
  * @since 1.0.0
  */
 function audiotheme_disable_directory_browsing_setting_field() {
@@ -168,9 +171,9 @@ function audiotheme_disable_directory_browsing_setting_field() {
 
 /**
  * Update Directory Browsing
- * 
+ *
  * Whenever the directory browsing setting is updated, update .htaccess
- * 
+ *
  * @since 1.0.0
  */
 function audiotheme_disable_directory_browsing_option_update( $oldvalue, $newvalue ) {
@@ -179,28 +182,28 @@ function audiotheme_disable_directory_browsing_option_update( $oldvalue, $newval
 
 /**
  * Save .htacess
- * 
+ *
  * Updates the .htaccess file.
- * 
+ *
  * @see save_mod_rewrite_rules()
- * 
+ *
  * @since 1.0.0
  * */
 function audiotheme_save_htaccess() {
 	$home_path = get_home_path();
 	$htaccess_file = $home_path . '.htaccess';
-	
+
 	if ( ( ! file_exists( $htaccess_file ) && is_writable( $home_path ) ) || is_writable( $htaccess_file ) ) {
 		$htaccess_contents = file_get_contents( $htaccess_file );
-		
+
 		$directive = 'Options All -Indexes';
 		$rules = array();
 		if ( get_option( 'audiotheme_disable_directory_browsing' ) && false === strpos( $htaccess_contents, $directive ) ) {
 			$rules[] = $directive;
 		}
-		
+
 		return insert_with_markers( $htaccess_file, 'AudioTheme', $rules );
-	}	
+	}
 }
 
 /**
@@ -217,10 +220,10 @@ function audiotheme_enqueue_admin_scripts() {
 
 /**
  * Register Nave Menu Meta Box
- * 
+ *
  * Registers the meta box for adding AudioTheme CPT archive links to nav
  * menus.
- * 
+ *
  * @since 1.0.0
  */
 function audiotheme_nav_menu_admin_head() {
@@ -239,7 +242,7 @@ function audiotheme_nav_menu_admin_head() {
  * automatically reflect the post type archive link as it's changed without
  * worrying about the URL input, but the only way to currently do it requires
  * making the 'type' argument an empty string and that seems awfully flimsy.
- * 
+ *
  * @link http://codeseekah.com/2012/03/01/custom-post-type-archives-in-wordpress-menus-2/
  *
  * @since 1.0.0
@@ -247,7 +250,7 @@ function audiotheme_nav_menu_admin_head() {
 function audiotheme_nav_menu_item_link_meta_box( $object, $box ) {
 	global $_nav_menu_placeholder, $nav_menu_selected_id;
 	$_nav_menu_placeholder = ( 0 > $_nav_menu_placeholder ) ? intval( $_nav_menu_placeholder ) : -1;
-	
+
 	$post_type_name = 'audiotheme_archive_pages';
 	?>
 	<div id="posttype-<?php echo $post_type_name; ?>" class="posttypediv">
@@ -255,14 +258,14 @@ function audiotheme_nav_menu_item_link_meta_box( $object, $box ) {
 			<ul id="<?php echo $post_type_name; ?>checklist" class="list:<?php echo $post_type_name?> categorychecklist form-no-clear">
 				<?php
 				// Hooks returning items should return them as an array with 'title' and 'url' arguments
-				// array( 'title' => 'Custom Title', 'url' => 'Custom URL' ) 
+				// array( 'title' => 'Custom Title', 'url' => 'Custom URL' )
 				$items = apply_filters( 'audiotheme_nav_menu_archive_items', array(), $box );
-				
+
 				if ( $items ) {
 					// Transform the item array into a format expected by the nav walker
 					foreach ( $items as $key => $item ) {
 						$_nav_menu_placeholder --;
-						
+
 						$items[ $key ] = (object) array(
 							'ID'           => 0,
 							'object'       => '',
@@ -272,13 +275,13 @@ function audiotheme_nav_menu_item_link_meta_box( $object, $box ) {
 							'post_content' => '',
 							'post_excerpt' => '',
 							'type'         => 'custom',
-							'url'          => $item['url']
+							'url'          => $item['url'],
 						);
 					}
-					
+
 					$items = audiotheme_sort_objects( $items, 'post_title', 'asc', false );
 				}
-				
+
 				$args['walker'] = new Walker_Nav_Menu_Checklist( false );
 				echo walk_nav_menu_tree( array_map( 'wp_setup_nav_menu_item', $items ), 0, (object) $args );
 				?>
@@ -287,7 +290,7 @@ function audiotheme_nav_menu_item_link_meta_box( $object, $box ) {
 
 		<p class="button-controls">
 			<span class="add-to-menu">
-				
+
 				<input type="submit"<?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e( 'Add to Menu' ); ?>" name="add-post-type-menu-item" id="submit-posttype-<?php echo $post_type_name; ?>">
 				<?php audiotheme_admin_spinner( array( 'class' => 'waiting' ) ); ?>
 			</span>
@@ -311,13 +314,13 @@ function audiotheme_admin_body_class( $class ) {
  *
  * This hook is run for all custom columns, so the column name is prefixed to
  * prevent potential conflicts.
- * 
+ *
  * @since 1.0.0
  */
 function audiotheme_display_custom_column( $column_name, $post_id ) {
 	switch ( $column_name ) {
 		case 'audiotheme_image' :
-			printf( '<a href="%1$s">%2$s</a>', 
+			printf( '<a href="%1$s">%2$s</a>',
 				esc_url( get_edit_post_link( $post_id ) ),
 				get_the_post_thumbnail( $post_id, array( 60, 60 ) )
 			);
@@ -329,12 +332,13 @@ function audiotheme_display_custom_column( $column_name, $post_id ) {
  * Custom User Contact Fields
  *
  * @since 1.0.0
+ * @todo This may conflict with the WordPress SEO plugin.
  */
 function audiotheme_edit_user_contact_info( $contactmethods ) {
 	// Add contact options
 	$contactmethods['twitter'] = __( 'Twitter <span class="description">(username)</span>', 'audiotheme-i18n' );
 	$contactmethods['facebook'] = __( 'Facebook  <span class="description">(link)</span>', 'audiotheme-i18n' );
-	
+
 	return $contactmethods;
 }
 
@@ -348,13 +352,13 @@ function audiotheme_edit_user_contact_info( $contactmethods ) {
  */
 function audiotheme_admin_menu_order( $menu_order ) {
 	global $menu;
-	
+
 	$start_key = array_search( 'edit.php', $menu_order );
-	
+
 	// Only try to re-order the menu items if the gigs menu hasn't been moved.
-	if ( false !== $start_key && array_key_exists( 512, $menu ) && 'gigs' == $menu[512][2] ) {
-		$audiotheme_admin_menu_order = array( 'gigs', 'edit.php?post_type=audiotheme_record', 'edit.php?post_type=audiotheme_video', 'edit.php?post_type=audiotheme_gallery' );
-		
+	if ( false !== $start_key && array_key_exists( 512, $menu ) && 'audiotheme-gigs' == $menu[512][2] ) {
+		$audiotheme_admin_menu_order = array( 'audiotheme-gigs', 'edit.php?post_type=audiotheme_record', 'edit.php?post_type=audiotheme_video', 'edit.php?post_type=audiotheme_gallery' );
+
 		foreach ( $audiotheme_admin_menu_order as $i => $item ) {
 			$menu_key = array_search( $item, $menu_order );
 			if ( $menu_key ) {
@@ -365,7 +369,6 @@ function audiotheme_admin_menu_order( $menu_order ) {
 			}
 		}
 	}
-	
+
 	return $menu_order;
 }
-?>

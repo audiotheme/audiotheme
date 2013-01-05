@@ -6,7 +6,7 @@
  * be included when that class is available.
  *
  * @see _wp_customize_include()
- * 
+ *
  * @package AudioTheme_Framework
  * @subpackage Settings
  */
@@ -16,7 +16,7 @@
  *
  * @package AudioTheme_Framework
  * @subpackage Settings
- * 
+ *
  * @since 1.0.0
  */
 class Audiotheme_Settings_Customize_Textarea_Control extends WP_Customize_Control {
@@ -25,13 +25,13 @@ class Audiotheme_Settings_Customize_Textarea_Control extends WP_Customize_Contro
 	 * @var string
 	 */
 	public $type = 'textarea';
-	
+
 	/**
 	 * @access public
 	 * @var int
 	 */
 	public $rows = 4;
-	
+
 	/**
 	 * Constructor.
 	 *
@@ -47,7 +47,7 @@ class Audiotheme_Settings_Customize_Textarea_Control extends WP_Customize_Contro
 		$this->rows = ( isset( $args['rows'] ) ) ? absint( $args['rows'] ) : 4;
 		parent::__construct( $manager, $id, $args );
 	}
-	
+
 	/**
 	 * Render the control's content.
 	 *
@@ -62,4 +62,3 @@ class Audiotheme_Settings_Customize_Textarea_Control extends WP_Customize_Contro
 		<?php
 	}
 }
-?>
