@@ -33,9 +33,6 @@ function audiotheme_admin_setup() {
 	add_filter( 'custom_menu_order', '__return_true' );
 	add_filter( 'menu_order', 'audiotheme_admin_menu_order', 999 );
 
-	// Fires new action hooks in older versions for backwards compatibility.
-	add_action( 'edit_form_advanced', 'audiotheme_edit_form_compat_actions' );
-
 	// Print javascript pointer object.
 	add_action( 'admin_print_footer_scripts', 'audiotheme_print_pointers' );
 
