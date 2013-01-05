@@ -82,11 +82,11 @@ function audiotheme_track_register_columns( $columns ) {
 	$columns['title'] = _x( 'Track', 'column_name', 'audiotheme-i18n' );
 	
 	$track_columns = array(
-		'artist'   => __( 'Artist', 'audiotheme-i18n' ),
-		'record'   => __( 'Record', 'audiotheme-i18n' ),
-		'file'     => __( 'Audio File', 'audiotheme-i18n' ),
-		'download' => __( 'Downloadable', 'audiotheme-i18n' ),
-		'purchase' => __( 'Purchase URL', 'audiotheme-i18n' )
+		'artist'   => _x( 'Artist', 'column name', 'audiotheme-i18n' ),
+		'record'   => _x( 'Record', 'column name', 'audiotheme-i18n' ),
+		'file'     => _x( 'Audio File', 'column name', 'audiotheme-i18n' ),
+		'download' => _x( 'Downloadable', 'column name', 'audiotheme-i18n' ),
+		'purchase' => _x( 'Purchase URL', 'column name', 'audiotheme-i18n' )
 	);
 	
 	$columns = audiotheme_array_insert_after_key( $columns, 'title', $track_columns );
@@ -154,10 +154,12 @@ function audiotheme_track_display_columns( $column_name, $post_id ) {
 			$track = get_post( $post_id );
 			$record = get_post( $track->post_parent );
 			
-			printf( '<a href="%1$s">%2$s</a>',
-				get_edit_post_link( $record->ID ),
-				apply_filters( 'the_title', $record->post_title )
-			);
+			if ( $record ) {
+				printf( '<a href="%1$s">%2$s</a>',
+					get_edit_post_link( $record->ID ),
+					apply_filters( 'the_title', $record->post_title )
+				);
+			}
 			break;
 	}
 }
@@ -219,8 +221,6 @@ function audiotheme_tracks_filters() {
 /**
  * Custom rules for saving a track.
  *
- * Updates track meta data.
- *
  * @since 1.0.0
  */
 function audiotheme_track_save_post( $post_id ) {
@@ -233,6 +233,8 @@ function audiotheme_track_save_post( $post_id ) {
 		return;
 	}
 	
+	$track = get_post( $post_id );
+	
 	$fields = array( 'artist', 'file_url', 'purchase_url' );
 	foreach( $fields as $field ) {
 		$value = ( empty( $_POST[ $field ] ) ) ? '' : $_POST[ $field ];
@@ -241,6 +243,8 @@ function audiotheme_track_save_post( $post_id ) {
 	
 	$is_downloadable = ( empty( $_POST['is_downloadable'] ) ) ? null : 1;
 	update_post_meta( $post_id, '_audiotheme_is_downloadable', $is_downloadable );
+	
+	audiotheme_record_update_track_count( $track->post_parent );
 }
 
 /**
@@ -285,7 +289,6 @@ function audiotheme_edit_track_meta_boxes( $post ) {
  * @todo Update to use 3.5 media frame.
  */
 function audiotheme_track_details_meta_box( $post ) {
-	// Nonce to verify intention later
 	wp_nonce_field( 'update-track_' . $post->ID, 'audiotheme_track_nonce' );
 	?>
 	<p class="audiotheme-meta-field">
@@ -324,7 +327,26 @@ function audiotheme_track_details_meta_box( $post ) {
 		<label for="track-purchase-url"><?php _e( 'Purchase URL:', 'audiotheme-i18n' ) ?></label>
 		<input type="url" name="purchase_url" id="track-purchase-url" value="<?php echo esc_url( get_post_meta( $post->ID, '_audiotheme_purchase_url', true ) ) ; ?>" class="widefat">
 	</p>
-
+	
 	<?php
+	if ( ! get_post( $post->post_parent ) ) {
+		$records = get_posts( 'post_type=audiotheme_record&orderby=title&order=asc&posts_per_page=-1' );
+		if ( $records ) {
+			echo '<p class="audiotheme-meta-field">';
+				echo '<label for="post-parent">' . __( 'Record:', 'audiotheme-i18n' ) . '</label>';
+				echo '<select name="post_parent" id="post-parent" class="widefat">';
+					echo '<option value=""></option>';
+					
+					foreach ( $records as $record ) {
+						printf( '<option value="%s">%s</option>',
+							$record->ID,
+							esc_html( $record->post_title )
+						);
+					}
+				echo '</select>';
+				echo '<span class="description">' . __( 'Associate this track with a record.', 'audiotheme-i18n' ) . '</span>';
+			echo '</p>';
+		}
+	}
 }
 ?>

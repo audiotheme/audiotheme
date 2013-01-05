@@ -176,10 +176,10 @@ function audiotheme_discography_permalinks( $post_link, $post, $leavename, $samp
 		if ( ! empty( $permalink ) && 'audiotheme_track' == get_post_type( $post ) && ! empty( $post->post_parent ) ) {
 			$base = get_audiotheme_discography_rewrite_base();
 			$slug = ( $leavename ) ? '%postname%' : $post->post_name;
-			// test to see which performs better
-			#$record_slug = $wpdb->get_var( $wpdb->prepare( "SELECT post_name FROM $wpdb->posts WHERE ID=%d", $post->post_parent ) );
 			$record = get_post( $post->post_parent );
-			$post_link = home_url( sprintf( '/%s/%s/track/%s/', $base, $record->post_name, $slug ) );
+			if ( $record ) {
+				$post_link = home_url( sprintf( '/%s/%s/track/%s/', $base, $record->post_name, $slug ) );
+			}
 		} elseif ( empty( $permalink ) && 'audiotheme_track' == get_post_type( $post ) && ! empty( $post->post_parent ) ) {
 			$post_link = add_query_arg( 'post_parent', $post->post_parent, $post_link );
 		}

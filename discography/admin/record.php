@@ -149,8 +149,6 @@ function audiotheme_record_list_table_bulk_actions( $actions ) {
  * @since 1.0.0
  */
 function audiotheme_record_save_post( $post_id ) {
-	global $wpdb;
-	
 	$is_autosave = ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ? true : false;
 	$is_revision = wp_is_post_revision( $post_id );
 	$is_valid_nonce = ( isset( $_POST['audiotheme_record_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_record_nonce'], 'update-record_' . $post_id ) ) ? true : false;
@@ -227,10 +225,23 @@ function audiotheme_record_save_post( $post_id ) {
 		}
 		
 		// Update track count.
-		$track_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->posts WHERE post_type='audiotheme_track' AND post_parent=%d", $post_id ) );
-		$track_count = ( empty( $track_count ) ) ? 0 : absint( $track_count );
-		update_post_meta( $post_id, '_audiotheme_track_count', $track_count );
+		audiotheme_record_update_track_count( $post_id );
 	}
+}
+
+/**
+ * Update a record's track count.
+ *
+ * @since 1.0.0
+ *
+ * @param int $post_id Record ID.
+ */
+function audiotheme_record_update_track_count( $post_id ) {
+	global $wpdb;
+	
+	$track_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->posts WHERE post_type='audiotheme_track' AND post_parent=%d", $post_id ) );
+	$track_count = ( empty( $track_count ) ) ? 0 : absint( $track_count );
+	update_post_meta( $post_id, '_audiotheme_track_count', $track_count );
 }
 
 /**
