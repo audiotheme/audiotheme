@@ -8,7 +8,7 @@
 			echo $post_type_object->labels->add_new_item;
 		}
 	?></h2>
-	
+
 	<?php
 	if ( isset( $_REQUEST['message'] ) ) {
 		$notices = array(); ?>
@@ -19,23 +19,23 @@
 					1 => __( 'Venue added.', 'audiotheme-i18n' ),
 					2 => __( 'Venue updated.', 'audiotheme-i18n' )
 				);
-				
+
 				if ( ! empty( $_REQUEST['message'] ) && isset( $messages[ $_REQUEST['message'] ] ) ) {
 					$notices[] = $messages[ $_REQUEST['message'] ];
 				}
-				
+
 				if ( $notices ) {
 					echo join( ' ', $notices );
 				}
-				
+
 				unset( $notices );
-				
+
 				$_SERVER['REQUEST_URI'] = remove_query_arg( array( 'message' ), $_SERVER['REQUEST_URI'] );
 				?>
 			</p>
 		</div>
 	<?php } ?>
-	
+
 	<form action="" method="post">
 		<input type="hidden" name="page" value="audiotheme-venue">
 		<input type="hidden" name="audiotheme_venue[ID]" id="venue-id" value="<?php echo esc_attr( $ID ); ?>">
@@ -44,16 +44,16 @@
 		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
 		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
 		?>
-		
+
 		<div id="poststuff">
 			<div id="post-body" class="metabox-holder columns-2">
-				
-			
+
+
 				<div id="post-body-content">
-					
+
 					<div id="venuediv" class="stuffbox">
 						<h3><?php echo $post_type_object->labels->singular_name; ?></h3>
-						
+
 						<div class="inside">
 							<table class="form-table" >
 								<tr>
@@ -103,16 +103,16 @@
 							</table>
 						</div>
 					</div>
-					
+
 					<?php do_meta_boxes( $screen->id, 'normal', '' ); ?>
 				</div><!--end div#post-body-content-->
-				
-				
+
+
 				<div id="postbox-container-1" class="postbox-container">
 					<?php do_meta_boxes( $screen->id, 'side', get_post( $ID ) ); ?>
 				</div>
-				
-				
+
+
 			</div><!--end div#post-body-->
 			<br class="clear" />
 		</div><!--end div#poststuff-->

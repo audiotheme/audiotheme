@@ -31,16 +31,16 @@ echo '<?xml version="1.0" encoding="' . get_option( 'blog_charset' ) . '"?>';
 			<link><?php the_permalink_rss() ?></link>
 			<pubDate><?php echo mysql2date( 'D, d M Y H:i:s +0000', get_post_time('Y-m-d H:i:s', true), false ); ?></pubDate>
 			<guid isPermaLink="false"><?php the_guid(); ?></guid>
-			
+
 			<description><![CDATA[<?php echo get_audiotheme_gig_rss_description(); ?>]]></description>
 			<?php if ( strlen( $post->post_content ) > 0 ) : ?>
 				<content:encoded><![CDATA[<?php the_content_feed('rss2') ?>]]></content:encoded>
 			<?php endif; ?>
-			
+
 			<ev:startdate><?php echo get_audiotheme_gig_time(); ?></ev:startdate>
 			<ev:type>concert</ev:type>
 			<xcal:dtstart><?php echo get_audiotheme_gig_time(); ?></xcal:dtstart>
-			
+
 			<?php
 			if ( ! empty( $gig->venue ) ) {
 				echo get_audiotheme_venue_vcard_rss( $gig->venue->ID );

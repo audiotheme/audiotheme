@@ -99,16 +99,16 @@ function audiotheme_load() {
 	add_filter( 'get_pages', 'audiotheme_page_list' );
 	add_filter( 'page_css_class', 'audiotheme_page_list_classes', 10, 2 );
 	add_filter( 'dynamic_sidebar_params', 'audiotheme_widget_count_class' );
-	
+
 	if ( ! is_admin() ) {
 		add_filter( 'wp_get_nav_menu_items', 'audiotheme_nav_menu_classes', 1, 3 );
 	}
-	
+
 	// Media filters.
 	add_action( 'init', 'audiotheme_add_default_oembed_providers' );
 	add_filter( 'embed_oembed_html', 'audiotheme_oembed_html', 10, 4 );
 	add_filter( 'embed_handler_html', 'audiotheme_oembed_html', 10, 4 );
-	
+
 	add_action( 'init', 'audiotheme_register_scripts' );
 	add_action( 'widgets_init', 'audiotheme_widgets_init' );
 }
@@ -124,4 +124,3 @@ function audiotheme_register_scripts() {
 	wp_register_script( 'jquery-placeholder', AUDIOTHEME_URI . 'includes/js/jquery.placeholder.min.js', array( 'jquery' ), '2.0.7' );
 	wp_register_script( 'jquery-timepicker', AUDIOTHEME_URI . 'includes/js/jquery.timepicker.min.js', array( 'jquery' ) );
 }
-?>

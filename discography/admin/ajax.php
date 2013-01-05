@@ -8,6 +8,6 @@
  */
 function audiotheme_ajax_get_default_track() {
 	$track = get_default_post_to_edit( 'audiotheme_track', true );
-	
+
 	wp_send_json( $track );
 }

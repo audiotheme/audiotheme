@@ -50,7 +50,7 @@ function audiotheme_videos_init() {
 		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' ),
 		'taxonomies'             => array( 'post_tag' )
 	) );
-	
+
 	// Register the video type custom taxonomy.
 	register_taxonomy( 'audiotheme_video_type', 'audiotheme_video', array(
 		'hierarchical'                   => true,
@@ -93,4 +93,3 @@ require( AUDIOTHEME_DIR . 'videos/post-template.php' );
 if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'videos/admin/videos.php' );
 }
-?>

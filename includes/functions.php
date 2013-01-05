@@ -32,7 +32,7 @@ function audiotheme_image_size_names() {
  * This function abstracts the logic for determining the current version
  * number for various packages, so the only version number that needs to be
  * known is the one to compare against.
- * 
+ *
  * Basically serves as a wrapper for the native PHP version_compare()
  * function, but allows a known package to be passed as the first parameter.
  *
@@ -65,7 +65,7 @@ function audiotheme_version_compare( $version, $version2, $operator = null ) {
 			$version = get_bloginfo( 'version' );
 			break;
 	}
-	
+
 	return version_compare( $version, $version2, $operator );
 }
 
@@ -77,7 +77,7 @@ function audiotheme_version_compare( $version, $version2, $operator = null ) {
  * @since 1.0.0
  * @uses Audiotheme_Sort_Objects
  * @todo Hasn't been tested extensively.
- * 
+ *
  * @param array $objects An array of objects to sort.
  * @param string $orderby The object property to sort on.
  * @param string $order The sort order; ASC or DESC.
@@ -89,14 +89,14 @@ function audiotheme_sort_objects( $objects, $orderby, $order = 'ASC', $unique = 
 	if ( ! is_array( $objects ) ) {
 		return false;
 	}
-	
+
 	usort( $objects, array( new Audiotheme_Sort_Objects( $orderby, $order, $fallback ), 'sort' ) );
-	
+
 	// Use object ids as the array keys.
 	if ( $unique && count( $objects ) && isset( $objects[0]->ID ) ) {
 		$objects = array_combine( wp_list_pluck( $objects, 'ID' ), $objects );
 	}
-	
+
 	return $objects;
 }
 
@@ -108,14 +108,14 @@ function audiotheme_sort_objects( $objects, $orderby, $order = 'ASC', $unique = 
  */
 class Audiotheme_Sort_Objects {
 	var $fallback, $order, $orderby;
-	
+
 	// Fallback is limited to working with properties of the parent object.
 	function __construct( $orderby, $order, $fallback = null ) {
 		$this->order = ( 'desc' == strtolower( $order ) ) ? 'DESC' : 'ASC';
 		$this->orderby = $orderby;
 		$this->fallback = $fallback;
 	}
-	
+
 	function sort( $a, $b ) {
 		if ( is_string( $this->orderby ) ) {
 			$a_value = $a->{$this->orderby};
@@ -123,13 +123,13 @@ class Audiotheme_Sort_Objects {
 		} elseif ( is_array( $this->orderby ) ) {
 			$a_value = $a;
 			$b_value = $b;
-			
+
 			foreach( $this->orderby as $prop ) {
 				$a_value = ( isset( $a_value->$prop ) ) ? $a_value->$prop : '';
 				$b_value = ( isset( $b_value->$prop ) ) ? $b_value->$prop : '';
 			}
 		}
-		
+
 		if ( $a_value == $b_value ) {
 			if ( ! empty( $this->fallback ) ) {
 				$properties = explode( ',', $this->fallback );
@@ -139,15 +139,15 @@ class Audiotheme_Sort_Objects {
 						return $this->compare( $a->$prop, $b->$prop );
 					}
 				}
-				
+
 			}
-			
+
 			return 0;
 		}
-		
+
 		return $this->compare( $a_value, $b_value );
 	}
-	
+
 	function compare( $a, $b ) {
 		if ( $a < $b ) {
 			return ( 'ASC' == $this->order ) ? -1 : 1;
@@ -191,23 +191,23 @@ endif;
 function audiotheme_array_asplice( $input, $offset, $length = 0, $replacement = null, $primary = 'input' ) {
 	$input = (array) $input;
 	$replacement = (array) $replacement;
-	
+
 	$start = array_slice( $input, 0, $offset, true );
 	// $remove = array_slice( $input, $offset, $length, true );
 	$end = array_slice( $input, $offset + $length, null, true );
-	
+
 	// Discard elements in $replacement whose keys match keys in $input.
 	if ( 'input' == $primary ) {
 		$replacement = array_diff_key( $replacement, $input );
 	}
-	
+
 	// Discard elements in $start and $end whose keys match keys in $replacement.
 	// Could change the size of $input, so this is done after slicing the start and end.
 	elseif ( 'replacement' == $primary ) {
 		$start = array_diff_key( $start, $replacement );
 		$end = array_diff_key( $end, $replacement );
 	}
-	
+
 	// Which is faster?
 	// return $start + $replacement + $end;
 	return array_merge( $start, $replacement, $end );
@@ -219,7 +219,7 @@ function audiotheme_array_asplice( $input, $offset, $length = 0, $replacement = 
  * @version  1.0.0
  * @uses audiotheme_array_find()
  * @uses audiotheme_array_asplice()
- * 
+ *
  * @param array $input The input array.
  * @param mixed $needle Value to insert new elements after.
  * @param mixed $insert The element(s) to insert.
@@ -228,12 +228,12 @@ function audiotheme_array_asplice( $input, $offset, $length = 0, $replacement = 
 function audiotheme_array_insert_after( $input, $needle, $insert ) {
 	$input = (array) $input;
 	$insert = (array) $insert;
-	
+
 	$position = audiotheme_array_find( $needle, $input );
 	if ( false === $position ) {
 		return false;
 	}
-	
+
 	return audiotheme_array_asplice( $input, $position + 1, 0, $insert );
 }
 
@@ -254,12 +254,12 @@ function audiotheme_array_insert_after( $input, $needle, $insert ) {
 function audiotheme_array_insert_after_key( $input, $needle, $insert ) {
 	$input = (array) $input;
 	$insert = (array) $insert;
-	
+
 	$position = audiotheme_array_key_find( $needle, $input );
 	if ( false === $position ) {
 		return false;
 	}
-	
+
 	return audiotheme_array_asplice( $input, $position + 1, 0, $insert );
 }
 
@@ -279,9 +279,9 @@ function audiotheme_array_find( $needle, $haystack, $strict = false ) {
 	if ( ! is_array( $haystack ) ) {
 		return false;
 	}
-	
+
 	$key = array_search( $needle, $haystack, $strict );
-	
+
 	return ( $key ) ? audiotheme_array_key_find( $key, $haystack ) : false;
 }
 
@@ -297,13 +297,13 @@ function audiotheme_array_find( $needle, $haystack, $strict = false ) {
  */
 function audiotheme_array_key_find( $key, $search ) {
 	$key = ( is_int( $key ) ) ? $key : (string) $key;
-	
+
 	if ( ! is_array( $search ) ) {
 		return false;
 	}
-	
+
 	$keys = array_keys( $search );
-	
+
 	return array_search( $key, $keys );
 }
 
@@ -321,21 +321,20 @@ function audiotheme_array_key_find( $key, $search ) {
  */
 function audiotheme_array_sort_array( $array, $order, $keep_diff = 'bottom' ) {
 	$order = array_flip( $order );
-	
+
 	// The difference should be tacked back on after sorting.
 	if ( 'discard' !== $keep_diff ) {
 		$diff = array_diff_key( $array, $order );
 	}
-	
+
 	$sorted = array();
 	foreach ( $order as $key => $val ) {
 		$sorted[ $key ] = $array[ $key ];
 	}
-	
+
 	if ( 'discard' !== $keep_diff ) {
 		$sorted = ( 'top' == $keep_diff ) ? $diff + $sorted : $sorted + $diff;
 	}
-	
+
 	return $sorted;
 }
-?>

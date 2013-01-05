@@ -46,4 +46,3 @@ require( AUDIOTHEME_DIR . 'galleries/post-template.php' );
 if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'galleries/admin/galleries.php' );
 }
-?>

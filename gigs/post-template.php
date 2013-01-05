@@ -20,19 +20,19 @@
 function get_audiotheme_gig( $post = null ) {
 	$post = get_post( $post );
 	$gig_id = $post->ID;
-	
+
 	$post->gig_datetime = get_post_meta( $gig_id, '_audiotheme_gig_datetime', true );
 	$post->gig_time = '';
 	$post->tickets_price = get_post_meta( $gig_id, '_audiotheme_tickets_price', true );
 	$post->tickets_url = get_post_meta( $gig_id, '_audiotheme_tickets_url', true );
-	
+
 	// determine the gig time
 	$gig_time = get_post_meta( $post->ID, '_audiotheme_gig_time', true );
 	$t = date_parse( $gig_time );
 	if ( empty( $t['errors'] ) ) {
 		$post->gig_time = mysql2date( get_option( 'time_format' ), $post->gig_datetime );
 	}
-	
+
 	$post->venue = null;
 	if ( isset( $post->connected[0] ) && isset( $post->connected[0]->ID ) ) {
 		$post->venue = get_audiotheme_venue( $post->connected[0]->ID );
@@ -44,12 +44,12 @@ function get_audiotheme_gig( $post = null ) {
 			'nopaging' => true,
 			'suppress_filters' => false
 		) );
-		
+
 		if ( ! empty( $venues ) ) {
 			$post->venue = get_audiotheme_venue( $venues[0]->ID );
 		}
 	}
-	
+
 	return $post;
 }
 
@@ -68,15 +68,15 @@ function get_audiotheme_gig_title( $post = null ) {
 	$gig = get_audiotheme_gig( $post );
 
 	$title = ( empty( $gig->post_title ) ) ? '' : $gig->post_title;
-	
+
 	if ( empty( $title ) ) {
 		if ( ! empty( $gig->venue->name ) ) {
-			$title = $gig->venue->name; 
+			$title = $gig->venue->name;
 		} else {
 			$title = get_audiotheme_gig_time( 'F j, Y' );
 		}
 	}
-	
+
 	return apply_filters( 'get_audiotheme_gig_title', $title, $gig );
 }
 
@@ -91,7 +91,7 @@ function get_audiotheme_gig_title( $post = null ) {
  */
 function the_audiotheme_gig_link( $args = array(), $echo = true ) {
 	$html = get_audiotheme_gig_link( null, $args );
-	
+
 	if ( $echo )
 		echo $html;
 	else
@@ -117,7 +117,7 @@ function the_audiotheme_gig_link( $args = array(), $echo = true ) {
  */
 function get_audiotheme_gig_link( $post = null, $args = array() ) {
 	$gig = get_audiotheme_gig( $post );
-	
+
 	$defaults = array(
 		'before' => '',
 		'after' => '',
@@ -126,13 +126,13 @@ function get_audiotheme_gig_link( $post = null, $args = array() ) {
 	);
 	$args = wp_parse_args( $args, $defaults );
 	extract( $args );
-	
+
 	$html = $before;
 	$html.= '<a href="' . esc_url( get_permalink( $gig->ID ) ) . '" class="url uid" itemprop="url">';
 	$html.= $before_link . get_audiotheme_gig_title( $post ) . $after_link;
 	$html.= '</a>';
 	$html.= $after;
-	
+
 	return $html;
 }
 
@@ -149,12 +149,12 @@ function get_audiotheme_gig_link( $post = null, $args = array() ) {
 function get_audiotheme_gig_gmt_date( $post = null ) {
 	$gig = get_audiotheme_gig( $post );
 	$format = 'Y-m-d H:i:s';
-	
+
 	$tz = get_option( 'timezone_string' );
 	if ( ! empty( $gig->venue->timezone_string ) ) {
 		$tz = $gig->venue->timezone_string;
 	}
-	
+
 	$string_gmt = $gig->gig_datetime;
 	if ( $tz && ! empty( $gig->gig_time ) ) {
 		date_default_timezone_set( $tz );
@@ -167,7 +167,7 @@ function get_audiotheme_gig_gmt_date( $post = null ) {
 	} else {
 		$string_gmt = mysql2date( 'Y-m-d', $gig->gig_datetime ); // only returns the date portion since the time portion is unknown
 	}
-	
+
 	return $string_gmt;
 }
 
@@ -197,9 +197,9 @@ function get_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null,
 	);
 	$args = wp_parse_args( $args, $defaults );
 	extract( $args, EXTR_SKIP );
-	
+
 	$gig = get_audiotheme_gig( $post );
-	
+
 	if ( empty( $gig->gig_time ) ) {
 		// ISO 8601 without time component or timezone component; need to verify google calendar support
 		$d = ( 'c' == $d ) ? 'Y-m-d' : $d;
@@ -207,7 +207,7 @@ function get_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null,
 	} else {
 		$format = ( empty( $t ) ) ? $d : $d . $t;
 	}
-	
+
 	if ( $gmt ) {
 		$time = get_audiotheme_gig_gmt_date( $post );
 	} else {
@@ -218,11 +218,11 @@ function get_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null,
 		}
 		date_default_timezone_set( $tz );
 	}
-	
+
 	$time = mysql2date( $format, $time, $translate );
 	$time = ( empty( $gig->gig_time ) && ! empty( $empty_time ) ) ? $time . $empty_time : $time;
 	date_default_timezone_set( 'UTC' );
-	
+
 	return $time;
 }
 
@@ -239,9 +239,9 @@ function get_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null,
 function the_audiotheme_gig_description( $before = '', $after = '', $echo = true ) {
 	$html = '';
 	$description = get_audiotheme_gig_description();
-	
+
 	$html = ( empty( $description ) ) ? '' : $before . wpautop( $description ) . $after;
-	
+
 	if ( $echo )
 		echo $html;
 	else
@@ -258,24 +258,24 @@ function the_audiotheme_gig_description( $before = '', $after = '', $echo = true
  */
 function get_audiotheme_gig_location( $post = null ) {
 	$gig = get_audiotheme_gig( $post );
-	
+
 	$location = '';
 	if ( audiotheme_gig_has_venue( $gig ) ) {
 		$venue = get_audiotheme_venue( $gig->venue->ID );
-		
+
 		$location = '';
 		$location.= ( empty( $venue->city ) ) ? '' : '<span class="locality">' . $venue->city . '</span>';
 		$location.= ( ! empty( $location ) && ! empty( $venue->state ) ) ? '<span class="sep sep-region">,</span> ' : '';
 		$location.= ( empty( $venue->state ) ) ? '' : '<span class="region">' . $venue->state . '</span>';
-		
+
 		if ( ! empty( $venue->country ) ) {
 			$country_class = esc_attr( 'country-name-' . sanitize_title_with_dashes( $venue->country ) );
-			
+
 			$location.= ( ! empty( $location ) ) ? '<span class="sep sep-country-name ' . $country_class . '">,</span> ' : '';
 			$location.= ( empty( $venue->country ) ) ? '' : '<span class="county-name ' . $country_class . '">' . $venue->country . '</span>';
 		}
 	}
-	
+
 	return $location;
 }
 
@@ -289,7 +289,7 @@ function get_audiotheme_gig_location( $post = null ) {
  */
 function get_audiotheme_gig_description( $post = 0 ) {
 	$gig = get_audiotheme_gig( $post );
-	
+
 	return $gig->post_excerpt;
 }
 
@@ -303,7 +303,7 @@ function get_audiotheme_gig_description( $post = 0 ) {
  */
 function get_audiotheme_gig_tickets_price( $post = 0 ) {
 	$gig = get_audiotheme_gig( $post );
-	
+
 	return get_post_meta( $gig->ID, '_audiotheme_tickets_price', true );
 }
 /**
@@ -316,7 +316,7 @@ function get_audiotheme_gig_tickets_price( $post = 0 ) {
  */
 function get_audiotheme_gig_tickets_url( $post = 0 ) {
 	$gig = get_audiotheme_gig( $post );
-	
+
 	return get_post_meta( $gig->ID, '_audiotheme_tickets_url', true );
 }
 
@@ -330,7 +330,7 @@ function get_audiotheme_gig_tickets_url( $post = 0 ) {
  */
 function audiotheme_gig_has_venue( $post = null ) {
 	$gig = get_audiotheme_gig( $post );
-	
+
 	return ! empty( $gig->venue );
 }
 
@@ -341,7 +341,7 @@ function audiotheme_gig_has_venue( $post = null ) {
  */
 function get_audiotheme_gig_admin_url( $args = '' ) {
 	$admin_url = admin_url( 'admin.php?page=audiotheme-gigs' );
-	
+
 	if ( ! empty( $args ) ) {
 		if ( is_array( $args ) ) {
 			$admin_url = add_query_arg( $args, $admin_url );
@@ -349,7 +349,7 @@ function get_audiotheme_gig_admin_url( $args = '' ) {
 			$admin_url = ( 0 !== strpos( $args, '&' ) ) ? '&' . $admin_url : $admin_url;
 		}
 	}
-	
+
 	return $admin_url;
 }
 
@@ -361,24 +361,24 @@ function get_audiotheme_gig_admin_url( $args = '' ) {
 function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
 	$gig = get_audiotheme_gig( $gig_id ); // Retrieve current venue info.
 	$venue_name = trim( stripslashes( $venue_name ) );
-	
+
 	if ( empty( $venue_name ) ) {
 		p2p_delete_connections( 'audiotheme_venue_to_gig', array( 'to' => $gig_id ) );
 	} elseif ( ! isset( $gig->venue->name ) || $venue_name != $gig->venue->name ) {
 		p2p_delete_connections( 'audiotheme_venue_to_gig', array( 'to' => $gig_id ) );
-		
+
 		$new_venue = get_audiotheme_venue_by( 'name', $venue_name );
 		if ( ! $new_venue ) {
 			$new_venue = array(
 				'name' => $venue_name,
 				'gig_count' => 1
 			);
-			
+
 			// Timezone is important, so retrieve it from the global $_POST array if it exists.
 			if ( ! empty( $_POST['audiotheme_venue']['timezone_string'] ) ) {
 				$new_venue['timezone_string'] = $_POST['audiotheme_venue']['timezone_string'];
 			}
-			
+
 			$venue_id = save_audiotheme_venue( $new_venue );
 			if ( $venue_id ) {
 				p2p_create_connection( 'audiotheme_venue_to_gig', array(
@@ -388,21 +388,21 @@ function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
 			}
 		} else {
 			$venue_id = $new_venue->ID;
-			
+
 			p2p_create_connection( 'audiotheme_venue_to_gig', array(
 				'from' => $new_venue->ID,
 				'to' => $gig_id
 			) );
-			
+
 			update_audiotheme_venue_gig_count( $new_venue->ID );
 		}
 	}
-	
+
 	if ( isset( $gig->venue->ID ) ) {
 		$venue_id = $gig->venue->ID;
 		update_audiotheme_venue_gig_count( $venue_id );
 	}
-	
+
 	return ( empty( $venue_id ) ) ? false : get_audiotheme_venue( $venue_id );
 }
 
@@ -413,16 +413,16 @@ function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
  */
 function get_audiotheme_venue( $post ) {
 	$post = get_post( $post );
-	
+
 	$defaults = get_default_audiotheme_venue_properties();
 	$meta = (array) get_post_custom( $post->ID );
 	foreach( $meta as $key => $val ) {
 		$meta[ str_replace( '_audiotheme_', '', $key ) ] = $val;
-		unset( $meta[ $key ] );	
+		unset( $meta[ $key ] );
 	}
-	
+
 	$properties = wp_parse_args( $meta, $defaults );
-	
+
 	foreach( $properties as $key => $prop ) {
 		if ( ! array_key_exists( $key, $defaults ) ) {
 			unset( $properties[ $key ] );
@@ -430,11 +430,11 @@ function get_audiotheme_venue( $post ) {
 			$properties[ $key ] = maybe_unserialize( $prop[0] );
 		}
 	}
-	
+
 	$venue['ID'] = $post->ID;
 	$venue['name'] = $post->post_title;
 	$venue = (object) wp_parse_args( $venue, $properties );
-	
+
 	return $venue;
 }
 
@@ -447,16 +447,16 @@ function get_audiotheme_venue( $post ) {
  */
 function get_audiotheme_venue_by( $field, $value ) {
 	global $wpdb;
-	
+
 	$field = 'name';
-	
+
 	$venue_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type='audiotheme_venue' AND post_title=%s", $value ) );
 	if ( ! $venue_id ) {
 		return false;
 	}
-	
+
 	$venue = get_audiotheme_venue( $venue_id );
-	
+
 	return $venue;
 }
 
@@ -484,7 +484,7 @@ function get_default_audiotheme_venue_properties() {
 		'notes'           => '',
 		'timezone_string' => ''
 	);
-	
+
 	return $args;
 }
 
@@ -499,12 +499,12 @@ function get_default_audiotheme_venue_properties() {
  */
 function the_audiotheme_gig_venue_link( $args = array(), $echo = true ) {
 	$gig = get_audiotheme_gig( $post );
-	
+
 	if ( empty( $gig->venue ) )
 		return;
-	
+
 	$html = get_audiotheme_venue_link( $gig->venue->ID, $args );
-	
+
 	if ( $echo )
 		echo $html;
 	else
@@ -530,10 +530,10 @@ function the_audiotheme_gig_venue_link( $args = array(), $echo = true ) {
  */
 function get_audiotheme_venue_link( $venue_id, $args = array() ) {
 	$venue = get_audiotheme_venue( $venue_id );
-	
+
 	if ( empty( $venue->name ) )
 		return '';
-	
+
 	$defaults = array(
 		'before' => '',
 		'after' => '',
@@ -541,13 +541,13 @@ function get_audiotheme_venue_link( $venue_id, $args = array() ) {
 		'after_link' => '</span>'
 	);
 	$args = wp_parse_args( $args, $defaults );
-	
+
 	$html = $before;
 	$html.= ( empty( $venue->website ) ) ? '' : sprintf( '<a href="%s" class="url" itemprop="url">', esc_url( $venue->website ) );
 	$html.= $before_link . $venue->name . $after_link;
 	$html.= ( empty( $venue->website ) ) ? '' : '</a>';
 	$html.= $after;
-	
+
 	return $html;
 }
 
@@ -562,12 +562,12 @@ function get_audiotheme_venue_link( $venue_id, $args = array() ) {
  */
 function the_audiotheme_gig_venue_vcard( $args = array(), $echo = true ) {
 	$gig = get_audiotheme_gig();
-	
+
 	if ( empty( $gig->venue ) )
 		return;
-	
+
 	$html = get_audiotheme_venue_vcard( $gig->venue->ID, $args );
-	
+
 	if ( $echo )
 		echo $html;
 	else
@@ -588,39 +588,39 @@ function the_audiotheme_gig_venue_vcard( $args = array(), $echo = true ) {
  */
 function get_audiotheme_venue_vcard( $venue_id, $args = array() ) {
 	$venue = get_audiotheme_venue( $venue_id );
-	
+
 	$defaults = array(
 		'container' => 'dd'
 	);
 	$args = wp_parse_args( $args, $defaults );
-	
+
 	$output = '';
-	
+
 	$output.= ( empty( $venue->website ) ) ? '' : '<a href="' . esc_url( $venue->website ) . '" class="url" itemprop="url">';
 	$output.= '<span class="fn org" itemprop="name">' . $venue->name . '</span>';
 	$output.= ( empty( $venue->website ) ) ? '' : '</a>';
-	
+
 	$address = '';
 	$address.= ( empty( $venue->address ) ) ? '' : '<span class="street-address" itemprop="streetAddress">' . nl2br( esc_html( $venue->address ) ) . '</span><br>';
-	
-	
+
+
 	$address.= ( empty( $venue->city ) ) ? '' : '<span class="locality" itemprop="addressLocality">' . $venue->city . '</span>';
 	$address.= ( ! empty( $venue->city ) && ! empty( $venue->state ) ) ? ', ' : '';
 	$address.= ( empty( $venue->state ) ) ? '' : '<span class="region" itempprop="addressRegion">' . $venue->state . '</span>';
 	$address.= ( empty( $venue->postal_code ) ) ? '' : ' <span class="postal-code" itemprop="postalCode">' . $venue->postal_code . '</span>';
 	$address.= ( empty( $venue->country ) ) ? '' : '<br><span class="country-name" itemprop="addressCountry">' . $venue->country . '</span>';
-	
-	
+
+
 	$output.= ( empty( $address ) ) ? '' : '<div class="adr" itemtype="http://schema.org/PostalAddress" itemscope itemprop="address">' . $address . '</div>';
 	$output.= ( empty( $venue->phone ) ) ? '' : '<span class="tel" itemprop="telephone">' . $venue->phone . '</span>';
-	
+
 	if ( ! empty( $output ) && ! empty( $args['container'] ) ) {
 		$container_open = '<' . $args['container'] . ' class="location vcard" itemtype="http://schema.org/EventVenue" itemscope itemprop="location">';
 		$container_close = '</' . $args['container'] . '>';
-		 
+
 		$output = $container_open . $output . $container_close;
 	}
-	
+
 	return $output;
 }
 
@@ -631,7 +631,7 @@ function get_audiotheme_venue_vcard( $venue_id, $args = array() ) {
  */
 function get_audiotheme_venue_admin_url( $args = '' ) {
 	$admin_url = admin_url( 'admin.php?page=audiotheme-venue' );
-	
+
 	if ( ! empty( $args ) ) {
 		if ( is_array( $args ) ) {
 			$admin_url = add_query_arg( $args, $admin_url );
@@ -639,7 +639,7 @@ function get_audiotheme_venue_admin_url( $args = '' ) {
 			$admin_url = ( 0 !== strpos( $args, '&' ) ) ? '&' . $admin_url : $admin_url;
 		}
 	}
-	
+
 	return $admin_url;
 }
 
@@ -650,7 +650,7 @@ function get_audiotheme_venue_admin_url( $args = '' ) {
  */
 function get_audiotheme_venues_admin_url( $args = '' ) {
 	$admin_url = admin_url( 'admin.php?page=audiotheme-venues' );
-	
+
 	if ( ! empty( $args ) ) {
 		if ( is_array( $args ) ) {
 			$admin_url = add_query_arg( $args, $admin_url );
@@ -658,7 +658,7 @@ function get_audiotheme_venues_admin_url( $args = '' ) {
 			$admin_url = ( 0 !== strpos( $args, '&' ) ) ? '&' . $admin_url : $admin_url;
 		}
 	}
-	
+
 	return $admin_url;
 }
 
@@ -673,10 +673,10 @@ function get_audiotheme_venue_edit_link( $admin_url, $post_id ) {
 			'action' => 'edit',
 			'venue_id' => $post_id
 		);
-		
+
 		$admin_url = get_audiotheme_venue_admin_url( $args );
 	}
-	
+
 	return $admin_url;
 }
 
@@ -687,12 +687,12 @@ function get_audiotheme_venue_edit_link( $admin_url, $post_id ) {
  */
 function get_unique_audiotheme_venue_name( $name, $venue_id = 0 ) {
 	global $wpdb;
-	
+
 	$suffix = 2;
 	while ( $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_title=%s AND post_type='audiotheme_venue' AND ID!=%d", $name, $venue_id ) ) ) {
 		$name.= ' ' . $suffix;
 	}
-	
+
 	return $name;
 }
 
@@ -706,11 +706,11 @@ function get_unique_audiotheme_venue_name( $name, $venue_id = 0 ) {
  */
 function save_audiotheme_venue( $data ) {
 	global $wpdb;
-	
+
 	$action = 'update';
 	$current_user = wp_get_current_user();
 	$defaults = get_default_audiotheme_venue_properties();
-	
+
 	// New venue.
 	if ( empty( $data['ID'] ) ) {
 		$action = 'insert';
@@ -718,37 +718,37 @@ function save_audiotheme_venue( $data ) {
 	} else {
 		$current_venue = get_audiotheme_venue( $data['ID'] );
 	}
-	
+
 	// Copy gig count before cleaning the data array.
 	$gig_count = ( isset( $data['gig_count'] ) && is_numeric( $data['gig_count'] ) ) ? absint( $data['gig_count'] ) : 0;
-	
+
 	// Remove properties that aren't whitelisted.
 	$data = array_intersect_key( $data, $defaults );
-	
+
 	// Map the 'name' property to the 'post_title' field.
 	if ( isset( $data['name'] ) && ! empty( $data['name'] ) ) {
 		$post_title = get_unique_audiotheme_venue_name( $data['name'], $data['ID'] );
-		
+
 		if ( ! isset( $current_venue ) || $post_title != $current_venue->name ) {
 			$venue['post_title'] = $post_title;
 			$venue['post_name'] = '';
 		}
 	}
-	
+
 	// Insert the post container.
 	if ( 'insert' == $action ) {
 		$venue['post_author'] = $current_user->ID;
 		$venue['post_status'] = 'publish';
 		$venue['post_type'] = 'audiotheme_venue';
-		
+
 		$venue_id = wp_insert_post( $venue );
 	} else {
 		$venue_id = absint( $data['ID'] );
-		
+
 		if ( ! empty( $venue['post_title'] ) ) {
 			$venue['ID'] = $venue_id;
 			wp_update_post( $venue );
-			
+
 			// Update the gig metadata, too. @todo Check this out.
 			/*$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->postmeta pm, $wpdb->postmeta pm2
 				SET pm2.meta_value=%s
@@ -757,7 +757,7 @@ function save_audiotheme_venue( $data ) {
 				$venue_id ) );*/
 		}
 	}
-	
+
 	// Set the venue title as the venue ID if the name argument was empty.
 	if ( isset( $data['name'] ) && empty( $data['name'] ) ) {
 		wp_update_post( array(
@@ -766,23 +766,23 @@ function save_audiotheme_venue( $data ) {
 			'post_name' => '' )
 		);
 	}
-	
+
 	// Save additional properties to post meta.
 	if ( $venue_id ) {
 		unset( $data['ID'] );
 		unset( $data['name'] );
-		
+
 		foreach ( $data as $key => $val ) {
 			$key = '_audiotheme_' . $key;
 			update_post_meta( $venue_id, $key, $val );
 		}
-		
+
 		// Update gig count.
 		update_audiotheme_venue_gig_count( $venue_id, $gig_count );
-		
+
 		return $venue_id;
 	}
-	
+
 	return false;
 }
 
@@ -799,7 +799,7 @@ function get_audiotheme_venue_gig_count( $venue_id ) {
 		WHERE p2p_type='audiotheme_venue_to_gig' AND p2p_from=%d",
 		$venue_id );
 	$count = $wpdb->get_var( $sql );
-	
+
 	return ( empty( $count ) ) ? 0 : $count;
 }
 
@@ -810,7 +810,7 @@ function get_audiotheme_venue_gig_count( $venue_id ) {
  */
 function update_audiotheme_venue_gig_count( $venue_id, $count = 0 ) {
 	global $wpdb;
-	
+
 	if ( ! $count ) {
 		$sql = $wpdb->prepare( "SELECT count( * )
 			FROM $wpdb->p2p
@@ -818,7 +818,6 @@ function update_audiotheme_venue_gig_count( $venue_id, $count = 0 ) {
 			$venue_id );
 		$count = $wpdb->get_var( $sql );
 	}
-	
+
 	update_post_meta( $venue_id, '_audiotheme_gig_count', absint( $count ) );
 }
-?>

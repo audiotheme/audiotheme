@@ -5,7 +5,7 @@
  *
  * Theme Options support is added in 'after_setup_theme' using
  * add_theme_support().
- * 
+ *
  * The AudioTheme Settings API is loaded on 'init'. It fires a custom action
  * called 'audiotheme_register_settings', which is where any settings should
  * be registered to ensure they're available to the Theme Customizer and the
@@ -18,7 +18,7 @@
  *
  * Finally, settings are registered with the WordPress Settings API during
  * 'admin_init'.
- * 
+ *
  * @package AudioTheme_Framework
  * @subpackage Settings
  */
@@ -51,9 +51,9 @@ function get_audiotheme_settings() {
  */
 function add_audiotheme_settings_screen( $screen_id, $title, $args = array() ) {
 	$settings = Audiotheme_Settings::instance();
-	
+
 	$settings->add_screen( $screen_id, $title, $args );
-	
+
 	return $settings;
 }
 
@@ -68,11 +68,11 @@ function add_audiotheme_settings_screen( $screen_id, $title, $args = array() ) {
  */
 function get_audiotheme_settings_screen( $screen_id = 'audiotheme-theme-options' ) {
 	$settings = Audiotheme_Settings::instance();
-	
+
 	if ( $screen_id ) {
 		$settings->set_screen( $screen_id );
 	}
-	
+
 	return $settings;
 }
 
@@ -92,7 +92,7 @@ function audiotheme_settings_init() {
 	// Add theme options support.
 	if ( ( $support = get_audiotheme_theme_options_support() ) && ! empty( $support['callback'] ) && function_exists( $support['callback'] ) ) {
 		$settings = get_audiotheme_settings();
-		
+
 		$screen = add_audiotheme_settings_screen( 'audiotheme-theme-options', __( 'Theme Options', 'audiotheme-i18n' ), array(
 			'menu_title'   => $support['menu_title'],
 			'option_group' => 'audiotheme_theme_mods',
@@ -100,20 +100,20 @@ function audiotheme_settings_init() {
 			'show_in_menu' => 'themes.php',
 			'capability'   => 'edit_theme_options'
 		) );
-		
+
 		// Registering the callback like this ensures that an error isn't thrown if the framework isn't active.
 		add_action( 'audiotheme_register_settings', $support['callback'] );
 	}
-	
+
 	// These must occur after the callback to register settings.
 	add_action( 'customize_register', 'audiotheme_settings_register_customizer_settings' );
-		
+
 	// Lower priority allows screens to be registered in the 'admin_menu' hook and still have the menu item display.
 	add_action( 'admin_menu', 'audiotheme_settings_add_admin_menus', 20 );
-		
+
 	// Settings should be registered before this.
 	add_action( 'admin_init', 'audiotheme_settings_register_wp_settings_api', 20 );
-	
+
 	// Custom settings should be registered during this hook.
 	if ( is_admin() ) {
 		do_action( 'audiotheme_register_settings' );
@@ -129,9 +129,9 @@ function audiotheme_settings_init() {
 function audiotheme_settings_register_customizer_settings( $wp_customize ) {
 	// Include custom Theme Customizer controls.
 	require( AUDIOTHEME_DIR . 'admin/includes/settings-theme-customizer-controls.php' );
-	
+
 	do_action( 'audiotheme_settings_before_customizer' );
-	
+
 	$settings = Audiotheme_Settings::instance();
 	$settings->register_customizer_settings( $wp_customize );
 }
@@ -143,13 +143,13 @@ function audiotheme_settings_register_customizer_settings( $wp_customize ) {
  * settings before sections and fields are added. Adds a sanitization
  * callback to process any sanitization routines that have been registered
  * with a setting.
- * 
+ *
  * @since 1.0.0
  * @todo http://make.wordpress.org/themes/2011/07/01/wordpress-3-2-fixing-the-edit_theme_optionsmanage_options-bug/
  */
 function audiotheme_settings_add_admin_menus() {
 	$settings = Audiotheme_Settings::instance();
-	
+
 	if ( $screens = $settings->get_screens() ) {
 		foreach ( $screens as $screen ) {
 			if ( false !== $screen->show_in_menu && $settings->screen_has_settings( $screen->screen_id ) ) {
@@ -158,16 +158,16 @@ function audiotheme_settings_add_admin_menus() {
 				} else {
 					$pagehook = add_submenu_page( $screen->show_in_menu, $screen->name, $screen->menu_title, $screen->capability, $screen->menu_slug, 'audiotheme_settings_display_screen' );
 				}
-				
+
 				add_action( 'load-' . $pagehook, 'audiotheme_settings_screen_load' );
 				add_action( 'admin_notices', 'audiotheme_settings_screen_notices' );
-				
+
 				$option_names = (array) $screen->option_name;
 				foreach ( $option_names as $name ) {
 					register_setting( $screen->option_group, $name );
 					add_filter( 'sanitize_option_' . $name, 'audiotheme_settings_sanitize_option', 10, 2 );
 				}
-				
+
 				#add_filter( 'option_page_capability_' . $screen->option_group, 'audiotheme_settings_page_capability' );
 			}
 		}
@@ -203,12 +203,12 @@ function audiotheme_settings_register_wp_settings_api() {
  */
 function audiotheme_settings_screen_load() {
 	wp_enqueue_media();
-	
+
 	add_thickbox();
 	wp_enqueue_script( 'audiotheme-settings' );
 	wp_enqueue_script( 'media-upload' );
 	wp_enqueue_script( 'wp-color-picker' );
-	
+
 	wp_enqueue_style( 'audiotheme-admin' );
 	wp_enqueue_style( 'wp-color-picker' );
 }
@@ -217,17 +217,17 @@ function audiotheme_settings_screen_load() {
  * Output error message.
  *
  * Outputs any error messages added when options are saved. Adds a data
- * attribute to the error message so it can be associated it with a 
+ * attribute to the error message so it can be associated it with a
  * specific field and moved with javascript.
  *
  * @since 1.0.0
  */
 function audiotheme_settings_screen_notices() {
 	global $plugin_page;
-	
+
 	$settings = Audiotheme_Settings::instance();
 	$screen = $settings->get_screen( $plugin_page );
-	
+
 	if ( $screen ) {
 		$updated = true;
 		$option_names = (array) $screen->option_name;
@@ -242,11 +242,11 @@ function audiotheme_settings_screen_notices() {
 						$details['message']
 					);
 				}
-				
+
 				$updated = false;
 			}
 		}
-		
+
 		if ( $updated && isset( $_REQUEST['settings-updated'] ) )  {
 			echo '<div class="updated fade"><p><strong>' . __( 'Settings saved.', 'audiotheme-i18n' ) . '</strong></p></div>';
 		}
@@ -263,17 +263,17 @@ function audiotheme_settings_screen_notices() {
  */
 function audiotheme_settings_display_screen() {
 	global $plugin_page;
-	
+
 	$settings = Audiotheme_Settings::instance();
 	$screen = $settings->get_screen( $plugin_page );
-	
+
 	$has_tabs = ( count( $screen->tabs ) < 2 ) ? false : true;
 	?>
 	<div class="wrap audiotheme-settings-screen<?php echo ( $has_tabs ) ? ' audiotheme-settings-screen-has-tabs' : ''; ?>">
 		<form action="options.php" method="post">
 			<?php
 			screen_icon();
-			
+
 			// Don't add tabs if there isn't more than one registered.
 			if ( ! $has_tabs ) {
 				echo '<h2>' . $screen->name . '</h2>';
@@ -284,23 +284,23 @@ function audiotheme_settings_display_screen() {
 					}
 				echo '</h2>';
 			}
-			
+
 			// Output the nonce stuff.
 			settings_fields( $screen->option_group );
-			
+
 			// Output the tab panels.
 			foreach ( $screen->tabs as $tab_id => $tab ) {
 				echo '<div class="tab-panel" id="' . $tab_id . '-panel">';
 					do_action( $screen->option_group . '_' . $tab_id . '_fields_before' );
-					
+
 					$wp_settings_section = ( $screen->screen_id == $tab_id ) ? $screen->screen_id : $screen->screen_id . '-' . $tab_id;
 					do_settings_sections( $wp_settings_section );
-					
+
 					do_action( $screen->option_group . '_' . $tab_id . '_fields_after' );
 				echo '</div>';
 			}
 			?>
-			
+
 			<p class="submit">
 				<input type="submit" value="Save Changes" class="button-primary">
 			</p>
@@ -322,24 +322,24 @@ function audiotheme_settings_display_screen() {
  * revert to the old value, otherwise, it discards the new value.
  *
  * @since 1.0.0
- * 
+ *
  * @param mixed $value Value to sanitize/validate.
  * @param string $option Name of the option.
  * @return mixed The sanitized value.
  */
 function audiotheme_settings_sanitize_option( $value, $option ) {
 	global $wp_settings_fields;
-	
+
 	foreach ( $wp_settings_fields as $sections ) {
 		foreach ( $sections as $section ) {
 			foreach ( $section as $field_name => $field ) {
 				if ( is_array( $value ) && ! array_key_exists( $field_name, $value ) ) {
 					continue;
 				}
-				
+
 				if ( isset( $field['args']['option_name'] ) && $option == $field['args']['option_name'] ) {
 					$value = audiotheme_settings_sanitize_field( $field, $value );
-					
+
 					if ( ! audiotheme_settings_validate_field( $field, $option, $value ) ) {
 						// Maintain the existing value.
 						$current_value = get_option( $option );
@@ -353,7 +353,7 @@ function audiotheme_settings_sanitize_option( $value, $option ) {
 			}
 		}
 	}
-	
+
 	return $value;
 }
 
@@ -379,7 +379,7 @@ function audiotheme_settings_sanitize_field( $field, $option_value ) {
 		if ( is_string( $sanitize ) ) {
 			$sanitize = array_map( 'trim', explode( ',', $sanitize ) );
 		}
-		
+
 		if ( is_array( $sanitize ) ) {
 			foreach ( $sanitize as $func ) {
 				if ( function_exists( $func ) ) {
@@ -392,7 +392,7 @@ function audiotheme_settings_sanitize_field( $field, $option_value ) {
 			}
 		}
 	}
-	
+
 	return $option_value;
 }
 
@@ -425,28 +425,27 @@ function audiotheme_settings_validate_field( $field, $option_name, $option_value
 		if ( is_string( $validate ) ) {
 			$validate = array_flip( array_map( 'trim', explode( ',', $validate ) ) );
 		}
-		
+
 		if ( is_array( $validate ) ) {
 			foreach ( $validate as $func => $error_msg ) {
 				$error_msg = ( is_string( $error_msg ) ) ? $error_msg : __( 'It appears there was a problem with a value entered.', 'audiotheme-i18n' );
 				if ( function_exists( $func ) ) {
 					$value = ( is_array( $option_value ) ) ? $option_value[ $field['id'] ] : $option_value;
 					$is_valid = call_user_func( $func, $value );
-					
+
 					// Used for adding data attributes to the error notice to highlight tabs and fields needing attention.
 					$error_code = $field['args']['field_id'];
 					if ( ! $is_valid || is_wp_error( $is_valid ) ) {
 						$error_msg = ( is_wp_error( $is_valid ) ) ? $is_valid->get_error_message() : $error_msg;
-						
+
 						add_settings_error( $option_name, $error_code, $error_msg );
-						
+
 						return false; // Only show one error message per field.
 					}
 				}
 			}
 		}
 	}
-	
+
 	return true;
 }
-?>

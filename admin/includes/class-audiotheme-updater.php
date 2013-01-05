@@ -8,11 +8,11 @@ class Audiotheme_Updater {
 	private static $item_name;
 	private static $version;
 	private static $author;
-	
+
 	public static function setup( $args = array() ) {
 		$theme_slug = ( isset( $args['theme_slug'] ) && ! empty( $args['theme_slug'] ) ) ? $args['theme_slug'] : get_template();
 		$theme = wp_get_theme( $theme_slug );
-		
+
 		$args = wp_parse_args( $args, array(
 			'remote_api_url' => 'http://audiotheme.com',
 			'request_data'   => array(),
@@ -23,7 +23,7 @@ class Audiotheme_Updater {
 			'author'         => $theme->get( 'Author' )
 		) );
 		extract( $args );
-		
+
 		self::$license_key = $license_key;
 		self::$item_name = $item_name;
 		self::$version = $version;
@@ -31,30 +31,30 @@ class Audiotheme_Updater {
 		self::$author = $author;
 		self::$remote_api_url = $remote_api_url;
 		self::$response_key = self::$theme_slug . '-update-response';
-		
+
 		add_filter( 'site_transient_update_themes', array( __CLASS__, 'theme_update_transient' ) );
 		add_filter( 'delete_site_transient_update_themes', array( __CLASS__, 'delete_theme_update_transient' ) );
 		add_action( 'load-update-core.php', array( __CLASS__, 'delete_theme_update_transient' ) );
 		add_action( 'load-themes.php', array( __CLASS__, 'delete_theme_update_transient' ) );
 		add_action( 'load-themes.php', array( __CLASS__, 'load_themes_screen' ) );
 	}
-	
+
 	public static function load_themes_screen() {
 		add_thickbox();
 		add_action( 'admin_notices', array( __CLASS__, 'update_nag' ) );
 	}
-	
+
 	public static function update_nag() {
 		$theme = wp_get_theme( self::$theme_slug );
-		
+
 		$api_response = get_transient( self::$response_key );
-		
+
 		if( false === $api_response )
 			return;
 
 		$update_url = wp_nonce_url( 'update.php?action=upgrade-theme&amp;theme=' . urlencode( self::$theme_slug ), 'upgrade-theme_' . self::$theme_slug );
 		$update_onclick = ' onclick="if ( confirm(\'' . esc_js( __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update." ) ) . '\') ) {return true;}return false;"';
-		
+
 		if ( version_compare( $theme->get( 'Version' ), $api_response->new_version, '<' ) ) {
 
 			echo '<div id="update-nag">';
@@ -70,7 +70,7 @@ class Audiotheme_Updater {
 			echo '</div>';
 		}
 	}
-	
+
 	public static function theme_update_transient( $value ) {
 		$update_data = self::check_for_update();
 		if ( $update_data ) {
@@ -78,41 +78,41 @@ class Audiotheme_Updater {
 		}
 		return $value;
 	}
-	
+
 	public static function delete_theme_update_transient() {
 		delete_transient( self::$response_key );
 	}
-	
+
 	public static function check_for_update() {
 		$theme = wp_get_theme( self::$theme_slug );
-		
+
 		$update_data = get_transient( self::$response_key );
 		if ( false === $update_data ) {
 			// Don't check for an update if the license key hasn't been validated.
 			// Prevents unncessary calls to the API.
 			// @todo Update the option name if refactored.
 			if ( 'valid' == get_option( 'audiotheme_license_key_status' ) ) {
-				$api_params = array( 
+				$api_params = array(
 					'edd_action' => 'get_version',
-					'license'    => self::$license_key, 
+					'license'    => self::$license_key,
 					'name'       => self::$item_name,
 					'slug'       => self::$theme_slug,
 					'author'     => self::$author
 				);
-				
+
 				$response = wp_remote_post( self::$remote_api_url, array( 'timeout' => 5, 'body' => $api_params ) );
-				
+
 				// Make sure the response was successful
 				if ( ! is_wp_error( $response ) && 200 == wp_remote_retrieve_response_code( $response ) ) {
 					$update_data = json_decode( wp_remote_retrieve_body( $response ) );
-					
+
 					// @todo Temporary workaround for the server not sending a URL
 					if ( ! isset( $update_data->url ) && isset( $update_data->homepage ) ) {
 						$update_data->url = $update_data->homepage;
 					}
 				}
 			}
-			
+
 			// If the response failed, try again in 30 minutes
 			if ( ! isset( $update_data ) || ! is_object( $update_data ) ) {
 				$data = new stdClass;
@@ -120,49 +120,48 @@ class Audiotheme_Updater {
 				set_transient( self::$response_key, $data, strtotime( '+30 minutes' ) );
 				return false;
 			}
-			
+
 			// If the response was good, cache it
 			$update_data->sections = maybe_unserialize( $update_data->sections );
 			set_transient( self::$response_key, $update_data, strtotime( '+12 hours' ) );
 		}
-		
+
 		if ( version_compare( $theme->get( 'Version' ), $update_data->new_version, '>=' ) ) {
 			return false;
 		}
-		
+
 		return (array) $update_data;
 	}
-	
+
 	public static function activate_license( $license ) {
-		$api_params = array( 
-			'edd_action' => 'activate_license', 
+		$api_params = array(
+			'edd_action' => 'activate_license',
 			'license'    => $license,
 			'item_name'  => self::$item_name
 		);
-		
+
 		$response = wp_remote_get( add_query_arg( $api_params, self::$remote_api_url ) );
 		if ( is_wp_error( $response ) )
 			return false;
-		
+
 		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-		
+
 		return $license_data->license;
 	}
-	
+
 	public static function check_license_status( $license ) {
-		$api_params = array( 
-			'edd_action' => 'check_license', 
+		$api_params = array(
+			'edd_action' => 'check_license',
 			'license'    => $license,
 			'item_name'  => self::$item_name
 		);
-		
+
 		$response = wp_remote_get( add_query_arg( $api_params, self::$remote_api_url ) );
 		if ( is_wp_error( $response ) )
 			return false;
-		
+
 		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-		
+
 		return $license_data->license;
 	}
 }
-?>

@@ -9,7 +9,7 @@
 			<th class="column-action"><a class="button audiotheme-repeater-add-item"><?php _e( 'Add Track', 'audiotheme-i18n' ) ?></a></th>
 		</tr>
 	</thead>
-	
+
 	<tfoot>
 	    <tr class="audiotheme-repeater-sort-warning" style="display: none;">
 	    	<td colspan="6">
@@ -22,7 +22,7 @@
 	    	</td>
 	    </tr>
 	</tfoot>
-	
+
 	<tbody class="audiotheme-repeater-items is-empty">
 		<tr>
 			<td colspan="6"><?php echo get_post_type_object( 'audiotheme_track' )->labels->not_found; ?></td>
@@ -73,7 +73,7 @@
 			<# if ( data.downloadable ) { #>
 				<span class="has-download audiotheme-remove-on-add"><img src="<?php echo AUDIOTHEME_URI; ?>admin/images/download.png" width="12" height="12"></span>
 			<# } #>
-			
+
 			<# if ( data.purchaseUrl ) { #>
 				<span class="has-purchase-url audiotheme-remove-on-add"><img src="<?php echo AUDIOTHEME_URI; ?>admin/images/buy.png" width="12" height="12"></span>
 			<# } #>
@@ -89,7 +89,7 @@
 <script type="text/javascript">
 jQuery(function($) {
 	var tracklist = <?php echo ( empty( $tracks ) ) ? 'null' : json_encode( $tracks ); ?>;
-	
+
 	// @todo Send and manage a nonce.
 	$('#record-tracklist').audiothemeRepeater({ items: tracklist })
 		.on('addItem.audiotheme', function( e, track ) {

@@ -18,11 +18,11 @@
  */
 function get_audiotheme_option( $option_name, $key = null, $default = null ) {
 	$option = get_option( $option_name );
-	
+
 	if ( $key == $option_name || empty( $key ) ) {
 		return ( $option ) ? $option : $default;
 	}
-	
+
 	return ( isset( $option[ $key ] ) ) ? $option[ $key ] : $default;
 }
 
@@ -36,7 +36,7 @@ function get_audiotheme_option( $option_name, $key = null, $default = null ) {
  *
  * @since 1.0.0
  * @uses get_audiotheme_option()
- * 
+ *
  * @param string The option key
  * @param mixed Optional. Default value to return if option key doesn't exist.
  * @param string Optional. Retrieve a non-standard option.
@@ -44,7 +44,7 @@ function get_audiotheme_option( $option_name, $key = null, $default = null ) {
  */
 function get_audiotheme_theme_option( $key, $default = false, $option_name = '' ) {
 	$option_name = ( empty( $option_name ) ) ? get_audiotheme_theme_options_name() : $option_name;
-	
+
 	return get_audiotheme_option( $option_name, $key, $default );
 }
 
@@ -59,7 +59,7 @@ function get_audiotheme_theme_options_name() {
 		// The default option name is the first one registered in add_theme_support().
 		return ( is_array( $option_name ) ) ? $option_name[0] : $option_name;
 	}
-	
+
 	return false;
 }
 
@@ -83,13 +83,13 @@ function get_audiotheme_theme_options_name() {
 function get_audiotheme_theme_options_support( $var = null ) {
 	if ( $support = get_theme_support( 'audiotheme-theme-options' ) ) {
 		$option_name = 'audiotheme_mods-' . get_option( 'stylesheet' );
-		
+
 		$args = array(
 			'callback'    => 'audiotheme_register_theme_options',
 			'option_name' => $option_name,
 			'menu_title'  => __( 'Theme Options', 'audiotheme-i18n' )
 		);
-		
+
 		if ( isset( $support[0] ) ) {
 			if ( is_array( $support[0] ) ) {
 				$args = wp_parse_args( $support[0], $args );
@@ -97,23 +97,23 @@ function get_audiotheme_theme_options_support( $var = null ) {
 				$args['callback'] = $support[0];
 			}
 		}
-		
+
 		// Reset the option name if it was blanked out.
 		if ( empty( $args['option_name'] ) ) {
 			$args['option_name'] = $option_name;
 		}
-		
+
 		// Option names can be arrays, so make sure it's always an array and sanitize each name.
 		$args['option_name'] = array_map( 'sanitize_key', (array) $args['option_name'] );
-		
+
 		// If a specific arg is requested and it exists, return it, otherwise return false.
 		if ( ! empty( $var ) ) {
 			return ( isset( $args[ $var ] ) ) ? $args[ $var ] : false;
 		}
-		
+
 		// Return the args.
 		return $args;
 	}
-	
+
 	return false;
 }

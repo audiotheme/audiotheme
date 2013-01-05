@@ -38,12 +38,12 @@ function audiotheme_widgets_init() {
 		'upcoming-gigs' => 'Audiotheme_Widget_Upcoming_Gigs',
 		'video'         => 'Audiotheme_Widget_Video'
 	);
-	
+
 	if ( $support = get_theme_support( 'audiotheme-widgets' ) ) {
 		if ( is_array( $support ) ) {
-			$widgets = array_intersect_key( $widgets, array_flip( $support[0] ) );	
+			$widgets = array_intersect_key( $widgets, array_flip( $support[0] ) );
 		}
-		
+
 		if ( ! empty( $widgets ) ) {
 			foreach ( $widgets as $widget_id => $widget_class ) {
 				register_widget( $widget_class );
@@ -51,4 +51,3 @@ function audiotheme_widgets_init() {
 		}
 	}
 }
-?>

@@ -3,11 +3,11 @@ jQuery(function($) {
 		$time = $('#gig-time'),
 		$venue = $('#gig-venue'),
 		$venueTz = $('#gig-venue-timezone');
-	
+
 	$venueTz.pointer({ audiothemeId: 'at100_gigvenue_tz' });
-	
+
 	$date.datepicker({ showOn: 'both', buttonImage: audiothemeGigsL10n.datepickerIcon });
-	
+
 	$time.timepicker({
 		'timeFormat': audiothemeGigsL10n.timeFormat,
 		'className': 'ui-autocomplete'
@@ -15,7 +15,7 @@ jQuery(function($) {
 	.on('showTimepicker', function() { $(this).addClass('open'); $('.ui-timepicker-list').width( $(this).outerWidth() ); })
 	.on('hideTimepicker', function() { $(this).removeClass('open'); })
 	.next().on('click', function(e) { $time.focus(); });
-	
+
 	$venue.autocomplete({
 		change: function() {
 			if ( '' != $venue.val() ) {
@@ -45,7 +45,7 @@ jQuery(function($) {
 		open: function() { $(this).addClass('open'); },
 		close: function() { $(this).removeClass('open'); }
 	});
-	
+
 	$('#gig-venue-select').on('click', function() {
 		$venue.focus().autocomplete('search','');
 	});

@@ -3,7 +3,7 @@
  * Load Galleries Admin
  *
  * @since 1.0.0
- * 
+ *
  * @todo Improve experience when the media changes settle sometime after
  * WordPress 3.5 is released.
  */
@@ -21,7 +21,7 @@ function audiotheme_load_galleries_admin() {
  */
 function audiotheme_gallery_post_updated_messages( $messages ) {
 	global $post, $post_ID;
-	
+
 	$messages['audiotheme_gallery'] = array(
 		0  => '',
 		1  => sprintf( __( 'Gallery updated. <a href="%s">View Gallery</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post_ID ) ) ),
@@ -50,7 +50,6 @@ function audiotheme_gallery_archive_menu_item( $items ) {
 		'post_type' => 'audiotheme_gallery',
 		'url' => get_post_type_archive_link( 'audiotheme_gallery' )
 	);
-	
+
 	return $items;
 }
-?>

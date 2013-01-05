@@ -35,7 +35,7 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 			'ajax'     => false
 		) );
 	}
-	
+
 	/**
 	 * Prepares the list of venues for displaying.
 	 *
@@ -46,18 +46,18 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 	 */
 	function prepare_items() {
 		global $wp_query, $wpdb;
-		
+
 		$screen = get_current_screen();
-		
+
 		$per_page = get_user_option( 'gigs_page_audiotheme_venues_per_page' );
 		$per_page = ( empty( $per_page ) ) ? 20 : $per_page;
-		
+
 		// Set up column headers.
 		$columns = $this->get_columns();
 		$hidden = get_hidden_columns( $screen->id );
 		$sortable = $this->get_sortable_columns();
 		$this->_column_headers = array( $columns, $hidden, $sortable );
-		
+
 		// Compile the WP_Query args based on the current view and user options.
 		$args = array(
 			'post_type'      => 'audiotheme_venue',
@@ -65,7 +65,7 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 			'orderby'        => ( ! isset( $_REQUEST['orderby'] ) ) ? 'title' : $_REQUEST['orderby'],
 			'posts_per_page' => $per_page
 		);
-		
+
 		if ( isset( $_REQUEST['orderby'] ) ) {
 			switch( $_REQUEST['orderby'] ) {
 				case 'gigs':
@@ -85,13 +85,13 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 					break;
 			}
 		}
-		
+
 		if ( isset( $_REQUEST['s'] ) ) {
 			$args['s'] = stripslashes( $_REQUEST['s'] );
 		}
-		
+
 		$args['paged'] = $this->get_pagenum();
-		
+
 		// Run the query.
 		$items = array();
 		$wp_query = new WP_Query( $args );
@@ -100,22 +100,22 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 				$items[ $post->ID ] = get_audiotheme_venue( $post->ID );
 			}
 		}
-		
+
 		$this->items = $items;
-		
+
 		$this->set_pagination_args( array(
 			'total_items' => $wp_query->found_posts,
 			'per_page'    => $per_page,
 			'total_pages' => $wp_query->max_num_pages
 		) );
 	}
-	
+
 	/**
 	 * Get the list of columns to display.
 	 *
 	 * @since 1.0.0
 	 * @todo Add a filter for add-ons.
-	 * 
+	 *
 	 * @return array
 	 */
 	function get_columns() {
@@ -132,13 +132,13 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 			'gigs'          => 'Gigs',
 			'website'       => '<span class="audiotheme-column-icon">Website</span>'
 		);
-		
+
 		// The screen id is used when managing column visibility.
 		$columns = apply_filters( 'manage_' . $this->screen->id . '_posts_columns', $columns );
-		
+
 		return $columns;
 	}
-	
+
 	/**
 	 * Get the list of sortable columns.
 	 *
@@ -158,10 +158,10 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 			'gigs'          => array( 'gigs', false ),
 			'website'       => array( 'website', false )
 		);
-		
+
 		return $sortable_columns;
 	}
-	
+
 	/**
 	 * Get the actions that can be performed in bulk.
 	 *
@@ -173,10 +173,10 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 		$actions = array(
 			'delete' => __( 'Delete Permanently', 'audiotheme-i18n' )
 		);
-		
+
 		return $actions;
 	}
-	
+
 	/**
 	 * Process actions.
 	 *
@@ -185,28 +185,28 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 	 */
 	function process_actions() {
 		global $wpdb;
-		
+
 		$action = '';
 		$current_user = wp_get_current_user();
 		$post_type_object = get_post_type_object( 'audiotheme_venue' );
-		
+
 		$sendback = remove_query_arg( array( 'deleted', 'ids', 'message', 'venue_id' ), wp_get_referer() );
 		if ( ! $sendback ) {
 			$sendback = get_audiotheme_venues_admin_url();
 		}
 		$sendback = add_query_arg( 'paged', $this->get_pagenum(), $sendback );
-		
+
 		if ( isset( $_POST['audiotheme_venue'] ) && isset( $_POST['audiotheme_venue_nonce'] ) ) {
 			$data = $_POST['audiotheme_venue'];
 			$nonce_action = ( empty( $data['ID'] ) ) ? 'add-venue' : 'update-venue_' . $data['ID'];
-			
+
 			// Should die on error.
 			if ( check_admin_referer( $nonce_action, 'audiotheme_venue_nonce' ) ) {
 				$action = ( ! empty( $data['ID'] ) ) ? 'edit' : 'add';
 			}
 		} elseif ( isset( $_REQUEST['action'] ) && 'delete' == $_REQUEST['action'] && ! empty( $_REQUEST['venue_id'] ) ) {
 			$post_ids = array( absint( $_REQUEST['venue_id'] ) );
-			
+
 			if ( wp_verify_nonce( $_REQUEST['_wpnonce'], 'delete-venue_' . $post_ids[0] ) ) {
 				$action = 'delete';
 				$sendback = get_audiotheme_venues_admin_url();
@@ -214,19 +214,19 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 		} elseif ( ! empty( $_REQUEST['ids'] ) ) {
 			$post_ids = ( is_array( $_REQUEST['ids'] ) ) ? $_REQUEST['ids'] : explode( ',', $_REQUEST['ids'] );
 			$post_ids = array_map( 'absint', $post_ids );
-			
+
 			if ( check_admin_referer( 'bulk-' . $this->_args['plural'] ) ) {
 				$action = $this->current_action();
 			}
 		}
-		
+
 		// @todo Add capability checks.
 		if ( ! empty( $action ) ) {
 			switch( $action ) {
 				case 'add':
 				case 'edit':
 					$venue_id = save_audiotheme_venue( $data );
-						
+
 					if ( $venue_id && 'add' == $action ) {
 						$sendback = add_query_arg( 'message', 1, $sendback );
 					} elseif ( $venue_id && 'edit' == $action ) {
@@ -240,7 +240,7 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 					foreach ( $post_ids as $post_id ) {
 						if ( ! current_user_can( $post_type_object->cap->delete_post, $post_id ) )
 							wp_die( __( 'You are not allowed to delete this item.', 'audiotheme-i18n' ) );
-						
+
 						if ( ! wp_delete_post( $post_id ) )
 							wp_die( __( 'Error in deleting…', 'audiotheme-i18n' ) );
 						$deleted++;
@@ -250,64 +250,64 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 				default:
 					break;
 			}
-			
+
 			$sendback = remove_query_arg( array( 'action', 'action2' ), $sendback );
 			wp_redirect( $sendback );
 			exit;
 		}
-		
+
 		if ( ! empty( $_REQUEST['_wp_http_referer'] ) ) {
 			 wp_redirect( remove_query_arg( array( '_wp_http_referer', '_wpnonce' ), stripslashes( $_SERVER['REQUEST_URI'] ) ) );
 			 exit;
 		}
 	}
-	
+
 	/**
 	 * Display the checkbox column.
 	 *
 	 * @since 1.0.0
-	 * 
+	 *
 	 * @param WP_Post $item Venue post object.
 	 * @return string Column value.
 	 */
 	function column_cb( $item ) {
 		return sprintf( '<input type="checkbox" name="ids[]" value="%s">', $item->ID );
 	}
-	
+
 	/**
 	 * Display the venue name column along with any row actions.
 	 *
 	 * @since 1.0.0
 	 * @todo Add a filter for add-ons.
-	 * 
+	 *
 	 * @param WP_Post $item Venue post object.
 	 * @return string Column value.
 	 */
 	function column_name( $item ) {
 		$post_type_object = get_post_type_object( 'audiotheme_venue' );
-		
+
 		$output = sprintf( '<strong><a href="%s" class="row-title">%s</a></strong><br>',
 			esc_url( get_edit_post_link( $item->ID ) ),
 			$item->name );
-		
+
 		$actions['edit'] = sprintf( '<a href="%s">Edit</a>', get_edit_post_link( $item->ID ) );
-		
+
 		$delete_args['action'] = 'delete';
 		$delete_args['venue_id'] = $item->ID;
 		$delete_url = get_audiotheme_venues_admin_url( $delete_args );
 		$delete_url_onclick = " onclick=\"return confirm('" . esc_js( sprintf( __( 'Are you sure you want to delete this %s?', 'audiotheme-i18n' ), strtolower( $post_type_object->labels->singular_name ) ) ) . "');\"";
 		$actions['delete'] = sprintf( '<a href="%s"%s>%s</a>', wp_nonce_url( $delete_url, 'delete-venue_' . $item->ID ), $delete_url_onclick, __( 'Delete', 'audiotheme-i18n' ) );
-		
+
 		$output .= $this->row_actions( $actions );
-		
+
 		return $output;
 	}
-	
+
 	/**
 	 * Display other columns.
 	 *
 	 * @since 1.0.0
-	 * 
+	 *
 	 * @param WP_Post $item Venue post object.
 	 * @param string $column_name The column id to display.
 	 * @return string Column value for display.
@@ -325,4 +325,3 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 		}
 	}
 }
-?>

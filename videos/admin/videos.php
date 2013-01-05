@@ -19,14 +19,14 @@ add_action( 'init', 'audiotheme_load_videos_admin' );
 function audiotheme_load_videos_admin() {
 	add_action( 'save_post', 'audiotheme_video_save_post', 10, 2 );
 	add_action( 'delete_attachment', 'audiotheme_video_delete_attachment' );
-	
+
 	add_action( 'wp_ajax_audiotheme_get_video_oembed_data', 'audiotheme_ajax_get_video_oembed_data' );
-	
+
 	add_filter( 'post_updated_messages', 'audiotheme_video_post_updated_messages' );
 	add_filter( 'manage_edit-audiotheme_video_columns', 'audiotheme_video_register_columns' );
 	add_filter( 'audiotheme_nav_menu_archive_items', 'audiotheme_video_archive_menu_item' );
 	add_filter( 'admin_post_thumbnail_html', 'audiotheme_video_admin_post_thumbnail_html', 10, 2 );
-	
+
 	wp_register_script( 'audiotheme-video-edit', AUDIOTHEME_URI . 'videos/admin/js/video-edit.js', array( 'jquery' ) );
 }
 
@@ -41,7 +41,7 @@ function audiotheme_load_videos_admin() {
  */
 function audiotheme_video_post_updated_messages( $messages ) {
 	global $post, $post_ID;
-	
+
 	$messages['audiotheme_video'] = array(
 		0  => '', // Unused. Messages start at index 1.
 		1  => sprintf( __( 'Video updated. <a href="%s">View Video</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
@@ -74,9 +74,9 @@ function audiotheme_video_register_columns( $columns ) {
 	// Register an image column and insert it after the checkbox column.
 	$image_column = array( 'audiotheme_image' => _x( 'Image', 'column name', 'audiotheme-i18n' ) );
 	$columns = audiotheme_array_insert_after_key( $columns, 'cb', $image_column );
-	
+
 	$columns['taxonomy-audiotheme_video_type'] = _x( 'Types', 'column name', 'audiotheme-i18n' );
-	
+
 	return $columns;
 }
 
@@ -91,7 +91,7 @@ function audiotheme_video_register_columns( $columns ) {
  */
 function audiotheme_video_meta_boxes() {
 	add_action( 'edit_form_after_title', 'audiotheme_video_after_title' );
-	
+
 	wp_enqueue_script( 'jquery-fitvids' );
 	wp_enqueue_script( 'audiotheme-video-edit' );
 }
@@ -103,15 +103,15 @@ function audiotheme_video_meta_boxes() {
  */
 function audiotheme_video_after_title() {
 	global $post;
-	
+
 	$video = get_audiotheme_video_url( $post->ID );
-	wp_nonce_field( 'save-video-meta_' . $post->ID, 'audiotheme_save_video_meta_nonce', false );	
+	wp_nonce_field( 'save-video-meta_' . $post->ID, 'audiotheme_save_video_meta_nonce', false );
 	?>
 	<div class="audiotheme-edit-after-title" style="position: relative">
 		<p>
 			<label for="audiotheme-video-url" class="screen-reader-text"><?php _e( 'Video URL:', 'audiotheme-i18n' ); ?></label>
 			<input type="text" name="_video_url" id="audiotheme-video-url" value="<?php echo esc_url( $video ); ?>" placeholder="<?php esc_attr_e( 'Video URL', 'audiotheme-i18n' ); ?>" class="widefat"><br>
-			
+
 			<span class="description">
 				<?php
 				printf( __( 'Enter a video URL from one of the %s.', 'audiotheme-i18n' ),
@@ -120,7 +120,7 @@ function audiotheme_video_after_title() {
 				?>
 			</span>
 		</p>
-		
+
 		<div id="audiotheme-video-preview" class="audiotheme-video-preview<?php echo ( $video ) ? '' : ' audiotheme-video-preview-empty'; ?>">
 			<?php
 			if( $video ) {
@@ -157,15 +157,15 @@ function audiotheme_video_admin_post_thumbnail_html( $content, $post_id ) {
 	if ( 'audiotheme_video' == get_post_type( $post_id ) ) {
 		$thumbnail_id = get_post_thumbnail_id( $post_id );
 		$oembed_thumb_id = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', true );
-		
+
 		$content .= sprintf( '<p id="audiotheme-select-oembed-thumb" class="hide-if-no-js" data-thumb-id="%s" data-oembed-thumb-id="%s">', $thumbnail_id, $oembed_thumb_id );
 			$content .= sprintf( '<a href="#" id="audiotheme-select-oembed-thumb-button">%s</a>', __( 'Get video thumbnail', 'audiotheme-i18n' ) );
 			$content .= audiotheme_admin_spinner( array( 'echo' => false ) );
 		$content .= '</p>';
-		
+
 		$content .= '<script>AudioThemeToggleVideoThumbLink();</script>';
 	}
-	
+
 	return $content;
 }
 
@@ -178,20 +178,20 @@ function audiotheme_video_admin_post_thumbnail_html( $content, $post_id ) {
  */
 function audiotheme_ajax_get_video_oembed_data() {
 	global $post_id;
-	
+
 	$post_id = absint( $_POST['post_id'] );
-	
+
 	$json['post_id'] = $post_id;
-	
+
 	add_filter( 'oembed_dataparse', 'audiotheme_parse_video_oembed_data', 1, 3 );
 	$oembed = wp_oembed_get( $_POST['video_url'] );
-	
+
 	if ( $thumbnail_id = get_post_thumbnail_id( $post_id ) ) {
 		$json['thumbnail_id'] = $thumbnail_id;
 		$json['thumbnail_url'] = wp_get_attachment_url( $thumbnail_id );
 		$json['thumbnail_meta_box_html'] = _wp_post_thumbnail_html( $thumbnail_id, $post_id );
 	}
-	
+
 	wp_send_json( $json );
 }
 
@@ -208,23 +208,23 @@ function audiotheme_ajax_get_video_oembed_data() {
  */
 function audiotheme_parse_video_oembed_data( $return, $data, $url ) {
 	global $post_id;
-	
+
 	// Supports any oEmbed providers that respond with 'thumbnail_url'.
-	if( isset( $data->thumbnail_url ) ) {	
+	if( isset( $data->thumbnail_url ) ) {
 		$current_thumb_id = get_post_thumbnail_id( $post_id );
 		$oembed_thumb_id = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', true );
 		$oembed_thumb = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url', true );
-		
+
 		if ( ( ! $current_thumb_id || $current_thumb_id != $oembed_thumb_id ) && $data->thumbnail_url == $oembed_thumb ) {
 			// Re-use the existing oEmbed data instead of making another copy of the thumbnail.
 			set_post_thumbnail( $post_id, $oembed_thumb_id );
 		} elseif ( ! $current_thumb_id || $data->thumbnail_url != $oembed_thumb ) {
-			// Add new thumbnail if the returned URL doesn't match the 
+			// Add new thumbnail if the returned URL doesn't match the
 			// oEmbed thumb URL or if there isn't a current thumbnail.
 			add_action( 'add_attachment', 'audiotheme_add_video_thumbnail' );
 			media_sideload_image( $data->thumbnail_url, $post_id );
 			remove_action( 'add_attachment', 'audiotheme_add_video_thumbnail' );
-			
+
 			if ( $thumbnail_id = get_post_thumbnail_id( $post_id ) ) {
 				// Store the oEmbed thumb data so the same image isn't copied on repeated requests.
 				update_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', $thumbnail_id, true );
@@ -232,7 +232,7 @@ function audiotheme_parse_video_oembed_data( $return, $data, $url ) {
 			}
 		}
 	}
-	
+
 	return $return;
 }
 
@@ -278,7 +278,7 @@ function audiotheme_video_save_post( $post_id, $post ) {
  */
 function audiotheme_video_delete_attachment( $attachment_id ) {
 	global $wpdb;
-	
+
 	$post_id = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key='_audiotheme_oembed_thumbnail_id' AND meta_value=%d", $attachment_id ) );
 	if ( $post_id ) {
 		delete_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id' );
@@ -301,7 +301,6 @@ function audiotheme_video_archive_menu_item( $items ) {
 		'post_type' => 'audiotheme_video',
 		'url'       => get_post_type_archive_link( 'audiotheme_video' )
 	);
-	
+
 	return $items;
 }
-?>

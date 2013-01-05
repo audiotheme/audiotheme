@@ -30,21 +30,21 @@ function audiotheme_load_discography_admin() {
 	if ( isset( $_POST['audiotheme_discography_rewrite_base_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_discography_rewrite_base_nonce'], 'save-discography-rewrite-base' ) ) {
 		update_option( 'audiotheme_discography_rewrite_base', $_POST['audiotheme_discography_rewrite_base'] );
 	}
-	
+
 	// Register AJAX admin actions.
 	add_action( 'wp_ajax_audiotheme_ajax_get_default_track', 'audiotheme_ajax_get_default_track' );
-	
+
 	// @todo Change this hook.
 	add_action( 'load-themes.php', 'audiotheme_discography_setup' );
-	
+
 	add_action( 'admin_menu', 'audiotheme_discography_admin_menu' );
 	add_action( 'admin_init', 'audiotheme_discography_admin_init' );
 	add_filter( 'post_updated_messages', 'audiotheme_discography_post_updated_messages' );
 	add_filter( 'audiotheme_nav_menu_archive_items', 'audiotheme_record_archive_menu_item' );
-	
-	// Records	
+
+	// Records
 	add_action( 'save_post', 'audiotheme_record_save_post' );
-	
+
 	// Manage Records screen.
 	add_filter( 'parse_query', 'audiotheme_records_admin_query' );
 	add_filter( 'manage_edit-audiotheme_record_columns', 'audiotheme_record_register_columns' );
@@ -52,11 +52,11 @@ function audiotheme_load_discography_admin() {
 	add_action( 'manage_pages_custom_column', 'audiotheme_record_display_columns', 10, 2 );
 	add_filter( 'bulk_actions-edit-audiotheme_record', 'audiotheme_record_list_table_bulk_actions' );
 	add_action( 'page_row_actions', 'audiotheme_record_list_table_actions', 10, 2 );
-	
+
 	// Tracks
 	add_action( 'save_post', 'audiotheme_track_save_post' );
 	add_action( 'wp_unique_post_slug', 'audiotheme_track_unique_slug', 10, 6 );
-	
+
 	// Manage Tracks screen.
 	add_filter( 'parse_query', 'audiotheme_tracks_admin_query' );
 	add_action( 'restrict_manage_posts', 'audiotheme_tracks_filters' );
@@ -109,7 +109,7 @@ function audiotheme_discography_admin_menu() {
  */
 function audiotheme_discography_post_updated_messages( $messages ) {
 	global $post;
-	
+
 	$messages['audiotheme_record'] = array(
 		0  => '', // Unused. Messages start at index 1.
 		1  => sprintf( __( 'Record updated. <a href="%s">View Record</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
@@ -126,7 +126,7 @@ function audiotheme_discography_post_updated_messages( $messages ) {
 		      date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
 		10 => sprintf( __( 'Record draft updated. <a target="_blank" href="%s">Preview Record</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
 	);
-	
+
 	$messages['audiotheme_track'] = array(
 		0  => '', // Unused. Messages start at index 1.
 		1  => sprintf( __( 'Track updated. <a href="%s">View Track</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
@@ -187,7 +187,6 @@ function audiotheme_record_archive_menu_item( $items ) {
 		'post_type' => 'audiotheme_record',
 		'url'       => get_post_type_archive_link( 'audiotheme_record' )
 	);
-	
+
 	return $items;
 }
-?>

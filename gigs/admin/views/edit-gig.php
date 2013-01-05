@@ -30,7 +30,7 @@
 				<div class="audiotheme-input-append">
 					<input type="text" name="gig_venue" id="gig-venue" value="<?php echo esc_html( $gig_venue ); ?>"><label for="gig-venue" id="gig-venue-select" class="audiotheme-input-append-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/arrow-down.png" width="12" height="12" title="<?php esc_attr_e( 'Select Venue', 'audiotheme-i18n' ); ?>" alt="<?php esc_attr_e( 'Select Venue', 'audiotheme-i18n' ); ?>"></label>
 				</div>
-				
+
 				<select name="audiotheme_venue[timezone_string]" id="gig-venue-timezone">
 					<?php
 					$tzstring = ( empty( $timezone_string ) ) ? get_option( 'timezone_string' ) : $timezone_string;

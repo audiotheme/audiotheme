@@ -24,7 +24,7 @@ function audiotheme_edit_form_compat_actions() {
 		</script>
 		<?php
 	}
-	
+
 	if ( ! did_action( 'edit_form_after_editor' ) ) {
 		do_action( 'edit_form_after_editor' );
 		?>
@@ -93,4 +93,3 @@ function wp_send_json_error( $data = null ) {
 	wp_send_json( $response );
 }
 endif;
-?>

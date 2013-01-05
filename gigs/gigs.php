@@ -14,7 +14,7 @@ add_action( 'init', 'audiotheme_gigs_init' );
 /**
  * Register gig and venue post types and attach hooks to load related
  * functionality.
- * 
+ *
  * @since 1.0.0
  * @uses register_post_type()
  */
@@ -46,7 +46,7 @@ function audiotheme_gigs_init() {
 		'show_in_nav_menus'      => false,
 		'supports'               => array( 'title', 'editor', 'thumbnail' )
 	) );
-	
+
 	// Register Venue custom post type.
 	register_post_type( 'audiotheme_venue', array(
 		'has_archive'            => false,
@@ -72,7 +72,7 @@ function audiotheme_gigs_init() {
 		'rewrite'                => false,
 		'supports'               => array( '' )
 	) );
-	
+
 	// Register the relationship between gigs and venues.
 	p2p_register_connection_type( array(
         'name'        => 'audiotheme_venue_to_gig',
@@ -80,10 +80,10 @@ function audiotheme_gigs_init() {
         'to'          => 'audiotheme_gig',
 		'cardinality' => 'one-to-many'
     ) );
-	
+
 	// Hook into the rewrite generation filter and add custom rewrite rules.
 	add_filter( 'generate_rewrite_rules', 'audiotheme_gig_generate_rewrite_rules' );
-	
+
 	// Filter the query to make sure gigs are returned in a logical way.
 	add_action( 'pre_get_posts', 'audiotheme_gig_query' );
 
@@ -134,7 +134,7 @@ function audiotheme_gigs_rewrite_base() {
  */
 function audiotheme_gig_generate_rewrite_rules( $wp_rewrite ) {
 	$base = audiotheme_gigs_rewrite_base();
-	
+
 	$new_rules[ $base . '/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/(feed|ical|json)/?$' ] = 'index.php?post_type=audiotheme_gig&year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]';
 	$new_rules[ $base . '/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/?$' ] = 'index.php?post_type=audiotheme_gig&year=$matches[1]&monthnum=$matches[2]&day=$matches[3]';
 	$new_rules[ $base . '/([0-9]{4})/([0-9]{1,2})/(feed|ical|json)/?$' ] = 'index.php?post_type=audiotheme_gig&year=$matches[1]&monthnum=$matches[2]&feed=$matches[3]';
@@ -143,7 +143,7 @@ function audiotheme_gig_generate_rewrite_rules( $wp_rewrite ) {
 	$new_rules[ $base . '/(feed|ical|json)/?$' ] = 'index.php?post_type=audiotheme_gig&feed=$matches[1]';
 	$new_rules[ $base . '/([^/]+)/?$' ] = 'index.php?audiotheme_gig=$matches[1]';
 	$new_rules[ $base . '/?$' ] = 'index.php?post_type=audiotheme_gig';
-	
+
 	$wp_rewrite->rules = array_merge( $new_rules, $wp_rewrite->rules );
 }
 
@@ -155,38 +155,38 @@ function audiotheme_gig_generate_rewrite_rules( $wp_rewrite ) {
  * month, day).
  *
  * @since 1.0.0
- * 
+ *
  * @param object $query The main WP_Query object. Passed by reference.
  */
 function audiotheme_gig_query( $query ) {
 	$orderby = $query->get( 'orderby' );
-	
+
 	if ( ! is_admin() && $query->is_main_query() && empty( $orderby ) && is_post_type_archive( 'audiotheme_gig' ) ) {
 		$query->set( 'meta_key', '_audiotheme_gig_datetime' );
 		$query->set( 'orderby', 'meta_value' );
 		$query->set( 'order', 'asc' );
-		
+
 		if ( is_date() ) {
 			if ( is_day() ) {
 				$d = absint( $query->get( 'day' ) );
 				$m = absint( $query->get( 'monthnum' ) );
 				$y = absint( $query->get( 'year' ) );
-				
+
 				$start = sprintf( '%s-%s-%s 00:00:00', $y, zeroise( $m, 2 ), zeroise( $d, 2 ) );
 				$end = sprintf( '%s-%s-%s 23:59:59', $y, zeroise( $m, 2 ), zeroise( $d, 2 ) );
 			} elseif ( is_month() ) {
 				$m = absint( $query->get( 'monthnum' ) );
 				$y = absint( $query->get( 'year' ) );
-				
+
 				$start = sprintf( '%s-%s-01 00:00:00', $y, zeroise( $m, 2 ) );
 				$end = sprintf( '%s 23:59:59', date( 'Y-m-t', mktime( 0, 0, 0, $m, 1, $y ) ) );
 			} elseif ( is_year() ) {
 				$y = absint( $query->get( 'year' ) );
-				
+
 				$start = sprintf( '%s-01-01 00:00:00', $y );
 				$end = sprintf( '%s-12-31 23:59:59', $y );
 			}
-			
+
 			if ( isset( $start ) && isset( $end ) ) {
 				$meta_query[] = array(
 					'key' => '_audiotheme_gig_datetime',
@@ -194,7 +194,7 @@ function audiotheme_gig_query( $query ) {
 					'compare' => 'BETWEEN',
 					'type' => 'DATETIME'
 				);
-				
+
 				$query->set( 'day', null );
 				$query->set( 'monthnum', null );
 				$query->set( 'year', null );
@@ -208,7 +208,7 @@ function audiotheme_gig_query( $query ) {
 				'type' => 'DATETIME'
 			);
 		}
-		
+
 		if ( isset( $meta_query ) ) {
 			$query->set( 'meta_query', $meta_query );
 		}
@@ -227,17 +227,17 @@ function audiotheme_gig_query( $query ) {
  */
 function audiotheme_gig_template_redirect() {
 	global $wp_query;
-	
+
 	if ( is_post_type_archive( 'audiotheme_gig' ) ) {
 		p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $wp_query );
 	}
-	
+
 	$type = $wp_query->get( 'feed' );
 	if ( is_feed() && 'audiotheme_gig' == $wp_query->get( 'post_type' ) ) {
 		p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $wp_query );
-		
+
 		require( AUDIOTHEME_DIR . 'gigs/feed.php' );
-		
+
 		switch( $type ) {
 			case 'feed':
 				load_template( AUDIOTHEME_DIR . 'gigs/feed-rss2.php' );
@@ -274,18 +274,18 @@ function audiotheme_gig_template_redirect() {
  */
 function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
 	$is_draft_or_pending = isset( $post->post_status ) && in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) );
-	
+
 	if ( ! empty( $post->post_name ) && ! $is_draft_or_pending ) {
 		$permalink = get_option( 'permalink_structure' );
-		
+
 		if ( ! empty( $permalink ) && 'audiotheme_gig' == get_post_type( $post ) ) {
 			$base = audiotheme_gigs_rewrite_base();
 			$slug = ( $leavename ) ? '%postname%' : $post->post_name;
-			
+
 			$post_link = home_url( sprintf( '/%s/%s/', $base, $slug ) );
 		}
 	}
-	
+
 	return $post_link;
 }
 
@@ -294,7 +294,7 @@ function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
  *
  * @since 1.0.0
  * @uses audiotheme_gigs_rewrite_base()
- * 
+ *
  * @param string $link The default archive URL.
  * @param string $post_type Post type.
  * @return string The gig archive URL.
@@ -306,7 +306,7 @@ function audiotheme_gigs_archive_link( $link, $post_type ) {
 	} elseif ( 'audiotheme_gig' == $post_type ) {
 		$link = add_query_arg( 'post_type', 'audiotheme_gig', home_url( '/' ) );
 	}
-	
+
 	return $link;
 }
 
@@ -322,4 +322,3 @@ if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'gigs/admin/gigs.php' );
 	require( AUDIOTHEME_DIR . 'gigs/admin/venues.php' );
 }
-?>

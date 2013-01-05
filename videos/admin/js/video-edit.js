@@ -4,7 +4,7 @@ AudioThemeToggleVideoThumbLink = function() {
 		$videoUrl = $('#audiotheme-video-url'),
 		thumbId = $el.data('thumb-id'),
 		oembedId = $el.data('oembed-thumb-id');
-	
+
 	$el.toggle( '' == $videoUrl.val() || ( thumbId && thumbId == oembedId ) ? false : true );
 }
 })(jQuery);
@@ -12,16 +12,16 @@ AudioThemeToggleVideoThumbLink = function() {
 jQuery(function($) {
 	var audiothemeThumb, toggleThumbLink, $spinner,
 		$thumbDiv = $('.inside', '#postimagediv');
-	
+
 	$('#audiotheme-video-url').on('change', AudioThemeToggleVideoThumbLink)
 	$('#audiotheme-video-preview').fitVids();
-	
+
 	// Retrieve the oEmbed thumbnail when the button is clicked.
 	$thumbDiv.on( 'click', '#audiotheme-select-oembed-thumb-button', function(e) {
 		e.preventDefault();
-		
+
 		$spinner = $thumbDiv.find('.spinner').css('display', 'inline-block');
-		
+
 		$.ajax({
 			type: 'POST',
 			url: ajaxurl,
@@ -33,7 +33,7 @@ jQuery(function($) {
 			dataType: 'json',
 			success: function( data ) {
 				$spinner.hide();
-				
+
 				// @todo Do some error checking and reporting here.
 				WPSetThumbnailID( data.thumbnail_id );
 				WPSetThumbnailHTML( data.thumbnail_meta_box_html );

@@ -20,7 +20,7 @@ class Audiotheme_Widget_Track extends WP_Widget {
 		$widget_options = array( 'classname' => 'widget_audiotheme_track', 'description' => __( 'Display a selected track', 'audiotheme-i18n' ) );
 		parent::__construct( 'audiotheme-track', __( 'Track (AudioTheme)', 'audiotheme-i18n' ), $widget_options );
 	}
-	
+
 	/**
 	 * Default widget front end display method.
 	 *
@@ -31,32 +31,32 @@ class Audiotheme_Widget_Track extends WP_Widget {
 	 */
 	function widget( $args, $instance ) {
 		extract( $args );
-		
+
 		$instance['title_raw'] = $instance['title'];
 		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? get_the_title( $instance['post_id'] ) : $instance['title'], $instance, $this->id_base );
 		$instance['title'] = apply_filters( 'audiotheme_widget_title', $instance['title'], $instance, $args, $this->id_base );
-		
+
 		if ( isset( $instance['show_link'] ) && $instance['show_link'] && empty( $instance['link_text'] ) ) {
 			$instance['link_text'] = apply_filters( 'audiotheme_widget_track_default_link_text', __( 'View Details &rarr;', 'audiotheme-i18n' ) );
 		}
-		
+
 		echo $before_widget;
-		
+
 			echo ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
-				
+
 			if ( ! $output = apply_filters( 'audiotheme_widget_track_output', '', $instance, $args ) ) {
 				$post = get_post( $instance['post_id'] );
-				
+
 				$image_size = apply_filters( 'audiotheme_widget_track_image_size', 'thumbnail', $instance, $args );
 				$image_size = apply_filters( 'audiotheme_widget_track_image_size-' . $args['id'], $image_size, $instance, $args );
-				
+
 				$output .= sprintf( '<p class="featured-image"><a href="%s">%s</a></p>',
 					get_permalink( $post->ID ),
 					get_the_post_thumbnail( $post->post_parent, $image_size )
 				);
-				
+
 				$output .= ( empty( $instance['text'] ) ) ? '' : wpautop( $instance['text'] );
-				
+
 				if ( isset( $instance['show_link'] ) && $instance['show_link'] && ! empty( $instance['link_text'] ) ) {
 					$output .= sprintf( '<p class="more"><a href="%s">%s</a></p>',
 						get_permalink( $post->ID ),
@@ -64,12 +64,12 @@ class Audiotheme_Widget_Track extends WP_Widget {
 					);
 				}
 			}
-				
+
 			echo $output;
-			
+
 		echo $after_widget;
 	}
-	
+
 	/**
 	 * Form to modify widget instance settings.
 	 *
@@ -79,7 +79,7 @@ class Audiotheme_Widget_Track extends WP_Widget {
 	 */
 	function form( $instance ) {
 		global $wpdb;
-		
+
 		$instance = wp_parse_args( (array) $instance, array(
 			'link_text' => '',
 			'post_id'   => '',
@@ -87,9 +87,9 @@ class Audiotheme_Widget_Track extends WP_Widget {
 			'text'      => '',
 			'title'     => ''
 		) );
-		
+
 		$title = wp_strip_all_tags( $instance['title'] );
-		
+
 		$tracks = $wpdb->get_results( "SELECT p.ID, p.post_title, p2.post_title AS record
 			FROM wp_posts p
 			INNER JOIN wp_posts p2 ON p.post_parent=p2.ID
@@ -109,7 +109,7 @@ class Audiotheme_Widget_Track extends WP_Widget {
 					echo ( 0 !== $key && $last_record != $track->record ) ? '</optgroup>' : '';
 					echo ( $last_record != $track->record ) ? '<optgroup label="' . esc_attr( $track->record ) . '">' : '';
 					$last_record = $track->record;
-					
+
 					printf( '<option value="%s"%s>%s</option>',
 						$track->ID,
 						selected( $instance['post_id'], $track->ID, false ),
@@ -136,7 +136,7 @@ class Audiotheme_Widget_Track extends WP_Widget {
 		</style>
 		<?php
 	}
-	
+
 	/**
 	 * Save widget settings.
 	 *
@@ -147,13 +147,12 @@ class Audiotheme_Widget_Track extends WP_Widget {
 	 */
 	function update( $new_instance, $old_instance ) {
 		$instance = wp_parse_args( $new_instance, $old_instance );
-		
+
 		$instance['title'] = wp_strip_all_tags( $new_instance['title'] );
 		$instance['text'] = wp_kses_data( $new_instance['text'] );
 		$instance['link_text'] = wp_kses_data( $new_instance['link_text'] );
 		$instance['show_link'] = ( isset( $new_instance['show_link'] ) ) ? 1 : 0;
-		
+
 		return $instance;
 	}
 }
-?>

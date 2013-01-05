@@ -23,35 +23,35 @@ add_action( 'init', 'audiotheme_gigs_admin_setup' );
  */
 function audiotheme_gigs_admin_setup() {
 	global $pagenow;
-	
+
 	// Update the gig rewrite base.
 	if ( isset( $_POST['audiotheme_gigs_rewrite_base_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_gigs_rewrite_base_nonce'], 'save-gigs-rewrite-base' ) ) {
 		update_option( 'audiotheme_gigs_rewrite_base', $_POST['audiotheme_gigs_rewrite_base'] );
 	}
-	
+
 	// @todo Move these so they're always registered, not just in the admin.
 	add_action( 'save_post', 'audiotheme_gig_save_post', 10, 2 );
 	add_filter( 'get_edit_post_link', 'get_audiotheme_venue_edit_link', 10, 2 );
 	add_action( 'before_delete_post', 'audiotheme_gig_before_delete' );
-	
+
 	add_action( 'admin_menu', 'audiotheme_gigs_admin_menu' );
 	add_action( 'admin_init', 'audiotheme_gigs_admin_init' );
 	add_filter( 'post_updated_messages', 'audiotheme_gig_post_updated_messages' );
 	add_filter( 'audiotheme_nav_menu_archive_items', 'audiotheme_gigs_archive_menu_item' );
-	
+
 	// Register ajax admin actions.
 	add_action( 'wp_ajax_audiotheme_ajax_get_venue_matches', 'audiotheme_ajax_get_venue_matches' );
 	add_action( 'wp_ajax_audiotheme_ajax_is_new_venue', 'audiotheme_ajax_is_new_venue' );
-	
+
 	// Register scripts.
 	wp_register_script( 'audiotheme-gig-edit', AUDIOTHEME_URI . 'gigs/admin/js/gig-edit.js', array( 'audiotheme-admin', 'audiotheme-pointer', 'jquery-timepicker', 'jquery-ui-autocomplete', 'jquery-ui-datepicker' ) );
 	wp_localize_script( 'audiotheme-gig-edit', 'audiothemeGigsL10n', array(
 		'datepickerIcon' => AUDIOTHEME_URI . 'admin/images/calendar.png',
 		'timeFormat' => get_option( 'time_format' )
 	) );
-	
+
 	wp_register_script( 'audiotheme-venue-edit', AUDIOTHEME_URI . 'gigs/admin/js/venue-edit.js', array( 'audiotheme-admin', 'jquery-ui-autocomplete', 'post' ) );
-	
+
 	// Only run on the gig and venue Manage Screens.
 	if ( 'admin.php' == $pagenow && isset( $_GET['page'] ) && ( 'audiotheme-gigs' == $_GET['page'] || 'audiotheme-venues' == $_GET['page'] ) ) {
 		add_filter( 'set-screen-option', 'audiotheme_gigs_screen_options', 999, 3 );
@@ -65,25 +65,25 @@ function audiotheme_gigs_admin_setup() {
  */
 function audiotheme_gigs_admin_menu() {
 	global $pagenow, $plugin_page, $typenow;
-	
+
 	// Redirect the default Manage Gigs screen.
 	if ( 'audiotheme_gig' == $typenow && 'edit.php' == $pagenow ) {
 		wp_redirect( get_audiotheme_gig_admin_url() );
 		exit;
 	}
-	
+
 	$gig_object = get_post_type_object( 'audiotheme_gig' );
 	$venue_object = get_post_type_object( 'audiotheme_venue' );
-	
+
 	// Remove the default gigs menu item and replace it with the screen using the custom post list table.
 	remove_submenu_page( 'audiotheme-gigs', 'edit.php?post_type=audiotheme_gig' );
-	
+
 	$manage_gigs_hook = add_menu_page( $gig_object->labels->name, $gig_object->labels->menu_name, 'edit_posts', 'audiotheme-gigs', 'audiotheme_gigs_manage_screen', null, 512 );
 		add_submenu_page( 'audiotheme-gigs', $gig_object->labels->name, $gig_object->labels->all_items, 'edit_posts', 'audiotheme-gigs', 'audiotheme_gigs_manage_screen' );
 		$edit_gig_hook = add_submenu_page( 'audiotheme-gigs', $gig_object->labels->add_new_item, $gig_object->labels->add_new_item, 'edit_posts', 'post-new.php?post_type=audiotheme_gig' );
 		$manage_venues_hook = add_submenu_page( 'audiotheme-gigs', $venue_object->labels->name, $venue_object->labels->menu_name, 'edit_posts', 'audiotheme-venues', 'audiotheme_venues_manage_screen' );
 		$edit_venue_hook = add_submenu_page( 'audiotheme-gigs', $venue_object->labels->add_new_item, $venue_object->labels->add_new_item, 'edit_posts', 'audiotheme-venue', 'audiotheme_venue_edit_screen' );
-	
+
 	add_action( 'parent_file', 'audiotheme_gigs_admin_menu_highlight' );
 	add_action( 'load-' . $manage_gigs_hook, 'audiotheme_gigs_manage_screen_setup' );
 	add_action( 'load-' . $edit_gig_hook, 'audiotheme_gig_edit_screen_setup' );
@@ -101,7 +101,7 @@ function audiotheme_gigs_admin_menu() {
  */
 function audiotheme_gig_post_updated_messages( $messages ) {
 	global $post;
-	
+
 	$messages['audiotheme_gig'] = array(
 		0  => '', // Unused. Messages start at index 1.
 		1  => sprintf( __( 'Gig updated. <a href="%s">View Gig</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
@@ -118,7 +118,7 @@ function audiotheme_gig_post_updated_messages( $messages ) {
 		      date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
 		10 => sprintf( __( 'Gig draft updated. <a target="_blank" href="%s">Preview Gig</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
 	);
-	
+
 	return $messages;
 }
 
@@ -142,7 +142,7 @@ function audiotheme_gigs_screen_options( $return, $option, $value ) {
 	if ( 'toplevel_page_audiotheme_gigs_per_page' == $option || 'gigs_page_audiotheme_venues_per_page' == $option ) {
 		$return = absint( $value );
 	}
-	
+
 	return $return;
 }
 
@@ -151,22 +151,22 @@ function audiotheme_gigs_screen_options( $return, $option, $value ) {
  * displayed.
  *
  * @since 1.0.0
- * 
+ *
  * @param string $parent_file The screen being displayed.
  * @return string The menu item to highlight.
  */
 function audiotheme_gigs_admin_menu_highlight( $parent_file ) {
 	global $pagenow, $post_type, $submenu, $submenu_file;
-	
+
 	if ( 'audiotheme_gig' == $post_type ) {
 		$parent_file = 'audiotheme-gigs';
 		$submenu_file = ( 'post.php' == $pagenow ) ? 'audiotheme-gigs' : $submenu_file;
 	}
-	
+
 	if ( 'audiotheme-gigs' == $parent_file && isset( $_GET['page'] ) && 'audiotheme-venue' == $_GET['page'] ) {
 		$submenu_file = 'audiotheme-venues';
 	}
-	
+
 	// Remove the Add New Venue submenu item.
 	if ( isset( $submenu['audiotheme-gigs'] ) ) {
 		foreach ( $submenu['audiotheme-gigs'] as $key => $sm ) {
@@ -175,7 +175,7 @@ function audiotheme_gigs_admin_menu_highlight( $parent_file ) {
 			}
 		}
 	}
-	
+
 	return $parent_file;
 }
 
@@ -193,13 +193,13 @@ function audiotheme_gigs_manage_screen_setup() {
 		'title'   => __( 'Overview', 'audiotheme-i18n' ),
 		'content' => '<p>' . __( 'This screen provides access to all of your gigs. You can customize the display of this screen to suit your workflow.', 'audiotheme-i18n' ) . '</p>'
 	) );
-	
+
 	$post_type_object = get_post_type_object( 'audiotheme_gig' );
 	$title = $post_type_object->labels->name;
 	add_screen_option( 'per_page', array( 'label' => $title, 'default' => 20 ) );
-	
+
 	require_once( AUDIOTHEME_DIR . 'gigs/admin/class-audiotheme-gigs-list-table.php' );
-	
+
 	$gigs_list_table = new Audiotheme_Gigs_List_Table();
 	$gigs_list_table->process_actions();
 }
@@ -211,10 +211,10 @@ function audiotheme_gigs_manage_screen_setup() {
  */
 function audiotheme_gigs_manage_screen() {
 	$post_type_object = get_post_type_object( 'audiotheme_gig' );
-	
+
 	$gigs_list_table = new Audiotheme_Gigs_List_Table();
 	$gigs_list_table->prepare_items();
-	
+
 	require( AUDIOTHEME_DIR . 'gigs/admin/views/list-gigs.php' );
 }
 
@@ -235,19 +235,19 @@ function audiotheme_gig_edit_screen_setup( $post ) {
 		'title'   => __( 'Customize This Screen', 'audiotheme-i18n' ),
 		'content' => '<p>' . __( 'The title field and the big Post Editing Area are fixed in place, but you can reposition all the other boxes using drag and drop. You can also minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to unhide more boxes (Excerpt, Send Trackbacks, Custom Fields, Discussion, Slug, Author) or to choose a 1- or 2-column layout for this screen.', 'audiotheme-i18n' ) . '</p>'
 	) );
-	
+
 	wp_enqueue_script( 'audiotheme-gig-edit' );
 	wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
-	
+
 	if ( ! is_audiotheme_pointer_dismissed( 'at100_gigvenue_tz' ) ) {
 		wp_enqueue_style( 'wp-pointer' );
-		
+
 		$pointer  = 'Be sure to set a timezone when you add new venues so you don\'t have to worry about converting dates and times.' . "\n\n";
 		$pointer .= 'It also gives your visitors the ability to subscribe to your events in their own timezones.' . "\n\n";
 		// $pointer_content .= '<a href="">Find out more.</a>'; // Maybe link this to a help section?
 		audiotheme_enqueue_pointer( 'at100_gigvenue_tz', 'Venue Timezones', $pointer, array( 'position' => 'top' ) );
 	}
-	
+
 	// Add a customized submit meta box.
 	remove_meta_box( 'submitdiv', 'audiotheme_gig', 'side' );
 	add_meta_box( 'submitdiv', 'Publish', 'audiotheme_post_submit_meta_box', 'audiotheme_gig', 'side', 'high', array(
@@ -256,10 +256,10 @@ function audiotheme_gig_edit_screen_setup( $post ) {
 		'show_statuses' => array(),
 		'show_visibility' => false
 	) );
-	
+
 	// Add a meta box for entering ticket information.
 	add_meta_box( 'audiothemegigticketsdiv', __( 'Tickets', 'audiotheme-i18n' ), 'audiotheme_gig_tickets_meta_box', 'audiotheme_gig', 'side', 'default' );
-	
+
 	// Display the main gig fields after the title.
 	add_action( 'edit_form_after_title', 'audiotheme_edit_gig_fields' );
 }
@@ -271,18 +271,18 @@ function audiotheme_gig_edit_screen_setup( $post ) {
  */
 function audiotheme_edit_gig_fields() {
 	global $post, $wpdb;
-	
+
 	$gig = get_audiotheme_gig( $post->ID );
-	
+
 	$gig_date = '';
 	$gig_time = '';
 	$gig_venue = '';
-	
+
 	if ( $gig->gig_datetime ) {
 		$timestamp = strtotime( $gig->gig_datetime );
 		// jQuery date format is kinda limited?
 		$gig_date = date( 'm/d/Y', $timestamp );
-		
+
 		$t = date_parse( $gig->gig_time );
 		if ( empty( $t['errors'] ) ) {
 			$gig_time = date( get_option( 'time_format' ), $timestamp );
@@ -291,9 +291,9 @@ function audiotheme_edit_gig_fields() {
 			$gig_time = '';
 		}
 	}
-	
+
 	$gig_venue = ( isset( $gig->venue->name ) ) ? $gig->venue->name : '';
-	
+
 	require( AUDIOTHEME_DIR . 'gigs/admin/views/edit-gig.php' );
 }
 
@@ -349,19 +349,19 @@ function audiotheme_gig_save_post( $post_id, $post ) {
 	$is_autosave = ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ? true : false;
 	$is_revision = wp_is_post_revision( $post_id );
 	$is_valid_nonce = ( isset( $_POST['audiotheme_save_gig_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_save_gig_nonce'], 'save-gig_' . $post_id ) ) ? true : false;
-	
+
 	// Bail if the data shouldn't be saved or intention can't be verified.
 	if( $is_autosave || $is_revision || ! $is_valid_nonce ) {
 		return;
 	}
-	
+
 	$post_type_object = get_post_type_object( 'audiotheme_gig' );
 	if ( isset( $_POST['gig_date'] ) && isset( $_POST['gig_time'] ) && current_user_can( $post_type_object->cap->edit_post, $post_id ) ) {
 		$venue = set_audiotheme_gig_venue( $post_id, $_POST['gig_venue'] );
-		
+
 		// @todo Return error if date is invalid.
 		$dt = date_parse( $_POST['gig_date'] . ' ' . $_POST['gig_time'] );
-		
+
 		// Date and time are always stored local to the venue.
 		// If GMT, or time in another locale is needed, use the venue timezone to calculate.
 		// Other functions should be aware that time is optional; check for the presence of gig_time.
@@ -373,9 +373,9 @@ function audiotheme_gig_save_post( $post_id, $post ) {
 				zeroise( $dt['hour'], 2 ),
 				zeroise( $dt['minute'], 2 ),
 				zeroise( $dt['second'], 2 ) );
-			
+
 			update_post_meta( $post_id, '_audiotheme_gig_datetime', $datetime );
-			
+
 			// If the post name is empty, default it to the date.
 			if ( empty( $post->post_name ) ) {
 				wp_update_post( array(
@@ -386,7 +386,7 @@ function audiotheme_gig_save_post( $post_id, $post ) {
 		} else {
 			update_post_meta( $post_id, '_audiotheme_gig_datetime', '' );
 		}
-		
+
 		// Store time separately to check for empty values, TBA, etc.
 		$time = $_POST['gig_time'];
 		$t = date_parse( $time );
@@ -444,7 +444,6 @@ function audiotheme_gigs_archive_menu_item( $items ) {
 		'post_type' => 'audiotheme_gig',
 		'url'   => get_post_type_archive_link( 'audiotheme_gig' )
 	);
-	
+
 	return $items;
 }
-?>

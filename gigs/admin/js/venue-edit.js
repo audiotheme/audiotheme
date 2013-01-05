@@ -3,7 +3,7 @@ jQuery(function($) {
 		$state = $('#venue-state'),
 		$country = $('#venue-country'),
 		$venueTz = $('#venue-timezone-string');
-	
+
 	$city.autocomplete({
 		source: function( request, response ) {
 			$.ajax({
@@ -32,10 +32,10 @@ jQuery(function($) {
 		select: function(e, ui) {
 			if ('' == $state.val())
 				$state.val(ui.item.adminCode);
-			
+
 			if ('' == $country.val())
 				$country.val(ui.item.countryName);
-			
+
 			$venueTz.find('option[value="' + ui.item.timezone + '"]').attr('selected','selected');
 		}
 	});

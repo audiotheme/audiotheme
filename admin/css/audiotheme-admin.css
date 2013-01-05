@@ -6,8 +6,8 @@ body.edit-audiotheme_track h2 a,
 body.edit-audiotheme_track select[name="m"] { display: none;}
 
 .audiotheme-field label { display: block;  margin-bottom: 3px;  font-weight: bold; }
-.audiotheme-field input[type="text"], 
-.audiotheme-field input[type="url"], 
+.audiotheme-field input[type="text"],
+.audiotheme-field input[type="url"],
 .audiotheme-field input[type="date"] { margin-bottom: 3px; width: 100%;}
 
 .audiotheme-meta-field { clear: both;  }
@@ -112,7 +112,7 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 	#adminmenu #menu-posts-audiotheme_gallery div.wp-menu-image,
 	#adminmenu #toplevel_page_edit-post_type-audiotheme_record div.wp-menu-image,
 	#adminmenu #menu-posts-audiotheme_video div.wp-menu-image { background-image: url(../images/icons32.png); background-size: 180px 64px;}
-	
+
 	#icon-audiotheme-gigs,
 	#icon-audiotheme-venues,
 	#icon-edit.icon32-posts-audiotheme_gallery,

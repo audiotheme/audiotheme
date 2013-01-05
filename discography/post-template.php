@@ -19,7 +19,7 @@ function get_audiotheme_record_link_sources() {
 		'Google'   => array( 'icon' => '' ),
 		'iTunes'   => array( 'icon' => '' )
 	);
-	
+
 	return apply_filters( 'audiotheme_record_link_sources', $default_sources );
 }
 
@@ -30,7 +30,7 @@ function get_audiotheme_record_link_sources() {
  * format.
  *
  * @since 1.0.0
- * 
+ *
  * @return array List of record types.
  */
 function get_audiotheme_record_type_strings() {
@@ -48,7 +48,7 @@ function get_audiotheme_record_type_strings() {
  * Gets an array of available record type slugs from record type strings.
  *
  * @since 1.0.0
- * 
+ *
  * @return array List of record type slugs.
  */
 function get_audiotheme_record_type_slugs() {
@@ -63,13 +63,13 @@ function get_audiotheme_record_type_slugs() {
  * Sets default value of record type if option is not set.
  *
  * @since 1.0.0
- * 
+ *
  * @param string Record type slug.
  * @return string Record type label.
  */
 function get_audiotheme_record_type_string( $slug ) {
 	$strings = get_audiotheme_record_type_strings();
-	
+
 	if ( ! $slug ) {
 		return $strings['record-type-album'];
 	} else {
@@ -88,7 +88,7 @@ function get_audiotheme_record_type_string( $slug ) {
  */
 function get_audiotheme_record_type( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-	
+
 	$type = get_the_terms( $post_id, 'audiotheme_record_type' );
 
 	if ( empty( $type ) )
@@ -160,13 +160,13 @@ function get_audiotheme_record_genre( $post_id = null ) {
  * Get a record's tracks.
  *
  * @since 1.0.0
- * 
+ *
  * @param int $post_id Post ID.
  * @return array
  */
 function get_audiotheme_record_tracks( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-	
+
 	$args = array(
 		'post_parent' => absint( $post_id ),
 		'post_type'   => 'audiotheme_track',
@@ -174,13 +174,13 @@ function get_audiotheme_record_tracks( $post_id = null ) {
 		'order'       => 'ASC',
 		'numberposts' => -1
 	);
-	
+
 	$tracks = get_posts( $args );
 
     if ( ! $tracks ) {
         $tracks = false;
     }
-    
+
     return $tracks;
 }
 
@@ -195,17 +195,17 @@ function get_audiotheme_record_tracks( $post_id = null ) {
  */
 function is_audiotheme_track_downloadable( $post_id = null ) {
 	$return = false;
-	
+
 	$is_downloadable = get_post_meta( $post_id, '_audiotheme_is_downloadable', true );
-	
+
 	if ( $is_downloadable ) {
 		$file_url = get_audiotheme_track_file_url( $post_id );
-		
+
 		if ( $file_url ) {
 			$return = $file_url;
 		}
 	}
-	
+
 	return apply_filters( 'audiotheme_track_download_url', $return, $post_id );
 }
 
@@ -214,7 +214,7 @@ function is_audiotheme_track_downloadable( $post_id = null ) {
  * Get a track's artist.
  *
  * @since 1.0.0
- * 
+ *
  * @param int $post_id. Post ID.
  * @return string
  */
@@ -250,4 +250,3 @@ function get_audiotheme_track_purchase_url( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
 	return get_post_meta( $post_id, '_audiotheme_purchase_url', true );
 }
-?>
