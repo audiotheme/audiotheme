@@ -254,10 +254,10 @@ function audiotheme_record_update_track_count( $post_id ) {
 function audiotheme_edit_record_meta_boxes( $post ) {
 	remove_meta_box( 'submitdiv', 'audiotheme_record', 'side' );
 	add_meta_box( 'submitdiv', __( 'Publish', 'audiotheme-i18n' ), 'audiotheme_post_submit_meta_box', 'audiotheme_record', 'side', 'high', array(
-		'force_delete' => false,
+		'force_delete'      => false,
 		'show_publish_date' => false,
-		'show_statuses' => array(),
-		'show_visibility' => false,
+		'show_statuses'     => array(),
+		'show_visibility'   => false,
 	) );
 
 	add_meta_box( 'audiotheme-record-details', __( 'Record Details', 'audiotheme-i18n' ), 'audiotheme_record_details_meta_box', 'audiotheme_record', 'side', 'high' );
@@ -275,6 +275,8 @@ function audiotheme_edit_record_meta_boxes( $post ) {
  */
 function audiotheme_edit_record_tracklist() {
 	global $post;
+
+	wp_enqueue_script( 'audiotheme-media' );
 
 	$tracks = get_audiotheme_record_tracks( $post->ID );
 

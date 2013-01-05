@@ -1,3 +1,5 @@
+window.audiotheme = window.audiotheme || {};
+
 jQuery(function($) {
 	$('.wrap').on('focus', '.audiotheme-input-append input', function() {
 		$(this).parent().addClass('focused');
@@ -170,10 +172,6 @@ jQuery(function($) {
 				.children(':last-child').find('input,select,textarea').each(function(e) {
 					var $this = $(this);
 					$this.attr('name', $this.attr('name').replace('[0]', '[' + itemIndex + ']') );
-				}).end()
-				.find('.thickbox').each(function(e) {
-					var $this = $(this);
-					$this.attr('data-insert-field', $this.attr('data-insert-field').replace('0', itemIndex) );
 				}).end()
 				.find('.audiotheme-clear-on-add').val('').end()
 				.find('.audiotheme-remove-on-add').remove().end()

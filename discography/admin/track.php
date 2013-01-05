@@ -253,6 +253,8 @@ function audiotheme_track_save_post( $post_id ) {
  * @since 1.0.0
  */
 function audiotheme_edit_track_meta_boxes( $post ) {
+	wp_enqueue_script( 'audiotheme-media' );
+	
 	remove_meta_box( 'submitdiv', 'audiotheme_track', 'side' );
 
 	add_meta_box(
@@ -296,31 +298,19 @@ function audiotheme_track_details_meta_box( $post ) {
 		<input type="text" name="artist" id="track-artist" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_artist', true ) ) ; ?>" class="widefat">
 	</p>
 
-	<p class="audiotheme-meta-field audiotheme-meta-field-upload">
+	<p class="audiotheme-meta-field audiotheme-media-control audiotheme-meta-field-upload"
+		data-title="<?php esc_attr_e( 'Choose an MP3', 'audiotheme-i18n' ); ?>"
+		data-update-text="<?php esc_attr_e( 'Use MP3', 'audiotheme-i18n' ); ?>"
+		data-target="#track-file-url"
+		data-return-property="url"
+		data-file-type="audio">
 		<label for="track-file-url"><?php _e( 'Audio File URL:', 'audiotheme-i18n' ) ?></label>
 		<input type="url" name="file_url" id="track-file-url" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_file_url', true ) ) ; ?>" class="widefat">
 
 		<input type="checkbox" name="is_downloadable" id="track-is-downlodable" value="1"<?php checked( get_post_meta( $post->ID, '_audiotheme_is_downloadable', true ) ); ?>>
 		<label for="track-is-downloadable"><?php _e( 'Allow downloads?', 'audiotheme-i18n' ) ?></label>
 
-		<?php
-		$tb_args = array(
-			'post_id' => $post->ID,
-			'type' => 'audio',
-			'TB_iframe' => true,
-			'width' => 640,
-			'height' => 750,
-		);
-
-		$tb_url = add_query_arg( $tb_args, admin_url( 'media-upload.php' ) );
-		?>
-		<a href="<?php echo esc_url( $tb_url ); ?>"
-		   title="<?php _e( 'Choose a MP3', 'audiotheme-i18n' ); ?>"
-		   id="audiotheme-upload-mp3-button"
-		   class="button thickbox audiotheme-meta-button"
-		   data-insert-field="track-file-url"
-		   data-insert-button-text="<?php _e( 'Use MP3', 'audiotheme-i18n' ) ?>"
-		   style="float: right"><?php _e( 'Upload MP3', 'audiotheme-i18n' ); ?></a>
+		<a href="#" class="button audiotheme-media-control-choose" style="float: right"><?php _e( 'Upload MP3', 'audiotheme-i18n' ); ?></a>
 	</p>
 
 	<p class="audiotheme-meta-field">

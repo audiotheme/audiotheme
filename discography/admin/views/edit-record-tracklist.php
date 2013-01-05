@@ -64,9 +64,12 @@
 		<td><input type="text" name="audiotheme_tracks[__i__][title]" placeholder="<?php esc_attr_e( 'Title', 'audiotheme-i18n' ) ?>" value="{{ data.title }}" class="widefat audiotheme-clear-on-add"></td>
 		<td><input type="text" name="audiotheme_tracks[__i__][artist]" placeholder="<?php esc_attr_e( 'Artist', 'audiotheme-i18n' ) ?>" value="{{ data.artist }}" class="widefat"></td>
 		<td>
-			<div class="audiotheme-input-append">
-				<input type="text" name="audiotheme_tracks[__i__][file_url]" id="track-file-url-__i__" placeholder="<?php esc_attr_e( 'File URL', 'audiotheme-i18n' ) ?>" value="{{ data.fileUrl }}" class="widefat audiotheme-clear-on-add">
-				<a href="<?php echo esc_url( $thickbox_url ); ?>" title="<?php esc_attr_e( 'Choose a MP3', 'audiotheme-i18n' ); ?>" class="thickbox audiotheme-input-append-trigger" data-insert-field="track-file-url-__i__" data-insert-button-text="<?php esc_attr_e( 'Use MP3', 'audiotheme-i18n' ) ?>"><img src="<?php echo AUDIOTHEME_URI; ?>admin/images/music-note.png" width="12" height="12"></a>
+			<div class="audiotheme-media-control audiotheme-input-append"
+				data-title="<?php esc_attr_e( 'Choose an MP3', 'audiotheme-i18n' ); ?>"
+				data-update-text="<?php esc_attr_e( 'Update MP3', 'audiotheme-i18n' ); ?>"
+				data-file-type="audio">
+				<input type="text" name="audiotheme_tracks[__i__][file_url]" id="track-file-url-__i__" placeholder="<?php esc_attr_e( 'File URL', 'audiotheme-i18n' ) ?>" value="{{ data.fileUrl }}" class="track-file-url widefat audiotheme-clear-on-add">
+				<a href="#" class="audiotheme-media-control-choose audiotheme-input-append-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>admin/images/music-note.png" width="12" height="12" alt="<?php esc_attr_e( 'Choose MP3', 'audiotheme-i18n' ); ?>"></a>
 			</div>
 		</td>
 		<td class="column-track-info">
