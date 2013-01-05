@@ -127,11 +127,11 @@ function get_audiotheme_gig_link( $post = null, $args = array() ) {
 	$args = wp_parse_args( $args, $defaults );
 	extract( $args );
 
-	$html = $before;
-	$html.= '<a href="' . esc_url( get_permalink( $gig->ID ) ) . '" class="url uid" itemprop="url">';
-	$html.= $before_link . get_audiotheme_gig_title( $post ) . $after_link;
-	$html.= '</a>';
-	$html.= $after;
+	$html  = $before;
+	$html .= '<a href="' . esc_url( get_permalink( $gig->ID ) ) . '" class="url uid" itemprop="url">';
+	$html .= $before_link . get_audiotheme_gig_title( $post ) . $after_link;
+	$html .= '</a>';
+	$html .= $after;
 
 	return $html;
 }
@@ -263,16 +263,16 @@ function get_audiotheme_gig_location( $post = null ) {
 	if ( audiotheme_gig_has_venue( $gig ) ) {
 		$venue = get_audiotheme_venue( $gig->venue->ID );
 
-		$location = '';
-		$location.= ( empty( $venue->city ) ) ? '' : '<span class="locality">' . $venue->city . '</span>';
-		$location.= ( ! empty( $location ) && ! empty( $venue->state ) ) ? '<span class="sep sep-region">,</span> ' : '';
-		$location.= ( empty( $venue->state ) ) ? '' : '<span class="region">' . $venue->state . '</span>';
+		$location  = '';
+		$location .= ( empty( $venue->city ) ) ? '' : '<span class="locality">' . $venue->city . '</span>';
+		$location .= ( ! empty( $location ) && ! empty( $venue->state ) ) ? '<span class="sep sep-region">,</span> ' : '';
+		$location .= ( empty( $venue->state ) ) ? '' : '<span class="region">' . $venue->state . '</span>';
 
 		if ( ! empty( $venue->country ) ) {
 			$country_class = esc_attr( 'country-name-' . sanitize_title_with_dashes( $venue->country ) );
 
-			$location.= ( ! empty( $location ) ) ? '<span class="sep sep-country-name ' . $country_class . '">,</span> ' : '';
-			$location.= ( empty( $venue->country ) ) ? '' : '<span class="county-name ' . $country_class . '">' . $venue->country . '</span>';
+			$location .= ( ! empty( $location ) ) ? '<span class="sep sep-country-name ' . $country_class . '">,</span> ' : '';
+			$location .= ( empty( $venue->country ) ) ? '' : '<span class="county-name ' . $country_class . '">' . $venue->country . '</span>';
 		}
 	}
 
@@ -542,11 +542,11 @@ function get_audiotheme_venue_link( $venue_id, $args = array() ) {
 	);
 	$args = wp_parse_args( $args, $defaults );
 
-	$html = $before;
-	$html.= ( empty( $venue->website ) ) ? '' : sprintf( '<a href="%s" class="url" itemprop="url">', esc_url( $venue->website ) );
-	$html.= $before_link . $venue->name . $after_link;
-	$html.= ( empty( $venue->website ) ) ? '' : '</a>';
-	$html.= $after;
+	$html  = $before;
+	$html .= ( empty( $venue->website ) ) ? '' : sprintf( '<a href="%s" class="url" itemprop="url">', esc_url( $venue->website ) );
+	$html .= $before_link . $venue->name . $after_link;
+	$html .= ( empty( $venue->website ) ) ? '' : '</a>';
+	$html .= $after;
 
 	return $html;
 }
@@ -594,25 +594,25 @@ function get_audiotheme_venue_vcard( $venue_id, $args = array() ) {
 	);
 	$args = wp_parse_args( $args, $defaults );
 
-	$output = '';
+	$output  = '';
 
-	$output.= ( empty( $venue->website ) ) ? '' : '<a href="' . esc_url( $venue->website ) . '" class="url" itemprop="url">';
-	$output.= '<span class="fn org" itemprop="name">' . $venue->name . '</span>';
-	$output.= ( empty( $venue->website ) ) ? '' : '</a>';
+	$output .= ( empty( $venue->website ) ) ? '' : '<a href="' . esc_url( $venue->website ) . '" class="url" itemprop="url">';
+	$output .= '<span class="fn org" itemprop="name">' . $venue->name . '</span>';
+	$output .= ( empty( $venue->website ) ) ? '' : '</a>';
 
-	$address = '';
-	$address.= ( empty( $venue->address ) ) ? '' : '<span class="street-address" itemprop="streetAddress">' . nl2br( esc_html( $venue->address ) ) . '</span><br>';
-
-
-	$address.= ( empty( $venue->city ) ) ? '' : '<span class="locality" itemprop="addressLocality">' . $venue->city . '</span>';
-	$address.= ( ! empty( $venue->city ) && ! empty( $venue->state ) ) ? ', ' : '';
-	$address.= ( empty( $venue->state ) ) ? '' : '<span class="region" itempprop="addressRegion">' . $venue->state . '</span>';
-	$address.= ( empty( $venue->postal_code ) ) ? '' : ' <span class="postal-code" itemprop="postalCode">' . $venue->postal_code . '</span>';
-	$address.= ( empty( $venue->country ) ) ? '' : '<br><span class="country-name" itemprop="addressCountry">' . $venue->country . '</span>';
+	$address  = '';
+	$address .= ( empty( $venue->address ) ) ? '' : '<span class="street-address" itemprop="streetAddress">' . nl2br( esc_html( $venue->address ) ) . '</span><br>';
 
 
-	$output.= ( empty( $address ) ) ? '' : '<div class="adr" itemtype="http://schema.org/PostalAddress" itemscope itemprop="address">' . $address . '</div>';
-	$output.= ( empty( $venue->phone ) ) ? '' : '<span class="tel" itemprop="telephone">' . $venue->phone . '</span>';
+	$address .= ( empty( $venue->city ) ) ? '' : '<span class="locality" itemprop="addressLocality">' . $venue->city . '</span>';
+	$address .= ( ! empty( $venue->city ) && ! empty( $venue->state ) ) ? ', ' : '';
+	$address .= ( empty( $venue->state ) ) ? '' : '<span class="region" itempprop="addressRegion">' . $venue->state . '</span>';
+	$address .= ( empty( $venue->postal_code ) ) ? '' : ' <span class="postal-code" itemprop="postalCode">' . $venue->postal_code . '</span>';
+	$address .= ( empty( $venue->country ) ) ? '' : '<br><span class="country-name" itemprop="addressCountry">' . $venue->country . '</span>';
+
+
+	$output .= ( empty( $address ) ) ? '' : '<div class="adr" itemtype="http://schema.org/PostalAddress" itemscope itemprop="address">' . $address . '</div>';
+	$output .= ( empty( $venue->phone ) ) ? '' : '<span class="tel" itemprop="telephone">' . $venue->phone . '</span>';
 
 	if ( ! empty( $output ) && ! empty( $args['container'] ) ) {
 		$container_open = '<' . $args['container'] . ' class="location vcard" itemtype="http://schema.org/EventVenue" itemscope itemprop="location">';
@@ -690,7 +690,7 @@ function get_unique_audiotheme_venue_name( $name, $venue_id = 0 ) {
 
 	$suffix = 2;
 	while ( $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_title=%s AND post_type='audiotheme_venue' AND ID!=%d", $name, $venue_id ) ) ) {
-		$name.= ' ' . $suffix;
+		$name .= ' ' . $suffix;
 	}
 
 	return $name;
