@@ -60,10 +60,8 @@ add_action( 'plugins_loaded', 'audiotheme_load' );
 /**
  * Load additional helper functions and libraries.
  */
-require( AUDIOTHEME_DIR . 'includes/compat.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
-require( AUDIOTHEME_DIR . 'includes/general-template.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/media.php' );
 require( AUDIOTHEME_DIR . 'includes/options.php' );
