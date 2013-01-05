@@ -81,7 +81,6 @@ if ( is_admin() ) {
  * Load AudioTheme CPTs and corresponding functionality.
  */
 require( AUDIOTHEME_DIR . 'discography/discography.php' );
-require( AUDIOTHEME_DIR . 'galleries/galleries.php' );
 require( AUDIOTHEME_DIR . 'gigs/gigs.php' );
 require( AUDIOTHEME_DIR . 'videos/videos.php' );
 
