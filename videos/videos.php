@@ -37,7 +37,7 @@ function audiotheme_videos_init() {
 			'not_found_in_trash' => __( 'No videos found in Trash', 'audiotheme-i18n' ),
 			'all_items'          => __( 'Videos', 'audiotheme-i18n' ),
 			'menu_name'          => __( 'Videos', 'audiotheme-i18n' ),
-			'name_admin_bar'     => _x( 'Video', 'add new on admin bar', 'audiotheme-i18n' )
+			'name_admin_bar'     => _x( 'Video', 'add new on admin bar', 'audiotheme-i18n' ),
 		),
 		'menu_position'          => 514,
 		'public'                 => true,
@@ -48,7 +48,7 @@ function audiotheme_videos_init() {
 		'show_in_menu'           => true,
 		'show_in_nav_menus'      => false,
 		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' ),
-		'taxonomies'             => array( 'post_tag' )
+		'taxonomies'             => array( 'post_tag' ),
 	) );
 
 	// Register the video type custom taxonomy.
@@ -78,7 +78,7 @@ function audiotheme_videos_init() {
 		'show_admin_column'              => true,
 		'show_in_nav_menus'              => false,
 		'show_ui'                        => true,
-		'show_tagcloud'                  => false
+		'show_tagcloud'                  => false,
 	) );
 }
 

@@ -76,7 +76,7 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 			'post_status'         => 'publish',
 			'posts_per_page'      => $instance['number'],
 			'ignore_sticky_posts' => true,
-			'no_found_rows'       => true
+			'no_found_rows'       => true,
 		) );
 
 		$output = $this->render( $args, $instance );
@@ -170,7 +170,7 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 			'show_date'      => 0,
 			'show_excerpts'  => 0,
 			'show_feed_link' => 1,
-			'title'          => ''
+			'title'          => '',
 		));
 
 		$post_types = get_post_types( array( 'public' => true ), 'objects' );

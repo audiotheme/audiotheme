@@ -32,7 +32,7 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 		parent::__construct( array(
 			'singular' => 'venue',
 			'plural'   => 'venues',
-			'ajax'     => false
+			'ajax'     => false,
 		) );
 	}
 
@@ -63,7 +63,7 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 			'post_type'      => 'audiotheme_venue',
 			'order'          => ( isset( $_REQUEST['order'] ) && 'desc' == strtolower( $_REQUEST['order'] ) ) ? 'desc' : 'asc',
 			'orderby'        => ( ! isset( $_REQUEST['orderby'] ) ) ? 'title' : $_REQUEST['orderby'],
-			'posts_per_page' => $per_page
+			'posts_per_page' => $per_page,
 		);
 
 		if ( isset( $_REQUEST['orderby'] ) ) {
@@ -106,7 +106,7 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 		$this->set_pagination_args( array(
 			'total_items' => $wp_query->found_posts,
 			'per_page'    => $per_page,
-			'total_pages' => $wp_query->max_num_pages
+			'total_pages' => $wp_query->max_num_pages,
 		) );
 	}
 
@@ -130,7 +130,7 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 			'contact_phone' => 'Contact Phone',
 			'contact_email' => 'Contact Email',
 			'gigs'          => 'Gigs',
-			'website'       => '<span class="audiotheme-column-icon">Website</span>'
+			'website'       => '<span class="audiotheme-column-icon">Website</span>',
 		);
 
 		// The screen id is used when managing column visibility.
@@ -156,7 +156,7 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 			'contact_phone' => array( 'contact_phone', false ),
 			'contact_email' => array( 'contact_email', false ),
 			'gigs'          => array( 'gigs', false ),
-			'website'       => array( 'website', false )
+			'website'       => array( 'website', false ),
 		);
 
 		return $sortable_columns;
@@ -171,7 +171,7 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 	 */
 	function get_bulk_actions() {
 		$actions = array(
-			'delete' => __( 'Delete Permanently', 'audiotheme-i18n' )
+			'delete' => __( 'Delete Permanently', 'audiotheme-i18n' ),
 		);
 
 		return $actions;

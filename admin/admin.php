@@ -75,7 +75,7 @@ function audiotheme_default_settings() {
 
 	$section = $settings->add_section( 'general', 'General Settings', '' );
 		$settings->add_field( 'text', 'license_key', __( 'License Key', 'audiotheme-i18n' ), $section, array(
-			'description' => ( 'valid' == get_option( 'audiotheme_license_key_status' ) ) ? ' <span style="color: green; font-style: normal">OK</span>' : ''
+			'description' => ( 'valid' == get_option( 'audiotheme_license_key_status' ) ) ? ' <span style="color: green; font-style: normal">OK</span>' : '',
 		) );
 }
 
@@ -274,7 +274,7 @@ function audiotheme_nav_menu_item_link_meta_box( $object, $box ) {
 							'post_content' => '',
 							'post_excerpt' => '',
 							'type'         => 'custom',
-							'url'          => $item['url']
+							'url'          => $item['url'],
 						);
 					}
 

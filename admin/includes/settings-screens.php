@@ -98,7 +98,7 @@ function audiotheme_settings_init() {
 			'option_group' => 'audiotheme_theme_mods',
 			'option_name'  => $support['option_name'],
 			'show_in_menu' => 'themes.php',
-			'capability'   => 'edit_theme_options'
+			'capability'   => 'edit_theme_options',
 		) );
 
 		// Registering the callback like this ensures that an error isn't thrown if the framework isn't active.

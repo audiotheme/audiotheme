@@ -83,7 +83,7 @@ class Audiotheme_Widget_Record extends WP_Widget {
 			'post_id'   => '',
 			'show_link' => false,
 			'text'      => '',
-			'title'     => ''
+			'title'     => '',
 		) );
 
 		$records = get_posts( array(
@@ -91,7 +91,7 @@ class Audiotheme_Widget_Record extends WP_Widget {
 			'orderby'        => 'title',
 			'order'          => 'asc',
 			'posts_per_page' => -1,
-			'cache_results'  => false
+			'cache_results'  => false,
 		) );
 
 		$title = wp_strip_all_tags( $instance['title'] );

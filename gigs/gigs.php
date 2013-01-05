@@ -36,7 +36,7 @@ function audiotheme_gigs_init() {
 			'not_found_in_trash' => __( 'No gigs found in Trash', 'audiotheme-i18n' ),
 			'all_items'          => __( 'All Gigs', 'audiotheme-i18n' ),
 			'menu_name'          => __( 'Gigs', 'audiotheme-i18n' ),
-			'name_admin_bar'     => _x( 'Gigs', 'add new on admin bar', 'audiotheme-i18n' )
+			'name_admin_bar'     => _x( 'Gigs', 'add new on admin bar', 'audiotheme-i18n' ),
 		),
 		'menu_position'          => 512,
 		'public'                 => true,
@@ -44,7 +44,7 @@ function audiotheme_gigs_init() {
 		'rewrite'                => false,
 		'show_in_menu'           => 'audiotheme-gigs',
 		'show_in_nav_menus'      => false,
-		'supports'               => array( 'title', 'editor', 'thumbnail' )
+		'supports'               => array( 'title', 'editor', 'thumbnail' ),
 	) );
 
 	// Register Venue custom post type.
@@ -64,13 +64,13 @@ function audiotheme_gigs_init() {
 			'not_found_in_trash' => __( 'No venues found in Trash', 'audiotheme-i18n' ),
 			'all_items'          => __( 'All Venues', 'audiotheme-i18n' ),
 			'menu_name'          => __( 'Venues', 'audiotheme-i18n' ),
-			'name_admin_bar'     => _x( 'Venues', 'add new on admin bar', 'audiotheme-i18n' )
+			'name_admin_bar'     => _x( 'Venues', 'add new on admin bar', 'audiotheme-i18n' ),
 		),
 		'public'                 => false,
 		'publicly_queryable'     => false,
 		'query_var'              => 'audiotheme_venue',
 		'rewrite'                => false,
-		'supports'               => array( '' )
+		'supports'               => array( '' ),
 	) );
 
 	// Register the relationship between gigs and venues.
@@ -78,7 +78,7 @@ function audiotheme_gigs_init() {
         'name'        => 'audiotheme_venue_to_gig',
         'from'        => 'audiotheme_venue',
         'to'          => 'audiotheme_gig',
-		'cardinality' => 'one-to-many'
+		'cardinality' => 'one-to-many',
     ) );
 
 	// Hook into the rewrite generation filter and add custom rewrite rules.

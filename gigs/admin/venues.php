@@ -18,7 +18,7 @@ function audiotheme_venues_manage_screen_setup() {
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'overview',
 		'title'   => __( 'Overview', 'audiotheme-i18n' ),
-		'content' => '<p>' . __( 'This screen provides access to all of your venues. You can customize the display of this screen to suit your workflow.', 'audiotheme-i18n' ) . '</p>'
+		'content' => '<p>' . __( 'This screen provides access to all of your venues. You can customize the display of this screen to suit your workflow.', 'audiotheme-i18n' ) . '</p>',
 	) );
 
 	$post_type_object = get_post_type_object( 'audiotheme_venue' );
@@ -82,7 +82,7 @@ function audiotheme_venue_edit_screen_setup() {
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'customize',
 		'title'   => __( 'Customize This Screen', 'audiotheme-i18n' ),
-		'content' => '<p>' . __( 'The title field and the big Post Editing Area are fixed in place, but you can reposition all the other boxes using drag and drop. You can also minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to unhide more boxes (Excerpt, Send Trackbacks, Custom Fields, Discussion, Slug, Author) or to choose a 1- or 2-column layout for this screen.', 'audiotheme-i18n' ) . '</p>'
+		'content' => '<p>' . __( 'The title field and the big Post Editing Area are fixed in place, but you can reposition all the other boxes using drag and drop. You can also minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to unhide more boxes (Excerpt, Send Trackbacks, Custom Fields, Discussion, Slug, Author) or to choose a 1- or 2-column layout for this screen.', 'audiotheme-i18n' ) . '</p>',
 	) );
 
 	get_current_screen()->set_help_sidebar(
@@ -191,11 +191,11 @@ function audiotheme_venue_notes_meta_box( $post, $args ) {
 
 	$notes = format_to_edit( $notes, user_can_richedit() );
 	wp_editor( $notes, 'venuenotes', array(
-		'editor_css' => '<style type="text/css" scoped="true">.mceIframeContainer { background-color: #fff;}</style>',
+		'editor_css'    => '<style type="text/css" scoped="true">.mceIframeContainer { background-color: #fff;}</style>',
 		'media_buttons' => false,
 		'textarea_name' => 'audiotheme_venue[notes]',
 		'textarea_rows' => 6,
-		'teeny' => true
+		'teeny'         => true,
 	) );
 }
 

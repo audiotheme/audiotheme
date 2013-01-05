@@ -85,7 +85,7 @@ class Audiotheme_Widget_Track extends WP_Widget {
 			'post_id'   => '',
 			'show_link' => false,
 			'text'      => '',
-			'title'     => ''
+			'title'     => '',
 		) );
 
 		$title = wp_strip_all_tags( $instance['title'] );

@@ -86,7 +86,7 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 			'exclude_replies' => false,
 			'include_rts'     => false,
 			'screen_name'     => '',
-			'title'           => ''
+			'title'           => '',
 		) );
 
 		$error = get_transient( 'audiotheme_twitter_widget_error-' . $this->number );
@@ -172,7 +172,7 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 				'exclude_replies'  => false,
 				'include_entities' => true,
 				'include_rts'      => false,
-				'trim_user'        => true
+				'trim_user'        => true,
 			);
 
 			$remote_args = wp_parse_args( $args, $defaults );
@@ -190,7 +190,7 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 							'id_str'     => $tweet['id_str'],
 							'created_at' => $tweet['created_at'],
 							'html'       => $this->parse_tweet( $tweet ),
-							'text'       => $tweet['text']
+							'text'       => $tweet['text'],
 						);
 					}
 

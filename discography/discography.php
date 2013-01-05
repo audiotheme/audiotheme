@@ -25,7 +25,7 @@ function audiotheme_discography_init() {
 			'parent_item_colon'  => __( 'Parent Records:', 'audiotheme-i18n' ),
 			'all_items'          => __( 'All Records', 'audiotheme-i18n' ),
 			'menu_name'          => __( 'Records', 'audiotheme-i18n' ),
-			'name_admin_bar'     => _x( 'Record', 'add new on admin bar', 'audiotheme-i18n' )
+			'name_admin_bar'     => _x( 'Record', 'add new on admin bar', 'audiotheme-i18n' ),
 		),
 		'menu_position'          => 513,
 		'public'                 => true,
@@ -34,7 +34,7 @@ function audiotheme_discography_init() {
 		'rewrite'                => false,
 		'show_ui'                => true,
 		'show_in_menu'           => true,
-		'supports'               => array( 'title', 'editor', 'thumbnail' )
+		'supports'               => array( 'title', 'editor', 'thumbnail' ),
 	) );
 
 	register_post_type( 'audiotheme_track', array(
@@ -54,7 +54,7 @@ function audiotheme_discography_init() {
 			'not_found_in_trash' => __( 'No tracks found in Trash.', 'audiotheme-i18n' ),
 			'all_items'          => __( 'All Tracks', 'audiotheme-i18n' ),
 			'menu_name'          => __( 'Tracks', 'audiotheme-i18n' ),
-			'name_admin_bar'     => _x( 'Track', 'add new on admin bar', 'audiotheme-i18n' )
+			'name_admin_bar'     => _x( 'Track', 'add new on admin bar', 'audiotheme-i18n' ),
 		),
 		'public'                 => true,
 		'publicly_queryable'     => true,
@@ -63,7 +63,7 @@ function audiotheme_discography_init() {
 		'show_ui'                => true,
 		'show_in_menu'           => 'edit.php?post_type=audiotheme_record',
 		'show_in_nav_menus'      => false,
-		'supports'               => array( 'title', 'editor', 'thumbnail' )
+		'supports'               => array( 'title', 'editor', 'thumbnail' ),
 	) );
 
 	register_taxonomy( 'audiotheme_record_type', 'audiotheme_record', array(
@@ -84,13 +84,13 @@ function audiotheme_discography_init() {
 			'new_item_name'              => __( 'New Record Type Name', 'audiotheme-i18n' ),
 			'separate_items_with_commas' => __( 'Separate record types with commas', 'audiotheme-i18n' ),
 			'add_or_remove_items'        => __( 'Add or remove record types', 'audiotheme-i18n' ),
-			'choose_from_most_used'      => __( 'Choose from most used record types', 'audiotheme-i18n' )
+			'choose_from_most_used'      => __( 'Choose from most used record types', 'audiotheme-i18n' ),
 		),
 		'public'                         => false,
 		'query_var'                      => true,
 		'rewrite'                        => false,
 		'show_ui'                        => false,
-		'show_in_nav_menus'              => false
+		'show_in_nav_menus'              => false,
 	) );
 
 	add_filter( 'generate_rewrite_rules', 'audiotheme_discography_generate_rewrite_rules' );

@@ -26,7 +26,7 @@ function audiotheme_enqueue_pointer( $id, $title, $content, $args = array() ) {
 	$id = sanitize_key( $id );
 
 	$args = wp_parse_args( $args, array(
-		'position' => 'left'
+		'position' => 'left',
 	) );
 
 	$content = sprintf( '<h3>%s</h3>%s', $title, wpautop( $content ) );
@@ -34,7 +34,7 @@ function audiotheme_enqueue_pointer( $id, $title, $content, $args = array() ) {
 	$audiotheme_pointers[ $id ] = array(
 		'id'       => $id,
 		'content'  => $content,
-		'position' => $args['position']
+		'position' => $args['position'],
 	);
 }
 
@@ -108,9 +108,9 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 		'force_delete' => false,
 		'show_publish_date' => true,
 		'show_statuses' => array(
-			'pending' => __( 'Pending Review', 'audiotheme-i18n' )
+			'pending' => __( 'Pending Review', 'audiotheme-i18n' ),
 		),
-		'show_visibility' => true
+		'show_visibility' => true,
 	);
 
 	$args = apply_filters( 'audiotheme_post_submit_meta_box_args', $metabox['args'], $post );
@@ -412,7 +412,7 @@ function audiotheme_admin_spinner( $args = array() ) {
 	$args = wp_parse_args( $args, array(
 		'id' => '',
 		'class' => 'ajax-loading',
-		'echo' => true
+		'echo' => true,
 	) );
 
 	if ( audiotheme_version_compare( 'wp', '3.5-beta-1', '<' ) ) {

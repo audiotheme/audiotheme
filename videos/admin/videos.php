@@ -299,7 +299,7 @@ function audiotheme_video_archive_menu_item( $items ) {
 	$items[] = array(
 		'title'     => _x( 'Videos', 'nav menu archive label', 'audiotheme-i18n' ),
 		'post_type' => 'audiotheme_video',
-		'url'       => get_post_type_archive_link( 'audiotheme_video' )
+		'url'       => get_post_type_archive_link( 'audiotheme_video' ),
 	);
 
 	return $items;

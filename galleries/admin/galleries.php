@@ -46,9 +46,9 @@ function audiotheme_gallery_post_updated_messages( $messages ) {
  */
 function audiotheme_gallery_archive_menu_item( $items ) {
 	$items[] = array(
-		'title' => _x( 'Gallery', 'nav menu archive label' ),
+		'title'     => _x( 'Gallery', 'nav menu archive label' ),
 		'post_type' => 'audiotheme_gallery',
-		'url' => get_post_type_archive_link( 'audiotheme_gallery' )
+		'url'       => get_post_type_archive_link( 'audiotheme_gallery' ),
 	);
 
 	return $items;

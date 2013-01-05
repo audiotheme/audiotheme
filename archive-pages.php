@@ -88,7 +88,7 @@ class Audiotheme_Archive_Pages {
 				'post_parent' => 0,
 				'post_status' => 'publish',
 				'orderby'     => 'title',
-				'order'       => 'asc'
+				'order'       => 'asc',
 			) );
 			
 			if ( $pages ) {
@@ -132,7 +132,7 @@ function the_audiotheme_archive_title() {
 function get_audiotheme_archive_title( $archive ) {
 	$map = array(
 		'audiotheme_gig'    => 'gigs',
-		'audiotheme_record' => 'discography'
+		'audiotheme_record' => 'discography',
 		// etc...
 	);
 	

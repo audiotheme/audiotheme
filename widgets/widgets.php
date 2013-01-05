@@ -36,7 +36,7 @@ function audiotheme_widgets_init() {
 		'track'         => 'Audiotheme_Widget_Track',
 		'twitter'       => 'Audiotheme_Widget_Twitter',
 		'upcoming-gigs' => 'Audiotheme_Widget_Upcoming_Gigs',
-		'video'         => 'Audiotheme_Widget_Video'
+		'video'         => 'Audiotheme_Widget_Video',
 	);
 
 	if ( $support = get_theme_support( 'audiotheme-widgets' ) ) {

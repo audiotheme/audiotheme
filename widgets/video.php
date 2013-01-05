@@ -70,7 +70,7 @@ class Audiotheme_Widget_Video extends WP_Widget {
 		$instance = wp_parse_args( (array) $instance, array(
 			'post_id' => '',
 			'text'    => '',
-			'title'   => ''
+			'title'   => '',
 		) );
 
 		$title = wp_strip_all_tags( $instance['title'] );
@@ -79,7 +79,7 @@ class Audiotheme_Widget_Video extends WP_Widget {
 			'post_type'      => 'audiotheme_video',
 			'orderby'        => 'title',
 			'order'          => 'asc',
-			'posts_per_page' => -1
+			'posts_per_page' => -1,
 		) );
 		?>
 		<p>

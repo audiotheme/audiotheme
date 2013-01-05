@@ -22,7 +22,7 @@ function audiotheme_image_size_names() {
 		'thumbnail' => __( 'Thumbnail', 'audiotheme-i18n' ),
 		'medium'    => __( 'Medium', 'audiotheme-i18n' ),
 		'large'     => __( 'Large', 'audiotheme-i18n' ),
-		'full'      => __( 'Full Size', 'audiotheme-i18n' )
+		'full'      => __( 'Full Size', 'audiotheme-i18n' ),
 	) );
 }
 

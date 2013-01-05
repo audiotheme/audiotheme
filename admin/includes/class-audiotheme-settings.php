@@ -83,7 +83,7 @@ class Audiotheme_Settings {
 
 		$this->add_screen( 'customizer', 'customizer', array(
 			'option_name'  => get_audiotheme_theme_options_name(),
-			'show_in_menu' => false
+			'show_in_menu' => false,
 		) );
 
 		$this->current_screen = null;
@@ -118,7 +118,7 @@ class Audiotheme_Settings {
 			'option_group'  => $default_options_id,
 			'option_name'   => $default_options_id,
 			'screen_icon'   => null,
-			'show_in_menu'  => null
+			'show_in_menu'  => null,
 		) );
 
 		$args['name'] = $title;
@@ -220,12 +220,12 @@ class Audiotheme_Settings {
 		// Add the tab if it doesn't exist on the current screen.
 		if ( ! isset( $screen->tabs[ $tab_id ] ) ) {
 			$args = wp_parse_args( $args, array(
-				'priority' => 20
+				'priority' => 20,
 			) );
 
 			$tab = wp_parse_args( array(
 				'title'    => $title,
-				'sections' => array()
+				'sections' => array(),
 			), $args );
 
 			$tab['priority'] = ( $tab_id == $screen->screen_id ) ? -1 : absint( $tab['priority'] );
@@ -382,10 +382,10 @@ class Audiotheme_Settings {
 			'priority'       => 20,
 			'field_callback' => $default_field_callback, // The callback to render the field on a settings screen.
 			'class'          => '',
-			'customizer'     => false
-			// choices          => array()
-			// sanitize         => ''
-			// validate         => ''
+			'customizer'     => false,
+			// choices          => array(),
+			// sanitize         => '',
+			// validate         => '',
 		) );
 
 		// Sanitize and reset some args.
@@ -408,7 +408,7 @@ class Audiotheme_Settings {
 			'label'                   => $label,
 
 			'field_name'              => $id,
-			'show_on_settings_screen' => true
+			'show_on_settings_screen' => true,
 		);
 
 		// Set up Settings API specific arguments.
@@ -429,7 +429,7 @@ class Audiotheme_Settings {
 			$customizer = wp_parse_args( $args['customizer'], array(
 				'control'   => $type,
 				'transport' => 'refresh', // @see WP_Customize_Control->type
-				'type'      => 'option' // @see WP_Customize_Setting->type
+				'type'      => 'option', // @see WP_Customize_Setting->type
 
 				// 'section'     => '', // Will override the settings section.
 				// 'priority'    => 10, // Overrides the priority passed as an $arg.
@@ -875,7 +875,7 @@ class Audiotheme_Settings {
 									'show_in_customizer',
 									'show_on_settings_screen',
 									'customizer',
-									'wp_settings_section'
+									'wp_settings_section',
 								) );
 
 								$args = array_diff_key( $setting, $unset );

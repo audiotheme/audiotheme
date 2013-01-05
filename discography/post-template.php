@@ -17,7 +17,7 @@ function get_audiotheme_record_link_sources() {
 		'Bandcamp' => array( 'icon' => '' ),
 		'CD Baby'  => array( 'icon' => '' ),
 		'Google'   => array( 'icon' => '' ),
-		'iTunes'   => array( 'icon' => '' )
+		'iTunes'   => array( 'icon' => '' ),
 	);
 
 	return apply_filters( 'audiotheme_record_link_sources', $default_sources );
@@ -36,7 +36,7 @@ function get_audiotheme_record_link_sources() {
 function get_audiotheme_record_type_strings() {
 	$strings = array(
 		'record-type-album'  => _x( 'Album',  'Record type', 'audiotheme-i18n' ),
-		'record-type-single' => _x( 'Single', 'Record type', 'audiotheme-i18n' )
+		'record-type-single' => _x( 'Single', 'Record type', 'audiotheme-i18n' ),
 	);
 	return $strings;
 }
@@ -172,7 +172,7 @@ function get_audiotheme_record_tracks( $post_id = null ) {
 		'post_type'   => 'audiotheme_track',
 		'orderby'     => 'menu_order',
 		'order'       => 'ASC',
-		'numberposts' => -1
+		'numberposts' => -1,
 	);
 
 	$tracks = get_posts( $args );

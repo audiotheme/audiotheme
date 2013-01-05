@@ -59,8 +59,8 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 					'value'   => current_time( 'mysql' ),
 					'compare' => '>=',
 					'type'    => 'DATETIME'
-				)
-			)
+				),
+			),
 		) ) );
 
 		p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $loop );
@@ -127,7 +127,7 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 	 */
 	function form( $instance ) {
 		$instance = wp_parse_args( (array) $instance, array(
-			'title' => ''
+			'title' => '',
 		) );
 
 		$title = wp_strip_all_tags( $instance['title'] );

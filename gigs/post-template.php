@@ -38,11 +38,11 @@ function get_audiotheme_gig( $post = null ) {
 		$post->venue = get_audiotheme_venue( $post->connected[0]->ID );
 	} elseif ( ! isset( $post->connected ) ) {
 		$venues = get_posts( array(
-			'post_type' => 'audiotheme_venue',
-			'connected_type' => 'audiotheme_venue_to_gig',
-			'connected_items' => $post->ID,
-			'nopaging' => true,
-			'suppress_filters' => false
+			'post_type'        => 'audiotheme_venue',
+			'connected_type'   => 'audiotheme_venue_to_gig',
+			'connected_items'  => $post->ID,
+			'nopaging'         => true,
+			'suppress_filters' => false,
 		) );
 
 		if ( ! empty( $venues ) ) {
@@ -119,10 +119,10 @@ function get_audiotheme_gig_link( $post = null, $args = array() ) {
 	$gig = get_audiotheme_gig( $post );
 
 	$defaults = array(
-		'before' => '',
-		'after' => '',
+		'before'      => '',
+		'after'       => '',
 		'before_link' => '<span class="summary" itemprop="name">',
-		'after_link' => '</span>'
+		'after_link'  => '</span>',
 	);
 	$args = wp_parse_args( $args, $defaults );
 	extract( $args );
@@ -193,7 +193,7 @@ function get_audiotheme_gig_gmt_date( $post = null ) {
 function get_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null, $post = null ) {
 	$defaults = array(
 		'empty_time' => '', // displays if time hasn't been saved
-		'translate' => false
+		'translate'  => false,
 	);
 	$args = wp_parse_args( $args, $defaults );
 	extract( $args, EXTR_SKIP );
@@ -370,8 +370,8 @@ function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
 		$new_venue = get_audiotheme_venue_by( 'name', $venue_name );
 		if ( ! $new_venue ) {
 			$new_venue = array(
-				'name' => $venue_name,
-				'gig_count' => 1
+				'name'      => $venue_name,
+				'gig_count' => 1,
 			);
 
 			// Timezone is important, so retrieve it from the global $_POST array if it exists.
@@ -383,7 +383,7 @@ function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
 			if ( $venue_id ) {
 				p2p_create_connection( 'audiotheme_venue_to_gig', array(
 					'from' => $venue_id,
-					'to' => $gig_id
+					'to'   => $gig_id,
 				) );
 			}
 		} else {
@@ -391,7 +391,7 @@ function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
 
 			p2p_create_connection( 'audiotheme_venue_to_gig', array(
 				'from' => $new_venue->ID,
-				'to' => $gig_id
+				'to'   => $gig_id,
 			) );
 
 			update_audiotheme_venue_gig_count( $new_venue->ID );
@@ -482,7 +482,7 @@ function get_default_audiotheme_venue_properties() {
 		'contact_phone'   => '',
 		'contact_email'   => '',
 		'notes'           => '',
-		'timezone_string' => ''
+		'timezone_string' => '',
 	);
 
 	return $args;
@@ -535,10 +535,10 @@ function get_audiotheme_venue_link( $venue_id, $args = array() ) {
 		return '';
 
 	$defaults = array(
-		'before' => '',
-		'after' => '',
+		'before'      => '',
+		'after'       => '',
 		'before_link' => '<span class="fn org" itemprop="name">',
-		'after_link' => '</span>'
+		'after_link'  => '</span>',
 	);
 	$args = wp_parse_args( $args, $defaults );
 
@@ -590,7 +590,7 @@ function get_audiotheme_venue_vcard( $venue_id, $args = array() ) {
 	$venue = get_audiotheme_venue( $venue_id );
 
 	$defaults = array(
-		'container' => 'dd'
+		'container' => 'dd',
 	);
 	$args = wp_parse_args( $args, $defaults );
 
@@ -670,8 +670,8 @@ function get_audiotheme_venues_admin_url( $args = '' ) {
 function get_audiotheme_venue_edit_link( $admin_url, $post_id ) {
 	if ( 'audiotheme_venue' == get_post_type( $post_id ) ) {
 		$args = array(
-			'action' => 'edit',
-			'venue_id' => $post_id
+			'action'   => 'edit',
+			'venue_id' => $post_id,
 		);
 
 		$admin_url = get_audiotheme_venue_admin_url( $args );
@@ -761,10 +761,10 @@ function save_audiotheme_venue( $data ) {
 	// Set the venue title as the venue ID if the name argument was empty.
 	if ( isset( $data['name'] ) && empty( $data['name'] ) ) {
 		wp_update_post( array(
-			'ID' => $venue_id,
+			'ID'         => $venue_id,
 			'post_title' => get_unique_audiotheme_venue_name( $venue_id, $venue_id ),
-			'post_name' => '' )
-		);
+			'post_name'  => '',
+		) );
 	}
 
 	// Save additional properties to post meta.

@@ -87,7 +87,7 @@ function get_audiotheme_theme_options_support( $var = null ) {
 		$args = array(
 			'callback'    => 'audiotheme_register_theme_options',
 			'option_name' => $option_name,
-			'menu_title'  => __( 'Theme Options', 'audiotheme-i18n' )
+			'menu_title'  => __( 'Theme Options', 'audiotheme-i18n' ),
 		);
 
 		if ( isset( $support[0] ) ) {

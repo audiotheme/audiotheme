@@ -185,7 +185,7 @@ function audiotheme_record_archive_menu_item( $items ) {
 	$items[] = array(
 		'title'     => _x( 'Discography', 'nav menu archive label' ),
 		'post_type' => 'audiotheme_record',
-		'url'       => get_post_type_archive_link( 'audiotheme_record' )
+		'url'       => get_post_type_archive_link( 'audiotheme_record' ),
 	);
 
 	return $items;

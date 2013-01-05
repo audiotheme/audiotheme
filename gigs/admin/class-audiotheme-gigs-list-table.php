@@ -40,7 +40,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		parent::__construct( array(
 			'singular' => 'gig',
 			'plural'   => 'gigs',
-			'ajax'     => false
+			'ajax'     => false,
 		) );
 
 		if ( ( isset( $_REQUEST['gig_date'] ) && empty( $_REQUEST['m'] ) && ( empty( $_REQUEST['compare'] ) || false !== strpos( $_REQUEST['compare'], '>' ) ) ) || ( empty( $_REQUEST['post_status'] ) && empty( $_REQUEST['gig_date'] ) ) ) {
@@ -81,15 +81,15 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 			'post_type'      => 'audiotheme_gig',
 			'order'          => ( isset( $_REQUEST['order'] ) && 'asc' == strtolower( $_REQUEST['order'] ) ) ? 'asc' : 'desc',
 			'post_status'    => ( isset( $_REQUEST['post_status'] ) ) ? $_REQUEST['post_status'] : 'publish,draft',
-			'posts_per_page' => $per_page
+			'posts_per_page' => $per_page,
 		);
 
 		if ( empty( $_REQUEST['m'] ) && ( 'upcoming' == $this->current_view || 'past' == $this->current_view ) ) {
 			$args['meta_query'][] = array(
-				'key' => '_audiotheme_gig_datetime',
-				'value' => ( isset( $_REQUEST['gig_date'] ) ) ? urldecode( $_REQUEST['gig_date'] ) : current_time( 'mysql' ),
+				'key'     => '_audiotheme_gig_datetime',
+				'value'   => ( isset( $_REQUEST['gig_date'] ) ) ? urldecode( $_REQUEST['gig_date'] ) : current_time( 'mysql' ),
 				'compare' => ( isset( $_REQUEST['compare'] ) ) ? urldecode( $_REQUEST['compare'] ) : '>=',
-				'type' => 'DATETIME'
+				'type'    => 'DATETIME',
 			);
 
 			// Sort upcoming in ascending order by default.
@@ -102,10 +102,10 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 			$end = sprintf( '%s 23:59:59', date( 'Y-m-t', mktime( 0, 0, 0, $m, 1, $y ) ) );
 
 			$args['meta_query'][] = array(
-				'key' => '_audiotheme_gig_datetime',
-				'value' => array( $start, $end ),
+				'key'     => '_audiotheme_gig_datetime',
+				'value'   => array( $start, $end ),
 				'compare' => 'BETWEEN',
-				'type' => 'DATETIME'
+				'type'    => 'DATETIME',
 			);
 
 			$args['order'] = ( isset( $_REQUEST['order'] ) ) ? $args['order'] : 'asc';
@@ -160,8 +160,8 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 
 		$this->set_pagination_args( array(
 			'total_items' => $wp_query->found_posts,
-			'per_page' => $per_page,
-			'total_pages' => $wp_query->max_num_pages
+			'per_page'    => $per_page,
+			'total_pages' => $wp_query->max_num_pages,
 		) );
 	}
 
@@ -306,7 +306,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 			'cb'         => '<input type="checkbox">',
 			'title'      => 'Date',
 			'post_title' => 'Title',
-			'venue'      => 'Venue'
+			'venue'      => 'Venue',
 		);
 
 		// The screen id is used when managing column visibility.
@@ -327,7 +327,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		$sortable_columns = array(
 			'title'      => array( 'gig_datetime', true ), // True means its already sorted.
 			'post_title' => array( 'title', false ),
-			'venue'      => array( 'venue', false )
+			'venue'      => array( 'venue', false ),
 		);
 
 		return $sortable_columns;

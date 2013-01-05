@@ -106,7 +106,7 @@ function audiotheme_record_display_columns( $column_name, $post_id ) {
 		case 'track_count' :
 			$args = array(
 				'post_type' => 'audiotheme_track',
-				'post_parent' => $post_id
+				'post_parent' => $post_id,
 			);
 
 			printf( '<a href="%s">%s</a>',
@@ -257,7 +257,7 @@ function audiotheme_edit_record_meta_boxes( $post ) {
 		'force_delete' => false,
 		'show_publish_date' => false,
 		'show_statuses' => array(),
-		'show_visibility' => false
+		'show_visibility' => false,
 	) );
 
 	add_meta_box( 'audiotheme-record-details', __( 'Record Details', 'audiotheme-i18n' ), 'audiotheme_record_details_meta_box', 'audiotheme_record', 'side', 'high' );
@@ -287,7 +287,7 @@ function audiotheme_edit_record_tracklist() {
 				'artist'       => esc_attr( get_post_meta( $track->ID, '_audiotheme_artist', true ) ),
 				'fileUrl'      => esc_attr( get_post_meta( $track->ID, '_audiotheme_file_url', true ) ),
 				'downloadable' => is_audiotheme_track_downloadable( $track->ID ),
-				'purchaseUrl'  => esc_url( get_post_meta( $track->ID, '_audiotheme_purchase_url', true ) )
+				'purchaseUrl'  => esc_url( get_post_meta( $track->ID, '_audiotheme_purchase_url', true ) ),
 			);
 		}
 	}
@@ -297,7 +297,7 @@ function audiotheme_edit_record_tracklist() {
 		'type'      => 'audio',
 		'TB_iframe' => true,
 		'width'     => 640,
-		'height'    => 750
+		'height'    => 750,
 	), admin_url( 'media-upload.php' ) );
 
 	require( AUDIOTHEME_DIR . 'discography/admin/views/edit-record-tracklist.php' );

@@ -47,7 +47,7 @@ function audiotheme_gigs_admin_setup() {
 	wp_register_script( 'audiotheme-gig-edit', AUDIOTHEME_URI . 'gigs/admin/js/gig-edit.js', array( 'audiotheme-admin', 'audiotheme-pointer', 'jquery-timepicker', 'jquery-ui-autocomplete', 'jquery-ui-datepicker' ) );
 	wp_localize_script( 'audiotheme-gig-edit', 'audiothemeGigsL10n', array(
 		'datepickerIcon' => AUDIOTHEME_URI . 'admin/images/calendar.png',
-		'timeFormat' => get_option( 'time_format' )
+		'timeFormat'     => get_option( 'time_format' ),
 	) );
 
 	wp_register_script( 'audiotheme-venue-edit', AUDIOTHEME_URI . 'gigs/admin/js/venue-edit.js', array( 'audiotheme-admin', 'jquery-ui-autocomplete', 'post' ) );
@@ -191,7 +191,7 @@ function audiotheme_gigs_manage_screen_setup() {
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'overview',
 		'title'   => __( 'Overview', 'audiotheme-i18n' ),
-		'content' => '<p>' . __( 'This screen provides access to all of your gigs. You can customize the display of this screen to suit your workflow.', 'audiotheme-i18n' ) . '</p>'
+		'content' => '<p>' . __( 'This screen provides access to all of your gigs. You can customize the display of this screen to suit your workflow.', 'audiotheme-i18n' ) . '</p>',
 	) );
 
 	$post_type_object = get_post_type_object( 'audiotheme_gig' );
@@ -233,7 +233,7 @@ function audiotheme_gig_edit_screen_setup( $post ) {
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'customize',
 		'title'   => __( 'Customize This Screen', 'audiotheme-i18n' ),
-		'content' => '<p>' . __( 'The title field and the big Post Editing Area are fixed in place, but you can reposition all the other boxes using drag and drop. You can also minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to unhide more boxes (Excerpt, Send Trackbacks, Custom Fields, Discussion, Slug, Author) or to choose a 1- or 2-column layout for this screen.', 'audiotheme-i18n' ) . '</p>'
+		'content' => '<p>' . __( 'The title field and the big Post Editing Area are fixed in place, but you can reposition all the other boxes using drag and drop. You can also minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to unhide more boxes (Excerpt, Send Trackbacks, Custom Fields, Discussion, Slug, Author) or to choose a 1- or 2-column layout for this screen.', 'audiotheme-i18n' ) . '</p>',
 	) );
 
 	wp_enqueue_script( 'audiotheme-gig-edit' );
@@ -251,10 +251,10 @@ function audiotheme_gig_edit_screen_setup( $post ) {
 	// Add a customized submit meta box.
 	remove_meta_box( 'submitdiv', 'audiotheme_gig', 'side' );
 	add_meta_box( 'submitdiv', 'Publish', 'audiotheme_post_submit_meta_box', 'audiotheme_gig', 'side', 'high', array(
-		'force_delete' => false,
+		'force_delete'      => false,
 		'show_publish_date' => false,
-		'show_statuses' => array(),
-		'show_visibility' => false
+		'show_statuses'     => array(),
+		'show_visibility'   => false,
 	) );
 
 	// Add a meta box for entering ticket information.
@@ -379,8 +379,8 @@ function audiotheme_gig_save_post( $post_id, $post ) {
 			// If the post name is empty, default it to the date.
 			if ( empty( $post->post_name ) ) {
 				wp_update_post( array(
-					'ID' => $post->ID,
-					'post_name' => sprintf( '%s-%s-%s', $dt['year'], zeroise( $dt['month'], 2 ), zeroise( $dt['day'], 2 ) )
+					'ID'        => $post->ID,
+					'post_name' => sprintf( '%s-%s-%s', $dt['year'], zeroise( $dt['month'], 2 ), zeroise( $dt['day'], 2 ) ),
 				) );
 			}
 		} else {
@@ -440,9 +440,9 @@ function audiotheme_gigs_rewrite_base_settings_field() {
  */
 function audiotheme_gigs_archive_menu_item( $items ) {
 	$items[] = array(
-		'title' => _x( 'Gigs', 'nav menu archive label' ),
+		'title'     => _x( 'Gigs', 'nav menu archive label' ),
 		'post_type' => 'audiotheme_gig',
-		'url'   => get_post_type_archive_link( 'audiotheme_gig' )
+		'url'       => get_post_type_archive_link( 'audiotheme_gig' ),
 	);
 
 	return $items;

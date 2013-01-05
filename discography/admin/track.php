@@ -86,7 +86,7 @@ function audiotheme_track_register_columns( $columns ) {
 		'record'   => _x( 'Record', 'column name', 'audiotheme-i18n' ),
 		'file'     => _x( 'Audio File', 'column name', 'audiotheme-i18n' ),
 		'download' => _x( 'Downloadable', 'column name', 'audiotheme-i18n' ),
-		'purchase' => _x( 'Purchase URL', 'column name', 'audiotheme-i18n' )
+		'purchase' => _x( 'Purchase URL', 'column name', 'audiotheme-i18n' ),
 	);
 
 	$columns = audiotheme_array_insert_after_key( $columns, 'title', $track_columns );
@@ -266,7 +266,7 @@ function audiotheme_edit_track_meta_boxes( $post ) {
 			'force_delete'      => false,
 			'show_publish_date' => false,
 			'show_statuses'     => array(),
-			'show_visibility'   => false
+			'show_visibility'   => false,
 		)
 	);
 
@@ -309,7 +309,7 @@ function audiotheme_track_details_meta_box( $post ) {
 			'type' => 'audio',
 			'TB_iframe' => true,
 			'width' => 640,
-			'height' => 750
+			'height' => 750,
 		);
 
 		$tb_url = add_query_arg( $tb_args, admin_url( 'media-upload.php' ) );
