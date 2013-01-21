@@ -153,10 +153,6 @@ function audiotheme_record_save_post( $post_id ) {
 	$is_revision = wp_is_post_revision( $post_id );
 	$is_valid_nonce = ( isset( $_POST['audiotheme_record_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_record_nonce'], 'update-record_' . $post_id ) ) ? true : false;
 
-	if ( $is_autosave || $is_revision ) {
-		return;
-	}
-
 	// Bail if the data shouldn't be saved or intention can't be verified.
 	if( $is_autosave || $is_revision || ! $is_valid_nonce ) {
 		return;
