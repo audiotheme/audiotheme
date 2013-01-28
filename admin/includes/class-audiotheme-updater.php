@@ -167,7 +167,7 @@ abstract class Audiotheme_Updater {
 		}
 
 		// Bail if the response status isn't 'ok' or there isn't a new version.
-		if ( ! isset( $response->status ) || 'ok' !== $response->status || version_compare( $this->version, $response->wpargs->new_version, '>=' ) ) {
+		if ( ! isset( $response->status ) || 'ok' !== $response->status || ! isset( $response->wpargs->new_version ) || version_compare( $this->version, $response->wpargs->new_version, '>=' ) ) {
 			return false;
 		}
 

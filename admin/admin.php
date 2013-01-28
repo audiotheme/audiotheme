@@ -20,6 +20,7 @@ add_action( 'after_setup_theme', 'audiotheme_admin_setup' );
 
 function audiotheme_admin_setup() {
 	add_action( 'init', 'audiotheme_admin_init' );
+	add_action( 'init', 'audiotheme_automatic_updates' );
 	add_action( 'init', 'audiotheme_settings_init' );
 	add_action( 'init', 'audiotheme_dashboard_init', 9 );
 
@@ -43,19 +44,36 @@ function audiotheme_admin_setup() {
 /**
  *
  */
-function audiotheme_admin_init() {
+function audiotheme_automatic_updates() {
+	// @todo Grab the license key option value or don't do an update.
+	$license = '';
+
+	if ( ! $license ) {
+		return;
+	}
+
+	$api_data = array( 'license' => $license );
+
+	$framework_updater = new Audiotheme_Updater_Plugin( array( 'api_data' => $api_data  ), AUDIOTHEME_DIR . 'audiotheme.php' );
+	$framework_updater->init();
+
 	// Automatic theme updates require support for 'audiotheme-theme-options' to be enabled.
 	if ( current_theme_supports( 'audiotheme-automatic-updates' ) ) {
 		include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-theme.php' );
 
-		// @todo Grab the license key option value or don't do an update.
+
 		$support = get_theme_support( 'audiotheme-automatic-updates' );
-		$support = wp_parse_args( $support[0], array( 'api_data' => array( 'license' => '' ) ) );
+		$support = wp_parse_args( $support[0], array( array( 'api_data' => $api_data ) ) );
 
 		$theme_updater = new Audiotheme_Updater_Theme( $support );
 		$theme_updater->init();
 	}
+}
 
+/**
+ *
+ */
+function audiotheme_admin_init() {
 	wp_register_script( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/js/audiotheme-admin.js', array( 'jquery-ui-sortable' ) );
 	wp_register_script( 'audiotheme-media', AUDIOTHEME_URI . 'admin/js/audiotheme-media.js', array( 'jquery' ) );
 	wp_register_script( 'audiotheme-pointer', AUDIOTHEME_URI . 'admin/js/audiotheme-pointer.js', array( 'wp-pointer' ) );
