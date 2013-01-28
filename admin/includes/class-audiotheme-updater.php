@@ -1,167 +1,238 @@
 <?php
-class Audiotheme_Updater {
-	private static $remote_api_url;
-	private static $request_data;
-	private static $response_key;
-	private static $theme_slug;
-	private static $license_key;
-	private static $item_name;
-	private static $version;
-	private static $author;
+abstract class Audiotheme_Updater {
+	/**
+	 * @var string
+	 */
+	protected $api_url = 'http://audiotheme.com/api/';
 
-	public static function setup( $args = array() ) {
-		$theme_slug = ( isset( $args['theme_slug'] ) && ! empty( $args['theme_slug'] ) ) ? $args['theme_slug'] : get_template();
-		$theme = wp_get_theme( $theme_slug );
+	/**
+	 * Additional data to send to pass through the API.
+	 * @var array
+	 */
+	protected $api_data = array();
 
-		$args = wp_parse_args( $args, array(
-			'remote_api_url' => 'http://audiotheme.com',
-			'request_data'   => array(),
-			'theme_slug'     => $theme_slug,
-			'item_name'      => $theme->get( 'Name' ),
-			'license_key'    => get_audiotheme_theme_option( 'license_key' ),
-			'version'        => $theme->get( 'Version' ),
-			'author'         => $theme->get( 'Author' ),
-		) );
-		extract( $args );
+	/**
+	 * Entity type.
+	 * @var string
+	 */
+	protected $type;
 
-		self::$license_key = $license_key;
-		self::$item_name = $item_name;
-		self::$version = $version;
-		self::$theme_slug = sanitize_key( $theme_slug );
-		self::$author = $author;
-		self::$remote_api_url = $remote_api_url;
-		self::$response_key = self::$theme_slug . '-update-response';
+	/**
+	 * Entity id.
+	 * @var string
+	 */
+	protected $id;
 
-		add_filter( 'site_transient_update_themes', array( __CLASS__, 'theme_update_transient' ) );
-		add_filter( 'delete_site_transient_update_themes', array( __CLASS__, 'delete_theme_update_transient' ) );
-		add_action( 'load-update-core.php', array( __CLASS__, 'delete_theme_update_transient' ) );
-		add_action( 'load-themes.php', array( __CLASS__, 'delete_theme_update_transient' ) );
-		add_action( 'load-themes.php', array( __CLASS__, 'load_themes_screen' ) );
-	}
+	/**
+	 * Entity slug. Ex: plugin-name or theme-name
+	 * @var string
+	 */
+	protected $slug;
 
-	public static function load_themes_screen() {
-		add_thickbox();
-		add_action( 'admin_notices', array( __CLASS__, 'update_nag' ) );
-	}
+	/**
+	 * Entity version number.
+	 * @var string
+	 */
+	protected $version;
 
-	public static function update_nag() {
-		$theme = wp_get_theme( self::$theme_slug );
+	/**
+	 * URI to determine if a default update check should be short-circuited.
+	 * @var array
+	 */
+	protected $default_api_uri;
 
-		$api_response = get_transient( self::$response_key );
+	/**
+	 * An associative array of update notices to display depending on the
+	 * server response.
+	 * @var array
+	 */
+	protected $notices = array();
 
-		if( false === $api_response )
-			return;
-
-		$update_url = wp_nonce_url( 'update.php?action=upgrade-theme&amp;theme=' . urlencode( self::$theme_slug ), 'upgrade-theme_' . self::$theme_slug );
-		$update_onclick = ' onclick="if ( confirm(\'' . esc_js( __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update." ) ) . '\') ) {return true;}return false;"';
-
-		if ( version_compare( $theme->get( 'Version' ), $api_response->new_version, '<' ) ) {
-
-			echo '<div id="update-nag">';
-				printf( '<strong>%1$s %2$s</strong> is available. <a href="%3$s" class="thickbox" title="%4s">Check out what\'s new</a> or <a href="%5$s"%6$s>update now</a>.',
-					$theme->get( 'Name' ),
-					$api_response->new_version,
-					add_query_arg( array( 'TB_iframe' => 'true', 'width' => 1024, 'height' => 800 ), $api_response->url ),
-					#'#TB_inline?width=640&amp;inlineId=' . self::$theme_slug . '_changelog',
-					$theme->get( 'Name' ),
-					$update_url,
-					$update_onclick
-				);
-			echo '</div>';
+	/**
+	 * Constructor. Sets up the theme updater object.
+	 *
+	 * Loops through the class properties and sets any that are passed in
+	 * through the $args parameter.
+	 *
+	 * This should be instantiated and hooked up before init:10 so it'll be
+	 * processed during WP Cron events.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Associative array to set object properties.
+	 */
+	public function __construct( $args = array() ) {
+		$keys = array_keys( get_object_vars( $this ) );
+		foreach ( $keys as $key ) {
+			if ( isset( $args[ $key ] ) ) {
+				$this->$key = $args[ $key ];
+			}
 		}
 	}
 
-	public static function theme_update_transient( $value ) {
-		$update_data = self::check_for_update();
+	abstract function init();
+
+	public function get_wporg_update_uri() { }
+
+	/**
+	 * Disable update requests to wordpress.org for the entity.
+	 *
+	 * @see http://markjaquith.wordpress.com/2009/12/14/excluding-your-plugin-or-theme-from-update-checks/
+	 * @see WP_Http::request()
+	 *
+	 * @since 1.0.0
+	 *
+	 * @todo Inactive plugins/themes will still hit the wordpress.org API.
+	 *
+	 * @param array $r Request args.
+	 * @param string $url URI resource.
+	 * @return array Filtered request args.
+	 */
+	public function disable_wporg_update_check( $r, $url ) {
+		$default_update_uri = $this->get_wporg_update_uri();
+
+		if ( empty( $update_uri ) || false === strpos( $url, $default_update_uri ) ) {
+			return $r; // Not an update request. Bail immediately.
+		}
+
+		$plural_type = $this->type . 's'; // @todo Kinda hacky.
+
+		$entities = unserialize( $r['body'][ $plural_type ] );
+		unset( $themes[ $this->id ] );
+		$r['body'][ $plural_type ] = serialize( $entities );
+
+		return $r;
+	}
+
+	/**
+	 * Filter the core update transients to add external update information.
+	 *
+	 * WordPress sets the "update_*" transients twice when doing a request for
+	 * updates. The remote API shouldn't be hit twice, so the "last_checked"
+	 * property is stored on the first pass and if it's the same on subsequent
+	 * passes, the transient will be utilized if it's available.
+	 *
+	 * @see wp_update_plugins()
+	 * @see wp_update_themes()
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $value Entity version and update information.
+	 * @return array
+	 */
+	public function update_transient( $value ) {
+		$data_source = ( ! empty( $this->last_checked ) && $this->last_checked == $value->last_checked ) ? 'transient' : 'api';
+		$this->last_checked = $value->last_checked;
+
+		$update_data = $this->check_for_update( $data_source );
+
 		if ( $update_data ) {
-			$value->response[ self::$theme_slug ] = $update_data;
+			$value->response[ $this->id ] = $update_data;
 		}
+
 		return $value;
 	}
 
-	public static function delete_theme_update_transient() {
-		delete_transient( self::$response_key );
-	}
+	/**
+	 * Check for an update.
+	 *
+	 * Checks the custom, theme-specific transient before doing a remote
+	 * request. If the request fails, the transient is changed so checks are
+	 * made every three hours.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $source Whether data should be returned from transient if available.
+	 * @return bool|object Update args expected by WordPress API or false if there isn't an update.
+	 */
+	public function check_for_update( $source = 'transient' ) {
+		$response = ( 'transient' == $source ) ? get_transient( $this->transient_key() ) : false;
 
-	public static function check_for_update() {
-		$theme = wp_get_theme( self::$theme_slug );
+		if ( ! $response ) {
+			$response = $this->api_request( array(
+				'entity' => $this->type,
+				'method' => 'update',
+			) );
 
-		$update_data = get_transient( self::$response_key );
-		if ( false === $update_data ) {
-			// Don't check for an update if the license key hasn't been validated.
-			// Prevents unncessary calls to the API.
-			// @todo Update the option name if refactored.
-			if ( 'valid' == get_option( 'audiotheme_license_key_status' ) ) {
-				$api_params = array(
-					'edd_action' => 'get_version',
-					'license'    => self::$license_key,
-					'name'       => self::$item_name,
-					'slug'       => self::$theme_slug,
-					'author'     => self::$author,
-				);
-
-				$response = wp_remote_post( self::$remote_api_url, array( 'timeout' => 5, 'body' => $api_params ) );
-
-				// Make sure the response was successful
-				if ( ! is_wp_error( $response ) && 200 == wp_remote_retrieve_response_code( $response ) ) {
-					$update_data = json_decode( wp_remote_retrieve_body( $response ) );
-
-					// @todo Temporary workaround for the server not sending a URL
-					if ( ! isset( $update_data->url ) && isset( $update_data->homepage ) ) {
-						$update_data->url = $update_data->homepage;
-					}
-				}
-			}
-
-			// If the response failed, try again in 30 minutes
-			if ( ! isset( $update_data ) || ! is_object( $update_data ) ) {
+			if ( is_wp_error( $response ) ) {
 				$data = new stdClass;
-				$data->new_version = $theme->get( 'Version' );
-				set_transient( self::$response_key, $data, strtotime( '+30 minutes' ) );
-				return false;
+				$data->status = $response->get_error_code();
+
+				// If the response failed, try again in 3 hours.
+				set_transient( $this->transient_key(), $data, strtotime( '+3 hours' ) );
+			} else {
+				$response->wpargs->slug = $this->id; // Set the basename for the API. Unnecessary for themes.
+				set_transient( $this->transient_key(), $response, strtotime( '+12 hours' ) );
 			}
-
-			// If the response was good, cache it
-			$update_data->sections = maybe_unserialize( $update_data->sections );
-			set_transient( self::$response_key, $update_data, strtotime( '+12 hours' ) );
 		}
 
-		if ( version_compare( $theme->get( 'Version' ), $update_data->new_version, '>=' ) ) {
+		// Bail if the response status isn't 'ok' or there isn't a new version.
+		if ( ! isset( $response->status ) || 'ok' !== $response->status || version_compare( $this->version, $response->wpargs->new_version, '>=' ) ) {
 			return false;
 		}
 
-		return (array) $update_data;
+		return $response->wpargs;
 	}
 
-	public static function activate_license( $license ) {
-		$api_params = array(
-			'edd_action' => 'activate_license',
-			'license'    => $license,
-			'item_name'  => self::$item_name,
+	/**
+	 * Do a remote API request.
+	 *
+	 * Merges the $api_data property, default arguments, and the $args
+	 * parameter and sends them to the API for processing.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments to send to the API endpoint.
+	 * @return object JSON-decoded response or WP_Error on failure.
+	 */
+	public function api_request( $args ) {
+		global $wpdb;
+
+		$defaults = array(
+			'audiotheme' => '', // @todo Add AudioTheme version.
+			'language'   => WPLANG,
+			'license'    => 'a72fdacfb04efa15976ed843d0bc7fec', // @todo Add license key.
+			'mysql'      => $wpdb->db_version(),
+			'php'        => phpversion(),
+			'slug'       => $this->slug,
+			'url'        => home_url(),
+			'version'    => $this->version,
+			'wp'         => get_bloginfo( 'version' ),
 		);
 
-		$response = wp_remote_get( add_query_arg( $api_params, self::$remote_api_url ) );
-		if ( is_wp_error( $response ) )
-			return false;
+		$args = array_merge( $this->api_data, $defaults, $args );
 
-		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
+		$response = wp_remote_post(
+			$this->api_url,
+			array(
+				'body'      => $args,
+				'headers'   => array(
+					'Content-Type' => 'application/x-www-form-urlencoded; charset=' . get_option( 'blog_charset' ),
+					'Referer'      => home_url(),
+				),
+				'sslverify' => false,
+				'timeout'   => ( ( defined( 'DOING_CRON' ) && DOING_CRON ) ? 30 : 5 ),
+			)
+		);
 
-		return $license_data->license;
+		// Make sure the response was successful.
+		if ( is_wp_error( $response ) || 200 != wp_remote_retrieve_response_code( $response ) ) {
+			return new WP_Error( 'bad_response', __( 'Bad response.', 'audiotheme-i18n' ) );
+		}
+
+		return json_decode( wp_remote_retrieve_body( $response ) );
 	}
 
-	public static function check_license_status( $license ) {
-		$api_params = array(
-			'edd_action' => 'check_license',
-			'license'    => $license,
-			'item_name'  => self::$item_name,
-		);
-
-		$response = wp_remote_get( add_query_arg( $api_params, self::$remote_api_url ) );
-		if ( is_wp_error( $response ) )
-			return false;
-
-		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-
-		return $license_data->license;
+	/**
+	 * Key for the transient containing the update check request.
+	 *
+	 * Transient keys can only be 45 characters, so the prefix has been
+	 * shortened to allow more space for the plugin name. Could change to use
+	 * a hash if they get too long.
+	 *
+	 * @since 1.0.0
+	 */
+	protected function transient_key() {
+		return 'atup_' . $this->slug;
 	}
 }

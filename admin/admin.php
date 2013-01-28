@@ -7,6 +7,8 @@
 require( AUDIOTHEME_DIR . 'admin/dashboard.php' );
 require( AUDIOTHEME_DIR . 'admin/functions.php' );
 require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-settings.php' );
+include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater.php' );
+include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-plugin.php' );
 require( AUDIOTHEME_DIR . 'admin/includes/settings-screens.php' );
 
 /**
@@ -20,9 +22,7 @@ function audiotheme_admin_setup() {
 	add_action( 'init', 'audiotheme_admin_init' );
 	add_action( 'init', 'audiotheme_settings_init' );
 	add_action( 'init', 'audiotheme_dashboard_init', 9 );
-	
-	#add_action( 'admin_init', 'audiotheme_register_directory_browsing_setting' );
-	#add_action( 'pre_update_option_audiotheme_disable_directory_browsing', 'audiotheme_disable_directory_browsing_option_update', 10, 2 );
+
 	add_action( 'update_option_audiotheme_disable_directory_browsing', 'audiotheme_disable_directory_browsing_option_update', 10, 2 );
 
 	add_action( 'admin_enqueue_scripts', 'audiotheme_enqueue_admin_scripts' );
@@ -38,24 +38,24 @@ function audiotheme_admin_setup() {
 
 	// Print javascript pointer object.
 	add_action( 'admin_print_footer_scripts', 'audiotheme_print_pointers' );
-
-
-	// @todo Reimplement the license key functionality.
-
-	// Automatic updates require support for 'audiotheme-theme-options' to be enabled
-	// Otherwise, the license key functionality needs to be added in custom hooks
-	/*if ( current_theme_supports( 'audiotheme-automatic-updates' ) ) {
-		include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater.php' );
-		$support = get_theme_support( 'audiotheme-automatic-updates' );
-		Audiotheme_Updater::setup( $support[0] );
-
-		add_action( 'pre_update_option_audiotheme_options', 'audiotheme_default_options_update', 10, 2 );
-		add_action( 'admin_init', 'audiotheme_default_settings', 9 ); // Will appear before options registered in the theme
-		add_action( 'load-appearance_page_audiotheme-theme-options', 'audiotheme_license_status_error' );
-	}*/
 }
 
+/**
+ *
+ */
 function audiotheme_admin_init() {
+	// Automatic theme updates require support for 'audiotheme-theme-options' to be enabled.
+	if ( current_theme_supports( 'audiotheme-automatic-updates' ) ) {
+		include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-theme.php' );
+
+		// @todo Grab the license key option value or don't do an update.
+		$support = get_theme_support( 'audiotheme-automatic-updates' );
+		$support = wp_parse_args( $support[0], array( 'api_data' => array( 'license' => '' ) ) );
+
+		$theme_updater = new Audiotheme_Updater_Theme( $support );
+		$theme_updater->init();
+	}
+
 	wp_register_script( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/js/audiotheme-admin.js', array( 'jquery-ui-sortable' ) );
 	wp_register_script( 'audiotheme-media', AUDIOTHEME_URI . 'admin/js/audiotheme-media.js', array( 'jquery' ) );
 	wp_register_script( 'audiotheme-pointer', AUDIOTHEME_URI . 'admin/js/audiotheme-pointer.js', array( 'wp-pointer' ) );
@@ -64,109 +64,6 @@ function audiotheme_admin_init() {
 	wp_register_style( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/css/audiotheme-admin.css' );
 	wp_register_style( 'jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css' );
 	wp_register_style( 'jquery-ui-theme-audiotheme', AUDIOTHEME_URI . 'admin/css/jquery-ui-audiotheme.css', array( 'jquery-ui-theme-smoothness' ) );
-}
-
-/**
- * Register default options
- *
- * @since 1.0.0
- */
-function audiotheme_default_settings() {
-	$settings = Audiotheme_Settings::instance();
-
-	$section = $settings->add_section( 'general', 'General Settings', '' );
-		$settings->add_field( 'text', 'license_key', __( 'License Key', 'audiotheme-i18n' ), $section, array(
-			'description' => ( 'valid' == get_option( 'audiotheme_license_key_status' ) ) ? ' <span style="color: green; font-style: normal">OK</span>' : '',
-		) );
-}
-
-/**
- * Execute additional functionality when options are updated
- *
- * Hooks into the 'pre_update_option_{$option}' action so the license can be
- * checked even if a field hasn't been changed.
- *
- * Currently it will activate and check license key status so visual feedback
- * can be provided.
- *
- * @since 1.0.0
- * @todo The status option should be unique per theme.
- * @todo When a key expires, or if it's deactivated on the server, there's no
- *       way to notify the user. The server should return the license status
- *       with an update check.
- */
-function audiotheme_default_options_update( $newvalue, $oldvalue ) {
-	if ( isset( $newvalue['license_key'] ) ) {
-		$license_status = get_option( 'audiotheme_license_key_status' );
-		$license_key_changed = ( isset( $oldvalue['license_key'] ) && $oldvalue['license_key'] != $newvalue['license_key'] ) ? true : false;
-
-		// Only hit the API if the license key field changed or the current license status is somehow empty
-		// If a change is made at the server level, the user would have to make a modification to their key to recognize it
-		if ( ( $license_key_changed && ! empty( $newvalue['license_key'] ) ) || empty( $license_status ) ) {
-			// Check the license to see if it's active, if not, activate it
-			$status = Audiotheme_Updater::check_license_status( $newvalue['license_key'] );
-			if ( 'invalid' == $status ) {
-				$status = Audiotheme_Updater::activate_license( $newvalue['license_key'] );
-			}
-			update_option( 'audiotheme_license_key_status', $status );
-		} elseif ( empty( $newvalue['license_key'] ) ) {
-			update_option( 'audiotheme_license_key_status', '' );
-		}
-	}
-
-	return $newvalue;
-}
-
-/**
- * Show an error on the default theme options if the license key is invalid.
- *
- * @since 1.0.0
- * @todo Update the option name if refactored.
- */
-function audiotheme_license_status_error() {
-	$license_status = get_option( 'audiotheme_license_key_status' );
-	if ( $license_status && 'valid' !== $license_status ) {
-		add_settings_error( 'audiotheme_options', 'license_key', __( 'Invalid license key.', 'audiotheme-i18n' ) );
-	}
-}
-
-/**
- * Register Directory Browsing Settings
- *
- * Registers a setting on the Privacy screen to disable directory browsing so
- * the uploads folder can't be accessed directly.
- *
- * @since 1.0.0
- * @todo Only show if using Apache.
- * @todo Error message if .htaccess isn't writable.
- * @todo Remove group comparison after < 3.5 support is dropped.
- */
-function audiotheme_register_directory_browsing_setting() {
-	// Privacy settings group was deprecated in 3.5
-	$group = ( audiotheme_version_compare( 'wp', '3.5-beta-1', '<' ) ) ? 'privacy' : 'reading';
-
-	register_setting( $group, 'audiotheme_disable_directory_browsing' );
-
-	add_settings_field(
-		'audiotheme_disable_directory_browsing',
-		'<label for="audiotheme-disable-directory-browsing">' . __( 'Directory Browsing', 'audiotheme-i18n' ) . '</label>',
-		'audiotheme_disable_directory_browsing_setting_field',
-		$group,
-		'default'
-	);
-}
-
-/**
- * Display Directory Browsing Setting
- *
- * @since 1.0.0
- */
-function audiotheme_disable_directory_browsing_setting_field() {
-	$disable_browsing = get_option( 'audiotheme_disable_directory_browsing' );
-	?>
-	<input type="checkbox" name="audiotheme_disable_directory_browsing" id="audiotheme-disable-directory-browsing" value="1"<?php checked( $disable_browsing, true ); ?>>
-	<label for="audiotheme-disable-directory-browsing"><?php _e( 'Disable directory browsing?', 'audiotheme-i18n' ); ?></label>
-	<?php
 }
 
 /**
