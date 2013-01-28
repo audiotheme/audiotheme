@@ -238,34 +238,3 @@ function audiotheme_edit_user_contact_info( $contactmethods ) {
 
 	return $contactmethods;
 }
-
-/**
- * Re-order the admin menu
- *
- * Positions AudioTheme admin menu items after Posts menu item if the Gigs
- * menu item position hasn't been modified. Should play nice with plugins.
- *
- * @since 1.0.0
- */
-function audiotheme_admin_menu_order( $menu_order ) {
-	global $menu;
-
-	$start_key = array_search( 'edit.php', $menu_order );
-
-	// Only try to re-order the menu items if the gigs menu hasn't been moved.
-	if ( false !== $start_key && array_key_exists( 512, $menu ) && 'audiotheme-gigs' == $menu[512][2] ) {
-		$audiotheme_admin_menu_order = array( 'audiotheme-gigs', 'edit.php?post_type=audiotheme_record', 'edit.php?post_type=audiotheme_video', 'edit.php?post_type=audiotheme_gallery' );
-
-		foreach ( $audiotheme_admin_menu_order as $i => $item ) {
-			$menu_key = array_search( $item, $menu_order );
-			if ( $menu_key ) {
-				$new_position = $start_key + $i + 1;
-				array_splice( $menu_order, $new_position, 0, $menu_order[ $menu_key ] ); // Insert the item in its new location.
-				unset( $menu_order[ $menu_key + 1 ] ); // Remove the old menu item.
-				$menu_order = array_values( $menu_order ); // Re-key the array.
-			}
-		}
-	}
-
-	return $menu_order;
-}
