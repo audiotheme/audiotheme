@@ -6,6 +6,25 @@
  */
 
 /**
+ * Filter the default post_type_archive_title() template tag and replace with
+ * custom archive title.
+ *
+ * @since 1.0.0
+ *
+ * @param string $label Post type archive title.
+ * @return string
+ */
+function audiotheme_post_type_archive_title( $label ) {
+	$post_type_object = get_queried_object();
+
+	if ( $page = get_audiotheme_archive_page( $post_type_object->name ) ) {
+		$label = $page->post_title;
+	}
+
+	return $label;
+}
+
+/**
  * Add helpful nav menu item classes.
  *
  * Adds class hooks to various nav menu items since child pseudo selectors

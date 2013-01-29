@@ -6,6 +6,7 @@
  */
 require( AUDIOTHEME_DIR . 'admin/dashboard.php' );
 require( AUDIOTHEME_DIR . 'admin/functions.php' );
+require( AUDIOTHEME_DIR . 'admin/includes/archives.php' );
 require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-settings.php' );
 include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater.php' );
 include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-plugin.php' );
@@ -23,19 +24,16 @@ function audiotheme_admin_setup() {
 	add_action( 'init', 'audiotheme_automatic_updates' );
 	add_action( 'init', 'audiotheme_settings_init' );
 	add_action( 'init', 'audiotheme_dashboard_init', 9 );
+	add_action( 'init', 'audiotheme_archive_pages_init' );
 
 	add_action( 'update_option_audiotheme_disable_directory_browsing', 'audiotheme_disable_directory_browsing_option_update', 10, 2 );
 
 	add_action( 'admin_enqueue_scripts', 'audiotheme_enqueue_admin_scripts' );
-	add_action( 'admin_head-nav-menus.php', 'audiotheme_nav_menu_admin_head');
 	add_action( 'admin_body_class', 'audiotheme_admin_body_class' );
 	add_filter( 'user_contactmethods', 'audiotheme_edit_user_contact_info' );
 
 	add_action( 'manage_pages_custom_column', 'audiotheme_display_custom_column', 10, 2 );
 	add_action( 'manage_posts_custom_column', 'audiotheme_display_custom_column', 10, 2 );
-
-	#add_filter( 'custom_menu_order', '__return_true' );
-	#add_filter( 'menu_order', 'audiotheme_admin_menu_order', 999 );
 
 	// Print javascript pointer object.
 	add_action( 'admin_print_footer_scripts', 'audiotheme_print_pointers' );
@@ -131,88 +129,6 @@ function audiotheme_save_htaccess() {
 function audiotheme_enqueue_admin_scripts() {
 	wp_enqueue_script( 'audiotheme-admin' );
 	wp_enqueue_style( 'audiotheme-admin' );
-}
-
-/**
- * Register Nave Menu Meta Box
- *
- * Registers the meta box for adding AudioTheme CPT archive links to nav
- * menus.
- *
- * @since 1.0.0
- */
-function audiotheme_nav_menu_admin_head() {
-	add_meta_box( 'add-audiotheme-archive-links', __( 'AudioTheme Pages', 'audiotheme-i18n' ), 'audiotheme_nav_menu_item_link_meta_box', 'nav-menus', 'side', 'default' );
-}
-
-/**
- * Nav Menu Meta Box for AudioTheme CPT Archives
- *
- * Adds a meta box to the nav menu screen for listing AudioTheme CPT archive
- * pages and allowing them to be easily included in nav menus. The CPTs should
- * hook into the `nav_menu_items_audiotheme_archive_pages` filter to add an
- * item to the list.
- *
- * @todo At some point, it would be nice to have these menu items
- * automatically reflect the post type archive link as it's changed without
- * worrying about the URL input, but the only way to currently do it requires
- * making the 'type' argument an empty string and that seems awfully flimsy.
- *
- * @link http://codeseekah.com/2012/03/01/custom-post-type-archives-in-wordpress-menus-2/
- *
- * @since 1.0.0
- */
-function audiotheme_nav_menu_item_link_meta_box( $object, $box ) {
-	global $_nav_menu_placeholder, $nav_menu_selected_id;
-	$_nav_menu_placeholder = ( 0 > $_nav_menu_placeholder ) ? intval( $_nav_menu_placeholder ) : -1;
-
-	$post_type_name = 'audiotheme_archive_pages';
-	?>
-	<div id="posttype-<?php echo $post_type_name; ?>" class="posttypediv">
-		<div id="<?php echo $post_type_name; ?>-all" class="tabs-panel tabs-panel-active">
-			<ul id="<?php echo $post_type_name; ?>checklist" class="list:<?php echo $post_type_name?> categorychecklist form-no-clear">
-				<?php
-				// Hooks returning items should return them as an array with 'title' and 'url' arguments
-				// array( 'title' => 'Custom Title', 'url' => 'Custom URL' )
-				$items = apply_filters( 'audiotheme_nav_menu_archive_items', array(), $box );
-
-				if ( $items ) {
-					// Transform the item array into a format expected by the nav walker
-					foreach ( $items as $key => $item ) {
-						$_nav_menu_placeholder --;
-
-						$items[ $key ] = (object) array(
-							'ID'           => 0,
-							'object'       => '',
-							'object_id'    => $_nav_menu_placeholder,
-							'post_title'   => $item['title'],
-							'post_type'    => 'nav_menu_item',
-							'post_content' => '',
-							'post_excerpt' => '',
-							'type'         => 'custom',
-							'url'          => $item['url'],
-						);
-					}
-
-					$items = audiotheme_sort_objects( $items, 'post_title', 'asc', false );
-				}
-
-				$args['walker'] = new Walker_Nav_Menu_Checklist( false );
-				echo walk_nav_menu_tree( array_map( 'wp_setup_nav_menu_item', $items ), 0, (object) $args );
-				?>
-			</ul>
-		</div><!-- /.tabs-panel -->
-
-		<p class="button-controls">
-			<span class="add-to-menu">
-
-				<input type="submit"<?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e( 'Add to Menu' ); ?>" name="add-post-type-menu-item" id="submit-posttype-<?php echo $post_type_name; ?>">
-				<?php audiotheme_admin_spinner( array( 'class' => 'waiting' ) ); ?>
-			</span>
-		</p>
-
-	</div><!-- /.posttypediv -->
-	<?php
 }
 
 /**

@@ -62,13 +62,11 @@ add_action( 'plugins_loaded', 'audiotheme_load' );
  */
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
+require( AUDIOTHEME_DIR . 'includes/general-template.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/media.php' );
 require( AUDIOTHEME_DIR . 'includes/options.php' );
 require( AUDIOTHEME_DIR . 'widgets/widgets.php' );
-
-// @todo For testing.
-require( AUDIOTHEME_DIR . 'archive-pages.php' );
 
 /**
  * Load admin-specific functions and libraries.
@@ -92,6 +90,7 @@ require( AUDIOTHEME_DIR . 'videos/videos.php' );
  */
 function audiotheme_load() {
 	// Default filters.
+	add_filter( 'post_type_archive_title', 'audiotheme_post_type_archive_title' );
 	add_filter( 'nav_menu_css_class', 'audiotheme_nav_menu_name_class', 1, 2 );
 	add_filter( 'get_pages', 'audiotheme_page_list' );
 	add_filter( 'page_css_class', 'audiotheme_page_list_classes', 10, 2 );

@@ -104,7 +104,7 @@ function audiotheme_gigs_init() {
  * @since 1.0.0
  */
 function audiotheme_gigs_rewrite_base() {
-	$base = get_option( 'audiotheme_gigs_rewrite_base' );
+	$base = get_option( 'audiotheme_gig_rewrite_base' );
 	return ( empty( $base ) ) ? 'shows' : $base;
 }
 
