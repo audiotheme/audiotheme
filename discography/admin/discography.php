@@ -26,11 +26,6 @@ add_action( 'init', 'audiotheme_load_discography_admin' );
  * @since 1.0.0
  */
 function audiotheme_load_discography_admin() {
-	// Update the discography rewrite base.
-	if ( isset( $_POST['audiotheme_discography_rewrite_base_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_discography_rewrite_base_nonce'], 'save-discography-rewrite-base' ) ) {
-		update_option( 'audiotheme_discography_rewrite_base', $_POST['audiotheme_discography_rewrite_base'] );
-	}
-
 	// Register AJAX admin actions.
 	add_action( 'wp_ajax_audiotheme_ajax_get_default_track', 'audiotheme_ajax_get_default_track' );
 
@@ -38,9 +33,7 @@ function audiotheme_load_discography_admin() {
 	add_action( 'load-themes.php', 'audiotheme_discography_setup' );
 
 	add_action( 'admin_menu', 'audiotheme_discography_admin_menu' );
-	add_action( 'admin_init', 'audiotheme_discography_admin_init' );
 	add_filter( 'post_updated_messages', 'audiotheme_discography_post_updated_messages' );
-	add_filter( 'audiotheme_nav_menu_archive_items', 'audiotheme_record_archive_menu_item' );
 
 	// Records
 	add_action( 'save_post', 'audiotheme_record_save_post' );
@@ -145,48 +138,4 @@ function audiotheme_discography_post_updated_messages( $messages ) {
 	);
 
 	return $messages;
-}
-
-/**
- * Register discography rewrite base setting.
- *
- * @since 1.0.0
- */
-function audiotheme_discography_admin_init() {
-	add_settings_field(
-		'audiotheme_discography_rewrite_base',
-		'<label for="audiotheme-discography-rewrite-base">' . __( 'Discography base', 'audiotheme-i18n' ) . '</label>',
-		'audiotheme_discography_rewrite_base_settings_field',
-		'permalink',
-		'optional'
-	);
-}
-
-/**
- * Callback for displaying the discography rewrite base field.
- *
- * @since 1.0.0
- */
-function audiotheme_discography_rewrite_base_settings_field() {
-	$discography_base = get_option( 'audiotheme_discography_rewrite_base' );
-	wp_nonce_field( 'save-discography-rewrite-base', 'audiotheme_discography_rewrite_base_nonce' );
-	?>
-	<input type="text" name="audiotheme_discography_rewrite_base" id="audiotheme-discography-rewrite-base" value="<?php echo esc_attr( $discography_base ); ?>" class="regular-text code">
-	<span class="description"><?php _e( 'Default is <code>music</code>.', 'audiotheme-i18n' ); ?></span>
-	<?php
-}
-
-/**
- * Add the discography archive link nav menu item to the custom AudioTheme Pages nav menu meta box.
- *
- * @since 1.0.0
- */
-function audiotheme_record_archive_menu_item( $items ) {
-	$items[] = array(
-		'title'     => _x( 'Discography', 'nav menu archive label' ),
-		'post_type' => 'audiotheme_record',
-		'url'       => get_post_type_archive_link( 'audiotheme_record' ),
-	);
-
-	return $items;
 }

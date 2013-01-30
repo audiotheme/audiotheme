@@ -24,20 +24,13 @@ add_action( 'init', 'audiotheme_gigs_admin_setup' );
 function audiotheme_gigs_admin_setup() {
 	global $pagenow;
 
-	// Update the gig rewrite base.
-	if ( isset( $_POST['audiotheme_gigs_rewrite_base_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_gigs_rewrite_base_nonce'], 'save-gigs-rewrite-base' ) ) {
-		update_option( 'audiotheme_gigs_rewrite_base', $_POST['audiotheme_gigs_rewrite_base'] );
-	}
-
 	// @todo Move these so they're always registered, not just in the admin.
 	add_action( 'save_post', 'audiotheme_gig_save_post', 10, 2 );
 	add_filter( 'get_edit_post_link', 'get_audiotheme_venue_edit_link', 10, 2 );
 	add_action( 'before_delete_post', 'audiotheme_gig_before_delete' );
 
 	add_action( 'admin_menu', 'audiotheme_gigs_admin_menu' );
-	add_action( 'admin_init', 'audiotheme_gigs_admin_init' );
 	add_filter( 'post_updated_messages', 'audiotheme_gig_post_updated_messages' );
-	add_filter( 'audiotheme_nav_menu_archive_items', 'audiotheme_gigs_archive_menu_item' );
 
 	// Register ajax admin actions.
 	add_action( 'wp_ajax_audiotheme_ajax_get_venue_matches', 'audiotheme_ajax_get_venue_matches' );
@@ -401,49 +394,4 @@ function audiotheme_gig_save_post( $post_id, $post ) {
 		update_post_meta( $post_id, '_audiotheme_tickets_price', $_POST['gig_tickets_price'] );
 		update_post_meta( $post_id, '_audiotheme_tickets_url', $_POST['gig_tickets_url'] );
 	}
-}
-
-/**
- * Register gigs rewrite base setting.
- *
- * @since 1.0.0
- */
-function audiotheme_gigs_admin_init() {
-	add_settings_field(
-		'audiotheme_gigs_rewrite_base',
-		'<label for="audiotheme-gigs-rewrite-base">' . __( 'Gigs base', 'audiotheme-i18n' ) . '</label>',
-		'audiotheme_gigs_rewrite_base_settings_field',
-		'permalink',
-		'optional'
-	);
-}
-
-/**
- * Callback for displaying the gigs rewrite base field.
- *
- * @since 1.0.0
- */
-function audiotheme_gigs_rewrite_base_settings_field() {
-	$gigs_base = get_option( 'audiotheme_gigs_rewrite_base' );
-	wp_nonce_field( 'save-gigs-rewrite-base', 'audiotheme_gigs_rewrite_base_nonce' );
-	?>
-	<input type="text" name="audiotheme_gigs_rewrite_base" id="audiotheme-gigs-rewrite-base" value="<?php echo esc_attr( $gigs_base ); ?>" class="regular-text code">
-	<span class="description"><?php _e( 'Default is <code>shows</code>.', 'audiotheme-i18n' ); ?></span>
-	<?php
-}
-
-/**
- * Add the gig archive link nav menu item to the custom AudioTheme Pages nav
- * menu meta box.
- *
- * @since 1.0.0
- */
-function audiotheme_gigs_archive_menu_item( $items ) {
-	$items[] = array(
-		'title'     => _x( 'Gigs', 'nav menu archive label' ),
-		'post_type' => 'audiotheme_gig',
-		'url'       => get_post_type_archive_link( 'audiotheme_gig' ),
-	);
-
-	return $items;
 }
