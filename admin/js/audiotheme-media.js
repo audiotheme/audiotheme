@@ -37,29 +37,33 @@ window.audiotheme = window.audiotheme || {};
  */
 jQuery(function($) {
 	var Attachment = wp.media.model.Attachment,
+		defaultExtensions = wp.Uploader.defaults.filters[0].extensions,
 		$control, $controlTarget, mediaControl;
 
 	mediaControl = {
-		// Initializes a new media manage or returns an existing frame.
-		// @see wp.media.featuredImage.frame()
-		frame: function() {
-			if ( this._frame )
-				return this._frame;
+		init: function() {
+			$('#wpbody').on('click', '.audiotheme-media-control-choose', function(e) {
+				var targetSelector;
 
-			this._frame = wp.media({
-				title: $control.data('title') || AudiothemeMediaControl.frameTitle,
-				library: {
-					type: $control.data('file-type') || 'image'
-				},
-				button: {
-					text: $control.data('update-text') || AudiothemeMediaControl.frameUpdateText
-				},
-				multiple: $control.data( 'select-multiple' ) || false
+				e.preventDefault();
+
+				$control = $(this).closest('.audiotheme-media-control');
+
+				targetSelector = $control.data('target') || '.audiotheme-media-control-target';
+				if ( 0 === targetSelector.indexOf('#') ) {
+					// Context doesn't matter if the selector is an ID.
+					$controlTarget = $( targetSelector );
+				} else {
+					// Search for other selectors within the context of the control.
+					$controlTarget = $control.find( targetSelector );
+				}
+				
+				if ( $control.data('upload-extensions') ) {
+					wp.Uploader.defaults.filters[0].extensions = $control.data('upload-extensions');
+				}
+
+				mediaControl.frame().open();
 			});
-
-			this._frame.on( 'open', this.updateLibrarySelection ).state('library').on( 'select', this.select );
-
-			return this._frame;
 		},
 
 		// Updates the control when an image is selected from the media library.
@@ -91,26 +95,29 @@ jQuery(function($) {
 
 			selection.reset( attachment ? [ attachment ] : [] );
 		},
+		
+		// Initializes a new media manage or returns an existing frame.
+		// @see wp.media.featuredImage.frame()
+		frame: function() {
+			if ( this._frame )
+				return this._frame;
 
-		init: function() {
-			$('#wpbody').on('click', '.audiotheme-media-control-choose', function(e) {
-				var targetSelector;
-
-				e.preventDefault();
-
-				$control = $(this).closest('.audiotheme-media-control');
-
-				targetSelector = $control.data('target') || '.audiotheme-media-control-target';
-				if ( 0 === targetSelector.indexOf('#') ) {
-					// Context doesn't matter if the selector is an ID.
-					$controlTarget = $( targetSelector );
-				} else {
-					// Search for other selectors within the context of the control.
-					$controlTarget = $control.find( targetSelector );
-				}
-
-				mediaControl.frame().open();
+			this._frame = wp.media({
+				title: $control.data('title') || AudiothemeMediaControl.frameTitle,
+				library: {
+					type: $control.data('file-type') || 'image'
+				},
+				button: {
+					text: $control.data('update-text') || AudiothemeMediaControl.frameUpdateText
+				},
+				multiple: $control.data( 'select-multiple' ) || false
 			});
+
+			this._frame.on( 'open', this.updateLibrarySelection ).on('close', function() {
+				wp.Uploader.defaults.filters[0].extensions = defaultExtensions;
+			}).state('library').on('select', this.select);;
+
+			return this._frame;
 		}
 	};
 

@@ -67,7 +67,8 @@
 			<div class="audiotheme-media-control audiotheme-input-append"
 				data-title="<?php esc_attr_e( 'Choose an MP3', 'audiotheme-i18n' ); ?>"
 				data-update-text="<?php esc_attr_e( 'Update MP3', 'audiotheme-i18n' ); ?>"
-				data-file-type="audio">
+				data-file-type="audio"
+				data-upload-extensions="mp3">
 				<input type="text" name="audiotheme_tracks[__i__][file_url]" id="track-file-url-__i__" placeholder="<?php esc_attr_e( 'File URL', 'audiotheme-i18n' ) ?>" value="{{ data.fileUrl }}" class="track-file-url widefat audiotheme-clear-on-add">
 				<a href="#" class="audiotheme-media-control-choose audiotheme-input-append-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>admin/images/music-note.png" width="12" height="12" alt="<?php esc_attr_e( 'Choose MP3', 'audiotheme-i18n' ); ?>"></a>
 			</div>
