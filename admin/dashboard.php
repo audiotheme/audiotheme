@@ -22,41 +22,6 @@ function audiotheme_dashboard_register_settings() {
 		'output' => 'Features should have fallbacks, CSS and JS may be able to be disabled here if the theme excplicitly removes support.'
 	) );
 
-
-	$section = $screen->add_section( 'archive_pages', __( 'AudioTheme Archive Pages' ), array(
-		'priority' => 20,
-		'callback' => 'audiotheme_dashboard_settings_archive_pages_section',
-	) );
-
-		$pages = get_posts( array(
-			'post_type'   => 'page',
-			'post_parent' => 0,
-			'post_status' => 'publish',
-			'orderby'     => 'title',
-			'order'       => 'asc',
-		) );
-
-		$page_choices = array( '' => '' );
-		if ( $pages ) {
-			foreach ( $pages as $page ) {
-				// @todo Exclude front page and blog page.
-				// @todo Try to filter those dropdowns to remove these pages.
-				$page_choices[ $page->ID ] = $page->post_title;
-			}
-		}
-
-		$screen->add_field( 'audiotheme_record', 'Discography Page', 'select', array(
-			'option_name'  => 'audiotheme_archive_pages',
-			'choices'      => $page_choices,
-			'description'  => ( $base = get_option( 'audiotheme_record_rewrite_base' ) ) ? 'Rewrite base: <code>' . $base . '</code>' : '',
-		) );
-
-		$screen->add_field( 'audiotheme_gig', 'Gigs Page', 'select', array(
-			'option_name'  => 'audiotheme_archive_pages',
-			'choices'      => $page_choices,
-			'description'  => ( $base = get_option( 'audiotheme_gig_rewrite_base' ) ) ? 'Rewrite base: <code>' . $base . '</code>' : '',
-		) );
-
 	$section = $screen->add_section( 'directory_browsing', __( 'Directory Browsing' ), array(
 		'priority' => 50,
 		#'callback' => 'audiotheme_dashboard_settings_archive_pages_section',
@@ -170,6 +135,8 @@ function audiotheme_dashboard_sort_menu() {
 	global $menu;
 
 	if ( $menu ) {
+		$menu = array_values( $menu ); // Re-key the array.
+
 		$separator = array( '', 'read', 'separator-before-audiotheme', '', 'wp-menu-separator' );
 		audiotheme_menu_insert_item( $separator, 'audiotheme', 'before' );
 
@@ -237,4 +204,3 @@ function audiotheme_submenu_move_after( $move_slug, $after_slug, $menu_slug ) {
 		}
 	}
 }
-?>

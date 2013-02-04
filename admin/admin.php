@@ -24,7 +24,7 @@ function audiotheme_admin_setup() {
 	add_action( 'init', 'audiotheme_automatic_updates' );
 	add_action( 'init', 'audiotheme_settings_init' );
 	add_action( 'init', 'audiotheme_dashboard_init', 9 );
-	add_action( 'init', 'audiotheme_archive_pages_init' );
+	add_action( 'init', 'audiotheme_archives_init_admin', 50 );
 
 	add_action( 'update_option_audiotheme_disable_directory_browsing', 'audiotheme_disable_directory_browsing_option_update', 10, 2 );
 

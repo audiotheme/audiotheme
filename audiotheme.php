@@ -60,6 +60,7 @@ add_action( 'plugins_loaded', 'audiotheme_load' );
 /**
  * Load additional helper functions and libraries.
  */
+require( AUDIOTHEME_DIR . 'includes/archives.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
 require( AUDIOTHEME_DIR . 'includes/general-template.php' );
@@ -90,7 +91,6 @@ require( AUDIOTHEME_DIR . 'videos/videos.php' );
  */
 function audiotheme_load() {
 	// Default filters.
-	add_filter( 'post_type_archive_title', 'audiotheme_post_type_archive_title' );
 	add_filter( 'nav_menu_css_class', 'audiotheme_nav_menu_name_class', 1, 2 );
 	add_filter( 'get_pages', 'audiotheme_page_list' );
 	add_filter( 'page_css_class', 'audiotheme_page_list_classes', 10, 2 );
@@ -107,6 +107,18 @@ function audiotheme_load() {
 
 	add_action( 'init', 'audiotheme_register_scripts' );
 	add_action( 'widgets_init', 'audiotheme_widgets_init' );
+
+	// Archive filters.
+	add_action( 'init', 'register_audiotheme_archives' );
+	add_filter( 'post_type_link', 'audiotheme_archives_post_type_link', 10, 3 );
+	add_filter( 'post_type_archive_link', 'audiotheme_archives_post_type_archive_link', 10, 2 );
+	add_filter( 'post_type_archive_title', 'audiotheme_archives_post_type_archive_title' );
+
+	add_action( 'post_updated', 'audiotheme_archives_post_updated', 10, 3 );
+	add_action( 'delete_post', 'audiotheme_archives_deleted_post' );
+
+	// Prevent the audiotheme_archive post type rules from being registered.
+	add_filter( 'audiotheme_archive_rewrite_rules', '__return_empty_array' );
 }
 
 /**

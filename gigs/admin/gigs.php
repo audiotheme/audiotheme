@@ -243,7 +243,7 @@ function audiotheme_gig_edit_screen_setup( $post ) {
 
 	// Add a customized submit meta box.
 	remove_meta_box( 'submitdiv', 'audiotheme_gig', 'side' );
-	add_meta_box( 'submitdiv', 'Publish', 'audiotheme_post_submit_meta_box', 'audiotheme_gig', 'side', 'high', array(
+	add_meta_box( 'submitdiv', __( 'Publish', 'audiotheme-i18n' ), 'audiotheme_post_submit_meta_box', 'audiotheme_gig', 'side', 'high', array(
 		'force_delete'      => false,
 		'show_publish_date' => false,
 		'show_statuses'     => array(),

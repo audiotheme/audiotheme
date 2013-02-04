@@ -6,6 +6,60 @@
  */
 
 /**
+ * Filter audiotheme_archive permalinks to match the corresponding post type's
+ * archive.
+ *
+ * @since 1.0.0
+ *
+ * @param string $permalink Default permalink.
+ * @param WP_Post $post Post object.
+ * @param bool $leavename Optional, defaults to false. Whether to keep post name.
+ * @return string Permalink.
+ */
+function audiotheme_archives_post_type_link( $permalink, $post, $leavename ) {
+	global $wp_rewrite;
+
+	if ( 'audiotheme_archive' == $post->post_type  ) {
+		$post_type = is_audiotheme_post_type_archive_id( $post->ID );
+		$post_type_object = get_post_type_object( $post_type );
+
+		if ( get_option( 'permalink_structure' ) ) {
+			$front = '/';
+			if ( isset( $post_type_object->rewrite ) && $post_type_object->rewrite['with_front'] ) {
+				$front = $wp_rewrite->front;
+			}
+
+			if ( $leavename ) {
+				$permalink = home_url( $front . '%postname%/' );
+			} else {
+				$permalink = home_url( $front . $post->post_name . '/' );
+			}
+		} else {
+			$permalink = add_query_arg( 'post_type', $post_type, home_url( '/' ) );
+		}
+	}
+
+	return $permalink;
+}
+
+/**
+ * Filter post type archive permalinks.
+ *
+ * @since 1.0.0
+ *
+ * @param string $link Post type archive link.
+ * @param string $post_type Post type name.
+ * @return string
+ */
+function audiotheme_archives_post_type_archive_link( $link, $post_type ) {
+	if ( $archive_id = get_audiotheme_post_type_archive( $post_type ) ) {
+		$link = get_permalink( $archive_id );
+	}
+
+	return $link;
+}
+
+/**
  * Filter the default post_type_archive_title() template tag and replace with
  * custom archive title.
  *
@@ -14,14 +68,15 @@
  * @param string $label Post type archive title.
  * @return string
  */
-function audiotheme_post_type_archive_title( $label ) {
+function audiotheme_archives_post_type_archive_title( $title ) {
 	$post_type_object = get_queried_object();
 
-	if ( $page = get_audiotheme_archive_page( $post_type_object->name ) ) {
-		$label = $page->post_title;
+	if ( $page_id = get_audiotheme_post_type_archive( $post_type_object->name ) ) {
+		$page = get_post( $page_id );
+		$title = $page->post_title;
 	}
 
-	return $label;
+	return $title;
 }
 
 /**
