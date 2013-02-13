@@ -7,15 +7,17 @@ function audiotheme_dashboard_init() {
 	add_action( 'audiotheme_register_settings', 'audiotheme_dashboard_register_settings' );
 	add_action( 'admin_menu', 'audiotheme_dashboard_admin_menu' );
 	add_action( 'admin_init', 'audiotheme_dashboard_sort_menu' );
+	
+	add_action( 'wp_ajax_audiotheme_ajax_activate_license', 'audiotheme_ajax_activate_license' );
 }
 
 function audiotheme_dashboard_register_settings() {
 	$screen = add_audiotheme_settings_screen( 'audiotheme-settings', __( 'Settings', 'audiotheme-i18n' ), array(
-		'menu_title'    => __( 'Settings', 'audiotheme-i18n' ),
-		'option_group'  => 'audiotheme_options',
-		'option_name'   => array( 'audiotheme_options', 'audiotheme_licenses', 'audiotheme_archive_pages', 'audiotheme_disable_directory_browsing' ),
-		'show_in_menu'  => 'audiotheme',
-		'capability'    => 'manage_options'
+		'menu_title'   => __( 'Settings', 'audiotheme-i18n' ),
+		'option_group' => 'audiotheme_options',
+		'option_name'  => array( 'audiotheme_options', 'audiotheme_license', 'audiotheme_disable_directory_browsing' ),
+		'show_in_menu' => 'audiotheme',
+		'capability'   => 'manage_options'
 	) );
 
 	$screen->add_field( 'settings_info', __( 'Info' ), 'html', array(
@@ -29,7 +31,7 @@ function audiotheme_dashboard_register_settings() {
 
 		$section->add_field( 'audiotheme_disable_directory_browsing', __( 'Directory Browsing' ), 'checkbox', array(
 			'option_name' => 'audiotheme_disable_directory_browsing',
-			'choices' => array(
+			'choices'     => array(
 				'1' => 'Disable directory browsing?',
 			),
 		) );
@@ -39,8 +41,8 @@ function audiotheme_dashboard_register_settings() {
 		'callback' => 'audiotheme_dashboard_settings_license_section'
 	) );
 
-		$section->add_field( 'framework_license', __( 'Framework License Key', 'audiotheme-i18n' ), 'audiotheme_dashboard_license_input', array(
-			'option_name' => 'audiotheme_licenses',
+		$section->add_field( 'audiotheme_license', __( 'License Key', 'audiotheme-i18n' ), 'audiotheme_dashboard_license_input', array(
+			'option_name' => 'audiotheme_license',
 		) );
 
 
@@ -50,14 +52,6 @@ function audiotheme_dashboard_register_settings() {
 		$tab->add_field( 'data', __( 'Installation Status', 'audiotheme-i18n' ), 'html', array(
 			'output' => 'Output the AudioTheme version, MySQL version, WordPress version, etc. for support. Maybe a field to dump a bunch of debug data for copying and pasting.'
 		) );
-}
-
-function audiotheme_dashboard_settings_archive_pages_section( $section ) {
-	?>
-	<p>
-		Archive pages allow you to customize your archives using a regular page. Change the title, add an intro, and even change the URL.
-	</p>
-	<?php
 }
 
 function audiotheme_dashboard_settings_license_section( $section ) {
@@ -79,11 +73,66 @@ function audiotheme_dashboard_license_input( $args ) {
 		esc_attr( $value )
 	);
 
-	echo '<input type="button" value="Check" class="audiotheme-settings-license-button button button-primary"> Good!';
+	echo '<input type="button" value="Check" class="audiotheme-settings-license-button button button-primary">';
 
-	echo '<br>Expires on: 12/31/2012. <a href="">Renew now?</a>';
+	#echo '<br><span class="description">Expires on: 12/31/2012. <a href="">Renew now?</a></span>';
 	$settings = get_audiotheme_settings();
 	echo $settings->get_field_description( $args );
+	?>
+	<script type="text/javascript">
+	var checkLicense;
+	
+	jQuery(function($) {
+		var $license = $('#audiotheme_license'),
+			$button = $license.parent().find('.button');
+		
+		$button.on('click', function(e) {
+			e.preventDefault();
+			
+			$.ajax({
+				url: ajaxurl,
+				type: 'POST',
+				data: {
+					action: 'audiotheme_ajax_activate_license',
+					license: $license.val()
+				},
+				dataType: 'json',
+				success: function( data ) {
+					data = data || {};
+					
+					if ( 'ok' == data.status ) {
+						$button.hide().after('Good!');
+					} else {
+						// ok|empty|unknown|invalid|expired|limit_reached|failed
+						$button.after('Error!');
+					}
+				}
+			});
+		});
+	});
+	</script>
+	<?php
+}
+
+/**
+ *
+ *
+ * @todo Update an option that stores the response.
+ * @todo Use a nonce.
+ */
+function audiotheme_ajax_activate_license() {
+	if ( isset( $_POST['license'] ) ) {
+		$updater = new Audiotheme_Updater( array( 'api_url'  => 'http://127.0.0.1/woocommerce/api/' ) );
+		$response = $updater->activate_license( $_POST['license'] );
+		
+		update_option( 'audiotheme_license_status', $response );
+		
+		if ( isset( $response->status ) && 'ok' == $response->status ) {
+			update_option( 'audiotheme_license', $_POST['license'] );
+		}
+		
+		wp_send_json( $response );
+	}
 }
 
 function audiotheme_dashboard_admin_menu() {
