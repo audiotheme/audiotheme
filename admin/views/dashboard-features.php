@@ -1,21 +1,21 @@
 <div class="wrap about-wrap audiotheme-dashboard audiotheme-dashboard-features">
 	<div class="audiotheme-dashboard-intro">
 		<h1>Welcome to AudioTheme</h1>
-		
+
 		<div class="about-text">
 			We've spent a good deal of time building a platform to allow bands, artists, musicians and labels to more easily manage their websites. This is the result. We're excited to have you try it out.
 		</div>
-		
-		<div class="wp-badge audiotheme-badge"><?php _e( sprintf( 'Version %s', AUDIOTHEME_VERSION ), 'audiotheme-i18n' ); ?></div>
+
+		<a href="http://audiotheme.com/" target="_blank" class="wp-badge audiotheme-badge"><?php _e( sprintf( 'Version %s', AUDIOTHEME_VERSION ), 'audiotheme-i18n' ); ?></a>
 	</div>
-	
+
 	<div class="audiotheme-about-banner">
 		<h2>Premium Websites for<br>Bands, Artists, Musicians &amp; Labels.</h2>
 		<p>
 			Let your site be heard.
 		</p>
 	</div>
-	
+
 	<div class="changelog">
 		<h3>Take Control of Your Content</h3>
 		<div class="feature-section col two-col">
@@ -27,7 +27,7 @@
 					Remember the days of having to rely on someone else to make updates to your website? Well, you can kiss those days (and that person) adios.
 				</p>
 			</div>
-			
+
 			<div class="last-feature">
 				<p>
 					With AudioTheme, you are the controller of all content posted to your site.
@@ -38,10 +38,10 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="changelog audiotheme-feature-section">
 		<img src="<?php echo AUDIOTHEME_URI; ?>admin/images/screenshots/gigs.jpg" class="stagger-right">
-		
+
 		<h3>Gigs &amp; Venues</h3>
 		<div class="feature-section">
 			<p>
@@ -55,10 +55,10 @@
 			</p>
 		</div>
 	</div>
-	
+
 	<div class="changelog audiotheme-feature-section">
 		<img src="<?php echo AUDIOTHEME_URI; ?>admin/images/screenshots/discography.jpg">
-		
+
 		<h3>Discography</h3>
 		<div class="feature-section">
 			<p>
@@ -72,10 +72,10 @@
 			</p>
 		</div>
 	</div>
-	
+
 	<div class="changelog audiotheme-feature-section">
 		<img src="<?php echo AUDIOTHEME_URI; ?>admin/images/screenshots/videos.jpg" class="stagger-right">
-		
+
 		<h3>Videos</h3>
 		<div class="feature-section">
 			<p>
@@ -89,5 +89,5 @@
 			</p>
 		</div>
 	</div>
-	
+
 </div><!--end div.wrap-->

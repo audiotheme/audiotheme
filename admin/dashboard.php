@@ -3,14 +3,26 @@
  * @todo Add a routine for sorting submenus by priority?
  */
 
+/**
+ * Setup the framework dashboard.
+ *
+ * @since 1.0.0
+ */
 function audiotheme_dashboard_init() {
 	add_action( 'audiotheme_register_settings', 'audiotheme_dashboard_register_settings' );
 	add_action( 'admin_menu', 'audiotheme_dashboard_admin_menu' );
 	add_action( 'admin_init', 'audiotheme_dashboard_sort_menu' );
-	
+
 	add_action( 'wp_ajax_audiotheme_ajax_activate_license', 'audiotheme_ajax_activate_license' );
+
+	add_action( 'update_option_audiotheme_license', 'audiotheme_license_option_update', 10, 2 );
 }
 
+/**
+ * Register default global settings.
+ *
+ * @since 1.0.0
+ */
 function audiotheme_dashboard_register_settings() {
 	$screen = add_audiotheme_settings_screen( 'audiotheme-settings', __( 'Settings', 'audiotheme-i18n' ), array(
 		'menu_title'   => __( 'Settings', 'audiotheme-i18n' ),
@@ -18,10 +30,6 @@ function audiotheme_dashboard_register_settings() {
 		'option_name'  => array( 'audiotheme_options', 'audiotheme_license', 'audiotheme_disable_directory_browsing' ),
 		'show_in_menu' => 'audiotheme',
 		'capability'   => 'manage_options'
-	) );
-
-	$screen->add_field( 'settings_info', __( 'Info' ), 'html', array(
-		'output' => 'Features should have fallbacks, CSS and JS may be able to be disabled here if the theme excplicitly removes support.'
 	) );
 
 	$section = $screen->add_section( 'directory_browsing', __( 'Directory Browsing' ), array(
@@ -54,87 +62,11 @@ function audiotheme_dashboard_register_settings() {
 		) );
 }
 
-function audiotheme_dashboard_settings_license_section( $section ) {
-	echo '';
-}
-
 /**
- * @todo Custom field callback for license key fields to activate and validate the keys without doing a post back. Should add elegant error reporting.
- * @todo Pass an arg that lets this routine determine whether or not a button should be output or a valid status message.
- */
-function audiotheme_dashboard_license_input( $args ) {
-	extract( $args );
-
-	$value = get_audiotheme_option( $option_name, $key, $default  );
-
-	printf( '<input type="text" name="%s" id="%s" value="%s" class="audiotheme-settings-license-text audiotheme-settings-text regular-text">',
-		esc_attr( $field_name ),
-		esc_attr( $field_id ),
-		esc_attr( $value )
-	);
-
-	echo '<input type="button" value="Check" class="audiotheme-settings-license-button button button-primary">';
-
-	#echo '<br><span class="description">Expires on: 12/31/2012. <a href="">Renew now?</a></span>';
-	$settings = get_audiotheme_settings();
-	echo $settings->get_field_description( $args );
-	?>
-	<script type="text/javascript">
-	var checkLicense;
-	
-	jQuery(function($) {
-		var $license = $('#audiotheme_license'),
-			$button = $license.parent().find('.button');
-		
-		$button.on('click', function(e) {
-			e.preventDefault();
-			
-			$.ajax({
-				url: ajaxurl,
-				type: 'POST',
-				data: {
-					action: 'audiotheme_ajax_activate_license',
-					license: $license.val()
-				},
-				dataType: 'json',
-				success: function( data ) {
-					data = data || {};
-					
-					if ( 'ok' == data.status ) {
-						$button.hide().after('Good!');
-					} else {
-						// ok|empty|unknown|invalid|expired|limit_reached|failed
-						$button.after('Error!');
-					}
-				}
-			});
-		});
-	});
-	</script>
-	<?php
-}
-
-/**
+ * Build the framework admin menu.
  *
- *
- * @todo Update an option that stores the response.
- * @todo Use a nonce.
+ * @since 1.0.0
  */
-function audiotheme_ajax_activate_license() {
-	if ( isset( $_POST['license'] ) ) {
-		$updater = new Audiotheme_Updater( array( 'api_url'  => 'http://127.0.0.1/woocommerce/api/' ) );
-		$response = $updater->activate_license( $_POST['license'] );
-		
-		update_option( 'audiotheme_license_status', $response );
-		
-		if ( isset( $response->status ) && 'ok' == $response->status ) {
-			update_option( 'audiotheme_license', $_POST['license'] );
-		}
-		
-		wp_send_json( $response );
-	}
-}
-
 function audiotheme_dashboard_admin_menu() {
 	$pagehook = add_menu_page(
 		__( 'AudioTheme', 'audiotheme-i18n' ),
@@ -165,21 +97,29 @@ function audiotheme_dashboard_admin_menu() {
 	);
 }
 
+/**
+ * Display the main dashboard screen.
+ *
+ * @since 1.0.0
+ */
 function audiotheme_dashboard_features_screen() {
 	include( AUDIOTHEME_DIR . 'admin/views/dashboard-features.php' );
 }
 
-function audiotheme_dashboard_addons_screen() {
-	include( AUDIOTHEME_DIR . 'admin/views/dashboard-addons.php' );
-}
-
+/**
+ * Display the dashboard help screen.
+ *
+ * @since 1.0.0
+ */
 function audiotheme_dashboard_help_screen() {
 	include( AUDIOTHEME_DIR . 'admin/views/dashboard-help.php' );
 }
 
-
-
-
+/**
+ * Sort the admin menu.
+ *
+ * @since 1.0.0
+ */
 function audiotheme_dashboard_sort_menu() {
 	global $menu;
 
@@ -196,8 +136,6 @@ function audiotheme_dashboard_sort_menu() {
 		audiotheme_submenu_move_after( 'audiotheme-settings', 'audiotheme', 'audiotheme' );
 	}
 }
-
-
 
 function audiotheme_menu_insert_item( $item, $relative_slug, $position = 'after' ) {
 	global $menu;

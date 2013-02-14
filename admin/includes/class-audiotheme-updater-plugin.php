@@ -48,7 +48,8 @@ class Audiotheme_Updater_Plugin extends Audiotheme_Updater {
 	}
 
 	/**
-	 *
+	 * String to determine whether an outgoing request is for a plugin update
+	 * check on WordPress.org.
 	 *
 	 * @since 1.0.0
 	 *
@@ -126,46 +127,33 @@ class Audiotheme_Updater_Plugin extends Audiotheme_Updater {
 			return;
 		}
 
+		$notice = '';
 		$api_response = get_transient( $this->transient_key() );
 
 		if ( isset( $api_response->status ) && 'ok' !== $api_response->status ) {
+			$notice_args = array();
+
+			// Determine if a new version is available.
 			if ( isset( $api_response->plugin->current_version ) && version_compare( $plugin_data['Version'], $api_response->plugin->current_version, '<' ) ) {
-				$update_available = true;
-				$notice = sprintf( _x( '%1$s %2$s is available.', 'plugin name and version', 'audiotheme-i18n' ), $plugin_data['Name'], $api_response->plugin->current_version ) . ' ';
+				$notice_args['prepend'] = sprintf( _x( '%1$s %2$s is available.', 'plugin name and version', 'audiotheme-i18n' ), $plugin_data['Name'], $api_response->plugin->current_version ) . ' ';
 			}
-
-			// Default notices.
-			$notices['empty_license']  = $notice . __( 'Register your copy to receive automatic updates and support. Need a license key?', 'audiotheme-i18n' ) . ' ';
-			$notices['empty_license'] .= sprintf( '<a href="%s">' . __( 'Purchase one now.', 'audiotheme-i18n' ) . '</a>', esc_url( $plugin_data['PluginURI'] ) );
-
-			$notices['invalid_license']  = $notice . __( 'Your license key appears to be invalid.', 'audiotheme-i18n' ) . ' ';
-			$notices['invalid_license'] .= sprintf( __( 'Verify that is has been <a href="%1$s">entered correctly</a> or <a href="%2$s">purchase one now.</a>', 'audiotheme-1i8n' ),
-				admin_url( 'options-general.php?page=wp-query-manager#show-settings-link' ),
-				esc_url( $plugin_data['PluginURI'] )
-			);
-
-			// @todo Can occur if the activation limit has been reached.
-			$notices['not_activated']  = $notice . __( 'Your license has not been activated for this site.', 'audiotheme-18n' );
-
-			$notices['expired_license']  = $notice . __( 'Your license has expired.', 'audiotheme-18n' ) . ' ';
-			$notices['expired_license'] .= sprintf( '<a href="%1$s">' . __( 'Renew here.', 'audiotheme-1i8n' ) . '</a>', esc_url( $plugin_data['PluginURI'] ) );
-
-			// @todo requires_purchase
-			// @todo wordpress_update_required
-
-			$notices['generic'] = __( 'An unexpected error occurred while checking the update server.', 'audiotheme-1i8n' );
 
 			// Merge default notices with the custom ones.
-			$notices = wp_parse_args( $this->notices, $notices );
+			$notices = wp_parse_args( $this->notices, $this->get_license_error_messages( $notice_args ) );
 
-			// Determine which notice to display and allow it to be filtered.
+			// @todo framework_update_required
+			// @todo wordpress_update_required
+
+			// Determine which notice to display.
 			$notice = ( isset( $notices[ $api_response->status ] ) ) ? $notices[ $api_response->status ] : $notices['generic'];
-			$notice = apply_filters( 'audiotheme_plugin_update_notice-' . $this->slug, $notice, $api_response, $plugin_data, $plugin_file );
+		}
 
-			// Finally display the notice.
-			if ( $notice ) {
-				echo '</tr><tr class="plugin-update-tr"><td class="plugin-update colspanchange" colspan="3"><div class="update-message">' . $notice . '</div></td>';
-			}
+		// Allow the notice to be filtered.
+		$notice = apply_filters( 'audiotheme_update_plugin_notice-' . $this->slug, $notice, $api_response, $plugin_data, $plugin_file );
+
+		// Finally display the notice.
+		if ( ! empty( $notice ) ) {
+			echo '</tr><tr class="plugin-update-tr"><td class="plugin-update colspanchange" colspan="3"><div class="update-message">' . $notice . '</div></td>';
 		}
 	}
 }

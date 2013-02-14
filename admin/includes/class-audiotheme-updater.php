@@ -1,5 +1,8 @@
 <?php
-abstract class Audiotheme_Updater {
+/**
+ *
+ */
+class Audiotheme_Updater {
 	/**
 	 * @var string
 	 */
@@ -36,12 +39,6 @@ abstract class Audiotheme_Updater {
 	protected $version;
 
 	/**
-	 * URI to determine if a default update check should be short-circuited.
-	 * @var array
-	 */
-	protected $default_api_uri;
-
-	/**
 	 * An associative array of update notices to display depending on the
 	 * server response.
 	 * @var array
@@ -70,8 +67,14 @@ abstract class Audiotheme_Updater {
 		}
 	}
 
-	abstract function init();
+	/**
+	 *
+	 */
+	public function init() { }
 
+	/**
+	 *
+	 */
 	public function get_wporg_update_uri() { }
 
 	/**
@@ -148,7 +151,7 @@ abstract class Audiotheme_Updater {
 	public function check_for_update( $source = 'transient' ) {
 		$response = ( 'transient' == $source ) ? get_transient( $this->transient_key() ) : false;
 
-		if ( ! $response ) {
+		if ( ! $response && apply_filters( 'do_audiotheme_update_request', true, $this ) ) {
 			$response = $this->api_request( array(
 				'entity' => $this->type,
 				'method' => 'update',
@@ -161,7 +164,8 @@ abstract class Audiotheme_Updater {
 				// If the response failed, try again in 3 hours.
 				set_transient( $this->transient_key(), $data, strtotime( '+3 hours' ) );
 			} else {
-				$response->wpargs->slug = $this->id; // Set the basename for the API. Unnecessary for themes.
+				// Set the basename for the API. Unnecessary for themes.
+				$response->wpargs->slug = $this->id;
 				set_transient( $this->transient_key(), $response, strtotime( '+12 hours' ) );
 			}
 		}
@@ -172,6 +176,24 @@ abstract class Audiotheme_Updater {
 		}
 
 		return $response->wpargs;
+	}
+
+	/**
+	 * Activate a license key.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $key License key.
+	 * @return object
+	 */
+	public function activate_license( $key ) {
+		$response = $this->api_request( array(
+			'entity'  => 'license',
+			'method'  => 'activate',
+			'license' => $key,
+		) );
+
+		return $response;
 	}
 
 	/**
@@ -189,9 +211,8 @@ abstract class Audiotheme_Updater {
 		global $wpdb;
 
 		$defaults = array(
-			'audiotheme' => '', // @todo Add AudioTheme version.
+			'audiotheme' => AUDIOTHEME_VERSION, // @todo Add AudioTheme version.
 			'language'   => WPLANG,
-			'license'    => 'a72fdacfb04efa15976ed843d0bc7fec', // @todo Add license key.
 			'mysql'      => $wpdb->db_version(),
 			'php'        => phpversion(),
 			'slug'       => $this->slug,
@@ -234,5 +255,54 @@ abstract class Audiotheme_Updater {
 	 */
 	protected function transient_key() {
 		return 'atup_' . $this->slug;
+	}
+
+	/**
+	 * Build default notices for license errors.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments to change output.
+	 * @return array
+	 */
+	public function get_license_error_messages( $args = array() ) {
+		$args = wp_parse_args( $args, array(
+			'prepend'     => '',
+
+			'account_url'   => 'http://audiotheme.com/my-account/',
+			'framework_url' => 'http://audiotheme.com/product/audiotheme/',
+			'product_url'   => 'http://audiotheme.com/',
+		) );
+
+		$messages['empty_license']  = $args['prepend'];
+		$messages['empty_license'] .= sprintf( __( '<a href="%s">Register your copy of AudioTheme</a> to receive automatic updates and support. Need a license key?', 'audiotheme-i18n' ),
+			esc_url( add_query_arg( 'page', 'audiotheme-settings', admin_url( 'admin.php' ) ) )
+		);
+		$messages['empty_license'] .= sprintf( ' <a href="%s">' . __( 'Purchase one now.', 'audiotheme-i18n' ) . '</a>',
+			esc_url( $args['framework_url'] )
+		);
+
+		$messages['invalid_license']  = $args['prepend'];
+		$messages['invalid_license']  = __( 'Your license key appears to be invalid.', 'audiotheme-i18n' ) . ' ';
+		$messages['invalid_license'] .= sprintf( __( 'Verify that is has been <a href="%1$s">entered correctly</a> or <a href="%2$s">purchase one now.</a>', 'audiotheme-1i8n' ),
+			esc_url( add_query_arg( 'page', 'audiotheme-settings', admin_url( 'admin.php' ) ) ),
+			esc_url( $args['framework_url'] )
+		);
+
+		$messages['not_activated']  = $args['prepend'];
+		$messages['not_activated']  = __( 'Your license has not been activated for this site.', 'audiotheme-18n' );
+		$messages['not_activated'] .= ' ' . sprintf( __( 'Manage your site activations in <a href="%s">your account on AudioTheme.com</a>.', 'audiotheme-i18n' ),
+			esc_url( $args['account_url'] )
+		);
+
+		$messages['expired_license']  = $args['prepend'];
+		$messages['expired_license']  = __( 'Your license has expired.', 'audiotheme-18n' ) . ' ';
+		$messages['expired_license'] .= sprintf( '<a href="%1$s">' . __( 'Renew here.', 'audiotheme-1i8n' ) . '</a>',
+			esc_url( $args['framework_url'] )
+		);
+
+		$messages['generic'] = __( 'An unexpected error occurred while checking the update server.', 'audiotheme-1i8n' );
+
+		return $messages;
 	}
 }
