@@ -7,8 +7,9 @@
  * Author: AudioTheme
  * Author URI: http://audiotheme.com
  * Requires at least: 3.4.2
- * License: GPLv2 or later
+ * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: audiotheme-i18n
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -29,7 +30,7 @@
  * @author AudioTheme
  * @link http://audiotheme.com/
  * @copyright Copyright 2012 AudioTheme
- * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2 or later
+ * @license GPL-2.0+
 */
 
 /**
@@ -48,15 +49,6 @@ if ( ! defined( 'AUDIOTHEME_DIR' ) )
 
 if ( ! defined( 'AUDIOTHEME_URI' ) )
     define( 'AUDIOTHEME_URI', plugin_dir_url( __FILE__ ) );
-
-/**
- * Begin setting up the framework during the after_setup_theme action.
- *
- * Ideally all functionality should be loaded via hooks so it can be disabled
- * or replaced by a theme or plugin if necessary.
- */
-add_action( 'after_setup_theme', 'audiotheme_load', 5 );
-add_action( 'after_setup_theme', 'audiotheme_load_admin', 5 );
 
 /**
  * Load additional helper functions and libraries.
@@ -82,26 +74,28 @@ require( AUDIOTHEME_DIR . 'videos/videos.php' );
 /**
  * AudioTheme setup.
  *
+ * Begin setting up the framework during the after_setup_theme action.
+ *
+ * Ideally all functionality should be loaded via hooks so it can be disabled
+ * or replaced by a theme or plugin if necessary.
+ *
  * @since 1.0.0
  */
 function audiotheme_load() {
 	// Default filters.
-	add_filter( 'nav_menu_css_class', 'audiotheme_nav_menu_name_class', 1, 2 );
+	add_action( 'init', 'audiotheme_register_scripts' );
+	add_action( 'widgets_init', 'audiotheme_widgets_init' );
+
+	add_filter( 'wp_get_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
+	add_filter( 'nav_menu_css_class', 'audiotheme_nav_menu_name_class', 10, 2 );
 	add_filter( 'get_pages', 'audiotheme_page_list' );
 	add_filter( 'page_css_class', 'audiotheme_page_list_classes', 10, 2 );
 	add_filter( 'dynamic_sidebar_params', 'audiotheme_widget_count_class' );
-
-	if ( ! is_admin() ) {
-		add_filter( 'wp_get_nav_menu_items', 'audiotheme_nav_menu_classes', 1, 3 );
-	}
 
 	// Media filters.
 	add_action( 'init', 'audiotheme_add_default_oembed_providers' );
 	add_filter( 'embed_oembed_html', 'audiotheme_oembed_html', 10, 4 );
 	add_filter( 'embed_handler_html', 'audiotheme_oembed_html', 10, 4 );
-
-	add_action( 'init', 'audiotheme_register_scripts' );
-	add_action( 'widgets_init', 'audiotheme_widgets_init' );
 
 	// Archive filters.
 	add_action( 'init', 'register_audiotheme_archives' );
@@ -115,6 +109,7 @@ function audiotheme_load() {
 	// Prevent the audiotheme_archive post type rules from being registered.
 	add_filter( 'audiotheme_archive_rewrite_rules', '__return_empty_array' );
 }
+add_action( 'after_setup_theme', 'audiotheme_load', 5 );
 
 /**
  * Load admin-specific functions and libraries.
@@ -132,6 +127,7 @@ function audiotheme_load_admin() {
 		audiotheme_admin_setup();
 	}
 }
+add_action( 'after_setup_theme', 'audiotheme_load_admin', 5 );
 
 /**
  * Register frontend scripts and styles for enqueuing when needed.
@@ -150,3 +146,19 @@ function audiotheme_register_scripts() {
 		'swfPath' => AUDIOTHEME_URI . 'includes/js'
 	) );
 }
+
+
+/**
+* Support localization for the plugin strings.
+*
+* @see http://www.geertdedeckere.be/article/loading-wordpress-language-files-the-right-way
+*
+* @since 1.0.0
+*/
+function audiotheme_l10n() {
+	$domain = 'audiotheme-i18n';
+	$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
+	load_textdomain( $domain, WP_LANG_DIR . '/audiotheme/' . $locale . '.mo' );
+	load_plugin_textdomain( $domain, false, AUDIOTHEME_DIR . 'languages/' );
+}
+add_action( 'init', 'audiotheme_l10n' );
