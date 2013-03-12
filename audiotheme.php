@@ -55,7 +55,8 @@ if ( ! defined( 'AUDIOTHEME_URI' ) )
  * Ideally all functionality should be loaded via hooks so it can be disabled
  * or replaced by a theme or plugin if necessary.
  */
-add_action( 'plugins_loaded', 'audiotheme_load' );
+add_action( 'after_setup_theme', 'audiotheme_load', 5 );
+add_action( 'after_setup_theme', 'audiotheme_load_admin', 5 );
 
 /**
  * Load additional helper functions and libraries.
@@ -69,12 +70,6 @@ require( AUDIOTHEME_DIR . 'includes/media.php' );
 require( AUDIOTHEME_DIR . 'includes/options.php' );
 require( AUDIOTHEME_DIR . 'widgets/widgets.php' );
 
-/**
- * Load admin-specific functions and libraries.
- */
-if ( is_admin() ) {
-	require( AUDIOTHEME_DIR . 'admin/admin.php' );
-}
 
 /**
  * Load AudioTheme CPTs and corresponding functionality.
@@ -119,6 +114,23 @@ function audiotheme_load() {
 
 	// Prevent the audiotheme_archive post type rules from being registered.
 	add_filter( 'audiotheme_archive_rewrite_rules', '__return_empty_array' );
+}
+
+/**
+ * Load admin-specific functions and libraries.
+ *
+ * Has to be loaded after the Theme Customizer in order to determine if the
+ * Settings API should be included while customizing a theme.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_load_admin() {
+	global $wp_customize;
+
+	if ( is_admin() || ( $wp_customize && $wp_customize->is_preview() ) ) {
+		require( AUDIOTHEME_DIR . 'admin/admin.php' );
+		audiotheme_admin_setup();
+	}
 }
 
 /**

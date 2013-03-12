@@ -115,9 +115,7 @@ function audiotheme_settings_init() {
 	add_action( 'admin_init', 'audiotheme_settings_register_wp_settings_api', 20 );
 
 	// Custom settings should be registered during this hook.
-	if ( is_admin() ) {
-		do_action( 'audiotheme_register_settings' );
-	}
+	do_action( 'audiotheme_register_settings' );
 }
 
 /**

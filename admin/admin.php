@@ -1,8 +1,7 @@
 <?php
 /**
- * Begin setting up admin functionality when the plugin is loaded.
+ *
  */
-add_action( 'plugins_loaded', 'audiotheme_admin_load' );
 
 /**
  * Admin Includes
@@ -23,7 +22,7 @@ require( AUDIOTHEME_DIR . 'admin/includes/settings-screens.php' );
  *
  * @since 1.0.0
  */
-function audiotheme_admin_load() {
+function audiotheme_admin_setup() {
 	add_action( 'init', 'audiotheme_admin_init' );
 	add_action( 'init', 'audiotheme_update' );
 	add_action( 'init', 'audiotheme_settings_init' );
