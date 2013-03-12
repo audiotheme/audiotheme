@@ -15,7 +15,8 @@ function audiotheme_dashboard_init() {
 
 	add_action( 'wp_ajax_audiotheme_ajax_activate_license', 'audiotheme_ajax_activate_license' );
 
-	add_action( 'update_option_audiotheme_license', 'audiotheme_license_option_update', 10, 2 );
+	add_action( 'audiotheme_update_response_error', 'audiotheme_license_clear_status' );
+	add_action( 'update_option_audiotheme_license_key', 'audiotheme_license_key_option_update', 10, 2 );
 }
 
 /**
@@ -27,7 +28,7 @@ function audiotheme_dashboard_register_settings() {
 	$screen = add_audiotheme_settings_screen( 'audiotheme-settings', __( 'Settings', 'audiotheme-i18n' ), array(
 		'menu_title'   => __( 'Settings', 'audiotheme-i18n' ),
 		'option_group' => 'audiotheme_options',
-		'option_name'  => array( 'audiotheme_options', 'audiotheme_license', 'audiotheme_disable_directory_browsing' ),
+		'option_name'  => array( 'audiotheme_options', 'audiotheme_license_key', 'audiotheme_disable_directory_browsing' ),
 		'show_in_menu' => 'audiotheme',
 		'capability'   => 'manage_options'
 	) );
@@ -49,8 +50,8 @@ function audiotheme_dashboard_register_settings() {
 		'callback' => 'audiotheme_dashboard_settings_license_section'
 	) );
 
-		$section->add_field( 'audiotheme_license', __( 'License Key', 'audiotheme-i18n' ), 'audiotheme_dashboard_license_input', array(
-			'option_name' => 'audiotheme_license',
+		$section->add_field( 'audiotheme_license_key', __( 'License Key', 'audiotheme-i18n' ), 'audiotheme_dashboard_license_input', array(
+			'option_name' => 'audiotheme_license_key',
 		) );
 
 

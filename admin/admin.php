@@ -48,7 +48,7 @@ function audiotheme_admin_setup() {
  * @since 1.0.0
  */
 function audiotheme_update() {
-	$license = get_option( 'audiotheme_license' );
+	$license = get_option( 'audiotheme_license_key' );
 
 	// Don't do the remote request if a license key hasn't been entered.
 	if ( ! $license ) {

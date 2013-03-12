@@ -170,9 +170,15 @@ class Audiotheme_Updater {
 			}
 		}
 
-		// Bail if the response status isn't 'ok' or there isn't a new version.
-		if ( ! isset( $response->status ) || 'ok' !== $response->status || ! isset( $response->wpargs->new_version ) || version_compare( $this->version, $response->wpargs->new_version, '>=' ) ) {
+		// Bail if the response status isn't 'ok'.
+		if ( ! isset( $response->status ) || 'ok' !== $response->status ) {
+			do_action( 'audiotheme_update_response_error', $response );
 			return false;
+		}
+		
+		// Bail if there isn't a new version.
+		if ( ! isset( $response->wpargs->new_version ) || version_compare( $this->version, $response->wpargs->new_version, '>=' ) ) {
+			
 		}
 
 		return $response->wpargs;
@@ -211,7 +217,7 @@ class Audiotheme_Updater {
 		global $wpdb;
 
 		$defaults = array(
-			'audiotheme' => AUDIOTHEME_VERSION, // @todo Add AudioTheme version.
+			'audiotheme' => AUDIOTHEME_VERSION,
 			'language'   => WPLANG,
 			'mysql'      => $wpdb->db_version(),
 			'php'        => phpversion(),
@@ -296,7 +302,7 @@ class Audiotheme_Updater {
 		);
 
 		$messages['expired_license']  = $args['prepend'];
-		$messages['expired_license']  = __( 'Your license has expired.', 'audiotheme-18n' ) . ' ';
+		$messages['expired_license']  = __( 'Your AudioTheme license has expired.', 'audiotheme-18n' ) . ' ';
 		$messages['expired_license'] .= sprintf( '<a href="%1$s">' . __( 'Renew here.', 'audiotheme-1i8n' ) . '</a>',
 			esc_url( $args['framework_url'] )
 		);
