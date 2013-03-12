@@ -75,8 +75,6 @@ function audiotheme_video_register_columns( $columns ) {
 	$image_column = array( 'audiotheme_image' => _x( 'Image', 'column name', 'audiotheme-i18n' ) );
 	$columns = audiotheme_array_insert_after_key( $columns, 'cb', $image_column );
 
-	$columns['taxonomy-audiotheme_video_type'] = _x( 'Types', 'column name', 'audiotheme-i18n' );
-
 	return $columns;
 }
 

@@ -50,36 +50,6 @@ function audiotheme_videos_init() {
 		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' ),
 		'taxonomies'             => array( 'post_tag' ),
 	) );
-
-	// Register the video type custom taxonomy.
-	register_taxonomy( 'audiotheme_video_type', 'audiotheme_video', array(
-		'hierarchical'                   => true,
-		'labels'                         => array(
-			'name'                       => _x( 'Video Types', 'taxonomy general name', 'audiotheme-i18n' ),
-			'singular_name'              => _x( 'Video Type', 'taxonomy singular name', 'audiotheme-i18n' ),
-			'search_items'               => __( 'Search Video Types', 'audiotheme-i18n' ),
-			'popular_items'              => __( 'Popular Video Types', 'audiotheme-i18n' ),
-			'all_items'                  => __( 'All Video Types', 'audiotheme-i18n' ),
-			'parent_item'                => __( 'Parent Video Type', 'audiotheme-i18n' ),
-			'parent_item_colon'          => __( 'Parent Video Type:', 'audiotheme-i18n' ),
-			'edit_item'                  => __( 'Edit Video Type', 'audiotheme-i18n' ),
-			'view_item'                  => __( 'View Video Type', 'audiotheme-i18n' ),
-			'update_item'                => __( 'Update Video Type', 'audiotheme-i18n' ),
-			'add_new_item'               => __( 'Add New Video Type', 'audiotheme-i18n' ),
-			'new_item_name'              => __( 'New Video Type Name', 'audiotheme-i18n' ),
-			'separate_items_with_commas' => __( 'Separate video types with commas', 'audiotheme-i18n' ),
-			'add_or_remove_items'        => __( 'Add or remove video types', 'audiotheme-i18n' ),
-			'choose_from_most_used'      => __( 'Choose from most used video types', 'audiotheme-i18n' ),
-			'menu_name'                  => __( 'Video Types', 'audiotheme-i18n' ),
-		),
-		'public'                         => true,
-		'query_var'                      => true,
-		'rewrite'                        => array( 'slug' => 'videos/type', 'with_front' => false ),
-		'show_admin_column'              => true,
-		'show_in_nav_menus'              => false,
-		'show_ui'                        => true,
-		'show_tagcloud'                  => false,
-	) );
 }
 
 /**
