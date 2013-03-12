@@ -1,7 +1,6 @@
 /**
  * Utility to show WP pointers added via audiotheme_enqueue_pointer().
  *
- * @todo This needs to be moved to a file that gets enqueued separately.
  * @todo Consider how to create tours.
  * @todo Build a method to use pointers as tooltips.
  */

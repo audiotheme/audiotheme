@@ -197,7 +197,6 @@ function audiotheme_settings_register_wp_settings_api() {
  * Enqueue thickbox functionality for selecting media files.
  *
  * @since 1.0.0
- * @todo Update for 3.5.
  */
 function audiotheme_settings_screen_load() {
 	wp_enqueue_media();

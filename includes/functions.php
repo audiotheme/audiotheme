@@ -76,7 +76,6 @@ function audiotheme_version_compare( $version, $version2, $operator = null ) {
  *
  * @since 1.0.0
  * @uses Audiotheme_Sort_Objects
- * @todo Hasn't been tested extensively.
  *
  * @param array $objects An array of objects to sort.
  * @param string $orderby The object property to sort on.

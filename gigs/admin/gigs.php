@@ -235,10 +235,10 @@ function audiotheme_gig_edit_screen_setup( $post ) {
 	if ( ! is_audiotheme_pointer_dismissed( 'at100_gigvenue_tz' ) ) {
 		wp_enqueue_style( 'wp-pointer' );
 
-		$pointer  = 'Be sure to set a timezone when you add new venues so you don\'t have to worry about converting dates and times.' . "\n\n";
-		$pointer .= 'It also gives your visitors the ability to subscribe to your events in their own timezones.' . "\n\n";
+		$pointer  = __( 'Be sure to set a timezone when you add new venues so you don\'t have to worry about converting dates and times.', 'audiotheme-i18n' ) . "\n\n";
+		$pointer .= __( 'It also gives your visitors the ability to subscribe to your events in their own timezones.', 'audiotheme-i18n' ) . "\n\n";
 		// $pointer_content .= '<a href="">Find out more.</a>'; // Maybe link this to a help section?
-		audiotheme_enqueue_pointer( 'at100_gigvenue_tz', 'Venue Timezones', $pointer, array( 'position' => 'top' ) );
+		audiotheme_enqueue_pointer( 'at100_gigvenue_tz', __( 'Venue Timezones', 'audiotheme-i18n' ), $pointer, array( 'position' => 'top' ) );
 	}
 
 	// Add a customized submit meta box.

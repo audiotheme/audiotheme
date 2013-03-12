@@ -190,12 +190,11 @@ function audiotheme_display_custom_column( $column_name, $post_id ) {
  * Custom User Contact Fields
  *
  * @since 1.0.0
- * @todo This may conflict with the WordPress SEO plugin.
  */
 function audiotheme_edit_user_contact_info( $contactmethods ) {
 	// Add contact options
-	$contactmethods['twitter'] = __( 'Twitter <span class="description">(username)</span>', 'audiotheme-i18n' );
-	$contactmethods['facebook'] = __( 'Facebook  <span class="description">(link)</span>', 'audiotheme-i18n' );
+	$contactmethods['twitter'] = __( 'Twitter Username', 'audiotheme-i18n' );
+	$contactmethods['facebook'] = __( 'Facebook URL', 'audiotheme-i18n' );
 
 	return $contactmethods;
 }

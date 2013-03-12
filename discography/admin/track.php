@@ -288,7 +288,6 @@ function audiotheme_edit_track_meta_boxes( $post ) {
  *
  * @since 1.0.0
  * @todo Consider appending the "Upload MP3" button to the field.
- * @todo Update to use 3.5 media frame.
  */
 function audiotheme_track_details_meta_box( $post ) {
 	wp_nonce_field( 'update-track_' . $post->ID, 'audiotheme_track_nonce' );

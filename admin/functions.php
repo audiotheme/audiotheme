@@ -403,7 +403,6 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
  * Displays the correct AJAX spinner depending on the version of WordPress.
  *
  * @since 1.0.0
- * @todo Most styles and scripts will need similar classes. Use spinner?
  *
  * @param array $args Array of args to modify output.
  * @return void|string Echoes spinner HTML or returns it.

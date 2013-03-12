@@ -5,9 +5,6 @@
  * @package AudioTheme_Framework
  *
  * @since 1.0.0
- *
- * @todo Account for a license?
- * @todo Create an abstract class to extend for each updater.
  */
 class Audiotheme_Updater_Theme extends Audiotheme_Updater {
 	/**

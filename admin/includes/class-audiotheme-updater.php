@@ -80,12 +80,12 @@ class Audiotheme_Updater {
 	/**
 	 * Disable update requests to wordpress.org for the entity.
 	 *
+	 * Inactive plugins/themes will still hit the wordpress.org API.
+	 *
 	 * @see http://markjaquith.wordpress.com/2009/12/14/excluding-your-plugin-or-theme-from-update-checks/
 	 * @see WP_Http::request()
 	 *
 	 * @since 1.0.0
-	 *
-	 * @todo Inactive plugins/themes will still hit the wordpress.org API.
 	 *
 	 * @param array $r Request args.
 	 * @param string $url URI resource.
@@ -98,7 +98,7 @@ class Audiotheme_Updater {
 			return $r; // Not an update request. Bail immediately.
 		}
 
-		$plural_type = $this->type . 's'; // @todo Kinda hacky.
+		$plural_type = $this->type . 's'; // Kinda hacky.
 
 		$entities = unserialize( $r['body'][ $plural_type ] );
 		unset( $themes[ $this->id ] );

@@ -76,8 +76,6 @@ jQuery(function($) {
 
 /**
  * Repeater
- *
- * @todo Convert actions (clear, remove, hide, show) to data attribute rather than classes.
  */
 (function($) {
 	// .audiotheme-clear-on-add will clear the value of a form element in a newly added row.

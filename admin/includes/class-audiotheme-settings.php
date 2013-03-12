@@ -8,8 +8,6 @@
  *
  * @since 1.0.0
  * @link http://core.trac.wordpress.org/ticket/18285
- *
- * @todo Implement a 'file' field type callback.
  */
 class Audiotheme_Settings {
 	/**
@@ -494,7 +492,6 @@ class Audiotheme_Settings {
 	 * Callback to render a color field.
 	 *
 	 * @since 1.0.0
-	 * @todo Use 'choices' arg to add palettes.
 	 *
 	 * @param array $args Setting field arguments.
 	 */

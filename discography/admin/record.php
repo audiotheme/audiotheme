@@ -267,7 +267,6 @@ function audiotheme_edit_record_meta_boxes( $post ) {
  * Tracklist editor.
  *
  * @since 1.0.0
- * @todo Update to use 3.5 media frame.
  */
 function audiotheme_edit_record_tracklist() {
 	global $post;

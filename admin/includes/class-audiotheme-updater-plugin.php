@@ -11,8 +11,6 @@ require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
  * @package AudioTheme_Framework
  *
  * @since 1.0.0
- *
- * @todo Account for a license?
  */
 class Audiotheme_Updater_Plugin extends Audiotheme_Updater {
 	/**
