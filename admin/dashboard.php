@@ -87,6 +87,7 @@ function audiotheme_dashboard_admin_menu() {
 		'audiotheme_dashboard_features_screen'
 	);
 
+	/*
 	add_submenu_page(
 		'audiotheme',
 		__( 'Help', 'audiotheme-i18n' ),
@@ -95,6 +96,7 @@ function audiotheme_dashboard_admin_menu() {
 		'audiotheme-help',
 		'audiotheme_dashboard_help_screen'
 	);
+	*/
 }
 
 /**
