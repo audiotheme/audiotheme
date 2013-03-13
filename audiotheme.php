@@ -57,6 +57,7 @@ require( AUDIOTHEME_DIR . 'includes/archives.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
 require( AUDIOTHEME_DIR . 'includes/general-template.php' );
+require( AUDIOTHEME_DIR . 'includes/less.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/media.php' );
 require( AUDIOTHEME_DIR . 'includes/options.php' );
@@ -84,6 +85,7 @@ require( AUDIOTHEME_DIR . 'videos/videos.php' );
 function audiotheme_load() {
 	// Default filters.
 	add_action( 'init', 'audiotheme_register_scripts' );
+	add_action( 'init', 'audiotheme_less_setup' );
 	add_action( 'widgets_init', 'audiotheme_widgets_init' );
 
 	add_filter( 'wp_get_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
