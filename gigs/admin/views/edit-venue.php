@@ -84,10 +84,7 @@
 									<th><label for="venue-timezone-string"><?php _e( 'Time zone', 'audiotheme-i18n' ) ?></label></th>
 									<td>
 										<select id="venue-timezone-string" name="audiotheme_venue[timezone_string]">
-											<?php
-											$tzstring = ( empty( $timezone_string ) ) ? get_option( 'timezone_string' ) : $timezone_string;
-											echo wp_timezone_choice( $tzstring );
-											?>
+											<?php echo audiotheme_timezone_choice( $timezone_string ); ?>
 										</select><br>
 										<span class="description">This is muy importante!</span>
 									</td>

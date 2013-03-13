@@ -157,6 +157,30 @@ class Audiotheme_Sort_Objects {
 }
 
 /**
+ * Gives a nicely formatted list of timezone strings.
+ *
+ * Strips the manual offsets from the default WordPress list.
+ *
+ * @since 1.0.0
+ * @uses wp_timezone_choice()
+ *
+ * @param string $selected_zone Selected Zone.
+ * @return string
+ */
+function audiotheme_timezone_choice( $selected_zone = null ) {
+	$selected = ( empty( $selected_zone ) ) ? get_option( 'timezone_string' ) : $selected_zone;
+	$choices = wp_timezone_choice( $selected );
+	
+	// Remove the manual offsets optgroup.
+	$pos = strrpos( $choices, '<optgroup' );
+	if ( false !== $pos ) {
+		$choices = substr( $choices, 0, $pos );
+	}
+	
+	return $choices;
+}
+
+/**
  * Display a variable for debugging.
  *
  * @since 1.0.0

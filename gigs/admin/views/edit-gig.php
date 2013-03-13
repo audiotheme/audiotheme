@@ -32,10 +32,7 @@
 				</div>
 
 				<select name="audiotheme_venue[timezone_string]" id="gig-venue-timezone">
-					<?php
-					$tzstring = ( empty( $timezone_string ) ) ? get_option( 'timezone_string' ) : $timezone_string;
-					echo wp_timezone_choice( $tzstring );
-					?>
+					<?php echo audiotheme_timezone_choice( $timezone_string ); ?>
 				</select>
 			</td>
 		</tr>
