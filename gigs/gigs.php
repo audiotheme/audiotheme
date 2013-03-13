@@ -87,8 +87,9 @@ function audiotheme_gigs_init() {
 	// Filter the query to make sure gigs are returned in a logical way.
 	add_action( 'pre_get_posts', 'audiotheme_gig_query' );
 
-	// Makes sure the correct template is loaded depending on the request.
+	// Make sure the correct template is loaded depending on the request.
 	add_action( 'template_redirect', 'audiotheme_gig_template_redirect' );
+	add_action( 'template_include', 'audiotheme_gig_template_include' );
 
 	// Filter default permalinks to return the custom format.
 	add_filter( 'post_type_link', 'audiotheme_gig_permalink', 10, 4 );
@@ -254,6 +255,26 @@ function audiotheme_gig_template_redirect() {
 		}
 		exit;
 	}
+}
+
+/**
+ * Load gig templates.
+ *
+ * Templates should be included in an /audiotheme/ directory within the theme.
+ *
+ * @since 1.0.0
+ *
+ * @param string $template Template path.
+ * @return string
+ */
+function audiotheme_gig_template_include( $template ) {
+	if ( is_post_type_archive( 'audiotheme_gig' ) ) {
+		$template = locate_template( 'audiotheme/archive-gig.php' );
+	} elseif ( is_singular( 'audiotheme_gig' ) ) {
+		$template = locate_template( 'audiotheme/single-gig.php' );
+	}
+	
+	return $template;
 }
 
 /**

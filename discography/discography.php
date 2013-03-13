@@ -95,6 +95,7 @@ function audiotheme_discography_init() {
 
 	add_filter( 'generate_rewrite_rules', 'audiotheme_discography_generate_rewrite_rules' );
 	add_action( 'pre_get_posts', 'audiotheme_discography_query' );
+	add_action( 'template_include', 'audiotheme_discography_template_include' );
 	add_filter( 'post_type_link', 'audiotheme_discography_permalinks', 10, 4 );
 	add_filter( 'post_type_archive_link', 'audiotheme_discography_archive_link', 10, 2 );
 }
@@ -152,6 +153,28 @@ function audiotheme_discography_query( $query ) {
 			$query->set( 'post_parent', absint( $_GET['post_parent'] ) );
 		}
 	}
+}
+
+/**
+ * Load discography templates.
+ *
+ * Templates should be included in an /audiotheme/ directory within the theme.
+ *
+ * @since 1.0.0
+ *
+ * @param string $template Template path.
+ * @return string
+ */
+function audiotheme_discography_template_include( $template ) {
+	if ( is_post_type_archive( 'audiotheme_record' ) ) {
+		$template = locate_template( 'audiotheme/archive-record.php' );
+	} elseif ( is_singular( 'audiotheme_record' ) ) {
+		$template = locate_template( 'audiotheme/single-record.php' );
+	} elseif ( is_singular( 'audiotheme_track' ) ) {
+		$template = locate_template( 'audiotheme/single-track.php' );
+	}
+	
+	return $template;
 }
 
 /**

@@ -50,6 +50,28 @@ function audiotheme_videos_init() {
 		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' ),
 		'taxonomies'             => array( 'post_tag' ),
 	) );
+	
+	add_action( 'template_include', 'audiotheme_video_template_include' );
+}
+
+/**
+ * Load video templates.
+ *
+ * Templates should be included in an /audiotheme/ directory within the theme.
+ *
+ * @since 1.0.0
+ *
+ * @param string $template Template path.
+ * @return string
+ */
+function audiotheme_video_template_include( $template ) {
+	if ( is_post_type_archive( 'audiotheme_video' ) ) {
+		$template = locate_template( 'audiotheme/archive-video.php' );
+	} elseif ( is_singular( 'audiotheme_video' ) ) {
+		$template = locate_template( 'audiotheme/single-video.php' );
+	}
+	
+	return $template;
 }
 
 /**
