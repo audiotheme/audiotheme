@@ -6,7 +6,6 @@
  * listed here show up as suggestions when the user types.
  *
  * @since 1.0.0
- * @todo Create an interface for registering new sources and icons.
  *
  * @return array
  */

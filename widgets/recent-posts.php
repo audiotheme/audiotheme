@@ -105,7 +105,6 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 					$output .= $args['before_title'];
 						$output .= $instance['title'];
 
-						// @todo Determine if the post type supports archive feeds before displaying.
 						if ( ! empty( $instance['show_feed_link'] ) ) {
 							$post_type_archive_feed_link = ( 'post' == $instance['post_type'] ) ? get_bloginfo( 'rss2_url' ) : get_post_type_archive_feed_link( $instance['post_type'] );
 							if ( $post_type_archive_feed_link ) {

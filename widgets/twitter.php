@@ -139,7 +139,7 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 		$instance['include_rts'] = isset( $new_instance['include_rts'] );
 		$instance['count'] = min( max( absint( $new_instance['count'] ), 1 ), 200 );
 
-		// @todo Fetch tweets in order to discover errors and display message
+		// Fetch tweets in order to discover errors and display message.
 		$tweets = $this->fetch_tweets( array_merge( $instance, array( 'force_refresh' => true ) ) );
 
 		return $instance;
@@ -220,7 +220,7 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 
 			if ( empty( $tweets ) ) {
 				// @todo Suggest something, check authorization, wait a little while.
-				return new WP_Error( 'no_tweets', __( "Uhh, there weren't any tweets.", 'audiotheme-i18n' ) );
+				return new WP_Error( 'no_tweets', __( "There weren't any tweets.", 'audiotheme-i18n' ) );
 			}
 		}
 

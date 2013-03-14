@@ -176,7 +176,8 @@ function audiotheme_settings_add_admin_menus() {
  * Change the capability required for modifying a particular option.
  *
  * @since 1.0.0
- * @todo http://make.wordpress.org/themes/2011/07/01/wordpress-3-2-fixing-the-edit_theme_optionsmanage_options-bug/
+ *
+ * @return string
  */
 function audiotheme_settings_page_capability() {
 	return 'manage_options';

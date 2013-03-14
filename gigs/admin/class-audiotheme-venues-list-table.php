@@ -114,7 +114,6 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 	 * Get the list of columns to display.
 	 *
 	 * @since 1.0.0
-	 * @todo Add a filter for add-ons.
 	 *
 	 * @return array
 	 */
@@ -143,7 +142,6 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 	 * Get the list of sortable columns.
 	 *
 	 * @since 1.0.0
-	 * @todo Add a filter for add-ons.
 	 *
 	 * @return array
 	 */
@@ -278,7 +276,6 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 	 * Display the venue name column along with any row actions.
 	 *
 	 * @since 1.0.0
-	 * @todo Add a filter for add-ons.
 	 *
 	 * @param WP_Post $item Venue post object.
 	 * @return string Column value.

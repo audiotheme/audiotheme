@@ -345,7 +345,7 @@ function audiotheme_record_details_meta_box( $post ) {
 	<table class="audiotheme-repeater" id="record-links">
 		<thead>
 			<tr>
-				<th colspan="2"><?php _e( 'Links', 'audiotheme_i18n' ); ?></th>
+				<th colspan="3"><?php _e( 'Links', 'audiotheme_i18n' ); ?></th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -359,6 +359,7 @@ function audiotheme_record_details_meta_box( $post ) {
 					);
 					?>
 				</td>
+				<td>&nbsp;</td>
 			</tr>
 		</tfoot>
 		<tbody class="audiotheme-repeater-items">
@@ -410,9 +411,9 @@ function audiotheme_record_details_meta_box( $post ) {
 	#record-links { width: 100%; border-spacing: 0;}
 	#record-links td { padding: 0 0 5px 0;}
 	#record-links th { text-align: left;}
-	#record-links tfoot td { padding-top: 5px; }
-	#record-links tfoot td a { float: right }
-	#record-links tfoot td .audiotheme-repeater-sort-warning { color: red }
+	#record-links tfoot td { padding-top: 5px;}
+	#record-links tfoot td a { float: right; margin-left: 10px;}
+	#record-links tfoot td .audiotheme-repeater-sort-warning { color: red;}
 	#record-links .column-action { padding: 0 0 0 5px;}
 	</style>
 	<?php

@@ -287,7 +287,6 @@ function audiotheme_edit_track_meta_boxes( $post ) {
  * Display track details meta box.
  *
  * @since 1.0.0
- * @todo Consider appending the "Upload MP3" button to the field.
  */
 function audiotheme_track_details_meta_box( $post ) {
 	wp_nonce_field( 'update-track_' . $post->ID, 'audiotheme_track_nonce' );

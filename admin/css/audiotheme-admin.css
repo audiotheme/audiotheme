@@ -102,7 +102,7 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 .js .audiotheme-settings-screen-has-tabs .tab-panel { display: none;}
 .js .audiotheme-settings-screen-has-tabs .tab-panel-active { display: block;}
 
-/* Error related styles; @todo Colors could be improved. */
+/* Error related styles */
 .audiotheme-settings-screen h2.nav-tab-wrapper a.nav-tab.audiotheme-settings-tab-has-error { background: #fff6f6; border-color: #eedddd;}
 .audiotheme-settings-screen h2.nav-tab-wrapper a.nav-tab-active.audiotheme-settings-tab-has-error { color: #464646; background: #fff; border-color: #ccc; border-bottom-color: #fff;}
 .audiotheme-settings-screen .form-table tr.audiotheme-settings-error td input { background-color: #fff6f6; border-color: #ee9999;}

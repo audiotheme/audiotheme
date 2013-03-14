@@ -171,14 +171,11 @@ function audiotheme_video_admin_post_thumbnail_html( $content, $post_id ) {
  * AJAX method to retrieve the thumbnail for a video.
  *
  * @since 1.0.0
- * @todo Display an error if it doesn't work.
- * @todo Use wp_send_json_success() or wp_send_json_failure()?
  */
 function audiotheme_ajax_get_video_oembed_data() {
 	global $post_id;
 
 	$post_id = absint( $_POST['post_id'] );
-
 	$json['post_id'] = $post_id;
 
 	add_filter( 'oembed_dataparse', 'audiotheme_parse_video_oembed_data', 1, 3 );

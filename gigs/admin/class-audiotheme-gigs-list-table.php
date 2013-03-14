@@ -319,7 +319,6 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 	 * Get the list of sortable columns.
 	 *
 	 * @since 1.0.0
-	 * @todo Add a filter for add-ons.
 	 *
 	 * @return array
 	 */
@@ -456,7 +455,6 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 	 * row actions based on capability.
 	 *
 	 * @since 1.0.0
-	 * @todo Clean up.
 	 *
 	 * @param WP_Post $item Gig post object.
 	 * @return string Column value.
@@ -473,27 +471,24 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 			$status
 		);
 
-		#$actions['edit'] = sprintf( '<a href="%s">Edit</a>', get_edit_post_link( $item->ID ) );
-
 		$post_type_object = get_post_type_object( $item->post_type );
 		$can_edit_post = current_user_can( $post_type_object->cap->edit_post, $item->ID );
-		#$actions = array();
+		
 		if ( $can_edit_post && 'trash' != $item->post_status ) {
-			$actions['edit'] = '<a href="' . get_edit_post_link( $item->ID, true ) . '" title="' . esc_attr( __( 'Edit this item' ) ) . '">' . __( 'Edit' ) . '</a>';
+			$actions['edit'] = '<a href="' . get_edit_post_link( $item->ID, true ) . '" title="' . esc_attr( __( 'Edit this item', 'audiotheme-i18n' ) ) . '">' . __( 'Edit', 'audiotheme-i18n' ) . '</a>';
 			#$actions['inline hide-if-no-js'] = '<a href="#" class="editinline" title="' . esc_attr( __( 'Edit this item inline' ) ) . '">' . __( 'Quick&nbsp;Edit' ) . '</a>';
 		}
 
 		if ( current_user_can( $post_type_object->cap->delete_post, $item->ID ) ) {
-			#$onclick = " onclick=\"return confirm('" . esc_js( sprintf( __( 'Are you sure you want to delete this %s?', 'audiotheme-i18n' ), strtolower( $post_type_object->labels->singular_name ) ) ) . "');\"";
-			#$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Delete this item permanently', 'audiotheme-i18n' ) ) . "' href='" . get_delete_post_link( $item->ID, '', true ) . "'$onclick>" . __( 'Delete Permanently', 'audiotheme-i18n' ) . "</a>";
 			if ( 'trash' == $item->post_status ) {
-				$actions['untrash'] = "<a title='" . esc_attr( __( 'Restore this item from the Trash', 'audiotheme-i18n' ) ) . "' href='" . wp_nonce_url( admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $item->ID ) ), 'untrash-' . $item->post_type . '_' . $item->ID ) . "'>" . __( 'Restore', 'audiotheme-i18n' ) . "</a>";
+				$actions['untrash'] = "<a title='" . esc_attr( __( 'Restore this item from the Trash', 'audiotheme-i18n' ) ) . "' href='" . wp_nonce_url( admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $item->ID ) ), 'untrash-post_' . $item->ID ) . "'>" . __( 'Restore', 'audiotheme-i18n' ) . "</a>";
 			} elseif ( EMPTY_TRASH_DAYS ) {
 				$actions['trash'] = "<a class='submitdelete' title='" . esc_attr( __( 'Move this item to the Trash', 'audiotheme-i18n' ) ) . "' href='" . get_delete_post_link( $item->ID ) . "'>" . __( 'Trash', 'audiotheme-i18n' ) . "</a>";
 			}
 
-			if ( 'trash' == $item->post_status || !EMPTY_TRASH_DAYS ) {
-				$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Delete this item permanently', 'audiotheme-i18n' ) ) . "' href='" . get_delete_post_link( $item->ID, '', true ) . "'>" . __( 'Delete Permanently', 'audiotheme-i18n' ) . "</a>";
+			if ( 'trash' == $item->post_status || ! EMPTY_TRASH_DAYS ) {
+				$onclick = " onclick=\"return confirm('" . esc_js( sprintf( __( 'Are you sure you want to delete this %s?', 'audiotheme-i18n' ), strtolower( $post_type_object->labels->singular_name ) ) ) . "');\"";
+				$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Delete this item permanently', 'audiotheme-i18n' ) ) . "' href='" . get_delete_post_link( $item->ID, '', true ) . "'$onclick>" . __( 'Delete Permanently', 'audiotheme-i18n' ) . "</a>";
 			}
 		}
 

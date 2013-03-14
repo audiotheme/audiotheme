@@ -4,8 +4,6 @@
  *
  * Display a list of upcoming gigs in a widget area.
  *
- * @todo Implement some caching.
- *
  * @package AudioTheme_Framework
  * @subpackage Widgets
  *
@@ -21,6 +19,10 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 	function __construct() {
 		$widget_options = array( 'classname' => 'widget_audiotheme_upcoming_gigs', 'description' => __( 'Display a list of upcoming gigs', 'audiotheme-i18n' ) );
 		parent::__construct( 'audiotheme-upcoming-gigs', __( 'Upcoming Gigs (AudioTheme)', 'audiotheme-i18n' ), $widget_options );
+		
+		add_action( 'save_post', array( $this, 'flush_group_cache' ) );
+		add_action( 'deleted_post', array( $this, 'flush_group_cache' ) );
+		add_action( 'switch_theme', array( $this, 'flush_group_cache' ) );
 	}
 
 	/**
@@ -32,6 +34,13 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 	 * @param array $instance Widget instance settings.
 	 */
 	function widget( $args, $instance ) {
+		$cache = (array) wp_cache_get( 'audiotheme_widget_upcoming_gigs', 'widget' );
+
+		if ( isset( $cache[ $this->id ] ) ) {
+			echo $cache[ $this->id ];
+			return;
+		}
+		
 		extract( $args );
 
 		$instance['title_raw'] = $instance['title'];
@@ -66,56 +75,60 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 		p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $loop );
 
 		// Add a class with the number of gigs to display.
-		echo preg_replace( '/class="([^"]+)"/', 'class="$1 widget-items-' . $instance['number'] . '"', $before_widget );
+		$output = preg_replace( '/class="([^"]+)"/', 'class="$1 widget-items-' . $instance['number'] . '"', $before_widget );
 
-			echo ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
+			$output .= ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
 
 			if ( $loop->have_posts() ) :
 
-				if ( ! $output = apply_filters( 'audiotheme_widget_upcoming_gigs_output', '', $instance, $args, $loop ) ) {
+				if ( ! $inside = apply_filters( 'audiotheme_widget_upcoming_gigs_output', '', $instance, $args, $loop ) ) {
 					while ( $loop->have_posts() ) :
 						$loop->the_post();
 
-						$output.= '<dl class="vevent" itemscope itemtype="http://schema.org/MusicEvent">';
+						$inside .= '<dl class="vevent" itemscope itemtype="http://schema.org/MusicEvent">';
 
 							$gig = get_audiotheme_gig();
 							$venue = get_audiotheme_venue( $gig->venue->ID );
 
-							$output.= get_audiotheme_gig_link( $gig, array( 'before' => '<dt>', 'after' => '</dt>' ) );
+							$inside .= get_audiotheme_gig_link( $gig, array( 'before' => '<dt>', 'after' => '</dt>' ) );
 
 							if ( audiotheme_gig_has_venue() ) {
-								$output.= '<dd class="location">';
+								$inside .= '<dd class="location">';
 									$location = get_audiotheme_gig_location( $gig );
-									$output.= '<a href="' . get_permalink( $gig->ID ) . '"><span class="gig-title">' . $location . '</span></a>';
-								$output.= '</dd>';
+									$inside .= '<a href="' . get_permalink( $gig->ID ) . '"><span class="gig-title">' . $location . '</span></a>';
+								$inside .= '</dd>';
 							}
 
-							$output.= '<dd class="date">';
-								$output.= sprintf( '<meta content="%s" itemprop="startDate">', get_audiotheme_gig_time( 'c' ) );
-								$output.= sprintf( '<time class="dtstart" datetime="%s">%s</time>',
+							$inside .= '<dd class="date">';
+								$inside .= sprintf( '<meta content="%s" itemprop="startDate">', get_audiotheme_gig_time( 'c' ) );
+								$inside .= sprintf( '<time class="dtstart" datetime="%s">%s</time>',
 									get_audiotheme_gig_time( 'c' ),
 									$instance['date_format']
 								);
-							$output.= '</dd>';
+							$inside .= '</dd>';
 
 							if ( ! empty( $gig->post_title ) && audiotheme_gig_has_venue() ) {
-								$output.= '<dd class="venue">' . esc_html( $venue->name ) . '</dd>';
+								$inside .= '<dd class="venue">' . esc_html( $venue->name ) . '</dd>';
 							}
 
 							if ( $gig_description = get_audiotheme_gig_description() ) {
-								$output.= '<dd class="description">' . wp_strip_all_tags( $gig_description ) . '</dd>';
+								$inside .= '<dd class="description">' . wp_strip_all_tags( $gig_description ) . '</dd>';
 							}
 
-						$output.= '</dl>';
+						$inside .= '</dl>';
 					endwhile;
 				}
 
 				wp_reset_postdata();
 			endif;
 
-			echo $output;
+			$output .= $inside;
 
-		echo $after_widget;
+		$output .= $after_widget;
+		echo $output;
+		
+		$cache[ $this->id ] = $output;
+		wp_cache_set( 'audiotheme_widget_upcoming_gigs', $cache, 'widget' );
 	}
 
 	/**
@@ -157,7 +170,32 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 
 		$instance['title'] = wp_strip_all_tags( $new_instance['title'] );
 		$instance['number'] = absint( $new_instance['number'] );
+		$this->flush_widget_cache();
 
 		return $instance;
+	}
+
+	/**
+	 * Remove a single upcoming gigs widget from the cache.
+	 *
+	 * @since 1.0.0
+	 */
+	function flush_widget_cache() {
+		$cache = (array) wp_cache_get( 'audiotheme_widget_upcoming_gigs', 'widget' );
+
+		if ( isset( $cache[ $this->id ] ) ) {
+			unset( $cache[ $this->id ] );
+		}
+
+		wp_cache_set( 'audiotheme_widget_upcoming_gigs', array_filter( $cache ), 'widget' );
+	}
+
+	/**
+	 * Flush the cache for all upcoming gigs widgets.
+	 *
+	 * @since 1.0.0
+	 */
+	function flush_group_cache() {
+		wp_cache_delete( 'audiotheme_widget_upcoming_gigs', 'widget' );
 	}
 }

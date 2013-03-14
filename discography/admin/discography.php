@@ -29,8 +29,8 @@ function audiotheme_load_discography_admin() {
 	// Register AJAX admin actions.
 	add_action( 'wp_ajax_audiotheme_ajax_get_default_track', 'audiotheme_ajax_get_default_track' );
 
-	// @todo Change this hook.
-	add_action( 'load-themes.php', 'audiotheme_discography_setup' );
+	// Set up the record type taxonomy.
+	add_action( 'admin_init', 'audiotheme_discography_setup' );
 
 	add_action( 'admin_menu', 'audiotheme_discography_admin_menu' );
 	add_filter( 'post_updated_messages', 'audiotheme_discography_post_updated_messages' );
@@ -67,7 +67,6 @@ function audiotheme_load_discography_admin() {
  * visited to ensure record types exist.
  *
  * @since 1.0.0
- * @todo Hook up elsewhere now that we're going the plugin route.
  */
 function audiotheme_discography_setup() {
 	if ( taxonomy_exists( 'audiotheme_record_type' ) ) {

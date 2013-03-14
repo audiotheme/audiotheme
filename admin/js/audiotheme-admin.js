@@ -20,9 +20,6 @@ jQuery(function($) {
  * To change the field that the media popup inserts the url to the selected
  * media item, add the following attribute with the id of the target element
  * as its value: data-insert-field="Target ID"
- *
- * @todo Test. The interval may not always be cleared when a popup is closed,
- *       so values may need to be reset when a popup is opened.
  */
 jQuery(function($) {
 	var audiothemeInsertField = null,

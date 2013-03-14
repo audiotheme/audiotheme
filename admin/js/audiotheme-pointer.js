@@ -1,8 +1,5 @@
 /**
  * Utility to show WP pointers added via audiotheme_enqueue_pointer().
- *
- * @todo Consider how to create tours.
- * @todo Build a method to use pointers as tooltips.
  */
 (function($) {
 	$.widget( 'audiotheme.pointer', $.wp.pointer, {
@@ -25,13 +22,11 @@
 		},
 
 		audiothemeDismiss: function( event ) {
-			/*
-			@todo Uncomment this to allow the pointer dismissal to be saved in user meta.
+			// Save the pointer dismissal to user meta.
 			jQuery.post( ajaxurl, {
 				pointer: this.options.audiothemeId,
 				action: 'dismiss-wp-pointer'
 			});
-			*/
 
 			this.options.disabled = true; // Prevents the pointer from being reopened.
 		},

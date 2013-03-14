@@ -1,6 +1,6 @@
 <?php
 /**
- * @todo Add a routine for sorting submenus by priority?
+ * 
  */
 
 /**
@@ -137,60 +137,5 @@ function audiotheme_dashboard_sort_menu() {
 		audiotheme_menu_move_item( 'edit.php?post_type=audiotheme_video', 'edit.php?post_type=audiotheme_record' );
 
 		audiotheme_submenu_move_after( 'audiotheme-settings', 'audiotheme', 'audiotheme' );
-	}
-}
-
-function audiotheme_menu_insert_item( $item, $relative_slug, $position = 'after' ) {
-	global $menu;
-
-	$relative_key = audiotheme_menu_get_item_key( $relative_slug );
-	$before = ( 'before' == $position ) ? $relative_key : $relative_key + 1;
-
-	array_splice( $menu, $before, 0, array( $item ) );
-}
-
-function audiotheme_menu_move_item( $move_slug, $relative_slug, $position = 'after' ) {
-	global $menu;
-
-	$move_key = audiotheme_menu_get_item_key( $move_slug );
-	$item = $menu[ $move_key ];
-	unset( $menu[ $move_key ] );
-
-	audiotheme_menu_insert_item( $item, $relative_slug, $position );
-}
-
-function audiotheme_menu_get_item_key( $menu_slug ) {
-	global $menu;
-
-	foreach ( $menu as $key => $item ) {
-		if ( $menu_slug == $item[2] ) {
-			return $key;
-		}
-	}
-
-	return false;
-}
-
-function audiotheme_submenu_move_after( $move_slug, $after_slug, $menu_slug ) {
-	global $submenu;
-
-	if ( isset( $submenu[ $menu_slug ] ) ) {
-		foreach ( $submenu[ $menu_slug ] as $key => $item ) {
-			if ( $item[2] == $move_slug ) {
-				$move_key = $key;
-			} elseif ( $item[2] == $after_slug ) {
-				$after_key = $key;
-			}
-		}
-
-		if ( isset( $move_key ) && isset( $after_key ) ) {
-			$move_item = $submenu[ $menu_slug ][ $move_key ];
-			unset( $submenu[ $menu_slug ][ $move_key ] );
-
-			// Need to account for the change in the the array with the previous unset.
-			$new_position = ( $move_key > $after_key ) ? $after_key + 1 : $after_key;
-
-			array_splice( $submenu[ $menu_slug ], $new_position, 0, array( $move_item ) );
-		}
 	}
 }

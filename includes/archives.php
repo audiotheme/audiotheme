@@ -11,9 +11,6 @@
  * @subpackage Archives
  *
  * @since 1.0.0
- *
- * @todo Add a new label to post types that should have a custom Archive label.
- * @todo Need to update nav menu classes to reflect when an archive page is the current item, parent, or ancestor.
  */
 
 /**

@@ -55,6 +55,5 @@ function audiotheme_p2p_load_core() {
 		require AUDIOTHEME_DIR . 'includes/lib/p2p/' . $file . '.php';
 	}
 
-	// @todo Can't use activation hook.
 	add_action( 'admin_init', array( 'P2P_Storage', 'install' ) );
 }

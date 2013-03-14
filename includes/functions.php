@@ -201,6 +201,8 @@ endif;
  * keys don't need to be preserved, although exact behavior of offset and
  * length is not duplicated.
  *
+ * @since 1.0.0
+ *
  * @version 1.0.0
  * @see array_splice()
  *
@@ -239,6 +241,8 @@ function audiotheme_array_asplice( $input, $offset, $length = 0, $replacement = 
 /**
  * Insert an element(s) after a particular value if it exists in an array.
  *
+ * @since 1.0.0
+ *
  * @version  1.0.0
  * @uses audiotheme_array_find()
  * @uses audiotheme_array_asplice()
@@ -265,6 +269,8 @@ function audiotheme_array_insert_after( $input, $needle, $insert ) {
  *
  * Use array_splice() if keys don't need to be maintained.
  *
+ * @since 1.0.0
+ *
  * @version 1.0.0
  * @uses audiotheme_array_key_find()
  * @uses audiotheme_array_asplice()
@@ -289,6 +295,8 @@ function audiotheme_array_insert_after_key( $input, $needle, $insert ) {
 /**
  * Find the position (not index) of a value in an array.
  *
+ * @since 1.0.0
+ *
  * @version 1.0.0
  * @see array_search()
  * @uses audiotheme_array_key_find()
@@ -310,6 +318,8 @@ function audiotheme_array_find( $needle, $haystack, $strict = false ) {
 
 /**
  * Find the position (not index) of a key in an array.
+ *
+ * @since 1.0.0
  *
  * @version 1.0.0
  * @see array_key_exists()
@@ -334,15 +344,17 @@ function audiotheme_array_key_find( $key, $search ) {
  * Use an ordered array to sort another array (the $order array values match
  * $input's keys).
  *
- * @version 1.0.0
- * @todo Implement a parameter to dictate how to sort the diff.
+ * @since 1.0.0
+ *
+ * @version 1.0.1
  *
  * @param array $array The array to sort.
  * @param array $order Array used for sorting. Values should match keys in $array.
  * @param string $keep_diff Optional. Whether to keep the difference of the two arrays if they don't exactly match and where to place the difference.
+ * @param string $diff_sort Optional. @todo Implement.
  * @return array The sorted array.
  */
-function audiotheme_array_sort_array( $array, $order, $keep_diff = 'bottom' ) {
+function audiotheme_array_sort_array( $array, $order, $keep_diff = 'bottom', $diff_sort = 'stable' ) {
 	$order = array_flip( $order );
 
 	// The difference should be tacked back on after sorting.

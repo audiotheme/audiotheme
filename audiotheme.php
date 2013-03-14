@@ -88,7 +88,7 @@ function audiotheme_load() {
 	add_action( 'init', 'audiotheme_less_setup' );
 	add_action( 'widgets_init', 'audiotheme_widgets_init' );
 
-	add_filter( 'wp_get_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
+	add_filter( 'wp_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
 	add_filter( 'nav_menu_css_class', 'audiotheme_nav_menu_name_class', 10, 2 );
 	add_filter( 'get_pages', 'audiotheme_page_list' );
 	add_filter( 'page_css_class', 'audiotheme_page_list_classes', 10, 2 );

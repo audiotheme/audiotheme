@@ -34,7 +34,6 @@ jQuery(function($) {
 			success: function( data ) {
 				$spinner.hide();
 
-				// @todo Do some error checking and reporting here.
 				WPSetThumbnailID( data.thumbnail_id );
 				WPSetThumbnailHTML( data.thumbnail_meta_box_html );
 			}

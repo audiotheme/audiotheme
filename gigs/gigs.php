@@ -94,6 +94,7 @@ function audiotheme_gigs_init() {
 	// Filter default permalinks to return the custom format.
 	add_filter( 'post_type_link', 'audiotheme_gig_permalink', 10, 4 );
 	add_filter( 'post_type_archive_link', 'audiotheme_gigs_archive_link', 10, 2 );
+	add_filter( 'get_edit_post_link', 'get_audiotheme_venue_edit_link', 10, 2 );
 }
 
 /**

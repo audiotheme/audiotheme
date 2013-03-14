@@ -335,8 +335,6 @@ class Audiotheme_Settings {
 	/**
 	 * Add a field.
 	 *
-	 * @todo Add more documentation.
-	 *
 	 * If the field $id and 'option_name' argument are equal, the option will
 	 * be stored as a string in the database. The 'option_name' must be
 	 * registered when the screen is added.
@@ -397,12 +395,12 @@ class Audiotheme_Settings {
 		$setting = array(
 			'screen'                  => $screen->screen_id,
 			'tab'                     => $tab_id,
-			'section'                 => $section_id, // If this is passed, it will be for the settings screen, unless the current screen is the customizer.
+			'section'                 => $section_id,  // If this is passed, it will be for the settings screen, unless the current screen is the customizer.
 			'type'                    => $type,
 
 			'option_name'             => $option_name,
-			'key'                     => $key, // The option array key. Used in the WordPress Settings API.
-			'id'                      => $id, // The $id argument in the customizer.
+			'key'                     => $key,         // The option array key. Used in the WordPress Settings API.
+			'id'                      => $id,          // The $id argument in the customizer.
 			'label'                   => $label,
 
 			'field_name'              => $id,
@@ -427,10 +425,10 @@ class Audiotheme_Settings {
 			$customizer = wp_parse_args( $args['customizer'], array(
 				'control'   => $type,
 				'transport' => 'refresh', // @see WP_Customize_Control->type
-				'type'      => 'option', // @see WP_Customize_Setting->type
+				'type'      => 'option',  // @see WP_Customize_Setting->type
 
-				// 'section'     => '', // Will override the settings section.
-				// 'priority'    => 10, // Overrides the priority passed as an $arg.
+				// 'section'     => '',   // Will override the settings section.
+				// 'priority'    => 10,   // Overrides the priority passed as an $arg.
 				// 'capability'  => 'edit_theme_options',
 			) );
 

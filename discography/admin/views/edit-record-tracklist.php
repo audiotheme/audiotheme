@@ -2,24 +2,29 @@
 	<thead>
 		<tr>
 			<th colspan="5"><?php _e( 'Tracks', 'audiotheme-i18n' ) ?></th>
-			<?php
-			// @todo Add a button to the table footer for adding tracks.
-			// @todo Only show if the user has the required capability.
-			?>
-			<th class="column-action"><a class="button audiotheme-repeater-add-item"><?php _e( 'Add Track', 'audiotheme-i18n' ) ?></a></th>
+			<th class="column-action">
+				<?php if ( current_user_can( 'publish_posts' ) ) : ?>
+					<a class="button audiotheme-repeater-add-item"><?php _e( 'Add Track', 'audiotheme-i18n' ) ?></a>
+				<?php endif; ?>
+			</th>
 		</tr>
 	</thead>
 
 	<tfoot>
-	    <tr class="audiotheme-repeater-sort-warning" style="display: none;">
-	    	<td colspan="6">
+	    <tr>
+	    	<td colspan="5">
 	    		<?php
-	    		printf( '<span>%1$s <em>%2$s</em></span>',
+	    		printf( '<span class="audiotheme-repeater-sort-warning" style="display: none">%1$s <em>%2$s</em></span>',
 	    			esc_html__( 'The order has been changed.', 'audiotheme-i18n' ),
 	    			esc_html__( 'Save your changes.', 'audiotheme-i18n' )
 	    		);
 	    		?>
 	    	</td>
+			<td class="column-action">
+				<?php if ( current_user_can( 'publish_posts' ) ) : ?>
+					<a class="button audiotheme-repeater-add-item"><?php _e( 'Add Track', 'audiotheme-i18n' ) ?></a>
+				<?php endif; ?>
+			</td>
 	    </tr>
 	</tfoot>
 
@@ -41,12 +46,13 @@
 .audiotheme-repeater .column-action .audiotheme-repeater-remove-item { opacity: .2;}
 .audiotheme-repeater .column-action .audiotheme-repeater-remove-item:hover { opacity: 1;}
 .audiotheme-repeater .audiotheme-show-on-add { display: none;}
-.audiotheme-repeater-sort-warning td { padding: 10px; color: #ff0000; border-top: 1px solid #dfdfdf; border-bottom: none;}
+.audiotheme-repeater-sort-warning { color: #ee0000;}
 
 .audiotheme-repeater .column-track-info { width: 48px; font-size: 12px; vertical-align: middle;}
 .audiotheme-repeater .column-track-info span { padding: 0 3px;}
 
 #record-tracklist.audiotheme-repeater tbody tr.audiotheme-repeater-active-item td { background: #ececec; border-top-color: #eee;}
+#record-tracklist.audiotheme-repeater tfoot td { padding: 5px 7px; background: #f5f5f5; border-top: 1px solid #dfdfdf;}
 #record-tracklist.audiotheme-repeater .ui-sortable-helper { background: #f9f9f9; border-top: 1px solid #dfdfdf; border-bottom: 1px solid #dfdfdf;}
 #record-tracklist.audiotheme-repeater .ui-sortable-helper td { border-top-width: 0; border-bottom-width: 0;}
 
@@ -92,20 +98,23 @@
 
 <script type="text/javascript">
 jQuery(function($) {
-	var tracklist = <?php echo ( empty( $tracks ) ) ? 'null' : json_encode( $tracks ); ?>;
+	var tracklist = <?php echo ( empty( $tracks ) ) ? 'null' : json_encode( $tracks ); ?>,
+		tracklistNonce = '<?php echo wp_create_nonce( 'get-default-track_' . $post->ID ); ?>';
 
-	// @todo Send and manage a nonce.
 	$('#record-tracklist').audiothemeRepeater({ items: tracklist })
 		.on('addItem.audiotheme', function( e, track ) {
 			$.ajax({
 				url: ajaxurl,
 				type: 'POST',
 				data: {
-					action: 'audiotheme_ajax_get_default_track'
+					action: 'audiotheme_ajax_get_default_track',
+					record: <?php echo $post->ID; ?>,
+					nonce: tracklistNonce
 				},
 				dataType: 'json',
 				success: function( data ) {
-					track.find('input.post-id').val( data.ID );
+					track.find('input.post-id').val( data.track.ID );
+					tracklistNonce = data.nonce;
 				}
 			});
 		});

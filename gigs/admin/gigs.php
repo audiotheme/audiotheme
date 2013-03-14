@@ -24,9 +24,7 @@ add_action( 'init', 'audiotheme_gigs_admin_setup' );
 function audiotheme_gigs_admin_setup() {
 	global $pagenow;
 
-	// @todo Move these so they're always registered, not just in the admin.
 	add_action( 'save_post', 'audiotheme_gig_save_post', 10, 2 );
-	add_filter( 'get_edit_post_link', 'get_audiotheme_venue_edit_link', 10, 2 );
 	add_action( 'before_delete_post', 'audiotheme_gig_before_delete' );
 
 	add_action( 'admin_menu', 'audiotheme_gigs_admin_menu' );
@@ -218,7 +216,6 @@ function audiotheme_gigs_manage_screen() {
  * to display the edit fields after the title.
  *
  * @since 1.0.0
- * @todo Register the pointers in a central location so they're easier to edit?
  *
  * @param WP_Post $post The gig post object being edited.
  */
