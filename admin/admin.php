@@ -165,7 +165,15 @@ function audiotheme_enqueue_admin_scripts() {
  * @return string
  */
 function audiotheme_admin_body_class( $class ) {
-	return ' ' . sanitize_html_class( get_current_screen()->id );
+	global $post;
+	
+	$class .= ' ' . sanitize_html_class( get_current_screen()->id );
+	
+	if ( 'audiotheme_archive' == get_current_screen()->id && $post_type = is_audiotheme_post_type_archive_id( $post->ID )) {
+		$class .= ' ' . $post_type . '-archive';
+	}
+	
+	return $class;
 }
 
 /**

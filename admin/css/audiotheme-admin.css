@@ -138,6 +138,7 @@ body.gigs_page_venues .search-box { margin-bottom: 8px;}
 #icon-audiotheme-gigs { background: transparent url(../images/icons32.png) no-repeat -71px -14px;}
 #icon-audiotheme-venues { background: transparent url(../images/icons32.png) no-repeat -371px -14px;}
 #icon-edit.icon32-posts-audiotheme_gallery { background: transparent url(../images/icons32.png) no-repeat -191px -14px;}
+.audiotheme_record-archive #icon-edit,
 #icon-edit.icon32-posts-audiotheme_record { background: transparent url(../images/icons32.png) no-repeat -131px -14px;}
 #icon-edit.icon32-posts-audiotheme_track { background: transparent url(../images/icons32.png) no-repeat -131px -14px;}
 #icon-edit.icon32-posts-audiotheme_video { background: transparent url(../images/icons32.png) no-repeat -191px -14px;}
