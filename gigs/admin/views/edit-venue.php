@@ -58,7 +58,7 @@
 							<table class="form-table" >
 								<tr>
 									<th><label for="venue-name"><?php _e( 'Name', 'audiotheme-i18n' ) ?></label></th>
-									<td><input type="text" name="audiotheme_venue[name]" id="venue-name" class="regular-text" value="<?php echo esc_attr( $name ); ?>"></td>
+									<td><input type="text" name="audiotheme_venue[name]" id="venue-name" class="regular-text" value="<?php esc_attr_e( $name ); ?>"></td>
 								</tr>
 								<tr>
 									<th><label for="venue-address"><?php _e( 'Address', 'audiotheme-i18n' ) ?></label></th>
@@ -66,19 +66,19 @@
 								</tr>
 								<tr>
 									<th><label for="venue-city"><?php _e( 'City', 'audiotheme-i18n' ) ?></label></th>
-									<td><input type="text" name="audiotheme_venue[city]" id="venue-city" class="regular-text" value="<?php echo esc_attr( $city ); ?>"></td>
+									<td><input type="text" name="audiotheme_venue[city]" id="venue-city" class="regular-text" value="<?php esc_attr_e( $city ); ?>"></td>
 								</tr>
 								<tr>
 									<th><label for="venue-state"><?php _e( 'State', 'audiotheme-i18n' ) ?></label></th>
-									<td><input type="text" name="audiotheme_venue[state]" id="venue-state" class="regular-text" value="<?php echo esc_attr( $state ); ?>"></td>
+									<td><input type="text" name="audiotheme_venue[state]" id="venue-state" class="regular-text" value="<?php esc_attr_e( $state ); ?>"></td>
 								</tr>
 								<tr>
 									<th><label for="venue-postal-code"><?php _e( 'Postal Code', 'audiotheme-i18n' ) ?></label></th>
-									<td><input type="text" name="audiotheme_venue[postal_code]" id="venue-postal-code" class="regular-text" value="<?php echo esc_attr( $postal_code ); ?>"></td>
+									<td><input type="text" name="audiotheme_venue[postal_code]" id="venue-postal-code" class="regular-text" value="<?php esc_attr_e( $postal_code ); ?>"></td>
 								</tr>
 								<tr>
 									<th><label for="venue-country"><?php _e( 'Country', 'audiotheme-i18n' ) ?></label></th>
-									<td><input type="text" name="audiotheme_venue[country]" id="venue-country" class="regular-text" value="<?php echo esc_attr( $country ); ?>"></td>
+									<td><input type="text" name="audiotheme_venue[country]" id="venue-country" class="regular-text" value="<?php esc_attr_e( $country ); ?>"></td>
 								</tr>
 								<tr>
 									<th><label for="venue-timezone-string"><?php _e( 'Time zone', 'audiotheme-i18n' ) ?></label></th>
@@ -86,7 +86,7 @@
 										<select id="venue-timezone-string" name="audiotheme_venue[timezone_string]">
 											<?php echo audiotheme_timezone_choice( $timezone_string ); ?>
 										</select><br>
-										<span class="description">This is muy importante!</span>
+										<span class="description"><?php _e( 'This is important.', 'audiotheme-i18n' ); ?></span>
 									</td>
 								</tr>
 								<tr>
@@ -95,7 +95,7 @@
 								</tr>
 								<tr>
 									<th><label for="venue-phone"><?php _e( 'Phone', 'audiotheme-i18n' ) ?></label></th>
-									<td><input type="text" name="audiotheme_venue[phone]" id="venue-phone" class="regular-text" value="<?php echo esc_attr( $phone ); ?>"></td>
+									<td><input type="text" name="audiotheme_venue[phone]" id="venue-phone" class="regular-text" value="<?php esc_attr_e( $phone ); ?>"></td>
 								</tr>
 							</table>
 						</div>
