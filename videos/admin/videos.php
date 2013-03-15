@@ -18,13 +18,10 @@ add_action( 'init', 'audiotheme_load_videos_admin' );
  */
 function audiotheme_load_videos_admin() {
 	add_action( 'save_post', 'audiotheme_video_save_post', 10, 2 );
-	add_action( 'delete_attachment', 'audiotheme_video_delete_attachment' );
-
 	add_action( 'wp_ajax_audiotheme_get_video_oembed_data', 'audiotheme_ajax_get_video_oembed_data' );
 
 	add_filter( 'post_updated_messages', 'audiotheme_video_post_updated_messages' );
 	add_filter( 'manage_edit-audiotheme_video_columns', 'audiotheme_video_register_columns' );
-	add_filter( 'audiotheme_nav_menu_archive_items', 'audiotheme_video_archive_menu_item' );
 	add_filter( 'admin_post_thumbnail_html', 'audiotheme_video_admin_post_thumbnail_html', 10, 2 );
 
 	wp_register_script( 'audiotheme-video-edit', AUDIOTHEME_URI . 'videos/admin/js/video-edit.js', array( 'jquery' ) );
@@ -262,40 +259,4 @@ function audiotheme_video_save_post( $post_id, $post ) {
 	if( isset( $_POST['_video_url'] ) ) {
 		update_post_meta( $post_id, '_audiotheme_video_url', esc_url_raw( $_POST['_video_url'] ) );
 	}
-}
-
-/**
- * Delete oEmbed thumbnail post meta if the associated attachment is deleted.
- *
- * @since 1.0.0
- *
- * @param int $attachment_id The ID of the attachment being deleted.
- */
-function audiotheme_video_delete_attachment( $attachment_id ) {
-	global $wpdb;
-
-	$post_id = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key='_audiotheme_oembed_thumbnail_id' AND meta_value=%d", $attachment_id ) );
-	if ( $post_id ) {
-		delete_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id' );
-		delete_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url' );
-	}
-}
-
-/**
- * Add a nav menu item to the custom AudioTheme archive meta box for the
- * video archive.
- *
- * @since 1.0.0
- *
- * @param array $items List of existing nav menu items.
- * @return array List of filtered nav menu items.
- */
-function audiotheme_video_archive_menu_item( $items ) {
-	$items[] = array(
-		'title'     => _x( 'Videos', 'nav menu archive label', 'audiotheme-i18n' ),
-		'post_type' => 'audiotheme_video',
-		'url'       => get_post_type_archive_link( 'audiotheme_video' ),
-	);
-
-	return $items;
 }

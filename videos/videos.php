@@ -7,17 +7,22 @@
  */
 
 /**
- * Load videos on init.
+ * Load the video template API.
  */
-add_action( 'init', 'audiotheme_videos_init' );
+require( AUDIOTHEME_DIR . 'videos/post-template.php' );
 
 /**
- * Register video post type and taxonomy and attach hooks to load related
- * functionality.
+ * Load the admin interface elements and functionality for videos.
+ */
+if ( is_admin() ) {
+	require( AUDIOTHEME_DIR . 'videos/admin/videos.php' );
+}
+
+/**
+ * Register video post type and attach hooks to load related functionality.
  *
  * @since 1.0.0
  * @uses register_post_type()
- * @uses register_taxonomy()
  */
 function audiotheme_videos_init() {
 	// Register the video custom post type.
@@ -50,9 +55,11 @@ function audiotheme_videos_init() {
 		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' ),
 		'taxonomies'             => array( 'post_tag' ),
 	) );
-	
+
 	add_action( 'template_include', 'audiotheme_video_template_include' );
+	add_action( 'delete_attachment', 'audiotheme_video_delete_attachment' );
 }
+add_action( 'init', 'audiotheme_videos_init' );
 
 /**
  * Load video templates.
@@ -70,18 +77,23 @@ function audiotheme_video_template_include( $template ) {
 	} elseif ( is_singular( 'audiotheme_video' ) ) {
 		$template = locate_template( 'audiotheme/single-video.php' );
 	}
-	
+
 	return $template;
 }
 
 /**
- * Load the video template API.
+ * Delete oEmbed thumbnail post meta if the associated attachment is deleted.
+ *
+ * @since 1.0.0
+ *
+ * @param int $attachment_id The ID of the attachment being deleted.
  */
-require( AUDIOTHEME_DIR . 'videos/post-template.php' );
+function audiotheme_video_delete_attachment( $attachment_id ) {
+	global $wpdb;
 
-/**
- * Load the admin interface elements and functionality for videos.
- */
-if ( is_admin() ) {
-	require( AUDIOTHEME_DIR . 'videos/admin/videos.php' );
+	$post_id = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key='_audiotheme_oembed_thumbnail_id' AND meta_value=%d", $attachment_id ) );
+	if ( $post_id ) {
+		delete_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id' );
+		delete_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url' );
+	}
 }
