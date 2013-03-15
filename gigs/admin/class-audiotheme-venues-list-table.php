@@ -149,6 +149,8 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 		$sortable_columns = array(
 			'name'          => array( 'title', true ), // True means its already sorted.
 			'city'          => array( 'city', false ),
+			'state'         => array( 'state', false ),
+			'country'       => array( 'country', false ),
 			'phone'         => array( 'phone', false ),
 			'contact_name'  => array( 'contact_name', false ),
 			'contact_phone' => array( 'contact_phone', false ),
