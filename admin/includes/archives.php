@@ -16,9 +16,6 @@
 /**
  * Setup archive posts for post types that have support.
  *
- * Support for a custom archive can be added by using:
- * add_post_type_support( 'post_type_name', 'archive' )
- *
  * @since 1.0.0
  */
 function audiotheme_archives_init_admin() {
@@ -89,7 +86,7 @@ function audiotheme_archives_admin_menu() {
  * Replace the submit meta box to remove unnecessary fields.
  *
  * @since 1.0.0
- * 
+ *
  * @param WP_Post $post Post object.
  */
 function audiotheme_archives_add_meta_boxes( $post ) {

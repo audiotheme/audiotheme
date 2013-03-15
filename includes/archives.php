@@ -14,7 +14,9 @@
  */
 
 /**
+ * Register archive post type and setup related functionality.
  *
+ * @since 1.0.0
  */
 function register_audiotheme_archives() {
 	$labels = array(

@@ -7,11 +7,6 @@
  */
 
 /**
- * Load videos admin on init.
- */
-add_action( 'init', 'audiotheme_load_videos_admin' );
-
-/**
  * Attach hooks for loading and managing videos in the admin dashboard.
  *
  * @since 1.0.0

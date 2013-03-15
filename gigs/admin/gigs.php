@@ -12,11 +12,6 @@
 require( AUDIOTHEME_DIR . 'gigs/admin/ajax.php' );
 
 /**
- * Load gigs admin on init.
- */
-add_action( 'init', 'audiotheme_gigs_admin_setup' );
-
-/**
  * Attach hooks for loading and managing gigs in the admin dashboard.
  *
  * @since 1.0.0
@@ -25,7 +20,6 @@ function audiotheme_gigs_admin_setup() {
 	global $pagenow;
 
 	add_action( 'save_post', 'audiotheme_gig_save_post', 10, 2 );
-	add_action( 'before_delete_post', 'audiotheme_gig_before_delete' );
 
 	add_action( 'admin_menu', 'audiotheme_gigs_admin_menu' );
 	add_filter( 'post_updated_messages', 'audiotheme_gig_post_updated_messages' );
@@ -308,26 +302,6 @@ function audiotheme_gig_tickets_meta_box( $post ) {
 }
 
 /**
- * Update a venue's cached gig count when gig is deleted.
- *
- * Determines if a venue's gig_count meta field needs to be updated
- * when a gig is deleted.
- *
- * @since 1.0.0
- *
- * @param int $post_id ID of the gig being deleted.
- */
-function audiotheme_gig_before_delete( $post_id ) {
-	if ( 'audiotheme_gig' == get_post_type( $post_id ) ) {
-		$gig = get_audiotheme_gig( $post_id );
-		if ( isset( $gig->venue->ID ) ) {
-			$count = get_audiotheme_venue_gig_count( $gig->venue->ID );
-			update_audiotheme_venue_gig_count( $gig->venue->ID, --$count );
-		}
-	}
-}
-
-/**
  * Process and save gig info when the CPT is saved.
  *
  * @since 1.0.0
@@ -349,7 +323,6 @@ function audiotheme_gig_save_post( $post_id, $post ) {
 	if ( isset( $_POST['gig_date'] ) && isset( $_POST['gig_time'] ) && current_user_can( $post_type_object->cap->edit_post, $post_id ) ) {
 		$venue = set_audiotheme_gig_venue( $post_id, $_POST['gig_venue'] );
 
-		// @todo Return error if date is invalid.
 		$dt = date_parse( $_POST['gig_date'] . ' ' . $_POST['gig_time'] );
 
 		// Date and time are always stored local to the venue.

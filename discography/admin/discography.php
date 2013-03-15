@@ -14,13 +14,6 @@ require( AUDIOTHEME_DIR . 'discography/admin/record.php' );
 require( AUDIOTHEME_DIR . 'discography/admin/track.php' );
 
 /**
- * Load discography admin on init.
- *
- * @since 1.0.0
- */
-add_action( 'init', 'audiotheme_load_discography_admin' );
-
-/**
  * Attach hooks for loading and managing discography in the admin dashboard.
  *
  * @since 1.0.0
@@ -48,7 +41,6 @@ function audiotheme_load_discography_admin() {
 
 	// Tracks
 	add_action( 'save_post', 'audiotheme_track_save_post' );
-	add_action( 'wp_unique_post_slug', 'audiotheme_track_unique_slug', 10, 6 );
 
 	// Manage Tracks screen.
 	add_filter( 'parse_query', 'audiotheme_tracks_admin_query' );

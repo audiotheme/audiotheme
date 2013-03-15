@@ -3,6 +3,7 @@
  * General template tags and functions.
  *
  * @package AudioTheme_Framework
+ * @subpackage Template
  */
 
 /**

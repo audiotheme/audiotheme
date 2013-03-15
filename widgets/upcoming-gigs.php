@@ -61,13 +61,13 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 			'meta_query'     => array(
 				array(
 					'key'     => '_audiotheme_gig_datetime',
-					'compare' => 'EXISTS'
+					'compare' => 'EXISTS',
 				),
 				array(
 					'key'     => '_audiotheme_gig_datetime',
 					'value'   => current_time( 'mysql' ),
 					'compare' => '>=',
-					'type'    => 'DATETIME'
+					'type'    => 'DATETIME',
 				),
 			),
 		) ) );

@@ -59,7 +59,6 @@ function audiotheme_videos_init() {
 	add_action( 'template_include', 'audiotheme_video_template_include' );
 	add_action( 'delete_attachment', 'audiotheme_video_delete_attachment' );
 }
-add_action( 'init', 'audiotheme_videos_init' );
 
 /**
  * Load video templates.

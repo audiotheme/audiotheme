@@ -34,7 +34,7 @@ function audiotheme_venues_manage_screen_setup() {
 }
 
 /**
- * Display the venue Manage Screen.
+ * Display the venue manage screen.
  *
  * @since 1.0.0
  */
@@ -70,7 +70,7 @@ function audiotheme_venues_manage_screen_notices() {
 }
 
 /**
- * Set up the venue Add/Edit Screen.
+ * Set up the venue add/edit screen.
  *
  * Add custom meta boxes, enqueue scripts and styles and process any actions.
  *
@@ -122,7 +122,6 @@ function audiotheme_venue_edit_screen_process_actions() {
 		}
 	}
 
-	// @todo Capability checks.
 	if ( ! empty( $action ) ) {
 		$venue_id = save_audiotheme_venue( $data );
 		$sendback = get_edit_post_link( $venue_id );
@@ -131,8 +130,6 @@ function audiotheme_venue_edit_screen_process_actions() {
 			$sendback = add_query_arg( 'message', 1, $sendback );
 		} elseif ( $venue_id && 'edit' == $action ) {
 			$sendback = add_query_arg( 'message', 2, $sendback );
-		} else {
-			// @todo Return error message.
 		}
 
 		wp_redirect( $sendback );
@@ -141,7 +138,7 @@ function audiotheme_venue_edit_screen_process_actions() {
 }
 
 /**
- * Display the venue Add/Edit screen.
+ * Display the venue add/edit screen.
  *
  * @since 1.0.0
  */
@@ -208,8 +205,6 @@ function audiotheme_venue_notes_meta_box( $post, $args ) {
  */
 function audiotheme_venue_submit_meta_box( $post ) {
 	$post = ( empty( $post ) ) ? get_default_post_to_edit( 'audiotheme_venue' ) : $post;
-
-	// @todo Improve capability handling and clean up.
 	$post_type = $post->post_type;
 	$post_type_object = get_post_type_object( $post_type );
 	$can_publish = current_user_can( $post_type_object->cap->publish_posts );

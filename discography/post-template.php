@@ -1,5 +1,12 @@
 <?php
 /**
+ * Discography template functions.
+ *
+ * @package AudioTheme_Framework
+ * @subpackage Template
+ */
+
+/**
  * Get record link sources.
  *
  * List of default outlets from which records can be purchased. The options

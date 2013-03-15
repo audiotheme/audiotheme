@@ -16,6 +16,8 @@
  * @see http://core.trac.wordpress.org/ticket/20663
  *
  * @since 1.0.0
+ *
+ * @return array
  */
 function audiotheme_image_size_names() {
 	return apply_filters( 'image_size_names_choose', array(
@@ -170,13 +172,13 @@ class Audiotheme_Sort_Objects {
 function audiotheme_timezone_choice( $selected_zone = null ) {
 	$selected = ( empty( $selected_zone ) ) ? get_option( 'timezone_string' ) : $selected_zone;
 	$choices = wp_timezone_choice( $selected );
-	
+
 	// Remove the manual offsets optgroup.
 	$pos = strrpos( $choices, '<optgroup' );
 	if ( false !== $pos ) {
 		$choices = substr( $choices, 0, $pos );
 	}
-	
+
 	return $choices;
 }
 
@@ -372,4 +374,17 @@ function audiotheme_array_sort_array( $array, $order, $keep_diff = 'bottom', $di
 	}
 
 	return $sorted;
+}
+
+/**
+* Helper function to determine if a shortcode attribute is true or false.
+*
+* @since 1.0.0
+*
+* @param string|int|bool $var Attribute value.
+* @return bool
+*/
+function audiotheme_shortcode_bool( $var ) {
+	$falsey = array( 'false', '0', 'no', 'n' );
+	return ( ! $var || in_array( strtolower( $var ), $falsey ) ) ? false : true;
 }

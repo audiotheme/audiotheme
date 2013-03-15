@@ -1,46 +1,17 @@
 <?php
 /**
- * Ensure track slugs are unique.
+ * Track admin functionality.
  *
- * Tracks should always be associated with a record so their slugs only need
- * to be unique within the context of a record.
- *
- * @since 1.0.0
- * @see wp_unique_post_slug()
+ * @package AudioTheme_Framework
+ * @subpackage Discography
  */
-function audiotheme_track_unique_slug( $slug, $post_ID, $post_status, $post_type, $post_parent, $original_slug = null ) {
-	global $wpdb, $wp_rewrite;
-
-	if ( 'audiotheme_track' == $post_type ) {
-		$slug = $original_slug;
-
-		$feeds = $wp_rewrite->feeds;
-		if ( ! is_array( $feeds ) ) {
-			$feeds = array();
-		}
-
-		// Make sure the track slug is unique within the context of the record only.
-		$check_sql = "SELECT post_name FROM $wpdb->posts WHERE post_name=%s AND post_type=%s AND post_parent=%d AND ID!=%d LIMIT 1";
-		$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug, $post_type, $post_parent, $post_ID ) );
-
-		if ( $post_name_check || apply_filters( 'wp_unique_post_slug_is_bad_flat_slug', false, $slug, $post_type ) ) {
-			$suffix = 2;
-			do {
-				$alt_post_name = substr( $slug, 0, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
-				$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $alt_post_name, $post_type, $post_parent, $post_ID ) );
-				$suffix++;
-			} while ( $post_name_check );
-			$slug = $alt_post_name;
-		}
-	}
-
-	return $slug;
-}
 
 /**
  * Custom sort tracks on the Manage Tracks screen.
  *
  * @since 1.0.0
+ *
+ * @param object $wp_query The main WP_Query object. Passed by reference.
  */
 function audiotheme_tracks_admin_query( $wp_query ) {
 	if ( isset( $_GET['post_type'] ) && 'audiotheme_track' == $_GET['post_type'] ) {
@@ -102,6 +73,7 @@ function audiotheme_track_register_columns( $columns ) {
  * @since 1.0.0
  *
  * @param array $columns Column query vars with their corresponding column id as the key.
+ * @return array
  */
 function audiotheme_track_register_sortable_columns( $columns ) {
 	$columns['artist'] = 'artist';
@@ -168,6 +140,10 @@ function audiotheme_track_display_columns( $column_name, $post_id ) {
  * Remove quick edit from the track list table.
  *
  * @since 1.0.0
+ *
+ * @param array $actions List of actions.
+ * @param WP_Post $post A post.
+ * @return array
  */
 function audiotheme_track_list_table_actions( $actions, $post ) {
 	if ( 'audiotheme_track' == get_post_type( $post ) ) {
@@ -191,6 +167,9 @@ function audiotheme_track_list_table_bulk_actions( $actions ) {
  * Custom track filter dropdowns.
  *
  * @since 1.0.0
+ *
+ * @param array $actions List of actions.
+ * @return array
  */
 function audiotheme_tracks_filters() {
 	global $wpdb;
@@ -222,6 +201,8 @@ function audiotheme_tracks_filters() {
  * Custom rules for saving a track.
  *
  * @since 1.0.0
+ *
+ * @param int $post_id Post ID.
  */
 function audiotheme_track_save_post( $post_id ) {
 	$is_autosave = ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ? true : false;
@@ -251,10 +232,12 @@ function audiotheme_track_save_post( $post_id ) {
  * Register track meta boxes.
  *
  * @since 1.0.0
+ *
+ * @param int $post_id Track ID.
  */
 function audiotheme_edit_track_meta_boxes( $post ) {
 	wp_enqueue_script( 'audiotheme-media' );
-	
+
 	remove_meta_box( 'submitdiv', 'audiotheme_track', 'side' );
 
 	add_meta_box(
@@ -287,13 +270,15 @@ function audiotheme_edit_track_meta_boxes( $post ) {
  * Display track details meta box.
  *
  * @since 1.0.0
+ *
+ * @param WP_Post $post The track post object being edited.
  */
 function audiotheme_track_details_meta_box( $post ) {
 	wp_nonce_field( 'update-track_' . $post->ID, 'audiotheme_track_nonce' );
 	?>
 	<p class="audiotheme-meta-field">
 		<label for="track-artist"><?php _e( 'Artist:', 'audiotheme-i18n' ) ?></label>
-		<input type="text" name="artist" id="track-artist" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_artist', true ) ) ; ?>" class="widefat">
+		<input type="text" name="artist" id="track-artist" value="<?php esc_attr_e( get_post_meta( $post->ID, '_audiotheme_artist', true ) ) ; ?>" class="widefat">
 	</p>
 
 	<p class="audiotheme-meta-field audiotheme-media-control audiotheme-meta-field-upload"
@@ -303,7 +288,7 @@ function audiotheme_track_details_meta_box( $post ) {
 		data-return-property="url"
 		data-file-type="audio">
 		<label for="track-file-url"><?php _e( 'Audio File URL:', 'audiotheme-i18n' ) ?></label>
-		<input type="url" name="file_url" id="track-file-url" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_file_url', true ) ) ; ?>" class="widefat">
+		<input type="url" name="file_url" id="track-file-url" value="<?php esc_attr_e( get_post_meta( $post->ID, '_audiotheme_file_url', true ) ) ; ?>" class="widefat">
 
 		<input type="checkbox" name="is_downloadable" id="track-is-downlodable" value="1"<?php checked( get_post_meta( $post->ID, '_audiotheme_is_downloadable', true ) ); ?>>
 		<label for="track-is-downloadable"><?php _e( 'Allow downloads?', 'audiotheme-i18n' ) ?></label>

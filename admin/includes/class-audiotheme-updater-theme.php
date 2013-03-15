@@ -1,6 +1,6 @@
 <?php
 /**
- * The plugin update class for AudioTheme.
+ * The theme update class for AudioTheme.
  *
  * @package AudioTheme_Framework
  *
@@ -139,8 +139,7 @@ class Audiotheme_Updater_Theme extends Audiotheme_Updater {
 			// Merge default notices with the custom ones.
 			$notices = wp_parse_args( $this->notices, $this->get_license_error_messages( $notice_args ) );
 
-			// @todo framework_update_required
-			// @todo wordpress_update_required
+			// @todo framework_update_required & wordpress_update_required
 
 			// Determine which notice to display.
 			$notice = ( isset( $api_response->status ) && isset( $notices[ $api_response->status ] ) ) ? $notices[ $api_response->status ] : $notices['generic'];

@@ -1,6 +1,10 @@
 <?php
 /**
+ * The base update class for AudioTheme.
  *
+ * @package AudioTheme_Framework
+ *
+ * @since 1.0.0
  */
 class Audiotheme_Updater {
 	/**
@@ -175,10 +179,10 @@ class Audiotheme_Updater {
 			do_action( 'audiotheme_update_response_error', $response );
 			return false;
 		}
-		
+
 		// Bail if there isn't a new version.
 		if ( ! isset( $response->wpargs->new_version ) || version_compare( $this->version, $response->wpargs->new_version, '>=' ) ) {
-			
+
 		}
 
 		return $response->wpargs;

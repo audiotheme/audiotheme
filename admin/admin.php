@@ -1,10 +1,13 @@
 <?php
 /**
+ * AudioTheme framework administration bootstrap.
  *
+ * @package AudioTheme_Framework
+ * @subpackage Administration
  */
 
 /**
- * Admin Includes
+ * Admin includes.
  *
  * @since 1.0.0
  */
@@ -14,11 +17,10 @@ require( AUDIOTHEME_DIR . 'admin/includes/archives.php' );
 require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-settings.php' );
 include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater.php' );
 include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-plugin.php' );
-require( AUDIOTHEME_DIR . 'admin/includes/license.php' );
 require( AUDIOTHEME_DIR . 'admin/includes/settings-screens.php' );
 
 /**
- * Admin Setup
+ * Set up the admin.
  *
  * @since 1.0.0
  */
@@ -29,7 +31,7 @@ function audiotheme_admin_setup() {
 	add_action( 'init', 'audiotheme_dashboard_init', 9 );
 	add_action( 'init', 'audiotheme_archives_init_admin', 50 );
 
-	add_action( 'update_option_audiotheme_disable_directory_browsing', 'audiotheme_disable_directory_browsing_option_update', 10, 2 );
+	add_action( 'update_option_audiotheme_disable_directory_browsing', 'audiotheme_disable_directory_browsing_option_update' );
 
 	add_action( 'admin_enqueue_scripts', 'audiotheme_enqueue_admin_scripts' );
 	add_action( 'admin_body_class', 'audiotheme_admin_body_class' );
@@ -77,7 +79,7 @@ function audiotheme_update() {
 }
 
 /**
- * Display a register notice if the license key is empty.
+ * Display a notice to register if the license key is empty.
  *
  * @since 1.0.0
  *
@@ -110,20 +112,18 @@ function audiotheme_admin_init() {
 }
 
 /**
- * Update Directory Browsing
+ * Update directory browsing preference.
  *
  * Whenever the directory browsing setting is updated, update .htaccess
  *
  * @since 1.0.0
  */
-function audiotheme_disable_directory_browsing_option_update( $oldvalue, $newvalue ) {
+function audiotheme_disable_directory_browsing_option_update() {
 	audiotheme_save_htaccess();
 }
 
 /**
- * Save .htacess
- *
- * Updates the .htaccess file.
+ * Save .htacess file.
  *
  * @see save_mod_rewrite_rules()
  *
@@ -142,14 +142,12 @@ function audiotheme_save_htaccess() {
 			$rules[] = $directive;
 		}
 
-		return insert_with_markers( $htaccess_file, 'AudioTheme', $rules );
+		insert_with_markers( $htaccess_file, 'AudioTheme', $rules );
 	}
 }
 
 /**
- * Enqueue Admin Scripts
- *
- * Should be loaded on every admin request
+ * Enqueue admin scripts and styles.
  *
  * @since 1.0.0
  */
@@ -159,21 +157,27 @@ function audiotheme_enqueue_admin_scripts() {
 }
 
 /**
- * Add Current Screen ID as CSS Class to <body>
+ * Add current screen ID as CSS class to the body element.
  *
  * @since 1.0.0
+ *
+ * @param string $class Body class.
+ * @return string
  */
 function audiotheme_admin_body_class( $class ) {
 	return ' ' . sanitize_html_class( get_current_screen()->id );
 }
 
 /**
- * Custom Post Type Columns
+ * General custom post type columns.
  *
  * This hook is run for all custom columns, so the column name is prefixed to
  * prevent potential conflicts.
  *
  * @since 1.0.0
+ *
+ * @param string $column_name Column identifier.
+ * @param int $post_id Post ID.
  */
 function audiotheme_display_custom_column( $column_name, $post_id ) {
 	switch ( $column_name ) {
@@ -187,12 +191,14 @@ function audiotheme_display_custom_column( $column_name, $post_id ) {
 }
 
 /**
- * Custom User Contact Fields
+ * Custom user contact fields.
  *
  * @since 1.0.0
+ *
+ * @param array $contactmethods List of contact methods.
+ * @return array
  */
 function audiotheme_edit_user_contact_info( $contactmethods ) {
-	// Add contact options
 	$contactmethods['twitter'] = __( 'Twitter Username', 'audiotheme-i18n' );
 	$contactmethods['facebook'] = __( 'Facebook URL', 'audiotheme-i18n' );
 

@@ -3,6 +3,7 @@
  * Generic utility functions for us in the admin.
  *
  * @package AudioTheme_Framework
+ * @subpackage Administration
  */
 
 /**
@@ -100,6 +101,9 @@ function audiotheme_print_pointers() {
  * @see post_submit_meta_box()
  *
  * @since 1.0.0
+ *
+ * @param WP_Post $post Post object.
+ * @param array $metabox Additional meta box args.
  */
 function audiotheme_post_submit_meta_box( $post, $metabox ) {
 	global $action;

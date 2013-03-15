@@ -218,7 +218,6 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 			}
 		}
 
-		// @todo Add capability checks.
 		if ( ! empty( $action ) ) {
 			switch( $action ) {
 				case 'add':
@@ -229,8 +228,6 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 						$sendback = add_query_arg( 'message', 1, $sendback );
 					} elseif ( $venue_id && 'edit' == $action ) {
 						$sendback = add_query_arg( 'updated', 1, $sendback );
-					} else {
-						// @todo Return an error message.
 					}
 					break;
 				case 'delete':

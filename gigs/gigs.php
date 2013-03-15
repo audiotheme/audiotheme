@@ -7,9 +7,17 @@
  */
 
 /**
- * Load gigs on init.
+ * Load the gig template API.
  */
-add_action( 'init', 'audiotheme_gigs_init' );
+require( AUDIOTHEME_DIR . 'gigs/post-template.php' );
+
+/**
+ * Load the admin interface and functionality for gigs and venues.
+ */
+if ( is_admin() ) {
+	require( AUDIOTHEME_DIR . 'gigs/admin/gigs.php' );
+	require( AUDIOTHEME_DIR . 'gigs/admin/venues.php' );
+}
 
 /**
  * Register gig and venue post types and attach hooks to load related
@@ -95,15 +103,16 @@ function audiotheme_gigs_init() {
 	add_filter( 'post_type_link', 'audiotheme_gig_permalink', 10, 4 );
 	add_filter( 'post_type_archive_link', 'audiotheme_gigs_archive_link', 10, 2 );
 	add_filter( 'get_edit_post_link', 'get_audiotheme_venue_edit_link', 10, 2 );
+
+	add_action( 'before_delete_post', 'audiotheme_gig_before_delete' );
 }
 
 /**
- * Get the gigs rewrite base.
- *
- * The rewrite base can be set on the Permalinks settings page within the
- * dashboard. If it's left empty, it will default to 'shows'.
+ * Get the gigs rewrite base. Defaults to 'shows'.
  *
  * @since 1.0.0
+ *
+ * @return string
  */
 function audiotheme_gigs_rewrite_base() {
 	$base = get_option( 'audiotheme_gig_rewrite_base' );
@@ -274,7 +283,7 @@ function audiotheme_gig_template_include( $template ) {
 	} elseif ( is_singular( 'audiotheme_gig' ) ) {
 		$template = locate_template( 'audiotheme/single-gig.php' );
 	}
-	
+
 	return $template;
 }
 
@@ -312,7 +321,7 @@ function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
 }
 
 /**
- * Retrieve the permalink for the gigs archive.
+ * Filter the permalink for the gigs archive.
  *
  * @since 1.0.0
  * @uses audiotheme_gigs_rewrite_base()
@@ -333,14 +342,21 @@ function audiotheme_gigs_archive_link( $link, $post_type ) {
 }
 
 /**
- * Load the gig template API.
+ * Update a venue's cached gig count when gig is deleted.
+ *
+ * Determines if a venue's gig_count meta field needs to be updated
+ * when a gig is deleted.
+ *
+ * @since 1.0.0
+ *
+ * @param int $post_id ID of the gig being deleted.
  */
-require( AUDIOTHEME_DIR . 'gigs/post-template.php' );
-
-/**
- * Load the admin interface and functionality for gigs and venues.
- */
-if ( is_admin() ) {
-	require( AUDIOTHEME_DIR . 'gigs/admin/gigs.php' );
-	require( AUDIOTHEME_DIR . 'gigs/admin/venues.php' );
+function audiotheme_gig_before_delete( $post_id ) {
+	if ( 'audiotheme_gig' == get_post_type( $post_id ) ) {
+		$gig = get_audiotheme_gig( $post_id );
+		if ( isset( $gig->venue->ID ) ) {
+			$count = get_audiotheme_venue_gig_count( $gig->venue->ID );
+			update_audiotheme_venue_gig_count( $gig->venue->ID, --$count );
+		}
+	}
 }

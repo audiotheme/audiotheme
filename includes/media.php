@@ -30,6 +30,10 @@ function audiotheme_add_default_oembed_providers() {
  *
  * @since 1.0.0
  *
+ * @param string $html HTML.
+ * @param string $url oEmbed URL.
+ * @param array $attr Embed attributes.
+ * @param int $post_id Post ID.
  * @return string Embed HTML with wrapper.
  */
 function audiotheme_oembed_html( $html, $url, $attr, $post_id ) {
@@ -60,6 +64,9 @@ function audiotheme_oembed_html( $html, $url, $attr, $post_id ) {
  *
  * @since 1.0.0
  * @access private
+ *
+ * @param array $matches
+ * @return string
  */
 function _audiotheme_oembed_youtube_wmode_parameter( $matches ) {
 	return add_query_arg( 'wmode', 'transparent', $matches[0] );

@@ -19,6 +19,7 @@ foreach ( $wp_query->posts as $post ) {
 	$event->start->date = get_audiotheme_gig_time( 'Y-m-d' );
 	$event->start->time = get_post_meta( $post->ID, '_audiotheme_gig_time', true );
 	$event->start->datetime = get_audiotheme_gig_time( 'c', '', true );
+	// @todo Attempt to add a property to display the date in UTC.
 
 	if ( ! empty( $post->venue ) ) {
 		$event->venue->ID = $post->venue->ID;
@@ -33,7 +34,6 @@ foreach ( $wp_query->posts as $post ) {
 		$event->venue->location->country = $post->venue->country;
 
 		$event->venue->location->timezone = $post->venue->timezone_string;
-		// @todo Attempt to add a property to display the date in UTC.
 	}
 
 	$events[] = $event;

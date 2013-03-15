@@ -1,11 +1,30 @@
 <?php
 /**
- * Discography Init
+ * Set up discography functionality in the AudioTheme framework.
+ *
+ * @package AudioTheme_Framework
+ * @subpackage Discography
+ */
+
+/**
+ * Load the discography template API.
+ */
+require( AUDIOTHEME_DIR . 'discography/post-template.php' );
+
+/**
+ * Load the admin interface and functionality for discography.
+ */
+if ( is_admin() ) {
+	require( AUDIOTHEME_DIR . 'discography/admin/discography.php' );
+}
+
+/**
+ * Register discography post types and attach hooks to load related
+ * functionality.
  *
  * @since 1.0.0
+ * @uses register_post_type()
  */
-add_action( 'init', 'audiotheme_discography_init' );
-
 function audiotheme_discography_init() {
 	register_post_type( 'audiotheme_record', array(
 		'capability_type'        => 'post',
@@ -98,12 +117,15 @@ function audiotheme_discography_init() {
 	add_action( 'template_include', 'audiotheme_discography_template_include' );
 	add_filter( 'post_type_link', 'audiotheme_discography_permalinks', 10, 4 );
 	add_filter( 'post_type_archive_link', 'audiotheme_discography_archive_link', 10, 2 );
+	add_filter( 'wp_unique_post_slug', 'audiotheme_track_unique_slug', 10, 6 );
 }
 
 /**
- * Get Discography Rewrite Base
+ * Get the discography rewrite base. Defaults to 'music'.
  *
  * @since 1.0.0
+ *
+ * @return string
  */
 function get_audiotheme_discography_rewrite_base() {
 	$base = get_option( 'audiotheme_record_rewrite_base' );
@@ -111,9 +133,12 @@ function get_audiotheme_discography_rewrite_base() {
 }
 
 /**
- * Add Discography Rewrite Rules
+ * Add custom discography rewrite rules.
  *
  * @since 1.0.0
+ * @see get_audiotheme_discography_rewrite_base()
+ *
+ * @param object $wp_rewrite The main rewrite object. Passed by reference.
  */
 function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
 	$base = get_audiotheme_discography_rewrite_base();
@@ -127,9 +152,16 @@ function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
 }
 
 /**
- * Filter Discography Requests
+ * Filter discography requests
+ *
+ * Automatically sorts records by released year.
+ *
+ * Tracks must belong to a record, so the parent record is set for track
+ * requests.
  *
  * @since 1.0.0
+ *
+ * @param object $query The main WP_Query object. Passed by reference.
  */
 function audiotheme_discography_query( $query ) {
 	global $wpdb;
@@ -166,21 +198,37 @@ function audiotheme_discography_query( $query ) {
  * @return string
  */
 function audiotheme_discography_template_include( $template ) {
-	if ( is_post_type_archive( 'audiotheme_record' ) ) {
-		$template = locate_template( 'audiotheme/archive-record.php' );
+	if ( is_post_type_archive( array( 'audiotheme_record', 'audiotheme_track' ) ) ) {
+		if ( is_post_type_archive( 'audiotheme_track' ) ) {
+			$templates[] = 'audiotheme/archive-track.php';
+		}
+
+		$templates[] = 'audiotheme/archive-record.php';
+		$template = locate_template( $templates );
 	} elseif ( is_singular( 'audiotheme_record' ) ) {
 		$template = locate_template( 'audiotheme/single-record.php' );
 	} elseif ( is_singular( 'audiotheme_track' ) ) {
 		$template = locate_template( 'audiotheme/single-track.php' );
 	}
-	
+
 	return $template;
 }
 
 /**
- * Discography Permalinks
+ * Filter discography permalinks to match the custom rewrite rules.
+ *
+ * Allows the standard WordPress API function get_permalink() to return the
+ * correct URL when used with a discography post type.
  *
  * @since 1.0.0
+ * @see get_post_permalink()
+ * @see audiotheme_discography_rewrite_base()
+ *
+ * @param string $post_link The default permalink.
+ * @param object $post_link The record or track to get the permalink for.
+ * @param bool $leavename Whether to keep the post name.
+ * @param bool $sample Is it a sample permalink.
+ * @return string The record or track permalink.
  */
 function audiotheme_discography_permalinks( $post_link, $post, $leavename, $sample ) {
 	global $wpdb;
@@ -212,7 +260,14 @@ function audiotheme_discography_permalinks( $post_link, $post, $leavename, $samp
 }
 
 /**
+ * Filter the permalink for the discography archive.
  *
+ * @since 1.0.0
+ * @uses audiotheme_discography_rewrite_base()
+ *
+ * @param string $link The default archive URL.
+ * @param string $post_type Post type.
+ * @return string The discography archive URL.
  */
 function audiotheme_discography_archive_link( $link, $post_type ) {
 	$permalink = get_option( 'permalink_structure' );
@@ -225,12 +280,47 @@ function audiotheme_discography_archive_link( $link, $post_type ) {
 }
 
 /**
- * Discography Includes
+ * Ensure track slugs are unique.
+ *
+ * Tracks should always be associated with a record so their slugs only need
+ * to be unique within the context of a record.
  *
  * @since 1.0.0
+ * @see wp_unique_post_slug()
+ *
+ * @param string $slug The desired slug (post_name).
+ * @param integer $post_ID
+ * @param string $post_status No uniqueness checks are made if the post is still draft or pending.
+ * @param string $post_type
+ * @param integer $post_parent
+ * @param string $original_slug Slug passed to the uniqueness method.
+ * @return string
  */
-require( AUDIOTHEME_DIR . 'discography/post-template.php' );
+function audiotheme_track_unique_slug( $slug, $post_ID, $post_status, $post_type, $post_parent, $original_slug = null ) {
+	global $wpdb, $wp_rewrite;
 
-if ( is_admin() ) {
-	require( AUDIOTHEME_DIR . 'discography/admin/discography.php' );
+	if ( 'audiotheme_track' == $post_type ) {
+		$slug = $original_slug;
+
+		$feeds = $wp_rewrite->feeds;
+		if ( ! is_array( $feeds ) ) {
+			$feeds = array();
+		}
+
+		// Make sure the track slug is unique within the context of the record only.
+		$check_sql = "SELECT post_name FROM $wpdb->posts WHERE post_name=%s AND post_type=%s AND post_parent=%d AND ID!=%d LIMIT 1";
+		$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug, $post_type, $post_parent, $post_ID ) );
+
+		if ( $post_name_check || apply_filters( 'wp_unique_post_slug_is_bad_flat_slug', false, $slug, $post_type ) ) {
+			$suffix = 2;
+			do {
+				$alt_post_name = substr( $slug, 0, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
+				$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $alt_post_name, $post_type, $post_parent, $post_ID ) );
+				$suffix++;
+			} while ( $post_name_check );
+			$slug = $alt_post_name;
+		}
+	}
+
+	return $slug;
 }

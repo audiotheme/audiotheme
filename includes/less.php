@@ -7,6 +7,8 @@
  * changes can't be previewed. The workaround is to load a Theme Customizer
  * style sheet separately *after* the main style sheet has already been loaded
  * so that it won't be recompiled to prevent changes from being made live prematurely.
+ *
+ * @package AudioTheme_Framework
  */
 
 /**
@@ -41,7 +43,7 @@ function audiotheme_less_setup() {
 function audiotheme_less_register_vars() {
 	$support = get_theme_support( 'audiotheme-less' );
 	$callback = ( empty( $support[0]['less_vars_callback'] ) ) ? '' : $support[0]['less_vars_callback'];
-	
+
 	// Always points to the parent theme.
 	add_less_var( 'templateurl', '~"' . get_template_directory_uri() . '"' );
 

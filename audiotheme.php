@@ -40,9 +40,6 @@ define( 'AUDIOTHEME_VERSION', '1.0.0' );
 
 /**
  * Framework path and URL.
- *
- * If the framework is loaded from a different location, maybe a plugin or a
- * child theme, these constants will need to be defined beforehand.
  */
 if ( ! defined( 'AUDIOTHEME_DIR' ) )
     define( 'AUDIOTHEME_DIR', plugin_dir_path( __FILE__ ) );
@@ -110,6 +107,17 @@ function audiotheme_load() {
 
 	// Prevent the audiotheme_archive post type rules from being registered.
 	add_filter( 'audiotheme_archive_rewrite_rules', '__return_empty_array' );
+
+	// Load discography.
+	add_action( 'init', 'audiotheme_discography_init' );
+
+	// Load gigs.
+	add_action( 'init', 'audiotheme_gigs_init' );
+
+	// Load videos
+	add_action( 'init', 'audiotheme_videos_init' );
+
+
 }
 add_action( 'after_setup_theme', 'audiotheme_load', 5 );
 
@@ -128,6 +136,17 @@ function audiotheme_load_admin() {
 		require( AUDIOTHEME_DIR . 'admin/admin.php' );
 		audiotheme_admin_setup();
 	}
+
+	if ( is_admin() ) {
+		// Load discography admin.
+		add_action( 'init', 'audiotheme_load_discography_admin' );
+
+		// Load gigs admin.
+		add_action( 'init', 'audiotheme_gigs_admin_setup' );
+
+		// Load videos admin.
+		add_action( 'init', 'audiotheme_load_videos_admin' );
+	}
 }
 add_action( 'after_setup_theme', 'audiotheme_load_admin', 5 );
 
@@ -139,7 +158,7 @@ add_action( 'after_setup_theme', 'audiotheme_load_admin', 5 );
  */
 function audiotheme_register_scripts() {
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-	
+
 	wp_register_script( 'jquery-fitvids', AUDIOTHEME_URI . 'includes/js/jquery.fitvids' . $suffix . '.js', array( 'jquery' ), '1.0', true );
 	wp_register_script( 'jquery-jplayer', AUDIOTHEME_URI . 'includes/js/jquery.jplayer' . $suffix . '.js', array( 'jquery' ), '2.2.19', true );
 	wp_register_script( 'jquery-jplayer-playlist', AUDIOTHEME_URI . 'includes/js/jquery.jplayer.playlist' . $suffix . '.js', array( 'jquery-jplayer' ), '2.2.2', true );

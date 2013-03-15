@@ -1,6 +1,6 @@
 <?php
 /**
- * Define some default filters for modifying WordPress behavior.
+ * Define default filters for modifying WordPress behavior.
  *
  * @package AudioTheme_Framework
  */
@@ -86,6 +86,10 @@ function audiotheme_archives_post_type_archive_title( $title ) {
  * aren't supported in all browsers.
  *
  * @since 1.0.0
+ *
+ * @param array $items List of menu items.
+ * @param array $args Menu display args.
+ * @return array
  */
 function audiotheme_nav_menu_classes( $items, $args ) {
 	$classes = array();
@@ -134,6 +138,10 @@ function audiotheme_nav_menu_classes( $items, $args ) {
  * individual items can be targeted by name.
  *
  * @since 1.0.0
+ *
+ * @param array $classes CSS classes.
+ * @param object $item Menu item.
+ * @return array
  */
 function audiotheme_nav_menu_name_class( $classes, $item ) {
 	$new_classes[] = sanitize_html_class( 'menu-item-' . sanitize_title_with_dashes( $item->title ) );
@@ -149,6 +157,9 @@ function audiotheme_nav_menu_name_class( $classes, $item ) {
  *
  * @since 1.0.0
  * @see audiotheme_page_list_classes()
+ *
+ * @param array $pages List of pages.
+ * @return array
  */
 function audiotheme_page_list( $pages ) {
 	global $audiotheme_page_depth_classes;
@@ -180,19 +191,23 @@ function audiotheme_page_list( $pages ) {
  * for consistent behavior.
  *
  * @since 1.0.0
+ *
+ * @param array $classes CSS classes.
+ * @param WP_Post $page Page object.
+ * @return array
  */
-function audiotheme_page_list_classes( $class, $page ) {
+function audiotheme_page_list_classes( $classes, $page ) {
 	global $audiotheme_page_depth_classes;
 
 	$depth = $audiotheme_page_depth_classes;
 
 	if ( 0 === $page->post_parent ) { $class[] = 'top-level-item'; }
-	if ( isset( $depth['first-top-level-page'] ) && $page->ID == $depth['first-top-level-page'] ) { $class[] = 'first-item'; }
-	if ( isset( $depth['last-top-level-page'] ) && $page->ID == $depth['last-top-level-page'] ) { $class[] = 'last-item'; }
-	if ( isset( $depth['first-child-pages'] ) && in_array( $page->ID, $depth['first-child-pages'] ) ) { $class[] = 'first-child-item'; }
-	if ( isset( $depth['last-child-pages'] ) && in_array( $page->ID, $depth['last-child-pages'] ) ) { $class[] = 'last-child-item'; }
+	if ( isset( $depth['first-top-level-page'] ) && $page->ID == $depth['first-top-level-page'] ) { $classes[] = 'first-item'; }
+	if ( isset( $depth['last-top-level-page'] ) && $page->ID == $depth['last-top-level-page'] ) { $classes[] = 'last-item'; }
+	if ( isset( $depth['first-child-pages'] ) && in_array( $page->ID, $depth['first-child-pages'] ) ) { $classes[] = 'first-child-item'; }
+	if ( isset( $depth['last-child-pages'] ) && in_array( $page->ID, $depth['last-child-pages'] ) ) { $classes[] = 'last-child-item'; }
 
-	return $class;
+	return $classes;
 }
 
 /**
@@ -202,6 +217,9 @@ function audiotheme_page_list_classes( $class, $page ) {
  * to and adds a special class to the last widget.
  *
  * @since 1.0.0
+ *
+ * @param array $params Wiget registration args.
+ * @return array
  */
 function audiotheme_widget_count_class( $params ) {
 	$class = '';
