@@ -35,7 +35,7 @@ function audiotheme_videos_init() {
 			'search_items'       => __( 'Search Videos', 'audiotheme-i18n' ),
 			'not_found'          => __( 'No videos found', 'audiotheme-i18n' ),
 			'not_found_in_trash' => __( 'No videos found in Trash', 'audiotheme-i18n' ),
-			'all_items'          => __( 'Videos', 'audiotheme-i18n' ),
+			'all_items'          => __( 'All Videos', 'audiotheme-i18n' ),
 			'menu_name'          => __( 'Videos', 'audiotheme-i18n' ),
 			'name_admin_bar'     => _x( 'Video', 'add new on admin bar', 'audiotheme-i18n' ),
 		),
