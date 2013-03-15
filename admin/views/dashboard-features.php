@@ -51,7 +51,7 @@
 				Schedule all the details about your next show, including location (address, city, state), dates, times, ticket prices and links to ticket purchasing. Set up your venue information by creating new venues and assigning shows to venues you've already created. You also have the ability to feature each venue's website, along with their contact information like email address and phone number.
 			</p>
 			<p>
-				<strong>Try it out:</strong> <a href="">Add a gig</a>
+				<strong>Try it out:</strong> <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=audiotheme_gig' ) ); ?>">Add a gig</a>
 			</p>
 		</div>
 	</div>
@@ -68,7 +68,7 @@
 				Upload cover images, place titles and assign tracks. Everything you need to build your discography is literally at your fingertips. You can also enter purchase URLs to let your music fans know where they cna buy your music. We help guide you through the process to create a dynamic, user friendly discography page.
 			</p>
 			<p>
-				<strong>Try it out:</strong> <a href="">Add a record</a>
+				<strong>Try it out:</strong> <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=audiotheme_record' ) ); ?>">Add a record</a>
 			</p>
 		</div>
 	</div>
@@ -85,7 +85,7 @@
 				Showcasing your videos doesn't need to be a hassle. All of our themes allow you the ability to create your video galleries by simply embedding your videos from a number of video services, including: YouTube, Vimeo, WordPress.tv, DailyMotion, blip.tv, Flickr (images and video), Viddler, Hulu, Qik, Revision3, and FunnyorDie.com.
 			</p>
 			<p>
-				<strong>Try it out:</strong> <a href="">Add a video</a>
+				<strong>Try it out:</strong> <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=audiotheme_video' ) ); ?>">Add a video</a>
 			</p>
 		</div>
 	</div>
