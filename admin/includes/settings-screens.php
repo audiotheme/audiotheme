@@ -328,6 +328,9 @@ function audiotheme_settings_display_screen() {
 function audiotheme_settings_sanitize_option( $value, $option ) {
 	global $wp_settings_fields;
 
+	$settings = get_audiotheme_settings();
+	$customizer = $settings->get_customizer_only_settings();
+
 	foreach ( $wp_settings_fields as $sections ) {
 		foreach ( $sections as $section ) {
 			foreach ( $section as $field_name => $field ) {
@@ -335,7 +338,7 @@ function audiotheme_settings_sanitize_option( $value, $option ) {
 					continue;
 				}
 
-				if ( isset( $field['args']['option_name'] ) && $option == $field['args']['option_name'] ) {
+				if ( isset( $field['args']['option_name'] ) && $option == $field['args']['option_name'] && ! in_array( $field_name, $customizer ) ) {
 					$value = audiotheme_settings_sanitize_field( $field, $value );
 
 					if ( ! audiotheme_settings_validate_field( $field, $option, $value ) ) {
@@ -410,7 +413,6 @@ function audiotheme_settings_sanitize_field( $field, $option_value ) {
  * error message isn't registered, a default message will be shown.
  *
  * @since 1.0.0
- * @todo Don't validate Theme Customizer only settings on the theme options screen.
  *
  * @param array $field Settings field properties.
  * @param mixed $option_value The option name.

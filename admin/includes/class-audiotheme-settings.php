@@ -898,6 +898,21 @@ class Audiotheme_Settings {
 	}
 
 	/**
+	 * Retrieve a list of keys of settings that should only show in the
+	 * Theme Customizer.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return array
+	 */
+	public function get_customizer_only_settings() {
+		$customizer_settings = wp_list_pluck( wp_list_filter( $this->settings, array( 'screen' => 'customizer' ) ), 'key' );
+		$theme_options_settings = wp_list_pluck( wp_list_filter( $this->settings, array( 'screen' => 'audiotheme-theme-options', 'show_in_customizer' => true ) ), 'key' );
+
+		return array_diff( $customizer_settings, $theme_options_settings );
+	}
+
+	/**
 	 * Get a Theme Customizer control from the setting field type.
 	 *
 	 * Provides an action for returning custom controls.
