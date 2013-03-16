@@ -85,7 +85,7 @@
 									<td>
 										<select id="venue-timezone-string" name="audiotheme_venue[timezone_string]">
 											<?php echo audiotheme_timezone_choice( $timezone_string ); ?>
-										</select><br>
+										</select>
 										<span class="description"><?php _e( 'This is important.', 'audiotheme-i18n' ); ?></span>
 									</td>
 								</tr>
