@@ -276,12 +276,12 @@ function audiotheme_edit_track_meta_boxes( $post ) {
 function audiotheme_track_details_meta_box( $post ) {
 	wp_nonce_field( 'update-track_' . $post->ID, 'audiotheme_track_nonce' );
 	?>
-	<p class="audiotheme-meta-field">
+	<p class="audiotheme-field">
 		<label for="track-artist"><?php _e( 'Artist:', 'audiotheme-i18n' ) ?></label>
 		<input type="text" name="artist" id="track-artist" value="<?php esc_attr_e( get_post_meta( $post->ID, '_audiotheme_artist', true ) ) ; ?>" class="widefat">
 	</p>
 
-	<p class="audiotheme-meta-field audiotheme-media-control audiotheme-meta-field-upload"
+	<p class="audiotheme-field audiotheme-media-control audiotheme-field-upload"
 		data-title="<?php esc_attr_e( 'Choose an MP3', 'audiotheme-i18n' ); ?>"
 		data-update-text="<?php esc_attr_e( 'Use MP3', 'audiotheme-i18n' ); ?>"
 		data-target="#track-file-url"
@@ -296,7 +296,7 @@ function audiotheme_track_details_meta_box( $post ) {
 		<a href="#" class="button audiotheme-media-control-choose" style="float: right"><?php _e( 'Upload MP3', 'audiotheme-i18n' ); ?></a>
 	</p>
 
-	<p class="audiotheme-meta-field">
+	<p class="audiotheme-field">
 		<label for="track-purchase-url"><?php _e( 'Purchase URL:', 'audiotheme-i18n' ) ?></label>
 		<input type="url" name="purchase_url" id="track-purchase-url" value="<?php echo esc_url( get_post_meta( $post->ID, '_audiotheme_purchase_url', true ) ) ; ?>" class="widefat">
 	</p>
@@ -305,7 +305,7 @@ function audiotheme_track_details_meta_box( $post ) {
 	if ( ! get_post( $post->post_parent ) ) {
 		$records = get_posts( 'post_type=audiotheme_record&orderby=title&order=asc&posts_per_page=-1' );
 		if ( $records ) {
-			echo '<p class="audiotheme-meta-field">';
+			echo '<p class="audiotheme-field">';
 				echo '<label for="post-parent">' . __( 'Record:', 'audiotheme-i18n' ) . '</label>';
 				echo '<select name="post_parent" id="post-parent" class="widefat">';
 					echo '<option value=""></option>';

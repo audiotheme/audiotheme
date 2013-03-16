@@ -1,18 +1,18 @@
-<p class="audiotheme-meta-field">
+<p class="audiotheme-field">
 	<label for="record-year"><?php _e( 'Release Year', 'audiotheme-i18n' ); ?></label>
 	<input type="text" name="release_year" id="record-year" value="<?php echo esc_attr( get_audiotheme_record_release_year( $post->ID ) ) ; ?>" class="widefat">
 </p>
-<p class="audiotheme-meta-field">
+<p class="audiotheme-field">
 	<label for="record-artist"><?php _e( 'Artist', 'audiotheme-i18n' ); ?></label>
 	<input type="text" name="artist" id="record-artist" value="<?php echo esc_attr( get_audiotheme_record_artist( $post->ID ) ) ; ?>" class="widefat">
 </p>
-<p class="audiotheme-meta-field">
+<p class="audiotheme-field">
 	<label for="record-genre"><?php _e( 'Genre', 'audiotheme-i18n' ); ?></label>
 	<input type="text" name="genre" id="record-genre" value="<?php echo esc_attr( get_audiotheme_record_genre( $post->ID ) ) ; ?>" class="widefat">
 </p>
 
 <?php if ( $record_types ) : ?>
-	<p id="audiotheme-record-types" class="audiotheme-meta-field">
+	<p id="audiotheme-record-types" class="audiotheme-field">
 		<label><?php _e( 'Type', 'audiotheme-i18n' ) ?></label><br />
 		<?php
 		foreach ( $record_types as $slug => $name ) {

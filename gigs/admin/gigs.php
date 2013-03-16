@@ -290,11 +290,11 @@ function audiotheme_edit_gig_fields() {
  */
 function audiotheme_gig_tickets_meta_box( $post ) {
 	?>
-	<p class="audiotheme-meta-field">
+	<p class="audiotheme-field">
 		<label for="gig-tickets-price">Price:</label><br>
 		<input type="text" name="gig_tickets_price" id="gig-tickets-price" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_tickets_price', true ) ) ; ?>" class="large-text">
 	</p>
-	<p class="audiotheme-meta-field">
+	<p class="audiotheme-field">
 		<label for="gig-tickets-url">Tickets URL:</label><br>
 		<input type="url" name="gig_tickets_url" id="gig-tickets-url" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_tickets_url', true ) ) ; ?>" class="large-text">
 	</p>
