@@ -22,6 +22,8 @@ function audiotheme_dashboard_init() {
 
 	add_action( 'audiotheme_update_response_error', 'audiotheme_license_clear_status' );
 	add_action( 'update_option_audiotheme_license_key', 'audiotheme_license_key_option_update', 10, 2 );
+
+	add_action( 'load-audiotheme_page_audiotheme-settings', 'audiotheme_dashboard_settings_help' );
 }
 
 /**
@@ -97,7 +99,7 @@ function audiotheme_dashboard_register_settings() {
 
 
 	// System Info Tab
-	
+
 	$screen->add_tab( 'system_info', __( 'System', 'audiotheme-i18n' ) );
 
 		$screen->add_section( 'system_info', '', array(
@@ -360,4 +362,49 @@ function audiotheme_license_clear_status( $response ) {
 	if ( ! isset( $response->status ) || in_array( $response->status, $license_errors ) ) {
 		update_option( 'audiotheme_license_status', '' );
 	}
+}
+
+function audiotheme_dashboard_settings() {
+	global $pagenow, $page_hook, $plugin_page;
+	echo $plugin_page;
+	exit;
+}
+#add_action( 'admin_init', 'audiotheme_dashboard_settings' );
+
+function audiotheme_dashboard_settings_help() {
+	$content  = '<h4>' . __( 'For more information:', 'audiotheme-i18n' ) . '</h4>';
+	$content .= '<p><a href="http://audiotheme.com/" target="_blank">' . __( "Find Your License", 'audiotheme-i18n' ) . '</a></p>';
+	$content .= '<p><a href="http://audiotheme.com/" target="_blank">' . __( "Upgrade Your License", 'audiotheme-i18n' ) . '</a></p>';
+	$content .= '<p><a href="http://audiotheme.com/" target="_blank">' . __( "Support Forum", 'audiotheme-i18n' ) . '</a></p>';
+	$content .= '<p><a href="http://audiotheme.com/" target="_blank">' . __( "Request Support", 'audiotheme-i18n' ) . '</a></p>';
+
+	get_current_screen()->set_help_sidebar( $content );
+
+	$content  = '<h4>' . __( 'License Key', 'audiotheme-i18n' ) . '</h4>';
+	$content .= '<p>' . __( "Your license key allows you to receive automatic updates and support for as long as your license is active. Don't worry, you won't lose any features you're currently using if it expires, however, it's a good idea to keep your license active to gain access to security upgrades, bug fixes, new features, or just to ask a question if you need a little help.", 'audiotheme-i18n' ) . '</p>';
+	$content .= '<p>' . __( "Your license key can be found in your account on AudioTheme.com or in your purchase email. It's a random string consisting of 32 numbers or letters. Let us know if you need help finding it. Example key:", 'audiotheme-i18n' ) . '</p>';
+	$content .= '<p><em>' . __( "<strong>Example key:</strong>", 'audiotheme-i18n' ) . ' <code>a72fdacfb04efa15976ed843d0bc7fec</code></em></p>';
+	$content .= '<p>' . __( "Simply copy and paste it into the <strong>License Key</strong> field and click the <strong>Activate</strong> button. If your license is valid, that's all you have to do.", 'audiotheme-i18n' ) . '</p>';
+	$content .= '<p><em>' . __( "If your license has expired or you want to use AudioTheme on more than one site, simply visit AudioTheme.com to upgrade.", 'audiotheme-i18n' ) . '</em></p>';
+
+	$content .= '<h4>' . __( 'Directory Browsing', 'audiotheme-i18n' ) . '</h4>';
+	$content .= '<p>' . __( "Most servers running WordPress have a feature called directory browsing. This means that visitors can see a list of files in certain folders on your server if they know where to look. These folders might contain music or pictures that you don't want to be easily downloaded. While anything you make available online can't be absolutely protected, disabling directory browsing will help hide important files from prying eyes.", 'audiotheme-i18n' ) . '</p>';
+
+	get_current_screen()->add_help_tab( array(
+		'id'      => 'settings',
+		'title'   => __( 'Settings', 'audiotheme-i18n' ),
+		'content' => $content,
+	) );
+
+	$content  = '<p>' . __( "The <strong>System</strong> tab displays information about your system that may be useful for support requests.", 'audiotheme-i18n' ) . '</p>';
+	$content .= '<p>' . __( "At the bottom of this screen is a field to copy all the information displayed to send along with a support request if it's needed.", 'audiotheme-i18n' ) . '</p>';
+
+	get_current_screen()->add_help_tab( array(
+		'id'      => 'system',
+		'title'   => __( 'System', 'audiotheme-i18n' ),
+		'content' => $content,
+	) );
+
+	$content  = '<h4>' . __( '', 'audiotheme-i18n' ) . '</h4>';
+	$content .= '<p>' . __( "", 'audiotheme-i18n' ) . '</p>';
 }
