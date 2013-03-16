@@ -1,8 +1,8 @@
 <?php
 /**
  * @todo Set a transient whenever a gig is saved so the date and time fields can be automatically adjusted.
- * The date field will automatically show the next day
- * The time field will have the same value as the previously saved time
+ *       The date field will automatically show the next day
+ *       The time field will have the same value as the previously saved time
  */
 ?>
 <div id="gig-ui" class="audiotheme-edit-after-title">
@@ -12,7 +12,7 @@
 			<th><label for="gig-date"><?php _e( 'Date', 'audiotheme-i18n' ) ?></label></th>
 			<td>
 				<div class="audiotheme-input-append">
-					<input type="text" name="gig_date" id="gig-date" value="<?php echo esc_attr( $gig_date ); ?>" placeholder="MM/DD/YYY" autocomplete="off">
+					<input type="text" name="gig_date" id="gig-date" value="<?php echo esc_attr( $gig_date ); ?>" placeholder="MM/DD/YYYY" autocomplete="off">
 				</div>
 			</td>
 		</tr>
@@ -40,7 +40,7 @@
 			<th><?php _e( 'Note', 'audiotheme-i18n' ) ?></th>
 			<td>
 				<textarea name="excerpt" id="excerpt" cols="76" rows="3"><?php echo esc_textarea( $post->post_excerpt ); ?></textarea><br>
-				<span class="description">A description of the gig to display within the list of gigs. Who's the opening act, special guests, etc? Keep it short.</span>
+				<span class="description"><?php _e( 'A description of the gig to display within the list of gigs. Who is the opening act, special guests, etc? Keep it short.', 'audiotheme-i18n' ); ?></span>
 			</td>
 		</tr>
 	</table>
