@@ -15,13 +15,7 @@
  * @since 1.0.0
  */
 function audiotheme_venues_manage_screen_setup() {
-	get_current_screen()->add_help_tab( array(
-		'id'      => 'overview',
-		'title'   => __( 'Overview', 'audiotheme-i18n' ),
-		'content' =>
-			'<p>' . __( 'This screen provides access to all of your venues. Think of it as a database or address book for all the venues where you have performed, will perform, or may potentially perform in the future.', 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( 'You can customize the display of this screen to suit your workflow. Hide or display columns based on your needs and decide how many venues to list per screen using the Screen Options tab.', 'audiotheme-i18n' ) . '</p>',
-	) );
+	audiotheme_venue_list_help();
 
 	$post_type_object = get_post_type_object( 'audiotheme_venue' );
 	$title = $post_type_object->labels->name;
@@ -80,45 +74,7 @@ function audiotheme_venues_manage_screen_notices() {
  */
 function audiotheme_venue_edit_screen_setup() {
 	audiotheme_venue_edit_screen_process_actions();
-
-	get_current_screen()->add_help_tab( array(
-		'id'      => 'default-fields',
-		'title'   => __( 'Venue Information', 'audiotheme-i18n' ),
-		'content' =>
-			'<p>' . __( "The venue box allows you to manage the details of the venue. This information makes it easier for your fans to find out about the venue(s) where you perform. ", 'audiotheme-i18n' ) .
-
-			'<p>' . __( "<strong>Name</strong> - Enter the name of the venue.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "<strong>Address</strong> - Enter venue's street address.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "<strong>City</strong> - Enter the city where the venue is located. After typing a city name, you may be presented with a list of cities to choose from. Selecting the correct city may help auto-complete additional address information.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "<strong>State</strong> - Enter the state where the venue is located.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "<strong>Country</strong> - Enter the name of the country where the venue is located.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "<strong>Time zone</strong> - Choose the time zone. This is important. Choosing the time zone requires selecting the nearest city in the time zone as the venue.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "<strong>Website</strong> - Enter the URL to the venue's website.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "<strong>Phone</strong> - Enter a phone number so that your visitors can easily contact the venue if needed.", 'audiotheme-i18n' ) . '</p>',
-	) );
-
-	get_current_screen()->add_help_tab( array(
-		'id'		=> 'additional-information',
-		'title'		=> __( 'Additional Information', 'audiotheme-i18n' ),
-		'content' 	=>
-			'<p>' . __( 'The contact and notes boxes allow you to save additional information about the venue for your own use.', 'audiotheme-i18n' ) . '</p>' .
-			'<h4>' . __( 'Contact', 'audiotheme-i18n' ) . '</h4>' .
-			'<p>' . __( "The contact box allows you to privately store the contact information of the person you communicate with at the venue.", 'audiotheme-i18n' ) . '</p>' .
-			'<h4>' . __( 'Notes', 'audiotheme-i18n' ) . '</h4>' .
-			'<p>' . __( "Store any relevant information about the venue in the notes box. Can't remember the doorman's name? Write it down here to refer to later. Maintaining a good relationship with a venue and its staff increases your chances of being invited back.", 'audiotheme-i18n' ) . '</p>',
-	) );
-
-	get_current_screen()->add_help_tab( array(
-		'id'		=> 'save-settings',
-		'title'		=> __( 'Saving Changes', 'audiotheme-i18n' ),
-		'content' 	=> '<p>' . __( 'When you are done adding a venue press the Add New Venue or Update button to save your changes.', 'audiotheme-i18n' ) . '</p>',
-	) );
-
-	get_current_screen()->add_help_tab( array(
-		'id'      => 'customize-display',
-		'title'   => __( 'Customize This Screen', 'audiotheme-i18n' ),
-		'content' => '<p>' . __( 'The venue box is fixed in place, but you can reposition all the other boxes using drag and drop. You can also minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to hide or unhide boxes.', 'audiotheme-i18n' ) . '</p>',
-	) );
+	audiotheme_venue_help();
 
 	wp_enqueue_script( 'audiotheme-venue-edit' );
 	wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
@@ -295,4 +251,65 @@ function audiotheme_venue_submit_meta_box( $post ) {
 	});
 	</script>
 	<?php
+}
+
+/**
+ * Add a help tab to the venue list screen.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_venue_list_help() {
+	get_current_screen()->add_help_tab( array(
+		'id'      => 'overview',
+		'title'   => __( 'Overview', 'audiotheme-i18n' ),
+		'content' =>
+			'<p>' . __( 'This screen provides access to all of your venues. Think of it as a database or address book for all the venues where you have performed, will perform, or may potentially perform in the future.', 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( 'You can customize the display of this screen to suit your workflow. Hide or display columns based on your needs and decide how many venues to list per screen using the Screen Options tab.', 'audiotheme-i18n' ) . '</p>',
+	) );
+}
+
+/**
+ * Add a help tab to the add/edit venue screen.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_venue_help() {
+	get_current_screen()->add_help_tab( array(
+		'id'      => 'default-fields',
+		'title'   => __( 'Venue Information', 'audiotheme-i18n' ),
+		'content' =>
+			'<p>' . __( "The venue box allows you to manage the details of the venue. This information makes it easier for your fans to find out about the venue(s) where you perform. ", 'audiotheme-i18n' ) .
+
+			'<p>' . __( "<strong>Name</strong> - Enter the name of the venue.", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "<strong>Address</strong> - Enter venue's street address.", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "<strong>City</strong> - Enter the city where the venue is located. After typing a city name, you may be presented with a list of cities to choose from. Selecting the correct city may help auto-complete additional address information.", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "<strong>State</strong> - Enter the state where the venue is located.", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "<strong>Country</strong> - Enter the name of the country where the venue is located.", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "<strong>Time zone</strong> - Choose the time zone. This is important. Choosing the time zone requires selecting the nearest city in the time zone as the venue.", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "<strong>Website</strong> - Enter the URL to the venue's website.", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "<strong>Phone</strong> - Enter a phone number so that your visitors can easily contact the venue if needed.", 'audiotheme-i18n' ) . '</p>',
+	) );
+
+	get_current_screen()->add_help_tab( array(
+		'id'		=> 'additional-information',
+		'title'		=> __( 'Additional Information', 'audiotheme-i18n' ),
+		'content' 	=>
+			'<p>' . __( 'The contact and notes boxes allow you to save additional information about the venue for your own use.', 'audiotheme-i18n' ) . '</p>' .
+			'<h4>' . __( 'Contact', 'audiotheme-i18n' ) . '</h4>' .
+			'<p>' . __( "The contact box allows you to privately store the contact information of the person you communicate with at the venue.", 'audiotheme-i18n' ) . '</p>' .
+			'<h4>' . __( 'Notes', 'audiotheme-i18n' ) . '</h4>' .
+			'<p>' . __( "Store any relevant information about the venue in the notes box. Can't remember the doorman's name? Write it down here to refer to later. Maintaining a good relationship with a venue and its staff increases your chances of being invited back.", 'audiotheme-i18n' ) . '</p>',
+	) );
+
+	get_current_screen()->add_help_tab( array(
+		'id'		=> 'save-settings',
+		'title'		=> __( 'Saving Changes', 'audiotheme-i18n' ),
+		'content' 	=> '<p>' . __( 'When you are done adding a venue press the Add New Venue or Update button to save your changes.', 'audiotheme-i18n' ) . '</p>',
+	) );
+
+	get_current_screen()->add_help_tab( array(
+		'id'      => 'customize-display',
+		'title'   => __( 'Customize This Screen', 'audiotheme-i18n' ),
+		'content' => '<p>' . __( 'The venue box is fixed in place, but you can reposition all the other boxes using drag and drop. You can also minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to hide or unhide boxes.', 'audiotheme-i18n' ) . '</p>',
+	) );
 }
