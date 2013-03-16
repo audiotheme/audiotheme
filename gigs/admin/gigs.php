@@ -245,7 +245,7 @@ function audiotheme_gig_edit_screen_setup( $post ) {
 		'id'      => 'standard-fields',
 		'title'   => __( 'Standard Fields', 'audiotheme-i18n' ),
 		'content' =>
-			'<p>' . __( "<strong>Title</strong> - Enter a title for your gig. After you enter a title, you''ll see the permalink below, which you can edit.", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "<strong>Title</strong> - Enter a title for your gig. After you enter a title, you'll see the permalink below, which you can edit.", 'audiotheme-i18n' ) . '</p>' .
 			'<p>' . __( "<strong>Date</strong> - Choose the date of your gig or enter it in the <code>MM/DD/YYYY</code> format.", 'audiotheme-i18n' ) . '</p>' .
 			'<p>' . __( "<strong>Time</strong> - Choose the time of your gig. Leave it blank if you don't know it.", 'audiotheme-i18n' ) . '</p>' .
 			'<p>' . __( "<strong>Venue</strong> - Enter the name of a new venue, or select a saved venue. <em>It is important to select the time zone for new venues.</em> New venues will be saved to your venue database and you can update additional details on the Edit Venue screen.", 'audiotheme-i18n' ) . '</p>' .
