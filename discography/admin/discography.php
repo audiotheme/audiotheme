@@ -33,6 +33,9 @@ function audiotheme_load_discography_admin() {
 
 	// Manage Records screen.
 	add_filter( 'parse_query', 'audiotheme_records_admin_query' );
+	add_action( 'load-edit.php', 'audiotheme_record_list_help' );
+	add_action( 'load-post.php', 'audiotheme_record_help' );
+	add_action( 'load-post-new.php', 'audiotheme_record_help' );
 	add_filter( 'manage_edit-audiotheme_record_columns', 'audiotheme_record_register_columns' );
 	add_action( 'manage_edit-audiotheme_record_sortable_columns', 'audiotheme_record_register_sortable_columns' );
 	add_action( 'manage_pages_custom_column', 'audiotheme_record_display_columns', 10, 2 );
@@ -44,6 +47,9 @@ function audiotheme_load_discography_admin() {
 
 	// Manage Tracks screen.
 	add_filter( 'parse_query', 'audiotheme_tracks_admin_query' );
+	add_action( 'load-edit.php', 'audiotheme_track_list_help' );
+	add_action( 'load-post.php', 'audiotheme_track_help' );
+	add_action( 'load-post-new.php', 'audiotheme_track_help' );
 	add_action( 'restrict_manage_posts', 'audiotheme_tracks_filters' );
 	add_filter( 'manage_edit-audiotheme_track_columns', 'audiotheme_track_register_columns' );
 	add_action( 'manage_edit-audiotheme_track_sortable_columns', 'audiotheme_track_register_sortable_columns' );

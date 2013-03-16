@@ -322,3 +322,97 @@ function audiotheme_track_details_meta_box( $post ) {
 		}
 	}
 }
+
+/**
+ * Add a help tab to the track list screen.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_track_list_help() {
+	if ( 'audiotheme_track' != get_current_screen()->post_type ) {
+		return;
+	}
+	
+	get_current_screen()->add_help_tab( array(
+		'id'      => 'overview',
+		'title'   => __( 'Overview', 'audiotheme-i18n' ),
+		'content' =>
+			'<p>' . __( "Your discography is the window through which listeners are introduced to and discover your music. Encourage that discovery on your website through a detailed and organized history of your recorded output using the AudioTheme discography screen.", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "This screen provides access to all of your tracks. You can customize the display of this screen to suit your workflow.", 'audiotheme-i18n' ) . '</p>' .
+			'<p><strong><em>' . __( "Tracks must be add/created through a record and cannot be added without being associated with a record.", 'audiotheme-i18n' ) . '</em></strong></p>',
+	) );
+	
+	get_current_screen()->add_help_tab( array(
+		'id'      => 'screen-content',
+		'title'   => __( 'Screen Content', 'audiotheme-i18n' ),
+		'content' =>
+			'<p>' . __( "You can customize the appearance of this screen's content in a number of ways:", 'audiotheme-i18n' ) . '</p>' .
+			'<ul>' .
+			'<li>' . __( "You can hide or display columns based on your needs and decide how many tracks to list per screen using the Screen Options tab.", 'audiotheme-i18n' ) . '</li>' .
+			'<li>' . __( "You can filter the list of tracks by status using the text links in the upper left to show All, Published, Draft, or Trashed records. The default view is to show all tracks.", 'audiotheme-i18n' ) . '</li>' .
+			'<li>' . __( "You can refine the list to show only tracks for a specific record by using the dropdown menus above the tracks list. Click the Filter button after making your selection.", 'audiotheme-i18n' ) . '</li>' .
+			'<li>' . __( "You can also sort your tracks in any view by clicking the column headers.", 'audiotheme-i18n' ) . '</li>' .
+			'</ul>',
+	) );
+	
+	get_current_screen()->add_help_tab( array(
+		'id'      => 'available-actions',
+		'title'   => __( 'Available Actions', 'audiotheme-i18n' ),
+		'content' =>
+			'<p>' . __( "Hovering over a row in the tracks list will display action links that allow you to manage your track. You can perform the following actions:", 'audiotheme-i18n' ) . '</p>' .
+			'<ul>' .
+			'<li>' . __( "<strong>Edit</strong> takes you to the editing screen for that track. You can also reach that screen by clicking on the track name.", 'audiotheme-i18n' ) . '</li>' .
+			'<li>' . __( "<strong>Trash</strong> removes your track from this list and places it in the trash, from which you can permanently delete it.", 'audiotheme-i18n' ) . '</li>' .
+			'<li>' . __( "<strong>Preview</strong> will show you what your draft track will look like if you publish it.", 'audiotheme-i18n' ) . '</li>' .
+			'<li>' . __( "<strong>View</strong> will take you to your live site to view the track. Which link is available depends on your track's status.", 'audiotheme-i18n' ) . '</li>' .
+			'</ul>',
+	) );
+}
+
+/**
+ * Add a help tab to the add/edit track screen.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_track_help() {
+	if ( 'audiotheme_track' != get_current_screen()->post_type ) {
+		return;
+	}
+	
+	get_current_screen()->add_help_tab( array(
+		'id'      => 'standard-fields',
+		'title'   => __( 'Standard Fields', 'audiotheme-i18n' ),
+		'content' =>
+			'<p>' . __( "<strong>Title</strong> - Enter the title of your track/song.", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "<strong>Editor</strong> - Describe your track. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "When you're done editing a track, click the Update button.", 'audiotheme-i18n' ) . '</p>',
+	) );
+	
+	get_current_screen()->add_help_tab( array(
+		'id'		=> 'track-details',
+		'title'		=> __( 'Track Details', 'audiotheme-i18n' ),
+		'content' 	=>
+			'<p>' . __( "Provide additional context to your tracks using this box." ) . '</p>' .
+			'<ul>' .
+			'<li>' . __( "<strong>Artist</strong> - Use this field for the main artist of the record.", 'audiotheme-i18n' ) . '</li>' .
+			// @todo Add link.
+			'<li>' . __( "<strong>File URL</strong> - This field lets you attach audio for streaming or download. To attach an audio file, see [How To: Adding Audio to Tracks]", 'audiotheme-i18n' ) . '</li>' .
+			'<li>' . __( "<strong>Allow Downloads</strong> - Check this field if you would like to allow your fans to download the track from your site.", 'audiotheme-i18n' ) . '</li>' .
+			'<li>' . __( "<strong>Purchase URL</strong> - Enter a URL where the track can be purchased individually.", 'audiotheme-i18n' ) . '</li>' .
+			'</ul>',
+	) );
+	
+	get_current_screen()->add_help_tab( array(
+		'id'		=> 'inserting-media',
+		'title'		=> __( 'Inserting Media', 'audiotheme-i18n' ),
+		'content' 	=>
+			'<p>' . __( 'You can upload and insert media (images, audio, documents, etc.) by clicking the Add Media button. You can select from the images and files already uploaded to the Media Library, or upload new media to add to your gig description. To create an image gallery, select the images to add and click the "Create a new gallery" button.', 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( 'You can also embed media from many popular websites including Twitter, YouTube, Flickr and others by pasting the media URL on its own line into the gig description editor. Please refer to the Codex to <a href="http://codex.wordpress.org/Embeds">learn more about embeds</a>.', 'audiotheme-i18n' ) . '</p>',
+	) );
+	
+	get_current_screen()->add_help_tab( array(
+		'id'      => 'customize-display',
+		'title'   => __( 'Customize This Screen', 'audiotheme-i18n' ),
+		'content' => '<p>' . __( 'The title and big editing area are fixed in place, but you can reposition all the other boxes using drag and drop. You can also minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to hide or unhide boxes or to choose a 1 or 2-column layout for this screen.', 'audiotheme-i18n' ) . '</p>',
+	) );
+}

@@ -242,8 +242,8 @@ function audiotheme_gigs_manage_screen() {
  */
 function audiotheme_gig_edit_screen_setup( $post ) {
 	get_current_screen()->add_help_tab( array(
-		'id'      => 'default-fields',
-		'title'   => __( 'Default Fields', 'audiotheme-i18n' ),
+		'id'      => 'standard-fields',
+		'title'   => __( 'Standard Fields', 'audiotheme-i18n' ),
 		'content' =>
 			'<p>' . __( "<strong>Title</strong> - Enter a title for your gig. After you enter a title, you''ll see the permalink below, which you can edit.", 'audiotheme-i18n' ) . '</p>' .
 			'<p>' . __( "<strong>Date</strong> - Choose the date of your gig or enter it in the <code>MM/DD/YYYY</code> format.", 'audiotheme-i18n' ) . '</p>' .
