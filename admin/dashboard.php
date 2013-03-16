@@ -25,49 +25,6 @@ function audiotheme_dashboard_init() {
 }
 
 /**
- * Register default global settings.
- *
- * @since 1.0.0
- */
-function audiotheme_dashboard_register_settings() {
-	$screen = add_audiotheme_settings_screen( 'audiotheme-settings', __( 'Settings', 'audiotheme-i18n' ), array(
-		'menu_title'   => __( 'Settings', 'audiotheme-i18n' ),
-		'option_group' => 'audiotheme_options',
-		'option_name'  => array( 'audiotheme_options', 'audiotheme_license_key', 'audiotheme_disable_directory_browsing' ),
-		'show_in_menu' => 'audiotheme',
-		'capability'   => 'manage_options'
-	) );
-
-	$section = $screen->add_section( 'directory_browsing', __( 'Directory Browsing' ), array(
-		'priority' => 50,
-	) );
-
-		$section->add_field( 'audiotheme_disable_directory_browsing', __( 'Directory Browsing' ), 'checkbox', array(
-			'option_name' => 'audiotheme_disable_directory_browsing',
-			'choices'     => array(
-				'1' => 'Disable directory browsing?',
-			),
-		) );
-
-	$section = $screen->add_section( 'license', 'License', array(
-		'priority' => 0,
-		'callback' => 'audiotheme_dashboard_settings_license_section',
-	) );
-
-		$section->add_field( 'audiotheme_license_key', __( 'License Key', 'audiotheme-i18n' ), 'audiotheme_dashboard_license_input', array(
-			'option_name' => 'audiotheme_license_key',
-		) );
-
-
-	// System Tab
-	$tab = $screen->add_tab( 'info', __( 'System', 'audiotheme-i18n' ) );
-
-		$tab->add_field( 'data', __( 'Installation Status', 'audiotheme-i18n' ), 'html', array(
-			'output' => 'Output the AudioTheme version, MySQL version, WordPress version, etc. for support. Maybe a field to dump a bunch of debug data for copying and pasting.'
-		) );
-}
-
-/**
  * Build the framework admin menu.
  *
  * @since 1.0.0
@@ -102,6 +59,116 @@ function audiotheme_dashboard_admin_menu() {
 		'audiotheme_dashboard_help_screen'
 	);
 	*/
+}
+
+/**
+ * Register default global settings.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_dashboard_register_settings() {
+	$screen = add_audiotheme_settings_screen( 'audiotheme-settings', __( 'Settings', 'audiotheme-i18n' ), array(
+		'menu_title'   => __( 'Settings', 'audiotheme-i18n' ),
+		'option_group' => 'audiotheme_options',
+		'option_name'  => array( 'audiotheme_options', 'audiotheme_license_key', 'audiotheme_disable_directory_browsing' ),
+		'show_in_menu' => 'audiotheme',
+		'capability'   => 'manage_options'
+	) );
+
+	$screen->add_section( 'directory_browsing', __( 'Directory Browsing', 'audiotheme-i18n' ), array(
+		'priority' => 50,
+	) );
+
+		$screen->add_field( 'audiotheme_disable_directory_browsing', __( 'Directory Browsing', 'audiotheme-i18n' ), 'checkbox', array(
+			'option_name' => 'audiotheme_disable_directory_browsing',
+			'choices'     => array(
+				'1' => 'Disable directory browsing?',
+			),
+		) );
+
+	$screen->add_section( 'license', __( 'License', 'audiotheme-i18n' ), array(
+		'priority' => 0,
+		'callback' => 'audiotheme_dashboard_settings_license_section',
+	) );
+
+		$screen->add_field( 'audiotheme_license_key', __( 'License Key', 'audiotheme-i18n' ), 'audiotheme_dashboard_license_input', array(
+			'option_name' => 'audiotheme_license_key',
+		) );
+
+
+	// System Info Tab
+	
+	$screen->add_tab( 'system_info', __( 'System', 'audiotheme-i18n' ) );
+
+		$screen->add_section( 'system_info', '', array(
+			'callback' => 'audiotheme_dashboard_settings_system_section',
+		) );
+
+		$screen->add_field( 'system_info', __( 'Export Data', 'audiotheme-i18n' ), 'html', array(
+			'label'  => '',
+			'output' => '<textarea id="audiotheme-system-info-export" class="widefat">' . audiotheme_system_info( array( 'format' => 'plaintext' ) ) . '</textarea>',
+		) );
+}
+
+/**
+ * Display the system data tables.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_dashboard_settings_system_section() {
+	$data = audiotheme_system_info();
+
+	$sections = array(
+		array(
+			'section' => __( 'AudioTheme', 'audiotheme-i18n' ),
+			'keys'    => array( 'audiotheme_version', 'theme', 'theme_version', 'child_theme', 'child_theme_version' ),
+		),
+		array(
+			'section' => __( 'WordPress', 'audiotheme-i18n' ),
+			'keys'    => array( 'home_url', 'site_url', 'wp_version', 'wp_lang', 'wp_memory_limit', 'wp_debug_mode', 'wp_max_upload_size' ),
+		),
+		array(
+			'section' => __( 'Environment', 'audiotheme-i18n' ),
+			'keys'    => array( 'web_server', 'php_version', 'mysql_version', 'php_post_max_size', 'php_time_limit' ),
+		),
+		array(
+			'section' => __( 'Browser', 'audiotheme-i18n' ),
+			'keys'    => array( 'user_agent' ),
+		),
+	);
+
+	foreach ( $sections as $section ) :
+		?>
+		<table class="audiotheme-system-info widefat">
+			<thead>
+				<tr>
+					<th colspan="2"><?php esc_html_e( $section['section'] ); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+				foreach ( $section['keys'] as $key ) {
+					if ( isset( $data[ $key ] ) ) {
+						printf( '<tr><th scope="row">%s</th><td>%s</td></tr>',
+							esc_html( $data[ $key ]['label'] ),
+							esc_html( $data[ $key ]['value'] )
+						);
+					}
+				}
+				?>
+			</tbody>
+		</table>
+		<?php
+	endforeach;
+	?>
+	<script type="text/javascript">
+	jQuery(function($) {
+		$('#audiotheme-system-info-export').on('focus', function() {
+			$(this).select();
+		});
+	});
+	</script>
+	<?php
 }
 
 /**

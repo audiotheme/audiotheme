@@ -524,3 +524,113 @@ function audiotheme_submenu_move_after( $move_slug, $after_slug, $menu_slug ) {
 		}
 	}
 }
+
+/**
+ * Retrieve system data.
+ *
+ * @since 1.0.0
+ *
+ * @return array
+ */
+function audiotheme_system_info( $args = array() ) {
+	global $wpdb;
+	
+	$args = wp_parse_args( $args, array(
+		'format' => '',
+	) );
+	
+	$theme = wp_get_theme( get_template() );
+	
+	$data = array(
+		'home_url' => array(
+			'label' => __( 'Home URL', 'audiotheme-i18n' ),
+			'value' => home_url(),
+		),
+		'site_url' => array(
+			'label' => __( 'Site URL', 'audiotheme-i18n' ),
+			'value' => site_url(),
+		),
+		'wp_lang' => array(
+			'label' => __( 'WP Language', 'audiotheme-i18n' ),
+			'value' => WPLANG,
+		),
+		'wp_version' => array(
+			'label' => __( 'WP Version', 'audiotheme-i18n' ),
+			'value' => get_bloginfo( 'version' ) . ( ( is_multisite() ) ? ' (WPMU)' : '' ),
+		),
+		'web_server' => array(
+			'label' => __( 'Web Server Info', 'audiotheme-i18n' ),
+			'value' => $_SERVER['SERVER_SOFTWARE'],
+		),
+		'php_version' => array(
+			'label' => __( 'PHP Version', 'audiotheme-i18n' ),
+			'value' => phpversion(),
+		),
+		'mysql_version' => array(
+			'label' => __( 'MySQL Version', 'audiotheme-i18n' ),
+			'value' => $wpdb->db_version(),
+		),
+		'wp_memory_limit' => array(
+			'label' => __( 'WP Memory Limit', 'audiotheme-i18n' ),
+			'value' => WP_MEMORY_LIMIT,
+		),
+		'wp_debug_mode' => array(
+			'label' => __( 'WP Debug Mode', 'audiotheme-i18n' ),
+			'value' => ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? 'Yes' : 'No',
+		),
+		'wp_max_upload_size' => array(
+			'label' => __( 'WP Max Upload Size', 'audiotheme-i18n' ),
+			'value' => wp_convert_bytes_to_hr( wp_max_upload_size() ),
+		),
+		'php_post_max_size' => array(
+			'label' => __( 'PHP Post Max Size', 'audiotheme-i18n' ),
+			'value' => ini_get( 'post_max_size' ),
+		),
+		'php_time_limit' => array(
+			'label' => __( 'PHP Time Limit', 'audiotheme-i18n' ),
+			'value' => ini_get( 'max_execution_time' ),
+		),
+		'user_agent' => array(
+			'label' => __( 'User Agent', 'audiotheme-i18n' ),
+			'value' => $_SERVER['HTTP_USER_AGENT'],
+		),
+		'audiotheme_version' => array(
+			'label' => __( 'AudioTheme Version', 'audiotheme-i18n' ),
+			'value' => AUDIOTHEME_VERSION,
+		),
+		'theme' => array(
+			'label' => __( 'Theme', 'audiotheme-i18n' ),
+			'value' => $theme->get( 'Name' ),
+		),
+		'theme_version' => array(
+			'label' => __( 'Theme Version', 'audiotheme-i18n' ),
+			'value' => $theme->get( 'Version' ),
+		),
+	);
+	
+	if ( get_template() != get_stylesheet() ) {
+		$theme = wp_get_theme();
+		
+		$data['child_theme'] = array(
+			'label' => __( 'Child Theme', 'audiotheme-i18n' ),
+			'value' => $theme->get( 'Name' ),
+		);
+		
+		$data['child_theme_version'] = array(
+			'label' => __( 'Child Theme', 'audiotheme-i18n' ),
+			'value' => $theme->get( 'Version' ),
+		);
+	}
+	
+	if ( 'plaintext' == $args['format'] ) {
+		$plain = '';
+		
+		foreach ( $data as $key => $info ) {
+			$plain .= $info['label'] . ': ' . $info['value'] . "\n";
+		}
+		
+		$data = trim( $plain );
+	}
+	
+	return $data;
+}
