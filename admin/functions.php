@@ -142,9 +142,9 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 			<div id="minor-publishing-actions">
 				<div id="save-action">
 					<?php if ( 'publish' != $post->post_status && 'future' != $post->post_status && 'pending' != $post->post_status ) { ?>
-						<input type="submit" name="save" id="save-post" value="<?php esc_attr_e('Save Draft'); ?>" class="button" <?php if ( 'private' == $post->post_status ) { echo 'style="display: none"'; } ?>>
+						<input type="submit" name="save" id="save-post" value="<?php esc_attr_e( 'Save Draft', 'audiotheme-i18n' ); ?>" class="button" <?php if ( 'private' == $post->post_status ) { echo 'style="display: none"'; } ?>>
 					<?php } elseif ( 'pending' == $post->post_status && $can_publish ) { ?>
-						<input type="submit" name="save" id="save-post" value="<?php esc_attr_e('Save as Pending'); ?>" class="button">
+						<input type="submit" name="save" id="save-post" value="<?php esc_attr_e( 'Save as Pending', 'audiotheme-i18n' ); ?>" class="button">
 					<?php } ?>
 
 					<?php audiotheme_admin_spinner( array( 'id' => 'draft-ajax-loading' ) ); ?>
@@ -177,7 +177,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 				 */
 				if ( false !== $show_statuses ) : ?>
 					<div class="misc-pub-section">
-						<label for="post_status"><?php _e( 'Status:' ) ?></label>
+						<label for="post_status"><?php _e( 'Status:', 'audiotheme-i18n' ) ?></label>
 						<span id="post-status-display">
 							<?php
 							switch ( $post->post_status ) {

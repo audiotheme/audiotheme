@@ -142,7 +142,7 @@ function audiotheme_dashboard_settings_system_section() {
 		<table class="audiotheme-system-info widefat">
 			<thead>
 				<tr>
-					<th colspan="2"><?php esc_html_e( $section['section'] ); ?></th>
+					<th colspan="2"><?php echo esc_html( $section['section'] ); ?></th>
 				</tr>
 			</thead>
 			<tbody>

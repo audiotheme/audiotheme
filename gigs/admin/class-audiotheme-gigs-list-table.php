@@ -574,7 +574,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		$m = isset( $_GET['m'] ) ? (int) $_GET['m'] : 0;
 		?>
 		<select name="m">
-			<option value="0" <?php selected( $m, 0 ); ?>><?php _e( 'Show all dates' ); ?></option>
+			<option value="0" <?php selected( $m, 0 ); ?>><?php _e( 'Show all dates', 'audiotheme-i18n' ); ?></option>
 			<?php
 			foreach ( $months as $arc_row ) {
 				if ( 0 == $arc_row->year ) {

@@ -278,7 +278,7 @@ function audiotheme_track_details_meta_box( $post ) {
 	?>
 	<p class="audiotheme-field">
 		<label for="track-artist"><?php _e( 'Artist:', 'audiotheme-i18n' ) ?></label>
-		<input type="text" name="artist" id="track-artist" value="<?php esc_attr_e( get_post_meta( $post->ID, '_audiotheme_artist', true ) ) ; ?>" class="widefat">
+		<input type="text" name="artist" id="track-artist" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_artist', true ) ) ; ?>" class="widefat">
 	</p>
 
 	<p class="audiotheme-field audiotheme-media-control audiotheme-field-upload"
@@ -288,7 +288,7 @@ function audiotheme_track_details_meta_box( $post ) {
 		data-return-property="url"
 		data-file-type="audio">
 		<label for="track-file-url"><?php _e( 'Audio File URL:', 'audiotheme-i18n' ) ?></label>
-		<input type="url" name="file_url" id="track-file-url" value="<?php esc_attr_e( get_post_meta( $post->ID, '_audiotheme_file_url', true ) ) ; ?>" class="widefat">
+		<input type="url" name="file_url" id="track-file-url" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_file_url', true ) ) ; ?>" class="widefat">
 
 		<input type="checkbox" name="is_downloadable" id="track-is-downlodable" value="1"<?php checked( get_post_meta( $post->ID, '_audiotheme_is_downloadable', true ) ); ?>>
 		<label for="track-is-downloadable"><?php _e( 'Allow downloads?', 'audiotheme-i18n' ) ?></label>

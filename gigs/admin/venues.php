@@ -232,13 +232,13 @@ function audiotheme_venue_submit_meta_box( $post ) {
 				<?php
 				if ( ! in_array( $post->post_status, array( 'publish', 'future', 'private' ) ) || 0 == $post->ID ) {
 					?>
-					<input type="hidden" name="original_publish" id="original_publish" value="<?php esc_attr_e( 'Publish' ) ?>">
+					<input type="hidden" name="original_publish" id="original_publish" value="<?php esc_attr_e( 'Publish', 'audiotheme-i18n' ) ?>">
 					<?php
 					submit_button( $post_type_object->labels->add_new_item, 'primary', 'publish', false, array( 'accesskey' => 'p' ) );
 				} else {
 					?>
-					<input type="hidden" name="original_publish" id="original_publish" value="<?php esc_attr_e( 'Update' ) ?>">
-					<input type="submit" name="save" id="publish" class="button-primary" accesskey="p" value="<?php esc_attr_e( 'Update' ) ?>">
+					<input type="hidden" name="original_publish" id="original_publish" value="<?php esc_attr_e( 'Update', 'audiotheme-i18n' ) ?>">
+					<input type="submit" name="save" id="publish" class="button-primary" accesskey="p" value="<?php esc_attr_e( 'Update', 'audiotheme-i18n' ) ?>">
 				<?php } ?>
 			</div><!--end div#publishing-action-->
 
