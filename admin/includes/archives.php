@@ -33,6 +33,7 @@ function audiotheme_archives_init_admin() {
 
 	audiotheme_archives_save_active_archives( $archives );
 
+	add_action( 'load-post.php', 'audiotheme_archive_help' );
 	add_action( 'parent_file', 'audiotheme_archives_parent_file' );
 	add_filter( 'post_updated_messages', 'audiotheme_archives_post_updated_messages' );
 
@@ -220,4 +221,33 @@ function get_audiotheme_post_type_archive_slug( $post_type ) {
 	}
 
 	return $slug;
+}
+
+/**
+ * Add a help tab to the add/edit archive screen.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_archive_help() {
+	if ( 'audiotheme_archive' != get_current_screen()->post_type ) {
+		return;
+	}
+	
+	get_current_screen()->add_help_tab( array(
+		'id'      => 'standard-fields',
+		'title'   => __( 'Standard Fields', 'audiotheme-i18n' ),
+		'content' =>
+			'<p>' . __( "<strong>Title</strong> - Enter the title of the archive screen.", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "<strong>Editor</strong> - Enter an introduction for the archive. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "When you're done editing, click the Update button.", 'audiotheme-i18n' ) . '</p>',
+	) );
+	
+	get_current_screen()->add_help_tab( array(
+		'id'		=> 'permalinks',
+		'title'		=> __( 'Permalinks', 'audiotheme-i18n' ),
+		'content' 	=>
+			'<p>' . __( "Editing the permalink for an archive changes the URL for all content associated with that archive. For example, the default discography slug is <code>music</code>; changing it to <code>albums</code> would change your URLs like this:", 'audiotheme-i18n' ) . '</p>' .
+			'<p><strong>' . __( "Before:", 'audiotheme-i18n' ) . '</strong> <code>' . home_url( '/music/a-record-name/' ) . '</code><br><strong>' . __( "After:", 'audiotheme-i18n' ) . '</strong> <code>' . home_url( '/albums/a-record-name/' ) . '</code></p>' .
+			'<p>' . __( "Taking this into consideration, you shouldn't change your slug on an established site, but it provides a powerful option to easily customize the structure of your URLs.", 'audiotheme-i18n' ) . '</p>',
+	) );
 }
