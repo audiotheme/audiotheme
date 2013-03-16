@@ -162,9 +162,9 @@ body.gigs_page_venues .search-box { margin-bottom: 8px;}
 #adminmenu #toplevel_page_edit-post_type-audiotheme_record div.wp-menu-image,
 #adminmenu #menu-posts-audiotheme_video div.wp-menu-image { background-color: transparent; background-image: url(../images/icons16.png); background-repeat: no-repeat;}
 
-#adminmenu #toplevel_page_audiotheme div.wp-menu-image { background-position: 0 0;}
+#adminmenu #toplevel_page_audiotheme div.wp-menu-image { background-position: 0 -1px;}
 #adminmenu #toplevel_page_audiotheme:hover div.wp-menu-image,
-#adminmenu #toplevel_page_audiotheme.wp-has-current-submenu div.wp-menu-image { background-position: 0 -32px;}
+#adminmenu #toplevel_page_audiotheme.wp-has-current-submenu div.wp-menu-image { background-position: 0 -33px;}
 
 #adminmenu #toplevel_page_audiotheme-gigs div.wp-menu-image { background-position: -30px 0;}
 #adminmenu #toplevel_page_audiotheme-gigs:hover div.wp-menu-image,
@@ -189,6 +189,7 @@ body.gigs_page_venues .search-box { margin-bottom: 8px;}
 #adminmenu #menu-posts-audiotheme_video div.wp-menu-image img { display: none;}
 
 @media print, (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+	#adminmenu #toplevel_page_audiotheme div.wp-menu-image,
 	#adminmenu #toplevel_page_audiotheme-gigs div.wp-menu-image,
 	#adminmenu #menu-posts-audiotheme_gallery div.wp-menu-image,
 	#adminmenu #toplevel_page_edit-post_type-audiotheme_record div.wp-menu-image,
