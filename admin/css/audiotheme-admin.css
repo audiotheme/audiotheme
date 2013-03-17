@@ -121,6 +121,10 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 .audiotheme-response.is-error { color: #cc0000;}
 .audiotheme-response.is-valid { color: #009900;}
 
+@media only screen and (max-width: 860px) {
+	.audiotheme-feature-section img { float: none; display: block; width: 100%;}
+}
+
 
 /* Venue Screens
 -------------------------------------------------------------- */
