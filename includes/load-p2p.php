@@ -4,6 +4,7 @@
  *
  * @package AudioTheme_Framework
  * @link https://github.com/AppThemes/wp-posts-to-posts-core
+ * @link https://github.com/AppThemes/wp-posts-to-posts-core/wiki/Bundling-in-a-plugin
  */
 
 /**
@@ -41,15 +42,7 @@ function audiotheme_p2p_load_core() {
 
 	define( 'P2P_TEXTDOMAIN', 'audiotheme-i18n' );
 
-	$p2p_files = array(
-		'storage', 'query', 'query-post', 'query-user', 'url-query',
-		'util', 'side', 'type-factory', 'type', 'directed-type', 'indeterminate-type',
-		'api', 'item', 'list', 'extra'
-	);
-
-	foreach ( $p2p_files as $file ) {
-		require AUDIOTHEME_DIR . 'includes/lib/p2p/' . $file . '.php';
-	}
+	require( AUDIOTHEME_DIR . 'includes/lib/p2p/init.php' );
 
 	add_action( 'admin_init', array( 'P2P_Storage', 'install' ) );
 }
