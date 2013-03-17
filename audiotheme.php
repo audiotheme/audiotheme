@@ -3,7 +3,7 @@
  * Plugin Name: AudioTheme Framework
  * Plugin URI: http://audiotheme.com/
  * Description: AudioTheme framework plugin.
- * Version: 1.0.0
+ * Version: 1.0-beta1
  * Author: AudioTheme
  * Author URI: http://audiotheme.com
  * Requires at least: 3.4.2
@@ -36,7 +36,7 @@
 /**
  * The AudioTheme version.
  */
-define( 'AUDIOTHEME_VERSION', '1.0.0' );
+define( 'AUDIOTHEME_VERSION', '1.0-beta1' );
 
 /**
  * Framework path and URL.
