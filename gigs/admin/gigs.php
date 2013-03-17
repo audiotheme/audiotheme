@@ -257,7 +257,7 @@ function audiotheme_edit_gig_fields() {
 	if ( $gig->gig_datetime ) {
 		$timestamp = strtotime( $gig->gig_datetime );
 		// jQuery date format is kinda limited?
-		$gig_date = date( 'm/d/Y', $timestamp );
+		$gig_date = date( 'Y/m/d', $timestamp );
 
 		$t = date_parse( $gig->gig_time );
 		if ( empty( $t['errors'] ) ) {
@@ -318,7 +318,7 @@ function audiotheme_gig_save_post( $post_id, $post ) {
 		$dt = date_parse( $_POST['gig_date'] . ' ' . $_POST['gig_time'] );
 
 		// Date and time are always stored local to the venue.
-		// If GMT, or time in another locale is needed, use the venue timezone to calculate.
+		// If GMT, or time in another locale is needed, use the venue time zone to calculate.
 		// Other functions should be aware that time is optional; check for the presence of gig_time.
 		if ( checkdate( $dt['month'], $dt['day'], $dt['year'] ) ) {
 			$datetime = sprintf( '%d-%s-%s %s:%s:%s',
@@ -408,7 +408,7 @@ function audiotheme_gig_help() {
 		'title'   => __( 'Standard Fields', 'audiotheme-i18n' ),
 		'content' =>
 			'<p>' . __( "<strong>Title</strong> - Enter a title for your gig. After you enter a title, you'll see the permalink below, which you can edit.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "<strong>Date</strong> - Choose the date of your gig or enter it in the <code>MM/DD/YYYY</code> format.", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "<strong>Date</strong> - Choose the date of your gig or enter it in the <code>YYYY/MM/DD</code> format.", 'audiotheme-i18n' ) . '</p>' .
 			'<p>' . __( "<strong>Time</strong> - Choose the time of your gig. Leave it blank if you don't know it.", 'audiotheme-i18n' ) . '</p>' .
 			'<p>' . __( "<strong>Venue</strong> - Enter the name of a new venue, or select a saved venue. <em>It is important to select the time zone for new venues.</em> New venues will be saved to your venue database and you can update additional details on the Edit Venue screen.", 'audiotheme-i18n' ) . '</p>' .
 			'<p>' . __( "<strong>Note</strong> - Enter a short note about the gig.", 'audiotheme-i18n' ) . '</p>' .

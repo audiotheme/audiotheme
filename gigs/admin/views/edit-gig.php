@@ -1,10 +1,3 @@
-<?php
-/**
- * @todo Set a transient whenever a gig is saved so the date and time fields can be automatically adjusted.
- *       The date field will automatically show the next day
- *       The time field will have the same value as the previously saved time
- */
-?>
 <div id="gig-ui" class="audiotheme-edit-after-title">
 	<?php wp_nonce_field( 'save-gig_' . $post->ID, 'audiotheme_save_gig_nonce' ); ?>
 	<table id="gig-fields">
@@ -12,7 +5,7 @@
 			<th><label for="gig-date"><?php _e( 'Date', 'audiotheme-i18n' ) ?></label></th>
 			<td>
 				<div class="audiotheme-input-append">
-					<input type="text" name="gig_date" id="gig-date" value="<?php echo esc_attr( $gig_date ); ?>" placeholder="MM/DD/YYYY" autocomplete="off">
+					<input type="text" name="gig_date" id="gig-date" value="<?php echo esc_attr( $gig_date ); ?>" placeholder="YYYY/MM/DD" autocomplete="off">
 				</div>
 			</td>
 		</tr>
