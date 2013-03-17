@@ -269,6 +269,7 @@ function audiotheme_edit_gig_fields() {
 	}
 
 	$gig_venue = ( isset( $gig->venue->name ) ) ? $gig->venue->name : '';
+	$timezone_string = ( isset( $gig->venue->timezone_string ) ) ? $gig->venue->timezone_string : '';
 
 	require( AUDIOTHEME_DIR . 'gigs/admin/views/edit-gig.php' );
 }

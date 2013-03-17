@@ -24,9 +24,12 @@
 					<input type="text" name="gig_venue" id="gig-venue" value="<?php echo esc_html( $gig_venue ); ?>"><label for="gig-venue" id="gig-venue-select" class="audiotheme-input-append-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/arrow-down.png" width="12" height="12" title="<?php esc_attr_e( 'Select Venue', 'audiotheme-i18n' ); ?>" alt="<?php esc_attr_e( 'Select Venue', 'audiotheme-i18n' ); ?>"></label>
 				</div>
 
-				<select name="audiotheme_venue[timezone_string]" id="gig-venue-timezone">
-					<?php echo audiotheme_timezone_choice( $timezone_string ); ?>
-				</select>
+				<span id="gig-venue-timezone-group" class="hide-if-js">
+					<input type="text" id="gig-venue-timezone-search" placeholder="<?php esc_attr_e( 'Search time zone by city', 'audiotheme-i18n' ); ?>" class="hide-if-no-js">
+					<select name="audiotheme_venue[timezone_string]" id="gig-venue-timezone" class="hide-if-js">
+						<?php echo audiotheme_timezone_choice( $timezone_string ); ?>
+					</select>
+				</span>
 			</td>
 		</tr>
 		<tr>
