@@ -2,10 +2,14 @@
 /**
  * Functions for retrieving options set using the AudioTheme Settings API.
  *
+ * These functions are duplicated in the theme drop-in, so they're wrapped in
+ * 'function_exists()' checks to prevent conflicts.
+ *
  * @package AudioTheme_Framework
  * @subpackage Settings
  */
 
+if ( ! function_exists( 'get_audiotheme_option' ) ) :
 /**
  * Returns an option value.
  *
@@ -25,7 +29,9 @@ function get_audiotheme_option( $option_name, $key = null, $default = null ) {
 
 	return ( isset( $option[ $key ] ) ) ? $option[ $key ] : $default;
 }
+endif;
 
+if ( ! function_exists( 'get_audiotheme_theme_option' ) ) :
 /**
  * Returns a theme option value.
  *
@@ -47,7 +53,9 @@ function get_audiotheme_theme_option( $key, $default = false, $option_name = '' 
 
 	return get_audiotheme_option( $option_name, $key, $default );
 }
+endif;
 
+if ( ! function_exists( 'get_audiotheme_theme_options_name' ) ) :
 /**
  * Retrieve the registered option name for theme options.
  *
@@ -55,14 +63,18 @@ function get_audiotheme_theme_option( $key, $default = false, $option_name = '' 
  * @uses get_audiotheme_theme_options_support()
  */
 function get_audiotheme_theme_options_name() {
-	if ( $option_name = get_audiotheme_theme_options_support( 'option_name' ) ) {
+	static $option_name;
+
+	if ( ! isset( $option_name ) && ( $name = get_audiotheme_theme_options_support( 'option_name' ) ) ) {
 		// The default option name is the first one registered in add_theme_support().
-		return ( is_array( $option_name ) ) ? $option_name[0] : $option_name;
+		$option_name = ( is_array( $name ) ) ? $name[0] : $name;
 	}
 
-	return false;
+	return ( isset( $option_name ) ) ? $option_name : false;
 }
+endif;
 
+if ( ! function_exists( 'get_audiotheme_theme_options_support' ) ) :
 /**
  * Check if the theme supports theme options and return registered arguments
  * with supplied defaults.
@@ -117,3 +129,4 @@ function get_audiotheme_theme_options_support( $var = null ) {
 
 	return false;
 }
+endif;
