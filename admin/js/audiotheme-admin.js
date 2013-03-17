@@ -2,9 +2,9 @@ window.audiotheme = window.audiotheme || {};
 
 jQuery(function($) {
 	$('.wrap').on('focus', '.audiotheme-input-append input', function() {
-		$(this).parent().addClass('focused');
+		$(this).parent().addClass('is-focused');
 	}).on('blur', '.audiotheme-input-append input', function() {
-		$(this).parent().removeClass('focused');
+		$(this).parent().removeClass('is-focused');
 	});
 });
 

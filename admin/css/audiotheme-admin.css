@@ -59,8 +59,8 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 	border-top-right-radius: 3px; border-bottom-right-radius: 3px;
 	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;}
 .audiotheme-input-append .audiotheme-input-append-trigger img { display: inline-block; vertical-align: text-top;}
-.audiotheme-input-append.focused .audiotheme-input-append-trigger,
-.audiotheme-input-append.focused button.ui-datepicker-trigger { border-color: #bbb;
+.audiotheme-input-append.is-focused .audiotheme-input-append-trigger,
+.audiotheme-input-append.is-focused button.ui-datepicker-trigger { border-color: #bbb;
 	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 	box-shadow: 1px 1px 2px rgba(0,0,0,0.1);}
 
