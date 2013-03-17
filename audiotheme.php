@@ -84,6 +84,7 @@ function audiotheme_load() {
 	add_action( 'init', 'audiotheme_register_scripts' );
 	add_action( 'init', 'audiotheme_less_setup' );
 	add_action( 'widgets_init', 'audiotheme_widgets_init' );
+	add_action( 'wp_loaded', 'audiotheme_loaded' );
 
 	add_filter( 'wp_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
 	add_filter( 'nav_menu_css_class', 'audiotheme_nav_menu_name_class', 10, 2 );
@@ -116,8 +117,6 @@ function audiotheme_load() {
 
 	// Load videos
 	add_action( 'init', 'audiotheme_videos_init' );
-
-
 }
 add_action( 'after_setup_theme', 'audiotheme_load', 5 );
 
@@ -185,3 +184,38 @@ function audiotheme_l10n() {
 	load_plugin_textdomain( $domain, false, AUDIOTHEME_DIR . 'languages/' );
 }
 add_action( 'init', 'audiotheme_l10n' );
+
+/**
+ * Flush the rewrite rules if needed.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_loaded() {
+	if ( 'yes' == get_option( 'audiotheme_flush_rewrite_rules' ) ) {
+		update_option( 'audiotheme_flush_rewrite_rules', 'no' );
+		flush_rewrite_rules();
+	}
+}
+
+/**
+ * Activation routine.
+ *
+ * Occurs too late to flush rewrite rules, so set an option to flush the
+ * rewrite rules on the next request.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_activate() {
+	add_option( 'audiotheme_flush_rewrite_rules', 'yes' );
+}
+register_activation_hook( __FILE__, 'audiotheme_activate' );
+
+/**
+ * Deactivation routine.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_deactivate() {
+	delete_option( 'rewrite_rules' );
+}
+register_deactivation_hook( __FILE__, 'audiotheme_deactivate' );

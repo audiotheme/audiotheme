@@ -30,6 +30,8 @@ function audiotheme_admin_setup() {
 	add_action( 'init', 'audiotheme_settings_init' );
 	add_action( 'init', 'audiotheme_dashboard_init', 9 );
 	add_action( 'init', 'audiotheme_archives_init_admin', 50 );
+	
+	add_action( 'admin_init', 'audiotheme_upgrade' );
 
 	add_action( 'update_option_audiotheme_disable_directory_browsing', 'audiotheme_disable_directory_browsing_option_update' );
 
@@ -211,4 +213,17 @@ function audiotheme_edit_user_contact_info( $contactmethods ) {
 	$contactmethods['facebook'] = __( 'Facebook URL', 'audiotheme-i18n' );
 
 	return $contactmethods;
+}
+
+/**
+ * Upgrade routine.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_upgrade() {
+	$saved_version = get_option( 'audiotheme_version' );
+
+	if ( ! $saved_version || audiotheme_version_compare( $saved_version, '1.0.0', '<' ) ) {
+		update_option( 'audiotheme_version', AUDIOTHEME_VERSION );
+	}
 }
