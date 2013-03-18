@@ -1,0 +1,19 @@
+{
+  "name": "AudioTheme",
+  "version": "1.0.0",
+  "description": "AudioTheme Framework",
+  "main": "Gruntfile.js",
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/audiotheme/plugin-audiotheme.git"
+  },
+  "dependencies": {
+    "grunt": "~0.4.0",
+    "grunt-contrib-copy": "~0.4.0",
+    "grunt-contrib-jshint": "~0.2.0",
+    "grunt-contrib-uglify": "~0.1.2",
+    "grunt-contrib-watch": "~0.3.1",
+    "grunt-shell": "~0.2.1",
+    "shelljs": "~0.1.2"
+  }
+}
