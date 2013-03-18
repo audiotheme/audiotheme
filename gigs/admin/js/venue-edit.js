@@ -23,23 +23,25 @@ jQuery(function($) {
 							adminCode: item.adminCode1,
 							countryName: item.countryName,
 							timezone: item.timezone.timeZoneId
-						}
+						};
 					}));
 				}
 			});
 		},
 		minLength: 2,
 		select: function(e, ui) {
-			if ('' == $state.val())
+			if ('' === $state.val()) {
 				$state.val(ui.item.adminCode);
+			}
 
-			if ('' == $country.val())
+			if ('' === $country.val()) {
 				$country.val(ui.item.countryName);
+			}
 
 			$venueTz.find('option[value="' + ui.item.timezone + '"]').attr('selected','selected');
 		}
 	});
-	
+
 	/*$city.autocomplete({
 		source: function( request, response ) {
 			$.ajax({

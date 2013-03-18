@@ -103,12 +103,14 @@ function audiotheme_update_notice( $notice ) {
  * @since 1.0.0
  */
 function audiotheme_admin_init() {
-	wp_register_script( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/js/audiotheme-admin.js', array( 'underscore', 'jquery-ui-sortable' ) );
-	wp_register_script( 'audiotheme-media', AUDIOTHEME_URI . 'admin/js/audiotheme-media.js', array( 'jquery' ) );
-	wp_register_script( 'audiotheme-pointer', AUDIOTHEME_URI . 'admin/js/audiotheme-pointer.js', array( 'wp-pointer' ) );
-	wp_register_script( 'audiotheme-settings', AUDIOTHEME_URI . 'admin/js/audiotheme-settings.js' );
+	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+	
+	wp_register_script( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/js/admin' . $suffix . '.js', array( 'underscore', 'jquery-ui-sortable' ) );
+	wp_register_script( 'audiotheme-media', AUDIOTHEME_URI . 'admin/js/media' . $suffix . '.js', array( 'jquery' ) );
+	wp_register_script( 'audiotheme-pointer', AUDIOTHEME_URI . 'admin/js/pointer' . $suffix . '.js', array( 'wp-pointer' ) );
+	wp_register_script( 'audiotheme-settings', AUDIOTHEME_URI . 'admin/js/settings' . $suffix . '.js' );
 
-	wp_register_style( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/css/audiotheme-admin.css' );
+	wp_register_style( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/css/admin.css' );
 	wp_register_style( 'jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css' );
 	wp_register_style( 'jquery-ui-theme-audiotheme', AUDIOTHEME_URI . 'admin/css/jquery-ui-audiotheme.css', array( 'jquery-ui-theme-smoothness' ) );
 }

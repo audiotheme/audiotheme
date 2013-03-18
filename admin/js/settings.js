@@ -25,7 +25,7 @@ jQuery(function($) {
 		}
 
 		// Makes wp-admin/options.php redirect to the appropriate tab.
-		if ( -1 == $refererField.val().indexOf('#') ) {
+		if ( -1 === $refererField.val().indexOf('#') ) {
 			$refererField.val( $refererField.val() + hash );
 		} else {
 			$refererField.val( $refererField.val().replace(/#.*/, hash) );

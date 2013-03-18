@@ -11,10 +11,12 @@ jQuery(function($) {
 		dummyCallback = function() {};
 
 	$venueTzGroup.pointer({ audiothemeId: 'at100_gigvenue_tz' });
-	
+
 	// Add a day to the last saved gig date.
-	lastGigDate ? lastGigDate.setDate( lastGigDate.getDate() + 1 ) : null;
-	
+	if ( lastGigDate ) {
+		lastGigDate.setDate( lastGigDate.getDate() + 1 );
+	}
+
 	// Intialize the date picker.
 	$date.datepicker({
 		dateFormat: 'yy/mm/dd',
@@ -36,18 +38,18 @@ jQuery(function($) {
 	}) .next().on('click', function(e) {
 		$time.focus();
 	});
-	
+
 	// Add the last saved date and time to session storage
 	// when the gig is saved.
 	$('#publish').on('click', function() {
 		var date = $date.datepicker('getDate'),
 			time = $time.timepicker('getTime');
-		
-		if ( ss && '' != date ) {
+
+		if ( ss && '' !== date ) {
 			ss.lastGigDate = date;
 		}
-		
-		if ( ss && '' != time ) {
+
+		if ( ss && '' !== time ) {
 			ss.lastGigTime = time;
 		}
 	});
@@ -56,7 +58,7 @@ jQuery(function($) {
 	// If the venue is new, show the time zone selection ui.
 	$venue.autocomplete({
 		change: function() {
-			if ( '' != $venue.val() ) {
+			if ( '' !== $venue.val() ) {
 				$.ajax({
 					url: ajaxurl,
 					data: {
@@ -87,7 +89,7 @@ jQuery(function($) {
 	$('#gig-venue-select').on('click', function() {
 		$venue.focus().autocomplete('search','');
 	});
-	
+
 	// Automcomplete the search for a city.
 	$venueTzSearch.autocomplete({
 		source: function( request, response ) {
@@ -106,7 +108,7 @@ jQuery(function($) {
 							value: item.timezone,
 							location: item.location,
 							timezone: item.timezone
-						}
+						};
 					}));
 				}
 			});

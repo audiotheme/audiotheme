@@ -71,10 +71,13 @@ window.audiotheme = window.audiotheme || {};
 
 			return $.Deferred( function( deferred ) {
 				// Transfer success/error callbacks.
-				if ( options.success )
+				if ( options.success ) {
 					deferred.done( options.success );
-				if ( options.error )
+				}
+
+				if ( options.error ) {
 					deferred.fail( options.error );
+				}
 
 				delete options.success;
 				delete options.error;
@@ -83,13 +86,15 @@ window.audiotheme = window.audiotheme || {};
 				$.ajax( options ).done( function( response ) {
 					// Treat a response of `1` as successful for backwards
 					// compatibility with existing handlers.
-					if ( response === '1' || response === 1 )
+					if ( response === '1' || response === 1 ) {
 						response = { success: true };
+					}
 
-					if ( _.isObject( response ) && ! _.isUndefined( response.success ) )
+					if ( _.isObject( response ) && ! _.isUndefined( response.success ) ) {
 						deferred[ response.success ? 'resolveWith' : 'rejectWith' ]( this, [response.data] );
-					else
+					} else {
 						deferred.rejectWith( this, [response] );
+					}
 				}).fail( function() {
 					deferred.rejectWith( this, arguments );
 				});
@@ -121,7 +126,7 @@ jQuery(function($) {
  */
 jQuery(function($) {
 	var audiothemeInsertField = null,
-		audiothemeInsertButtonText = null
+		audiothemeInsertButtonText = null,
 		audiothemeInsertButtonInterval = null;
 
 	$('body').on('click', '.thickbox', function() {
@@ -131,11 +136,11 @@ jQuery(function($) {
 
 		clearInterval(audiothemeInsertButtonInterval);
 
-		if ( 'undefined' != typeof insertField ) {
+		if ( 'undefined' !== typeof insertField ) {
 			audiothemeInsertField = insertField;
 		}
 
-		if ( 'undefined' != typeof insertButtonText ) {
+		if ( 'undefined' !== typeof insertButtonText ) {
 			audiothemeInsertButtonText = insertButtonText;
 
 			audiothemeInsertButtonInterval = setInterval( function() {
@@ -146,7 +151,8 @@ jQuery(function($) {
 				if (audiothemeInsertField.length) {
 					buttons.off('click').on('click.audiotheme', function(e) {
 						var $this = $(this),
-							mediaItem = $this.closest('table');
+							mediaItem = $this.closest('table'),
+							url;
 
 						e.preventDefault();
 
@@ -184,8 +190,9 @@ jQuery(function($) {
 				items: null
 			};
 
-			if (options)
+			if (options) {
 				$.extend(settings, options);
+			}
 
 			return this.each(function() {
 				var repeater = $(this),
@@ -221,7 +228,7 @@ jQuery(function($) {
 					helper: function(e, ui) {
 						var $helper = ui.clone();
 						$helper.children().each(function(index) {
-						  $(this).width(ui.children().eq(index).width())
+							$(this).width(ui.children().eq(index).width());
 						});
 
 						return $helper;

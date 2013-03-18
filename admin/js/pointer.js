@@ -40,7 +40,7 @@
 					e.preventDefault();
 					t.element.pointer('close').pointer('audiothemeDismiss');
 				});
-			}
+			};
 		}
 	});
 })(jQuery);

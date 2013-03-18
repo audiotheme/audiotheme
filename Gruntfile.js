@@ -31,7 +31,9 @@ module.exports = function(grunt) {
 					ajaxurl: true,
 					audiotheme: true,
 					audiothemePointers: true,
+					audiothemeGigsL10n: true,
 					AudiothemeMediaControl: true,
+					isRtl: true,
 					jQuery: true,
 					tb_remove: true,
 					wp: true,
@@ -42,6 +44,8 @@ module.exports = function(grunt) {
 				'Gruntfile.js',
 				'admin/js/*.js',
 				'!admin/js/*.min.js',
+				'gigs/admin/js/*.js',
+				'!gigs/admin/js/*.min.js',
 			]
 		},
 
@@ -49,10 +53,12 @@ module.exports = function(grunt) {
 		uglify: {
 			dist: {
 				files: [
-					{ src: 'admin/js/audiotheme-admin.js', dest: 'admin/js/audiotheme-admin.min.js' },
-					{ src: 'admin/js/audiotheme-media.js', dest: 'admin/js/audiotheme-media.min.js' },
-					{ src: 'admin/js/audiotheme-pointer.js', dest: 'admin/js/audiotheme-pointer.min.js' },
-					{ src: 'admin/js/audiotheme-settings.js', dest: 'admin/js/audiotheme-settings.min.js' },
+					{ src: 'admin/js/admin.js', dest: 'admin/js/admin.min.js' },
+					{ src: 'admin/js/media.js', dest: 'admin/js/media.min.js' },
+					{ src: 'admin/js/pointer.js', dest: 'admin/js/pointer.min.js' },
+					{ src: 'admin/js/settings.js', dest: 'admin/js/settings.min.js' },
+					{ src: 'gigs/admin/js/gig-edit.js', dest: 'gigs/admin/js/gig-edit.min.js' },
+					{ src: 'gigs/admin/js/venue-edit.js', dest: 'gigs/admin/js/venue-edit.min.js' },
 				]
 			}
 		},

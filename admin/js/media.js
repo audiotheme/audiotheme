@@ -57,7 +57,7 @@ jQuery(function($) {
 					// Search for other selectors within the context of the control.
 					$controlTarget = $control.find( targetSelector );
 				}
-				
+
 				if ( $control.data('upload-extensions') ) {
 					wp.Uploader.defaults.filters[0].extensions = $control.data('upload-extensions');
 				}
@@ -95,12 +95,13 @@ jQuery(function($) {
 
 			selection.reset( attachment ? [ attachment ] : [] );
 		},
-		
+
 		// Initializes a new media manage or returns an existing frame.
 		// @see wp.media.featuredImage.frame()
 		frame: function() {
-			if ( this._frame )
+			if ( this._frame ) {
 				return this._frame;
+			}
 
 			this._frame = wp.media({
 				title: $control.data('title') || AudiothemeMediaControl.frameTitle,
@@ -115,7 +116,7 @@ jQuery(function($) {
 
 			this._frame.on( 'open', this.updateLibrarySelection ).on('close', function() {
 				wp.Uploader.defaults.filters[0].extensions = defaultExtensions;
-			}).state('library').on('select', this.select);;
+			}).state('library').on('select', this.select);
 
 			return this._frame;
 		}
