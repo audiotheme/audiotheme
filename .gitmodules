@@ -4,3 +4,6 @@
 [submodule "includes/p2p"]
 	path = includes/lib/p2p
 	url = https://github.com/AppThemes/wp-posts-to-posts-core.git
+[submodule "includes/lib/wp-less"]
+	path = includes/lib/wp-less
+	url = https://github.com/sanchothefat/wp-less.git
