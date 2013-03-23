@@ -45,7 +45,7 @@ function audiotheme_less_register_vars() {
 	$callback = ( empty( $support[0]['less_vars_callback'] ) ) ? '' : $support[0]['less_vars_callback'];
 
 	// Always points to the parent theme.
-	add_less_var( 'templateurl', '~"' . get_template_directory_uri() . '"' );
+	add_less_var( 'templateurl', '~"' . get_template_directory_uri() . '/"' );
 
 	if ( ! empty( $callback ) && function_exists( $callback ) ) {
 		call_user_func( $callback );
