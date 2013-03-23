@@ -50,29 +50,10 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 		$instance['date_format'] = apply_filters( 'audiotheme_widget_upcoming_gigs_date_format', get_option( 'date_format' ) );
 		$instance['number'] = ( empty( $instance['number'] ) || ! absint( $instance['number'] ) ) ? 5 : absint( $instance['number'] );
 
-		$loop = new WP_Query( apply_filters( 'audiotheme_widget_upcoming_gigs_loop_args', array(
-			'post_type'      => 'audiotheme_gig',
+		$loop = new Audiotheme_Gig_Query( apply_filters( 'audiotheme_widget_upcoming_gigs_loop_args', array(
 			'no_found_rows'  => true,
-			'post_status'    => 'publish',
 			'posts_per_page' => $instance['number'],
-			'orderby'        => 'meta_value',
-			'order'          => 'asc',
-			'ignore_sticky_posts' => true,
-			'meta_query'     => array(
-				array(
-					'key'     => '_audiotheme_gig_datetime',
-					'compare' => 'EXISTS',
-				),
-				array(
-					'key'     => '_audiotheme_gig_datetime',
-					'value'   => current_time( 'mysql' ),
-					'compare' => '>=',
-					'type'    => 'DATETIME',
-				),
-			),
 		) ) );
-
-		p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $loop );
 
 		// Add a class with the number of gigs to display.
 		$output = preg_replace( '/class="([^"]+)"/', 'class="$1 widget-items-' . $instance['number'] . '"', $before_widget );
