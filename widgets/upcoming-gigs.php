@@ -103,7 +103,7 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 								$inside .= sprintf( '<meta content="%s" itemprop="startDate">', get_audiotheme_gig_time( 'c' ) );
 								$inside .= sprintf( '<time class="dtstart" datetime="%s">%s</time>',
 									get_audiotheme_gig_time( 'c' ),
-									$instance['date_format']
+									get_audiotheme_gig_time( $instance['date_format'] )
 								);
 							$inside .= '</dd>';
 
