@@ -42,7 +42,16 @@ function audiotheme_p2p_load_core() {
 
 	define( 'P2P_TEXTDOMAIN', 'audiotheme-i18n' );
 
-	require( AUDIOTHEME_DIR . 'includes/lib/p2p/init.php' );
+	require_once( AUDIOTHEME_DIR . 'includes/lib/p2p/util.php' );
+	require_once( AUDIOTHEME_DIR . 'includes/lib/p2p/api.php' );
+	require_once( AUDIOTHEME_DIR . 'includes/lib/p2p/autoload.php' );
+
+	P2P_Autoload::register( 'P2P_', AUDIOTHEME_DIR . 'includes/lib/p2p' );
+
+	P2P_Storage::init();
+
+	P2P_Query_Post::init();
+	P2P_Query_User::init();
 
 	add_action( 'admin_init', array( 'P2P_Storage', 'install' ) );
 }
