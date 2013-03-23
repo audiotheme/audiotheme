@@ -166,16 +166,20 @@ function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
 function audiotheme_discography_query( $query ) {
 	global $wpdb;
 
+	if ( is_admin() ) {
+		return;
+	}
+
 	// Sort records by release year
 	$orderby = $query->get( 'orderby' );
-	if ( $query->is_main_query() && is_post_type_archive( 'audiotheme_record' ) && empty( $orderby ) && ! is_admin() ) {
+	if ( $query->is_main_query() && is_post_type_archive( 'audiotheme_record' ) && empty( $orderby ) ) {
 		$query->set( 'meta_key', '_audiotheme_release_year' );
-		$query->set( 'orderby', 'meta_value_number' );
+		$query->set( 'orderby', 'meta_value_num' );
 		$query->set( 'order', 'desc' );
 	}
 
 	// Limit requests for single tracks to the context of the parent record
-	if ( $query->is_main_query() && is_single() && 'audiotheme_track' == $query->get( 'post_type' ) && ! is_admin() ) {
+	if ( $query->is_main_query() && is_single() && 'audiotheme_track' == $query->get( 'post_type' ) ) {
 		if ( get_option('permalink_structure') ) {
 			$record_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type='audiotheme_record' AND post_name=%s LIMIT 1", $query->get( 'audiotheme_record' ) ) );
 			if ( $record_id ) {
