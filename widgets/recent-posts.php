@@ -47,7 +47,7 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 		$instance['number'] = ( empty( $instance['number'] ) || ! absint( $instance['number'] ) ) ? 5 : absint( $instance['number'] );
 
 		$instance['title_raw'] = $instance['title'];
-		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? 'Recent Posts' : $instance['title'], $instance, $this->id_base );
+		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Recent Posts', 'audiotheme-i18n' ) : $instance['title'], $instance, $this->id_base );
 
 		$instance['date_format'] = apply_filters( 'audiotheme_widget_recent_posts_date_format', get_option( 'date_format' ), $instance, $this->id_base );
 		$instance['excerpt_length'] = apply_filters( 'audiotheme_widget_recent_posts_excerpt_length', 100, $instance, $this->id_base );
@@ -64,7 +64,7 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 				$classes[] = 'show-date';
 			}
 
-			if ( isset( $instance['show_excerpts'] ) && ! empty( $instance['show_date'] ) ) {
+			if ( isset( $instance['show_excerpts'] ) && ! empty( $instance['show_excerpts'] ) ) {
 				$classes[] = 'show-excerpts';
 			}
 
@@ -101,7 +101,7 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 			if ( $inside = apply_filters( 'audiotheme_widget_recent_posts_output', '', $instance, $args ) ) {
 				$output .= $inside;
 			} else {
-				if ( ! empty( $title ) ) {
+				if ( ! empty( $instance['title'] ) ) {
 					$output .= $args['before_title'];
 						$output .= $instance['title'];
 
@@ -114,7 +114,7 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 								);
 							}
 						}
-					$output .= $after_title;
+					$output .= $args['after_title'];
 				}
 
 				$output .= '<ul>';
