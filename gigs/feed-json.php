@@ -39,4 +39,4 @@ foreach ( $wp_query->posts as $post ) {
 	$events[] = $event;
 }
 
-echo json_encode( $events );
+echo ( is_singular() ) ? json_encode( $events[0] ) : json_encode( $events );
