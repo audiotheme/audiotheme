@@ -52,7 +52,7 @@ function audiotheme_videos_init() {
 		'show_ui'                => true,
 		'show_in_menu'           => true,
 		'show_in_nav_menus'      => false,
-		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author' ),
+		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments', 'revisions', 'author' ),
 		'taxonomies'             => array( 'post_tag' ),
 	) );
 
