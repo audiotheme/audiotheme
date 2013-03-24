@@ -322,6 +322,91 @@ function get_audiotheme_gig_tickets_url( $post = 0 ) {
 }
 
 /**
+ * Get a link to add a gig to Google Calendar.
+ *
+ * @since 1.0.0
+ *
+ * @todo Need to add the artists' name to provide context in Google Calendar.
+ *
+ * @param int|object $post Optional post ID or object. Default is global $post object.
+ * @return string
+ */
+function get_audiotheme_gig_gcal_link( $post = null ) {
+	$gig = get_audiotheme_gig( $post );
+
+	$date = get_audiotheme_gig_time( 'Ymd', '', true );
+	$time = get_audiotheme_gig_time( '', 'His', true );
+
+	$dtstart  = $date;
+	$dtstart .= ( empty( $time ) ) ? '' : 'T' . $time . 'Z';
+
+	$location = '';
+	if ( audiotheme_gig_has_venue( $gig ) ) {
+		$venue = get_audiotheme_venue( $gig->venue->ID );
+
+		$location  = $venue->name;
+		$location .= ( empty( $venue->address ) ) ? '' : ', ' . esc_html( $venue->address );
+		$location .= ( empty( $venue->city ) ) ? '' : ', ' . $venue->city;
+		$location .= ( ! empty( $location ) && ! empty( $venue->state ) ) ? ', ' : '';
+		$location .= ( empty( $venue->state ) ) ? '' : $venue->state;
+
+		if ( ! empty( $venue->country ) ) {
+			$location .= ( ! empty( $location ) ) ? ', ' : '';
+			$location .= ( empty( $venue->country ) ) ? '' : $venue->country;
+		}
+	}
+
+	$args = array(
+		'action'   => 'TEMPLATE',
+		'text'     => rawurlencode( wp_strip_all_tags( get_audiotheme_gig_title() ) ),
+		'dates'    => $dtstart . '/' . $dtstart,
+		'details'  => rawurlencode( wp_strip_all_tags( get_audiotheme_gig_description() ) ),
+		'location' => rawurlencode( $location ),
+		'sprop'    => rawurlencode( home_url( '/' ) ),
+	);
+
+	$link = add_query_arg( $args, 'http://www.google.com/calendar/event' );
+
+	return $link;
+}
+
+/**
+ * Display a link to add a gig to Google Calendar.
+ *
+ * @since 1.0.0
+ */
+function the_audiotheme_gig_gcal_link() {
+	echo esc_url( get_audiotheme_gig_gcal_link() );
+}
+
+/**
+ * Get a link to a gig's iCal endpoint.
+ *
+ * @since 1.0.0
+ *
+ * @param int|object $post Optional post ID or object. Default is global $post object.
+ * @return string
+ */
+function get_audiotheme_gig_ical_link( $post = null ) {
+	$post = get_post( $post );
+	$permalink = get_option( 'permalink_structure' );
+
+	$ical_link = get_permalink( $post );
+	$ical_link = ( empty( $permalink ) ) ? add_query_arg( '', 'ical', $ical_link ) : trailingslashit( $ical_link ) . 'ical/';
+
+	return $ical_link;
+}
+
+/**
+ * Display the link to a gig's iCal endpoint.
+ *
+ * @since 1.0.0
+ */
+function the_audiotheme_gig_ical_link() {
+	echo esc_url( get_audiotheme_gig_ical_link() );
+}
+
+/**
  * Check if a gig has a venue.
  *
  * @since 1.0.0
