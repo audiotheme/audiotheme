@@ -94,7 +94,12 @@ function audiotheme_archives_post_type_archive_title( $title ) {
 function audiotheme_nav_menu_classes( $items, $args ) {
 	$classes = array();
 	$first_top = -1;
+
+	$blog_page_id = get_option( 'page_for_posts' );
+	$is_blog_post = is_singular( 'post' );
+
 	$is_audiotheme_post_type = is_singular( array( 'audiotheme_gig', 'audiotheme_record', 'audiotheme_track', 'audiotheme_video' ) );
+	$post_type_archive_id = get_audiotheme_post_type_archive( get_post_type() );
 	$post_type_archive_link = get_post_type_archive_link( get_post_type() );
 
 	foreach ( $items as $key => $item ) {
@@ -109,13 +114,19 @@ function audiotheme_nav_menu_classes( $items, $args ) {
 			$classes['last-child-items'][ $item->menu_item_parent ] = $key;
 		}
 
-		if ( 'audiotheme_archive' == $item->object && get_audiotheme_post_type_archive( get_post_type() ) == $item->object_id ) {
-			$items[ $key ]->classes[] = 'current-menu-item';
-		}
+		if ( ! is_404() ) {
+			if ( 'audiotheme_archive' == $item->object && $post_type_archive_id == $item->object_id ) {
+				$items[ $key ]->classes[] = 'current-menu-item';
+			}
 
-		// Add 'current-menu-parent' class to CPT archive links when viewing a singular template.
-		if ( $is_audiotheme_post_type && $post_type_archive_link == $item->url ) {
-			$items[ $key ]->classes[] = 'current-menu-parent';
+			if ( $is_blog_post && $blog_page_id == $item->object_id ) {
+				$items[ $key ]->classes[] = 'current-menu-parent';
+			}
+
+			// Add 'current-menu-parent' class to CPT archive links when viewing a singular template.
+			if ( $is_audiotheme_post_type && $post_type_archive_link == $item->url ) {
+				$items[ $key ]->classes[] = 'current-menu-parent';
+			}
 		}
 	}
 
