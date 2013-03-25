@@ -231,7 +231,7 @@ function audiotheme_settings_screen_notices() {
 		$option_names = (array) $screen->option_name;
 		foreach ( $option_names as $name ) {
 			$errors = get_settings_errors( $name, false );
-			if ( is_array( $errors ) ) {
+			if ( ! empty( $errors ) && is_array( $errors ) ) {
 				foreach ( $errors as $key => $details ) {
 					printf( '<div id="%1$s" class="%2$s" data-field-id="%3$s"><p><strong>%4$s</strong></p></div>',
 						'audiotheme-settings-error-' . str_replace( ':', '-', $details['code'] ),
