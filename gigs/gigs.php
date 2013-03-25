@@ -388,7 +388,7 @@ class Audiotheme_Gig_Query extends WP_Query {
 	public function __construct( $args = array() ) {
 		$args = wp_parse_args( $args, array(
 			'post_status'         => 'publish',
-			'posts_per_page'      => -1,
+			'posts_per_page'      => get_option( 'posts_per_page' ),
 			'meta_key'            => '_audiotheme_gig_datetime',
 			'orderby'             => 'meta_value',
 			'order'               => 'asc',
