@@ -92,6 +92,17 @@ function get_audiotheme_post_type_archive( $post_type ) {
 }
 
 /**
+ * Determine if the current template is a post type archive.
+ *
+ * @since 1.0.0
+ *
+ * @return bool
+ */
+function is_audiotheme_post_type_archive() {
+	return ( is_post_type_archive( 'audiotheme_gig', 'audiotheme_record' ) );
+}
+
+/**
  * Determine if a post ID is for a post type archive post.
  *
  * @since 1.0.0
