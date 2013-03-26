@@ -711,6 +711,29 @@ function get_audiotheme_venue_vcard( $venue_id, $args = array() ) {
 }
 
 /**
+ * Retrieve a venue's address as a string.
+ *
+ * @since 1.0.0
+ *
+ * @param int $venue_id
+ * @param array $args Optional. Override the defaults and modify the output structure.
+ * @return string
+ */
+function get_audiotheme_venue_address( $venue_id, $args = array() ) {
+	$venue = get_audiotheme_venue( $venue_id );
+
+	$address  = '';
+	$address .= ( empty( $venue->address ) ) ? '' : trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( $venue->address ) ) ) . ', ';
+
+	$address .= ( empty( $venue->city ) ) ? '' : $venue->city;
+	$address .= ( ! empty( $venue->city ) && ! empty( $venue->state ) ) ? ', ' : '';
+	$address .= ( empty( $venue->state ) ) ? '' : $venue->state;
+	$address .= ( empty( $venue->postal_code ) ) ? '' : ' ' . $venue->postal_code;
+
+	return $address;
+}
+
+/**
  * Get the base admin panel URL for adding a venue.
  *
  * @since 1.0.0
