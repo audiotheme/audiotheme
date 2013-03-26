@@ -116,6 +116,36 @@ function is_audiotheme_post_type_archive_id( $archive_id ) {
 }
 
 /**
+ * Retrieve archive meta.
+ *
+ * @since 1.0.0
+ *
+ * @param string $key Optional. The meta key to retrieve. By default, returns data for all keys.
+ * @param bool $single Optional. Whether to return a single value.
+ * @param mixed $default Optional. A default value to return if the requested meta doesn't exist.
+ * @param string $post_type Optional. The post type archive to retrieve meta data for. Defaults to the current post type.
+ * @return mixed Will be an array if $single is false. Will be value of meta data field if $single is true.
+ */
+function get_audiotheme_archive_meta( $key = '', $single = false, $default = null, $post_type = null ) {
+	$post_type = ( empty( $post_type ) ) ? get_post_type() : $post_type;
+	if ( ! $post_type && ! is_audiotheme_post_type_archive() ) {
+		return null;
+	}
+
+	$archive_id = get_audiotheme_post_type_archive( $post_type );
+	if ( ! $archive_id ) {
+		return null;
+	}
+
+	$value = get_post_meta( $archive_id, $key, $single );
+	if ( empty( $value ) && ! empty( $default ) ) {
+		$value = $default;
+	}
+
+	return $value;
+}
+
+/**
  * Save the active archive IDs.
  *
  * Determines when an archive has become inactive and moves it to a separate
