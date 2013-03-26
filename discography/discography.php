@@ -176,6 +176,8 @@ function audiotheme_discography_query( $query ) {
 		$query->set( 'meta_key', '_audiotheme_release_year' );
 		$query->set( 'orderby', 'meta_value_num' );
 		$query->set( 'order', 'desc' );
+
+		add_filter( 'posts_orderby_request', 'audiotheme_discography_query_orderby' );
 	}
 
 	// Limit requests for single tracks to the context of the parent record
@@ -189,6 +191,20 @@ function audiotheme_discography_query( $query ) {
 			$query->set( 'post_parent', absint( $_GET['post_parent'] ) );
 		}
 	}
+}
+
+/**
+ * Sort records by title after sorting by release year.
+ *
+ * @since 1.0.0
+ *
+ * @param string $orderby SQL order clause.
+ * @return string
+ */
+function audiotheme_discography_query_orderby( $orderby ) {
+	global $wpdb;
+
+	return $orderby . ", {$wpdb->posts}.post_title asc";
 }
 
 /**
