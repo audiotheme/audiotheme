@@ -27,7 +27,7 @@ if ( is_admin() ) {
 function audiotheme_videos_init() {
 	// Register the video custom post type.
 	register_post_type( 'audiotheme_video', array(
-		'has_archive'            => true,
+		'has_archive'            => get_audiotheme_videos_rewrite_base(),
 		'hierarchical'           => false,
 		'labels'                 => array(
 			'name'               => _x( 'Videos', 'post type general name', 'audiotheme-i18n' ),
@@ -48,7 +48,10 @@ function audiotheme_videos_init() {
 		'public'                 => true,
 		'publicly_queryable'     => true,
 		'register_meta_box_cb'   => 'audiotheme_video_meta_boxes',
-		'rewrite'                => array( 'slug' => 'videos', 'with_front' => false ),
+		'rewrite'                => array(
+			'slug'       => get_audiotheme_videos_rewrite_base(),
+			'with_front' => false
+		),
 		'show_ui'                => true,
 		'show_in_menu'           => true,
 		'show_in_nav_menus'      => false,
@@ -58,6 +61,18 @@ function audiotheme_videos_init() {
 
 	add_action( 'template_include', 'audiotheme_video_template_include' );
 	add_action( 'delete_attachment', 'audiotheme_video_delete_attachment' );
+}
+
+/**
+ * Get the videos rewrite base. Defaults to 'videos'.
+ *
+ * @since 1.0.0
+ *
+ * @return string
+ */
+function get_audiotheme_videos_rewrite_base() {
+	$base = get_option( 'audiotheme_video_rewrite_base' );
+	return ( empty( $base ) ) ? 'videos' : $base;
 }
 
 /**

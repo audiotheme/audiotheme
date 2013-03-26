@@ -99,7 +99,7 @@ function get_audiotheme_post_type_archive( $post_type ) {
  * @return bool
  */
 function is_audiotheme_post_type_archive() {
-	return ( is_post_type_archive( 'audiotheme_gig', 'audiotheme_record' ) );
+	return ( is_post_type_archive( 'audiotheme_gig', 'audiotheme_record', 'audiotheme_video' ) );
 }
 
 /**

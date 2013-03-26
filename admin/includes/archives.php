@@ -21,7 +21,7 @@
 function audiotheme_archives_init_admin() {
 	$archives = array();
 
-	$post_types = array( 'audiotheme_gig', 'audiotheme_record' );
+	$post_types = array( 'audiotheme_gig', 'audiotheme_record', 'audiotheme_video' );
 
 	// Add an archive if one doesn't exist for whitelisted post types.
 	foreach ( $post_types as $post_type ) {
