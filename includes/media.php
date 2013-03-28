@@ -36,7 +36,7 @@ function audiotheme_add_default_oembed_providers() {
  * @param int $post_id Post ID.
  * @return string Embed HTML with wrapper.
  */
-function audiotheme_oembed_html( $html, $url, $attr, $post_id ) {
+function audiotheme_oembed_html( $html, $url = null, $attr = null, $post_id = null ) {
 	$players = array( 'youtube', 'vimeo', 'dailymotion', 'hulu', 'blip.tv', 'wordpress.tv', 'viddler', 'revision3' );
 
 	foreach( $players as $player ) {
