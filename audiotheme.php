@@ -163,7 +163,7 @@ function audiotheme_register_scripts() {
 	wp_register_script( 'jquery-jplayer', AUDIOTHEME_URI . 'includes/js/jquery.jplayer' . $suffix . '.js', array( 'jquery' ), '2.2.19', true );
 	wp_register_script( 'jquery-jplayer-playlist', AUDIOTHEME_URI . 'includes/js/jquery.jplayer.playlist' . $suffix . '.js', array( 'jquery-jplayer' ), '2.2.2', true );
 	wp_register_script( 'jquery-placeholder', AUDIOTHEME_URI . 'includes/js/jquery.placeholder' . $suffix . '.js', array( 'jquery' ), '2.0.7', true );
-	wp_register_script( 'jquery-timepicker', AUDIOTHEME_URI . 'includes/js/jquery.timepicker' . $suffix . '.js', array( 'jquery' ), '1.0.10', true );
+	wp_register_script( 'jquery-timepicker', AUDIOTHEME_URI . 'includes/js/jquery.timepicker' . $suffix . '.js', array( 'jquery' ), '1.1', true );
 
 	wp_localize_script( 'jquery-jplayer', 'AudiothemeJplayer', array(
 		'swfPath' => AUDIOTHEME_URI . 'includes/js'

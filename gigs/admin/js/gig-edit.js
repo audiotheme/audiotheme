@@ -27,7 +27,7 @@ jQuery(function($) {
 
 	// Initialize the time picker.
 	$time.timepicker({
-		'scrollDefaultTime': lastGigTime,
+		'scrollDefaultTime': lastGigTime || '',
 		'timeFormat': audiothemeGigsL10n.timeFormat,
 		'className': 'ui-autocomplete'
 	}).on('showTimepicker', function() {
