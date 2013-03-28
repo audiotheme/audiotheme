@@ -53,7 +53,7 @@ function audiotheme_discography_init() {
 		'rewrite'                => false,
 		'show_ui'                => true,
 		'show_in_menu'           => true,
-		'supports'               => array( 'title', 'editor', 'thumbnail' ),
+		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
 	) );
 
 	register_post_type( 'audiotheme_track', array(
