@@ -92,7 +92,7 @@ function audiotheme_update_notice( $notice ) {
 	$notice  =  sprintf( __( '<a href="%s">Register your copy of AudioTheme</a> to receive automatic updates and support. Need a license key?', 'audiotheme-i18n' ),
 		esc_url( add_query_arg( 'page', 'audiotheme-settings', admin_url( 'admin.php' ) ) )
 	);
-	$notice .= ' <a href="http://audiotheme.com/" target="_blank">' . __( 'Purchase one now.', 'audiotheme-i18n' ) . '</a>';
+	$notice .= ' <a href="http://audiotheme.com/view/audiotheme/" target="_blank">' . __( 'Purchase one now.', 'audiotheme-i18n' ) . '</a>';
 
 	return $notice;
 }

@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: AudioTheme Framework
- * Plugin URI: http://audiotheme.com/
+ * Plugin URI: http://audiotheme.com/view/audiotheme/
  * Description: AudioTheme framework plugin.
  * Version: 1.0-beta1
  * Author: AudioTheme
- * Author URI: http://audiotheme.com
+ * Author URI: http://audiotheme.com/
  * Requires at least: 3.4.2
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html

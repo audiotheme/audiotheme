@@ -278,30 +278,29 @@ class Audiotheme_Updater {
 	public function get_license_error_messages( $args = array() ) {
 		$args = wp_parse_args( $args, array(
 			'prepend'     => '',
-
-			'account_url'   => 'http://audiotheme.com/my-account/',
-			'framework_url' => 'http://audiotheme.com/product/audiotheme/',
-			'product_url'   => 'http://audiotheme.com/',
+			'account_url'   => 'http://audiotheme.com/account/',
+			'framework_url' => 'http://audiotheme.com/view/audiotheme/',
+			'product_url'   => 'http://audiotheme.com/shop/',
 		) );
 
 		$messages['empty_license']  = $args['prepend'];
 		$messages['empty_license'] .= sprintf( __( '<a href="%s">Register your copy of AudioTheme</a> to receive automatic updates and support. Need a license key?', 'audiotheme-i18n' ),
 			esc_url( add_query_arg( 'page', 'audiotheme-settings', admin_url( 'admin.php' ) ) )
 		);
-		$messages['empty_license'] .= sprintf( ' <a href="%s">' . __( 'Purchase one now.', 'audiotheme-i18n' ) . '</a>',
+		$messages['empty_license'] .= sprintf( ' <a href="%s" target="_blank">' . __( 'Purchase one now.', 'audiotheme-i18n' ) . '</a>',
 			esc_url( $args['framework_url'] )
 		);
 
 		$messages['invalid_license']  = $args['prepend'];
 		$messages['invalid_license']  = __( 'Your license key appears to be invalid.', 'audiotheme-i18n' ) . ' ';
-		$messages['invalid_license'] .= sprintf( __( 'Verify that is has been <a href="%1$s">entered correctly</a> or <a href="%2$s">purchase one now.</a>', 'audiotheme-1i8n' ),
+		$messages['invalid_license'] .= sprintf( __( 'Verify that is has been <a href="%1$s">entered correctly</a> or <a href="%2$s" target="_blank">purchase one now.</a>', 'audiotheme-1i8n' ),
 			esc_url( add_query_arg( 'page', 'audiotheme-settings', admin_url( 'admin.php' ) ) ),
 			esc_url( $args['framework_url'] )
 		);
 
 		$messages['not_activated']  = $args['prepend'];
 		$messages['not_activated']  = __( 'Your license has not been activated for this site.', 'audiotheme-18n' );
-		$messages['not_activated'] .= ' ' . sprintf( __( 'Manage your site activations in <a href="%s">your account on AudioTheme.com</a>.', 'audiotheme-i18n' ),
+		$messages['not_activated'] .= ' ' . sprintf( __( 'Manage your site activations in <a href="%s" target="_blank">your account on AudioTheme.com</a>.', 'audiotheme-i18n' ),
 			esc_url( $args['account_url'] )
 		);
 

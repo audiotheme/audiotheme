@@ -219,7 +219,7 @@ function audiotheme_dashboard_sort_menu() {
  * @since 1.0.0
  */
 function audiotheme_dashboard_settings_license_section( $section ) {
-	echo __( 'Find your license key in your account on AudioTheme.com. Your license key is used for automatic upgrades and support.', 'audiotheme-i18n' );
+	echo sprintf( __( 'Find your license key in <a href="%s" target="_blank">your account</a> on AudioTheme.com. Your license key is used for automatic upgrades and support.', 'audiotheme-i18n' ), 'http://audiotheme.com/account/' );
 }
 
 /**
@@ -291,8 +291,8 @@ function audiotheme_dashboard_license_input( $args ) {
 						// ok|empty|unknown|invalid|expired|limit_reached|failed
 						errors['empty']         = '<?php echo esc_js( __( 'Empty license key.', 'audiotheme-i18n' ) ); ?>';
 						errors['invalid']       = '<?php echo esc_js( __( 'Invalid license key.', 'audiotheme-i18n' ) ); ?>';
-						errors['expired']       = '<?php echo esc_js( __( 'License key expired.', 'audiotheme-i18n' ) ) .' <a href="http://audiotheme.com/">' . esc_js( __( 'Renew now.', 'audiotheme-i18n' ) ) . '</a>'; ?>';
-						errors['limit_reached'] = '<?php echo esc_js( __( 'Activation limit reached.', 'audiotheme-i18n' ) ) . ' <a href="http://audiotheme.com/">' . esc_js( __( 'Upgrade your license.', 'audiotheme-i18n' ) ) . '</a>'; ?>';
+						errors['expired']       = '<?php echo esc_js( __( 'License key expired.', 'audiotheme-i18n' ) ) .' <a href="http://audiotheme.com/view/audiotheme/" target="_blank">' . esc_js( __( 'Renew now.', 'audiotheme-i18n' ) ) . '</a>'; ?>';
+						errors['limit_reached'] = '<?php echo esc_js( __( 'Activation limit reached.', 'audiotheme-i18n' ) ) . ' <a href="http://audiotheme.com/view/audiotheme/" target="_blank">' . esc_js( __( 'Upgrade your license.', 'audiotheme-i18n' ) ) . '</a>'; ?>';
 
 						if ( 'status' in data && data.status in errors ) {
 							$response.html( errors[ data.status ] );
@@ -371,10 +371,9 @@ function audiotheme_license_clear_status( $response ) {
  */
 function audiotheme_dashboard_settings_help() {
 	$content  = '<h4>' . __( 'For more information:', 'audiotheme-i18n' ) . '</h4>';
-	$content .= '<p><a href="http://audiotheme.com/" target="_blank">' . __( "Find Your License", 'audiotheme-i18n' ) . '</a></p>';
-	$content .= '<p><a href="http://audiotheme.com/" target="_blank">' . __( "Upgrade Your License", 'audiotheme-i18n' ) . '</a></p>';
-	$content .= '<p><a href="http://audiotheme.com/" target="_blank">' . __( "Support Forum", 'audiotheme-i18n' ) . '</a></p>';
-	$content .= '<p><a href="http://audiotheme.com/" target="_blank">' . __( "Request Support", 'audiotheme-i18n' ) . '</a></p>';
+	$content .= '<p><a href="http://audiotheme.com/account/" target="_blank">' . __( "Find Your License", 'audiotheme-i18n' ) . '</a></p>';
+	$content .= '<p><a href="http://audiotheme.com/view/audiotheme/" target="_blank">' . __( "Upgrade Your License", 'audiotheme-i18n' ) . '</a></p>';
+	$content .= '<p><a href="http://audiotheme.com/support/" target="_blank">' . __( "Support Forum", 'audiotheme-i18n' ) . '</a></p>';
 	get_current_screen()->set_help_sidebar( $content );
 
 	get_current_screen()->add_help_tab( array(
@@ -383,13 +382,13 @@ function audiotheme_dashboard_settings_help() {
 		'content' =>
 			'<h4>' . __( 'License Key', 'audiotheme-i18n' ) . '</h4>' .
 			'<p>' . __( "Your license key allows you to receive automatic updates and support for as long as your license is active. Don't worry, you won't lose any features you're currently using if it expires, however, it's a good idea to keep your license active to gain access to security upgrades, bug fixes, new features, or just to ask a question if you need a little help.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "Your license key can be found in your account on AudioTheme.com or in your purchase email. It's a random string consisting of 32 numbers or letters. Let us know if you need help finding it. Example key:", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . sprintf( __( "Your license key can be found in <a href='%s' target='_blank'>your account</a> on AudioTheme.com or in your purchase email. It's a random string consisting of 32 numbers or letters. Let us know if you need help finding it.", 'audiotheme-i18n' ), 'http://audiotheme.com/account/' ) . '</p>' .
 			'<p><em>' . __( "<strong>Example key:</strong>", 'audiotheme-i18n' ) . ' <code>a72fdacfb04efa15976ed843d0bc7fec</code></em></p>' .
 			'<p>' . __( "Simply copy and paste it into the <strong>License Key</strong> field and click the <strong>Activate</strong> button. If your license is valid, that's all you have to do.", 'audiotheme-i18n' ) . '</p>' .
-			'<p><em>' . __( "If your license has expired or you want to use AudioTheme on more than one site, simply visit AudioTheme.com to upgrade.", 'audiotheme-i18n' ) . '</em></p>' .
+			'<p><em>' . sprintf( __( "If your license has expired or you want to use AudioTheme on more than one site, simply visit <a href='%s' target='_blank'>AudioTheme.com</a> to upgrade.", 'audiotheme-i18n' ), 'http://audiotheme.com/view/audiotheme/' ) . '</em></p>' .
 
 			'<h4>' . __( 'Directory Browsing', 'audiotheme-i18n' ) . '</h4>' .
-			'<p>' . __( "Most servers running WordPress have a feature called directory browsing. This means that visitors can see a list of files in certain folders on your server if they know where to look. These folders might contain music or pictures that you don't want to be easily downloaded. While anything you make available online can't be absolutely protected, disabling directory browsing will help hide important files from prying eyes.", 'audiotheme-i18n' ) . '</p>',
+			'<p>' . __( "Most servers running WordPress have a feature called directory browsing. This means that visitors can see a list of files in certain folders on your server if they know where to look. These folders might contain music or pictures that you don't want to be easily downloaded. While anything you make available online can't be completely protected, disabling directory browsing will help hide important files from prying eyes.", 'audiotheme-i18n' ) . '</p>',
 	) );
 
 	get_current_screen()->add_help_tab( array(
