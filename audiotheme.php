@@ -207,12 +207,15 @@ function audiotheme_loaded() {
  * @since 1.0.0
  */
 function audiotheme_activate() {
-	add_option( 'audiotheme_flush_rewrite_rules', 'yes' );
+	update_option( 'audiotheme_flush_rewrite_rules', 'yes' );
 }
 register_activation_hook( __FILE__, 'audiotheme_activate' );
 
 /**
  * Deactivation routine.
+ *
+ * Deleting the rewrite rules option should force them to be regenerated the
+ * next time they're needed.
  *
  * @since 1.0.0
  */
