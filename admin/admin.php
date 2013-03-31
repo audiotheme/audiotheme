@@ -63,7 +63,6 @@ function audiotheme_update() {
 	$api_data = array( 'license' => $license );
 
 	$framework_updater = new Audiotheme_Updater_Plugin( array(
-		'api_url'  => 'http://127.0.0.1/woocommerce/api/',
 		'api_data' => $api_data
 	), AUDIOTHEME_DIR . 'audiotheme.php' );
 

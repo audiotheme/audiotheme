@@ -309,12 +309,13 @@ function audiotheme_ajax_activate_license() {
 	if ( isset( $_POST['license'] ) && wp_verify_nonce( $_POST['nonce'], 'audiotheme-activate-license' ) ) {
 		update_option( 'audiotheme_license_key', $_POST['license'] );
 
-		$updater = new Audiotheme_Updater( array( 'api_url'  => 'http://127.0.0.1/woocommerce/api/' ) );
+		$updater = new Audiotheme_Updater();
 		$response = $updater->activate_license( $_POST['license'] );
 
 		update_option( 'audiotheme_license_status', $response );
 
 		if ( isset( $response->status ) && 'ok' == $response->status ) {
+			// @todo Clear the last update status check with a 'not_activated' response.
 			update_option( 'audiotheme_license_key', $_POST['license'] );
 		}
 

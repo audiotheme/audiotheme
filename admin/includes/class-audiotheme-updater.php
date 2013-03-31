@@ -98,15 +98,20 @@ class Audiotheme_Updater {
 	public function disable_wporg_update_check( $r, $url ) {
 		$default_update_uri = $this->get_wporg_update_uri();
 
-		if ( empty( $update_uri ) || false === strpos( $url, $default_update_uri ) ) {
+		if ( empty( $default_update_uri ) || false === strpos( $url, $default_update_uri ) ) {
 			return $r; // Not an update request. Bail immediately.
 		}
 
-		$plural_type = $this->type . 's'; // Kinda hacky.
-
-		$entities = unserialize( $r['body'][ $plural_type ] );
-		unset( $themes[ $this->id ] );
-		$r['body'][ $plural_type ] = serialize( $entities );
+		if ( 'plugin' == $this->type ) {
+			$plugins = unserialize( $r['body']['plugins'] );
+			unset( $plugins->plugins[ $this->id ] );
+			unset( $plugins->active[ array_search( $this->id, $plugins->active ) ] );
+			$r['body']['plugins'] = serialize( $plugins );
+		} elseif ( 'theme' == $this->type ) {
+			$themes = unserialize( $r['body']['themes'] );
+			unset( $themes[ $this->id ] );
+			$r['body']['themes'] = serialize( $themes );
+		}
 
 		return $r;
 	}
@@ -234,7 +239,7 @@ class Audiotheme_Updater {
 		$args = array_merge( $this->api_data, $defaults, $args );
 
 		$response = wp_remote_post(
-			$this->api_url,
+			apply_filters( 'audiotheme_update_api_url', $this->api_url ),
 			array(
 				'body'      => $args,
 				'headers'   => array(
