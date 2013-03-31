@@ -285,7 +285,7 @@ function audiotheme_venue_help() {
 			'<p>' . __( "<strong>City</strong> - Enter the city where the venue is located. After typing a city name, you may be presented with a list of cities to choose from. Selecting the correct city may help auto-complete additional address information.", 'audiotheme-i18n' ) . '</p>' .
 			'<p>' . __( "<strong>State</strong> - Enter the state where the venue is located.", 'audiotheme-i18n' ) . '</p>' .
 			'<p>' . __( "<strong>Country</strong> - Enter the name of the country where the venue is located.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "<strong>Time zone</strong> - Choose the time zone. This is important. Choosing the time zone requires selecting the nearest city in the time zone as the venue.", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "<strong>Time zone</strong> - Choose the time zone. This is important. Choosing the time zone requires selecting the nearest city in the same time zone as the venue.", 'audiotheme-i18n' ) . '</p>' .
 			'<p>' . __( "<strong>Website</strong> - Enter the URL to the venue's website.", 'audiotheme-i18n' ) . '</p>' .
 			'<p>' . __( "<strong>Phone</strong> - Enter a phone number so that your visitors can easily contact the venue if needed.", 'audiotheme-i18n' ) . '</p>',
 	) );

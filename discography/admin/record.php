@@ -409,9 +409,9 @@ function audiotheme_record_help() {
 			'<li>' . __( "<strong>Title</strong> - Enter the title of your track/song here. ", 'audiotheme-i18n' ) . '</li>' .
 			'<li>' . __( "<strong>Artist</strong> - Use this field for the track artist(s). Does the track feature a special guest? Put that here, too.", 'audiotheme-i18n' ) . '</li>' .
 			// @todo Add link.
-			'<li>' . __( "<strong>File URL</strong> - This field lets you attach audio for streaming or download. To attach an audio file, see [How To: Adding Audio to Tracks]", 'audiotheme-i18n' ) . '</li>' .
+			'<li>' . __( "<strong>File URL</strong> - This field lets you attach audio for streaming or download.", 'audiotheme-i18n' ) . '</li>' .
 			'</ul>' .
-			'<p>' . __( "When you're done adding a record, press the Publish button to make it available on your site. If you're not ready to publish, or want to finish updating your record later, press the Save Draft to privately save your progress. You can access your drafts at a later time through the Discography > All Records menu.", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "When you're done adding a record, press the Publish button to make it available on your site. If you're not ready to publish, or want to finish updating your record later, press the Save Draft to privately save your progress. You can access your drafts at a later time through the <strong>Discography > All Records</strong> menu.", 'audiotheme-i18n' ) . '</p>' .
 			'<p>' . __( "After saving the record, you can edit each track individually to add more information.", 'audiotheme-i18n' ) . '</p>',
 	) );
 	

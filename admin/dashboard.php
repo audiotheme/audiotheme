@@ -50,17 +50,6 @@ function audiotheme_dashboard_admin_menu() {
 		'audiotheme',
 		'audiotheme_dashboard_features_screen'
 	);
-
-	/*
-	add_submenu_page(
-		'audiotheme',
-		__( 'Help', 'audiotheme-i18n' ),
-		__( 'Help', 'audiotheme-i18n' ),
-		'manage_options',
-		'audiotheme-help',
-		'audiotheme_dashboard_help_screen'
-	);
-	*/
 }
 
 /**
@@ -219,7 +208,7 @@ function audiotheme_dashboard_sort_menu() {
  * @since 1.0.0
  */
 function audiotheme_dashboard_settings_license_section( $section ) {
-	echo sprintf( __( 'Find your license key in <a href="%s" target="_blank">your account</a> on AudioTheme.com. Your license key is used for automatic upgrades and support.', 'audiotheme-i18n' ), 'http://audiotheme.com/account/' );
+	echo sprintf( __( 'Find your license key in <a href="%s" target="_blank">your account</a> on AudioTheme.com. Your license key allows you to recieve automatic upgrades and support.', 'audiotheme-i18n' ), 'http://audiotheme.com/account/' );
 }
 
 /**
@@ -385,10 +374,10 @@ function audiotheme_dashboard_settings_help() {
 			'<p>' . sprintf( __( "Your license key can be found in <a href='%s' target='_blank'>your account</a> on AudioTheme.com or in your purchase email. It's a random string consisting of 32 numbers or letters. Let us know if you need help finding it.", 'audiotheme-i18n' ), 'http://audiotheme.com/account/' ) . '</p>' .
 			'<p><em>' . __( "<strong>Example key:</strong>", 'audiotheme-i18n' ) . ' <code>a72fdacfb04efa15976ed843d0bc7fec</code></em></p>' .
 			'<p>' . __( "Simply copy and paste it into the <strong>License Key</strong> field and click the <strong>Activate</strong> button. If your license is valid, that's all you have to do.", 'audiotheme-i18n' ) . '</p>' .
-			'<p><em>' . sprintf( __( "If your license has expired or you want to use AudioTheme on more than one site, simply visit <a href='%s' target='_blank'>AudioTheme.com</a> to upgrade.", 'audiotheme-i18n' ), 'http://audiotheme.com/view/audiotheme/' ) . '</em></p>' .
+			'<p><em>' . sprintf( __( "If your license has expired or you want to use AudioTheme on more than one site, visit <a href='%s' target='_blank'>AudioTheme.com</a> to upgrade.", 'audiotheme-i18n' ), 'http://audiotheme.com/view/audiotheme/' ) . '</em></p>' .
 
 			'<h4>' . __( 'Directory Browsing', 'audiotheme-i18n' ) . '</h4>' .
-			'<p>' . __( "Most servers running WordPress have a feature called directory browsing. This means that visitors can see a list of files in certain folders on your server if they know where to look. These folders might contain music or pictures that you don't want to be easily downloaded. While anything you make available online can't be completely protected, disabling directory browsing will help hide important files from prying eyes.", 'audiotheme-i18n' ) . '</p>',
+			'<p>' . __( "Most servers running WordPress have a feature referred to as directory browsing. When active, visitors can see a list of files in some folders on your server if they know where to look. These folders might contain music or pictures that you don't want to be easily accessed. While anything you make available online can't be completely protected, disabling directory browsing will help hide important files from prying eyes.", 'audiotheme-i18n' ) . '</p>',
 	) );
 
 	get_current_screen()->add_help_tab( array(
@@ -396,6 +385,6 @@ function audiotheme_dashboard_settings_help() {
 		'title'   => __( 'System', 'audiotheme-i18n' ),
 		'content' =>
 			'<p>' . __( "The <strong>System</strong> tab displays information about your system that may be useful for support requests.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "At the bottom of this screen is a field to copy all the information displayed to send along with a support request if it's needed.", 'audiotheme-i18n' ) . '</p>',
+			'<p>' . __( "At the bottom of the screen is a field to copy the information displayed, so you can send it along with a support request if needed.", 'audiotheme-i18n' ) . '</p>',
 	) );
 }

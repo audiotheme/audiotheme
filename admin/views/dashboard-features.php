@@ -3,14 +3,14 @@
 		<h1><?php _e( 'Welcome to AudioTheme', 'audiotheme-i18n' ); ?></h1>
 
 		<div class="about-text">
-			<?php _e( 'A platform allowing people like you to easily manage your website and own your content. We hope to dramatically improve the quality and experience for everyone involved. Give it a try and let us know what you think.', 'audiotheme-i18n' ); ?>
+			<?php _e( 'A platform allowing anyone to easily manage their music-oriented website, while dramatically improving the quality and experience for everyone involved. We\'re excited to have you try it out.', 'audiotheme-i18n' ); ?>
 		</div>
 
 		<a href="http://audiotheme.com/" target="_blank" class="wp-badge audiotheme-badge"><?php _e( sprintf( 'Version %s', AUDIOTHEME_VERSION ), 'audiotheme-i18n' ); ?></a>
 	</div>
 
 	<div class="audiotheme-about-banner">
-		<h2><?php _e( 'Premium Websites for<br>Bands, Artists, Musicians &amp; Labels.', 'audiotheme-i18n' ); ?></h2>
+		<h2><?php _e( 'Premium Websites for<br>Bands, Artists, Musicians and Labels.', 'audiotheme-i18n' ); ?></h2>
 		<p>
 			<?php _e( 'Let your site be heard.', 'audiotheme-i18n' ); ?>
 		</p>
@@ -21,7 +21,7 @@
 		<div class="feature-section col two-col">
 			<div class="">
 				<p>
-					<?php _e( 'AudioTheme gives you the <strong>power to add your own content</strong>, including gigs, discography, videos and more.', 'audiotheme-i18n' ); ?>
+					<?php _e( 'AudioTheme gives you the <strong>power to add and manage your own content</strong>, including gigs, discography, videos and more.', 'audiotheme-i18n' ); ?>
 				</p>
 				<p>
 					<?php _e( 'Remember the days of having to rely on someone else to make updates to your website? Well, you can kiss those days (and that person) adios.', 'audiotheme-i18n' ); ?>
@@ -33,7 +33,7 @@
 					<?php _e( 'With AudioTheme, you control all the content posted to your site.', 'audiotheme-i18n' ); ?>
 				</p>
 				<p>
-					<?php _e( 'Through WordPress, you can easily add, update and edit all of your content, from tour dates to video to audio to photos to well, everything! This is your website and you have the power to reign over it.', 'audiotheme-i18n' ); ?>
+					<?php _e( 'Through WordPress, you can easily add, update and edit all of your content, from tour dates to video to audio to photos to&hellip; well, everything! This is your website and you have the power to reign over it.', 'audiotheme-i18n' ); ?>
 				</p>
 			</div>
 		</div>
@@ -62,10 +62,10 @@
 		<h3><?php _e( 'Discography', 'audiotheme-i18n' ); ?></h3>
 		<div class="feature-section">
 			<p>
-				<?php _e( '<strong>Put together your albums, assign tracks, plugin your cover art and go.', 'audiotheme-i18n' ); ?></strong>
+				<?php _e( '<strong>Put together your albums, assign tracks, plug in your cover art and go.', 'audiotheme-i18n' ); ?></strong>
 			</p>
 			<p>
-				<?php _e( 'Upload cover images, place titles and assign tracks. Everything you need to build your discography is literally at your fingertips. You can also enter purchase URLs to let your music fans know where they cna buy your music. We help guide you through the process to create a dynamic, user friendly discography page.', 'audiotheme-i18n' ); ?>
+				<?php _e( 'Upload cover images, place titles and assign tracks. Everything you need to build your discography is literally at your fingertips. You can also enter links to let your music fans know where they can buy your music. We help guide you through the process to create a dynamic, user friendly discography page to enhance your online presence.', 'audiotheme-i18n' ); ?>
 			</p>
 			<p>
 				<?php _e( '<strong>Try it out:', 'audiotheme-i18n' ); ?></strong> <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=audiotheme_record' ) ); ?>"><?php _e( 'Add a record', 'audiotheme-i18n' ); ?></a>
@@ -88,6 +88,26 @@
 				<?php _e( '<strong>Try it out:', 'audiotheme-i18n' ); ?></strong> <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=audiotheme_video' ) ); ?>"><?php _e( 'Add a video', 'audiotheme-i18n' ); ?></a>
 			</p>
 		</div>
+	</div>
+
+	<div class="changelog">
+		<h3><?php _e( 'Credits', 'audiotheme-i18n' ); ?></h3>
+		<p>
+			<?php _e( 'AudioTheme would not be possible without the incredible effort by countless individuals who contribute to the numerous projects on which the platform relies. A hearty thanks to all!', 'americanaura-i18n' ); ?>
+		</p>
+		<p>
+			<a href="http://wordpress.org/" target="_blank"><?php _e( 'WordPress', 'americanaura-i18n' ); ?></a>,
+			<a href="http://fitvidsjs.com/" target="_blank"><?php _e( 'FitVids.JS', 'americanaura-i18n' ); ?></a>,
+			<a href="http://www.jplayer.org/" target="_blank"><?php _e( 'jPlayer', 'americanaura-i18n' ); ?></a>,
+			<a href="http://jquery.com/" target="_blank"><?php _e( 'jQuery', 'americanaura-i18n' ); ?></a>,
+			<a href="https://github.com/mathiasbynens/jquery-placeholder" target="_blank"><?php _e( 'jQuery Placeholder', 'americanaura-i18n' ); ?></a>,
+			<a href="http://jonthornton.github.com/jquery-timepicker/" target="_blank"><?php _e( 'jQuery Timepicker', 'americanaura-i18n' ); ?></a>,
+			<a href="http://jqueryui.com/" target="_blank"><?php _e( 'jQuery UI', 'americanaura-i18n' ); ?></a>,
+			<a href="http://lesscss.org/" target="_blank"><?php _e( 'LESS', 'americanaura-i18n' ); ?></a>,
+			<a href="http://wordpress.org/extend/plugins/posts-to-posts/" target="_blank"><?php _e( 'Posts to Posts', 'americanaura-i18n' ); ?></a>,
+			<a href="https://github.com/sanchothefat/wp-less" target="_blank"><?php _e( 'wp-less', 'americanaura-i18n' ); ?></a>
+		</p>
+
 	</div>
 
 </div><!--end div.wrap-->
