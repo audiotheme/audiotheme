@@ -2,7 +2,7 @@
 /**
  * Plugin Name: AudioTheme Framework
  * Plugin URI: http://audiotheme.com/view/audiotheme/
- * Description: An engine for powering music-oriented websites, allowing gigs, discography, videos and more to be easily managed.
+ * Description: A platform for powering music-oriented websites, allowing gigs, discography, videos and more to be easily managed.
  * Version: 1.0-beta1
  * Author: AudioTheme
  * Author URI: http://audiotheme.com/
