@@ -37,22 +37,28 @@ function audiotheme_add_default_oembed_providers() {
  * @return string Embed HTML with wrapper.
  */
 function audiotheme_oembed_html( $html, $url = null, $attr = null, $post_id = null ) {
-	$players = array( 'youtube', 'vimeo', 'dailymotion', 'hulu', 'blip.tv', 'wordpress.tv', 'viddler', 'revision3' );
+	$wrapped = '<div class="audiotheme-video">' . $html . '</div>';
 
-	foreach( $players as $player ) {
-		if( false !== strpos( $url, $player ) ) {
-			if ( false !== strpos( $url, 'youtube' ) && false !== strpos( $html, '<iframe' ) && false === strpos( $html, 'wmode' ) ) {
-				$html = preg_replace_callback( '|https?://[^"]+|im', '_audiotheme_oembed_youtube_wmode_parameter', $html );
-			}
+    if ( empty( $url ) && 'video_embed_html' == current_filter() ) { // Jetpack
+        $html = $wrapped;
+    } elseif ( ! empty( $url ) ) {
+        $players = array( 'youtube', 'youtu.be', 'vimeo', 'dailymotion', 'hulu', 'blip.tv', 'wordpress.tv', 'viddler', 'revision3' );
 
-			$html = '<div class="audiotheme-video">' . $html . '</div>';
-			break;
-		}
-	}
+        foreach ( $players as $player ) {
+            if ( false !== strpos( $url, $player ) ) {
+                if ( false !== strpos( $url, 'youtube' ) && false !== strpos( $html, '<iframe' ) && false === strpos( $html, 'wmode' ) ) {
+                    $html = preg_replace_callback( '|https?://[^"]+|im', 'at_oembed_youtube_wmode_parameter', $html );
+                }
 
-	if ( false !== strpos( $html, '<embed' ) && false === strpos( $html, 'wmode' ) ) {
-		$html = str_replace( '</param><embed', '</param><param name="wmode" value="opaque"></param><embed wmode="opaque"', $html );
-	}
+                $html = $wrapped;
+                break;
+            }
+        }
+    }
+
+    if ( false !== strpos( $html, '<embed' ) && false === strpos( $html, 'wmode' ) ) {
+        $html = str_replace( '</param><embed', '</param><param name="wmode" value="opaque"></param><embed wmode="opaque"', $html );
+    }
 
 	return $html;
 }

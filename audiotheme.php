@@ -96,7 +96,7 @@ function audiotheme_load() {
 	add_action( 'init', 'audiotheme_add_default_oembed_providers' );
 	add_filter( 'embed_oembed_html', 'audiotheme_oembed_html', 10, 4 );
 	add_filter( 'embed_handler_html', 'audiotheme_oembed_html', 10, 4 );
-	add_filter( 'video_embed_html', 'audiotheme_oembed_html', 10, 4 ); // Jetpack compat.
+	add_filter( 'video_embed_html', 'audiotheme_oembed_html', 10 ); // Jetpack compat.
 
 	// Archive filters.
 	add_action( 'init', 'register_audiotheme_archives' );
