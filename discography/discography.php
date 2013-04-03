@@ -53,6 +53,7 @@ function audiotheme_discography_init() {
 		'rewrite'                => false,
 		'show_ui'                => true,
 		'show_in_menu'           => true,
+		'show_in_nav_menus'      => true,
 		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
 	) );
 
@@ -81,7 +82,7 @@ function audiotheme_discography_init() {
 		'rewrite'                => false,
 		'show_ui'                => true,
 		'show_in_menu'           => 'edit.php?post_type=audiotheme_record',
-		'show_in_nav_menus'      => false,
+		'show_in_nav_menus'      => true,
 		'supports'               => array( 'title', 'editor', 'thumbnail' ),
 	) );
 
