@@ -118,7 +118,7 @@ class Audiotheme_Widget_Video extends WP_Widget {
 		$instance = wp_parse_args( $new_instance, $old_instance );
 
 		$instance['title'] = wp_strip_all_tags( $new_instance['title'] );
-		$instance['text'] = wp_kses_data( $new_instance['text'] );
+		$instance['text'] = wp_filter_kses( $new_instance['text'] );
 
 		return $instance;
 	}
