@@ -273,7 +273,7 @@ function get_audiotheme_gig_location( $post = null ) {
 			$country_class = esc_attr( 'country-name-' . sanitize_title_with_dashes( $venue->country ) );
 
 			$location .= ( ! empty( $location ) ) ? '<span class="sep sep-country-name ' . $country_class . '">,</span> ' : '';
-			$location .= ( empty( $venue->country ) ) ? '' : '<span class="county-name ' . $country_class . '">' . $venue->country . '</span>';
+			$location .= ( empty( $venue->country ) ) ? '' : '<span class="country-name ' . $country_class . '">' . $venue->country . '</span>';
 		}
 	}
 
