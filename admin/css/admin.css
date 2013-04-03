@@ -73,8 +73,9 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 .audiotheme-dashboard-intro { margin: 0 0 40px 0; border-bottom: 1px solid #d6d6d6;}
 
 .audiotheme-badge { width: 180px; text-decoration: none; background-image: url(../images/audiotheme-badge.png);}
+.audiotheme-badge:hover { color: #e74c3c;}
 
-.audiotheme-about-banner { padding: 20px 30px 40px; color: #a3a4a6; background: url(../images/intro-banner.jpg) 0 0 no-repeat;}
+.audiotheme-about-banner { padding: 20px 30px 40px; color: #a3a4a6; background: #34495e url(../images/intro-banner.jpg);}
 .audiotheme-about-banner h2 { margin: 0; padding: 0; color: #fff; font-size: 20px; text-shadow: 0 0;}
 .audiotheme-about-banner p { margin: 0;}
 
