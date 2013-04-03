@@ -91,8 +91,8 @@ class Audiotheme_Widget_Track extends WP_Widget {
 		$title = wp_strip_all_tags( $instance['title'] );
 
 		$tracks = $wpdb->get_results( "SELECT p.ID, p.post_title, p2.post_title AS record
-			FROM wp_posts p
-			INNER JOIN wp_posts p2 ON p.post_parent=p2.ID
+			FROM $wpdb->posts p
+			INNER JOIN $wpdb->posts p2 ON p.post_parent=p2.ID
 			WHERE p.post_type='audiotheme_track'
 			ORDER BY p2.post_title ASC, p.post_title ASC" );
 		?>
