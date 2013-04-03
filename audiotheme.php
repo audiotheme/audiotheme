@@ -6,7 +6,7 @@
  * Version: 1.0-beta1
  * Author: AudioTheme
  * Author URI: http://audiotheme.com/
- * Requires at least: 3.4.2
+ * Requires at least: 3.5.0
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: audiotheme-i18n
