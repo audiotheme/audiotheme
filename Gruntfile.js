@@ -87,7 +87,7 @@ module.exports = function(grunt) {
 							'includes/lib/wp-less/lessc/lessc.inc.php',
 							'includes/lib/wp-less/wp-less.php',
 						],
-						dest: 'release/audiotheme-<%= build %>/'
+						dest: 'release/audiotheme-<%= build %>/audiotheme/'
 					}
 				]
 			}
