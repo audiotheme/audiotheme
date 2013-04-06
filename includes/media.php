@@ -47,7 +47,7 @@ function audiotheme_oembed_html( $html, $url = null, $attr = null, $post_id = nu
         foreach ( $players as $player ) {
             if ( false !== strpos( $url, $player ) ) {
                 if ( false !== strpos( $url, 'youtube' ) && false !== strpos( $html, '<iframe' ) && false === strpos( $html, 'wmode' ) ) {
-                    $html = preg_replace_callback( '|https?://[^"]+|im', 'at_oembed_youtube_wmode_parameter', $html );
+                    $html = preg_replace_callback( '|https?://[^"]+|im', '_audiotheme_oembed_youtube_wmode_parameter', $html );
                 }
 
                 $html = $wrapped;
