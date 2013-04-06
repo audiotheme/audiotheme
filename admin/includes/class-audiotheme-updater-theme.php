@@ -117,7 +117,7 @@ class Audiotheme_Updater_Theme extends Audiotheme_Updater {
 
 				$notice .= sprintf( _x( '%1$s or %2$s.', 'theme changelog and update', 'audiotheme-i18n' ),
 					sprintf( '<a href="%1$s" class="thickbox" title="%2$s">' . __( "Check out what's new", 'audiotheme-i18n' ) . '</a>',
-						add_query_arg( array( 'TB_iframe' => 'true', 'width' => 1024, 'height' => 800 ), $api_response->wpargs->url ),
+						add_query_arg( array( 'TB_iframe' => 'true', 'width' => 600, 'height' => 600 ), $api_response->wpargs->url ),
 						esc_attr( $theme->get( 'Name' ) )
 					),
 					sprintf( '<a href="%1$s"%2$s>' . __( 'update now', 'audiotheme-i18n' ) . '</a>',
