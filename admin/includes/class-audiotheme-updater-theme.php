@@ -109,23 +109,23 @@ class Audiotheme_Updater_Theme extends Audiotheme_Updater {
 
 		if ( isset( $api_response->theme->current_version ) && version_compare( $theme->get( 'Version' ), $api_response->theme->current_version, '<' ) ) {
 			$notice = sprintf( _x( '<strong>%1$s %2$s</strong> is available.', 'theme name and version', 'audiotheme-i18n' ), $theme->get( 'Name' ), $api_response->theme->current_version ) . ' ';
-		}
 
-		if ( 'ok' == $api_response->status ) {
-			// If status is ok and there's a new version, display a message to update.'
-			$update_url = wp_nonce_url( 'update.php?action=upgrade-theme&amp;theme=' . urlencode( $this->slug ), 'upgrade-theme_' . $this->slug );
-			$update_onclick = ' onclick="if ( confirm(\'' . esc_js( __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update.", 'audiotheme-i18n' ) ) . '\') ) {return true;}return false;"';
+			if ( 'ok' == $api_response->status ) {
+				// If status is ok and there's a new version, display a message to update.'
+				$update_url = wp_nonce_url( 'update.php?action=upgrade-theme&amp;theme=' . urlencode( $this->slug ), 'upgrade-theme_' . $this->slug );
+				$update_onclick = ' onclick="if ( confirm(\'' . esc_js( __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update.", 'audiotheme-i18n' ) ) . '\') ) {return true;}return false;"';
 
-			$notice .= sprintf( _x( '%1$s or %2$s.', 'theme changelog and update', 'audiotheme-i18n' ),
-				sprintf( '<a href="%1$s" class="thickbox" title="%2$s">' . __( "Check out what's new", 'audiotheme-i18n' ) . '</a>',
-					add_query_arg( array( 'TB_iframe' => 'true', 'width' => 1024, 'height' => 800 ), $api_response->wpargs->url ),
-					esc_attr( $theme->get( 'Name' ) )
-				),
-				sprintf( '<a href="%1$s"%2$s>' . __( 'update now', 'audiotheme-i18n' ) . '</a>',
-					$update_url,
-					$update_onclick
-				)
-			);
+				$notice .= sprintf( _x( '%1$s or %2$s.', 'theme changelog and update', 'audiotheme-i18n' ),
+					sprintf( '<a href="%1$s" class="thickbox" title="%2$s">' . __( "Check out what's new", 'audiotheme-i18n' ) . '</a>',
+						add_query_arg( array( 'TB_iframe' => 'true', 'width' => 1024, 'height' => 800 ), $api_response->wpargs->url ),
+						esc_attr( $theme->get( 'Name' ) )
+					),
+					sprintf( '<a href="%1$s"%2$s>' . __( 'update now', 'audiotheme-i18n' ) . '</a>',
+						$update_url,
+						$update_onclick
+					)
+				);
+			}
 		}
 
 		// If status isn't ok, display a reason why.

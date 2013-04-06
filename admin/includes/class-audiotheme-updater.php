@@ -174,7 +174,10 @@ class Audiotheme_Updater {
 				set_transient( $this->transient_key(), $data, strtotime( '+3 hours' ) );
 			} else {
 				// Set the basename for the API. Unnecessary for themes.
-				$response->wpargs->slug = $this->id;
+				if ( 'plugin' == $this->type ) {
+					$response->wpargs->slug = $this->id;
+				}
+
 				set_transient( $this->transient_key(), $response, strtotime( '+12 hours' ) );
 			}
 		}
@@ -187,7 +190,7 @@ class Audiotheme_Updater {
 
 		// Bail if there isn't a new version.
 		if ( ! isset( $response->wpargs->new_version ) || version_compare( $this->version, $response->wpargs->new_version, '>=' ) ) {
-
+			return false;
 		}
 
 		return $response->wpargs;
