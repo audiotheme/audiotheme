@@ -30,7 +30,8 @@ function audiotheme_admin_setup() {
 	add_action( 'init', 'audiotheme_settings_init' );
 	add_action( 'init', 'audiotheme_dashboard_init', 9 );
 	add_action( 'init', 'audiotheme_archives_init_admin', 50 );
-	
+
+	add_action( 'http_request_args', 'audiotheme_update_request', 10, 2 );
 	add_action( 'admin_init', 'audiotheme_upgrade' );
 
 	add_action( 'update_option_audiotheme_disable_directory_browsing', 'audiotheme_disable_directory_browsing_option_update' );
@@ -97,13 +98,34 @@ function audiotheme_update_notice( $notice ) {
 }
 
 /**
+ * Disable SSL verification when interacting with audiotheme.com.
+ *
+ * Prevents automatic updates from failing when 'sslverify' is true.
+ *
+ * @since 1.0.0
+ *
+ * @param array $r Request args.
+ * @param string $url URI resource.
+ * @return array Filtered request args.
+ */
+function audiotheme_update_request( $r, $url ) {
+	if ( false === strpos( $url, 'audiotheme.com' ) ) {
+		return $r; // Not a request to audiotheme.com.
+	}
+
+	$r['sslverify'] = false;
+
+	return $r;
+}
+
+/**
  * Register scripts and styles for enqueuing when needed.
  *
  * @since 1.0.0
  */
 function audiotheme_admin_init() {
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-	
+
 	wp_register_script( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/js/admin' . $suffix . '.js', array( 'underscore', 'jquery-ui-sortable' ) );
 	wp_register_script( 'audiotheme-media', AUDIOTHEME_URI . 'admin/js/media' . $suffix . '.js', array( 'jquery' ) );
 	wp_register_script( 'audiotheme-pointer', AUDIOTHEME_URI . 'admin/js/pointer' . $suffix . '.js', array( 'wp-pointer' ) );
@@ -169,13 +191,13 @@ function audiotheme_enqueue_admin_scripts() {
  */
 function audiotheme_admin_body_class( $class ) {
 	global $post;
-	
+
 	$class .= ' ' . sanitize_html_class( get_current_screen()->id );
-	
+
 	if ( 'audiotheme_archive' == get_current_screen()->id && $post_type = is_audiotheme_post_type_archive_id( $post->ID )) {
 		$class .= ' ' . $post_type . '-archive';
 	}
-	
+
 	return $class;
 }
 
