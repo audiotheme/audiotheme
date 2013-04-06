@@ -26,7 +26,7 @@
  * Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  * @package AudioTheme_Framework
- * @version 1.0.0
+ * @version 1.0-beta1
  * @author AudioTheme
  * @link http://audiotheme.com/
  * @copyright Copyright 2012 AudioTheme
