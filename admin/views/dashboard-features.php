@@ -3,7 +3,7 @@
 		<h1><?php _e( 'Welcome to AudioTheme', 'audiotheme-i18n' ); ?></h1>
 
 		<div class="about-text">
-			<?php _e( 'A platform allowing anyone to easily manage their music-oriented website, while dramatically improving the quality and experience for everyone involved. We\'re excited to have you try it out.', 'audiotheme-i18n' ); ?>
+			<?php _e( "A platform for allowing anyone to easily manage a music-related website and improving the quality and experience for everyone involved. We're excited for you to try it out.", 'audiotheme-i18n' ); ?>
 		</div>
 
 		<a href="http://audiotheme.com/" target="_blank" class="wp-badge audiotheme-badge"><?php _e( sprintf( 'Version %s', AUDIOTHEME_VERSION ), 'audiotheme-i18n' ); ?></a>
@@ -21,16 +21,16 @@
 		<div class="feature-section col two-col">
 			<div class="">
 				<p>
-					<?php _e( 'AudioTheme gives you the <strong>power to add and manage your own content</strong>, including gigs, discography, videos and more.', 'audiotheme-i18n' ); ?>
+					<?php _e( 'AudioTheme gives you the <strong>power to manage your own content</strong>, including gigs, discography, videos and more.', 'audiotheme-i18n' ); ?>
 				</p>
 				<p>
-					<?php _e( 'Remember the days of having to rely on someone else to make updates to your website? Well, you can kiss those days (and that person) adios.', 'audiotheme-i18n' ); ?>
+					<?php _e( 'Remember the days of having to rely on someone else to make updates to your website? Well, you can kiss those days adios.', 'audiotheme-i18n' ); ?>
 				</p>
 			</div>
 
 			<div class="last-feature">
 				<p>
-					<?php _e( 'With AudioTheme, you control all the content posted to your site.', 'audiotheme-i18n' ); ?>
+					<?php _e( 'With AudioTheme, you are in control.', 'audiotheme-i18n' ); ?>
 				</p>
 				<p>
 					<?php _e( 'Through WordPress, you can easily add, update and edit all of your content, from tour dates to video to audio to photos to&hellip; well, everything! This is your website and you have the power to reign over it.', 'audiotheme-i18n' ); ?>
