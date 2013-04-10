@@ -3,7 +3,7 @@
 		<h1><?php _e( 'Welcome to AudioTheme', 'audiotheme-i18n' ); ?></h1>
 
 		<div class="about-text">
-			<?php _e( "A platform for allowing anyone to easily manage a music-related website and improving the quality and experience for everyone involved. We're excited for you to try it out.", 'audiotheme-i18n' ); ?>
+			<?php _e( "A platform that makes managing music-related websites easy for anyone, while also improving the experience for everyone involved. We're excited for you try it out.", 'audiotheme-i18n' ); ?>
 		</div>
 
 		<a href="http://audiotheme.com/" target="_blank" class="wp-badge audiotheme-badge"><?php _e( sprintf( 'Version %s', AUDIOTHEME_VERSION ), 'audiotheme-i18n' ); ?></a>
