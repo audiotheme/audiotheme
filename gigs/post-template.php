@@ -584,7 +584,7 @@ function get_default_audiotheme_venue_properties() {
  * @return string|null Null on failure or display. String when echo is false.
  */
 function the_audiotheme_gig_venue_link( $args = array(), $echo = true ) {
-	$gig = get_audiotheme_gig( $post );
+	$gig = get_audiotheme_gig();
 
 	if ( empty( $gig->venue ) )
 		return;
@@ -627,6 +627,7 @@ function get_audiotheme_venue_link( $venue_id, $args = array() ) {
 		'after_link'  => '</span>',
 	);
 	$args = wp_parse_args( $args, $defaults );
+	extract( $args );
 
 	$html  = $before;
 	$html .= ( empty( $venue->website ) ) ? '' : sprintf( '<a href="%s" class="url" itemprop="url">', esc_url( $venue->website ) );
