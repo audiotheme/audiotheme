@@ -586,15 +586,17 @@ function get_default_audiotheme_venue_properties() {
 function the_audiotheme_gig_venue_link( $args = array(), $echo = true ) {
 	$gig = get_audiotheme_gig();
 
-	if ( empty( $gig->venue ) )
+	if ( empty( $gig->venue ) ) {
 		return;
+	}
 
 	$html = get_audiotheme_venue_link( $gig->venue->ID, $args );
 
-	if ( $echo )
+	if ( $echo ) {
 		echo $html;
-	else
+	} else {
 		return $html;
+	}
 }
 
 /**
@@ -617,17 +619,16 @@ function the_audiotheme_gig_venue_link( $args = array(), $echo = true ) {
 function get_audiotheme_venue_link( $venue_id, $args = array() ) {
 	$venue = get_audiotheme_venue( $venue_id );
 
-	if ( empty( $venue->name ) )
+	if ( empty( $venue->name ) ) {
 		return '';
+	}
 
-	$defaults = array(
+	extract( wp_parse_args( $args, array(
 		'before'      => '',
 		'after'       => '',
 		'before_link' => '<span class="fn org" itemprop="name">',
 		'after_link'  => '</span>',
-	);
-	$args = wp_parse_args( $args, $defaults );
-	extract( $args );
+	) ) );
 
 	$html  = $before;
 	$html .= ( empty( $venue->website ) ) ? '' : sprintf( '<a href="%s" class="url" itemprop="url">', esc_url( $venue->website ) );
