@@ -80,7 +80,7 @@ require( AUDIOTHEME_DIR . 'videos/videos.php' );
  * @since 1.0.0
  */
 function audiotheme_load() {
-	// Default filters.
+	// Default hooks.
 	add_action( 'init', 'audiotheme_register_scripts' );
 	add_action( 'init', 'audiotheme_less_setup' );
 	add_action( 'widgets_init', 'audiotheme_widgets_init' );
@@ -92,13 +92,13 @@ function audiotheme_load() {
 	add_filter( 'page_css_class', 'audiotheme_page_list_classes', 10, 2 );
 	add_filter( 'dynamic_sidebar_params', 'audiotheme_widget_count_class' );
 
-	// Media filters.
+	// Media hooks.
 	add_action( 'init', 'audiotheme_add_default_oembed_providers' );
 	add_filter( 'embed_oembed_html', 'audiotheme_oembed_html', 10, 4 );
 	add_filter( 'embed_handler_html', 'audiotheme_oembed_html', 10, 4 );
 	add_filter( 'video_embed_html', 'audiotheme_oembed_html', 10 ); // Jetpack compat.
 
-	// Archive filters.
+	// Archive hooks.
 	add_action( 'init', 'register_audiotheme_archives' );
 	add_filter( 'post_type_link', 'audiotheme_archives_post_type_link', 10, 3 );
 	add_filter( 'post_type_archive_link', 'audiotheme_archives_post_type_archive_link', 10, 2 );
