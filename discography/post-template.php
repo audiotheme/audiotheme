@@ -161,20 +161,36 @@ function get_audiotheme_record_genre( $post_id = null ) {
  * @since 1.0.0
  *
  * @param int $post_id Post ID.
+ * @param array $args
  * @return array
  */
-function get_audiotheme_record_tracks( $post_id = null ) {
-	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
+function get_audiotheme_record_tracks( $post_id = null, $args = array() ) {
+	$post = get_post( $post_id );
 
-	$args = array(
-		'post_parent' => absint( $post_id ),
+	$args = wp_parse_args( $args, array(
+		'has_file' => false,
+	) );
+
+	$query = array(
 		'post_type'   => 'audiotheme_track',
+		'post_parent' => absint( $post->ID ),
 		'orderby'     => 'menu_order',
 		'order'       => 'ASC',
 		'numberposts' => -1,
 	);
 
-	$tracks = get_posts( $args );
+	// Only return tracks with a file URL.
+	if ( $args['has_file'] ) {
+		$query['meta_query'] = array(
+			array(
+				'key'     => '_audiotheme_file_url',
+				'value'   => '',
+				'compare' => '!=',
+			),
+		);
+	}
+
+	$tracks = get_posts( $query );
 
     if ( ! $tracks ) {
         $tracks = false;
