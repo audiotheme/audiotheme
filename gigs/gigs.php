@@ -105,6 +105,8 @@ function audiotheme_gigs_init() {
 	add_filter( 'get_edit_post_link', 'get_audiotheme_venue_edit_link', 10, 2 );
 
 	add_action( 'before_delete_post', 'audiotheme_gig_before_delete' );
+
+	add_filter( 'post_class', 'audiotheme_gig_post_class', 10, 3 );
 }
 
 /**
@@ -365,6 +367,24 @@ function audiotheme_gig_before_delete( $post_id ) {
 			update_audiotheme_venue_gig_count( $gig->venue->ID, --$count );
 		}
 	}
+}
+
+/**
+ * Add useful classes to gig posts.
+ *
+ * @since 1.1.0
+ *
+ * @param array $classes List of classes.
+ * @param string|array $class One or more classes to add to the class list.
+ * @param int $post_id An optional post ID.
+ * @return array Array of classes.
+ */
+function audiotheme_gig_post_class( $classes, $class, $post_id ) {
+	if ( 'audiotheme_gig' == get_post_type( $post_id ) && audiotheme_gig_has_ticket_meta() ) {
+		$classes[] = 'has-ticket-meta';
+	}
+
+	return $classes;
 }
 
 /**
