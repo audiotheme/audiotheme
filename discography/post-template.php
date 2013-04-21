@@ -284,3 +284,42 @@ function get_audiotheme_track_thumbnail_id( $post = null ) {
 
 	return $thumbnail_id;
 }
+
+/**
+ * Enqueue tracks.
+ *
+ * Saves basic track data to a global variable so it can be output as
+ * JavaScript in the footer for use by scripts.
+ *
+ * If an associative array representing a track is passed, it should be wrapped
+ * in an array itself. IDs and post objects can be passed by themselves or as an
+ * array of IDs or objects.
+ *
+ * Example format of associative array:
+ * <code>
+ * $track = array(
+ *     array(
+ *         'title' => '',
+ *         'file'  => '',
+ *     )
+ * )
+ * </code>
+ *
+ * @since 1.1.0
+ * @uses $audiotheme_enqueued_tracks
+ * @see audiotheme_print_tracks_js()
+ * @see audiotheme_prepare_track_for_js()
+ *
+ * @param int|array|object $track Accepts a track ID, record ID, post object, or array in the expected format.
+ * @param string $list A list identifier.
+ */
+function enqueue_audiotheme_tracks( $track, $list = 'tracks' ) {
+	global $audiotheme_enqueued_tracks;
+
+	$key = sanitize_key( $list );
+	if ( ! isset( $audiotheme_enqueued_tracks[ $key ] ) ) {
+		$audiotheme_enqueued_tracks[ $key ] = array();
+	}
+
+	$audiotheme_enqueued_tracks[ $key ] = array_merge( $audiotheme_enqueued_tracks[ $key ], (array) $track );
+}

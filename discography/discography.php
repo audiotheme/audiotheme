@@ -119,6 +119,7 @@ function audiotheme_discography_init() {
 	add_filter( 'post_type_link', 'audiotheme_discography_permalinks', 10, 4 );
 	add_filter( 'post_type_archive_link', 'audiotheme_discography_archive_link', 10, 2 );
 	add_filter( 'wp_unique_post_slug', 'audiotheme_track_unique_slug', 10, 6 );
+	add_action( 'wp_print_footer_scripts', 'audiotheme_print_tracks_js' );
 }
 
 /**
@@ -344,4 +345,115 @@ function audiotheme_track_unique_slug( $slug, $post_ID, $post_status, $post_type
 	}
 
 	return $slug;
+}
+
+/**
+ * Transform a track id or array of data into the expected format for use as a
+ * JavaScript object.
+ *
+ * @since 1.1.0
+ *
+ * @param int|array $track Track ID or array of expected track properties.
+ * @return array
+ */
+function audiotheme_prepare_track_for_js( $track ) {
+	$data = array(
+		'artist'  => '',
+		'artwork' => '',
+		'mp3'     => '',
+		'record'  => '',
+		'title'   => '',
+	);
+
+	// Enqueue a track post type.
+	if ( 'audiotheme_track' == get_post_type( $track ) ) {
+		$track = get_post( $track );
+		$record = get_post( $track->post_parent );
+
+		$data['artist'] = get_audiotheme_track_artist( $track->ID );
+		$data['mp3'] = get_audiotheme_track_file_url( $track->ID );
+		$data['record'] = $record->post_title;
+		$data['title'] = $track->post_title;
+
+		if ( $thumbnail_id = get_audiotheme_track_thumbnail_id( $track ) ) {
+			$image = wp_get_attachment_image_src( $thumbnail_id, apply_filters( 'audiotheme_track_js_artwork_size', 'thumbnail' ) );
+			$data['artwork'] = $image[0];
+		}
+	}
+
+	// Add the track data directly.
+	elseif ( is_array( $track ) ) {
+		if ( isset( $track['artwork'] ) ) {
+			$data['artwork'] = esc_url( $track['artwork'] );
+		}
+
+		if ( isset( $track['file'] ) ) {
+			$data['mp3'] = esc_url( $track['file'] );
+		}
+
+		if ( isset( $track['mp3'] ) ) {
+			$data['mp3'] = esc_url( $track['mp3'] );
+		}
+
+		if ( isset( $track['title'] ) ) {
+			$data['title'] = wp_strip_all_tags( $track['title'] );
+		}
+
+		$data = array_merge( $track, $data );
+	}
+
+	$data = apply_filters( 'audiotheme_track_js_data', $data, $track );
+
+	return $data;
+}
+
+/**
+ * Convert enqueue track lists into an array of tracks prepared for JavaScript
+ * and output the JSON-encoded object in the footer.
+ *
+ * @since 1.1.0
+ */
+function audiotheme_print_tracks_js() {
+	global $audiotheme_enqueued_tracks;
+
+	if ( empty( $audiotheme_enqueued_tracks ) || ! is_array( $audiotheme_enqueued_tracks ) ) {
+		return;
+	}
+
+	$lists = array();
+
+	// @todo The track & record ids should be collected at some point so they can all be fetched in a single query.
+
+	foreach ( $audiotheme_enqueued_tracks as $list => $tracks ) {
+		if ( empty( $tracks ) || ! is_array( $tracks ) ) {
+			continue;
+		}
+
+		do_action( 'audiotheme_prepare_tracks', $list );
+
+		foreach ( $tracks as $track ) {
+			if ( 'audiotheme_record' == get_post_type( $track ) ) {
+				$record_tracks = get_audiotheme_record_tracks( $track, array( 'has_file' => true ) );
+
+				if ( $record_tracks ) {
+					foreach ( $record_tracks as $record_track ) {
+						if ( $track_data = audiotheme_prepare_track_for_js( $record_track ) ) {
+							$lists[ $list ][] = $track_data;
+						}
+					}
+				}
+			} elseif ( $track_data = audiotheme_prepare_track_for_js( $track ) ) {
+				$lists[ $list ][] = $track_data;
+			}
+		}
+	}
+
+	// Print a JavaScript object.
+	if ( ! empty( $lists ) ) {
+		echo "<script type='text/javascript'>\n";
+		echo "/* <![CDATA[ */\n";
+		echo "var AudiothemeTracks = " . json_encode( $lists ) . ";\n";
+		echo "/* ]]> */\n";
+		echo "</script>\n";
+	}
 }
