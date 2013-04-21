@@ -670,18 +670,20 @@ function get_audiotheme_venue_link( $venue_id, $args = array() ) {
  * @param bool $echo Optional. Default to true. Whether to display or return.
  * @return string|null Null on failure or display. String when echo is false.
  */
-function the_audiotheme_gig_venue_vcard( $args = array(), $echo = true ) {
+function the_audiotheme_venue_vcard( $args = array(), $echo = true ) {
 	$gig = get_audiotheme_gig();
 
-	if ( empty( $gig->venue ) )
+	if ( empty( $gig->venue ) ) {
 		return;
+	}
 
 	$html = get_audiotheme_venue_vcard( $gig->venue->ID, $args );
 
-	if ( $echo )
+	if ( $echo ) {
 		echo $html;
-	else
+	} else {
 		return $html;
+	}
 }
 
 /**
@@ -725,7 +727,7 @@ function get_audiotheme_venue_vcard( $venue_id, $args = array() ) {
 	$output .= ( empty( $venue->phone ) ) ? '' : '<span class="tel" itemprop="telephone">' . $venue->phone . '</span>';
 
 	if ( ! empty( $output ) && ! empty( $args['container'] ) ) {
-		$container_open = '<' . $args['container'] . ' class="location vcard" itemtype="http://schema.org/EventVenue" itemscope itemprop="location">';
+		$container_open = '<' . $args['container'] . ' class="location vcard" itemprop="location" itemscope itemtype="http://schema.org/EventVenue">';
 		$container_close = '</' . $args['container'] . '>';
 
 		$output = $container_open . $output . $container_close;
