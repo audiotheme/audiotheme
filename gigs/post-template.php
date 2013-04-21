@@ -283,6 +283,39 @@ function get_audiotheme_gig_description( $post = 0 ) {
 }
 
 /**
+ * Does a gig have ticket meta?
+ *
+ * @since 1.1.0
+ *
+ * @param string $key Check for a particular type of meta. Defaults to any.
+ * @param int|object $post Optional post ID or object. Default is global $post object.
+ * @return bool
+ */
+function audiotheme_gig_has_ticket_meta( $key = '', $post = 0 ) {
+	$gig = get_audiotheme_gig( $post );
+
+	$keys = array(
+		'price' => '_audiotheme_tickets_price',
+		'url'   => '_audiotheme_tickets_url',
+	);
+
+	if ( $key && ! isset( $keys[ $key ] ) ) {
+		return false;
+	} elseif ( $key ) {
+		// Reset the keys array with a single value.
+		$keys = array( $key => $keys[ $key ] );
+	}
+
+	foreach ( $keys as $key ) {
+		if ( get_post_meta( $gig->ID, $key, true ) ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
  * Retrieve a gig's ticket price.
  *
  * @since 1.0.0
@@ -295,6 +328,7 @@ function get_audiotheme_gig_tickets_price( $post = 0 ) {
 
 	return get_post_meta( $gig->ID, '_audiotheme_tickets_price', true );
 }
+
 /**
  * Retrieve a gig's ticket url.
  *
