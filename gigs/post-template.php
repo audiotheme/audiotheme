@@ -250,7 +250,7 @@ function the_audiotheme_gig_description( $before = '', $after = '', $echo = true
 }
 
 /**
- * Retrieve a gig's location..
+ * Retrieve a gig's location (city, state, country).
  *
  * @since 1.0.0
  *
@@ -262,19 +262,7 @@ function get_audiotheme_gig_location( $post = null ) {
 
 	$location = '';
 	if ( audiotheme_gig_has_venue( $gig ) ) {
-		$venue = get_audiotheme_venue( $gig->venue->ID );
-
-		$location  = '';
-		$location .= ( empty( $venue->city ) ) ? '' : '<span class="locality">' . $venue->city . '</span>';
-		$location .= ( ! empty( $location ) && ! empty( $venue->state ) ) ? '<span class="sep sep-region">,</span> ' : '';
-		$location .= ( empty( $venue->state ) ) ? '' : '<span class="region">' . $venue->state . '</span>';
-
-		if ( ! empty( $venue->country ) ) {
-			$country_class = esc_attr( 'country-name-' . sanitize_title_with_dashes( $venue->country ) );
-
-			$location .= ( ! empty( $location ) ) ? '<span class="sep sep-country-name ' . $country_class . '">,</span> ' : '';
-			$location .= ( empty( $venue->country ) ) ? '' : '<span class="country-name ' . $country_class . '">' . $venue->country . '</span>';
-		}
+		$location = get_audiotheme_venue_location( $gig->venue->ID );
 	}
 
 	return $location;
@@ -733,6 +721,33 @@ function get_audiotheme_venue_address( $venue_id, $args = array() ) {
 	$address .= ( empty( $venue->postal_code ) ) ? '' : ' ' . $venue->postal_code;
 
 	return $address;
+}
+
+/**
+ * Retrieve a venue's location (city, region, country).
+ *
+ * @since 1.1.0
+ *
+ * @param int $venue_id
+ * @param array $args Optional. Override the defaults and modify the output structure.
+ * @return string
+ */
+function get_audiotheme_venue_location( $venue_id, $args = array() ) {
+	$venue = get_audiotheme_venue( $venue_id );
+
+	$location  = '';
+	$location .= ( empty( $venue->city ) ) ? '' : '<span class="locality">' . $venue->city . '</span>';
+	$location .= ( ! empty( $location ) && ! empty( $venue->state ) ) ? '<span class="sep sep-region">,</span> ' : '';
+	$location .= ( empty( $venue->state ) ) ? '' : '<span class="region">' . $venue->state . '</span>';
+
+	if ( ! empty( $venue->country ) && apply_filters( 'show_audiotheme_venue_country', true ) ) {
+		$country_class = esc_attr( 'country-name-' . sanitize_title_with_dashes( $venue->country ) );
+
+		$location .= ( ! empty( $location ) ) ? '<span class="sep sep-country-name ' . $country_class . '">,</span> ' : '';
+		$location .= ( empty( $venue->country ) ) ? '' : '<span class="country-name ' . $country_class . '">' . $venue->country . '</span>';
+	}
+
+	return $location;
 }
 
 /**
