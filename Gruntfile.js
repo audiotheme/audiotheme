@@ -1,7 +1,5 @@
 'use strict';
 
-var shell = require('shelljs');
-
 module.exports = function(grunt) {
 
 	grunt.initConfig({
@@ -46,6 +44,8 @@ module.exports = function(grunt) {
 				'!admin/js/*.min.js',
 				'gigs/admin/js/*.js',
 				'!gigs/admin/js/*.min.js',
+				'includes/js/*.js',
+				'!includes/js/*.min.js',
 			]
 		},
 
@@ -59,6 +59,7 @@ module.exports = function(grunt) {
 					{ src: 'admin/js/settings.js', dest: 'admin/js/settings.min.js' },
 					{ src: 'gigs/admin/js/gig-edit.js', dest: 'gigs/admin/js/gig-edit.min.js' },
 					{ src: 'gigs/admin/js/venue-edit.js', dest: 'gigs/admin/js/venue-edit.min.js' },
+					{ src: 'includes/js/audiotheme.js', dest: 'includes/js/audiotheme.min.js' },
 				]
 			}
 		},
@@ -71,9 +72,12 @@ module.exports = function(grunt) {
 			}
 		},
 
-		// Copy the plugin to a release/audiotheme-XXX directory.
-		copy: {
+		// Zip the plugin into an audiotheme-{{version}}.zip archive in a /release directory.
+		compress: {
 			dist: {
+				options: {
+					archive: 'release/audiotheme-<%= build %>.zip',
+				},
 				files: [
 					{
 						src: [
@@ -87,31 +91,21 @@ module.exports = function(grunt) {
 							'includes/lib/wp-less/lessc/lessc.inc.php',
 							'includes/lib/wp-less/wp-less.php',
 						],
-						dest: 'release/audiotheme-<%= build %>/audiotheme/'
+						dest: 'audiotheme/'
 					}
 				]
 			}
 		},
-
-		/*shell: {
-			gitTag: {
-				command: 'git tag v<%= build %> -m "Version <%= build %>"'
-			},
-			makeDir: {
-				command: 'mkdir test'
-			},
-		},*/
 
 	});
 
 	/**
 	 * Load tasks.
 	 */
-	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-compress');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-shell');
 
 	/**
 	 * Register default task.
@@ -126,19 +120,16 @@ module.exports = function(grunt) {
 	 * Build a release.
 	 *
 	 * @todo generate pot files
+	 *       bump/verify version numbers
 	 *       git tag, commit, and push
-	 *       copy to a release directory
-	 *       clean source files
-	 *       zip
+	 *       zip to release directory, cleaning source files in the process
 	 *       push to remote server
 	 */
 	grunt.registerTask('release', function(arg1) {
-		if (0 === arguments.length) {
-			grunt.log.writeln('Pass in a version number.');
-		} else {
-			grunt.config.set('build', arg1);
-			grunt.task.run('copy:dist');
-		}
+		var pkg = grunt.file.readJSON('package.json');
+
+		grunt.config.set('build', 0 === arguments.length ? pkg.version : arg1);
+		grunt.task.run('compress:dist');
 	});
 
 };
