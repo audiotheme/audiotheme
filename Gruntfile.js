@@ -4,6 +4,7 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		version: '<%= pkg.version %>',
 
 		// Check JavaScript for errors.
 		jshint: {
@@ -72,11 +73,32 @@ module.exports = function(grunt) {
 			}
 		},
 
-		// Zip the plugin into an audiotheme-{{version}}.zip archive in a /release directory.
+		// Replace version numbers in audiotheme.php with the version in package.json.
+		"string-replace": {
+			dist: {
+				options: {
+					replacements: [{
+						pattern: /Version: .+/,
+						replacement: "Version: <%= version %>"
+					}, {
+						pattern: /@version .+/,
+						replacement: "@version <%= version %>"
+					}, {
+						pattern: /'AUDIOTHEME_VERSION', '[^']+'/,
+						replacement: "'AUDIOTHEME_VERSION', '<%= version %>'"
+					}]
+				},
+				files: {
+					'./': 'audiotheme.php'
+				}
+			}
+		},
+
+		// Zip the plugin into an audiotheme-{{version}}.zip archive in the /release directory.
 		compress: {
 			dist: {
 				options: {
-					archive: 'release/audiotheme-<%= build %>.zip',
+					archive: 'release/<%= pkg.slug %>-<%= version %>.zip',
 				},
 				files: [
 					{
@@ -91,7 +113,7 @@ module.exports = function(grunt) {
 							'includes/lib/wp-less/lessc/lessc.inc.php',
 							'includes/lib/wp-less/wp-less.php',
 						],
-						dest: 'audiotheme/'
+						dest: '<%= pkg.slug %>/'
 					}
 				]
 			}
@@ -106,6 +128,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-string-replace');
 
 	/**
 	 * Register default task.
@@ -119,6 +142,13 @@ module.exports = function(grunt) {
 	/**
 	 * Build a release.
 	 *
+	 * Bumps the version numbers in audiotheme.php. Defaults to the version set
+	 * in package.json, but a specific version number can be passed as the first
+	 * argument. Ex: grunt release:1.2.3
+	 *
+	 * The project is then zipped into an archive in the release directory,
+	 * excluding unncessary source files in the process.
+	 *
 	 * @todo generate pot files
 	 *       bump/verify version numbers
 	 *       git tag, commit, and push
@@ -128,7 +158,8 @@ module.exports = function(grunt) {
 	grunt.registerTask('release', function(arg1) {
 		var pkg = grunt.file.readJSON('package.json');
 
-		grunt.config.set('build', 0 === arguments.length ? pkg.version : arg1);
+		grunt.config.set('version', 0 === arguments.length ? pkg.version : arg1);
+		grunt.task.run('string-replace:dist');
 		grunt.task.run('compress:dist');
 	});
 
