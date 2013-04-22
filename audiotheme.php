@@ -85,6 +85,7 @@ function audiotheme_load() {
 	add_action( 'init', 'audiotheme_less_setup' );
 	add_action( 'widgets_init', 'audiotheme_widgets_init' );
 	add_action( 'wp_loaded', 'audiotheme_loaded' );
+	add_action( 'wp_enqueue_scripts', 'audiotheme_enqueue_scripts' );
 
 	add_filter( 'wp_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
 	add_filter( 'nav_menu_css_class', 'audiotheme_nav_menu_name_class', 10, 2 );
@@ -159,6 +160,9 @@ add_action( 'after_setup_theme', 'audiotheme_load_admin', 5 );
 function audiotheme_register_scripts() {
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
+	wp_register_style( 'audiotheme', AUDIOTHEME_URI . 'includes/css/audiotheme.css' );
+
+	wp_register_script( 'audiotheme', AUDIOTHEME_URI . 'includes/js/audiotheme' . $suffix . '.js', array( 'jquery' ), '1.0.0', true );
 	wp_register_script( 'jquery-fitvids', AUDIOTHEME_URI . 'includes/js/jquery.fitvids.min.js', array( 'jquery' ), '1.0', true );
 	wp_register_script( 'jquery-jplayer', AUDIOTHEME_URI . 'includes/js/jquery.jplayer.min.js', array( 'jquery' ), '2.2.19', true );
 	wp_register_script( 'jquery-jplayer-playlist', AUDIOTHEME_URI . 'includes/js/jquery.jplayer.playlist.min.js', array( 'jquery-jplayer' ), '2.2.2', true );
@@ -168,6 +172,21 @@ function audiotheme_register_scripts() {
 	wp_localize_script( 'jquery-jplayer', 'AudiothemeJplayer', array(
 		'swfPath' => AUDIOTHEME_URI . 'includes/js'
 	) );
+}
+
+/**
+ * Enqueue frontend scripts and styles.
+ *
+ * @since 1.0.0
+ */
+function audiotheme_enqueue_scripts() {
+	if ( apply_filters( 'audiotheme_enqueue_default_template_styles', true ) ) {
+		wp_enqueue_style( 'audiotheme' );
+	}
+
+	if ( apply_filters( 'audiotheme_enqueue_default_template_scripts', true ) ) {
+		wp_enqueue_script( 'audiotheme' );
+	}
 }
 
 /**
