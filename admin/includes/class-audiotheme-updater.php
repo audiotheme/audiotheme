@@ -285,7 +285,7 @@ class Audiotheme_Updater {
 	 */
 	public function get_license_error_messages( $args = array() ) {
 		$args = wp_parse_args( $args, array(
-			'prepend'     => '',
+			'prepend'       => '',
 			'account_url'   => 'http://audiotheme.com/account/',
 			'framework_url' => 'http://audiotheme.com/view/audiotheme/',
 			'product_url'   => 'http://audiotheme.com/shop/',
