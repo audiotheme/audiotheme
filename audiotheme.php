@@ -3,7 +3,7 @@
  * Plugin Name: AudioTheme Framework
  * Plugin URI: http://audiotheme.com/view/audiotheme/
  * Description: A platform for music-oriented websites, allowing for easy management of gigs, discography, videos and more.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: AudioTheme
  * Author URI: http://audiotheme.com/
  * Requires at least: 3.5.0
@@ -26,7 +26,7 @@
  * Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  * @package AudioTheme_Framework
- * @version 1.0.0
+ * @version 1.1.0
  * @author AudioTheme
  * @link http://audiotheme.com/
  * @copyright Copyright 2012 AudioTheme
@@ -36,7 +36,7 @@
 /**
  * The AudioTheme version.
  */
-define( 'AUDIOTHEME_VERSION', '1.0.0' );
+define( 'AUDIOTHEME_VERSION', '1.1.0' );
 
 /**
  * Framework path and URL.
