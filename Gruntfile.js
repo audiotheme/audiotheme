@@ -89,7 +89,8 @@ module.exports = function(grunt) {
 					}]
 				},
 				files: {
-					'./': 'audiotheme.php'
+					'audiotheme.php': 'audiotheme.php',
+					'style.css': 'style.css'
 				}
 			}
 		},
@@ -98,7 +99,7 @@ module.exports = function(grunt) {
 		compress: {
 			dist: {
 				options: {
-					archive: 'release/<%= pkg.slug %>-<%= version %>.zip',
+					archive: 'release/<%= pkg.slug %>-plugin-<%= version %>.zip',
 				},
 				files: [
 					{
