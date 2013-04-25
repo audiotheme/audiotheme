@@ -1,0 +1,17 @@
+/**
+ * Theme Name: AudioTheme Framework
+ * Theme URI: http://audiotheme.com/view/audiotheme/
+ * Description: The AudioTheme framework is a plugin, not a theme.
+ * Version: 1.1.0
+ * Author: AudioTheme
+ * Author URI: http://audiotheme.com/
+ * License: GPL-2.0+
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: audiotheme-i18n
+ */
+
+/**
+ * This file won't be used by the framework unless it is installed as a theme.
+ * Its purpose is to allow WordPress to recognize the framework as a basic theme
+ * in order to present more helpful error messages in functions.php.
+ */
