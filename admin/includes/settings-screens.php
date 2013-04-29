@@ -152,7 +152,7 @@ function audiotheme_settings_add_admin_menus() {
 		foreach ( $screens as $screen ) {
 			if ( false !== $screen->show_in_menu && $settings->screen_has_settings( $screen->screen_id ) ) {
 				if ( true === $screen->show_in_menu || ! is_string( $screen->show_in_menu ) ) {
-					$pagehook = add_menu_page( $screen->name, $screen->menu_title, $screen->capability, $screen->menu_slug, 'audiotheme_settings_screen' );
+					$pagehook = add_menu_page( $screen->name, $screen->menu_title, $screen->capability, $screen->menu_slug, 'audiotheme_settings_display_screen' );
 				} else {
 					$pagehook = add_submenu_page( $screen->show_in_menu, $screen->name, $screen->menu_title, $screen->capability, $screen->menu_slug, 'audiotheme_settings_display_screen' );
 				}
