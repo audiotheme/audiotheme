@@ -701,30 +701,48 @@ function the_audiotheme_venue_vcard( $args = array(), $echo = true ) {
 function get_audiotheme_venue_vcard( $venue_id, $args = array() ) {
 	$venue = get_audiotheme_venue( $venue_id );
 
-	$defaults = array(
-		'container' => 'dd',
-	);
-	$args = wp_parse_args( $args, $defaults );
+	$args = wp_parse_args( $args, array(
+		'container'         => 'dd',
+		'show_country'      => true,
+		'show_name'         => true,
+		'show_name_link'    => true,
+		'show_phone'        => true,
+		'separator_address' => '<br>',
+		'separator_country' => '<br>',
+	) );
 
 	$output  = '';
 
-	$output .= ( empty( $venue->website ) ) ? '' : '<a href="' . esc_url( $venue->website ) . '" class="url" itemprop="url">';
-	$output .= '<span class="fn org" itemprop="name">' . $venue->name . '</span>';
-	$output .= ( empty( $venue->website ) ) ? '' : '</a>';
+	if ( $args['show_name'] ) {
+		$output .= ( empty( $venue->website ) || ! $args['show_name_link'] ) ? '' : '<a href="' . esc_url( $venue->website ) . '" class="url" itemprop="url">';
+		$output .= '<span class="venue-name fn org" itemprop="name">' . $venue->name . '</span>';
+		$output .= ( empty( $venue->website ) || ! $args['show_name_link'] ) ? '' : '</a>';
+	}
 
 	$address  = '';
-	$address .= ( empty( $venue->address ) ) ? '' : '<span class="street-address" itemprop="streetAddress">' . nl2br( esc_html( $venue->address ) ) . '</span><br>';
+	$address .= ( empty( $venue->address ) ) ? '' : '<span class="street-address" itemprop="streetAddress">' . esc_html( $venue->address ) . '</span>';
 
+	$region  = '';
+	$region .= ( empty( $venue->city ) ) ? '' : '<span class="locality" itemprop="addressLocality">' . $venue->city . '</span>';
+	$region .= ( ! empty( $venue->city ) && ! empty( $venue->state ) ) ? ', ' : '';
+	$region .= ( empty( $venue->state ) ) ? '' : '<span class="region" itempprop="addressRegion">' . $venue->state . '</span>';
+	$region .= ( empty( $venue->postal_code ) ) ? '' : ' <span class="postal-code" itemprop="postalCode">' . $venue->postal_code . '</span>';
 
-	$address .= ( empty( $venue->city ) ) ? '' : '<span class="locality" itemprop="addressLocality">' . $venue->city . '</span>';
-	$address .= ( ! empty( $venue->city ) && ! empty( $venue->state ) ) ? ', ' : '';
-	$address .= ( empty( $venue->state ) ) ? '' : '<span class="region" itempprop="addressRegion">' . $venue->state . '</span>';
-	$address .= ( empty( $venue->postal_code ) ) ? '' : ' <span class="postal-code" itemprop="postalCode">' . $venue->postal_code . '</span>';
-	$address .= ( empty( $venue->country ) ) ? '' : '<br><span class="country-name" itemprop="addressCountry">' . $venue->country . '</span>';
+	$address .= ( ! empty( $address ) && ! empty( $region ) ) ? '<span class="sep sep-street-address">' . $args['separator_address'] . '</span>' : '';
+	$address .= ( empty( $region ) ) ? '' : '<span class="venue-location">' . $region . '</span>';
 
+	if ( ! empty( $venue->country ) && $args['show_country'] && apply_filters( 'show_audiotheme_venue_country', true ) ) {
+		$country_class = esc_attr( 'country-name-' . sanitize_title_with_dashes( $venue->country ) );
 
-	$output .= ( empty( $address ) ) ? '' : '<div class="adr" itemtype="http://schema.org/PostalAddress" itemscope itemprop="address">' . $address . '</div>';
-	$output .= ( empty( $venue->phone ) ) ? '' : '<span class="tel" itemprop="telephone">' . $venue->phone . '</span>';
+		$address .= ( ! empty( $address ) && ! empty( $venue->country ) ) ? '<span class="sep sep-country-name ' . $country_class . '">' . $args['separator_country'] . '</span> ' : '';
+		$address .= ( empty( $venue->country ) ) ? '' : '<span class="country-name ' . $country_class . '" itemprop="addressCountry">' . $venue->country . '</span>';
+	}
+
+	$output .= ( empty( $address ) ) ? '' : '<div class="venue-address adr" itemtype="http://schema.org/PostalAddress" itemscope itemprop="address">' . $address . '</div> ';
+
+	if ( $args['show_phone'] ) {
+		$output .= ( empty( $venue->phone ) ) ? '' : '<span class="venue-phone tel" itemprop="telephone">' . $venue->phone . '</span>';
+	}
 
 	if ( ! empty( $output ) && ! empty( $args['container'] ) ) {
 		$container_open = '<' . $args['container'] . ' class="location vcard" itemprop="location" itemscope itemtype="http://schema.org/EventVenue">';
