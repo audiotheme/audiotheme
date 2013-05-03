@@ -1,6 +1,6 @@
 <?php
 /**
- * The template to display list of gigs.
+ * The template to display a list of gigs.
  *
  * @package AudioTheme
  * @subpackage Template
@@ -44,10 +44,10 @@ get_header();
 
 						<?php
 						the_audiotheme_gig_venue_link( array(
-							'before' => '<span class="gig-venue">',
-							'after' => '</span>',
+							'before'      => '<span class="gig-venue">',
+							'after'       => '</span>',
 							'before_link' => '<span itemprop="name">',
-							'after_link' => '</span>'
+							'after_link'  => '</span>',
 						) );
 						?>
 					</p>

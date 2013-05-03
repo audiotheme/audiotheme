@@ -34,7 +34,7 @@ while ( have_posts() ) :
 						<strong><?php echo get_audiotheme_gig_time( 'F d, Y' ); ?></strong>
 					</time>
 				</div><!-- /.gig-date -->
-			</dt>
+			</dt><!-- /.gig-header -->
 
 		<?php endif; ?>
 
