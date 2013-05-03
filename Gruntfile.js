@@ -36,7 +36,7 @@ module.exports = function(grunt) {
 					jQuery: true,
 					tb_remove: true,
 					wp: true,
-					wpPointerL10n: true,
+					wpPointerL10n: true
 				},
 			},
 			all: [
@@ -46,8 +46,20 @@ module.exports = function(grunt) {
 				'gigs/admin/js/*.js',
 				'!gigs/admin/js/*.min.js',
 				'includes/js/*.js',
-				'!includes/js/*.min.js',
+				'!includes/js/*.min.js'
 			]
+		},
+
+		// Compile LESS files.
+		less: {
+			dist: {
+				options: {
+					yuicompress: true
+				},
+				files: [
+					{ src: 'includes/css/less/*.less', dest: 'includes/css/audiotheme.min.css' },
+				]
+			}
 		},
 
 		// Minify (could concatenate, too).
@@ -60,7 +72,7 @@ module.exports = function(grunt) {
 					{ src: 'admin/js/settings.js', dest: 'admin/js/settings.min.js' },
 					{ src: 'gigs/admin/js/gig-edit.js', dest: 'gigs/admin/js/gig-edit.min.js' },
 					{ src: 'gigs/admin/js/venue-edit.js', dest: 'gigs/admin/js/venue-edit.min.js' },
-					//{ src: 'includes/js/audiotheme.js', dest: 'includes/js/audiotheme.min.js' },
+					{ src: 'includes/js/audiotheme.js', dest: 'includes/js/audiotheme.min.js' }
 				]
 			}
 		},
@@ -69,7 +81,11 @@ module.exports = function(grunt) {
 		watch: {
 			js: {
 				files: ['<%= jshint.all %>'],
-				tasks: ['jshint', 'uglify'],
+				tasks: ['jshint', 'uglify']
+			},
+			less: {
+				files: ['includes/css/less/*.less'],
+				tasks: ['less']
 			}
 		},
 
@@ -118,7 +134,7 @@ module.exports = function(grunt) {
 					}
 				]
 			}
-		},
+		}
 
 	});
 
@@ -127,6 +143,7 @@ module.exports = function(grunt) {
 	 */
 	grunt.loadNpmTasks('grunt-contrib-compress');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-string-replace');
@@ -136,8 +153,9 @@ module.exports = function(grunt) {
 	 */
 	grunt.registerTask('default', [
 		'jshint',
+		'less',
 		'uglify',
-		'watch',
+		'watch'
 	]);
 
 	/**
