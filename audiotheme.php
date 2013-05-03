@@ -117,8 +117,12 @@ function audiotheme_load() {
 	// Load gigs.
 	add_action( 'init', 'audiotheme_gigs_init' );
 
-	// Load videos
+	// Load videos.
 	add_action( 'init', 'audiotheme_videos_init' );
+
+	// Template hooks.
+	add_action( 'audiotheme_template_before_main_content', 'audiotheme_template_before_main_content' );
+	add_action( 'audiotheme_template_after_main_content', 'audiotheme_template_after_main_content' );
 }
 add_action( 'after_setup_theme', 'audiotheme_load', 5 );
 

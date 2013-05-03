@@ -244,3 +244,29 @@ function audiotheme_widget_count_class( $params ) {
 
 	return $params;
 }
+
+/**
+ * Add wrapper open tags in default templates for theme compatibility.
+ *
+ * @since 1.2.0
+ */
+function audiotheme_template_before_main_content() {
+	$theme = get_template();
+
+	if ( 'twentyeleven' == $theme ) {
+		echo '<div id="primary"><div id="content" role="main">';
+	}
+}
+
+/**
+ * Add wrapper close tags in default templates for theme compatibility.
+ *
+ * @since 1.2.0
+ */
+function audiotheme_template_after_main_content() {
+	$theme = get_template();
+
+	if ( 'twentyeleven' == $theme ) {
+		echo '</div></div>';
+	}
+}
