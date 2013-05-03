@@ -288,9 +288,9 @@ function audiotheme_gig_template_redirect() {
  */
 function audiotheme_gig_template_include( $template ) {
 	if ( is_post_type_archive( 'audiotheme_gig' ) ) {
-		$template = locate_template( 'audiotheme/archive-gig.php' );
+		$template = audiotheme_locate_template( 'archive-gig.php' );
 	} elseif ( is_singular( 'audiotheme_gig' ) ) {
-		$template = locate_template( 'audiotheme/single-gig.php' );
+		$template = audiotheme_locate_template( 'single-gig.php' );
 	}
 
 	return $template;
