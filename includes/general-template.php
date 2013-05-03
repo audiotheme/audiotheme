@@ -82,3 +82,15 @@ function the_audiotheme_archive_description( $before = '', $after = '' ) {
 		}
 	}
 }
+
+/**
+ * Strip the protocol and trailing slash from a URL for display.
+ *
+ * @since 1.2.0
+ *
+ * @param string $url URL to simplify.
+ * @return string
+ */
+function audiotheme_simplify_url( $url ) {
+	return untrailingslashit( preg_replace( '|^https?://(www\.)?|i', '', esc_url( $url ) ) );
+}
