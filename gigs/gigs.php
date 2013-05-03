@@ -182,6 +182,7 @@ function audiotheme_gig_query( $query ) {
 		return;
 	}
 
+	$query->set( 'posts_per_archive_page', -1 );
 	$query->set( 'meta_key', '_audiotheme_gig_datetime' );
 	$query->set( 'orderby', 'meta_value' );
 	$query->set( 'order', 'asc' );
