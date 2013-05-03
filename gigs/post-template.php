@@ -985,12 +985,69 @@ function update_audiotheme_venue_gig_count( $venue_id, $count = 0 ) {
 	global $wpdb;
 
 	if ( ! $count ) {
-		$sql = $wpdb->prepare( "SELECT count( * )
-			FROM $wpdb->p2p
-			WHERE p2p_type='audiotheme_venue_to_gig' AND p2p_from=%d",
-			$venue_id );
-		$count = $wpdb->get_var( $sql );
+		$count = get_audiotheme_venue_gig_count( $venue_id );
 	}
 
 	update_post_meta( $venue_id, '_audiotheme_gig_count', absint( $count ) );
+}
+
+/**
+ * Generate a Google Map iframe for an address or venue.
+ *
+ * If a venue ID is passed as the second parameter, it's address will supercede
+ * the address argument in the $args array.
+ *
+ * If the address argument is left empty and the current post is a gig CPT and
+ * it has a venue with an address, that is the address that will be used.
+ *
+ * The args are:
+ * 'address' - Default is '' (string). The address to send to Google.
+ * 'width' - Default is '100%' (string). Width of the iframe.
+ * 'height' - Default is 300 (string). Height of the iframe.
+ *
+ * @since 1.2.0
+ *
+ * @param array $args Array of args.
+ * @param int $venue_id Optional. Venue ID.
+ * @return string
+ */
+function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
+	$args = wp_parse_args( $args, array(
+		'address' => '',
+		'width' => '100%',
+		'height' => 300,
+	) );
+
+	// Get the current post and determine if it's a gig with a venue.
+	if ( empty( $args['address'] ) && ( $gig = get_audiotheme_gig() ) ) {
+		if ( 'audiotheme_gig' == get_post_type( $gig ) && ! empty( $gig->venue->ID ) ) {
+			$venue_id = $gig->venue->ID;
+		}
+	}
+
+	// Retrieve the address for the venue.
+	if ( $venue_id ) {
+		$venue = get_audiotheme_venue( $venue_id );
+
+		$args['address'] = get_audiotheme_venue_address( $venue->ID );
+		$args['address'] = ( $args['address'] ) ? $venue->name . ', ' . $args['address'] : $venue->name;
+	}
+
+	$url = add_query_arg( array(
+		'f'       => 'q',
+		'source'  => 's_q',
+		'hl'      => 'en',
+		'geocode' => '',
+		'q'       => rawurlencode( $args['address'] ),
+		'output'  => 'embed',
+		'iwloc'   => '',
+	), 'http://maps.google.com/maps' );
+
+	$iframe = sprintf( '<iframe src="%s" width="%s" height="%s" frameBorder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>',
+		esc_url( $url ),
+		esc_attr( $args['width'] ),
+		esc_attr( $args['height'] )
+	);
+
+	return $iframe;
 }
