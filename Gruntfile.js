@@ -31,7 +31,9 @@ module.exports = function(grunt) {
 					audiotheme: true,
 					audiothemePointers: true,
 					audiothemeGigsL10n: true,
+					AudiothemeJplayer: true,
 					AudiothemeMediaControl: true,
+					AudiothemeTracks: true,
 					isRtl: true,
 					jQuery: true,
 					tb_remove: true,
@@ -57,7 +59,7 @@ module.exports = function(grunt) {
 					yuicompress: true
 				},
 				files: [
-					{ src: 'includes/css/less/*.less', dest: 'includes/css/audiotheme.min.css' },
+					{ src: 'includes/css/less/audiotheme.less', dest: 'includes/css/audiotheme.min.css' },
 				]
 			}
 		},

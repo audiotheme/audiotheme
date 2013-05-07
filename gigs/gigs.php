@@ -382,7 +382,7 @@ function audiotheme_gig_before_delete( $post_id ) {
  */
 function audiotheme_gig_post_class( $classes, $class, $post_id ) {
 	if ( 'audiotheme_gig' == get_post_type( $post_id ) && audiotheme_gig_has_ticket_meta() ) {
-		$classes[] = 'has-ticket-meta';
+		$classes[] = 'has-audiotheme-ticket-meta';
 	}
 
 	return $classes;

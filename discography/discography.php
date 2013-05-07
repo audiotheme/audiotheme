@@ -120,6 +120,7 @@ function audiotheme_discography_init() {
 	add_filter( 'post_type_archive_link', 'audiotheme_discography_archive_link', 10, 2 );
 	add_filter( 'wp_unique_post_slug', 'audiotheme_track_unique_slug', 10, 6 );
 	add_action( 'wp_print_footer_scripts', 'audiotheme_print_tracks_js' );
+	add_filter( 'post_class', 'audiotheme_record_archive_post_class' );
 }
 
 /**
@@ -222,15 +223,15 @@ function audiotheme_discography_query_orderby( $orderby ) {
 function audiotheme_discography_template_include( $template ) {
 	if ( is_post_type_archive( array( 'audiotheme_record', 'audiotheme_track' ) ) ) {
 		if ( is_post_type_archive( 'audiotheme_track' ) ) {
-			$templates[] = 'audiotheme/archive-track.php';
+			$templates[] = 'archive-track.php';
 		}
 
-		$templates[] = 'audiotheme/archive-record.php';
-		$template = locate_template( $templates );
+		$templates[] = 'archive-record.php';
+		$template = audiotheme_locate_template( $templates );
 	} elseif ( is_singular( 'audiotheme_record' ) ) {
-		$template = locate_template( 'audiotheme/single-record.php' );
+		$template = audiotheme_locate_template( 'single-record.php' );
 	} elseif ( is_singular( 'audiotheme_track' ) ) {
-		$template = locate_template( 'audiotheme/single-track.php' );
+		$template = audiotheme_locate_template( 'single-track.php' );
 	}
 
 	return $template;
@@ -456,4 +457,31 @@ function audiotheme_print_tracks_js() {
 		echo "/* ]]> */\n";
 		echo "</script>\n";
 	}
+}
+
+/**
+ * Add classes to record posts on the archive page.
+ *
+ * Classes serve as helpful hooks to aid in styling across various browsers.
+ *
+ * - Adds nth-child classes to record posts.
+ *
+ * @since 1.2.0
+ *
+ * @param array $classes Default post classes.
+ * @return array
+ */
+function audiotheme_record_archive_post_class( $classes ) {
+	global $wp_query;
+
+	if ( $wp_query->is_main_query() && is_post_type_archive( 'audiotheme_record' ) ) {
+		$nth_child_classes = audiotheme_nth_child_classes( array(
+			'current' => $wp_query->current_post + 1,
+			'max'     => 4,
+		) );
+
+		$classes = array_merge( $classes, $nth_child_classes );
+	}
+
+	return $classes;
 }

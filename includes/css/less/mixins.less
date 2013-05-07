@@ -1,0 +1,36 @@
+.border-radius (@radius: 3px) {
+	-webkit-border-radius: @radius;
+	border-radius:         @radius;
+
+	-webkit-background-clip: padding-box;
+	background-clip:         padding-box;
+}
+
+.opacity (@opacity: 1) {
+	@ieOpacity: @opacity * 100;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=@{ieOpacity})";
+	filter: ~"alpha(opacity=@{ieOpacity})";
+	opacity: @opacity;
+}
+
+.responsive-grid(@columns: 3, @margin: 0.5%) {
+	@marginTotal: ( @margin * @columns * 2 );
+	@rowStart: ~"@{columns}n+1";
+	@rowEnd: ~"@{columns}n";
+
+	list-style: none;
+
+	.item {
+		float: left;
+		clear: none;
+		margin-right: @margin;
+		margin-left: @margin;
+		width: ( ( 100% - @marginTotal ) / @columns );
+	}
+
+	.item:nth-of-type(@{rowStart}),
+	.item-@{columns}np1 { clear: left;} // First item in row.
+
+	.item:nth-of-type(@{rowEnd}),
+	.item-@{columns}n { clear: right;} // Last item in row.
+}

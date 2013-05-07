@@ -61,6 +61,7 @@ function audiotheme_videos_init() {
 
 	add_action( 'template_include', 'audiotheme_video_template_include' );
 	add_action( 'delete_attachment', 'audiotheme_video_delete_attachment' );
+	add_filter( 'post_class', 'audiotheme_video_archive_post_class' );
 }
 
 /**
@@ -87,9 +88,9 @@ function get_audiotheme_videos_rewrite_base() {
  */
 function audiotheme_video_template_include( $template ) {
 	if ( is_post_type_archive( 'audiotheme_video' ) ) {
-		$template = locate_template( 'audiotheme/archive-video.php' );
+		$template = audiotheme_locate_template( 'archive-video.php' );
 	} elseif ( is_singular( 'audiotheme_video' ) ) {
-		$template = locate_template( 'audiotheme/single-video.php' );
+		$template = audiotheme_locate_template( 'single-video.php' );
 	}
 
 	return $template;
@@ -110,4 +111,31 @@ function audiotheme_video_delete_attachment( $attachment_id ) {
 		delete_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id' );
 		delete_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url' );
 	}
+}
+
+/**
+ * Add classes to video posts on the archive page.
+ *
+ * Classes serve as helpful hooks to aid in styling across various browsers.
+ *
+ * - Adds nth-child classes to video posts.
+ *
+ * @since 1.2.0
+ *
+ * @param array $classes Default post classes.
+ * @return array
+ */
+function audiotheme_video_archive_post_class( $classes ) {
+	global $wp_query;
+
+	if ( $wp_query->is_main_query() && is_post_type_archive( 'audiotheme_video' ) ) {
+		$nth_child_classes = audiotheme_nth_child_classes( array(
+			'current' => $wp_query->current_post + 1,
+			'max'     => 4,
+		) );
+
+		$classes = array_merge( $classes, $nth_child_classes );
+	}
+
+	return $classes;
 }

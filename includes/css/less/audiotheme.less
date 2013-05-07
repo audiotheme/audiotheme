@@ -1,3 +1,6 @@
+@import 'mixins';
+
+
 .audiotheme-clearfix {
     *zoom: 1;
 
@@ -8,6 +11,104 @@
 	}
 	&:after {
 		clear: both;
+	}
+}
+
+.audiotheme-archive-intro {
+	margin: 0 0 30px 0;
+	line-height: 1.5;
+}
+
+.audiotheme-archive-title {
+	margin: 0 0 1.5em 0;
+	font-size: 24px;
+	font-weight: normal;
+}
+
+.audiotheme-grid {
+	.item {
+		margin-bottom: 20px;
+	}
+	&.min-width-400 {
+		margin-right: -2%;
+		margin-left: -2%;
+		.responsive-grid(2, 2%);
+	}
+	&.min-width-600 {
+		margin-right: -1%;
+		margin-left: -1%;
+
+		// Reset the the smaller breakpoint rules.
+		.item:nth-of-type(2n+1),
+		.item-2np1,
+		.item:nth-of-type(2n),
+		.item-2n { clear: none;}
+
+		.responsive-grid(4, 1%);
+	}
+}
+
+.audiotheme-label {
+	display: block;
+	font-size: 11px;
+	font-weight: normal;
+	text-transform: uppercase;
+}
+
+.audiotheme-meta-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+	border-color: #d3d3d3;
+	border-style: solid;
+	border-width: 1px 0;
+
+	.audiotheme-meta-item {
+		display: inline-block;
+		padding: 10px;
+		border-color: #d3d3d3;
+		border-style: solid;
+		border-width: 0 0 0 1px;
+
+		&:first-child {
+			border-left-width: 0;
+		}
+	}
+}
+
+.audiotheme-term-list {
+	display: table;
+	width: 100%;
+	border-color: #d3d3d3;
+	border-style: solid;
+	border-width: 1px 0;
+
+	.audiotheme-term-list-label {
+		.audiotheme-label;
+		display: table-cell;
+		padding: 10px;
+		vertical-align: middle;
+		border-color: #d3d3d3;
+		border-style: solid;
+		border-width: 0 1px 0 0;
+	}
+	.audiotheme-term-list-items {
+		display: table-cell;
+		padding: 5px 10px;
+
+		a {
+			display: inline-block;
+			margin: 5px 0;
+			padding: 0 10px;
+			height: 21px;
+			color: #fff;
+			font-size: 12px;
+			line-height: 21px;
+			text-decoration: none;
+			background: #b2b2b2;
+			.border-radius(10px);
+		}
 	}
 }
 
@@ -36,7 +137,7 @@
 	border-style: solid;
 	border-width: 0 0 1px 0;
 
-	.gig-title {
+	.audiotheme-gig-title {
 		margin: 0;
 		padding: 10px;
 		background-color: #f3f3f3;
@@ -45,44 +146,44 @@
 		border-width: 0 0 1px 0;
 	}
 
-	.gig-meta-datetime {
+	.audiotheme-gig-meta-datetime {
 		float: left;
 		margin-right: -150px;
 		padding: 10px;
 		width: 130px;
 
-		.gig-date {
+		.audiotheme-gig-date {
 			display: block;
 			font-weight: bold;
 		}
-		.gig-time {
+		.audiotheme-gig-time {
 			display: block;
 		}
 	}
-	.gig-details {
+	.audiotheme-gig-details {
 		padding: 10px 10px 10px 150px;
 
-		.gig-place {
+		.audiotheme-gig-place {
 			clear: none;
 
-			.gig-location {
+			.audiotheme-gig-location {
 				display: block;
 				font-weight: bold;
 			}
-			.gig-venue {
+			.audiotheme-gig-venue {
 				display: block;
 			}
 		}
 	}
-	.gig-meta-tickets {
+	.audiotheme-gig-meta-tickets {
 		margin-left: 140px;
 		padding: 0 10px 10px 10px;
 
-		.gig-tickets-price {
+		.audiotheme-gig-tickets-price {
 			display: block;
 			font-weight: bold;
 		}
-		.gig-tickets-url {
+		.audiotheme-gig-tickets-url {
 			display: block;
 		}
 	}
@@ -91,10 +192,10 @@
 /* Desktop only */
 .audiotheme-gigs.min-width-600 {
 	.audiotheme-gig-card {
-		&.has-ticket-meta .gig-details {
+		&.has-audiotheme-ticket-meta .audiotheme-gig-details {
 			padding-right: 120px;
 		}
-		.gig-meta-tickets {
+		.audiotheme-gig-meta-tickets {
 			position: absolute;
 			top: 0;
 			right: 0;
@@ -110,24 +211,24 @@
 /* Single Gig
 -------------------------------------------------------------- */
 
-.single-audiotheme-gig {
+.audiotheme-gig-single {
 	margin: 0;
 	line-height: 1.5;
 
-	.gig-content {
+	.audiotheme-content {
 		padding: 30px 10px 0 10px;
 	}
-	.gig-description {
+	.audiotheme-gig-description {
 		margin: 0;
 		padding: 20px 10px;
 		border-color: #d3d3d3;
 		border-style: solid;
 		border-width: 0 0 1px 0;
 
-		.gig-note {
+		.audiotheme-gig-note {
 			margin: 10px 0 0 0;
 		}
-		.gig-place {
+		.audiotheme-gig-place {
 			font-size: 18px;
 			font-weight: bold;
 			.country-name,
@@ -136,7 +237,7 @@
 			}
 		}
 	}
-	.gig-header {
+	.audiotheme-gig-header {
 		margin: 0;
 		padding: 0 10px 20px 10px;
 		font-size: 30px;
@@ -151,46 +252,27 @@
 			font-weight: normal;
 		}
 	}
-	.gig-meta {
-		margin: 0;
-		padding: 0;
-		font-weight: bold;
-		border-color: #d3d3d3;
-		border-style: solid;
-		border-width: 0 0 1px 0;
+	.audiotheme-gig-meta {
+		border-top-width: 0;
 
-		.label {
-			display: block;
-			font-size: 11px;
-			font-weight: normal;
-			text-transform: uppercase;
-		}
-		.gig-time,
-		.gig-tickets {
-			display: inline-block;
-			padding: 10px;
-			border-color: #d3d3d3;
-			border-style: solid;
-			border-width: 0 0 0 1px;
-		}
-		.gig-tickets-link {
+		.audiotheme-gig-tickets-link {
 			&:before {
 				content: "\2022\00a0";
 				padding: 0 5px;
 			}
 		}
-		.gig-time {
+		.audiotheme-gig-time {
 			border-width: 0;
 		}
 	}
-	.gig-venue {
+	.audiotheme-gig-venue {
 		margin: 0;
 		padding: 20px 10px;
 		border-color: #d3d3d3;
 		border-style: solid;
 		border-width: 0 0 1px 0;
 
-		.venue-name {
+		.audiotheme-venue-name {
 			display: block;
 			clear: both;
 			font-weight: bold;
@@ -205,31 +287,31 @@
 				display: none;
 			}
 		}
-		.venue-website {
+		.audiotheme-venue-website {
 			display: block;
 		}
-		.venue-map {
+		.audiotheme-venue-map {
 			display: none;
 		}
 	}
 }
 
 /* Tablets + Desktop */
-.single-audiotheme-gig.min-width-400 {
-	.gig-venue {
+.audiotheme-gig-single.min-width-400 {
+	.audiotheme-gig-venue {
 		.venue-address {
 			float: left;
-			
+
 			.street-address,
 			.sep-street-address {
 				display: inline;
 			}
 		}
-		.venue-meta {
+		.audiotheme-venue-meta {
 			float: right;
 			text-align: right;
 		}
-		.venue-map {
+		.audiotheme-venue-map {
 			display: block;
 			float: left;
 			clear: both;
@@ -243,9 +325,321 @@
 	}
 }
 
-/* Desktop only */
-.single-audiotheme-gig.min-width-600 {
-	.gig-venue {
-		
+
+/* Record Archive
+-------------------------------------------------------------- */
+
+.audiotheme-records {
+	line-height: 1.5;
+
+	.audiotheme_record {
+		.audiotheme-record-artwork {
+			position: relative;
+			margin: 0 0 10px 0;
+
+			img {
+				display: block;
+				width: 100%;
+				max-width: 100%;
+				height: auto;
+			}
+			.audiotheme-record-type {
+				position: absolute;
+				bottom: 10px;
+				left: 10px;
+				display: inline-block;
+				padding: 0 10px;
+				color: #fff;
+				font-size: 11px;
+				line-height: 20px;
+				text-transform: uppercase;
+				background: #000;
+				.border-radius(10px);
+				.opacity(.5);
+			}
+		}
+		.audiotheme-record-meta {
+			strong {
+				font-weight: normal;
+			}
+		}
+		.audiotheme-record-title {
+			font-size: 14px;
+			font-weight: bold;
+		}
+	}
+}
+
+
+/* Single Record
+-------------------------------------------------------------- */
+
+.audiotheme-record-single {
+	.audiotheme-clearfix;
+	line-height: 1.5;
+
+	h1, h2, h3, h4, h5, h6 {
+		clear: none;
+	}
+	.audiotheme-record-artwork {
+		margin: 0 0 30px 0;
+		max-width: 400px;
+
+		img {
+			width: 100%;
+			max-width: 100%;
+			height: auto;
+		}
+	}
+	.audiotheme-record-header {
+		width: 100%;
+
+		.audiotheme-record-title {
+			font-size: 18px;
+			font-weight: bold;
+		}
+		.audiotheme-record-subtitle {
+			border-width: 0;
+
+			em {
+				font-style: normal;
+			}
+		}
+		.audiotheme-record-artist {
+			font-weight: normal;
+		}
+		.audiotheme-record-meta {
+			margin-top: 20px;
+		}
+	}
+	.audiotheme-record-links {
+		.audiotheme-record-links-title {
+			display: none;
+		}
+	}
+	.audiotheme-content {
+		margin-top: 30px;
+		width: 100%;
+	}
+}
+
+.audiotheme-record-links-list {
+	list-style: none;
+	margin: 20px 0 0 0;
+	padding: 0;
+
+	.audiotheme-record-links-item {
+		display: inline;
+
+		.audiotheme-record-link {
+			display: inline-block;
+			margin: 0 10px 10px 0;
+			padding: 4px 10px;
+			color: #fff;
+			font-weight: bold;
+			text-decoration: none;
+			background: #333;
+			.border-radius(3px);
+		}
+	}
+}
+
+.audiotheme-tracklist-section {
+	margin: 20px 0 0 0;
+
+	.audiotheme-tracklist-title {
+		margin-bottom: 20px;
+	}
+}
+
+.audiotheme-tracklist {
+	display: table;
+	position: relative;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	border-color: #d3d3d3;
+	border-style: solid;
+	border-width: 1px 0 0 0;
+	counter-reset: li;
+
+	.audiotheme-track {
+		display: table-row;
+		position: relative;
+		border-color: #d3d3d3;
+		border-style: solid;
+		border-width: 0 0 1px 0;
+
+		&:before {
+			content: counter(li);
+			counter-increment: li;
+			display: table-cell;
+			width: 50px;
+			text-align: center;
+			vertical-align: middle;
+			border-color: #d3d3d3;
+			border-style: solid;
+			border-width: 0 1px 1px 0;
+		}
+		.audiotheme-track-cell {
+			display: table-cell;
+			padding: 6px 10px;
+			vertical-align: middle;
+			border-color: #d3d3d3;
+			border-style: solid;
+			border-width: 0 0 1px 0;
+		}
+		.audiotheme-track-meta {
+			display: block;
+			font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", monospace;
+
+			.jp-duration,
+			.sep-jp-duration {
+				display: none;
+			}
+			.audiotheme-track-download-link {
+				display: none;
+			}
+		}
+		.audiotheme-track-title {
+			font-weight: bold;
+		}
+
+		/* Track States */
+		&.is-playable:hover {
+			background: #f7f7f7;
+
+			&:before {
+				cursor: pointer;
+				content: "\25ae\25ae";
+				content: "\25a0";
+				content: "\25b6";
+				font-size: 16px;
+			}
+		}
+		&.is-playing,
+		&.is-playing:hover {
+			background: #f7f7f7;
+
+			&:before {
+				content: "\25a0";
+				font-size: 16px;
+			}
+		}
+	}
+}
+
+/* Tablets + Desktop */
+.min-width-400 {
+	.audiotheme-tracklist {
+		.audiotheme-track {
+			&:before {
+				width: 40px;
+			}
+			.audiotheme-track-meta {
+				float: right;
+				text-align: right;
+
+				.audiotheme-track-download-link {
+					display: inline;
+				}
+			}
+			.audiotheme-track-title {
+				float: left;
+			}
+		}
+	}
+}
+
+.audiotheme-record-single.min-width-400 {
+	position: relative;
+	padding: 0 0 0 170px;
+
+	.audiotheme-record-artwork {
+		float: left;
+		clear: none;
+		margin: 0 0 0 -170px;
+		width: 140px;
+	}
+}
+
+.audiotheme-record-single.min-width-600 {
+	position: relative;
+	padding: 0 0 0 330px;
+
+	.audiotheme-record-artwork {
+		margin: 0 0 0 -330px;
+		width: 290px;
+	}
+}
+
+
+/* Single Track
+-------------------------------------------------------------- */
+
+.audiotheme-tracklist-single {
+	.audiotheme-track {
+		&:before {
+			display: none;
+		}
+
+		/* Track States */
+		&.is-playable {
+			&:before {
+				content: "\25b6";
+				display: table-cell;
+			}
+			&:hover {
+				background: #f7f7f7;
+			}
+		}
+		&.is-playing,
+		&.is-playing:hover {
+			&:before {
+				content: "\25a0";
+			}
+		}
+	}
+}
+
+
+/* Video Archive
+-------------------------------------------------------------- */
+
+.audiotheme-videos {
+	line-height: 1.5;
+
+	.audiotheme_video {
+		.feataured-image {
+			margin: 0 0 10px 0;
+
+			img {
+				display: block;
+				width: 100%;
+				max-width: 100%;
+				height: auto;
+			}
+		}
+		.audiotheme-video-title {
+			font-size: 14px;
+			font-weight: bold;
+		}
+	}
+}
+
+
+/* Single Video
+-------------------------------------------------------------- */
+
+.audiotheme-video-single {
+	.audiotheme-video {
+		margin: 0 0 30px 0;
+	}
+	.audiotheme-video-title {
+		margin: 0;
+	}
+	.audiotheme-term-list {
+		margin: 0 0 30px 0;
 	}
 }
