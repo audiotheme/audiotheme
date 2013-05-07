@@ -290,7 +290,7 @@ function audiotheme_track_details_meta_box( $post ) {
 		<label for="track-file-url"><?php _e( 'Audio File URL:', 'audiotheme-i18n' ) ?></label>
 		<input type="url" name="file_url" id="track-file-url" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_file_url', true ) ) ; ?>" class="widefat">
 
-		<input type="checkbox" name="is_downloadable" id="track-is-downlodable" value="1"<?php checked( get_post_meta( $post->ID, '_audiotheme_is_downloadable', true ) ); ?>>
+		<input type="checkbox" name="is_downloadable" id="track-is-downloadable" value="1"<?php checked( get_post_meta( $post->ID, '_audiotheme_is_downloadable', true ) ); ?>>
 		<label for="track-is-downloadable"><?php _e( 'Allow downloads?', 'audiotheme-i18n' ) ?></label>
 
 		<a href="#" class="button audiotheme-media-control-choose" style="float: right"><?php _e( 'Upload MP3', 'audiotheme-i18n' ); ?></a>
