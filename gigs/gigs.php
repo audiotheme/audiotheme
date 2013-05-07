@@ -415,10 +415,12 @@ class Audiotheme_Gig_Query extends WP_Query {
 			'order'               => 'asc',
 			'ignore_sticky_posts' => true,
 			'meta_query'          => array(
-				'key'     => '_audiotheme_gig_datetime',
-				'value'   => current_time( 'mysql' ),
-				'compare' => '>=',
-				'type'    => 'DATETIME',
+				array(
+					'key'     => '_audiotheme_gig_datetime',
+					'value'   => current_time( 'mysql' ),
+					'compare' => '>=',
+					'type'    => 'DATETIME',
+				)
 			),
 		) );
 
