@@ -10,6 +10,7 @@
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: audiotheme-i18n
+ * Domain Path: /languages/
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -194,17 +195,17 @@ function audiotheme_enqueue_scripts() {
 }
 
 /**
-* Support localization for the plugin strings.
-*
-* @see http://www.geertdedeckere.be/article/loading-wordpress-language-files-the-right-way
-*
-* @since 1.0.0
-*/
+ * Support localization for the plugin strings.
+ *
+ * @see http://www.geertdedeckere.be/article/loading-wordpress-language-files-the-right-way
+ *
+ * @since 1.0.0
+ */
 function audiotheme_l10n() {
 	$domain = 'audiotheme-i18n';
 	$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 	load_textdomain( $domain, WP_LANG_DIR . '/audiotheme/' . $locale . '.mo' );
-	load_plugin_textdomain( $domain, false, AUDIOTHEME_DIR . 'languages/' );
+	load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 }
 add_action( 'init', 'audiotheme_l10n' );
 
