@@ -37,7 +37,7 @@ function audiotheme_add_default_oembed_providers() {
  * @return string Embed HTML with wrapper.
  */
 function audiotheme_oembed_html( $html, $url = null, $attr = null, $post_id = null ) {
-	$wrapped = '<div class="audiotheme-video">' . $html . '</div>';
+	$wrapped = '<div class="audiotheme-embed">' . $html . '</div>';
 
     if ( empty( $url ) && 'video_embed_html' == current_filter() ) { // Jetpack
         $html = $wrapped;
