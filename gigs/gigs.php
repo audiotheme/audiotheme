@@ -50,6 +50,7 @@ function audiotheme_gigs_init() {
 		'public'                 => true,
 		'register_meta_box_cb'   => 'audiotheme_gig_edit_screen_setup',
 		'rewrite'                => false,
+		'show_in_admin_bar'      => true,
 		'show_in_menu'           => 'audiotheme-gigs',
 		'show_in_nav_menus'      => false,
 		'supports'               => array( 'title', 'editor', 'thumbnail' ),
