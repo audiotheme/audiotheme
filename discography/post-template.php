@@ -208,10 +208,11 @@ function get_audiotheme_record_tracks( $post_id = null, $args = array() ) {
  * @return string|bool File url if downloadable, else false.
  */
 function is_audiotheme_track_downloadable( $post_id = null ) {
-	$return = false;
+	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
 
 	$is_downloadable = get_post_meta( $post_id, '_audiotheme_is_downloadable', true );
 
+	$return = false;
 	if ( $is_downloadable ) {
 		$file_url = get_audiotheme_track_file_url( $post_id );
 
