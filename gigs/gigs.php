@@ -94,7 +94,7 @@ function audiotheme_gigs_init() {
 	add_filter( 'generate_rewrite_rules', 'audiotheme_gig_generate_rewrite_rules' );
 
 	// Filter the query to make sure gigs are returned in a logical way.
-	add_action( 'pre_get_posts', 'audiotheme_gig_query' );
+	add_action( 'pre_get_posts', 'audiotheme_pre_gig_query' );
 
 	// Make sure the correct template is loaded depending on the request.
 	add_action( 'template_redirect', 'audiotheme_gig_template_redirect' );
@@ -173,7 +173,7 @@ function audiotheme_gig_generate_rewrite_rules( $wp_rewrite ) {
  *
  * @param object $query The main WP_Query object. Passed by reference.
  */
-function audiotheme_gig_query( $query ) {
+function audiotheme_pre_gig_query( $query ) {
 	if ( is_admin() || ! $query->is_main_query() || ! is_post_type_archive( 'audiotheme_gig' ) ) {
 		return;
 	}
@@ -211,10 +211,10 @@ function audiotheme_gig_query( $query ) {
 
 		if ( isset( $start ) && isset( $end ) ) {
 			$meta_query[] = array(
-				'key' => '_audiotheme_gig_datetime',
-				'value' => array( $start, $end ),
+				'key'     => '_audiotheme_gig_datetime',
+				'value'   => array( $start, $end ),
 				'compare' => 'BETWEEN',
-				'type' => 'DATETIME'
+				'type'    => 'DATETIME',
 			);
 
 			$query->set( 'day', null );
@@ -224,10 +224,10 @@ function audiotheme_gig_query( $query ) {
 	} else {
 		// Only show upcoming gigs.
 		$meta_query[] = array(
-			'key' => '_audiotheme_gig_datetime',
-			'value' => current_time( 'mysql' ),
+			'key'     => '_audiotheme_gig_datetime',
+			'value'   => current_time( 'mysql' ),
 			'compare' => '>=',
-			'type' => 'DATETIME'
+			'type'    => 'DATETIME',
 		);
 	}
 
