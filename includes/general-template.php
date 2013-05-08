@@ -49,6 +49,18 @@ function audiotheme_locate_template( $template_names, $load = false, $require_on
 }
 
 /**
+ * Determine if a template file is being loaded from the plugin.
+ *
+ * @since 1.2.0
+ *
+ * @param string $template Template path.
+ * @return bool
+ */
+function is_audiotheme_default_template( $template ) {
+	return ( false !== strpos( $template, AUDIOTHEME_DIR ) );
+}
+
+/**
  * Display a post type archive title.
  *
  * Just a wrapper to the default post_type_archive_title for the sake of
