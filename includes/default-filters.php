@@ -246,6 +246,30 @@ function audiotheme_widget_count_class( $params ) {
 }
 
 /**
+ * Set up AudioTheme templates when they're loaded.
+ *
+ * Limits default scripts and styles to load only for AudioTheme templates.
+ *
+ * @since 1.2.0
+ */
+function audiotheme_template_setup() {
+	add_action( 'wp_enqueue_scripts', 'audiotheme_enqueue_scripts' );
+}
+
+/**
+ * Enqueue default frontend scripts and styles.
+ *
+ * Themes can remove default styles and scripts by removing this hook:
+ * <code>remove_action( 'wp_enqueue_scripts', 'audiotheme_enqueue_scripts' );</code>
+ *
+ * @since 1.2.0
+ */
+function audiotheme_enqueue_scripts() {
+	wp_enqueue_script( 'audiotheme' );
+	wp_enqueue_style( 'audiotheme' );
+}
+
+/**
  * Add wrapper open tags in default templates for theme compatibility.
  *
  * @since 1.2.0

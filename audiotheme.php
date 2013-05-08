@@ -61,14 +61,12 @@ require( AUDIOTHEME_DIR . 'includes/media.php' );
 require( AUDIOTHEME_DIR . 'includes/options.php' );
 require( AUDIOTHEME_DIR . 'widgets/widgets.php' );
 
-
 /**
  * Load AudioTheme CPTs and corresponding functionality.
  */
 require( AUDIOTHEME_DIR . 'discography/discography.php' );
 require( AUDIOTHEME_DIR . 'gigs/gigs.php' );
 require( AUDIOTHEME_DIR . 'videos/videos.php' );
-
 
 /**
  * AudioTheme setup.
@@ -86,7 +84,7 @@ function audiotheme_load() {
 	add_action( 'init', 'audiotheme_less_setup' );
 	add_action( 'widgets_init', 'audiotheme_widgets_init' );
 	add_action( 'wp_loaded', 'audiotheme_loaded' );
-	add_action( 'wp_enqueue_scripts', 'audiotheme_enqueue_scripts' );
+	add_action( 'audiotheme_template_include', 'audiotheme_template_setup' );
 
 	add_filter( 'wp_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
 	add_filter( 'nav_menu_css_class', 'audiotheme_nav_menu_name_class', 10, 2 );
@@ -177,21 +175,6 @@ function audiotheme_register_scripts() {
 	) );
 
 	wp_register_style( 'audiotheme', AUDIOTHEME_URI . 'includes/css/audiotheme.min.css' );
-}
-
-/**
- * Enqueue default frontend scripts and styles.
- *
- * @since 1.2.0
- */
-function audiotheme_enqueue_scripts() {
-	if ( apply_filters( 'audiotheme_enqueue_default_template_scripts', true ) ) {
-		wp_enqueue_script( 'audiotheme' );
-	}
-
-	if ( apply_filters( 'audiotheme_enqueue_default_template_styles', true ) ) {
-		wp_enqueue_style( 'audiotheme' );
-	}
 }
 
 /**
