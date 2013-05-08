@@ -230,10 +230,13 @@ function audiotheme_discography_template_include( $template ) {
 
 		$templates[] = 'archive-record.php';
 		$template = audiotheme_locate_template( $templates );
+		do_action( 'audiotheme_template_include', $template );
 	} elseif ( is_singular( 'audiotheme_record' ) ) {
 		$template = audiotheme_locate_template( 'single-record.php' );
+		do_action( 'audiotheme_template_include', $template );
 	} elseif ( is_singular( 'audiotheme_track' ) ) {
 		$template = audiotheme_locate_template( 'single-track.php' );
+		do_action( 'audiotheme_template_include', $template );
 	}
 
 	return $template;

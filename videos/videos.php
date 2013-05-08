@@ -89,8 +89,10 @@ function get_audiotheme_videos_rewrite_base() {
 function audiotheme_video_template_include( $template ) {
 	if ( is_post_type_archive( 'audiotheme_video' ) ) {
 		$template = audiotheme_locate_template( 'archive-video.php' );
+		do_action( 'audiotheme_template_include', $template );
 	} elseif ( is_singular( 'audiotheme_video' ) ) {
 		$template = audiotheme_locate_template( 'single-video.php' );
+		do_action( 'audiotheme_template_include', $template );
 	}
 
 	return $template;

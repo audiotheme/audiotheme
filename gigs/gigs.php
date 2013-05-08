@@ -290,8 +290,10 @@ function audiotheme_gig_template_redirect() {
 function audiotheme_gig_template_include( $template ) {
 	if ( is_post_type_archive( 'audiotheme_gig' ) ) {
 		$template = audiotheme_locate_template( 'archive-gig.php' );
+		do_action( 'audiotheme_template_include', $template );
 	} elseif ( is_singular( 'audiotheme_gig' ) ) {
 		$template = audiotheme_locate_template( 'single-gig.php' );
+		do_action( 'audiotheme_template_include', $template );
 	}
 
 	return $template;
