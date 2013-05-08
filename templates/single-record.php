@@ -27,7 +27,7 @@ get_header();
 		<?php endif; ?>
 
 		<header class="audiotheme-record-header entry-header">
-			<?php the_title( '<h1 class="record-title entry-title" itemprop="name">', '</h1>' ); ?>
+			<?php the_title( '<h1 class="audiotheme-record-title entry-title" itemprop="name">', '</h1>' ); ?>
 
 			<?php if ( $artist = get_audiotheme_record_artist() ) : ?>
 				<h2 class="audiotheme-record-artist" itemprop="byArtist"><?php echo esc_html( $artist ); ?></h2>
@@ -83,7 +83,7 @@ get_header();
 
 								<span class="audiotheme-track-meta">
 									<?php if ( $download_url = is_audiotheme_track_downloadable( $track->ID ) ) : ?>
-										<a href="<?php echo esc_url( $download_url ); ?>" class="audiotheme-track-download-link">d</a>
+										<a href="<?php echo esc_url( $download_url ); ?>" class="audiotheme-track-download-link">Download</a>
 									<?php endif; ?>
 									
 									<span class="jp-current-time">-:--</span>

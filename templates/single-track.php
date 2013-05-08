@@ -41,7 +41,7 @@ get_header();
 
 				<li id="track-<?php the_ID(); ?>" class="audiotheme-track">
 					<span class="audiotheme-track-info audiotheme-track-cell">
-						<a href="<?php the_permalink(); ?>" itemprop="url" class="audiotheme-track-title"><span itemprop="name"><?php the_title(); ?></span></a>
+						<span class="audiotheme-track-title" itemprop="name"><?php the_title(); ?></span>
 						
 						<span class="audiotheme-track-meta">
 							<span class="jp-current-time">-:--</span>

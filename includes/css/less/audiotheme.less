@@ -1,6 +1,5 @@
 @import 'mixins';
 
-
 .audiotheme-clearfix {
     *zoom: 1;
 
@@ -28,6 +27,15 @@
 .audiotheme-grid {
 	.item {
 		margin-bottom: 20px;
+
+		.audiotheme-featured-image {
+			img {
+				display: block;
+				width: 100%;
+				max-width: 100%;
+				height: auto;
+			}
+		}
 	}
 	&.min-width-400 {
 		margin-right: -2%;
@@ -108,7 +116,42 @@
 			text-decoration: none;
 			background: #b2b2b2;
 			.border-radius(10px);
+
+			&:hover {
+				background: #333;
+			}
 		}
+	}
+}
+
+
+/* Icons
+-------------------------------------------------------------- */
+
+.audiotheme-icon-download {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAQlBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACGKEuzAAAAFXRSTlMAAA2A9vLzDObxDhEZ93OQ/oQIIf1ObA7rAAAAaElEQVR4Xm3MyQ7DIADE0M4QIPvu///VSkG0SK2P7+DXnyTlPsY+S6owAowNOEJ0AxpgUIVr8pwgzZ6uB1aWtMOeFtby2Cix1UcoEFShSFCFIkEt6Dj0gWz7lE7b+YEO4L4Bui9Agd/eFXsGaavhdn4AAAAASUVORK5CYII=);
+
+	@media print, (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAgMAAAAOFJJnAAAADFBMVEUAAAD///8AAAAAAADI23cLAAAAA3RSTlMAAIAXzkf+AAAAV0lEQVR4XrXKsQ2AMAwF0a+0rpnDy5B9sllWyRipbL6NJURDx1WvOPQKJ7Ij4P4PpjMjNLAJCSyiBQYBToaAckkIlwSnkcA03NBdkFVoo8Be8OwLz9yrC3HQYk6qHP6yAAAAAElFTkSuQmCC);
+		background-size: 16px 16px;
+	}
+}
+
+.audiotheme-icon-pause {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAD1BMVEUAAAD///8AAAAAAAAAAACCa9JWAAAABHRSTlMAAOby6AShwAAAACtJREFUeF5jEIQCbAwhYwUmY0UgQ8TFgcXFEcgQdjFgdjEkiQHXjjAQj6UA/eAON6xnlVcAAAAASUVORK5CYII=);
+
+	@media print, (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAgMAAAAOFJJnAAAACVBMVEUAAAD///8AAABzxoNxAAAAAnRSTlMAAHaTzTgAAAAhSURBVHheYwiFAuIYDgxAwAhkeK1awLVq4RBiIBxPkpcBKaFj46YN2z8AAAAASUVORK5CYII=);
+		background-size: 16px 16px;
+	}
+}
+
+.audiotheme-icon-play {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAJFBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADHJj5lAAAAC3RSTlMAALlG8vFWTdeztOIN6c8AAAAzSURBVHheY8ACpguCAJCxWxnKiN6tDGF4796tDGPsVoYxdrehM2BSyjDtaAYuF4QwMAAAxu0X60hD7/0AAAAASUVORK5CYII=);
+
+	@media print, (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgBAMAAACBVGfHAAAAFVBMVEUAAAD///8AAAAAAAAAAAAAAAAAAACWttmcAAAABnRSTlMAAD9Av8BOTRJhAAAAXUlEQVR4Xp3RwQnAMAwEQaWDpCW3sD24/xJC4OBgX8F6DsiWTvOo/sA9rbk+WIa9DJFCpBApRAqRQqRQCVQCFcNeBgSoBT2KvkWDodHRcmh9FBCKEIWMzqBDHRz7BcU4RyM9LM10AAAAAElFTkSuQmCC);
+		background-size: 16px 16px;
 	}
 }
 
@@ -138,12 +181,9 @@
 	border-width: 0 0 1px 0;
 
 	.audiotheme-gig-title {
+		clear: none;
 		margin: 0;
-		padding: 10px;
-		background-color: #f3f3f3;
-		border-color: #d3d3d3;
-		border-style: dashed;
-		border-width: 0 0 1px 0;
+		font-weight: normal;
 	}
 
 	.audiotheme-gig-meta-datetime {
@@ -240,14 +280,14 @@
 	.audiotheme-gig-header {
 		margin: 0;
 		padding: 0 10px 20px 10px;
-		font-size: 30px;
+		font-size: 24px;
 		font-weight: bold;
 		line-height: 36px;
 		border-color: #d3d3d3;
 		border-style: solid;
 		border-width: 0 0 1px 0;
 
-		.gig-title {
+		.audiotheme-gig-title {
 			margin: 0 0 4px 0;
 			font-weight: normal;
 		}
@@ -272,7 +312,7 @@
 		border-style: solid;
 		border-width: 0 0 1px 0;
 
-		.audiotheme-venue-name {
+		.venue-name {
 			display: block;
 			clear: both;
 			font-weight: bold;
@@ -337,12 +377,6 @@
 			position: relative;
 			margin: 0 0 10px 0;
 
-			img {
-				display: block;
-				width: 100%;
-				max-width: 100%;
-				height: auto;
-			}
 			.audiotheme-record-type {
 				position: absolute;
 				bottom: 10px;
@@ -356,6 +390,11 @@
 				background: #000;
 				.border-radius(10px);
 				.opacity(.5);
+			}
+			a:hover {
+				.audiotheme-record-type {
+					.opacity(.9);
+				}
 			}
 		}
 		.audiotheme-record-meta {
@@ -395,7 +434,7 @@
 		width: 100%;
 
 		.audiotheme-record-title {
-			font-size: 18px;
+			font-size: 24px;
 			font-weight: bold;
 		}
 		.audiotheme-record-subtitle {
@@ -440,6 +479,13 @@
 			text-decoration: none;
 			background: #333;
 			.border-radius(3px);
+
+			&:hover {
+				padding: 3px 9px;
+				color: #333;
+				background: #fff;
+				border: 1px solid #333;
+			}
 		}
 	}
 }
@@ -478,6 +524,8 @@
 			width: 50px;
 			text-align: center;
 			vertical-align: middle;
+			background-position: 50% 50%;
+			background-repeat: no-repeat;
 			border-color: #d3d3d3;
 			border-style: solid;
 			border-width: 0 1px 1px 0;
@@ -511,11 +559,10 @@
 			background: #f7f7f7;
 
 			&:before {
+				display: table-cell;
 				cursor: pointer;
-				content: "\25ae\25ae";
-				content: "\25a0";
-				content: "\25b6";
-				font-size: 16px;
+				content: "";
+				.audiotheme-icon-play;
 			}
 		}
 		&.is-playing,
@@ -523,8 +570,8 @@
 			background: #f7f7f7;
 
 			&:before {
-				content: "\25a0";
-				font-size: 16px;
+				content: "";
+				.audiotheme-icon-pause;
 			}
 		}
 	}
@@ -542,7 +589,21 @@
 				text-align: right;
 
 				.audiotheme-track-download-link {
-					display: inline;
+					overflow: hidden;
+					display: inline-block;
+					width: 16px;
+					height: 16px;
+					text-indent: 100%;
+					vertical-align: middle;
+					white-space: nowrap;
+					background-position: 0 0;
+					background-repeat: no-repeat;
+					.audiotheme-icon-download;
+					.opacity(.3);
+
+					&:hover {
+						.opacity(1);
+					}
 				}
 			}
 			.audiotheme-track-title {
@@ -587,8 +648,9 @@
 		/* Track States */
 		&.is-playable {
 			&:before {
-				content: "\25b6";
 				display: table-cell;
+				content: "";
+				.audiotheme-icon-play;
 			}
 			&:hover {
 				background: #f7f7f7;
@@ -597,7 +659,7 @@
 		&.is-playing,
 		&.is-playing:hover {
 			&:before {
-				content: "\25a0";
+				.audiotheme-icon-pause;
 			}
 		}
 	}
@@ -611,15 +673,8 @@
 	line-height: 1.5;
 
 	.audiotheme_video {
-		.feataured-image {
+		.audiotheme-featured-image {
 			margin: 0 0 10px 0;
-
-			img {
-				display: block;
-				width: 100%;
-				max-width: 100%;
-				height: auto;
-			}
 		}
 		.audiotheme-video-title {
 			font-size: 14px;
@@ -633,11 +688,13 @@
 -------------------------------------------------------------- */
 
 .audiotheme-video-single {
-	.audiotheme-video {
+	.audiotheme-embed {
 		margin: 0 0 30px 0;
 	}
 	.audiotheme-video-title {
 		margin: 0;
+		font-size: 24px;
+		font-weight: bold;
 	}
 	.audiotheme-term-list {
 		margin: 0 0 30px 0;

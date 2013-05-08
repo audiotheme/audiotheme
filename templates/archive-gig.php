@@ -22,8 +22,6 @@ get_header();
 
 		<li <?php post_class( array( 'audiotheme-gig-card', 'audiotheme-clearfix' ) ) ?> itemscope itemtype="http://schema.org/MusicEvent">
 
-			<?php the_title( '<h2 class="audiotheme-gig-title" itemprop="name">', '</h2>' ); ?>
-
 			<div class="audiotheme-gig-meta-datetime">
 				<meta content="<?php echo get_audiotheme_gig_time( 'c' ); ?>" itemprop="startDate">
 				<time datetime="<?php echo get_audiotheme_gig_time( 'c' ); ?>">
@@ -33,6 +31,8 @@ get_header();
 			</div><!-- /.gig-meta-datetime -->
 
 			<div class="audiotheme-gig-details">
+
+				<?php the_title( '<h2 class="audiotheme-gig-title" itemprop="name">', '</h2>' ); ?>
 
 				<?php if ( audiotheme_gig_has_venue() ) : ?>
 
