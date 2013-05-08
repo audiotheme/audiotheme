@@ -37,6 +37,8 @@ get_header();
 
 </ul>
 
+<?php audiotheme_archive_nav(); ?>
+
 <?php do_action( 'audiotheme_template_after_main_content' ); ?>
 
 <?php get_footer(); ?>

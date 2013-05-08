@@ -60,6 +60,7 @@ function audiotheme_videos_init() {
 	) );
 
 	add_action( 'template_include', 'audiotheme_video_template_include' );
+	add_action( 'pre_get_posts', 'audiotheme_pre_video_query' );
 	add_action( 'delete_attachment', 'audiotheme_video_delete_attachment' );
 	add_filter( 'post_class', 'audiotheme_video_archive_post_class' );
 }
@@ -74,6 +75,27 @@ function audiotheme_videos_init() {
 function get_audiotheme_videos_rewrite_base() {
 	$base = get_option( 'audiotheme_video_rewrite_base' );
 	return ( empty( $base ) ) ? 'videos' : $base;
+}
+
+/**
+ * Filter video requests.
+ *
+ * @since 1.0.0
+ *
+ * @param object $query The main WP_Query object. Passed by reference.
+ */
+function audiotheme_pre_video_query( $query ) {
+	global $wpdb;
+
+	if ( is_admin() || ! $query->is_main_query() ) {
+		return;
+	}
+
+	// The default video archive template uses a 4-column grid.
+	// If it's being loaded from the plugin, set the posts per page arg to a multiple of 4.
+	if ( is_post_type_archive( 'audiotheme_video' ) && is_audiotheme_default_template( audiotheme_locate_template( 'archive-video.php' ) ) ) {
+		$query->set( 'posts_per_archive_page', 12 );
+	}
 }
 
 /**

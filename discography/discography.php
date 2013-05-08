@@ -116,7 +116,7 @@ function audiotheme_discography_init() {
 	) );
 
 	add_filter( 'generate_rewrite_rules', 'audiotheme_discography_generate_rewrite_rules' );
-	add_action( 'pre_get_posts', 'audiotheme_discography_query' );
+	add_action( 'pre_get_posts', 'audiotheme_pre_discography_query' );
 	add_action( 'template_include', 'audiotheme_discography_template_include' );
 	add_filter( 'post_type_link', 'audiotheme_discography_permalinks', 10, 4 );
 	add_filter( 'post_type_archive_link', 'audiotheme_discography_archive_link', 10, 2 );
@@ -168,25 +168,31 @@ function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
  *
  * @param object $query The main WP_Query object. Passed by reference.
  */
-function audiotheme_discography_query( $query ) {
+function audiotheme_pre_discography_query( $query ) {
 	global $wpdb;
 
-	if ( is_admin() ) {
+	if ( is_admin() || ! $query->is_main_query() ) {
 		return;
 	}
 
 	// Sort records by release year
 	$orderby = $query->get( 'orderby' );
-	if ( $query->is_main_query() && is_post_type_archive( 'audiotheme_record' ) && empty( $orderby ) ) {
+	if ( is_post_type_archive( 'audiotheme_record' ) && empty( $orderby ) ) {
 		$query->set( 'meta_key', '_audiotheme_release_year' );
 		$query->set( 'orderby', 'meta_value_num' );
 		$query->set( 'order', 'desc' );
 
 		add_filter( 'posts_orderby_request', 'audiotheme_discography_query_orderby' );
+
+		// The default record archive template uses a 4-column grid.
+	// If it's being loaded from the plugin, set the posts per page arg to a multiple of 4.
+		if ( is_audiotheme_default_template( audiotheme_locate_template( 'archive-record.php' ) ) ) {
+			$query->set( 'posts_per_archive_page', 12 );
+		}
 	}
 
 	// Limit requests for single tracks to the context of the parent record
-	if ( $query->is_main_query() && is_single() && 'audiotheme_track' == $query->get( 'post_type' ) ) {
+	if ( is_single() && 'audiotheme_track' == $query->get( 'post_type' ) ) {
 		if ( get_option('permalink_structure') ) {
 			$record_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type='audiotheme_record' AND post_name=%s LIMIT 1", $query->get( 'audiotheme_record' ) ) );
 			if ( $record_id ) {

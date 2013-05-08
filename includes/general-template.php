@@ -131,3 +131,27 @@ function audiotheme_nth_child_classes( $args ) {
 
 	return $classes;
 }
+
+/**
+ * Displays navigation to next/previous pages when applicable in archive
+ * templates
+ *
+ * @since 1.2.0
+ */
+function audiotheme_archive_nav() {
+	global $wp_query;
+
+	if ( $wp_query->max_num_pages > 1 ) :
+		?>
+		<div class="audiotheme-paged-nav audiotheme-clearfix" role="navigation">
+			<?php if ( get_previous_posts_link() ) : ?>
+				<span class="audiotheme-paged-nav-prev"><?php previous_posts_link( __( '&larr; Previous', 'audiotheme-i18n' ) ); ?></span>
+			<?php endif; ?>
+
+			<?php if ( get_next_posts_link() ) : ?>
+				<span class="audiotheme-paged-nav-next"><?php next_posts_link( __( 'Next &rarr;', 'audiotheme-i18n' ) ) ?></span>
+			<?php endif; ?>
+		</div>
+		<?php
+	endif;
+}
