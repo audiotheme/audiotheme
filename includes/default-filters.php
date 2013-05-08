@@ -274,7 +274,7 @@ function audiotheme_enqueue_scripts() {
  *
  * @since 1.2.0
  */
-function audiotheme_template_before_main_content() {
+function audiotheme_before_main_content() {
 	$theme = get_template();
 
 	if ( 'twentyeleven' == $theme ) {
@@ -287,7 +287,7 @@ function audiotheme_template_before_main_content() {
  *
  * @since 1.2.0
  */
-function audiotheme_template_after_main_content() {
+function audiotheme_after_main_content() {
 	$theme = get_template();
 
 	if ( 'twentyeleven' == $theme ) {

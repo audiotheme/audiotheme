@@ -10,7 +10,7 @@
 get_header();
 ?>
 
-<?php do_action( 'audiotheme_template_before_main_content' ); ?>
+<?php do_action( 'audiotheme_before_main_content' ); ?>
 
 <ul id="audiotheme-gigs" class="audiotheme-gigs audiotheme-clearfix">
 
@@ -78,6 +78,6 @@ get_header();
 
 </ul><!-- /#audiotheme-gigs -->
 
-<?php do_action( 'audiotheme_template_after_main_content' ); ?>
+<?php do_action( 'audiotheme_after_main_content' ); ?>
 
 <?php get_footer(); ?>

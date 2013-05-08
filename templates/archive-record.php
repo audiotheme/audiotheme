@@ -10,7 +10,7 @@
 get_header();
 ?>
 
-<?php do_action( 'audiotheme_template_before_main_content' ); ?>
+<?php do_action( 'audiotheme_before_main_content' ); ?>
 
 <h1 class="audiotheme-archive-title"><?php the_audiotheme_archive_title(); ?></h1>
 
@@ -60,6 +60,6 @@ get_header();
 
 <?php audiotheme_archive_nav(); ?>
 
-<?php do_action( 'audiotheme_template_after_main_content' ); ?>
+<?php do_action( 'audiotheme_after_main_content' ); ?>
 
 <?php get_footer(); ?>
