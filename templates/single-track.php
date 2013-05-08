@@ -27,7 +27,7 @@ get_header();
 		<?php endif; ?>
 
 		<header class="audiotheme-record-header entry-header">
-			<?php the_title( '<h1 class="record-title entry-title" itemprop="name">', '</h1>' ); ?>
+			<?php the_title( '<h1 class="audiotheme-record-title entry-title" itemprop="name">', '</h1>' ); ?>
 
 			<?php if ( $artist = get_audiotheme_record_artist() ) : ?>
 				<h2 class="audiotheme-record-artist" itemprop="byArtist"><?php echo esc_html( $artist ); ?></h2>

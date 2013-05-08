@@ -227,8 +227,16 @@
 	.audiotheme-gig-details {
 		padding: 10px 10px 10px 150px;
 
+		.audiotheme-gig-note {
+			margin: 10px 0 0 0;
+
+			p:last-child {
+				margin-bottom: 0;
+			}
+		}
 		.audiotheme-gig-place {
 			clear: none;
+			margin: 0;
 
 			.audiotheme-gig-location {
 				display: block;
@@ -291,10 +299,16 @@
 
 		.audiotheme-gig-note {
 			margin: 10px 0 0 0;
+
+			p:last-child {
+				margin-bottom: 0;
+			}
 		}
 		.audiotheme-gig-place {
+			margin: 0;
 			font-size: 18px;
 			font-weight: bold;
+
 			.country-name,
 			.sep-country-name {
 				font-weight: normal;
@@ -339,6 +353,7 @@
 		.venue-name {
 			display: block;
 			clear: both;
+			width: 100%;
 			font-weight: bold;
 		}
 		.venue-address {
@@ -427,8 +442,12 @@
 			}
 		}
 		.audiotheme-record-title {
-			font-size: 14px;
+			margin: 0;
+			padding: 0;
+			width: auto;
+			font-size: 16px;
 			font-weight: bold;
+			border-width: 0;
 		}
 	}
 }
@@ -458,8 +477,11 @@
 		width: 100%;
 
 		.audiotheme-record-title {
+			margin: 0;
+			padding: 0;
 			font-size: 24px;
 			font-weight: bold;
+			border-width: 0;
 		}
 		.audiotheme-record-subtitle {
 			border-width: 0;
@@ -469,13 +491,18 @@
 			}
 		}
 		.audiotheme-record-artist {
+			margin: 0;
 			font-weight: normal;
 		}
 		.audiotheme-record-meta {
 			margin-top: 20px;
+			margin-left: 0;
 		}
 	}
 	.audiotheme-record-links {
+		.audiotheme-record-links-list {
+			margin-left: 0;
+		}
 		.audiotheme-record-links-title {
 			display: none;
 		}
@@ -519,6 +546,9 @@
 
 	.audiotheme-tracklist-title {
 		margin-bottom: 20px;
+	}
+	.audiotheme-tracklist {
+		margin-left: 0;
 	}
 }
 
@@ -701,7 +731,7 @@
 			margin: 0 0 10px 0;
 		}
 		.audiotheme-video-title {
-			font-size: 14px;
+			font-size: 16px;
 			font-weight: bold;
 		}
 	}
@@ -715,10 +745,15 @@
 	.audiotheme-embed {
 		margin: 0 0 30px 0;
 	}
+	.audiotheme-video-header {
+		width: 100%;
+	}
 	.audiotheme-video-title {
-		margin: 0;
+		margin: 0 0 20px 0;
+		padding: 0;
 		font-size: 24px;
 		font-weight: bold;
+		border-width: 0;
 	}
 	.audiotheme-term-list {
 		margin: 0 0 30px 0;

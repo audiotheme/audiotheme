@@ -33,7 +33,7 @@ get_header();
 
 			<?php endif; ?>
 
-			<?php the_title( '<h2 class="record-title entry-title" itemprop="name"><a href="' . get_permalink() . '">', '</a></h2>' ); ?>
+			<?php the_title( '<h2 class="audiotheme-record-title entry-title" itemprop="name"><a href="' . get_permalink() . '">', '</a></h2>' ); ?>
 
 			<?php
 			$artist = get_audiotheme_record_artist();
