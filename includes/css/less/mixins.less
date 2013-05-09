@@ -34,3 +34,9 @@
 	.item:nth-of-type(@{rowEnd}),
 	.item-@{columns}n { clear: right;} // Last item in row.
 }
+
+.transition(@props) {
+	-webkit-transition: @props;
+	   -moz-transition: @props;
+	        transition: @props;
+}

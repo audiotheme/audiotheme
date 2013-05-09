@@ -207,6 +207,7 @@
 	.audiotheme-gig-title {
 		clear: none;
 		margin: 0;
+		font-size: 16px;
 		font-weight: normal;
 	}
 
@@ -458,6 +459,7 @@
 
 .audiotheme-record-single {
 	.audiotheme-clearfix;
+	width: auto;
 	line-height: 1.5;
 
 	h1, h2, h3, h4, h5, h6 {
@@ -467,7 +469,8 @@
 		margin: 0 0 30px 0;
 		max-width: 400px;
 
-		img {
+		img,
+		img.wp-post-image {
 			width: 100%;
 			max-width: 100%;
 			height: auto;
@@ -530,6 +533,7 @@
 			text-decoration: none;
 			background: #333;
 			.border-radius(3px);
+			.transition(none);
 
 			&:hover {
 				padding: 3px 9px;
