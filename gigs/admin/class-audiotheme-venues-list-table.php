@@ -239,7 +239,7 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 							wp_die( __( 'You are not allowed to delete this item.', 'audiotheme-i18n' ) );
 
 						if ( ! wp_delete_post( $post_id ) )
-							wp_die( __( 'Error in deleting…', 'audiotheme-i18n' ) );
+							wp_die( __( 'Error in deleting&hellip;', 'audiotheme-i18n' ) );
 						$deleted++;
 					}
 					$sendback = add_query_arg( 'deleted', $deleted, $sendback );
