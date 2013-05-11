@@ -184,13 +184,13 @@ function audiotheme_register_scripts() {
  *
  * @since 1.0.0
  */
-function audiotheme_l10n() {
+function audiotheme_i18n() {
 	$domain = 'audiotheme-i18n';
 	$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 	load_textdomain( $domain, WP_LANG_DIR . '/audiotheme/' . $locale . '.mo' );
 	load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 }
-add_action( 'init', 'audiotheme_l10n' );
+add_action( 'init', 'audiotheme_i18n' );
 
 /**
  * Flush the rewrite rules if needed.
