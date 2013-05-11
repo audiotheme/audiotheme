@@ -6,7 +6,9 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		version: '<%= pkg.version %>',
 
-		// Check JavaScript for errors.
+		/**
+		 * Check JavaScript for errors and warnings.
+		 */
 		jshint: {
 			options: {
 				bitwise: true,
@@ -52,7 +54,9 @@ module.exports = function(grunt) {
 			]
 		},
 
-		// Compile LESS files.
+		/**
+		 * Compile LESS style sheets.
+		 */
 		less: {
 			dist: {
 				options: {
@@ -64,7 +68,9 @@ module.exports = function(grunt) {
 			}
 		},
 
-		// Minify (could concatenate, too).
+		/**
+		 * Minify JavaScript source files.
+		 */
 		uglify: {
 			dist: {
 				files: [
@@ -79,7 +85,9 @@ module.exports = function(grunt) {
 			}
 		},
 
-		// Watch for changes.
+		/**
+		 * Watch sources files and compile when they're changed.
+		 */
 		watch: {
 			js: {
 				files: ['<%= jshint.all %>'],
@@ -91,29 +99,12 @@ module.exports = function(grunt) {
 			}
 		},
 
-		// Replace version numbers in audiotheme.php with the version in package.json.
-		"string-replace": {
-			dist: {
-				options: {
-					replacements: [{
-						pattern: /Version: .+/,
-						replacement: "Version: <%= version %>"
-					}, {
-						pattern: /@version .+/,
-						replacement: "@version <%= version %>"
-					}, {
-						pattern: /'AUDIOTHEME_VERSION', '[^']+'/,
-						replacement: "'AUDIOTHEME_VERSION', '<%= version %>'"
-					}]
-				},
-				files: {
-					'audiotheme.php': 'audiotheme.php',
-					'style.css': 'style.css'
-				}
-			}
-		},
-
-		// Zip the plugin into an audiotheme-{{version}}.zip archive in the /release directory.
+		/**
+		 * Archive the plugin in the /release directory, excluding development
+		 * and build related files.
+		 *
+		 * The zip archive will be named: audiotheme-plugin-{{version}}.zip
+		 */
 		compress: {
 			dist: {
 				options: {
@@ -136,6 +127,44 @@ module.exports = function(grunt) {
 					}
 				]
 			}
+		},
+
+		shell: {
+			/**
+			 * The custom AudioTheme version of WordPress' i18n tools needs to
+			 * exist at '/wp-content/i18n-tools/', with php-cli and gettext in
+			 * the system path to run this target.
+			 *
+			 * @link http://github.com/AudioTheme/i18n-tools/
+			 */
+			makepot: {
+				command: 'php ../../i18n-tools/makepot-audiotheme.php wp-plugin . languages/audiotheme.pot'
+			}
+		},
+
+		/**
+		 * Replace version numbers in the main audiotheme.php file with the
+		 * version defined in package.json.
+		 */
+		"string-replace": {
+			dist: {
+				options: {
+					replacements: [{
+						pattern: /Version: .+/,
+						replacement: "Version: <%= version %>"
+					}, {
+						pattern: /@version .+/,
+						replacement: "@version <%= version %>"
+					}, {
+						pattern: /'AUDIOTHEME_VERSION', '[^']+'/,
+						replacement: "'AUDIOTHEME_VERSION', '<%= version %>'"
+					}]
+				},
+				files: {
+					'audiotheme.php': 'audiotheme.php',
+					'style.css': 'style.css'
+				}
+			}
 		}
 
 	});
@@ -148,10 +177,11 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-shell');
 	grunt.loadNpmTasks('grunt-string-replace');
 
 	/**
-	 * Register default task.
+	 * Register the default task.
 	 */
 	grunt.registerTask('default', [
 		'jshint',
@@ -168,12 +198,12 @@ module.exports = function(grunt) {
 	 * argument. Ex: grunt release:1.2.3
 	 *
 	 * The project is then zipped into an archive in the release directory,
-	 * excluding unncessary source files in the process.
+	 * excluding unncessary dev/build files in the process.
 	 *
 	 * @todo generate pot files
 	 *       bump/verify version numbers
 	 *       git tag, commit, and push
-	 *       zip to release directory, cleaning source files in the process
+	 *       zip to release directory, cleaning dev/build files in the process
 	 *       push to remote server
 	 */
 	grunt.registerTask('release', function(arg1) {
