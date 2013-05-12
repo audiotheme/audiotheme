@@ -47,7 +47,8 @@ jQuery(function( $ ) {
 	// Set up track lists.
 	$('.audiotheme-record-single').each(function() {
 		var $tracklist = $('.audiotheme-tracklist'),
-			$tracks = $tracklist.find('.audiotheme-track');
+			$tracks = $tracklist.find('.audiotheme-track'),
+			$playableTracks;
 
 		if ( 'undefined' === typeof AudiothemeTracks || null === AudiothemeTracks || ! ( 'record' in AudiothemeTracks ) ) {
 			return;
@@ -83,9 +84,18 @@ jQuery(function( $ ) {
 					$track.removeClass('is-playing');
 				},
 				ended: function() {
+					var playableIndex = $playableTracks.index( $track );
+
 					$track.removeClass('is-playing');
+
+					// Play the next track.
+					if ( playableIndex < $playableTracks.length - 1 ) {
+						$playableTracks.eq( playableIndex + 1 ).find('.jplayer').jPlayer('play');
+					}
 				}
 			});
+
+			$playableTracks = $tracks.filter('.is-playable');
 		});
 
 		$tracklist.on('click', '.is-playable', function() {
