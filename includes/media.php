@@ -77,3 +77,168 @@ function audiotheme_oembed_html( $html, $url = null, $attr = null, $post_id = nu
 function _audiotheme_oembed_youtube_wmode_parameter( $matches ) {
 	return add_query_arg( 'wmode', 'transparent', $matches[0] );
 }
+
+/**
+ * Filter the default gallery shortcode.
+ *
+ * This filter allows the output of the default gallery shortcode to be
+ * customized and adds support for additional functionality, shortcode
+ * attributes, and classes for CSS and JavaScript hooks.
+ *
+ * A lot of the default sanitization is duplicated because WordPress doesn't
+ * provide a filter later in the process.
+ *
+ * @since 1.2.0
+ *
+ * @param string $output Output string passed from default shortcode.
+ * @param array $attr Array of shortcode attributes.
+ * @return string Custom gallery output markup.
+ */
+function audiotheme_post_gallery( $output, $attr ) {
+	global $post;
+
+	static $instance = 0;
+	$instance ++;
+
+	// Let WordPress handle the output for feed requests.
+	if ( is_feed() ) {
+		return $output;
+	}
+
+	if ( isset( $attr['orderby'] ) ) {
+		$attr['orderby'] = sanitize_sql_orderby( $attr['orderby'] );
+		if ( ! $attr['orderby'] ) {
+			unset( $attr['orderby'] );
+		}
+	}
+
+	$attr = shortcode_atts( array(
+		'order'      => 'ASC',
+		'orderby'    => 'menu_order ID',
+		'id'         => $post->ID,
+		'itemtag'    => 'dl',
+		'icontag'    => 'dt',
+		'captiontag' => 'dd',
+		'link'       => 'file',
+		'columns'    => 3,
+		'size'       => 'thumbnail',
+		'ids'        => '',
+		'include'    => '',
+		'exclude'    => ''
+	), $attr );
+
+	$attr['id'] = absint( $attr['id'] );
+	if ( 'RAND' == $attr['order'] ) {
+		$attr['orderby'] = 'none';
+	}
+
+	// Build up an array of arguments to pass to get_posts().
+	$args = array(
+		'post_parent'    => $attr['id'],
+		'post_status'    => 'inherit',
+		'post_type'      => 'attachment',
+		'post_mime_type' => 'image',
+		'order'          => $attr['order'],
+		'orderby'        => $attr['orderby'],
+		'numberposts'    => -1
+	);
+
+	if ( ! empty( $attr['ids'] ) ) {
+		$attr['include'] = $attr['ids'];
+
+		// 'ids' should be explicitly ordered.
+		$args['orderby'] = 'post__in';
+	}
+
+	if ( ! empty( $attr['include'] ) ) {
+		$args['include'] = $attr['include'];
+
+		// Don't want to restrict images to a parent post if 'include' is set.
+		unset( $args['post_parent'] );
+	} elseif ( ! empty( $exclude ) ) {
+		$args['exclude'] = $attr['exclude'];
+	}
+
+	$attachments = get_posts( $args );
+	if ( empty( $attachments ) ) {
+		return '';
+	}
+
+	// Sanitize tags and values.
+	$attr['captiontag'] = tag_escape( $attr['captiontag'] );
+	$attr['icontag'] = tag_escape( $attr['icontag'] );
+	$attr['itemtag'] = tag_escape( $attr['itemtag'] );
+	$attr['columns'] = ( absint( $attr['columns'] ) ) ? absint( $attr['columns'] ) : 1;
+
+	// Add gallery wrapper classes to $attr variable so they can be passed to the filter.
+	$attr['gallery_classes'] = array(
+		'gallery',
+		'galleryid-' . $attr['id'],
+		'gallery-columns-' . $attr['columns'],
+		'gallery-size-' . $attr['size'],
+		'gallery-link-' . $attr['link'],
+		( is_rtl() ) ? 'gallery-rtl' : 'gallery-ltr',
+	);
+	$attr['gallery_classes'] = apply_filters( 'audiotheme_post_gallery_classes', $attr['gallery_classes'], $attr, $instance );
+
+	extract( $attr );
+
+	// id attribute is a combination of post ID and instance to ensure uniqueness.
+	$wrapper = sprintf( "\n" . '<div id="gallery-%d-%d" class="%s">', $post->ID, $instance, join( ' ', array_map( 'sanitize_html_class', $gallery_classes ) ) );
+
+	// Hooks should append custom output to the $wrapper arg if necessary and be sure to close the div.
+	$output = apply_filters( 'audiotheme_post_gallery_output', $wrapper, $attachments, $attr, $instance );
+
+	// Skip output generation if a hook modified the output.
+	if ( empty( $output ) || $wrapper == $output ) {
+		// If $output is empty for some reason, restart the output with the default wrapper.
+		if ( empty( $output ) ) {
+			$output = $wrapper;
+		}
+
+		foreach ( $attachments as $i => $attachment ) {
+			// More 'link' options have been added.
+			if ( 'none' == $link ) {
+				// Don't link the thumbnails in the gallery.
+				$href = '';
+			} elseif ( 'file' == $link ) {
+				// Link directly to the attachment.
+				$href = wp_get_attachment_url( $attachment->ID );
+			} elseif ( 'link' == $link ) {
+				// Use a custom meta field associated with the image for the link.
+				$href = get_post_meta( $attachment->ID, '_audiotheme_attachment_url', true );
+			} else {
+				// Link to the attachment's permalink page.
+				$href = get_permalink( $attachment->ID );
+			}
+
+			$classes = array( 'gallery-item', 'gallery-item-' . ( $i + 1 ) );
+			$classes = array_merge( $classes, audiotheme_nth_child_classes( array(
+				'base'    => 'gallery-item',
+				'current' => ( $i + 1 ),
+				'max'     => $columns,
+			) ) );
+
+			$output .= "\n\t\t" . '<' . $itemtag . ' class="' . join( ' ', $classes ) . '">';
+
+				$output .= '<' . $icontag . ' class="gallery-icon">';
+					$output .= ( $href ) ? '<a href="' . esc_url( $href ) . '">' : '';
+						$output .= wp_get_attachment_image( $attachment->ID, $size, false );
+					$output .= ( $href ) ? '</a>' : '';
+				$output .= '</' . $icontag . '>';
+
+				if ( $captiontag && trim( $attachment->post_excerpt ) ) {
+					$output .= '<' . $captiontag . ' class="wp-caption-text gallery-caption">';
+						$output .= wptexturize( $attachment->post_excerpt );
+					$output .= '</' . $captiontag . '>';
+				}
+
+			$output .= '</' . $itemtag .'>';
+		}
+
+
+		$output .= "\n</div>\n"; // Close the default gallery wrapper.
+	}
+
+	return $output;
+}

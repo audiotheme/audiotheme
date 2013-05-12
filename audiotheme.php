@@ -126,6 +126,18 @@ function audiotheme_load() {
 add_action( 'after_setup_theme', 'audiotheme_load', 5 );
 
 /**
+ * Additional setup during init.
+ *
+ * @since 1.2.0
+ */
+function audiotheme_init() {
+	if ( current_theme_supports( 'audiotheme-post-gallery' ) ) {
+		add_filter( 'post_gallery', 'audiotheme_post_gallery', 20, 2 );
+	}
+}
+add_action( 'init', 'audiotheme_init' );
+
+/**
  * Load admin-specific functions and libraries.
  *
  * Has to be loaded after the Theme Customizer in order to determine if the
