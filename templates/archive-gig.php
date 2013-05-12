@@ -58,14 +58,16 @@ get_header();
 
 			<?php if ( audiotheme_gig_has_ticket_meta() ) : ?>
 
-				<div class="audiotheme-gig-meta-tickets">
+				<div class="audiotheme-gig-meta-tickets" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 
 					<?php if ( $gig_tickets_price = get_audiotheme_gig_tickets_price() ) : ?>
-						<span class="audiotheme-gig-tickets-price"><?php echo esc_html( $gig_tickets_price ); ?></span>
+						<span class="audiotheme-gig-tickets-price" itemprop="price"><?php echo esc_html( $gig_tickets_price ); ?></span>
 					<?php endif; ?>
 
 					<?php if ( $gig_tickets_url = get_audiotheme_gig_tickets_url() ) : ?>
-						<span class="audiotheme-gig-tickets-link"><a href="<?php echo esc_url( $gig_tickets_url ); ?>" target="_blank"><?php _e( 'Buy Tickets', 'audiotheme-i18n' ); ?></a></span>
+						<span class="audiotheme-gig-tickets-link" >
+							<a href="<?php echo esc_url( $gig_tickets_url ); ?>" target="_blank" itemprop="url"><?php _e( 'Buy Tickets', 'audiotheme-i18n' ); ?></a>
+						</span>
 					<?php endif; ?>
 
 				</div><!-- /.gig-meta-tickets -->

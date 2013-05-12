@@ -371,7 +371,9 @@
 			display: block;
 		}
 		.audiotheme-venue-map {
-			display: none;
+			iframe {
+				display: none;
+			}
 		}
 	}
 }
@@ -399,7 +401,11 @@
 			width: 100%;
 
 			iframe {
+				display: block;
 				max-width: 100%;
+			}
+			.venue-map-link {
+				display: none;
 			}
 		}
 	}
@@ -449,6 +455,10 @@
 			font-size: 16px;
 			font-weight: bold;
 			border-width: 0;
+
+			a {
+				font-size: 16px;
+			}
 		}
 	}
 }
@@ -737,6 +747,10 @@
 		.audiotheme-video-title {
 			font-size: 16px;
 			font-weight: bold;
+
+			a {
+				font-size: 16px;
+			}
 		}
 	}
 }
