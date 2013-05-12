@@ -120,7 +120,7 @@ function audiotheme_dashboard_settings_system_section() {
 		),
 		array(
 			'section' => __( 'Environment', 'audiotheme-i18n' ),
-			'keys'    => array( 'web_server', 'php_version', 'mysql_version', 'php_post_max_size', 'php_time_limit' ),
+			'keys'    => array( 'web_server', 'php_version', 'mysql_version', 'php_post_max_size', 'php_time_limit', 'php_safe_mode' ),
 		),
 		array(
 			'section' => __( 'Browser', 'audiotheme-i18n' ),

@@ -576,7 +576,7 @@ function audiotheme_system_info( $args = array() ) {
 		),
 		'wp_debug_mode' => array(
 			'label' => __( 'WP Debug Mode', 'audiotheme-i18n' ),
-			'value' => ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? 'Yes' : 'No',
+			'value' => ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? __( 'Yes', 'audiotheme-i18n' ) : __( 'No', 'audiotheme-i18n' ),
 		),
 		'wp_max_upload_size' => array(
 			'label' => __( 'WP Max Upload Size', 'audiotheme-i18n' ),
@@ -589,6 +589,10 @@ function audiotheme_system_info( $args = array() ) {
 		'php_time_limit' => array(
 			'label' => __( 'PHP Time Limit', 'audiotheme-i18n' ),
 			'value' => ini_get( 'max_execution_time' ),
+		),
+		'php_safe_mode' => array(
+			'label' => __( 'PHP Safe Mode', 'audiotheme-i18n' ),
+			'value' => ( ini_get( 'safe_mode' ) ) ? __( 'Yes', 'audiotheme-i18n' ) : __( 'No', 'audiotheme-i18n' ),
 		),
 		'user_agent' => array(
 			'label' => __( 'User Agent', 'audiotheme-i18n' ),
