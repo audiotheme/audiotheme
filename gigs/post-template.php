@@ -1013,9 +1013,11 @@ function update_audiotheme_venue_gig_count( $venue_id, $count = 0 ) {
  */
 function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 	$args = wp_parse_args( $args, array(
-		'address' => '',
-		'width' => '100%',
-		'height' => 300,
+		'address'   => '',
+		'width'     => '100%',
+		'height'    => 300,
+		'link_text' => __( 'Get Directions', 'audiotheme-i18n' ),
+		'format'    => '%1$s<p class="venue-map-link">%2$s</p>',
 	) );
 
 	// Get the current post and determine if it's a gig with a venue.
@@ -1033,7 +1035,7 @@ function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 		$args['address'] = ( $args['address'] ) ? $venue->name . ', ' . $args['address'] : $venue->name;
 	}
 
-	$url = add_query_arg( array(
+	$src = add_query_arg( array(
 		'f'       => 'q',
 		'source'  => 's_q',
 		'hl'      => 'en',
@@ -1044,10 +1046,15 @@ function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 	), 'http://maps.google.com/maps' );
 
 	$iframe = sprintf( '<iframe src="%s" width="%s" height="%s" frameBorder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>',
-		esc_url( $url ),
+		esc_url( $src ),
 		esc_attr( $args['width'] ),
 		esc_attr( $args['height'] )
 	);
 
-	return $iframe;
+	$link = sprintf( '<a href="%s" target="_blank">%s</a>',
+		esc_url( add_query_arg( 'q', urlencode( $args['address'] ), 'http://maps.google.com/maps' ) ),
+		$args['link_text']
+	);
+
+	return sprintf( $args['format'], $iframe, $link );
 }
