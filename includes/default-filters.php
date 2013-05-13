@@ -275,11 +275,7 @@ function audiotheme_enqueue_scripts() {
  * @since 1.2.0
  */
 function audiotheme_before_main_content() {
-	$theme = get_template();
-
-	if ( 'twentyeleven' == $theme ) {
-		echo '<div id="primary"><div id="content" role="main">';
-	}
+	echo '<div class="audiotheme">';
 }
 
 /**
@@ -288,9 +284,5 @@ function audiotheme_before_main_content() {
  * @since 1.2.0
  */
 function audiotheme_after_main_content() {
-	$theme = get_template();
-
-	if ( 'twentyeleven' == $theme ) {
-		echo '</div></div>';
-	}
+	echo '</div>';
 }
