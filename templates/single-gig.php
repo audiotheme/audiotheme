@@ -24,7 +24,7 @@ while ( have_posts() ) :
 		<?php if ( audiotheme_gig_has_venue() ) : ?>
 
 			<dt class="audiotheme-gig-header">
-				<?php the_title( '<h1 class="audiotheme-gig-title" itemprop="name">', '</h1>' ); ?>
+				<?php the_title( '<h1 class="audiotheme-gig-title entry-title" itemprop="name">', '</h1>' ); ?>
 
 				<div class="audiotheme-gig-date">
 					<meta content="<?php echo get_audiotheme_gig_time( 'c' ); ?>" itemprop="startDate">
