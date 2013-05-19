@@ -132,7 +132,8 @@ add_action( 'after_setup_theme', 'audiotheme_load', 5 );
  */
 function audiotheme_init() {
 	if ( current_theme_supports( 'audiotheme-post-gallery' ) ) {
-		add_filter( 'post_gallery', 'audiotheme_post_gallery', 20, 2 );
+		// High priority so plugins filtering ouput don't get stomped. Jetpack, etc.
+		add_filter( 'post_gallery', 'audiotheme_post_gallery', 5000, 2 );
 	}
 }
 add_action( 'init', 'audiotheme_init' );

@@ -97,6 +97,11 @@ function _audiotheme_oembed_youtube_wmode_parameter( $matches ) {
 function audiotheme_post_gallery( $output, $attr ) {
 	global $post;
 
+	// Something else is already overriding the gallery. Jetpack?
+	if ( ! empty( $output ) ) {
+		return $output;
+	}
+
 	static $instance = 0;
 	$instance ++;
 
