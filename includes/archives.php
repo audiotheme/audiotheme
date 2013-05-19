@@ -82,10 +82,11 @@ function get_audiotheme_archive_ids() {
  *
  * @since 1.0.0
  *
- * @param string $post_type_name Post type name
+ * @param string $post_type_name Optional. Post type name
  * @return array
  */
-function get_audiotheme_post_type_archive( $post_type ) {
+function get_audiotheme_post_type_archive( $post_type = null ) {
+	$post_type = ( $post_type ) ? $post_type : get_post_type();
 	$archives = get_audiotheme_archive_ids();
 
 	return ( empty( $archives[ $post_type ] ) ) ? null : $archives[ $post_type ];
