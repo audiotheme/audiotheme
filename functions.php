@@ -91,7 +91,7 @@ function audiotheme_framework_not_a_theme_nag() {
 			$notice .= ( empty( $delete_link ) ) ? '' : ' ' . $delete_link;
 			break;
 		case 'move-failed' :
-			$notice  = __( 'The AudioTheme framework could not be moved to your plugins folder automatically. You should move it manually.' );
+			$notice  = __( 'The AudioTheme framework could not be moved to your plugins folder automatically. You should move it manually.', 'audiotheme-i18n' );
 			break;
 		default :
 			$notice  = __( '<strong>The AudioTheme framework is not a theme.</strong> It should be installed as a plugin.', 'audiotheme-i18n' );
