@@ -155,3 +155,81 @@ function audiotheme_archive_nav() {
 		<?php
 	endif;
 }
+
+/**
+ * Template tag to allow for CSS classes to be easily filtered
+ * across templates.
+ *
+ * @since 1.3.0
+ * @link http://www.blazersix.com/blog/wordpress-class-template-tag/
+ *
+ * @param string $id Element identifier.
+ * @param array|string $classes Optional. List of default classes as an array or space-separated string.
+ * @param array|string $args Optional. Override defaults.
+ * @return null|array Null when displaying, otherwise an array of classes.
+ */
+function audiotheme_class( $id, $classes = array(), $args = array() ) {
+	$id = sanitize_key( $id );
+
+	$args = wp_parse_args( (array) $args, array(
+		'echo'    => true,
+		'post_id' => null
+	) );
+
+	if ( ! empty( $classes ) && ! is_array( $classes ) ) {
+		// Split a string.
+		$classes = preg_split( '#\s+#', $classes );
+	} elseif ( empty( $classes ) ) {
+		// If the function call didn't pass any classes, use the id as a default class.
+		// Otherwise, the calling function can pass the id as a class along with any others.
+		$classes = array( $id );
+	}
+
+	// Add support for the body element.
+	if ( 'body' == $id ) {
+		$classes = array_merge( get_body_class(), $classes );
+	}
+
+	// Add support for post classes.
+	if ( 'post' == $id ) {
+		$classes = array_merge( get_post_class( '', $args['post_id'] ), $classes );
+	}
+
+	if ( 'archive' == $id && is_audiotheme_post_type_archive() ) {
+		$post_type_class = 'audiotheme-archive-' . str_replace( 'audiotheme_', '', get_post_type() );
+		$classes = array_merge( $classes, array( 'audiotheme-archive', $post_type_class ) );
+	}
+
+	// A page template should set modifier classes all at once in the form of an array.
+	$class_mods = apply_filters( 'audiotheme_class', array(), $id, $args );
+
+	if ( ! empty( $class_mods ) && isset( $class_mods[ $id ] ) ) {
+		$mods = $class_mods[ $id ];
+
+		// Split a string.
+		if ( ! is_array( $mods ) ) {
+			$mods = preg_split( '#\s+#', $mods );
+		}
+
+		foreach( $mods as $key => $mod ) {
+			// If the class starts with a double minus, remove it from both arrays.
+			if ( 0 === strpos( $mod, '--' ) ) {
+				$unset_class = substr( $mod, 2 );
+				unset( $mods[ $key ] );
+				unset( $classes[ array_search( $unset_class, $classes ) ] );
+			}
+		}
+
+		$classes = array_merge( $classes, $mods );
+	}
+
+	// Last chance to modify.
+	$classes = apply_filters( 'audiotheme_classes', $classes, $id, $args );
+	$classes = apply_filters( 'audiotheme_classes-' . $id, $classes, $args );
+
+	if ( $args['echo'] ) {
+		echo 'class="' . join( ' ', array_map( 'sanitize_html_class', $classes ) ) . '"';
+	} else {
+		return esc_attr( $classes );
+	}
+}
