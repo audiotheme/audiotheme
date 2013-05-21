@@ -166,7 +166,7 @@ function audiotheme_archive_nav() {
  * @param string $id Element identifier.
  * @param array|string $classes Optional. List of default classes as an array or space-separated string.
  * @param array|string $args Optional. Override defaults.
- * @return null|array Null when displaying, otherwise an array of classes.
+ * @return array
  */
 function audiotheme_class( $id, $classes = array(), $args = array() ) {
 	$id = sanitize_key( $id );
@@ -193,11 +193,6 @@ function audiotheme_class( $id, $classes = array(), $args = array() ) {
 	// Add support for post classes.
 	if ( 'post' == $id ) {
 		$classes = array_merge( get_post_class( '', $args['post_id'] ), $classes );
-	}
-
-	if ( 'archive' == $id && is_audiotheme_post_type_archive() ) {
-		$post_type_class = 'audiotheme-archive-' . str_replace( 'audiotheme_', '', get_post_type() );
-		$classes = array_merge( $classes, array( 'audiotheme-archive', $post_type_class ) );
 	}
 
 	// A page template should set modifier classes all at once in the form of an array.
@@ -229,7 +224,7 @@ function audiotheme_class( $id, $classes = array(), $args = array() ) {
 
 	if ( $args['echo'] ) {
 		echo 'class="' . join( ' ', array_map( 'sanitize_html_class', $classes ) ) . '"';
-	} else {
-		return esc_attr( $classes );
 	}
+
+	return $classes;
 }

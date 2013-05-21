@@ -231,3 +231,27 @@ function audiotheme_archives_update_post_type_rewrite_base( $post_type, $archive
 	$archive = get_post( $archive_id );
 	update_option( $post_type . '_rewrite_base', $archive->post_name );
 }
+
+/**
+ * Display classes for a wrapper div on an AudioTheme archive page.
+ *
+ * @since 1.3.0
+ * @uses audiotheme_class()
+ *
+ * @param array|string $classes Optional. List of default classes as an array or space-separated string.
+ * @param array|string $args Optional. Override defaults.
+ * @return array
+ */
+function audiotheme_archive_class( $classes = array(), $args = array() ) {
+	if ( ! empty( $classes ) && ! is_array( $classes ) ) {
+		// Split a string.
+		$classes = preg_split( '#\s+#', $classes );
+	}
+
+	if ( is_audiotheme_post_type_archive() ) {
+		$post_type_class = 'audiotheme-archive-' . str_replace( 'audiotheme_', '', get_post_type() );
+		$classes = array_merge( $classes, array( 'audiotheme-archive', $post_type_class ) );
+	}
+
+	return audiotheme_class( 'archive', $classes, $args );
+}
