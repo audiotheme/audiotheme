@@ -57,7 +57,7 @@ function register_audiotheme_archives() {
 		'rewrite'                    => 'audiotheme_archive', // Allows slug to be edited. Extra rules wont' be generated.
 		'query_var'                  => false,
 		'show_ui'                    => false,
-		'show_in_admin_bar'          => false,
+		'show_in_admin_bar'          => true,
 		'show_in_menu'               => false,
 		'show_in_nav_menus'          => true,
 		'supports'                   => array( 'title', 'editor' ),
@@ -254,4 +254,24 @@ function audiotheme_archive_class( $classes = array(), $args = array() ) {
 	}
 
 	return audiotheme_class( 'archive', $classes, $args );
+}
+
+/**
+ * Provide an edit link for archives in the admin bar.
+ *
+ * @since 1.3.0
+ *
+ * @param WP_Admin_Bar $wp_admin_bar Admin bar object instance.
+ */
+function audiotheme_archives_admin_bar_edit_menu( $wp_admin_bar ) {
+	if ( ! is_admin() && is_audiotheme_post_type_archive() ) {
+		$id = get_audiotheme_post_type_archive();
+		$post_type_object = get_post_type_object( get_post_type( $id ) );
+
+		$wp_admin_bar->add_menu( array(
+			'id'    => 'edit',
+			'title' => $post_type_object->labels->edit_item,
+			'href'  => get_edit_post_link( $id ),
+		) );
+	}
 }
