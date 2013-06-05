@@ -180,7 +180,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		$post_type_object = get_post_type_object( $post_type );
 		$avail_post_stati = get_available_post_statuses( $post_type );
 
-		$base_url = 'admin.php?page=audiotheme-gigs';
+		$base_url = add_query_arg( 'page', 'audiotheme-gigs', admin_url() ); // 'admin.php?page=audiotheme-gigs';
 		$status_links = array();
 		$num_posts = wp_count_posts( $post_type, 'readable' );
 		$allposts = '';
@@ -203,21 +203,27 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		foreach ( get_post_stati( array( 'show_in_admin_all_list' => false ) ) as $status ) {
 			$total_posts -= $num_posts->$status;
 		}
+		
+		$sql = "SELECT COUNT( DISTINCT p.ID )
+			FROM $wpdb->posts p
+			INNER JOIN $wpdb->postmeta pm ON p.ID=pm.post_id
+			WHERE p.post_type='audiotheme_gig' AND p.post_status!='auto-draft' AND pm.meta_key='_audiotheme_gig_datetime'";
 
-		$class = ( 'upcoming' == $this->current_view ) ? ' class="current"' : '';
-		$upcoming_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*)
-			FROM $wpdb->posts p, $wpdb->postmeta pm
-			WHERE p.post_type='audiotheme_gig' AND p.post_status!='auto-draft' AND p.ID=pm.post_id AND pm.meta_key='_audiotheme_gig_datetime' AND pm.meta_value>=%s",
-			current_time( 'mysql' ) ) );
-		$status_links['upcoming'] = sprintf( '<a href="%s"%s>%s <span class="count">(%d)</span></a>', $base_url, $class, 'Upcoming', $upcoming_count );
+		$upcoming_count = $wpdb->get_var( $wpdb->prepare( $sql . " AND pm.meta_value>=%s", current_time( 'mysql' ) ) );
+		$status_links['upcoming'] = sprintf( '<a href="%s"%s>%s <span class="count">(%d)</span></a>',
+			$base_url,
+			( 'upcoming' == $this->current_view ) ? ' class="current"' : '',
+			__( 'Upcoming', 'audiotheme-i18n' ),
+			$upcoming_count
+		);
 
-		$class = ( 'past' == $this->current_view ) ? ' class="current"' : '';
-		$past_url = add_query_arg( array( 'gig_date' => current_time( 'mysql' ), 'compare' => '<' ), $base_url );
-		$past_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*)
-			FROM $wpdb->posts p, $wpdb->postmeta pm
-			WHERE p.post_type='audiotheme_gig' AND p.post_status!='auto-draft' AND p.ID=pm.post_id AND pm.meta_key='_audiotheme_gig_datetime' AND pm.meta_value<%s",
-			current_time( 'mysql' ) ) );
-		$status_links['past'] = sprintf( '<a href="%s"%s>%s <span class="count">(%d)</span></a>', $past_url, $class, 'Past', $past_count );
+		$past_count = $wpdb->get_var( $wpdb->prepare( $sql . " AND pm.meta_value<%s", current_time( 'mysql' ) ) );
+		$status_links['past'] = sprintf( '<a href="%s"%s>%s <span class="count">(%d)</span></a>',
+			add_query_arg( array( 'gig_date' => current_time( 'mysql' ), 'compare' => '<' ), $base_url ),
+			( 'past' == $this->current_view ) ? ' class="current"' : '',
+			__( 'Past', 'audiotheme-i18n' ),
+			$past_count
+		);
 
 		$class = ( 'any' == $this->current_view ) ? ' class="current"' : '';
 		$all_url = add_query_arg( 'post_status', 'any', $base_url );
