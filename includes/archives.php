@@ -235,7 +235,7 @@ function audiotheme_archives_update_post_type_rewrite_base( $post_type, $archive
 /**
  * Display classes for a wrapper div on an AudioTheme archive page.
  *
- * @since 1.3.0
+ * @since 1.2.1
  * @uses audiotheme_class()
  *
  * @param array|string $classes Optional. List of default classes as an array or space-separated string.
@@ -259,7 +259,7 @@ function audiotheme_archive_class( $classes = array(), $args = array() ) {
 /**
  * Provide an edit link for archives in the admin bar.
  *
- * @since 1.3.0
+ * @since 1.2.1
  *
  * @param WP_Admin_Bar $wp_admin_bar Admin bar object instance.
  */

@@ -160,7 +160,7 @@ function audiotheme_archive_nav() {
  * Template tag to allow for CSS classes to be easily filtered
  * across templates.
  *
- * @since 1.3.0
+ * @since 1.2.1
  * @link http://www.blazersix.com/blog/wordpress-class-template-tag/
  *
  * @param string $id Element identifier.
