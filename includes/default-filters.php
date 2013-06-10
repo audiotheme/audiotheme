@@ -252,8 +252,10 @@ function audiotheme_widget_count_class( $params ) {
  *
  * @since 1.2.0
  */
-function audiotheme_template_setup() {
-	add_action( 'wp_enqueue_scripts', 'audiotheme_enqueue_scripts' );
+function audiotheme_template_setup( $template ) {
+	if ( is_audiotheme_default_template( $template ) ) {
+		add_action( 'wp_enqueue_scripts', 'audiotheme_enqueue_scripts' );
+	}
 }
 
 /**
