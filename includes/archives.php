@@ -36,6 +36,7 @@ function register_audiotheme_archives() {
 	);
 
 	$args = array(
+		'can_export'                 => false,
 		'capability_type'            => array( 'post', 'posts' ),
 		'capabilities'               => array(
 			'delete_post'            => 'delete_audiotheme_archive',
