@@ -2,6 +2,16 @@
 
 module.exports = function(grunt) {
 
+	var exec = require('child_process').exec;
+
+	grunt.loadNpmTasks('grunt-contrib-compress');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-less');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-shell');
+	grunt.loadNpmTasks('grunt-string-replace');
+
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		version: '<%= pkg.version %>',
@@ -170,17 +180,6 @@ module.exports = function(grunt) {
 	});
 
 	/**
-	 * Load tasks.
-	 */
-	grunt.loadNpmTasks('grunt-contrib-compress');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-contrib-less');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-shell');
-	grunt.loadNpmTasks('grunt-string-replace');
-
-	/**
 	 * Register the default task.
 	 */
 	grunt.registerTask('default', [
@@ -212,6 +211,28 @@ module.exports = function(grunt) {
 		grunt.config.set('version', 0 === arguments.length ? pkg.version : arg1);
 		grunt.task.run('string-replace:dist');
 		grunt.task.run('compress:dist');
+	});
+
+	/**
+	 * PHP Code Sniffer using WordPress Coding Standards
+	 *
+	 * @link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards
+	 */
+	grunt.registerTask('phpcs', function() {
+		var cmd = 'phpcs -p -s --standard=WordPress --extensions=php --ignore=*/node_modules/*,*/release/*,*/includes/lib/* --report-file=release/codesniffs.txt .',
+			done = this.async();
+
+		exec(cmd, function(error, stdout, stderr) {
+			if (stdout) {
+				grunt.log.write(stdout);
+			}
+
+			if (null !== error) {
+				grunt.fatal(error);
+			}
+
+			done();
+		});
 	});
 
 };
