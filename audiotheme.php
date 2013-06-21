@@ -43,10 +43,10 @@ define( 'AUDIOTHEME_VERSION', '1.2.2' );
  * Framework path and URL.
  */
 if ( ! defined( 'AUDIOTHEME_DIR' ) )
-    define( 'AUDIOTHEME_DIR', plugin_dir_path( __FILE__ ) );
+	define( 'AUDIOTHEME_DIR', plugin_dir_path( __FILE__ ) );
 
 if ( ! defined( 'AUDIOTHEME_URI' ) )
-    define( 'AUDIOTHEME_URI', plugin_dir_url( __FILE__ ) );
+	define( 'AUDIOTHEME_URI', plugin_dir_url( __FILE__ ) );
 
 /**
  * Load additional helper functions and libraries.
