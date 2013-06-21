@@ -2,8 +2,7 @@
 
 module.exports = function(grunt) {
 
-	var exec = require('child_process').exec,
-		pkg = grunt.file.readJSON('package.json');
+	var exec = require('child_process').exec;
 
 	grunt.loadNpmTasks('grunt-contrib-compress');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -14,6 +13,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-string-replace');
 
 	grunt.initConfig({
+		pkg: grunt.file.readJSON('package.json'),
 		version: '<%= pkg.version %>',
 
 		/**
@@ -206,6 +206,8 @@ module.exports = function(grunt) {
 	 *       push to remote server
 	 */
 	grunt.registerTask('release', function(arg1) {
+		var pkg = grunt.file.readJSON('package.json');
+
 		grunt.config.set('version', 0 === arguments.length ? pkg.version : arg1);
 		grunt.task.run('string-replace:dist');
 		grunt.task.run('compress:dist');
