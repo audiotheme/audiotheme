@@ -344,6 +344,66 @@ function audiotheme_record_details_meta_box( $post ) {
 }
 
 /**
+ * Save record archive sort order.
+ *
+ * The $post_id and $post parameters will refer to the archive CPT, while the $post_type parameter references the type of post the archive is for.
+ *
+ * @since 1.3.0
+ *
+ * @param int $post_id Post ID.
+ * @param WP_Post $post Post object.
+ * @param string $post_type The type of post the archive lists.
+ */
+function audiotheme_record_archive_save_settings_hook( $post_id, $post, $post_type ) {
+	if ( 'audiotheme_record' != $post_type ) {
+		return;
+	}
+
+	$orderby = ( isset( $_POST['audiotheme_orderby'] ) ) ? $_POST['audiotheme_orderby'] : '';
+	update_post_meta( $post_id, 'orderby', $orderby );
+}
+
+/**
+ * Add an orderby setting to the record archive.
+ *
+ * Allows for changing the sort order of records. Custom would require a plugin like Simple Page Ordering.
+ *
+ * @since 1.3.0
+ *
+ * @param WP_Post $post Post object.
+ */
+function audiotheme_record_archive_settings( $post ) {
+	$post_type = is_audiotheme_post_type_archive_id( $post->ID );
+	if ( 'audiotheme_record' != $post_type ) {
+		return;
+	}
+
+	$options = array(
+		'release_year' => __( 'Release Year', 'audiotheme-i18n' ),
+		'title'   => __( 'Title', 'audiotheme-i18n' ),
+		'custom'  => __( 'Custom', 'audiotheme-i18n' ),
+	);
+
+	$orderby = get_audiotheme_archive_meta( 'orderby', true, 'release_year', 'audiotheme_record' );
+	?>
+	<p>
+		<label for="audiotheme-orderby"><?php _e( 'Order by:', 'audiotheme-i18n' ); ?></label>
+		<select name="audiotheme_orderby" id="audiotheme-orderby">
+			<?php
+			foreach ( $options as $id => $value ) {
+				printf( '<option value="%s"%s>%s</option>',
+					esc_attr( $id ),
+					selected( $id, $orderby, false ),
+					esc_html( $value )
+				);
+			}
+			?>
+		</select>
+	</p>
+	<?php
+}
+
+/**
  * Add a help tab to the record list screen.
  *
  * @since 1.0.0
@@ -352,7 +412,7 @@ function audiotheme_record_list_help() {
 	if ( 'audiotheme_record' != get_current_screen()->post_type ) {
 		return;
 	}
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'overview',
 		'title'   => __( 'Overview', 'audiotheme-i18n' ),
@@ -360,7 +420,7 @@ function audiotheme_record_list_help() {
 			'<p>' . __( "Your discography is the window through which listeners are introduced to and discover your music. Encourage that discovery on your website through a detailed and organized history of your recorded output using the AudioTheme discography screen.", 'audiotheme-i18n' ) . '</p>' .
 			'<p>' . __( 'This screen provides access to all of your records. You can customize the display of this screen to suit your workflow.', 'audiotheme-i18n' ) . '</p>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'screen-content',
 		'title'   => __( 'Screen Content', 'audiotheme-i18n' ),
@@ -372,7 +432,7 @@ function audiotheme_record_list_help() {
 			'<li>' . __( "You can also sort your records in any view by clicking the column headers.", 'audiotheme-i18n' ) . '</li>' .
 			'</ul>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'available-actions',
 		'title'   => __( 'Available Actions', 'audiotheme-i18n' ),
@@ -396,7 +456,7 @@ function audiotheme_record_help() {
 	if ( 'audiotheme_record' != get_current_screen()->post_type ) {
 		return;
 	}
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'standard-fields',
 		'title'   => __( 'Standard Fields', 'audiotheme-i18n' ),
@@ -414,7 +474,7 @@ function audiotheme_record_help() {
 			'<p>' . __( "When you're done adding a record, press the Publish button to make it available on your site. If you're not ready to publish, or want to finish updating your record later, press the Save Draft to privately save your progress. You can access your drafts at a later time through the <strong>Discography > All Records</strong> menu.", 'audiotheme-i18n' ) . '</p>' .
 			'<p>' . __( "After saving the record, you can edit each track individually to add more information.", 'audiotheme-i18n' ) . '</p>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'record-details',
 		'title'		=> __( 'Record Details', 'audiotheme-i18n' ),
@@ -428,20 +488,20 @@ function audiotheme_record_help() {
 			'<li>' . __( "<strong>Links</strong> - This allows you to link to any additional resources. For example, if you want to direct fans to download your album on Amazon, enter 'Amazon' in the text field and put the web address to your record on Amazon in the URL field. Add as many resources as you would like using the Add URL button.", 'audiotheme-i18n' ) . '</li>' .
 			'</ul>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'featured-image',
 		'title'		=> __( 'Featured Image', 'audiotheme-i18n' ),
 		'content' 	=> '<p>' . __( "Use the featured image section to add cover art to your record. It's likely this will be used in various place in your theme, so it's best to upload high quality images. Find out more about <a href=\"http://codex.wordpress.org/Post_Thumbnails\" target=\"_blank\">setting featured images</a> in the WordPress Codex.", 'audiotheme-i18n' ) . '</p>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'inserting-media',
 		'title'		=> __( 'Inserting Media', 'audiotheme-i18n' ),
 		'content' 	=>
 			'<p>' . __( "Use the Add Media button to attach media to your record. This might be a documentary about the recording process or promotional pictures. Don't add your cover art here, that should be added in the featured image area. Find out more about using the <a href=\"http://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Step_2_.E2.80.93_Click_the_Add_Media_button\" target=\"_blank\">Add Media button</a> in the WordPress Codex." ) . '</p>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'customize-display',
 		'title'   => __( 'Customize This Screen', 'audiotheme-i18n' ),

@@ -33,6 +33,7 @@ function audiotheme_archives_init_admin() {
 
 	audiotheme_archives_save_active_archives( $archives );
 
+	add_action( 'save_post', 'audiotheme_archive_save_hook', 10, 2 );
 	add_action( 'load-post.php', 'audiotheme_archive_help' );
 	add_action( 'parent_file', 'audiotheme_archives_parent_file' );
 	add_filter( 'post_updated_messages', 'audiotheme_archives_post_updated_messages' );
@@ -91,13 +92,31 @@ function audiotheme_archives_admin_menu() {
  * @param WP_Post $post Post object.
  */
 function audiotheme_archives_add_meta_boxes( $post ) {
+	$post_type = is_audiotheme_post_type_archive_id( $post->ID );
+
 	remove_meta_box( 'submitdiv', 'audiotheme_archive', 'side' );
+
 	add_meta_box( 'submitdiv', __( 'Update', 'audiotheme-i18n' ), 'audiotheme_post_submit_meta_box', 'audiotheme_archive', 'side', 'high', array(
 		'force_delete'      => false,
 		'show_publish_date' => false,
 		'show_statuses'     => false,
 		'show_visibility'   => false,
 	) );
+
+	// Activate the default archive settings meta box.
+	$show = apply_filters( 'add_audiotheme_archive_settings_meta_box', false, $post_type );
+	$show_for_post_type = apply_filters( 'add_audiotheme_archive_settings_meta_box_' . $post_type, false );
+
+	if ( $show || $show_for_post_type ) {
+		add_meta_box(
+			'audiothemesettingsdiv',
+			__( 'Archive Settings', 'audiotheme-i18n' ),
+			'audiotheme_archive_settings_meta_box',
+			'audiotheme_archive',
+			'side',
+			'default'
+		);
+	}
 }
 
 /**
@@ -224,6 +243,44 @@ function get_audiotheme_post_type_archive_slug( $post_type ) {
 }
 
 /**
+ * Save archive meta data.
+ *
+ * @since 1.3.0
+ *
+ * @param int $post_id Post ID.
+ */
+function audiotheme_archive_save_hook( $post_id, $post ) {
+	$is_autosave = defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE;
+	$is_revision = wp_is_post_revision( $post_id );
+	$is_valid_nonce = isset( $_POST['audiotheme_archive_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_archive_nonce'], 'save-archive-meta_' . $post_id );
+
+	// Bail if the data shouldn't be saved or intention can't be verified.
+	if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
+		return;
+	}
+
+	$post_type = is_audiotheme_post_type_archive_id( $post->ID );
+	do_action( 'save_audiotheme_archive_settings', $post_id, $post, $post_type );
+}
+
+/**
+ * Display archive settings meta box.
+ *
+ * The meta box needs to be activated first, then fields can be displayed using
+ * one of the actions.
+ *
+ * @since 1.3.0
+ *
+ * @param WP_Post $post Archive post.
+ */
+function audiotheme_archive_settings_meta_box( $post ) {
+	$post_type = is_audiotheme_post_type_archive_id( $post->ID );
+	wp_nonce_field( 'save-archive-meta_' . $post->ID, 'audiotheme_archive_nonce' );
+	do_action( 'audiotheme_archive_settings_meta_box', $post, $post_type );
+	do_action( 'audiotheme_archive_settings_meta_box_' . $post_type, $post );
+}
+
+/**
  * Add a help tab to the add/edit archive screen.
  *
  * @since 1.0.0
@@ -232,7 +289,7 @@ function audiotheme_archive_help() {
 	if ( 'audiotheme_archive' != get_current_screen()->post_type ) {
 		return;
 	}
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'standard-fields',
 		'title'   => __( 'Standard Fields', 'audiotheme-i18n' ),
@@ -241,7 +298,7 @@ function audiotheme_archive_help() {
 			'<p>' . __( "<strong>Editor</strong> - Enter an introduction for the archive. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.", 'audiotheme-i18n' ) . '</p>' .
 			'<p>' . __( "When you're done editing, click the Update button.", 'audiotheme-i18n' ) . '</p>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'permalinks',
 		'title'		=> __( 'Permalinks', 'audiotheme-i18n' ),

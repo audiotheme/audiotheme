@@ -56,6 +56,11 @@ function audiotheme_load_discography_admin() {
 	add_action( 'manage_posts_custom_column', 'audiotheme_track_display_columns', 10, 2 );
 	add_filter( 'bulk_actions-edit-audiotheme_track', 'audiotheme_track_list_table_bulk_actions' );
 	add_action( 'post_row_actions', 'audiotheme_track_list_table_actions', 10, 2 );
+
+	// Record Archive
+	add_action( 'add_audiotheme_archive_settings_meta_box_audiotheme_record', '__return_true' );
+	add_action( 'save_audiotheme_archive_settings', 'audiotheme_record_archive_save_settings_hook', 10, 3 );
+	add_action( 'audiotheme_archive_settings_meta_box', 'audiotheme_record_archive_settings' );
 }
 
 /**

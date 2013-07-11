@@ -115,8 +115,12 @@ function audiotheme_discography_init() {
 		'show_in_nav_menus'              => false,
 	) );
 
+	// Separated so they can be unhooked individually if needed.
+	add_action( 'pre_get_posts', 'audiotheme_record_query_sort' );
+	add_action( 'pre_get_posts', 'audiotheme_track_query' );
+	add_action( 'pre_get_posts', 'audiotheme_record_default_template_query' );
+
 	add_filter( 'generate_rewrite_rules', 'audiotheme_discography_generate_rewrite_rules' );
-	add_action( 'pre_get_posts', 'audiotheme_pre_discography_query' );
 	add_action( 'template_include', 'audiotheme_discography_template_include' );
 	add_filter( 'post_type_link', 'audiotheme_discography_permalinks', 10, 4 );
 	add_filter( 'post_type_archive_link', 'audiotheme_discography_archive_link', 10, 2 );
@@ -157,41 +161,81 @@ function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
 }
 
 /**
- * Filter discography requests
+ * Sort record archive requests.
  *
- * Automatically sorts records by released year.
+ * Defaults to sorting by release year in descending order. An option is
+ * available on the archive page to sort by title or a custom order. The custom
+ * order using the 'menu_order' value, which can be set using a plugin like
+ * Simple Page Ordering.
+ *
+ * Alternatively, a plugin a plugin can hook into pre_get_posts at an earlier
+ * priority and manually set the order.
+ *
+ * @since 1.3.0
+ *
+ * @param object $query The main WP_Query object. Passed by reference.
+ */
+function audiotheme_record_query_sort( $query ) {
+	if ( is_admin() || ! $query->is_main_query() || ! is_post_type_archive( 'audiotheme_record' ) ) {
+		return;
+	}
+
+	if ( ! $orderby = $query->get( 'orderby' ) ) {
+		$orderby = get_audiotheme_archive_meta( 'orderby', true, 'release_year', 'audiotheme_record' );
+		switch ( $orderby ) {
+			// Use a plugin like Simple Page Ordering to change the menu order.
+			case 'custom' :
+				$query->set( 'orderby', 'menu_order' );
+				$query->set( 'order', 'asc' );
+				break;
+
+			case 'title':
+				$query->set( 'orderby', 'title' );
+				$query->set( 'order', 'asc' );
+				break;
+
+			// Sort records by release year, then by title.
+			default :
+				$query->set( 'meta_key', '_audiotheme_release_year' );
+				$query->set( 'orderby', 'meta_value_num' );
+				$query->set( 'order', 'desc' );
+				add_filter( 'posts_orderby_request', 'audiotheme_record_query_sort_sql' );
+		}
+	}
+}
+
+/**
+ * Sort records by title after sorting by release year.
+ *
+ * @since 1.0.0
+ *
+ * @param string $orderby SQL order clause.
+ * @return string
+ */
+function audiotheme_record_query_sort_sql( $orderby ) {
+	global $wpdb;
+
+	return $orderby . ", {$wpdb->posts}.post_title asc";
+}
+
+/**
+ * Filter track requests.
  *
  * Tracks must belong to a record, so the parent record is set for track
  * requests.
  *
- * @since 1.0.0
+ * @since 1.3.0
  *
  * @param object $query The main WP_Query object. Passed by reference.
  */
-function audiotheme_pre_discography_query( $query ) {
+function audiotheme_track_query( $query ) {
 	global $wpdb;
 
 	if ( is_admin() || ! $query->is_main_query() ) {
 		return;
 	}
 
-	// Sort records by release year
-	$orderby = $query->get( 'orderby' );
-	if ( is_post_type_archive( 'audiotheme_record' ) && empty( $orderby ) ) {
-		$query->set( 'meta_key', '_audiotheme_release_year' );
-		$query->set( 'orderby', 'meta_value_num' );
-		$query->set( 'order', 'desc' );
-
-		add_filter( 'posts_orderby_request', 'audiotheme_discography_query_orderby' );
-
-		// The default record archive template uses a 4-column grid.
-	// If it's being loaded from the plugin, set the posts per page arg to a multiple of 4.
-		if ( is_audiotheme_default_template( audiotheme_locate_template( 'archive-record.php' ) ) ) {
-			$query->set( 'posts_per_archive_page', 12 );
-		}
-	}
-
-	// Limit requests for single tracks to the context of the parent record
+	// Limit requests for single tracks to the context of the parent record.
 	if ( is_single() && 'audiotheme_track' == $query->get( 'post_type' ) ) {
 		if ( get_option('permalink_structure') ) {
 			$record_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type='audiotheme_record' AND post_name=%s LIMIT 1", $query->get( 'audiotheme_record' ) ) );
@@ -205,17 +249,24 @@ function audiotheme_pre_discography_query( $query ) {
 }
 
 /**
- * Sort records by title after sorting by release year.
+ * Set posts per page for record archives if the default templates are being
+ * loaded.
  *
- * @since 1.0.0
+ * The default record archive template uses a 4-column grid. If it's loaded from
+ * the plugin, set the posts per page arg to a multiple of 4.
  *
- * @param string $orderby SQL order clause.
- * @return string
+ * @since 1.3.0
+ *
+ * @param object $query The main WP_Query object. Passed by reference.
  */
-function audiotheme_discography_query_orderby( $orderby ) {
-	global $wpdb;
+function audiotheme_record_default_template_query( $query ) {
+	if ( is_admin() || ! $query->is_main_query() || ! is_post_type_archive( 'audiotheme_record' ) ) {
+		return;
+	}
 
-	return $orderby . ", {$wpdb->posts}.post_title asc";
+	if ( is_audiotheme_default_template( audiotheme_locate_template( 'archive-record.php' ) ) ) {
+		$query->set( 'posts_per_archive_page', 12 );
+	}
 }
 
 /**
