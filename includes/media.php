@@ -160,7 +160,7 @@ function audiotheme_post_gallery( $output, $attr ) {
 
 		// Don't want to restrict images to a parent post if 'include' is set.
 		unset( $args['post_parent'] );
-	} elseif ( ! empty( $exclude ) ) {
+	} elseif ( ! empty( $attr['exclude'] ) ) {
 		$args['exclude'] = $attr['exclude'];
 	}
 
