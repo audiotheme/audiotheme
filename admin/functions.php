@@ -534,13 +534,13 @@ function audiotheme_submenu_move_after( $move_slug, $after_slug, $menu_slug ) {
  */
 function audiotheme_system_info( $args = array() ) {
 	global $wpdb;
-	
+
 	$args = wp_parse_args( $args, array(
 		'format' => '',
 	) );
-	
+
 	$theme = wp_get_theme( get_template() );
-	
+
 	$data = array(
 		'home_url' => array(
 			'label' => __( 'Home URL', 'audiotheme-i18n' ),
@@ -580,7 +580,7 @@ function audiotheme_system_info( $args = array() ) {
 		),
 		'wp_max_upload_size' => array(
 			'label' => __( 'WP Max Upload Size', 'audiotheme-i18n' ),
-			'value' => wp_convert_bytes_to_hr( wp_max_upload_size() ),
+			'value' => size_format( wp_max_upload_size() ),
 		),
 		'php_post_max_size' => array(
 			'label' => __( 'PHP Post Max Size', 'audiotheme-i18n' ),
@@ -611,30 +611,30 @@ function audiotheme_system_info( $args = array() ) {
 			'value' => $theme->get( 'Version' ),
 		),
 	);
-	
+
 	if ( get_template() != get_stylesheet() ) {
 		$theme = wp_get_theme();
-		
+
 		$data['child_theme'] = array(
 			'label' => __( 'Child Theme', 'audiotheme-i18n' ),
 			'value' => $theme->get( 'Name' ),
 		);
-		
+
 		$data['child_theme_version'] = array(
 			'label' => __( 'Child Theme', 'audiotheme-i18n' ),
 			'value' => $theme->get( 'Version' ),
 		);
 	}
-	
+
 	if ( 'plaintext' == $args['format'] ) {
 		$plain = '';
-		
+
 		foreach ( $data as $key => $info ) {
 			$plain .= $info['label'] . ': ' . $info['value'] . "\n";
 		}
-		
+
 		$data = trim( $plain );
 	}
-	
+
 	return $data;
 }
