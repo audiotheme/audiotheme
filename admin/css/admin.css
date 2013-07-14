@@ -33,7 +33,8 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 .audiotheme-edit-after-title input::-webkit-input-placeholder { padding: 3px 0;}
 .audiotheme-edit-after-title select { padding: 5px 5px 5px 8px; font-size: 1.2em;}
 
-.audiotheme-edit-after-editor { margin: 20px 0 0 0;}
+.audiotheme-edit-after-editor { margin: 20px 0;}
+.branch-3-5 .audiotheme-edit-after-editor { margin-bottom: 0;}
 
 /* Field/icon button combo. */
 .audiotheme-input-append { display: inline-block; vertical-align: top;}
