@@ -238,7 +238,6 @@ function get_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null,
  * @return null|string Null on no description. String if $echo parameter is false.
  */
 function the_audiotheme_gig_description( $before = '', $after = '', $echo = true ) {
-	$html = '';
 	$description = get_audiotheme_gig_description();
 
 	$html = ( empty( $description ) ) ? '' : $before . wpautop( $description ) . $after;
