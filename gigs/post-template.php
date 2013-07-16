@@ -821,9 +821,9 @@ function audiotheme_venue_has_contact_meta( $key = '', $venue_id = null ) {
 	$venue = get_audiotheme_venue( $venue_id );
 
 	$keys = array(
-		'name'  => 'contact_name',
-		'phone' => 'contact_phone',
-		'email' => 'contact_email',
+		'name'  => '_audiotheme_contact_name',
+		'phone' => '_audiotheme_contact_phone',
+		'email' => '_audiotheme_contact_email',
 	);
 
 	if ( $key && ! isset( $keys[ $key ] ) ) {
