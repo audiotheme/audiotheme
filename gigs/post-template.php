@@ -518,7 +518,7 @@ function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
  *
  * @since 1.0.0
  */
-function get_audiotheme_venue( $post ) {
+function get_audiotheme_venue( $post = null ) {
 	if ( null === $post ) {
 		$gig  = get_audiotheme_gig();
 		$post = get_post( $gig->venue->ID );
