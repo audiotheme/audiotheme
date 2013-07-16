@@ -804,6 +804,82 @@ function get_audiotheme_venue_location( $venue_id, $args = array() ) {
 }
 
 /**
+ * Does a venue have contact meta?
+ *
+ * @since 1.2.3
+ *
+ * @param string $key Check for a particular type of meta. Defaults to any.
+ * @param int|object $post Optional post ID or object. Default is global $post object.
+ * @return bool
+ */
+function audiotheme_venue_has_contact_meta( $key = '', $post = 0 ) {
+	$venue = get_audiotheme_venue( $post );
+
+	$keys = array(
+		'name'  => 'contact_name',
+		'phone' => 'contact_phone',
+		'email' => 'contact_email',
+	);
+
+	if ( $key && ! isset( $keys[ $key ] ) ) {
+		return false;
+	} elseif ( $key ) {
+		// Reset the keys array with a single value.
+		$keys = array( $key => $keys[ $key ] );
+	}
+
+	foreach ( $keys as $key ) {
+		if ( get_post_meta( $venue->ID, $key, true ) ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Retrieve a venue's contact name.
+ *
+ * @since 1.2.3
+ *
+ * @param int|object $post Optional post ID or object. Default is global $post object.
+ * @return string
+ */
+function get_audiotheme_venue_contact_name( $post = 0 ) {
+	$venue = get_audiotheme_venue( $post );
+
+	return get_post_meta( $venue->ID, '_audiotheme_contact_name', true );
+}
+
+/**
+ * Retrieve a venue's contact phone.
+ *
+ * @since 1.2.3
+ *
+ * @param int|object $post Optional post ID or object. Default is global $post object.
+ * @return string
+ */
+function get_audiotheme_venue_contact_phone( $post = 0 ) {
+	$venue = get_audiotheme_venue( $post );
+
+	return get_post_meta( $venue->ID, '_audiotheme_contact_phone', true );
+}
+
+/**
+ * Retrieve a venue's contact email.
+ *
+ * @since 1.2.3
+ *
+ * @param int|object $post Optional post ID or object. Default is global $post object.
+ * @return string
+ */
+function get_audiotheme_venue_contact_email( $post = 0 ) {
+	$venue = get_audiotheme_venue( $post );
+
+	return get_post_meta( $venue->ID, '_audiotheme_contact_email', true );
+}
+
+/**
  * Get the base admin panel URL for adding a venue.
  *
  * @since 1.0.0
