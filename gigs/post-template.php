@@ -519,7 +519,12 @@ function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
  * @since 1.0.0
  */
 function get_audiotheme_venue( $post ) {
-	$post = get_post( $post );
+	if ( null === $post ) {
+		$gig  = get_audiotheme_gig();
+		$post = get_post( $gig->venue->ID );
+	} else {
+		$post = get_post( $post );
+	}
 
 	$defaults = get_default_audiotheme_venue_properties();
 	$meta = (array) get_post_custom( $post->ID );
@@ -812,8 +817,8 @@ function get_audiotheme_venue_location( $venue_id, $args = array() ) {
  * @param int|object $post Optional post ID or object. Default is global $post object.
  * @return bool
  */
-function audiotheme_venue_has_contact_meta( $key = '', $post = 0 ) {
-	$venue = get_audiotheme_venue( $post );
+function audiotheme_venue_has_contact_meta( $key = '', $venue_id = null ) {
+	$venue = get_audiotheme_venue( $venue_id );
 
 	$keys = array(
 		'name'  => 'contact_name',
@@ -845,8 +850,8 @@ function audiotheme_venue_has_contact_meta( $key = '', $post = 0 ) {
  * @param int|object $post Optional post ID or object. Default is global $post object.
  * @return string
  */
-function get_audiotheme_venue_contact_name( $post = 0 ) {
-	$venue = get_audiotheme_venue( $post );
+function get_audiotheme_venue_contact_name( $venue_id = null ) {
+	$venue = get_audiotheme_venue( $venue_id );
 
 	return get_post_meta( $venue->ID, '_audiotheme_contact_name', true );
 }
@@ -859,8 +864,8 @@ function get_audiotheme_venue_contact_name( $post = 0 ) {
  * @param int|object $post Optional post ID or object. Default is global $post object.
  * @return string
  */
-function get_audiotheme_venue_contact_phone( $post = 0 ) {
-	$venue = get_audiotheme_venue( $post );
+function get_audiotheme_venue_contact_phone( $venue_id = null ) {
+	$venue = get_audiotheme_venue( $venue_id );
 
 	return get_post_meta( $venue->ID, '_audiotheme_contact_phone', true );
 }
@@ -873,8 +878,8 @@ function get_audiotheme_venue_contact_phone( $post = 0 ) {
  * @param int|object $post Optional post ID or object. Default is global $post object.
  * @return string
  */
-function get_audiotheme_venue_contact_email( $post = 0 ) {
-	$venue = get_audiotheme_venue( $post );
+function get_audiotheme_venue_contact_email( $venue_id = null ) {
+	$venue = get_audiotheme_venue( $venue_id );
 
 	return get_post_meta( $venue->ID, '_audiotheme_contact_email', true );
 }
