@@ -238,7 +238,6 @@ function get_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null,
  * @return null|string Null on no description. String if $echo parameter is false.
  */
 function the_audiotheme_gig_description( $before = '', $after = '', $echo = true ) {
-	$html = '';
 	$description = get_audiotheme_gig_description();
 
 	$html = ( empty( $description ) ) ? '' : $before . wpautop( $description ) . $after;
@@ -519,8 +518,13 @@ function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
  *
  * @since 1.0.0
  */
-function get_audiotheme_venue( $post ) {
-	$post = get_post( $post );
+function get_audiotheme_venue( $post = null ) {
+	if ( null === $post ) {
+		$gig  = get_audiotheme_gig();
+		$post = get_post( $gig->venue->ID );
+	} else {
+		$post = get_post( $post );
+	}
 
 	$defaults = get_default_audiotheme_venue_properties();
 	$meta = (array) get_post_custom( $post->ID );
