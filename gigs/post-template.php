@@ -172,6 +172,22 @@ function get_audiotheme_gig_gmt_date( $post = null ) {
 }
 
 /**
+ * Display a gig's date and time.
+ *
+ * @since 1.0.0
+ * @uses get_audiotheme_gig_time()
+ *
+ * @param string $d Optional. PHP date format.
+ * @param string $t Optional. PHP time format.
+ * @param bool $gmt Optional, default is false. Whether to return the gmt time.
+ * @param array $args Optional. Override the defaults.
+ * @param int|object $post Optional post ID or object. Default is global $post object.
+ */
+function the_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null, $post = null ) {
+	echo get_audiotheme_gig_time( $d, $t, $gmt, $args, $post );
+}
+
+/**
  * Retrieve a gig's date and time.
  *
  * Separates date and time parameters due to the time not always
