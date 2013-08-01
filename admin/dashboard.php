@@ -15,6 +15,8 @@
  */
 function audiotheme_dashboard_init() {
 	add_action( 'audiotheme_register_settings', 'audiotheme_dashboard_register_settings' );
+	add_action( 'audiotheme_settings_save_network_options', 'audiotheme_dashboard_save_network_settings' );
+
 	add_action( 'admin_menu', 'audiotheme_dashboard_admin_menu' );
 	add_action( 'admin_init', 'audiotheme_dashboard_sort_menu' );
 
@@ -59,12 +61,16 @@ function audiotheme_dashboard_admin_menu() {
  */
 function audiotheme_dashboard_register_settings() {
 	$screen = add_audiotheme_settings_screen( 'audiotheme-settings', __( 'Settings', 'audiotheme-i18n' ), array(
-		'menu_title'   => __( 'Settings', 'audiotheme-i18n' ),
+		'menu_title'   => ( is_network_admin() ) ? __( 'AudioTheme', 'audiotheme-i18n' ) : __( 'Settings', 'audiotheme-i18n' ),
 		'option_group' => 'audiotheme_options',
 		'option_name'  => array( 'audiotheme_options', 'audiotheme_license_key', 'audiotheme_disable_directory_browsing' ),
-		'show_in_menu' => 'audiotheme',
-		'capability'   => 'manage_options'
+		'show_in_menu' => ( is_network_admin() ) ? 'settings.php' : 'audiotheme',
+		'capability'   => ( is_network_admin() ) ? 'manage_network_options' : 'manage_options',
 	) );
+
+	if ( is_multisite() && ! is_network_admin() ) {
+		return;
+	}
 
 	$screen->add_section( 'directory_browsing', __( 'Directory Browsing', 'audiotheme-i18n' ), array(
 		'priority' => 50,
@@ -99,6 +105,27 @@ function audiotheme_dashboard_register_settings() {
 			'label'  => '',
 			'output' => '<textarea id="audiotheme-system-info-export" class="widefat">' . audiotheme_system_info( array( 'format' => 'plaintext' ) ) . '</textarea>',
 		) );
+}
+
+/**
+ * Manually save network settings.
+ *
+ * @since 1.3.0
+ */
+function audiotheme_dashboard_save_network_settings() {
+	// Just return since other network settings screens will use the same action.
+	if ( empty( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'audiotheme_options-options' ) ) {
+		return;
+	}
+
+	// Update the license key.
+	update_option( 'audiotheme_license_key', ( empty( $_POST['audiotheme_license_key'] ) ) ? '' : esc_html( $_POST['audiotheme_license_key'] ) );
+
+	// Update the directory browsing setting.
+	update_option( 'audiotheme_disable_directory_browsing', ( empty( $_POST['audiotheme_disable_directory_browsing'] ) ) ? '' : 1 );
+
+	wp_redirect( add_query_arg( 'page', 'audiotheme-settings', admin_url( 'network/settings.php' ) ) );
+	exit;
 }
 
 /**
@@ -187,6 +214,10 @@ function audiotheme_dashboard_help_screen() {
  */
 function audiotheme_dashboard_sort_menu() {
 	global $menu;
+
+	if ( is_network_admin() ) {
+		return;
+	}
 
 	if ( $menu ) {
 		$menu = array_values( $menu ); // Re-key the array.

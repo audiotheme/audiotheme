@@ -17,6 +17,7 @@ require( AUDIOTHEME_DIR . 'admin/includes/archives.php' );
 require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-settings.php' );
 include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater.php' );
 include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-plugin.php' );
+include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-theme.php' );
 require( AUDIOTHEME_DIR . 'admin/includes/settings-screens.php' );
 
 /**
@@ -53,6 +54,10 @@ function audiotheme_admin_setup() {
  * @since 1.0.0
  */
 function audiotheme_update() {
+	if ( is_multisite() && ! is_network_admin() ) {
+		return;
+	}
+
 	$license = get_option( 'audiotheme_license_key' );
 
 	// Don't do the remote request if a license key hasn't been entered.
@@ -70,13 +75,33 @@ function audiotheme_update() {
 	$framework_updater->init();
 
 	if ( current_theme_supports( 'audiotheme-automatic-updates' ) ) {
-		include( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-theme.php' );
-
 		$support = get_theme_support( 'audiotheme-automatic-updates' );
-		$support = wp_parse_args( $support[0], array( 'api_data' => $api_data ) );
+		$args = wp_parse_args( $support[0], array( 'api_data' => $api_data ) );
 
-		$theme_updater = new Audiotheme_Updater_Theme( $support );
+		$theme_updater = new Audiotheme_Updater_Theme( $args );
 		$theme_updater->init();
+
+		// Add the theme to a list to check for updates in multisite.
+		audiotheme_update_themes_list( get_template(), $support[0] );
+	}
+
+	// Check for updates to all AudioTheme themes in the network admin.
+	if ( is_network_admin() && ( $themes = get_site_option( 'audiotheme_themes' ) ) ) {
+		// Filter out invalid theme slugs.
+		$check = array_intersect_key( $themes, wp_get_themes() );
+
+		if ( $check ) {
+			foreach ( $check as $slug => $args ) {
+				$args = wp_parse_args( $args, array( 'api_data' => $api_data ) );
+
+				$theme_updater = new Audiotheme_Updater_Theme( $args );
+				$theme_updater->init();
+			}
+		}
+
+		if ( count( $check ) != count( $themes ) ) {
+			update_site_option( 'audiotheme_themes', $check );
+		}
 	}
 }
 

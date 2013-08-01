@@ -155,7 +155,8 @@ body.gigs_page_venues .search-box { margin-bottom: 8px;}
 #icon-edit.icon32-posts-audiotheme_record { background: transparent url(../images/icons32.png) no-repeat -131px -14px;}
 #icon-edit.icon32-posts-audiotheme_track { background: transparent url(../images/icons32.png) no-repeat -131px -14px;}
 #icon-edit.icon32-posts-audiotheme_video { background: transparent url(../images/icons32.png) no-repeat -191px -14px;}
-.audiotheme_page_audiotheme-settings #icon-audiotheme { background: transparent url(../images/icons32.png) no-repeat -311px -14px;}
+.audiotheme_page_audiotheme-settings #icon-audiotheme,
+.settings_page_audiotheme-settings-network #icon-settings { background: transparent url(../images/icons32.png) no-repeat -311px -14px;}
 
 
 /* Menu Icons

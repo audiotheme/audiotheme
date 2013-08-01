@@ -110,12 +110,33 @@ function audiotheme_settings_init() {
 
 	// Lower priority allows screens to be registered in the 'admin_menu' hook and still have the menu item display.
 	add_action( 'admin_menu', 'audiotheme_settings_add_admin_menus', 20 );
+	add_action( 'network_admin_menu', 'audiotheme_settings_add_admin_menus', 20 );
 
 	// Settings should be registered before this.
 	add_action( 'admin_init', 'audiotheme_settings_register_wp_settings_api', 20 );
+	add_action( 'admin_init', 'audiotheme_settings_save_network_options' );
 
 	// Custom settings should be registered during this hook.
 	do_action( 'audiotheme_register_settings' );
+}
+
+/**
+ * Fire an action when a network settings screen is saved.
+ *
+ * Plugins need to manually save each registered options. Check the nonce in
+ * $_POST['_wpnonce'] to be sure the action is '{$option_group}-options'.
+ *
+ * Don't call wp_die() or exit() since all network settings screens will use
+ * the same action.
+ *
+ * @since 1.3.0
+ */
+function audiotheme_settings_save_network_options() {
+	if ( ! is_network_admin() || empty( $_GET['action'] ) || 'audiotheme-save-network-settings' != $_GET['action'] ) {
+		return;
+	}
+
+	do_action( 'audiotheme_settings_save_network_options' );
 }
 
 /**
@@ -268,7 +289,7 @@ function audiotheme_settings_display_screen() {
 	$has_tabs = ( count( $screen->tabs ) < 2 ) ? false : true;
 	?>
 	<div class="wrap audiotheme-settings-screen<?php echo ( $has_tabs ) ? ' audiotheme-settings-screen-has-tabs' : ''; ?>">
-		<form action="options.php" method="post">
+		<form action="<?php echo ( is_network_admin() ) ? 'edit.php?action=audiotheme-save-network-settings' : 'options.php'; ?>" method="post">
 			<?php
 			screen_icon();
 

@@ -212,7 +212,7 @@ add_action( 'init', 'audiotheme_i18n' );
  * @since 1.0.0
  */
 function audiotheme_loaded() {
-	if ( 'yes' == get_option( 'audiotheme_flush_rewrite_rules' ) ) {
+	if ( ! is_network_admin() && 'no' != get_option( 'audiotheme_flush_rewrite_rules' ) ) {
 		update_option( 'audiotheme_flush_rewrite_rules', 'no' );
 		flush_rewrite_rules();
 	}

@@ -638,3 +638,25 @@ function audiotheme_system_info( $args = array() ) {
 
 	return $data;
 }
+
+/**
+ * Add AudioTheme themes to a site option so they can be checked for updates
+ * when in multsite mode.
+ *
+ * @since 1.3.0
+ *
+ * @param string $theme Theme slug.
+ * @param array $api_args Optional. Arguments to send to the remote API.
+ */
+function audiotheme_update_themes_list( $theme, $api_args = array() ) {
+	if ( ! is_multisite() ) {
+		return;
+	}
+
+	$themes = (array) get_site_option( 'audiotheme_themes' );
+
+	if ( ! array_key_exists( $theme, $themes ) || $themes[ $theme ] != $api_args ) {
+		$themes[ $theme ] = wp_parse_args( $api_args, array( 'slug' => $theme ) );
+		update_site_option( 'audiotheme_themes', $themes );
+	}
+}

@@ -19,6 +19,10 @@
  * @since 1.0.0
  */
 function audiotheme_archives_init_admin() {
+	if ( is_network_admin() ) {
+		return;
+	}
+
 	$archives = array();
 
 	$post_types = array( 'audiotheme_gig', 'audiotheme_record', 'audiotheme_video' );
