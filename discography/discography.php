@@ -415,6 +415,7 @@ function audiotheme_track_unique_slug( $slug, $post_ID, $post_status, $post_type
  * JavaScript object.
  *
  * @since 1.1.0
+ * @todo esc_url() strips spaces. No bueno.
  *
  * @param int|array $track Track ID or array of expected track properties.
  * @return array
