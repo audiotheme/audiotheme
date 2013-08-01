@@ -1,3 +1,5 @@
+/*global _:true, ajaxurl:true, audiotheme:true, tb_remove:true */
+
 window.audiotheme = window.audiotheme || {};
 
 (function($) {

@@ -1,6 +1,5 @@
-'use strict';
-
 module.exports = function(grunt) {
+	'use strict';
 
 	var exec = require('child_process').exec;
 
@@ -21,37 +20,7 @@ module.exports = function(grunt) {
 		 */
 		jshint: {
 			options: {
-				bitwise: true,
-				browser: true,
-				curly: true,
-				eqeqeq: true,
-				eqnull: true,
-				es5: true,
-				esnext: true,
-				immed: true,
-				jquery: true,
-				latedef: true,
-				newcap: true,
-				noarg: true,
-				node: true,
-				strict: false,
-				trailing: true,
-				undef: true,
-				globals: {
-					_: true,
-					ajaxurl: true,
-					audiotheme: true,
-					audiothemePointers: true,
-					audiothemeGigsL10n: true,
-					AudiothemeJplayer: true,
-					AudiothemeMediaControl: true,
-					AudiothemeTracks: true,
-					isRtl: true,
-					jQuery: true,
-					tb_remove: true,
-					wp: true,
-					wpPointerL10n: true
-				},
+				jshintrc: '.jshintrc'
 			},
 			all: [
 				'Gruntfile.js',
@@ -73,7 +42,7 @@ module.exports = function(grunt) {
 					yuicompress: true
 				},
 				files: [
-					{ src: 'includes/css/less/audiotheme.less', dest: 'includes/css/audiotheme.min.css' },
+					{ src: 'includes/css/less/audiotheme.less', dest: 'includes/css/audiotheme.min.css' }
 				]
 			}
 		},
@@ -118,7 +87,7 @@ module.exports = function(grunt) {
 		compress: {
 			dist: {
 				options: {
-					archive: 'release/<%= pkg.slug %>-plugin-<%= version %>.zip',
+					archive: 'release/<%= pkg.slug %>-plugin-<%= version %>.zip'
 				},
 				files: [
 					{
@@ -127,6 +96,7 @@ module.exports = function(grunt) {
 							'!node_modules/**',
 							'!release/**',
 							'!tests/**',
+							'!.jshintrc',
 							'!config.json',
 							'!Gruntfile.js',
 							'!package.json',
@@ -134,7 +104,7 @@ module.exports = function(grunt) {
 							'!README.md',
 							'!includes/lib/wp-less/**',
 							'includes/lib/wp-less/lessc/lessc.inc.php',
-							'includes/lib/wp-less/wp-less.php',
+							'includes/lib/wp-less/wp-less.php'
 						],
 						dest: '<%= pkg.slug %>/'
 					}

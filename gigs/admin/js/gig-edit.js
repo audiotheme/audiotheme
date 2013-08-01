@@ -1,3 +1,5 @@
+/*global ajaxurl:true, audiothemeGigsL10n:true, isRtl:true */
+
 jQuery(function($) {
 	var $date = $('#gig-date'),
 		$time = $('#gig-time'),

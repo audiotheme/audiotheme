@@ -134,6 +134,11 @@ function audiotheme_admin_init() {
 	wp_register_style( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/css/admin.css' );
 	wp_register_style( 'jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css' );
 	wp_register_style( 'jquery-ui-theme-audiotheme', AUDIOTHEME_URI . 'admin/css/jquery-ui-audiotheme.css', array( 'jquery-ui-theme-smoothness' ) );
+
+	wp_localize_script( 'audiotheme-media', 'AudiothemeMediaControl', array(
+		'frameTitle'      => __( 'Choose an Attachment', 'audiotheme-i18n' ),
+		'frameUpdateText' => __( 'Update Attachment', 'audiotheme-i18n' ),
+	) );
 }
 
 /**

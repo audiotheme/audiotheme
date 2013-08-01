@@ -1,3 +1,5 @@
+/*global AudiothemeMediaControl:true, wp:true */
+
 window.audiotheme = window.audiotheme || {};
 
 /*(function($) {

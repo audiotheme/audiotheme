@@ -1,3 +1,5 @@
+/*global AudiothemeJplayer:true, AudiothemeTracks:true */
+
 (function( $, window, undefined ) {
 	$.fn.audiothemeDeviceClasses = function() {
 		var $el = $(this),
