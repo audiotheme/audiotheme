@@ -174,7 +174,7 @@ function get_audiotheme_gig_gmt_date( $post = null ) {
 /**
  * Display a gig's date and time.
  *
- * @since 1.0.0
+ * @since 1.3.0
  * @uses get_audiotheme_gig_time()
  *
  * @param string $d Optional. PHP date format.

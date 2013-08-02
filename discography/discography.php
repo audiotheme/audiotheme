@@ -207,7 +207,7 @@ function audiotheme_record_query_sort( $query ) {
 /**
  * Sort records by title after sorting by release year.
  *
- * @since 1.0.0
+ * @since 1.3.0
  *
  * @param string $orderby SQL order clause.
  * @return string
