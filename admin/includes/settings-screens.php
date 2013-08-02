@@ -349,6 +349,10 @@ function audiotheme_settings_display_screen() {
 function audiotheme_settings_sanitize_option( $value, $option ) {
 	global $wp_settings_fields;
 
+	if ( empty( $wp_settings_fields ) ) {
+		return $value;
+	}
+
 	$settings = get_audiotheme_settings();
 	$customizer = $settings->get_customizer_only_settings();
 
