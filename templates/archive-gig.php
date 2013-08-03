@@ -12,6 +12,10 @@ get_header();
 
 <?php do_action( 'audiotheme_before_main_content' ); ?>
 
+<h1 class="audiotheme-archive-title"><?php the_audiotheme_archive_title(); ?></h1>
+
+<?php the_audiotheme_archive_description( '<div class="audiotheme-archive-intro">', '</div>' ); ?>
+
 <ul id="audiotheme-gigs" class="audiotheme-gigs audiotheme-clearfix">
 
 	<?php
