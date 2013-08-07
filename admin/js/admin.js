@@ -1,4 +1,4 @@
-/*global _:true, ajaxurl:true, audiotheme:true, tb_remove:true */
+/*global _:false, ajaxurl:false, audiotheme:false, tb_remove:false */
 
 window.audiotheme = window.audiotheme || {};
 

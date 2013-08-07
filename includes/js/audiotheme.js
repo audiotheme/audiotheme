@@ -1,4 +1,4 @@
-/*global AudiothemeJplayer:true, AudiothemeTracks:true */
+/*global AudiothemeJplayer:false, AudiothemeTracks:false */
 
 (function( $, window, undefined ) {
 	$.fn.audiothemeDeviceClasses = function() {

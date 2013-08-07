@@ -1,4 +1,4 @@
-/*global ajaxurl:true, audiothemeGigsL10n:true, isRtl:true */
+/*global ajaxurl:false, audiothemeGigsL10n:false, isRtl:false */
 
 jQuery(function($) {
 	var $date = $('#gig-date'),

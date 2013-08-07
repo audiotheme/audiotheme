@@ -18,6 +18,6 @@
 	"globals": {
 		"exports": true,
 		"module": false,
-		"require": true
+		"require": false
 	}
 }

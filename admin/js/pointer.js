@@ -1,4 +1,4 @@
-/*global ajaxurl:true, audiothemePointers:true, wpPointerL10n:true */
+/*global ajaxurl:false, audiothemePointers:false, wpPointerL10n:false */
 
 /**
  * Utility to show WP pointers added via audiotheme_enqueue_pointer().

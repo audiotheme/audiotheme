@@ -1,4 +1,4 @@
-/*global AudiothemeMediaControl:true, wp:true */
+/*global AudiothemeMediaControl:false, wp:false */
 
 window.audiotheme = window.audiotheme || {};
 
