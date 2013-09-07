@@ -413,9 +413,9 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
  */
 function audiotheme_admin_spinner( $args = array() ) {
 	$args = wp_parse_args( $args, array(
-		'id' => '',
+		'id'    => '',
 		'class' => 'ajax-loading',
-		'echo' => true,
+		'echo'  => true,
 	) );
 
 	if ( audiotheme_version_compare( 'wp', '3.5-beta-1', '<' ) ) {
@@ -425,7 +425,10 @@ function audiotheme_admin_spinner( $args = array() ) {
 			esc_attr( $args['class'] )
 		);
 	} else {
-		$spinner = sprintf( '<span id="%1$s" class="spinner"></span>', esc_attr( $args['id'] ) );
+		$spinner = sprintf( '<span id="%1$s" class="spinner %2$s"></span>',
+			esc_attr( $args['id'] ),
+			esc_attr( $args['class'] )
+		);
 	}
 
 	if ( $args['echo'] ) {

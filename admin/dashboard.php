@@ -264,7 +264,7 @@ function audiotheme_dashboard_license_input( $args ) {
 
 	if ( ! isset( $status->status ) || 'ok' != $status->status ) {
 		echo '<input type="button" value="' . __( 'Activate', 'audiotheme-i18n' ) . '" disabled="disabled" class="audiotheme-settings-license-button button button-primary">';
-		audiotheme_admin_spinner();
+		audiotheme_admin_spinner( array( 'class' => 'audiotheme-license-spinner' ) );
 		echo '<br><span class="audiotheme-response"></span>';
 	} else {
 		echo $activated_response;
@@ -287,7 +287,7 @@ function audiotheme_dashboard_license_input( $args ) {
 		$button.on('click', function(e) {
 			e.preventDefault();
 
-			$spinner.show();
+			$spinner.addClass('is-visible');
 
 			$.ajax({
 				url: ajaxurl,
@@ -321,7 +321,7 @@ function audiotheme_dashboard_license_input( $args ) {
 						}
 					}
 
-					$spinner.hide();
+					$spinner.removeClass('is-visible');
 				}
 			});
 		});

@@ -89,6 +89,9 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 table.audiotheme-system-info { margin-bottom: 20px;}
 .audiotheme-system-info tbody th { width: 20%; font-family: sans-serif; font-size: 12px;}
 
+.spinner.audiotheme-license-spinner { float: none; margin-top: 0; vertical-align: middle;}
+.spinner.is-visible { display: inline-block;}
+
 @media print, (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
 	.audiotheme-badge { background-image: url(../images/audiotheme-badge-2x.png); background-size: 180px 180px;}
 }
