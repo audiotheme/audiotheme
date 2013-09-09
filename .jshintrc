@@ -16,6 +16,7 @@
 	"trailing": true,
 	"undef": true,
 	"globals": {
+		"console": false,
 		"exports": true,
 		"module": false,
 		"require": false
