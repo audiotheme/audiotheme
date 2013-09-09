@@ -22,6 +22,7 @@ function audiotheme_less_setup() {
 		wp_less::instance();
 
 		add_action( 'wp_loaded', 'audiotheme_less_register_vars', 20 );
+		add_filter( 'wp_less_cache_url', 'audiotheme_less_force_ssl' );
 
 		// Register a style sheet specifically for the Theme Customizer.
 		$stylesheet = ( empty( $support[0]['customize_stylesheet'] ) ) ? '' : $support[0]['customize_stylesheet'];
@@ -32,6 +33,22 @@ function audiotheme_less_setup() {
 			add_action( 'customize_save', 'audiotheme_less_recompile_stylesheets' );
 		}
 	}
+}
+
+/**
+ * Force SSL on LESS cache URLs.
+ *
+ * @since 1.3.1
+ *
+ * @param string $url URL to compiled CSS.
+ * @return string
+ */
+function audiotheme_less_force_ssl( $dir ) {
+	if ( is_ssl() ) {
+		$dir = set_url_scheme( $dir, 'https' );
+	}
+
+	return $dir;
 }
 
 /**
