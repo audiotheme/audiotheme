@@ -42,7 +42,7 @@ get_header();
 
 					<p class="audiotheme-gig-place" itemprop="location" itemscope itemtype="http://schema.org/EventVenue">
 
-						<span class="audiotheme-gig-location" itemprop="location"><?php echo get_audiotheme_venue_location( $gig->venue->ID ); ?></span>
+						<span class="audiotheme-gig-location"><?php echo get_audiotheme_venue_location( $gig->venue->ID ); ?></span>
 
 						<?php
 						the_audiotheme_gig_venue_link( array(

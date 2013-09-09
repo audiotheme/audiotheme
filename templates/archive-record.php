@@ -20,7 +20,7 @@ get_header();
 
 	<?php while ( have_posts() ) : the_post(); ?>
 
-		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> role="article" itemtype="http://schema.org/MusicRecording" itemscope>
+		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> role="article" itemscope itemtype="http://schema.org/MusicAlbum">
 
 			<?php if ( has_post_thumbnail() ) : ?>
 

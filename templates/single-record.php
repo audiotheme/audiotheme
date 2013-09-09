@@ -14,7 +14,7 @@ get_header();
 
 <?php while ( have_posts() ) : the_post(); ?>
 
-	<article id="post-<?php the_ID(); ?>" <?php post_class( 'audiotheme-record-single' ); ?> itemtype="http://schema.org/MusicRecording" itemscope role="article">
+	<article id="post-<?php the_ID(); ?>" <?php post_class( 'audiotheme-record-single' ); ?> itemscope itemtype="http://schema.org/MusicAlbum" role="article">
 
 		<?php if ( has_post_thumbnail() ) : ?>
 
@@ -77,7 +77,7 @@ get_header();
 
 					<?php foreach ( $tracks as $track ) : ?>
 
-						<li id="track-<?php echo $track->ID; ?>" class="audiotheme-track" itemprop="tracks" itemtype="http://schema.org/MusicRecording" itemscope>
+						<li id="track-<?php echo $track->ID; ?>" class="audiotheme-track" itemprop="track" itemscope itemtype="http://schema.org/MusicRecording">
 							<span class="audiotheme-track-info audiotheme-track-cell">
 								<a href="<?php echo get_permalink( $track->ID ); ?>" itemprop="url" class="audiotheme-track-title"><span itemprop="name"><?php echo get_the_title( $track->ID ); ?></span></a>
 

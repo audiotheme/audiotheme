@@ -758,7 +758,7 @@ function get_audiotheme_venue_vcard( $venue_id, $args = array() ) {
 		$address .= ( empty( $venue->country ) ) ? '' : '<span class="country-name ' . $country_class . '" itemprop="addressCountry">' . $venue->country . '</span>';
 	}
 
-	$output .= ( empty( $address ) ) ? '' : '<div class="venue-address adr" itemtype="http://schema.org/PostalAddress" itemscope itemprop="address">' . $address . '</div> ';
+	$output .= ( empty( $address ) ) ? '' : '<div class="venue-address adr" itemscope itemtype="http://schema.org/PostalAddress" itemprop="address">' . $address . '</div> ';
 
 	if ( $args['show_phone'] ) {
 		$output .= ( empty( $venue->phone ) ) ? '' : '<span class="venue-phone tel" itemprop="telephone">' . $venue->phone . '</span>';

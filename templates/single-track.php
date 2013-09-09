@@ -14,7 +14,7 @@ get_header();
 
 <?php while ( have_posts() ) : the_post(); ?>
 
-	<article id="post-<?php the_ID(); ?>" <?php post_class( 'audiotheme-record-single audiotheme-track-single' ); ?> itemtype="http://schema.org/MusicRecording" itemscope role="article">
+	<article id="post-<?php the_ID(); ?>" <?php post_class( 'audiotheme-record-single audiotheme-track-single' ); ?> itemscope itemtype="http://schema.org/MusicRecording" role="article">
 
 		<?php if ( $thumbnail_id = get_audiotheme_track_thumbnail_id() ) : ?>
 
