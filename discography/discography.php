@@ -110,10 +110,15 @@ function audiotheme_discography_init() {
 		),
 		'public'                         => false,
 		'query_var'                      => true,
-		'rewrite'                        => false,
+		'rewrite'                        => array(
+			'slug'                       => get_audiotheme_discography_rewrite_base() . '/type',
+			'with_front'                 => false,
+		),
 		'show_ui'                        => false,
 		'show_in_nav_menus'              => false,
 	) );
+
+	add_filter( 'request', 'audiotheme_record_type_request' );
 
 	// Separated so they can be unhooked individually if needed.
 	add_action( 'pre_get_posts', 'audiotheme_record_query_sort' );
@@ -162,6 +167,30 @@ function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
 }
 
 /**
+ * Filter the request to allow for the record type prefix.
+ *
+ * @access private
+ * @since 1.3.2
+ *
+ * @param array $query_vars
+ * @return array
+ */
+function audiotheme_record_type_request( $query_vars ) {
+	if ( ! isset( $query_vars['audiotheme_record_type'] ) ) {
+		return $query_vars;
+	}
+
+	$current_slug = 'record-type-' . $query_vars['audiotheme_record_type'];
+	$slugs = get_audiotheme_record_type_slugs();
+
+	if ( in_array( $current_slug, $slugs ) ) {
+		$query_vars['audiotheme_record_type'] = $current_slug;
+	}
+
+	return $query_vars;
+}
+
+/**
  * Sort record archive requests.
  *
  * Defaults to sorting by release year in descending order. An option is
@@ -177,7 +206,7 @@ function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
  * @param object $query The main WP_Query object. Passed by reference.
  */
 function audiotheme_record_query_sort( $query ) {
-	if ( is_admin() || ! $query->is_main_query() || ! is_post_type_archive( 'audiotheme_record' ) ) {
+	if ( is_admin() || ! $query->is_main_query() || ! ( is_post_type_archive( 'audiotheme_record' ) || is_tax( 'audiotheme_record_type' ) ) ) {
 		return;
 	}
 
@@ -281,9 +310,17 @@ function audiotheme_record_default_template_query( $query ) {
  * @return string
  */
 function audiotheme_discography_template_include( $template ) {
-	if ( is_post_type_archive( array( 'audiotheme_record', 'audiotheme_track' ) ) ) {
+	if ( is_post_type_archive( array( 'audiotheme_record', 'audiotheme_track' ) ) || is_tax( 'audiotheme_record_type' ) ) {
 		if ( is_post_type_archive( 'audiotheme_track' ) ) {
 			$templates[] = 'archive-track.php';
+		}
+
+		if ( is_tax() ) {
+			$term = get_queried_object();
+			$slug = str_replace( 'record-type-', '', $term->slug );
+			$taxonomy = str_replace( 'audiotheme_', '', $term->taxonomy );
+			$templates[] = "taxonomy-$taxonomy-{$slug}.php";
+			$templates[] = "taxonomy-$taxonomy.php";
 		}
 
 		$templates[] = 'archive-record.php';
