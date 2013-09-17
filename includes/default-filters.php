@@ -92,9 +92,12 @@ function audiotheme_archives_post_type_archive_title( $title ) {
  * @return array
  */
 function audiotheme_nav_menu_classes( $items, $args ) {
+	global $wp;
+
 	$classes = array();
 	$first_top = -1;
 
+	$current_url = trailingslashit( home_url( add_query_arg( array(), $wp->request ) ) );
 	$blog_page_id = get_option( 'page_for_posts' );
 	$is_blog_post = is_singular( 'post' );
 
@@ -115,7 +118,11 @@ function audiotheme_nav_menu_classes( $items, $args ) {
 		}
 
 		if ( ! is_404() ) {
-			if ( 'audiotheme_archive' == $item->object && $post_type_archive_id == $item->object_id ) {
+			if (
+				'audiotheme_archive' == $item->object &&
+				$post_type_archive_id == $item->object_id &&
+				trailingslashit( $item->url ) == $current_url
+			) {
 				$items[ $key ]->classes[] = 'current-menu-item';
 			}
 
