@@ -175,6 +175,7 @@ function audiotheme_tracks_filters() {
 	global $wpdb;
 
 	$screen = get_current_screen();
+	$post_parent = empty( $_GET['post_parent'] ) ? 0 : absint( $_GET['post_parent'] );
 
 	if ( 'edit-audiotheme_track' == $screen->id ) {
 		$records = $wpdb->get_results( "SELECT ID, post_title FROM $wpdb->posts WHERE post_type='audiotheme_record' AND post_status!='auto-draft' ORDER BY post_title ASC" );
@@ -186,7 +187,7 @@ function audiotheme_tracks_filters() {
 				foreach ( $records as $record ) {
 					echo printf( '<option value="%1$d"%2$s>%3$s</option>',
 						esc_attr( $record->ID ),
-						selected( $_GET['post_parent'], $record->ID, false ),
+						selected( $post_parent, $record->ID, false ),
 						esc_html( $record->post_title )
 					);
 				}
