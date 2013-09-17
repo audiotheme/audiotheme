@@ -175,6 +175,10 @@ class Audiotheme_Updater {
 			} else {
 				// Set the basename for the API. Unnecessary for themes.
 				if ( 'plugin' == $this->type ) {
+					if ( ! isset( $response->wpargs ) ) {
+						$response->wpargs = new stdClass;
+					}
+
 					$response->wpargs->slug = $this->id;
 				}
 
