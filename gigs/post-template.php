@@ -163,7 +163,7 @@ function get_audiotheme_gig_gmt_date( $post = null ) {
 		$offset = $datetime->getOffset();
 		$datetime->modify( '+' . $offset / 3600 . ' hours' );
 		$string_gmt = gmdate( $format, $datetime->format( 'U' ) );
-		date_default_timezone_set('UTC');
+		date_default_timezone_set( 'UTC' );
 	} else {
 		$string_gmt = mysql2date( 'Y-m-d', $gig->gig_datetime ); // only returns the date portion since the time portion is unknown
 	}
