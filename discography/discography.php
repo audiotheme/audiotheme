@@ -108,7 +108,7 @@ function audiotheme_discography_init() {
 			'add_or_remove_items'        => __( 'Add or remove record types', 'audiotheme-i18n' ),
 			'choose_from_most_used'      => __( 'Choose from most used record types', 'audiotheme-i18n' ),
 		),
-		'public'                         => false,
+		'public'                         => true,
 		'query_var'                      => true,
 		'rewrite'                        => array(
 			'slug'                       => get_audiotheme_discography_rewrite_base() . '/type',
