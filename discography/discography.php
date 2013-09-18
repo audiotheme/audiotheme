@@ -132,6 +132,7 @@ function audiotheme_discography_init() {
 	add_filter( 'wp_unique_post_slug', 'audiotheme_track_unique_slug', 10, 6 );
 	add_action( 'wp_print_footer_scripts', 'audiotheme_print_tracks_js' );
 	add_filter( 'post_class', 'audiotheme_record_archive_post_class' );
+	add_filter( 'get_term', 'audiotheme_record_type_term_filter', 10, 2 );
 }
 
 /**
@@ -585,4 +586,21 @@ function audiotheme_record_archive_post_class( $classes ) {
 	}
 
 	return $classes;
+}
+
+/**
+ * Set the correct record type name when a term is requested.
+ *
+ * @since 1.3.2
+ *
+ * @param object $term Term object.
+ * @param string $taxonomy Taxonomy name.
+ * @return object
+ */
+function audiotheme_record_type_term_filter( $term, $taxonomy ) {
+	if ( 'audiotheme_record_type' == $taxonomy ) {
+		$term->name = get_audiotheme_record_type_string( $term->slug );
+	}
+
+	return $term;
 }
