@@ -130,7 +130,7 @@ function audiotheme_post_gallery( $output, $attr ) {
 		'ids'        => '',
 		'include'    => '',
 		'exclude'    => ''
-	), $attr );
+	), $attr, 'gallery' );
 
 	$attr['id'] = absint( $attr['id'] );
 	if ( 'RAND' == $attr['order'] ) {
@@ -173,6 +173,11 @@ function audiotheme_post_gallery( $output, $attr ) {
 	$attr['captiontag'] = tag_escape( $attr['captiontag'] );
 	$attr['icontag'] = tag_escape( $attr['icontag'] );
 	$attr['itemtag'] = tag_escape( $attr['itemtag'] );
+
+	$valid_tags = wp_kses_allowed_html( 'post' );
+	$attr['captiontag'] = isset( $valid_tags[ $attr['captiontag'] ] ) ? $attr['captiontag'] : 'dd';
+	$attr['icontag'] = isset( $valid_tags[ $attr['icontag'] ] ) ? $attr['icontag'] : 'dl';
+	$attr['itemtag'] = isset( $valid_tags[ $attr['itemtag'] ] ) ? $attr['itemtag'] : 'dl';
 	$attr['columns'] = ( absint( $attr['columns'] ) ) ? absint( $attr['columns'] ) : 1;
 
 	// Add gallery wrapper classes to $attr variable so they can be passed to the filter.
@@ -217,6 +222,13 @@ function audiotheme_post_gallery( $output, $attr ) {
 				$href = get_permalink( $attachment->ID );
 			}
 
+			$image_meta = wp_get_attachment_metadata( $attachment->ID );
+
+			$orientation = '';
+			if ( isset( $image_meta['height'], $image_meta['width'] ) ) {
+				$orientation = ( $image_meta['height'] > $image_meta['width'] ) ? 'portrait' : 'landscape';
+			}
+
 			$classes = array( 'gallery-item', 'gallery-item-' . ( $i + 1 ) );
 			$classes = array_merge( $classes, audiotheme_nth_child_classes( array(
 				'base'    => 'gallery-item',
@@ -226,10 +238,20 @@ function audiotheme_post_gallery( $output, $attr ) {
 
 			$output .= "\n\t\t" . '<' . $itemtag . ' class="' . join( ' ', $classes ) . '">';
 
-				$output .= '<' . $icontag . ' class="gallery-icon">';
-					$output .= ( $href ) ? '<a href="' . esc_url( $href ) . '">' : '';
-						$output .= wp_get_attachment_image( $attachment->ID, $size, false );
-					$output .= ( $href ) ? '</a>' : '';
+				$output .= '<' . $icontag . ' class="gallery-icon ' . $orientation . '">';
+
+					$image  = ( $href ) ? '<a href="' . esc_url( $href ) . '">' : '';
+						$image .= wp_get_attachment_image( $attachment->ID, $size, false );
+					$image .= ( $href ) ? '</a>' : '';
+
+					// Some plugins use this filter, so mimic it as best we can.
+					if ( 'none' !== $link ) {
+						$permalink = in_array( $link, array( 'file', 'link' ) ) ? false: true;
+						$icon = $text = false;
+						$image = apply_filters( 'wp_get_attachment_link', $image, $attachment->ID, $size, $permalink, $icon, $text );
+					}
+
+					$output .= $image;
 				$output .= '</' . $icontag . '>';
 
 				if ( $captiontag && trim( $attachment->post_excerpt ) ) {
