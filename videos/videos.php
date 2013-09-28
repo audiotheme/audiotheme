@@ -28,7 +28,7 @@ function audiotheme_videos_init() {
 	// Register the video custom post type.
 	register_post_type( 'audiotheme_video', array(
 		'has_archive'            => get_audiotheme_videos_rewrite_base(),
-		'hierarchical'           => false,
+		'hierarchical'           => true,
 		'labels'                 => array(
 			'name'               => _x( 'Videos', 'post type general name', 'audiotheme-i18n' ),
 			'singular_name'      => _x( 'Video', 'post type singular name', 'audiotheme-i18n' ),
