@@ -21,10 +21,10 @@
  */
 function audiotheme_image_size_names() {
 	return apply_filters( 'image_size_names_choose', array(
-		'thumbnail' => __( 'Thumbnail', 'audiotheme-i18n' ),
-		'medium'    => __( 'Medium', 'audiotheme-i18n' ),
-		'large'     => __( 'Large', 'audiotheme-i18n' ),
-		'full'      => __( 'Full Size', 'audiotheme-i18n' ),
+		'thumbnail' => __( 'Thumbnail', 'audiotheme' ),
+		'medium'    => __( 'Medium', 'audiotheme' ),
+		'large'     => __( 'Large', 'audiotheme' ),
+		'full'      => __( 'Full Size', 'audiotheme' ),
 	) );
 }
 

@@ -35,8 +35,8 @@ function audiotheme_dashboard_init() {
  */
 function audiotheme_dashboard_admin_menu() {
 	$pagehook = add_menu_page(
-		__( 'AudioTheme', 'audiotheme-i18n' ),
-		__( 'AudioTheme', 'audiotheme-i18n' ),
+		__( 'AudioTheme', 'audiotheme' ),
+		__( 'AudioTheme', 'audiotheme' ),
 		'manage_options',
 		'audiotheme',
 		'audiotheme_dashboard_features_screen',
@@ -46,8 +46,8 @@ function audiotheme_dashboard_admin_menu() {
 
 	add_submenu_page(
 		'audiotheme',
-		__( 'Features', 'audiotheme-i18n' ),
-		__( 'Features', 'audiotheme-i18n' ),
+		__( 'Features', 'audiotheme' ),
+		__( 'Features', 'audiotheme' ),
 		'manage_options',
 		'audiotheme',
 		'audiotheme_dashboard_features_screen'
@@ -60,8 +60,8 @@ function audiotheme_dashboard_admin_menu() {
  * @since 1.0.0
  */
 function audiotheme_dashboard_register_settings() {
-	$screen = add_audiotheme_settings_screen( 'audiotheme-settings', __( 'Settings', 'audiotheme-i18n' ), array(
-		'menu_title'   => ( is_network_admin() ) ? __( 'AudioTheme', 'audiotheme-i18n' ) : __( 'Settings', 'audiotheme-i18n' ),
+	$screen = add_audiotheme_settings_screen( 'audiotheme-settings', __( 'Settings', 'audiotheme' ), array(
+		'menu_title'   => ( is_network_admin() ) ? __( 'AudioTheme', 'audiotheme' ) : __( 'Settings', 'audiotheme' ),
 		'option_group' => 'audiotheme_options',
 		'option_name'  => array( 'audiotheme_options', 'audiotheme_license_key', 'audiotheme_disable_directory_browsing' ),
 		'show_in_menu' => ( is_network_admin() ) ? 'settings.php' : 'audiotheme',
@@ -72,36 +72,36 @@ function audiotheme_dashboard_register_settings() {
 		return;
 	}
 
-	$screen->add_section( 'directory_browsing', __( 'Directory Browsing', 'audiotheme-i18n' ), array(
+	$screen->add_section( 'directory_browsing', __( 'Directory Browsing', 'audiotheme' ), array(
 		'priority' => 50,
 	) );
 
-		$screen->add_field( 'audiotheme_disable_directory_browsing', __( 'Directory Browsing', 'audiotheme-i18n' ), 'checkbox', array(
+		$screen->add_field( 'audiotheme_disable_directory_browsing', __( 'Directory Browsing', 'audiotheme' ), 'checkbox', array(
 			'option_name' => 'audiotheme_disable_directory_browsing',
 			'choices'     => array(
 				'1' => 'Disable directory browsing?',
 			),
 		) );
 
-	$screen->add_section( 'license', __( 'License', 'audiotheme-i18n' ), array(
+	$screen->add_section( 'license', __( 'License', 'audiotheme' ), array(
 		'priority' => 0,
 		'callback' => 'audiotheme_dashboard_settings_license_section',
 	) );
 
-		$screen->add_field( 'audiotheme_license_key', __( 'License Key', 'audiotheme-i18n' ), 'audiotheme_dashboard_license_input', array(
+		$screen->add_field( 'audiotheme_license_key', __( 'License Key', 'audiotheme' ), 'audiotheme_dashboard_license_input', array(
 			'option_name' => 'audiotheme_license_key',
 		) );
 
 
 	// System Info Tab
 
-	$screen->add_tab( 'system_info', __( 'System', 'audiotheme-i18n' ) );
+	$screen->add_tab( 'system_info', __( 'System', 'audiotheme' ) );
 
 		$screen->add_section( 'system_info', '', array(
 			'callback' => 'audiotheme_dashboard_settings_system_section',
 		) );
 
-		$screen->add_field( 'system_info', __( 'Export Data', 'audiotheme-i18n' ), 'html', array(
+		$screen->add_field( 'system_info', __( 'Export Data', 'audiotheme' ), 'html', array(
 			'label'  => '',
 			'output' => '<textarea id="audiotheme-system-info-export" class="widefat">' . audiotheme_system_info( array( 'format' => 'plaintext' ) ) . '</textarea>',
 		) );
@@ -138,19 +138,19 @@ function audiotheme_dashboard_settings_system_section() {
 
 	$sections = array(
 		array(
-			'section' => __( 'AudioTheme', 'audiotheme-i18n' ),
+			'section' => __( 'AudioTheme', 'audiotheme' ),
 			'keys'    => array( 'audiotheme_version', 'theme', 'theme_version', 'child_theme', 'child_theme_version' ),
 		),
 		array(
-			'section' => __( 'WordPress', 'audiotheme-i18n' ),
+			'section' => __( 'WordPress', 'audiotheme' ),
 			'keys'    => array( 'home_url', 'site_url', 'wp_version', 'wp_lang', 'wp_memory_limit', 'wp_debug_mode', 'wp_max_upload_size' ),
 		),
 		array(
-			'section' => __( 'Environment', 'audiotheme-i18n' ),
+			'section' => __( 'Environment', 'audiotheme' ),
 			'keys'    => array( 'web_server', 'php_version', 'mysql_version', 'php_post_max_size', 'php_time_limit', 'php_safe_mode' ),
 		),
 		array(
-			'section' => __( 'Browser', 'audiotheme-i18n' ),
+			'section' => __( 'Browser', 'audiotheme' ),
 			'keys'    => array( 'user_agent' ),
 		),
 	);
@@ -239,7 +239,7 @@ function audiotheme_dashboard_sort_menu() {
  * @since 1.0.0
  */
 function audiotheme_dashboard_settings_license_section( $section ) {
-	echo sprintf( __( 'Find your license key in <a href="%s" target="_blank">your account</a> on AudioTheme.com. Your license key allows you to recieve automatic upgrades and support.', 'audiotheme-i18n' ), 'http://audiotheme.com/account/' );
+	echo sprintf( __( 'Find your license key in <a href="%s" target="_blank">your account</a> on AudioTheme.com. Your license key allows you to recieve automatic upgrades and support.', 'audiotheme' ), 'http://audiotheme.com/account/' );
 }
 
 /**
@@ -254,7 +254,7 @@ function audiotheme_dashboard_license_input( $args ) {
 
 	$value = get_audiotheme_option( $option_name, $key, $default  );
 	$status = get_option( 'audiotheme_license_status' );
-	$activated_response = ' <strong class="audiotheme-response is-valid">' . esc_js( __( 'Activated!', 'audiotheme-i18n' ) ) . '</strong>';
+	$activated_response = ' <strong class="audiotheme-response is-valid">' . esc_js( __( 'Activated!', 'audiotheme' ) ) . '</strong>';
 
 	printf( '<input type="text" name="%s" id="%s" value="%s" class="audiotheme-settings-license-text audiotheme-settings-text regular-text">',
 		esc_attr( $field_name ),
@@ -263,7 +263,7 @@ function audiotheme_dashboard_license_input( $args ) {
 	);
 
 	if ( ! isset( $status->status ) || 'ok' != $status->status ) {
-		echo '<input type="button" value="' . __( 'Activate', 'audiotheme-i18n' ) . '" disabled="disabled" class="audiotheme-settings-license-button button button-primary">';
+		echo '<input type="button" value="' . __( 'Activate', 'audiotheme' ) . '" disabled="disabled" class="audiotheme-settings-license-button button button-primary">';
 		audiotheme_admin_spinner( array( 'class' => 'audiotheme-license-spinner' ) );
 		echo '<br><span class="audiotheme-response"></span>';
 	} else {
@@ -309,15 +309,15 @@ function audiotheme_dashboard_license_input( $args ) {
 							errors = [];
 
 						// ok|empty|unknown|invalid|expired|limit_reached|failed
-						errors['empty']         = '<?php echo esc_js( __( 'Empty license key.', 'audiotheme-i18n' ) ); ?>';
-						errors['invalid']       = '<?php echo esc_js( __( 'Invalid license key.', 'audiotheme-i18n' ) ); ?>';
-						errors['expired']       = '<?php echo esc_js( __( 'License key expired.', 'audiotheme-i18n' ) ) .' <a href="http://audiotheme.com/view/audiotheme/" target="_blank">' . esc_js( __( 'Renew now.', 'audiotheme-i18n' ) ) . '</a>'; ?>';
-						errors['limit_reached'] = '<?php echo esc_js( __( 'Activation limit reached.', 'audiotheme-i18n' ) ) . ' <a href="http://audiotheme.com/view/audiotheme/" target="_blank">' . esc_js( __( 'Upgrade your license.', 'audiotheme-i18n' ) ) . '</a>'; ?>';
+						errors['empty']         = '<?php echo esc_js( __( 'Empty license key.', 'audiotheme' ) ); ?>';
+						errors['invalid']       = '<?php echo esc_js( __( 'Invalid license key.', 'audiotheme' ) ); ?>';
+						errors['expired']       = '<?php echo esc_js( __( 'License key expired.', 'audiotheme' ) ) .' <a href="http://audiotheme.com/view/audiotheme/" target="_blank">' . esc_js( __( 'Renew now.', 'audiotheme' ) ) . '</a>'; ?>';
+						errors['limit_reached'] = '<?php echo esc_js( __( 'Activation limit reached.', 'audiotheme' ) ) . ' <a href="http://audiotheme.com/view/audiotheme/" target="_blank">' . esc_js( __( 'Upgrade your license.', 'audiotheme' ) ) . '</a>'; ?>';
 
 						if ( 'status' in data && data.status in errors ) {
 							$response.html( errors[ data.status ] );
 						} else {
-							$response.html( '<?php echo esc_js( __( 'Oops, there was an error.', 'audiotheme-i18n' ) ); ?>' );
+							$response.html( '<?php echo esc_js( __( 'Oops, there was an error.', 'audiotheme' ) ); ?>' );
 						}
 					}
 
@@ -391,32 +391,32 @@ function audiotheme_license_clear_status( $response ) {
  * @since 1.0.0
  */
 function audiotheme_dashboard_settings_help() {
-	$content  = '<h4>' . __( 'For more information:', 'audiotheme-i18n' ) . '</h4>';
-	$content .= '<p><a href="http://audiotheme.com/account/" target="_blank">' . __( "Find Your License", 'audiotheme-i18n' ) . '</a></p>';
-	$content .= '<p><a href="http://audiotheme.com/view/audiotheme/" target="_blank">' . __( "Upgrade Your License", 'audiotheme-i18n' ) . '</a></p>';
-	$content .= '<p><a href="http://audiotheme.com/support/" target="_blank">' . __( "Support Forum", 'audiotheme-i18n' ) . '</a></p>';
+	$content  = '<h4>' . __( 'For more information:', 'audiotheme' ) . '</h4>';
+	$content .= '<p><a href="http://audiotheme.com/account/" target="_blank">' . __( "Find Your License", 'audiotheme' ) . '</a></p>';
+	$content .= '<p><a href="http://audiotheme.com/view/audiotheme/" target="_blank">' . __( "Upgrade Your License", 'audiotheme' ) . '</a></p>';
+	$content .= '<p><a href="http://audiotheme.com/support/" target="_blank">' . __( "Support Forum", 'audiotheme' ) . '</a></p>';
 	get_current_screen()->set_help_sidebar( $content );
 
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'settings',
-		'title'   => __( 'Settings', 'audiotheme-i18n' ),
+		'title'   => __( 'Settings', 'audiotheme' ),
 		'content' =>
-			'<h4>' . __( 'License Key', 'audiotheme-i18n' ) . '</h4>' .
-			'<p>' . __( "Your license key allows you to receive automatic updates and support for as long as your license is active. Don't worry, you won't lose any features you're currently using if it expires, however, it's a good idea to keep your license active to gain access to security upgrades, bug fixes, new features, or just to ask a question if you need a little help.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . sprintf( __( "Your license key can be found in <a href='%s' target='_blank'>your account</a> on AudioTheme.com or in your purchase email. It's a random string consisting of 32 numbers or letters. Let us know if you need help finding it.", 'audiotheme-i18n' ), 'http://audiotheme.com/account/' ) . '</p>' .
-			'<p><em>' . __( "<strong>Example key:</strong>", 'audiotheme-i18n' ) . ' <code>a72fdacfb04efa15976ed843d0bc7fec</code></em></p>' .
-			'<p>' . __( "Simply copy and paste it into the <strong>License Key</strong> field and click the <strong>Activate</strong> button. If your license is valid, that's all you have to do.", 'audiotheme-i18n' ) . '</p>' .
-			'<p><em>' . sprintf( __( "If your license has expired or you want to use AudioTheme on more than one site, visit <a href='%s' target='_blank'>AudioTheme.com</a> to upgrade.", 'audiotheme-i18n' ), 'http://audiotheme.com/view/audiotheme/' ) . '</em></p>' .
+			'<h4>' . __( 'License Key', 'audiotheme' ) . '</h4>' .
+			'<p>' . __( "Your license key allows you to receive automatic updates and support for as long as your license is active. Don't worry, you won't lose any features you're currently using if it expires, however, it's a good idea to keep your license active to gain access to security upgrades, bug fixes, new features, or just to ask a question if you need a little help.", 'audiotheme' ) . '</p>' .
+			'<p>' . sprintf( __( "Your license key can be found in <a href='%s' target='_blank'>your account</a> on AudioTheme.com or in your purchase email. It's a random string consisting of 32 numbers or letters. Let us know if you need help finding it.", 'audiotheme' ), 'http://audiotheme.com/account/' ) . '</p>' .
+			'<p><em>' . __( "<strong>Example key:</strong>", 'audiotheme' ) . ' <code>a72fdacfb04efa15976ed843d0bc7fec</code></em></p>' .
+			'<p>' . __( "Simply copy and paste it into the <strong>License Key</strong> field and click the <strong>Activate</strong> button. If your license is valid, that's all you have to do.", 'audiotheme' ) . '</p>' .
+			'<p><em>' . sprintf( __( "If your license has expired or you want to use AudioTheme on more than one site, visit <a href='%s' target='_blank'>AudioTheme.com</a> to upgrade.", 'audiotheme' ), 'http://audiotheme.com/view/audiotheme/' ) . '</em></p>' .
 
-			'<h4>' . __( 'Directory Browsing', 'audiotheme-i18n' ) . '</h4>' .
-			'<p>' . __( "Most servers running WordPress have a feature referred to as directory browsing. When active, visitors can see a list of files in some folders on your server if they know where to look. These folders might contain music or pictures that you don't want to be easily accessed. While anything you make available online can't be completely protected, disabling directory browsing will help hide important files from prying eyes.", 'audiotheme-i18n' ) . '</p>',
+			'<h4>' . __( 'Directory Browsing', 'audiotheme' ) . '</h4>' .
+			'<p>' . __( "Most servers running WordPress have a feature referred to as directory browsing. When active, visitors can see a list of files in some folders on your server if they know where to look. These folders might contain music or pictures that you don't want to be easily accessed. While anything you make available online can't be completely protected, disabling directory browsing will help hide important files from prying eyes.", 'audiotheme' ) . '</p>',
 	) );
 
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'system',
-		'title'   => __( 'System', 'audiotheme-i18n' ),
+		'title'   => __( 'System', 'audiotheme' ),
 		'content' =>
-			'<p>' . __( "The <strong>System</strong> tab displays information about your system that may be useful for support requests.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "At the bottom of the screen is a field to copy the information displayed, so you can send it along with a support request if needed.", 'audiotheme-i18n' ) . '</p>',
+			'<p>' . __( "The <strong>System</strong> tab displays information about your system that may be useful for support requests.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( "At the bottom of the screen is a field to copy the information displayed, so you can send it along with a support request if needed.", 'audiotheme' ) . '</p>',
 	) );
 }

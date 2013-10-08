@@ -20,19 +20,19 @@
  */
 function register_audiotheme_archives() {
 	$labels = array(
-		'name'               => _x( 'Archives', 'post format general name', 'audiotheme-i18n' ),
-		'singular_name'      => _x( 'Archive', 'post format singular name', 'audiotheme-i18n' ),
-		'add_new'            => _x( 'Add New', 'audiotheme_archive',        'audiotheme-i18n' ),
-		'add_new_item'       => __( 'Add New Archive',                      'audiotheme-i18n' ),
-		'edit_item'          => __( 'Edit Archive',                         'audiotheme-i18n' ),
-		'new_item'           => __( 'New Archive',                          'audiotheme-i18n' ),
-		'view_item'          => __( 'View Archive',                         'audiotheme-i18n' ),
-		'search_items'       => __( 'Search Archives',                      'audiotheme-i18n' ),
-		'not_found'          => __( 'No archives found.',                   'audiotheme-i18n' ),
-		'not_found_in_trash' => __( 'No archives found in Trash.',          'audiotheme-i18n' ),
-		'all_items'          => __( 'All Archives',                         'audiotheme-i18n' ),
-		'menu_name'          => __( 'Archives',                             'audiotheme-i18n' ),
-		'name_admin_bar'     => _x( 'Archive', 'add new on admin bar',      'audiotheme-i18n' ),
+		'name'               => _x( 'Archives', 'post format general name', 'audiotheme' ),
+		'singular_name'      => _x( 'Archive', 'post format singular name', 'audiotheme' ),
+		'add_new'            => _x( 'Add New', 'audiotheme_archive',        'audiotheme' ),
+		'add_new_item'       => __( 'Add New Archive',                      'audiotheme' ),
+		'edit_item'          => __( 'Edit Archive',                         'audiotheme' ),
+		'new_item'           => __( 'New Archive',                          'audiotheme' ),
+		'view_item'          => __( 'View Archive',                         'audiotheme' ),
+		'search_items'       => __( 'Search Archives',                      'audiotheme' ),
+		'not_found'          => __( 'No archives found.',                   'audiotheme' ),
+		'not_found_in_trash' => __( 'No archives found in Trash.',          'audiotheme' ),
+		'all_items'          => __( 'All Archives',                         'audiotheme' ),
+		'menu_name'          => __( 'Archives',                             'audiotheme' ),
+		'name_admin_bar'     => _x( 'Archive', 'add new on admin bar',      'audiotheme' ),
 	);
 
 	$args = array(

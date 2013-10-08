@@ -90,7 +90,7 @@ function audiotheme_discography_setup() {
  * @since 1.0.0
  */
 function audiotheme_discography_admin_menu() {
-	add_menu_page( __( 'Discography', 'audiotheme-i18n' ), __( 'Discography', 'audiotheme-i18n' ), 'edit_posts', 'edit.php?post_type=audiotheme_record', null, null, 513 );
+	add_menu_page( __( 'Discography', 'audiotheme' ), __( 'Discography', 'audiotheme' ), 'edit_posts', 'edit.php?post_type=audiotheme_record', null, null, 513 );
 }
 
 /**
@@ -107,36 +107,36 @@ function audiotheme_discography_post_updated_messages( $messages ) {
 
 	$messages['audiotheme_record'] = array(
 		0  => '', // Unused. Messages start at index 1.
-		1  => sprintf( __( 'Record updated. <a href="%s">View Record</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
-		2  => __( 'Custom field updated.', 'audiotheme-i18n' ),
-		3  => __( 'Custom field deleted.', 'audiotheme-i18n' ),
-		4  => __( 'Record updated.', 'audiotheme-i18n' ),
+		1  => sprintf( __( 'Record updated. <a href="%s">View Record</a>', 'audiotheme' ), esc_url( get_permalink( $post->ID ) ) ),
+		2  => __( 'Custom field updated.', 'audiotheme' ),
+		3  => __( 'Custom field deleted.', 'audiotheme' ),
+		4  => __( 'Record updated.', 'audiotheme' ),
 		/* translators: %s: date and time of the revision */
-		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Record restored to revision from %s', 'audiotheme-i18n' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-		6  => sprintf( __( 'Record published. <a href="%s">View Record</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
-		7  => __( 'Record saved.', 'audiotheme-i18n' ),
-		8  => sprintf( __( 'Record submitted. <a target="_blank" href="%s">Preview Record</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
-		9  => sprintf( __( 'Record scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Record</a>', 'audiotheme-i18n' ),
+		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Record restored to revision from %s', 'audiotheme' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6  => sprintf( __( 'Record published. <a href="%s">View Record</a>', 'audiotheme' ), esc_url( get_permalink( $post->ID ) ) ),
+		7  => __( 'Record saved.', 'audiotheme' ),
+		8  => sprintf( __( 'Record submitted. <a target="_blank" href="%s">Preview Record</a>', 'audiotheme' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
+		9  => sprintf( __( 'Record scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Record</a>', 'audiotheme' ),
 		      // translators: Publish box date format, see http://php.net/date
-		      date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
-		10 => sprintf( __( 'Record draft updated. <a target="_blank" href="%s">Preview Record</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
+		      date_i18n( __( 'M j, Y @ G:i', 'audiotheme' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
+		10 => sprintf( __( 'Record draft updated. <a target="_blank" href="%s">Preview Record</a>', 'audiotheme' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
 	);
 
 	$messages['audiotheme_track'] = array(
 		0  => '', // Unused. Messages start at index 1.
-		1  => sprintf( __( 'Track updated. <a href="%s">View Track</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
-		2  => __( 'Custom field updated.', 'audiotheme-i18n' ),
-		3  => __( 'Custom field deleted.', 'audiotheme-i18n' ),
-		4  => __( 'Track updated.', 'audiotheme-i18n' ),
+		1  => sprintf( __( 'Track updated. <a href="%s">View Track</a>', 'audiotheme' ), esc_url( get_permalink( $post->ID ) ) ),
+		2  => __( 'Custom field updated.', 'audiotheme' ),
+		3  => __( 'Custom field deleted.', 'audiotheme' ),
+		4  => __( 'Track updated.', 'audiotheme' ),
 		/* translators: %s: date and time of the revision */
-		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Track restored to revision from %s', 'audiotheme-i18n' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-		6  => sprintf( __( 'Track published. <a href="%s">View Track</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
-		7  => __( 'Track saved.', 'audiotheme-i18n' ),
-		8  => sprintf( __( 'Track submitted. <a target="_blank" href="%s">Preview Track</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
-		9  => sprintf( __( 'Track scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Track</a>', 'audiotheme-i18n' ),
+		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Track restored to revision from %s', 'audiotheme' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6  => sprintf( __( 'Track published. <a href="%s">View Track</a>', 'audiotheme' ), esc_url( get_permalink( $post->ID ) ) ),
+		7  => __( 'Track saved.', 'audiotheme' ),
+		8  => sprintf( __( 'Track submitted. <a target="_blank" href="%s">Preview Track</a>', 'audiotheme' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
+		9  => sprintf( __( 'Track scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Track</a>', 'audiotheme' ),
 		      // translators: Publish box date format, see http://php.net/date
-		      date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
-		10 => sprintf( __( 'Track draft updated. <a target="_blank" href="%s">Preview Track</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
+		      date_i18n( __( 'M j, Y @ G:i', 'audiotheme' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
+		10 => sprintf( __( 'Track draft updated. <a target="_blank" href="%s">Preview Track</a>', 'audiotheme' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
 	);
 
 	return $messages;

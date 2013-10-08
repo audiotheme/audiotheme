@@ -40,7 +40,7 @@ function audiotheme_p2p_load_core() {
 		return;
 	}
 
-	define( 'P2P_TEXTDOMAIN', 'audiotheme-i18n' );
+	define( 'P2P_TEXTDOMAIN', 'audiotheme' );
 
 	require_once( AUDIOTHEME_DIR . 'includes/lib/p2p/util.php' );
 	require_once( AUDIOTHEME_DIR . 'includes/lib/p2p/api.php' );

@@ -20,8 +20,8 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 	 * @see WP_Widget::construct()
 	 */
 	function __construct() {
-		$widget_options = array( 'classname' => 'widget_audiotheme_twitter', 'description' => __( 'Display your latest tweets', 'audiotheme-i18n' ) );
-		parent::__construct( 'audiotheme-twitter', __( 'Twitter (AudioTheme)', 'audiotheme-i18n' ), $widget_options );
+		$widget_options = array( 'classname' => 'widget_audiotheme_twitter', 'description' => __( 'Display your latest tweets', 'audiotheme' ) );
+		parent::__construct( 'audiotheme-twitter', __( 'Twitter (AudioTheme)', 'audiotheme' ), $widget_options );
 	}
 
 	/**
@@ -97,24 +97,24 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 		$title = wp_strip_all_tags( $instance['title'] );
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'audiotheme-i18n' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'audiotheme' ); ?></label>
 			<input type="text" name="<?php echo $this->get_field_name( 'title' ); ?>" id="<?php echo $this->get_field_id( 'title' ); ?>" value="<?php echo esc_attr( $title ); ?>" class="widefat">
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'screen_name' ); ?>"><?php _e( 'Twitter username:', 'audiotheme-i18n' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'screen_name' ); ?>"><?php _e( 'Twitter username:', 'audiotheme' ); ?></label>
 			<input type="text" name="<?php echo $this->get_field_name( 'screen_name' ); ?>" id="<?php echo $this->get_field_id( 'screen_name' ); ?>" value="<?php echo esc_attr( $instance['screen_name'] ); ?>" class="widefat">
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'count' ); ?>"><?php _e( 'Tweets to show:', 'audiotheme-i18n' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'count' ); ?>"><?php _e( 'Tweets to show:', 'audiotheme' ); ?></label>
 			<input type="text" name="<?php echo $this->get_field_name( 'count' ); ?>" id="<?php echo $this->get_field_id( 'count' ); ?>" value="<?php echo esc_attr( $instance['count'] ); ?>" class="small-text">
 		</p>
 		<p>
 			<input type="checkbox" name="<?php echo $this->get_field_name( 'exclude_replies' ); ?>" id="<?php echo $this->get_field_id( 'exclude_replies' ); ?>" <?php checked( $instance['exclude_replies'] ); ?>>
-			<label for="<?php echo $this->get_field_id( 'exclude_replies' ); ?>"><?php _e( 'Hide replies?', 'audiotheme-i18n' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'exclude_replies' ); ?>"><?php _e( 'Hide replies?', 'audiotheme' ); ?></label>
 		</p>
 		<p>
 			<input type="checkbox" name="<?php echo $this->get_field_name( 'include_rts' ); ?>" id="<?php echo $this->get_field_id( 'include_rts' ); ?>" <?php checked( $instance['include_rts'] ); ?>>
-			<label for="<?php echo $this->get_field_id( 'include_rts' ); ?>"><?php _e( 'Include retweets?', 'audiotheme-i18n' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'include_rts' ); ?>"><?php _e( 'Include retweets?', 'audiotheme' ); ?></label>
 		</p>
 		<style type="text/css">
 		.widget .widget-inside div.error p { margin: .25em 0; padding: 2px;}
@@ -159,7 +159,7 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 		$error_key = 'audiotheme_twitter_widget_error-' . $this->number;
 
 		if ( empty( $args['screen_name'] ) ) {
-			set_transient( $error_key, __( 'Twitter username cannot be empty.', 'audiotheme-i18n' ), 60*5 );
+			set_transient( $error_key, __( 'Twitter username cannot be empty.', 'audiotheme' ), 60*5 );
 			return new WP_Error( 'empty_screen_name', __( 'The screen name cannot be empty.' ) );
 		}
 
@@ -200,15 +200,15 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 				} elseif ( isset( $results['errors'] ) ) {
 					$error = $results['errors'][0]['message'];
 				} else {
-					$error = __( 'Unknown response format received from Twitter.', 'audiotheme-i18n' );
+					$error = __( 'Unknown response format received from Twitter.', 'audiotheme' );
 				}
 			} else {
 				if ( is_wp_error( $response ) ) {
 					$error = $response->get_error_message();
 				} elseif ( $code = wp_remote_retrieve_response_code( $response ) ) {
-					$error = sprintf( __( 'Remote response code: %s', 'audiotheme-i18n' ), $code );
+					$error = sprintf( __( 'Remote response code: %s', 'audiotheme' ), $code );
 				} else {
-					$error = __( 'Twitter did not respond. Please wait awhile and try again.', 'audiotheme-i18n' );
+					$error = __( 'Twitter did not respond. Please wait awhile and try again.', 'audiotheme' );
 				}
 			}
 
@@ -220,7 +220,7 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 
 			if ( empty( $tweets ) ) {
 				// @todo Suggest something, check authorization, wait a little while.
-				return new WP_Error( 'no_tweets', __( "There weren't any tweets.", 'audiotheme-i18n' ) );
+				return new WP_Error( 'no_tweets', __( "There weren't any tweets.", 'audiotheme' ) );
 			}
 		}
 

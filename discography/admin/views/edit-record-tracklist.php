@@ -1,10 +1,10 @@
 <table id="record-tracklist" class="audiotheme-repeater audiotheme-edit-after-editor widefat" data-item-template-id="audiotheme-track">
 	<thead>
 		<tr>
-			<th colspan="5"><?php _e( 'Tracks', 'audiotheme-i18n' ) ?></th>
+			<th colspan="5"><?php _e( 'Tracks', 'audiotheme' ) ?></th>
 			<th class="column-action">
 				<?php if ( current_user_can( 'publish_posts' ) ) : ?>
-					<a class="button audiotheme-repeater-add-item"><?php _e( 'Add Track', 'audiotheme-i18n' ) ?></a>
+					<a class="button audiotheme-repeater-add-item"><?php _e( 'Add Track', 'audiotheme' ) ?></a>
 				<?php endif; ?>
 			</th>
 		</tr>
@@ -15,14 +15,14 @@
 	    	<td colspan="5">
 	    		<?php
 	    		printf( '<span class="audiotheme-repeater-sort-warning" style="display: none">%1$s <em>%2$s</em></span>',
-	    			esc_html__( 'The order has been changed.', 'audiotheme-i18n' ),
-	    			esc_html__( 'Save your changes.', 'audiotheme-i18n' )
+	    			esc_html__( 'The order has been changed.', 'audiotheme' ),
+	    			esc_html__( 'Save your changes.', 'audiotheme' )
 	    		);
 	    		?>
 	    	</td>
 			<td class="column-action">
 				<?php if ( current_user_can( 'publish_posts' ) ) : ?>
-					<a class="button audiotheme-repeater-add-item"><?php _e( 'Add Track', 'audiotheme-i18n' ) ?></a>
+					<a class="button audiotheme-repeater-add-item"><?php _e( 'Add Track', 'audiotheme' ) ?></a>
 				<?php endif; ?>
 			</td>
 	    </tr>
@@ -67,18 +67,18 @@
 			<span class="audiotheme-repeater-index"></span>
 			<input type="hidden" name="audiotheme_tracks[__i__][post_id]" value="{{ data.id }}" class="post-id audiotheme-clear-on-add">
 		</td>
-		<td><input type="text" name="audiotheme_tracks[__i__][title]" placeholder="<?php esc_attr_e( 'Title', 'audiotheme-i18n' ) ?>" value="{{ data.title }}" class="widefat audiotheme-clear-on-add"></td>
-		<td><input type="text" name="audiotheme_tracks[__i__][artist]" placeholder="<?php esc_attr_e( 'Artist', 'audiotheme-i18n' ) ?>" value="{{ data.artist }}" class="widefat"></td>
+		<td><input type="text" name="audiotheme_tracks[__i__][title]" placeholder="<?php esc_attr_e( 'Title', 'audiotheme' ) ?>" value="{{ data.title }}" class="widefat audiotheme-clear-on-add"></td>
+		<td><input type="text" name="audiotheme_tracks[__i__][artist]" placeholder="<?php esc_attr_e( 'Artist', 'audiotheme' ) ?>" value="{{ data.artist }}" class="widefat"></td>
 		<td>
 			<div class="audiotheme-media-control audiotheme-input-append"
-				data-title="<?php esc_attr_e( 'Choose an MP3', 'audiotheme-i18n' ); ?>"
-				data-update-text="<?php esc_attr_e( 'Update MP3', 'audiotheme-i18n' ); ?>"
+				data-title="<?php esc_attr_e( 'Choose an MP3', 'audiotheme' ); ?>"
+				data-update-text="<?php esc_attr_e( 'Update MP3', 'audiotheme' ); ?>"
 				data-file-type="audio"
 				data-upload-extensions="mp3"
 				data-target=".track-file-url"
 				data-return-property="url">
-				<input type="text" name="audiotheme_tracks[__i__][file_url]" id="track-file-url-__i__" placeholder="<?php esc_attr_e( 'File URL', 'audiotheme-i18n' ) ?>" value="{{ data.fileUrl }}" class="track-file-url widefat audiotheme-clear-on-add">
-				<a href="#" class="audiotheme-media-control-choose audiotheme-input-append-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>admin/images/music-note.png" width="12" height="12" alt="<?php esc_attr_e( 'Choose MP3', 'audiotheme-i18n' ); ?>"></a>
+				<input type="text" name="audiotheme_tracks[__i__][file_url]" id="track-file-url-__i__" placeholder="<?php esc_attr_e( 'File URL', 'audiotheme' ) ?>" value="{{ data.fileUrl }}" class="track-file-url widefat audiotheme-clear-on-add">
+				<a href="#" class="audiotheme-media-control-choose audiotheme-input-append-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>admin/images/music-note.png" width="12" height="12" alt="<?php esc_attr_e( 'Choose MP3', 'audiotheme' ); ?>"></a>
 			</div>
 		</td>
 		<td class="column-track-info">
@@ -92,8 +92,8 @@
 			&nbsp;
 		</td>
 		<td class="column-action">
-			<a href="<?php echo admin_url( 'post.php' ); ?>?post={{ data.id }}&amp;action=edit" class="audiotheme-remove-on-add"><?php esc_html_e( 'Edit', 'audiotheme-i18n' ); ?></a>
-			<a class="audiotheme-repeater-remove-item audiotheme-show-on-add"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/delete.png" width="16" height="16" alt="<?php esc_attr_e( 'Delete Item', 'audiotheme-i18n' ) ?>" title="<?php esc_attr_e( 'Delete Item', 'audiotheme-i18n' ) ?>" class="icon-delete"></a>
+			<a href="<?php echo admin_url( 'post.php' ); ?>?post={{ data.id }}&amp;action=edit" class="audiotheme-remove-on-add"><?php esc_html_e( 'Edit', 'audiotheme' ); ?></a>
+			<a class="audiotheme-repeater-remove-item audiotheme-show-on-add"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/delete.png" width="16" height="16" alt="<?php esc_attr_e( 'Delete Item', 'audiotheme' ) ?>" title="<?php esc_attr_e( 'Delete Item', 'audiotheme' ) ?>" class="icon-delete"></a>
 		</td>
 	</tr>
 </script>

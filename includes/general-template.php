@@ -145,11 +145,11 @@ function audiotheme_archive_nav() {
 		?>
 		<div class="audiotheme-paged-nav audiotheme-clearfix" role="navigation">
 			<?php if ( get_previous_posts_link() ) : ?>
-				<span class="audiotheme-paged-nav-prev"><?php previous_posts_link( __( '&larr; Previous', 'audiotheme-i18n' ) ); ?></span>
+				<span class="audiotheme-paged-nav-prev"><?php previous_posts_link( __( '&larr; Previous', 'audiotheme' ) ); ?></span>
 			<?php endif; ?>
 
 			<?php if ( get_next_posts_link() ) : ?>
-				<span class="audiotheme-paged-nav-next"><?php next_posts_link( __( 'Next &rarr;', 'audiotheme-i18n' ) ) ?></span>
+				<span class="audiotheme-paged-nav-next"><?php next_posts_link( __( 'Next &rarr;', 'audiotheme' ) ) ?></span>
 			<?php endif; ?>
 		</div>
 		<?php

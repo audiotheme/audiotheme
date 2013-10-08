@@ -50,21 +50,21 @@ while ( have_posts() ) :
 
 		<dd class="audiotheme-gig-meta audiotheme-meta-list">
 			<span class="audiotheme-gig-time audiotheme-meta-item">
-				<strong class="audiotheme-label"><?php _e( 'Time', 'audiotheme-i18n' ); ?></strong>
-				<?php echo get_audiotheme_gig_time( '', 'g:i A', false, array( 'empty_time' => __( 'TBD', 'audiotheme-i18n' ) ) ); ?>
+				<strong class="audiotheme-label"><?php _e( 'Time', 'audiotheme' ); ?></strong>
+				<?php echo get_audiotheme_gig_time( '', 'g:i A', false, array( 'empty_time' => __( 'TBD', 'audiotheme' ) ) ); ?>
 			</span>
 
 			<?php if ( audiotheme_gig_has_ticket_meta() ) : ?>
 
 				<span class="audiotheme-gig-tickets audiotheme-meta-item" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-					<strong class="audiotheme-label"><?php _e( 'Admission', 'audiotheme-i18n' ); ?></strong>
+					<strong class="audiotheme-label"><?php _e( 'Admission', 'audiotheme' ); ?></strong>
 
 					<?php if ( $gig_tickets_price = get_audiotheme_gig_tickets_price() ) : ?>
 						<span class="audiotheme-gig-tickets-price" itemprop="price"><?php echo esc_html( $gig_tickets_price ); ?></span>
 					<?php endif; ?>
 
 					<?php if ( $gig_tickets_url = get_audiotheme_gig_tickets_url() ) : ?>
-						<span class="audiotheme-gig-tickets-link"><a href="<?php echo esc_url( $gig_tickets_url ); ?>" target="_blank" itemprop="url"><?php _e( 'Buy Tickets', 'audiotheme-i18n' ); ?></a></span>
+						<span class="audiotheme-gig-tickets-link"><a href="<?php echo esc_url( $gig_tickets_url ); ?>" target="_blank" itemprop="url"><?php _e( 'Buy Tickets', 'audiotheme' ); ?></a></span>
 					<?php endif; ?>
 				</span>
 

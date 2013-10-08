@@ -100,7 +100,7 @@ function audiotheme_archives_add_meta_boxes( $post ) {
 
 	remove_meta_box( 'submitdiv', 'audiotheme_archive', 'side' );
 
-	add_meta_box( 'submitdiv', __( 'Update', 'audiotheme-i18n' ), 'audiotheme_post_submit_meta_box', 'audiotheme_archive', 'side', 'high', array(
+	add_meta_box( 'submitdiv', __( 'Update', 'audiotheme' ), 'audiotheme_post_submit_meta_box', 'audiotheme_archive', 'side', 'high', array(
 		'force_delete'      => false,
 		'show_publish_date' => false,
 		'show_statuses'     => false,
@@ -114,7 +114,7 @@ function audiotheme_archives_add_meta_boxes( $post ) {
 	if ( $show || $show_for_post_type ) {
 		add_meta_box(
 			'audiothemesettingsdiv',
-			__( 'Archive Settings', 'audiotheme-i18n' ),
+			__( 'Archive Settings', 'audiotheme' ),
 			'audiotheme_archive_settings_meta_box',
 			'audiotheme_archive',
 			'side',
@@ -161,19 +161,19 @@ function audiotheme_archives_post_updated_messages( $messages ) {
 
 	$messages['audiotheme_archive'] = array(
 		0  => '', // Unused. Messages start at index 1.
-		1  => sprintf( __( 'Archive updated. <a href="%s">View Archive</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
-		2  => __( 'Custom field updated.', 'audiotheme-i18n' ),
-		3  => __( 'Custom field deleted.', 'audiotheme-i18n' ),
-		4  => __( 'Archive updated.', 'audiotheme-i18n' ),
+		1  => sprintf( __( 'Archive updated. <a href="%s">View Archive</a>', 'audiotheme' ), esc_url( get_permalink( $post->ID ) ) ),
+		2  => __( 'Custom field updated.', 'audiotheme' ),
+		3  => __( 'Custom field deleted.', 'audiotheme' ),
+		4  => __( 'Archive updated.', 'audiotheme' ),
 		/* translators: %s: date and time of the revision */
-		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Archive restored to revision from %s', 'audiotheme-i18n' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-		6  => sprintf( __( 'Archive published. <a href="%s">View Archive</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
-		7  => __( 'Archive saved.', 'audiotheme-i18n' ),
-		8  => sprintf( __( 'Archive submitted. <a target="_blank" href="%s">Preview Archive</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
-		9  => sprintf( __( 'Archive scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Archive</a>', 'audiotheme-i18n' ),
+		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Archive restored to revision from %s', 'audiotheme' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6  => sprintf( __( 'Archive published. <a href="%s">View Archive</a>', 'audiotheme' ), esc_url( get_permalink( $post->ID ) ) ),
+		7  => __( 'Archive saved.', 'audiotheme' ),
+		8  => sprintf( __( 'Archive submitted. <a target="_blank" href="%s">Preview Archive</a>', 'audiotheme' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
+		9  => sprintf( __( 'Archive scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Archive</a>', 'audiotheme' ),
 		      // translators: Publish box date format, see http://php.net/date
-		      date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
-		10 => sprintf( __( 'Archive draft updated. <a target="_blank" href="%s">Preview Archive</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
+		      date_i18n( __( 'M j, Y @ G:i', 'audiotheme' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
+		10 => sprintf( __( 'Archive draft updated. <a target="_blank" href="%s">Preview Archive</a>', 'audiotheme' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
 	);
 
 	return $messages;
@@ -296,19 +296,19 @@ function audiotheme_archive_help() {
 
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'standard-fields',
-		'title'   => __( 'Standard Fields', 'audiotheme-i18n' ),
+		'title'   => __( 'Standard Fields', 'audiotheme' ),
 		'content' =>
-			'<p>' . __( "<strong>Title</strong> - Enter the title of the archive screen.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "<strong>Editor</strong> - Enter an introduction for the archive. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "When you're done editing, click the Update button.", 'audiotheme-i18n' ) . '</p>',
+			'<p>' . __( "<strong>Title</strong> - Enter the title of the archive screen.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( "<strong>Editor</strong> - Enter an introduction for the archive. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( "When you're done editing, click the Update button.", 'audiotheme' ) . '</p>',
 	) );
 
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'permalinks',
-		'title'		=> __( 'Permalinks', 'audiotheme-i18n' ),
+		'title'		=> __( 'Permalinks', 'audiotheme' ),
 		'content' 	=>
-			'<p>' . __( "Editing the permalink for an archive changes the URL for all content associated with that archive. For example, the default discography slug is <code>music</code>; changing it to <code>albums</code> would change your URLs like this:", 'audiotheme-i18n' ) . '</p>' .
-			'<p><strong>' . __( "Before:", 'audiotheme-i18n' ) . '</strong> <code>' . home_url( '/music/a-record-name/' ) . '</code><br><strong>' . __( "After:", 'audiotheme-i18n' ) . '</strong> <code>' . home_url( '/albums/a-record-name/' ) . '</code></p>' .
-			'<p>' . __( "Taking this into consideration, you shouldn't change your slug on an established site, but it provides a powerful option to easily customize the structure of your URLs.", 'audiotheme-i18n' ) . '</p>',
+			'<p>' . __( "Editing the permalink for an archive changes the URL for all content associated with that archive. For example, the default discography slug is <code>music</code>; changing it to <code>albums</code> would change your URLs like this:", 'audiotheme' ) . '</p>' .
+			'<p><strong>' . __( "Before:", 'audiotheme' ) . '</strong> <code>' . home_url( '/music/a-record-name/' ) . '</code><br><strong>' . __( "After:", 'audiotheme' ) . '</strong> <code>' . home_url( '/albums/a-record-name/' ) . '</code></p>' .
+			'<p>' . __( "Taking this into consideration, you shouldn't change your slug on an established site, but it provides a powerful option to easily customize the structure of your URLs.", 'audiotheme' ) . '</p>',
 	) );
 }

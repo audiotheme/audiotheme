@@ -213,7 +213,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		$status_links['upcoming'] = sprintf( '<a href="%s"%s>%s <span class="count">(%d)</span></a>',
 			$base_url,
 			( 'upcoming' == $this->current_view ) ? ' class="current"' : '',
-			__( 'Upcoming', 'audiotheme-i18n' ),
+			__( 'Upcoming', 'audiotheme' ),
 			$upcoming_count
 		);
 
@@ -221,7 +221,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		$status_links['past'] = sprintf( '<a href="%s"%s>%s <span class="count">(%d)</span></a>',
 			add_query_arg( array( 'gig_date' => current_time( 'mysql' ), 'compare' => '<' ), $base_url ),
 			( 'past' == $this->current_view ) ? ' class="current"' : '',
-			__( 'Past', 'audiotheme-i18n' ),
+			__( 'Past', 'audiotheme' ),
 			$past_count
 		);
 
@@ -293,7 +293,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 				</select>
 				<?php
 
-				submit_button( __( 'Filter', 'audiotheme-i18n' ), 'secondary', false, false, array( 'id' => 'post-query-submit' ) );
+				submit_button( __( 'Filter', 'audiotheme' ), 'secondary', false, false, array( 'id' => 'post-query-submit' ) );
 			}
 			?>
 		</div>
@@ -349,13 +349,13 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		$actions = array();
 
 		if ( $this->is_trash ) {
-			$actions['untrash'] = __( 'Restore', 'audiotheme-i18n' );
+			$actions['untrash'] = __( 'Restore', 'audiotheme' );
 		}
 
 		if ( $this->is_trash || ! EMPTY_TRASH_DAYS ) {
-			$actions['delete'] = __( 'Delete Permanently', 'audiotheme-i18n' );
+			$actions['delete'] = __( 'Delete Permanently', 'audiotheme' );
 		} else {
-			$actions['trash'] = __( 'Move to Trash', 'audiotheme-i18n' );
+			$actions['trash'] = __( 'Move to Trash', 'audiotheme' );
 		}
 
 		return $actions;
@@ -393,10 +393,10 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 					$trashed = 0;
 					foreach( (array) $post_ids as $post_id ) {
 						if ( ! current_user_can( $post_type_object->cap->delete_post, $post_id ) )
-							wp_die( __( 'You are not allowed to move this item to the Trash.', 'audiotheme-i18n' ) );
+							wp_die( __( 'You are not allowed to move this item to the Trash.', 'audiotheme' ) );
 
 						if ( ! wp_trash_post( $post_id ) )
-							wp_die( __( 'Error moving to Trash.', 'audiotheme-i18n' ) );
+							wp_die( __( 'Error moving to Trash.', 'audiotheme' ) );
 						$trashed++;
 					}
 					$sendback = add_query_arg( array( 'trashed' => $trashed, 'ids' => join( ',', $post_ids ) ), $sendback );
@@ -405,10 +405,10 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 					$untrashed = 0;
 					foreach( (array) $post_ids as $post_id ) {
 						if ( ! current_user_can( $post_type_object->cap->delete_post, $post_id ) )
-							wp_die( __( 'You are not allowed to restore this item from the Trash.', 'audiotheme-i18n' ) );
+							wp_die( __( 'You are not allowed to restore this item from the Trash.', 'audiotheme' ) );
 
 						if ( ! wp_untrash_post( $post_id ) )
-							wp_die( __( 'Error in restoring from Trash.', 'audiotheme-i18n' ) );
+							wp_die( __( 'Error in restoring from Trash.', 'audiotheme' ) );
 
 						$untrashed++;
 					}
@@ -419,10 +419,10 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 					$deleted = 0;
 					foreach ( $post_ids as $post_id ) {
 						if ( ! current_user_can( $post_type_object->cap->delete_post, $post_id ) )
-							wp_die( __( 'You are not allowed to delete this item.', 'audiotheme-i18n' ) );
+							wp_die( __( 'You are not allowed to delete this item.', 'audiotheme' ) );
 
 						if ( ! wp_delete_post( $post_id ) )
-							wp_die( __( 'Error in deleting...', 'audiotheme-i18n' ) );
+							wp_die( __( 'Error in deleting...', 'audiotheme' ) );
 						$deleted++;
 					}
 					$sendback = add_query_arg( 'deleted', $deleted, $sendback );
@@ -469,7 +469,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		$statuses = get_post_statuses();
 		$status = ( 'publish' != $item->post_status && array_key_exists( $item->post_status, $statuses ) ) ? ' - <strong>' . esc_html( $statuses[ $item->post_status ] ) . '</strong>' : '';
 
-		$date = ( empty( $item->gig_datetime ) ) ? __( '(no date)', 'audiotheme-i18n' ) : mysql2date( get_option( 'date_format' ), $item->gig_datetime );
+		$date = ( empty( $item->gig_datetime ) ) ? __( '(no date)', 'audiotheme' ) : mysql2date( get_option( 'date_format' ), $item->gig_datetime );
 		$out = sprintf( '<strong><a href="%1$s" class="row-title">%2$s</a></strong> - %3$s%4$s<br>',
 			esc_url( get_edit_post_link( $item->ID ) ),
 			esc_html( $date ),
@@ -481,30 +481,30 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		$can_edit_post = current_user_can( $post_type_object->cap->edit_post, $item->ID );
 		
 		if ( $can_edit_post && 'trash' != $item->post_status ) {
-			$actions['edit'] = '<a href="' . get_edit_post_link( $item->ID, true ) . '" title="' . esc_attr( __( 'Edit this item', 'audiotheme-i18n' ) ) . '">' . __( 'Edit', 'audiotheme-i18n' ) . '</a>';
+			$actions['edit'] = '<a href="' . get_edit_post_link( $item->ID, true ) . '" title="' . esc_attr( __( 'Edit this item', 'audiotheme' ) ) . '">' . __( 'Edit', 'audiotheme' ) . '</a>';
 			#$actions['inline hide-if-no-js'] = '<a href="#" class="editinline" title="' . esc_attr( __( 'Edit this item inline' ) ) . '">' . __( 'Quick&nbsp;Edit' ) . '</a>';
 		}
 
 		if ( current_user_can( $post_type_object->cap->delete_post, $item->ID ) ) {
 			if ( 'trash' == $item->post_status ) {
-				$actions['untrash'] = "<a title='" . esc_attr( __( 'Restore this item from the Trash', 'audiotheme-i18n' ) ) . "' href='" . wp_nonce_url( admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $item->ID ) ), 'untrash-post_' . $item->ID ) . "'>" . __( 'Restore', 'audiotheme-i18n' ) . "</a>";
+				$actions['untrash'] = "<a title='" . esc_attr( __( 'Restore this item from the Trash', 'audiotheme' ) ) . "' href='" . wp_nonce_url( admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $item->ID ) ), 'untrash-post_' . $item->ID ) . "'>" . __( 'Restore', 'audiotheme' ) . "</a>";
 			} elseif ( EMPTY_TRASH_DAYS ) {
-				$actions['trash'] = "<a class='submitdelete' title='" . esc_attr( __( 'Move this item to the Trash', 'audiotheme-i18n' ) ) . "' href='" . get_delete_post_link( $item->ID ) . "'>" . __( 'Trash', 'audiotheme-i18n' ) . "</a>";
+				$actions['trash'] = "<a class='submitdelete' title='" . esc_attr( __( 'Move this item to the Trash', 'audiotheme' ) ) . "' href='" . get_delete_post_link( $item->ID ) . "'>" . __( 'Trash', 'audiotheme' ) . "</a>";
 			}
 
 			if ( 'trash' == $item->post_status || ! EMPTY_TRASH_DAYS ) {
-				$onclick = " onclick=\"return confirm('" . esc_js( sprintf( __( 'Are you sure you want to delete this %s?', 'audiotheme-i18n' ), strtolower( $post_type_object->labels->singular_name ) ) ) . "');\"";
-				$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Delete this item permanently', 'audiotheme-i18n' ) ) . "' href='" . get_delete_post_link( $item->ID, '', true ) . "'$onclick>" . __( 'Delete Permanently', 'audiotheme-i18n' ) . "</a>";
+				$onclick = " onclick=\"return confirm('" . esc_js( sprintf( __( 'Are you sure you want to delete this %s?', 'audiotheme' ), strtolower( $post_type_object->labels->singular_name ) ) ) . "');\"";
+				$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Delete this item permanently', 'audiotheme' ) ) . "' href='" . get_delete_post_link( $item->ID, '', true ) . "'$onclick>" . __( 'Delete Permanently', 'audiotheme' ) . "</a>";
 			}
 		}
 
 		if ( $post_type_object->public ) {
 			if ( in_array( $item->post_status, array( 'pending', 'draft', 'future' ) ) ) {
 				if ( $can_edit_post ) {
-					$actions['view'] = '<a href="' . esc_url( add_query_arg( 'preview', 'true', get_permalink( $item->ID ) ) ) . '" title="' . esc_attr( sprintf( __( 'Preview &#8220;%s&#8221;', 'audiotheme-i18n' ), $item->post_title ) ) . '" rel="permalink">' . __( 'Preview', 'audiotheme-i18n' ) . '</a>';
+					$actions['view'] = '<a href="' . esc_url( add_query_arg( 'preview', 'true', get_permalink( $item->ID ) ) ) . '" title="' . esc_attr( sprintf( __( 'Preview &#8220;%s&#8221;', 'audiotheme' ), $item->post_title ) ) . '" rel="permalink">' . __( 'Preview', 'audiotheme' ) . '</a>';
 				}
 			} elseif ( 'trash' != $item->post_status ) {
-				$actions['view'] = '<a href="' . get_permalink( $item->ID ) . '" title="' . esc_attr( sprintf( __( 'View &#8220;%s&#8221;', 'audiotheme-i18n' ), $item->post_title ) ) . '" rel="permalink">' . __( 'View', 'audiotheme-i18n' ) . '</a>';
+				$actions['view'] = '<a href="' . get_permalink( $item->ID ) . '" title="' . esc_attr( sprintf( __( 'View &#8220;%s&#8221;', 'audiotheme' ), $item->post_title ) ) . '" rel="permalink">' . __( 'View', 'audiotheme' ) . '</a>';
 			}
 		}
 
@@ -580,7 +580,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		$m = isset( $_GET['m'] ) ? (int) $_GET['m'] : 0;
 		?>
 		<select name="m">
-			<option value="0" <?php selected( $m, 0 ); ?>><?php _e( 'Show all dates', 'audiotheme-i18n' ); ?></option>
+			<option value="0" <?php selected( $m, 0 ); ?>><?php _e( 'Show all dates', 'audiotheme' ); ?></option>
 			<?php
 			foreach ( $months as $arc_row ) {
 				if ( 0 == $arc_row->year ) {

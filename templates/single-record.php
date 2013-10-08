@@ -36,14 +36,14 @@ get_header();
 			<ul class="audiotheme-record-meta audiotheme-meta-list">
 				<?php if ( $year = get_audiotheme_record_release_year() ) : ?>
 					<li class="audiotheme-meta-item">
-						<span class="audiotheme-label"><?php _e( 'Release', 'audiotheme-i18n' ); ?></span>
+						<span class="audiotheme-label"><?php _e( 'Release', 'audiotheme' ); ?></span>
 						<span itemprop="dateCreated"><?php echo esc_html( $year ); ?></span>
 					</li>
 				<?php endif; ?>
 
 				<?php if ( $genre = get_audiotheme_record_genre() ) : ?>
 					<li class="audiotheme-meta-item">
-						<span class="audiotheme-label"><?php _e( 'Genre', 'audiotheme-i18n' ); ?></span>
+						<span class="audiotheme-label"><?php _e( 'Genre', 'audiotheme' ); ?></span>
 						<span itemprop="genre"><?php echo esc_html( $genre ); ?></span>
 					</li>
 				<?php endif; ?>
@@ -53,7 +53,7 @@ get_header();
 		<?php if ( $links = get_audiotheme_record_links() ) : ?>
 
 			<div class="audiotheme-record-links">
-				<h2 class="audiotheme-record-links-title"><?php _e( 'Purchase', 'audiotheme-i18n' ); ?></h2>
+				<h2 class="audiotheme-record-links-title"><?php _e( 'Purchase', 'audiotheme' ); ?></h2>
 				<ul class="audiotheme-record-links-list">
 					<?php
 					foreach( $links as $link ) {
@@ -72,7 +72,7 @@ get_header();
 		<?php if ( $tracks = get_audiotheme_record_tracks() ) : ?>
 
 			<div class="audiotheme-tracklist-section">
-				<h2 class="audiotheme-tracklist-title audiotheme-label"><?php _e( 'Track List', 'audiotheme-i18n' ); ?></h2>
+				<h2 class="audiotheme-tracklist-title audiotheme-label"><?php _e( 'Track List', 'audiotheme' ); ?></h2>
 				<ol class="audiotheme-tracklist">
 
 					<?php foreach ( $tracks as $track ) : ?>

@@ -1,19 +1,19 @@
 <p class="audiotheme-field">
-	<label for="record-year"><?php _e( 'Release Year', 'audiotheme-i18n' ); ?></label>
+	<label for="record-year"><?php _e( 'Release Year', 'audiotheme' ); ?></label>
 	<input type="text" name="release_year" id="record-year" value="<?php echo esc_attr( get_audiotheme_record_release_year( $post->ID ) ) ; ?>" class="widefat">
 </p>
 <p class="audiotheme-field">
-	<label for="record-artist"><?php _e( 'Artist', 'audiotheme-i18n' ); ?></label>
+	<label for="record-artist"><?php _e( 'Artist', 'audiotheme' ); ?></label>
 	<input type="text" name="artist" id="record-artist" value="<?php echo esc_attr( get_audiotheme_record_artist( $post->ID ) ) ; ?>" class="widefat">
 </p>
 <p class="audiotheme-field">
-	<label for="record-genre"><?php _e( 'Genre', 'audiotheme-i18n' ); ?></label>
+	<label for="record-genre"><?php _e( 'Genre', 'audiotheme' ); ?></label>
 	<input type="text" name="genre" id="record-genre" value="<?php echo esc_attr( get_audiotheme_record_genre( $post->ID ) ) ; ?>" class="widefat">
 </p>
 
 <?php if ( $record_types ) : ?>
 	<p id="audiotheme-record-types" class="audiotheme-field">
-		<label><?php _e( 'Type', 'audiotheme-i18n' ) ?></label><br />
+		<label><?php _e( 'Type', 'audiotheme' ) ?></label><br />
 		<?php
 		foreach ( $record_types as $slug => $name ) {
 			echo sprintf( '<input type="radio" name="record_type[]" id="%1$s" value="%1$s"%2$s> <label for="%1$s">%3$s</label><br />',
@@ -34,11 +34,11 @@
 	<tfoot>
 		<tr>
 			<td colspan="2">
-				<a class="button audiotheme-repeater-add-item"><?php _e( 'Add URL', 'audiotheme-i18n' ) ?></a>
+				<a class="button audiotheme-repeater-add-item"><?php _e( 'Add URL', 'audiotheme' ) ?></a>
 				<?php
 				printf( '<span class="audiotheme-repeater-sort-warning" style="display: none;">%1$s <br /><em>%2$s</em></span>',
-					esc_html__( 'The order has been changed.', 'audiotheme-i18n' ),
-					esc_html__( 'Save your changes.', 'audiotheme-i18n' )
+					esc_html__( 'The order has been changed.', 'audiotheme' ),
+					esc_html__( 'Save your changes.', 'audiotheme' )
 				);
 				?>
 			</td>
@@ -51,9 +51,9 @@
 			$link = wp_parse_args( $link, array( 'name' => '', 'url' => '' ) );
 			?>
 			<tr class="audiotheme-repeater-item">
-				<td><input type="text" name="record_links[<?php echo $i; ?>][name]" value="<?php echo esc_attr( $link['name'] ); ?>" placeholder="<?php esc_attr_e( 'Text', 'audiotheme-i18n' ); ?>" class="record-link-name audiotheme-clear-on-add" style="width: 8em"></td>
-				<td><input type="text" name="record_links[<?php echo $i; ?>][url]" value="<?php echo esc_url( $link['url'] ); ?>" placeholder="<?php esc_attr_e( 'URL', 'audiotheme-i18n' ); ?>" class="widefat audiotheme-clear-on-add"></td>
-				<td class="column-action"><a class="audiotheme-repeater-remove-item"><img src="<?php echo esc_url( AUDIOTHEME_URI . '/admin/images/delete.png' ); ?>" width="16" height="16" alt="<?php esc_attr_e( 'Delete Item', 'audiotheme-i18n' ) ?>" title="<?php _e( 'Delete Item', 'audiotheme-i18n' ) ?>" class="icon-delete" /></a></td>
+				<td><input type="text" name="record_links[<?php echo $i; ?>][name]" value="<?php echo esc_attr( $link['name'] ); ?>" placeholder="<?php esc_attr_e( 'Text', 'audiotheme' ); ?>" class="record-link-name audiotheme-clear-on-add" style="width: 8em"></td>
+				<td><input type="text" name="record_links[<?php echo $i; ?>][url]" value="<?php echo esc_url( $link['url'] ); ?>" placeholder="<?php esc_attr_e( 'URL', 'audiotheme' ); ?>" class="widefat audiotheme-clear-on-add"></td>
+				<td class="column-action"><a class="audiotheme-repeater-remove-item"><img src="<?php echo esc_url( AUDIOTHEME_URI . '/admin/images/delete.png' ); ?>" width="16" height="16" alt="<?php esc_attr_e( 'Delete Item', 'audiotheme' ) ?>" title="<?php _e( 'Delete Item', 'audiotheme' ) ?>" class="icon-delete" /></a></td>
 			</tr>
 		<?php endforeach; ?>
 	</tbody>

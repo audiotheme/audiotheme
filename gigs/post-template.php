@@ -1036,7 +1036,7 @@ function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 		'address'   => '',
 		'width'     => '100%',
 		'height'    => 300,
-		'link_text' => __( 'Get Directions', 'audiotheme-i18n' ),
+		'link_text' => __( 'Get Directions', 'audiotheme' ),
 		'format'    => '%1$s<p class="venue-map-link">%2$s</p>',
 	) );
 

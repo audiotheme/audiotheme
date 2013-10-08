@@ -63,13 +63,13 @@ get_header();
 				<ul class="audiotheme-record-links-list">
 					<?php if ( $download_url ) : ?>
 						<li class="audiotheme-record-links-item">
-							<a href="<?php echo esc_url( $download_url ); ?>" class="audiotheme-record-link" itemprop="url" target="_blank"><?php _e( 'Download', 'audiotheme-i18n' ); ?></a>
+							<a href="<?php echo esc_url( $download_url ); ?>" class="audiotheme-record-link" itemprop="url" target="_blank"><?php _e( 'Download', 'audiotheme' ); ?></a>
 						</li>
 					<?php endif; ?>
 
 					<?php if ( $purchase_url ) : ?>
 						<li class="audiotheme-record-links-item">
-							<a href="<?php echo esc_url( $purchase_url ); ?>" class="audiotheme-record-link" itemprop="url" target="_blank"><?php _e( 'Purchase', 'audiotheme-i18n' ); ?></a>
+							<a href="<?php echo esc_url( $purchase_url ); ?>" class="audiotheme-record-link" itemprop="url" target="_blank"><?php _e( 'Purchase', 'audiotheme' ); ?></a>
 						</li>
 					<?php endif; ?>
 				</ul>

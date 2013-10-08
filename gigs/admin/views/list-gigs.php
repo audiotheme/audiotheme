@@ -9,7 +9,7 @@
 		}
 
 		if ( ! empty( $_REQUEST['s'] ) ) {
-			printf( ' <span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;', 'audiotheme-i18n' ) . '</span>', get_search_query() );
+			printf( ' <span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;', 'audiotheme' ) . '</span>', get_search_query() );
 		}
 		?>
 	</h2>
@@ -41,7 +41,7 @@
 				if ( isset( $_REQUEST['trashed'] ) && (int) $_REQUEST['trashed'] ) {
 					$messages[] = sprintf( _n( 'Item moved to the Trash.', '%s items moved to the Trash.', $_REQUEST['trashed'] ), number_format_i18n( $_REQUEST['trashed'] ) );
 					$ids = isset( $_REQUEST['ids'] ) ? $_REQUEST['ids'] : 0;
-					$messages[] = '<a href="' . esc_url( wp_nonce_url( get_audiotheme_gig_admin_url( "action=untrash&ids=$ids" ), "bulk-gigs" ) ) . '">' . __( 'Undo', 'audiotheme-i18n' ) . '</a>';
+					$messages[] = '<a href="' . esc_url( wp_nonce_url( get_audiotheme_gig_admin_url( "action=untrash&ids=$ids" ), "bulk-gigs" ) ) . '">' . __( 'Undo', 'audiotheme' ) . '</a>';
 					unset( $_REQUEST['trashed'] );
 				}
 

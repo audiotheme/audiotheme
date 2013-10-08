@@ -17,8 +17,8 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 	 * @see WP_Widget::construct()
 	 */
 	function __construct() {
-		$widget_options = array( 'classname' => 'widget_audiotheme_upcoming_gigs', 'description' => __( 'Display a list of upcoming gigs', 'audiotheme-i18n' ) );
-		parent::__construct( 'audiotheme-upcoming-gigs', __( 'Upcoming Gigs (AudioTheme)', 'audiotheme-i18n' ), $widget_options );
+		$widget_options = array( 'classname' => 'widget_audiotheme_upcoming_gigs', 'description' => __( 'Display a list of upcoming gigs', 'audiotheme' ) );
+		parent::__construct( 'audiotheme-upcoming-gigs', __( 'Upcoming Gigs (AudioTheme)', 'audiotheme' ), $widget_options );
 		
 		add_action( 'save_post', array( $this, 'flush_group_cache' ) );
 		add_action( 'deleted_post', array( $this, 'flush_group_cache' ) );
@@ -44,7 +44,7 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 		extract( $args );
 
 		$instance['title_raw'] = $instance['title'];
-		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Upcoming Gigs', 'audiotheme-i18n' ) : $instance['title'], $instance, $this->id_base );
+		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Upcoming Gigs', 'audiotheme' ) : $instance['title'], $instance, $this->id_base );
 		$instance['title'] = apply_filters( 'audiotheme_widget_title', $instance['title'], $instance, $args, $this->id_base );
 
 		$instance['date_format'] = apply_filters( 'audiotheme_widget_upcoming_gigs_date_format', get_option( 'date_format' ) );
@@ -128,11 +128,11 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 		$number = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'audiotheme-i18n' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'audiotheme' ); ?></label>
 			<input type="text" name="<?php echo $this->get_field_name( 'title' ); ?>" id="<?php echo $this->get_field_id( 'title' ); ?>" class="widefat" value="<?php echo $title; ?>">
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of gigs to show:', 'audiotheme-i18n' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of gigs to show:', 'audiotheme' ); ?></label>
 			<input type="text" name="<?php echo $this->get_field_name( 'number' ); ?>" id="<?php echo $this->get_field_id( 'number' ); ?>" value="<?php echo $number; ?>" size="3">
 		</p>
 		<?php

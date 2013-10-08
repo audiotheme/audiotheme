@@ -16,7 +16,7 @@
  * @since 1.2.0
  */
 function audiotheme_framework_not_a_theme_setup_as_theme() {
-	load_theme_textdomain( 'audiotheme-i18n', get_template_directory() . '/languages' );
+	load_theme_textdomain( 'audiotheme', get_template_directory() . '/languages' );
 }
 add_action( 'after_setup_theme', 'audiotheme_framework_not_a_theme_setup_as_theme' );
 
@@ -82,20 +82,20 @@ function audiotheme_framework_not_a_theme_nag() {
 		case 'plugin-exists' :
 			if ( ! is_multisite() && current_user_can( 'delete_themes' ) ) {
 				$stylesheet = get_template();
-				$delete_link = sprintf( __( 'You should <a href="%s">delete the theme</a> and activate as a plugin instead.', 'audiotheme-i18n' ),
+				$delete_link = sprintf( __( 'You should <a href="%s">delete the theme</a> and activate as a plugin instead.', 'audiotheme' ),
 					wp_nonce_url( 'themes.php?action=delete&amp;stylesheet=' . urlencode( $stylesheet ), 'delete-theme_' . $stylesheet )
 				);
 			}
 
-			$notice  = __( 'The AudioTheme framework appears to already exist as a plugin.', 'audiotheme-i18n' );
+			$notice  = __( 'The AudioTheme framework appears to already exist as a plugin.', 'audiotheme' );
 			$notice .= ( empty( $delete_link ) ) ? '' : ' ' . $delete_link;
 			break;
 		case 'move-failed' :
-			$notice  = __( 'The AudioTheme framework could not be moved to your plugins folder automatically. You should move it manually.', 'audiotheme-i18n' );
+			$notice  = __( 'The AudioTheme framework could not be moved to your plugins folder automatically. You should move it manually.', 'audiotheme' );
 			break;
 		default :
-			$notice  = __( '<strong>The AudioTheme framework is not a theme.</strong> It should be installed as a plugin.', 'audiotheme-i18n' );
-			$notice .= ( current_user_can( 'install_plugins' ) ) ? sprintf( ' <a href="%s">%s</a>', esc_url( $move_url ), __( 'Would you like to move it now?', 'audiotheme-i18n' ) ) : '';
+			$notice  = __( '<strong>The AudioTheme framework is not a theme.</strong> It should be installed as a plugin.', 'audiotheme' );
+			$notice .= ( current_user_can( 'install_plugins' ) ) ? sprintf( ' <a href="%s">%s</a>', esc_url( $move_url ), __( 'Would you like to move it now?', 'audiotheme' ) ) : '';
 	}
 
 	if ( ! empty( $notice ) ) :

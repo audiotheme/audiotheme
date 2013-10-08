@@ -25,7 +25,7 @@ get_header();
 		<?php if ( $tag_list = get_the_tag_list( '', ' ' ) ) : ?>
 			
 			<p class="audiotheme-term-list">
-				<span class="audiotheme-term-list-label"><?php _e( 'Tags', 'audiotheme-i18n' ); ?></span>
+				<span class="audiotheme-term-list-label"><?php _e( 'Tags', 'audiotheme' ); ?></span>
 				<span class="audiotheme-term-list-items"><?php echo $tag_list; ?></span>
 			</p>
 			

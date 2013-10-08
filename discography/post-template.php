@@ -41,8 +41,8 @@ function get_audiotheme_record_link_sources() {
  */
 function get_audiotheme_record_type_strings() {
 	$strings = array(
-		'record-type-album'  => _x( 'Album',  'Record type', 'audiotheme-i18n' ),
-		'record-type-single' => _x( 'Single', 'Record type', 'audiotheme-i18n' ),
+		'record-type-album'  => _x( 'Album',  'Record type', 'audiotheme' ),
+		'record-type-single' => _x( 'Single', 'Record type', 'audiotheme' ),
 	);
 	return $strings;
 }

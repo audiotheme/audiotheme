@@ -116,10 +116,10 @@ function audiotheme_update() {
 function audiotheme_update_notice( $notice ) {
 	$settings_page = is_network_admin() ? 'network/settings.php' : 'admin.php';
 
-	$notice  =  sprintf( __( '<a href="%s">Register your copy of AudioTheme</a> to receive automatic updates and support. Need a license key?', 'audiotheme-i18n' ),
+	$notice  =  sprintf( __( '<a href="%s">Register your copy of AudioTheme</a> to receive automatic updates and support. Need a license key?', 'audiotheme' ),
 		esc_url( add_query_arg( 'page', 'audiotheme-settings', admin_url( $settings_page ) ) )
 	);
-	$notice .= ' <a href="http://audiotheme.com/view/audiotheme/" target="_blank">' . __( 'Purchase one now.', 'audiotheme-i18n' ) . '</a>';
+	$notice .= ' <a href="http://audiotheme.com/view/audiotheme/" target="_blank">' . __( 'Purchase one now.', 'audiotheme' ) . '</a>';
 
 	return $notice;
 }
@@ -163,8 +163,8 @@ function audiotheme_admin_init() {
 	wp_register_style( 'jquery-ui-theme-audiotheme', AUDIOTHEME_URI . 'admin/css/jquery-ui-audiotheme.css', array( 'jquery-ui-theme-smoothness' ) );
 
 	wp_localize_script( 'audiotheme-media', 'AudiothemeMediaControl', array(
-		'frameTitle'      => __( 'Choose an Attachment', 'audiotheme-i18n' ),
-		'frameUpdateText' => __( 'Update Attachment', 'audiotheme-i18n' ),
+		'frameTitle'      => __( 'Choose an Attachment', 'audiotheme' ),
+		'frameUpdateText' => __( 'Update Attachment', 'audiotheme' ),
 	) );
 }
 
@@ -264,8 +264,8 @@ function audiotheme_display_custom_column( $column_name, $post_id ) {
  * @return array
  */
 function audiotheme_edit_user_contact_info( $contactmethods ) {
-	$contactmethods['twitter'] = __( 'Twitter Username', 'audiotheme-i18n' );
-	$contactmethods['facebook'] = __( 'Facebook URL', 'audiotheme-i18n' );
+	$contactmethods['twitter'] = __( 'Twitter Username', 'audiotheme' );
+	$contactmethods['facebook'] = __( 'Facebook URL', 'audiotheme' );
 
 	return $contactmethods;
 }

@@ -9,7 +9,7 @@
 		}
 
 		if ( ! empty( $_REQUEST['s'] ) ) {
-			printf( ' <span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;', 'audiotheme-i18n' ) . '</span>', get_search_query() );
+			printf( ' <span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;', 'audiotheme' ) . '</span>', get_search_query() );
 		}
 		?>
 	</h2>
@@ -22,7 +22,7 @@
 			<p>
 				<?php
 				$messages = array(
-					1 => __( 'Venue added.', 'audiotheme-i18n' ),
+					1 => __( 'Venue added.', 'audiotheme' ),
 				);
 
 				if ( ! empty( $_REQUEST['message'] ) && isset( $messages[ $_REQUEST['message'] ] ) ) {

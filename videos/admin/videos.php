@@ -39,19 +39,19 @@ function audiotheme_video_post_updated_messages( $messages ) {
 
 	$messages['audiotheme_video'] = array(
 		0  => '', // Unused. Messages start at index 1.
-		1  => sprintf( __( 'Video updated. <a href="%s">View Video</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
-		2  => __( 'Custom field updated.', 'audiotheme-i18n' ),
-		3  => __( 'Custom field deleted.', 'audiotheme-i18n' ),
-		4  => __( 'Video updated.', 'audiotheme-i18n' ),
+		1  => sprintf( __( 'Video updated. <a href="%s">View Video</a>', 'audiotheme' ), esc_url( get_permalink( $post->ID ) ) ),
+		2  => __( 'Custom field updated.', 'audiotheme' ),
+		3  => __( 'Custom field deleted.', 'audiotheme' ),
+		4  => __( 'Video updated.', 'audiotheme' ),
 		/* translators: %s: date and time of the revision */
-		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Video restored to revision from %s', 'audiotheme-i18n' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-		6  => sprintf( __( 'Video published. <a href="%s">View Video</a>', 'audiotheme-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
-		7  => __( 'Video saved.', 'audiotheme-i18n' ),
-		8  => sprintf( __( 'Video submitted. <a target="_blank" href="%s">Preview Video</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
-		9  => sprintf( __( 'Video scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Video</a>', 'audiotheme-i18n' ),
+		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Video restored to revision from %s', 'audiotheme' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6  => sprintf( __( 'Video published. <a href="%s">View Video</a>', 'audiotheme' ), esc_url( get_permalink( $post->ID ) ) ),
+		7  => __( 'Video saved.', 'audiotheme' ),
+		8  => sprintf( __( 'Video submitted. <a target="_blank" href="%s">Preview Video</a>', 'audiotheme' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
+		9  => sprintf( __( 'Video scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Video</a>', 'audiotheme' ),
 		      // translators: Publish box date format, see http://php.net/date
-		      date_i18n( __( 'M j, Y @ G:i', 'audiotheme-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
-		10 => sprintf( __( 'Video draft updated. <a target="_blank" href="%s">Preview Video</a>', 'audiotheme-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
+		      date_i18n( __( 'M j, Y @ G:i', 'audiotheme' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
+		10 => sprintf( __( 'Video draft updated. <a target="_blank" href="%s">Preview Video</a>', 'audiotheme' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
 	);
 
 	return $messages;
@@ -67,7 +67,7 @@ function audiotheme_video_post_updated_messages( $messages ) {
  */
 function audiotheme_video_register_columns( $columns ) {
 	// Register an image column and insert it after the checkbox column.
-	$image_column = array( 'audiotheme_image' => _x( 'Image', 'column name', 'audiotheme-i18n' ) );
+	$image_column = array( 'audiotheme_image' => _x( 'Image', 'column name', 'audiotheme' ) );
 	$columns = audiotheme_array_insert_after_key( $columns, 'cb', $image_column );
 
 	return $columns;
@@ -102,13 +102,13 @@ function audiotheme_video_after_title() {
 	?>
 	<div class="audiotheme-edit-after-title" style="position: relative">
 		<p>
-			<label for="audiotheme-video-url" class="screen-reader-text"><?php _e( 'Video URL:', 'audiotheme-i18n' ); ?></label>
-			<input type="text" name="_video_url" id="audiotheme-video-url" value="<?php echo esc_url( $video ); ?>" placeholder="<?php esc_attr_e( 'Video URL', 'audiotheme-i18n' ); ?>" class="widefat"><br>
+			<label for="audiotheme-video-url" class="screen-reader-text"><?php _e( 'Video URL:', 'audiotheme' ); ?></label>
+			<input type="text" name="_video_url" id="audiotheme-video-url" value="<?php echo esc_url( $video ); ?>" placeholder="<?php esc_attr_e( 'Video URL', 'audiotheme' ); ?>" class="widefat"><br>
 
 			<span class="description">
 				<?php
-				printf( __( 'Enter a video URL from one of the %s.', 'audiotheme-i18n' ),
-					'<a href="http://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F" target="_blank">' . __( 'supported video services', 'audiotheme-i18n' ) . '</a>'
+				printf( __( 'Enter a video URL from one of the %s.', 'audiotheme' ),
+					'<a href="http://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F" target="_blank">' . __( 'supported video services', 'audiotheme' ) . '</a>'
 				);
 				?>
 			</span>
@@ -119,7 +119,7 @@ function audiotheme_video_after_title() {
 			if( $video ) {
 				echo get_audiotheme_video( $post->ID, array( 'width' => 600 ) );
 			} else {
-				_e( 'Save the video after entering a URL to preview it.', 'audiotheme-i18n' );
+				_e( 'Save the video after entering a URL to preview it.', 'audiotheme' );
 			}
 			?>
 		</div>
@@ -152,7 +152,7 @@ function audiotheme_video_admin_post_thumbnail_html( $content, $post_id ) {
 		$oembed_thumb_id = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', true );
 
 		$content .= sprintf( '<p id="audiotheme-select-oembed-thumb" class="hide-if-no-js" data-thumb-id="%s" data-oembed-thumb-id="%s">', $thumbnail_id, $oembed_thumb_id );
-			$content .= sprintf( '<a href="#" id="audiotheme-select-oembed-thumb-button">%s</a>', __( 'Get video thumbnail', 'audiotheme-i18n' ) );
+			$content .= sprintf( '<a href="#" id="audiotheme-select-oembed-thumb-button">%s</a>', __( 'Get video thumbnail', 'audiotheme' ) );
 			$content .= audiotheme_admin_spinner( array( 'echo' => false ) );
 		$content .= '</p>';
 
@@ -271,36 +271,36 @@ function audiotheme_video_list_help() {
 
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'overview',
-		'title'   => __( 'Overview', 'audiotheme-i18n' ),
+		'title'   => __( 'Overview', 'audiotheme' ),
 		'content' =>
-			'<p>' . __( "Using the video panel, AudioTheme allows you to collect your videos from a wide variety of supported services and present them to your fans on your website.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( 'This screen provides access to all of your videos. You can customize the display of this screen to suit your workflow.', 'audiotheme-i18n' ) . '</p>',
+			'<p>' . __( "Using the video panel, AudioTheme allows you to collect your videos from a wide variety of supported services and present them to your fans on your website.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( 'This screen provides access to all of your videos. You can customize the display of this screen to suit your workflow.', 'audiotheme' ) . '</p>',
 	) );
 
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'screen-content',
-		'title'   => __( 'Screen Content', 'audiotheme-i18n' ),
+		'title'   => __( 'Screen Content', 'audiotheme' ),
 		'content' =>
-			'<p>' . __( "You can customize the appearance of this screen's content in a number of ways:", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "You can customize the appearance of this screen's content in a number of ways:", 'audiotheme' ) . '</p>' .
 			'<ul>' .
-			'<li>' . __( "You can hide or display columns based on your needs and decide how many videos to list per screen using the Screen Options tab.", 'audiotheme-i18n' ) . '</li>' .
-			'<li>' . __( "You can filter the list of videos by status using the text links in the upper left to show Upcoming, Past, All, Published, Draft, or Trashed videos. The default view is to show all videos.", 'audiotheme-i18n' ) . '</li>' .
-			'<li>' . __( "You can refine the list to show only videos from a specific month by using the dropdown menus above the videos list. Click the Filter button after making your selection.", 'audiotheme-i18n' ) . '</li>' .
-			'<li>' . __( "You can also sort your videos in any view by clicking the column headers.", 'audiotheme-i18n' ) . '</li>' .
+			'<li>' . __( "You can hide or display columns based on your needs and decide how many videos to list per screen using the Screen Options tab.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( "You can filter the list of videos by status using the text links in the upper left to show Upcoming, Past, All, Published, Draft, or Trashed videos. The default view is to show all videos.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( "You can refine the list to show only videos from a specific month by using the dropdown menus above the videos list. Click the Filter button after making your selection.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( "You can also sort your videos in any view by clicking the column headers.", 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
 
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'available-actions',
-		'title'   => __( 'Available Actions', 'audiotheme-i18n' ),
+		'title'   => __( 'Available Actions', 'audiotheme' ),
 		'content' =>
-			'<p>' . __( "Hovering over a row in the videos list will display action links that allow you to manage your video. You can perform the following actions:", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "Hovering over a row in the videos list will display action links that allow you to manage your video. You can perform the following actions:", 'audiotheme' ) . '</p>' .
 			'<ul>' .
-			'<li>' . __( "<strong>Edit</strong> takes you to the editing screen for that video. You can also reach that screen by clicking on the video title.", 'audiotheme-i18n' ) . '</li>' .
-			'<li>' . __( "<strong>Quick Edit</strong> provides inline access to the metadata of your video, allowing you to update video details without leaving this screen.", 'audiotheme-i18n' ) . '</li>' .
-			'<li>' . __( "<strong>Trash</strong> removes your video from this list and places it in the trash, from which you can permanently delete it.", 'audiotheme-i18n' ) . '</li>' .
-			'<li>' . __( "<strong>Preview</strong> will show you what your draft video will look like if you publish it.", 'audiotheme-i18n' ) . '</li>' .
-			'<li>' . __( "<strong>View</strong> will take you to your live site to view the video. Which link is available depends on your video's status.", 'audiotheme-i18n' ) . '</li>' .
+			'<li>' . __( "<strong>Edit</strong> takes you to the editing screen for that video. You can also reach that screen by clicking on the video title.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( "<strong>Quick Edit</strong> provides inline access to the metadata of your video, allowing you to update video details without leaving this screen.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( "<strong>Trash</strong> removes your video from this list and places it in the trash, from which you can permanently delete it.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( "<strong>Preview</strong> will show you what your draft video will look like if you publish it.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( "<strong>View</strong> will take you to your live site to view the video. Which link is available depends on your video's status.", 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
 }
@@ -317,23 +317,23 @@ function audiotheme_video_help() {
 
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'standard-fields',
-		'title'   => __( 'Standard Fields', 'audiotheme-i18n' ),
+		'title'   => __( 'Standard Fields', 'audiotheme' ),
 		'content' =>
-			'<p>' . __( "<strong>Title</strong> - Enter a title for your video. After you enter a title, you'll see the permalink below, which you can edit.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "<strong>Video URL</strong> - Enter the URL for your video. After saving a preview of the video will display below this field.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "<strong>Editor</strong> - Describe your video. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "<strong>Excerpt</strong> - Depending on the theme you have activated, this is a brief expert that may appear in your list of videos. Visit the WordPress Support section to <a href=\"http://en.support.wordpress.com/splitting-content/excerpts/\" target=\"_blank\">learn more about excerpts</a>.", 'audiotheme-i18n' ) . '</p>',
+			'<p>' . __( "<strong>Title</strong> - Enter a title for your video. After you enter a title, you'll see the permalink below, which you can edit.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( "<strong>Video URL</strong> - Enter the URL for your video. After saving a preview of the video will display below this field.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( "<strong>Editor</strong> - Describe your video. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( "<strong>Excerpt</strong> - Depending on the theme you have activated, this is a brief expert that may appear in your list of videos. Visit the WordPress Support section to <a href=\"http://en.support.wordpress.com/splitting-content/excerpts/\" target=\"_blank\">learn more about excerpts</a>.", 'audiotheme' ) . '</p>',
 	) );
 
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'featured-image',
-		'title'		=> __( 'Featured Image', 'audiotheme-i18n' ),
-		'content' 	=> '<p>' . __( "This is used to set the thumbnail that will represent your video throughout your site. Make it interesting. You can choose the image through the normal process of setting or a featured image, or click the 'Get video thumbnail link' (you'll need to add a URL to the Video URL field for this to appear) to grab the image directly from the video service. Find out more about <a href=\"http://codex.wordpress.org/Post_Thumbnails\" target=\"_blank\">setting featured images</a> in the WordPress Codex.", 'audiotheme-i18n' ) . '</p>',
+		'title'		=> __( 'Featured Image', 'audiotheme' ),
+		'content' 	=> '<p>' . __( "This is used to set the thumbnail that will represent your video throughout your site. Make it interesting. You can choose the image through the normal process of setting or a featured image, or click the 'Get video thumbnail link' (you'll need to add a URL to the Video URL field for this to appear) to grab the image directly from the video service. Find out more about <a href=\"http://codex.wordpress.org/Post_Thumbnails\" target=\"_blank\">setting featured images</a> in the WordPress Codex.", 'audiotheme' ) . '</p>',
 	) );
 
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'customize-display',
-		'title'   => __( 'Customize This Screen', 'audiotheme-i18n' ),
-		'content' => '<p>' . __( 'The title, video url, and big editing area are fixed in place, but you can reposition all the other boxes using drag and drop. You can also minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to hide or unhide boxes or to choose a 1 or 2-column layout for this screen.', 'audiotheme-i18n' ) . '</p>',
+		'title'   => __( 'Customize This Screen', 'audiotheme' ),
+		'content' => '<p>' . __( 'The title, video url, and big editing area are fixed in place, but you can reposition all the other boxes using drag and drop. You can also minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to hide or unhide boxes or to choose a 1 or 2-column layout for this screen.', 'audiotheme' ) . '</p>',
 	) );
 }

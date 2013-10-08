@@ -17,8 +17,8 @@ class Audiotheme_Widget_Video extends WP_Widget {
 	 * @see WP_Widget::construct()
 	 */
 	function __construct() {
-		$widget_options = array( 'classname' => 'widget_audiotheme_video', 'description' => __( 'Display a video', 'audiotheme-i18n' ) );
-		parent::__construct( 'audiotheme-video', __( 'Video (AudioTheme)', 'audiotheme-i18n' ), $widget_options );
+		$widget_options = array( 'classname' => 'widget_audiotheme_video', 'description' => __( 'Display a video', 'audiotheme' ) );
+		parent::__construct( 'audiotheme-video', __( 'Video (AudioTheme)', 'audiotheme' ), $widget_options );
 	}
 
 	/**
@@ -83,11 +83,11 @@ class Audiotheme_Widget_Video extends WP_Widget {
 		) );
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'audiotheme-i18n' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'audiotheme' ); ?></label>
 			<input type="text" name="<?php echo $this->get_field_name( 'title' ); ?>" id="<?php echo $this->get_field_id( 'title' ); ?>" value="<?php echo esc_attr( $title ); ?>" class="widefat">
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'post_id' ); ?>"><?php _e( 'Video:', 'audiotheme-i18n' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'post_id' ); ?>"><?php _e( 'Video:', 'audiotheme' ); ?></label>
 			<select name="<?php echo $this->get_field_name( 'post_id' ); ?>" id="<?php echo $this->get_field_id( 'post_id' ); ?>" class="widefat">
 				<?php
 				foreach ( $videos as $video ) {

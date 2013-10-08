@@ -101,7 +101,7 @@ class Audiotheme_Updater_Plugin extends Audiotheme_Updater {
 		) );
 
 		if ( is_wp_error( $response ) ) {
-			return new WP_Error( 'plugins_api_failed', __( 'An unexpected error occurred. Something may be wrong with the update API or this server&#8217;s configuration.', 'audiotheme-i18n' ), $response );
+			return new WP_Error( 'plugins_api_failed', __( 'An unexpected error occurred. Something may be wrong with the update API or this server&#8217;s configuration.', 'audiotheme' ), $response );
 		}
 
 		if ( isset( $response->sections ) ) {
@@ -133,7 +133,7 @@ class Audiotheme_Updater_Plugin extends Audiotheme_Updater {
 
 			// Determine if a new version is available.
 			if ( isset( $api_response->plugin->current_version ) && version_compare( $plugin_data['Version'], $api_response->plugin->current_version, '<' ) ) {
-				$notice_args['prepend'] = sprintf( _x( '%1$s %2$s is available.', 'plugin name and version', 'audiotheme-i18n' ), $plugin_data['Name'], $api_response->plugin->current_version ) . ' ';
+				$notice_args['prepend'] = sprintf( _x( '%1$s %2$s is available.', 'plugin name and version', 'audiotheme' ), $plugin_data['Name'], $api_response->plugin->current_version ) . ' ';
 			}
 
 			// Merge default notices with the custom ones.

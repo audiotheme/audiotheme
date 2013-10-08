@@ -9,8 +9,8 @@
  * Requires at least: 3.5.0
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: audiotheme-i18n
- * Domain Path: /languages/
+ * Text Domain: audiotheme
+ * Domain Path: /languages
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -198,13 +198,13 @@ function audiotheme_register_scripts() {
  *
  * @since 1.0.0
  */
-function audiotheme_i18n() {
-	$domain = 'audiotheme-i18n';
+function audiotheme_load_textdomain() {
+	$domain = 'audiotheme';
 	$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 	load_textdomain( $domain, WP_LANG_DIR . '/audiotheme/' . $locale . '.mo' );
 	load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 }
-add_action( 'init', 'audiotheme_i18n' );
+add_action( 'init', 'audiotheme_load_textdomain' );
 
 /**
  * Flush the rewrite rules if needed.

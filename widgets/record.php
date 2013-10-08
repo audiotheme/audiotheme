@@ -17,8 +17,8 @@ class Audiotheme_Widget_Record extends WP_Widget {
 	 * @see WP_Widget::construct()
 	 */
 	function __construct() {
-		$widget_options = array( 'classname' => 'widget_audiotheme_record', 'description' => __( 'Display a selected record', 'audiotheme-i18n' ) );
-		parent::__construct( 'audiotheme-record', __( 'Record (AudioTheme)', 'audiotheme-i18n' ), $widget_options );
+		$widget_options = array( 'classname' => 'widget_audiotheme_record', 'description' => __( 'Display a selected record', 'audiotheme' ) );
+		parent::__construct( 'audiotheme-record', __( 'Record (AudioTheme)', 'audiotheme' ), $widget_options );
 	}
 
 	/**
@@ -37,7 +37,7 @@ class Audiotheme_Widget_Record extends WP_Widget {
 		$instance['title'] = apply_filters( 'audiotheme_widget_title', $instance['title'], $instance, $args, $this->id_base );
 
 		if ( isset( $instance['show_link'] ) && $instance['show_link'] && empty( $instance['link_text'] ) ) {
-			$instance['link_text'] = apply_filters( 'audiotheme_widget_record_default_link_text', __( 'View Details &rarr;', 'audiotheme-i18n' ) );
+			$instance['link_text'] = apply_filters( 'audiotheme_widget_record_default_link_text', __( 'View Details &rarr;', 'audiotheme' ) );
 		}
 
 		echo $before_widget;
@@ -97,11 +97,11 @@ class Audiotheme_Widget_Record extends WP_Widget {
 		$title = wp_strip_all_tags( $instance['title'] );
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'audiotheme-i18n' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'audiotheme' ); ?></label>
 			<input type="text" name="<?php echo $this->get_field_name( 'title' ); ?>" id="<?php echo $this->get_field_id( 'title' ); ?>" value="<?php echo esc_attr( $title ); ?>" class="widefat">
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'post_id' ); ?>"><?php _e( 'Record:', 'audiotheme-i18n' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'post_id' ); ?>"><?php _e( 'Record:', 'audiotheme' ); ?></label>
 			<select name="<?php echo $this->get_field_name( 'post_id' ); ?>" id="<?php echo $this->get_field_id( 'post_id' ); ?>" class="widefat">
 				<?php
 				foreach ( $records as $record ) {
@@ -118,12 +118,12 @@ class Audiotheme_Widget_Record extends WP_Widget {
 			<textarea name="<?php echo $this->get_field_name( 'text' ); ?>" id="<?php echo $this->get_field_id( 'text' ); ?>" cols="20" rows="5" class="widefat"><?php echo esc_textarea( $instance['text'] ); ?></textarea>
 		</p>
 		<p style="margin-bottom: 0.5em">
-			<label for="<?php echo $this->get_field_id( 'link_text' ); ?>"><?php _e( 'More Link Text:', 'audiotheme-i18n' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'link_text' ); ?>"><?php _e( 'More Link Text:', 'audiotheme' ); ?></label>
 			<input type="text" name="<?php echo $this->get_field_name( 'link_text' ); ?>" id="<?php echo $this->get_field_id( 'link_text' ); ?>" value="<?php echo esc_attr( $instance['link_text'] ); ?>" class="widefat">
 		</p>
 		<p>
 			<input type="checkbox" name="<?php echo $this->get_field_name( 'show_link' ); ?>" id="<?php echo $this->get_field_id( 'show_link' ); ?>" value="1"<?php checked( $instance['show_link'] ); ?>>
-			<label for="<?php echo $this->get_field_id( 'show_link' ); ?>"><?php _e( 'Show more link?', 'audiotheme-i18n' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'show_link' ); ?>"><?php _e( 'Show more link?', 'audiotheme' ); ?></label>
 		</p>
 		<?php
 	}

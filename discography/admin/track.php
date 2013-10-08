@@ -50,14 +50,14 @@ function audiotheme_tracks_admin_query( $wp_query ) {
  * @return array The filtered array of column names.
  */
 function audiotheme_track_register_columns( $columns ) {
-	$columns['title'] = _x( 'Track', 'column_name', 'audiotheme-i18n' );
+	$columns['title'] = _x( 'Track', 'column_name', 'audiotheme' );
 
 	$track_columns = array(
-		'artist'   => _x( 'Artist', 'column name', 'audiotheme-i18n' ),
-		'record'   => _x( 'Record', 'column name', 'audiotheme-i18n' ),
-		'file'     => _x( 'Audio File', 'column name', 'audiotheme-i18n' ),
-		'download' => _x( 'Downloadable', 'column name', 'audiotheme-i18n' ),
-		'purchase' => _x( 'Purchase URL', 'column name', 'audiotheme-i18n' ),
+		'artist'   => _x( 'Artist', 'column name', 'audiotheme' ),
+		'record'   => _x( 'Record', 'column name', 'audiotheme' ),
+		'file'     => _x( 'Audio File', 'column name', 'audiotheme' ),
+		'download' => _x( 'Downloadable', 'column name', 'audiotheme' ),
+		'purchase' => _x( 'Purchase URL', 'column name', 'audiotheme' ),
 	);
 
 	$columns = audiotheme_array_insert_after_key( $columns, 'title', $track_columns );
@@ -181,7 +181,7 @@ function audiotheme_tracks_filters() {
 		$records = $wpdb->get_results( "SELECT ID, post_title FROM $wpdb->posts WHERE post_type='audiotheme_record' AND post_status!='auto-draft' ORDER BY post_title ASC" );
 		?>
 		<select name="post_parent">
-			<option value="0"><?php _e( 'View all records', 'audiotheme-i18n' ); ?></option>
+			<option value="0"><?php _e( 'View all records', 'audiotheme' ); ?></option>
 			<?php
 			if ( $records ) {
 				foreach ( $records as $record ) {
@@ -243,7 +243,7 @@ function audiotheme_edit_track_meta_boxes( $post ) {
 
 	add_meta_box(
 		'submitdiv',
-		__( 'Publish', 'audiotheme-i18n' ),
+		__( 'Publish', 'audiotheme' ),
 		'audiotheme_post_submit_meta_box',
 		'audiotheme_track',
 		'side',
@@ -258,7 +258,7 @@ function audiotheme_edit_track_meta_boxes( $post ) {
 
 	add_meta_box(
 		'audiotheme-track-details',
-		__( 'Track Details', 'audiotheme-i18n' ),
+		__( 'Track Details', 'audiotheme' ),
 		'audiotheme_track_details_meta_box',
 		'audiotheme_track',
 		'side',
@@ -278,27 +278,27 @@ function audiotheme_track_details_meta_box( $post ) {
 	wp_nonce_field( 'update-track_' . $post->ID, 'audiotheme_track_nonce' );
 	?>
 	<p class="audiotheme-field">
-		<label for="track-artist"><?php _e( 'Artist:', 'audiotheme-i18n' ) ?></label>
+		<label for="track-artist"><?php _e( 'Artist:', 'audiotheme' ) ?></label>
 		<input type="text" name="artist" id="track-artist" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_artist', true ) ) ; ?>" class="widefat">
 	</p>
 
 	<p class="audiotheme-field audiotheme-media-control audiotheme-field-upload"
-		data-title="<?php esc_attr_e( 'Choose an MP3', 'audiotheme-i18n' ); ?>"
-		data-update-text="<?php esc_attr_e( 'Use MP3', 'audiotheme-i18n' ); ?>"
+		data-title="<?php esc_attr_e( 'Choose an MP3', 'audiotheme' ); ?>"
+		data-update-text="<?php esc_attr_e( 'Use MP3', 'audiotheme' ); ?>"
 		data-target="#track-file-url"
 		data-return-property="url"
 		data-file-type="audio">
-		<label for="track-file-url"><?php _e( 'Audio File URL:', 'audiotheme-i18n' ) ?></label>
+		<label for="track-file-url"><?php _e( 'Audio File URL:', 'audiotheme' ) ?></label>
 		<input type="url" name="file_url" id="track-file-url" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_file_url', true ) ) ; ?>" class="widefat">
 
 		<input type="checkbox" name="is_downloadable" id="track-is-downloadable" value="1"<?php checked( get_post_meta( $post->ID, '_audiotheme_is_downloadable', true ) ); ?>>
-		<label for="track-is-downloadable"><?php _e( 'Allow downloads?', 'audiotheme-i18n' ) ?></label>
+		<label for="track-is-downloadable"><?php _e( 'Allow downloads?', 'audiotheme' ) ?></label>
 
-		<a href="#" class="button audiotheme-media-control-choose" style="float: right"><?php _e( 'Upload MP3', 'audiotheme-i18n' ); ?></a>
+		<a href="#" class="button audiotheme-media-control-choose" style="float: right"><?php _e( 'Upload MP3', 'audiotheme' ); ?></a>
 	</p>
 
 	<p class="audiotheme-field">
-		<label for="track-purchase-url"><?php _e( 'Purchase URL:', 'audiotheme-i18n' ) ?></label>
+		<label for="track-purchase-url"><?php _e( 'Purchase URL:', 'audiotheme' ) ?></label>
 		<input type="url" name="purchase_url" id="track-purchase-url" value="<?php echo esc_url( get_post_meta( $post->ID, '_audiotheme_purchase_url', true ) ) ; ?>" class="widefat">
 	</p>
 
@@ -307,7 +307,7 @@ function audiotheme_track_details_meta_box( $post ) {
 		$records = get_posts( 'post_type=audiotheme_record&orderby=title&order=asc&posts_per_page=-1' );
 		if ( $records ) {
 			echo '<p class="audiotheme-field">';
-				echo '<label for="post-parent">' . __( 'Record:', 'audiotheme-i18n' ) . '</label>';
+				echo '<label for="post-parent">' . __( 'Record:', 'audiotheme' ) . '</label>';
 				echo '<select name="post_parent" id="post-parent" class="widefat">';
 					echo '<option value=""></option>';
 
@@ -318,7 +318,7 @@ function audiotheme_track_details_meta_box( $post ) {
 						);
 					}
 				echo '</select>';
-				echo '<span class="description">' . __( 'Associate this track with a record.', 'audiotheme-i18n' ) . '</span>';
+				echo '<span class="description">' . __( 'Associate this track with a record.', 'audiotheme' ) . '</span>';
 			echo '</p>';
 		}
 	}
@@ -336,36 +336,36 @@ function audiotheme_track_list_help() {
 	
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'overview',
-		'title'   => __( 'Overview', 'audiotheme-i18n' ),
+		'title'   => __( 'Overview', 'audiotheme' ),
 		'content' =>
-			'<p>' . __( "Your discography is the window through which listeners are introduced to and discover your music. Encourage that discovery on your website through a detailed and organized history of your recorded output using the AudioTheme discography screen.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "This screen provides access to all of your tracks. You can customize the display of this screen to suit your workflow.", 'audiotheme-i18n' ) . '</p>' .
-			'<p><strong><em>' . __( "Tracks must be add/created through a record and cannot be added without being associated with a record.", 'audiotheme-i18n' ) . '</em></strong></p>',
+			'<p>' . __( "Your discography is the window through which listeners are introduced to and discover your music. Encourage that discovery on your website through a detailed and organized history of your recorded output using the AudioTheme discography screen.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( "This screen provides access to all of your tracks. You can customize the display of this screen to suit your workflow.", 'audiotheme' ) . '</p>' .
+			'<p><strong><em>' . __( "Tracks must be add/created through a record and cannot be added without being associated with a record.", 'audiotheme' ) . '</em></strong></p>',
 	) );
 	
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'screen-content',
-		'title'   => __( 'Screen Content', 'audiotheme-i18n' ),
+		'title'   => __( 'Screen Content', 'audiotheme' ),
 		'content' =>
-			'<p>' . __( "You can customize the appearance of this screen's content in a number of ways:", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "You can customize the appearance of this screen's content in a number of ways:", 'audiotheme' ) . '</p>' .
 			'<ul>' .
-			'<li>' . __( "You can hide or display columns based on your needs and decide how many tracks to list per screen using the Screen Options tab.", 'audiotheme-i18n' ) . '</li>' .
-			'<li>' . __( "You can filter the list of tracks by status using the text links in the upper left to show All, Published, Draft, or Trashed records. The default view is to show all tracks.", 'audiotheme-i18n' ) . '</li>' .
-			'<li>' . __( "You can refine the list to show only tracks for a specific record by using the dropdown menus above the tracks list. Click the Filter button after making your selection.", 'audiotheme-i18n' ) . '</li>' .
-			'<li>' . __( "You can also sort your tracks in any view by clicking the column headers.", 'audiotheme-i18n' ) . '</li>' .
+			'<li>' . __( "You can hide or display columns based on your needs and decide how many tracks to list per screen using the Screen Options tab.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( "You can filter the list of tracks by status using the text links in the upper left to show All, Published, Draft, or Trashed records. The default view is to show all tracks.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( "You can refine the list to show only tracks for a specific record by using the dropdown menus above the tracks list. Click the Filter button after making your selection.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( "You can also sort your tracks in any view by clicking the column headers.", 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
 	
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'available-actions',
-		'title'   => __( 'Available Actions', 'audiotheme-i18n' ),
+		'title'   => __( 'Available Actions', 'audiotheme' ),
 		'content' =>
-			'<p>' . __( "Hovering over a row in the tracks list will display action links that allow you to manage your track. You can perform the following actions:", 'audiotheme-i18n' ) . '</p>' .
+			'<p>' . __( "Hovering over a row in the tracks list will display action links that allow you to manage your track. You can perform the following actions:", 'audiotheme' ) . '</p>' .
 			'<ul>' .
-			'<li>' . __( "<strong>Edit</strong> takes you to the editing screen for that track. You can also reach that screen by clicking on the track name.", 'audiotheme-i18n' ) . '</li>' .
-			'<li>' . __( "<strong>Trash</strong> removes your track from this list and places it in the trash, from which you can permanently delete it.", 'audiotheme-i18n' ) . '</li>' .
-			'<li>' . __( "<strong>Preview</strong> will show you what your draft track will look like if you publish it.", 'audiotheme-i18n' ) . '</li>' .
-			'<li>' . __( "<strong>View</strong> will take you to your live site to view the track. Which link is available depends on your track's status.", 'audiotheme-i18n' ) . '</li>' .
+			'<li>' . __( "<strong>Edit</strong> takes you to the editing screen for that track. You can also reach that screen by clicking on the track name.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( "<strong>Trash</strong> removes your track from this list and places it in the trash, from which you can permanently delete it.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( "<strong>Preview</strong> will show you what your draft track will look like if you publish it.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( "<strong>View</strong> will take you to your live site to view the track. Which link is available depends on your track's status.", 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
 }
@@ -382,38 +382,38 @@ function audiotheme_track_help() {
 	
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'standard-fields',
-		'title'   => __( 'Standard Fields', 'audiotheme-i18n' ),
+		'title'   => __( 'Standard Fields', 'audiotheme' ),
 		'content' =>
-			'<p>' . __( "<strong>Title</strong> - Enter the title of your track/song.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "<strong>Editor</strong> - Describe your track. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.", 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( "When you're done editing a track, click the Update button.", 'audiotheme-i18n' ) . '</p>',
+			'<p>' . __( "<strong>Title</strong> - Enter the title of your track/song.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( "<strong>Editor</strong> - Describe your track. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( "When you're done editing a track, click the Update button.", 'audiotheme' ) . '</p>',
 	) );
 	
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'track-details',
-		'title'		=> __( 'Track Details', 'audiotheme-i18n' ),
+		'title'		=> __( 'Track Details', 'audiotheme' ),
 		'content' 	=>
 			'<p>' . __( "Provide additional context to your tracks using this box." ) . '</p>' .
 			'<ul>' .
-			'<li>' . __( "<strong>Artist</strong> - Use this field for the main artist of the record.", 'audiotheme-i18n' ) . '</li>' .
+			'<li>' . __( "<strong>Artist</strong> - Use this field for the main artist of the record.", 'audiotheme' ) . '</li>' .
 			// @todo Add link.
-			'<li>' . __( "<strong>File URL</strong> - This field lets you attach audio for streaming or download. To attach an audio file, see [How To: Adding Audio to Tracks]", 'audiotheme-i18n' ) . '</li>' .
-			'<li>' . __( "<strong>Allow Downloads</strong> - Check this field if you would like to allow your fans to download the track from your site.", 'audiotheme-i18n' ) . '</li>' .
-			'<li>' . __( "<strong>Purchase URL</strong> - Enter a URL where the track can be purchased individually.", 'audiotheme-i18n' ) . '</li>' .
+			'<li>' . __( "<strong>File URL</strong> - This field lets you attach audio for streaming or download. To attach an audio file, see [How To: Adding Audio to Tracks]", 'audiotheme' ) . '</li>' .
+			'<li>' . __( "<strong>Allow Downloads</strong> - Check this field if you would like to allow your fans to download the track from your site.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( "<strong>Purchase URL</strong> - Enter a URL where the track can be purchased individually.", 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
 	
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'inserting-media',
-		'title'		=> __( 'Inserting Media', 'audiotheme-i18n' ),
+		'title'		=> __( 'Inserting Media', 'audiotheme' ),
 		'content' 	=>
-			'<p>' . __( 'You can upload and insert media (images, audio, documents, etc.) by clicking the Add Media button. You can select from the images and files already uploaded to the Media Library, or upload new media to add to your gig description. To create an image gallery, select the images to add and click the "Create a new gallery" button.', 'audiotheme-i18n' ) . '</p>' .
-			'<p>' . __( 'You can also embed media from many popular websites including Twitter, YouTube, Flickr and others by pasting the media URL on its own line into the gig description editor. Please refer to the Codex to <a href="http://codex.wordpress.org/Embeds">learn more about embeds</a>.', 'audiotheme-i18n' ) . '</p>',
+			'<p>' . __( 'You can upload and insert media (images, audio, documents, etc.) by clicking the Add Media button. You can select from the images and files already uploaded to the Media Library, or upload new media to add to your gig description. To create an image gallery, select the images to add and click the "Create a new gallery" button.', 'audiotheme' ) . '</p>' .
+			'<p>' . __( 'You can also embed media from many popular websites including Twitter, YouTube, Flickr and others by pasting the media URL on its own line into the gig description editor. Please refer to the Codex to <a href="http://codex.wordpress.org/Embeds">learn more about embeds</a>.', 'audiotheme' ) . '</p>',
 	) );
 	
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'customize-display',
-		'title'   => __( 'Customize This Screen', 'audiotheme-i18n' ),
-		'content' => '<p>' . __( 'The title and big editing area are fixed in place, but you can reposition all the other boxes using drag and drop. You can also minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to hide or unhide boxes or to choose a 1 or 2-column layout for this screen.', 'audiotheme-i18n' ) . '</p>',
+		'title'   => __( 'Customize This Screen', 'audiotheme' ),
+		'content' => '<p>' . __( 'The title and big editing area are fixed in place, but you can reposition all the other boxes using drag and drop. You can also minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to hide or unhide boxes or to choose a 1 or 2-column layout for this screen.', 'audiotheme' ) . '</p>',
 	) );
 }

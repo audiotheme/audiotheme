@@ -163,7 +163,7 @@ class Audiotheme_Settings {
 	 */
 	public function set_screen( $screen_id ) {
 		if ( ! isset( $this->screens[ $screen_id ] ) ) {
-			return new WP_Error( 'invalid_screen', sprintf( __( 'Invalid screen: %s.', 'audiotheme-i18n' ), $screen_id ) );
+			return new WP_Error( 'invalid_screen', sprintf( __( 'Invalid screen: %s.', 'audiotheme' ), $screen_id ) );
 		}
 
 		$this->current_screen = $screen_id;
@@ -260,7 +260,7 @@ class Audiotheme_Settings {
 			$this->current_tab = $tab_id;
 			$this->set_section( '_default' ); // Reset the current section.
 		} else {
-			return new WP_Error( 'invalid_screen_tab', sprintf( __( 'Invalid screen tab: %s.', 'audiotheme-i18n' ), $tab_id ) );
+			return new WP_Error( 'invalid_screen_tab', sprintf( __( 'Invalid screen tab: %s.', 'audiotheme' ), $tab_id ) );
 		}
 
 		return $this;
@@ -551,10 +551,10 @@ class Audiotheme_Settings {
 
 			printf( '<a href="%s" title="%s" class="button thickbox" data-insert-field="%s" data-insert-button-text="%s">%s</a>',
 				esc_url( $tb_url ),
-				esc_attr( __( 'Choose an Image', 'audiotheme-i18n' ) ),
+				esc_attr( __( 'Choose an Image', 'audiotheme' ) ),
 				esc_attr( $field_id ),
-				esc_attr( __( 'Use This Image', 'audiotheme-i18n' ) ),
-				esc_attr( __( 'Choose Image', 'audiotheme-i18n' ) )
+				esc_attr( __( 'Use This Image', 'audiotheme' ) ),
+				esc_attr( __( 'Choose Image', 'audiotheme' ) )
 			);
 		}
 
@@ -562,8 +562,8 @@ class Audiotheme_Settings {
 		if ( 'media_frame' == $control ) {
 			$has_image = ( empty( $value ) ) ? '' : ' has-image';
 			echo '<span class="' . $this->get_field_class( 'audiotheme-media-control', $args ) . $has_image . '"';
-				echo 'data-title="' . __( 'Choose an Image', 'audiotheme-i18n' ) . '"';
-				echo 'data-update-text="' . __( 'Update Image', 'audiotheme-i18n' ) . '"';
+				echo 'data-title="' . __( 'Choose an Image', 'audiotheme' ) . '"';
+				echo 'data-update-text="' . __( 'Update Image', 'audiotheme' ) . '"';
 			echo '>';
 
 			printf( '<input type="text" name="%s" id="%s" value="%s" class="audiotheme-media-control-target regular-text">',
@@ -572,7 +572,7 @@ class Audiotheme_Settings {
 				esc_attr( $value )
 			);
 
-			echo '<a class="button audiotheme-media-control-choose">' . __( 'Choose Image', 'audiotheme-i18n' ) . '</a>';
+			echo '<a class="button audiotheme-media-control-choose">' . __( 'Choose Image', 'audiotheme' ) . '</a>';
 
 			echo '</span>';
 		}
@@ -709,8 +709,8 @@ class Audiotheme_Settings {
 		);
 
 		printf( '<span class="description">%s.</span>',
-			sprintf( __( 'Change this setting in the %s', 'audiotheme-i18n' ),
-				sprintf( '<a href="%s">%s</a>', admin_url( 'customize.php' ), __( 'theme customizer', 'audiotheme-i18n' ) )
+			sprintf( __( 'Change this setting in the %s', 'audiotheme' ),
+				sprintf( '<a href="%s">%s</a>', admin_url( 'customize.php' ), __( 'theme customizer', 'audiotheme' ) )
 			)
 		);
 	}

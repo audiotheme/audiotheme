@@ -93,7 +93,7 @@ function audiotheme_settings_init() {
 	if ( ( $support = get_audiotheme_theme_options_support() ) && ! empty( $support['callback'] ) && function_exists( $support['callback'] ) ) {
 		$settings = get_audiotheme_settings();
 
-		$screen = add_audiotheme_settings_screen( 'audiotheme-theme-options', __( 'Theme Options', 'audiotheme-i18n' ), array(
+		$screen = add_audiotheme_settings_screen( 'audiotheme-theme-options', __( 'Theme Options', 'audiotheme' ), array(
 			'menu_title'   => $support['menu_title'],
 			'option_group' => 'audiotheme_theme_mods',
 			'option_name'  => $support['option_name'],
@@ -267,7 +267,7 @@ function audiotheme_settings_screen_notices() {
 		}
 
 		if ( $updated && isset( $_REQUEST['settings-updated'] ) )  {
-			echo '<div class="updated fade"><p><strong>' . __( 'Settings saved.', 'audiotheme-i18n' ) . '</strong></p></div>';
+			echo '<div class="updated fade"><p><strong>' . __( 'Settings saved.', 'audiotheme' ) . '</strong></p></div>';
 		}
 	}
 }
@@ -453,7 +453,7 @@ function audiotheme_settings_validate_field( $field, $option_name, $option_value
 
 		if ( is_array( $validate ) ) {
 			foreach ( $validate as $func => $error_msg ) {
-				$error_msg = ( is_string( $error_msg ) ) ? $error_msg : __( 'It appears there was a problem with a value entered.', 'audiotheme-i18n' );
+				$error_msg = ( is_string( $error_msg ) ) ? $error_msg : __( 'It appears there was a problem with a value entered.', 'audiotheme' );
 				if ( function_exists( $func ) ) {
 					$value = ( is_array( $option_value ) ) ? $option_value[ $field['id'] ] : $option_value;
 					$is_valid = call_user_func( $func, $value );

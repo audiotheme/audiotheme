@@ -17,8 +17,8 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 	 * @see WP_Widget::construct()
 	 */
 	function __construct() {
-		$widget_options = array( 'classname' => 'widget_recent_posts', 'description' => __( 'Display a list of recent posts', 'audiotheme-i18n' ) );
-		parent::__construct( 'recent-posts', __( 'Recent Posts', 'audiotheme-i18n' ), $widget_options );
+		$widget_options = array( 'classname' => 'widget_recent_posts', 'description' => __( 'Display a list of recent posts', 'audiotheme' ) );
+		parent::__construct( 'recent-posts', __( 'Recent Posts', 'audiotheme' ), $widget_options );
 		$this->alt_option_name = 'widget_recent_entries';
 
 		add_action( 'save_post', array( $this, 'flush_group_cache' ) );
@@ -47,7 +47,7 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 		$instance['number'] = ( empty( $instance['number'] ) || ! absint( $instance['number'] ) ) ? 5 : absint( $instance['number'] );
 
 		$instance['title_raw'] = $instance['title'];
-		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Recent Posts', 'audiotheme-i18n' ) : $instance['title'], $instance, $this->id_base );
+		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Recent Posts', 'audiotheme' ) : $instance['title'], $instance, $this->id_base );
 
 		$instance['date_format'] = apply_filters( 'audiotheme_widget_recent_posts_date_format', get_option( 'date_format' ), $instance, $this->id_base );
 		$instance['excerpt_length'] = apply_filters( 'audiotheme_widget_recent_posts_excerpt_length', 100, $instance, $this->id_base );
@@ -110,7 +110,7 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 							if ( $post_type_archive_feed_link ) {
 								$output .= sprintf( ' <a href="%s" target="_blank">%s</a>',
 									esc_url( $post_type_archive_feed_link ),
-									__( 'Feed', 'audiotheme-i18n' )
+									__( 'Feed', 'audiotheme' )
 								);
 							}
 						}
@@ -180,17 +180,17 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 		$selected_post_type = ( array_key_exists( $instance['post_type'], $post_types ) || 'any' == $instance['post_type'] ) ? $instance['post_type'] : 'post';
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'audiotheme-i18n' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'audiotheme' ); ?></label>
 			<input type="text" name="<?php echo $this->get_field_name( 'title' ); ?>" id="<?php echo $this->get_field_id( 'title' ); ?>" class="widefat" value="<?php echo $title; ?>">
 		</p>
 		<p>
 			<input type="checkbox" name="<?php echo $this->get_field_name( 'show_feed_link' ); ?>" id="<?php echo $this->get_field_id( 'show_feed_link' ); ?>" <?php checked( $instance['show_feed_link'] ); ?>>
-			<label for="<?php echo $this->get_field_id( 'show_feed_link' ); ?>"><?php _e( 'Show feed link in title?', 'audiotheme-i18n' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'show_feed_link' ); ?>"><?php _e( 'Show feed link in title?', 'audiotheme' ); ?></label>
 		</p>
 
 		<?php if ( apply_filters( 'audiotheme_widget_recent_posts_show_post_type_dropdown', false ) ) : ?>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'post_type' ); ?>"><?php _e( 'Post Type:', 'audiotheme-i18n' ); ?></label>
+				<label for="<?php echo $this->get_field_id( 'post_type' ); ?>"><?php _e( 'Post Type:', 'audiotheme' ); ?></label>
 				<select name="<?php echo $this->get_field_name( 'post_type' ); ?>" id="<?php echo $this->get_field_id( 'post_type' ); ?>">
 					<!--<option value="any">Any</option>-->
 					<?php
@@ -207,16 +207,16 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 		<?php endif; ?>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show:', 'audiotheme-i18n' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show:', 'audiotheme' ); ?></label>
 			<input type="text" name="<?php echo $this->get_field_name( 'number' ); ?>" id="<?php echo $this->get_field_id( 'number' ); ?>" value="<?php echo $number; ?>" size="3">
 		</p>
 		<p>
 			<input type="checkbox" name="<?php echo $this->get_field_name( 'show_date' ); ?>" id="<?php echo $this->get_field_id( 'show_date' ); ?>" <?php checked( $instance['show_date'] ); ?>>
-			<label for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Show date?', 'audiotheme-i18n' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Show date?', 'audiotheme' ); ?></label>
 		</p>
 		<p>
 			<input type="checkbox" name="<?php echo $this->get_field_name( 'show_excerpts' ); ?>" id="<?php echo $this->get_field_id( 'show_excerpts' ); ?>" <?php checked( $instance['show_excerpts'] ); ?>>
-			<label for="<?php echo $this->get_field_id( 'show_excerpts' ); ?>"><?php _e( 'Show excerpts?', 'audiotheme-i18n' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'show_excerpts' ); ?>"><?php _e( 'Show excerpts?', 'audiotheme' ); ?></label>
 		</p>
 		<?php
 	}

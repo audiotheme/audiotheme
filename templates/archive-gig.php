@@ -70,7 +70,7 @@ get_header();
 
 					<?php if ( $gig_tickets_url = get_audiotheme_gig_tickets_url() ) : ?>
 						<span class="audiotheme-gig-tickets-link" >
-							<a href="<?php echo esc_url( $gig_tickets_url ); ?>" target="_blank" itemprop="url"><?php _e( 'Buy Tickets', 'audiotheme-i18n' ); ?></a>
+							<a href="<?php echo esc_url( $gig_tickets_url ); ?>" target="_blank" itemprop="url"><?php _e( 'Buy Tickets', 'audiotheme' ); ?></a>
 						</span>
 					<?php endif; ?>
 
