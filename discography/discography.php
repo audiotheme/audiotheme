@@ -171,7 +171,7 @@ function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
  * Filter the request to allow for the record type prefix.
  *
  * @access private
- * @since 1.3.2
+ * @since 1.4.0
  *
  * @param array $query_vars
  * @return array
@@ -591,7 +591,7 @@ function audiotheme_record_archive_post_class( $classes ) {
 /**
  * Set the correct record type name when a term is requested.
  *
- * @since 1.3.2
+ * @since 1.4.0
  *
  * @param object $term Term object.
  * @param string $taxonomy Taxonomy name.
