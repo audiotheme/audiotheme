@@ -117,7 +117,7 @@ function audiotheme_nav_menu_classes( $items, $args ) {
 			$classes['last-child-items'][ $item->menu_item_parent ] = $key;
 		}
 
-		if ( ! is_404() ) {
+		if ( ! is_404() && ! is_search() ) {
 			if (
 				'audiotheme_archive' == $item->object &&
 				$post_type_archive_id == $item->object_id &&
