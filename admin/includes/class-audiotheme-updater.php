@@ -77,16 +77,12 @@ class Audiotheme_Updater {
 	public function init() { }
 
 	/**
-	 *
-	 */
-	public function get_wporg_update_uri() { }
-
-	/**
 	 * Disable update requests to wordpress.org for the entity.
 	 *
 	 * Inactive plugins/themes will still hit the wordpress.org API.
 	 *
-	 * @see http://markjaquith.wordpress.com/2009/12/14/excluding-your-plugin-or-theme-from-update-checks/
+	 * @link http://markjaquith.wordpress.com/2009/12/14/excluding-your-plugin-or-theme-from-update-checks/
+	 * @link https://github.com/cftp/external-update-api/blob/281a0efbf6c2085cbd8c3d49814fce97c59a63b4/external-update-api/euapi.php#L45
 	 * @see WP_Http::request()
 	 *
 	 * @since 1.0.0
@@ -96,22 +92,25 @@ class Audiotheme_Updater {
 	 * @return array Filtered request args.
 	 */
 	public function disable_wporg_update_check( $r, $url ) {
-		$default_update_uri = $this->get_wporg_update_uri();
-
-		if ( empty( $default_update_uri ) || false === strpos( $url, $default_update_uri ) ) {
-			return $r; // Not an update request. Bail immediately.
+		// If this isn't an update request, bail immediately.
+		if ( false === strpos( $url, 'api.wordpress.org' ) || ! preg_match( '#://api\.wordpress\.org/(?P<type>plugins|themes)/update-check/(?P<version>[0-9.]+)/#', $url, $matches ) ) {
+			return $r;
 		}
 
-		if ( 'plugin' == $this->type ) {
-			$plugins = unserialize( $r['body']['plugins'] );
-			unset( $plugins->plugins[ $this->id ] );
-			unset( $plugins->active[ array_search( $this->id, $plugins->active ) ] );
-			$r['body']['plugins'] = serialize( $plugins );
-		} elseif ( 'theme' == $this->type ) {
-			$themes = unserialize( $r['body']['themes'] );
-			unset( $themes[ $this->id ] );
-			$r['body']['themes'] = serialize( $themes );
+		$api_type = $matches['type'];
+		$api_version = floatval( $matches['version'] );
+
+		$entities = $r['body'][ $api_type ];
+		$entities = ( 1.0 == $api_version ) ? unserialize( $entities ) : json_decode( $entities, true );
+
+		if ( 'plugins' == $api_type ) {
+			unset( $entities['plugins'][ $this->id ] );
+			unset( $entities['active'][ array_search( $this->id, $entities['active'] ) ] );
+		} elseif ( 'theme' == $api_type ) {
+			unset( $entities[ $this->id ] );
 		}
+
+		$r['body'][ $api_type ] = ( 1.0 == $api_version ) ? serialize( $entities ) : json_encode( $entities );
 
 		return $r;
 	}

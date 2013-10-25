@@ -30,18 +30,6 @@ class Audiotheme_Updater_Theme extends Audiotheme_Updater {
 	}
 
 	/**
-	 * String to determine whether an outgoing request is for a theme update
-	 * check on WordPress.org.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string
-	 */
-	public function get_wporg_update_uri() {
-		return 'api.wordpress.org/themes/update-check';
-	}
-
-	/**
 	 * Attach hooks to integrate with the WordPress update process.
 	 *
 	 * @since 1.0.0
