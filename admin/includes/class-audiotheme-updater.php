@@ -104,9 +104,16 @@ class Audiotheme_Updater {
 		$entities = ( 1.0 == $api_version ) ? unserialize( $entities ) : json_decode( $entities, true );
 
 		if ( 'plugins' == $api_type ) {
+			$entities = (array) $entities;
+
 			unset( $entities['plugins'][ $this->id ] );
 			unset( $entities['active'][ array_search( $this->id, $entities['active'] ) ] );
-		} elseif ( 'theme' == $api_type ) {
+
+			// Cast back to an object.
+			if ( 1.0 == $api_version ) {
+				$entities = (object) $entities;
+			}
+		} elseif ( 'themes' == $api_type ) {
 			unset( $entities[ $this->id ] );
 		}
 
