@@ -5,6 +5,7 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		config: grunt.file.readJSON('config.json'),
 		version: '<%= pkg.version %>',
 
 		/**
@@ -77,7 +78,7 @@ module.exports = function(grunt) {
 		 * The zip archive will be named: audiotheme-plugin-{{version}}.zip
 		 */
 		compress: {
-			dist: {
+			build: {
 				options: {
 					archive: 'release/<%= pkg.slug %>-plugin-<%= version %>.zip'
 				},
@@ -118,11 +119,10 @@ module.exports = function(grunt) {
 		},
 
 		/**
-		 * Replace version numbers in the main audiotheme.php file with the
-		 * version defined in package.json.
+		 * Replace version numbers during a build.
 		 */
 		"string-replace": {
-			dist: {
+			build: {
 				options: {
 					replacements: [{
 						pattern: /Version: .+/,
@@ -139,6 +139,44 @@ module.exports = function(grunt) {
 					'audiotheme.php': 'audiotheme.php',
 					'style.css': 'style.css'
 				}
+			},
+			release: {
+				options: {
+					replacements: [{
+						pattern: /@since x\.x\.x/g,
+						replacement: "@since <%= version %>"
+					}]
+				},
+				files: [
+					{
+						src: [
+							'*.php',
+							'**/*.php'
+						],
+						dest: './'
+					}
+				]
+			}
+		},
+
+		/**
+		 * Upload a release build to the production server.
+		 */
+		sftp: {
+			release: {
+				options: {
+					path: '<%= config.production.releasePath %>',
+					srcBasePath: 'release/',
+					host: '<%= config.production.host %>',
+					username: '<%= config.production.username %>',
+					password: '<%= config.production.password %>'
+				},
+				files: [
+					{
+						src: [ 'release/<%= pkg.slug %>-plugin-<%= version %>.zip' ],
+						dest: './'
+					}
+				]
 			}
 		}
 
@@ -157,25 +195,43 @@ module.exports = function(grunt) {
 	/**
 	 * Build a release.
 	 *
-	 * Bumps the version numbers in audiotheme.php. Defaults to the version set
-	 * in package.json, but a specific version number can be passed as the first
-	 * argument. Ex: grunt release:1.2.3
+	 * Bumps version numbers. Defaults to the version set in package.json, but a
+	 * specific version number can be passed as the first argument.
+	 * Ex: grunt release:1.2.3
 	 *
 	 * The project is then zipped into an archive in the release directory,
-	 * excluding unncessary dev/build files in the process.
+	 * excluding unnecessary source files in the process.
+	 */
+	grunt.registerTask('build', function(arg1) {
+		var pkg = grunt.file.readJSON('package.json'),
+			version = 0 === arguments.length ? pkg.version : arg1;
+
+		grunt.config.set('version', version);
+		grunt.task.run('string-replace:build');
+		grunt.task.run('jshint');
+		grunt.task.run('less');
+		grunt.task.run('uglify');
+		// @todo generate pot file
+		grunt.task.run('compress:build');
+	});
+
+	/**
+	 * Release a new version.
 	 *
-	 * @todo generate pot files
-	 *       bump/verify version numbers
-	 *       git tag, commit, and push
-	 *       zip to release directory, cleaning dev/build files in the process
-	 *       push to remote server
+	 * Builds a release and pushes it to the remote git repo and uploads it to
+	 * the production server.
+	 *
+	 * @todo "@since x.x.x" tags are also replaced with the new version number.
 	 */
 	grunt.registerTask('release', function(arg1) {
-		var pkg = grunt.file.readJSON('package.json');
+		var pkg = grunt.file.readJSON('package.json'),
+			version = 0 === arguments.length ? pkg.version : arg1;
 
-		grunt.config.set('version', 0 === arguments.length ? pkg.version : arg1);
-		grunt.task.run('string-replace:dist');
-		grunt.task.run('compress:dist');
+		grunt.config.set('version', version);
+		grunt.task.run('build:' + version);
+		//grunt.task.run('string-replace:release');
+		// @todo git tag, commit, and push to origin
+		grunt.task.run('sftp:release');
 	});
 
 	/**
