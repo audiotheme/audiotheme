@@ -7,7 +7,7 @@
 	$.widget( 'audiotheme.pointer', $.wp.pointer, {
 		options: {},
 
-		audiothemeOpen: function( event ) {
+		audiothemeOpen: function() {
 			var audiothemePointer;
 
 			if( this.options.audiothemeId && 'undefined' !== typeof audiothemePointers ) {
@@ -23,7 +23,7 @@
 			}
 		},
 
-		audiothemeDismiss: function( event ) {
+		audiothemeDismiss: function() {
 			// Save the pointer dismissal to user meta.
 			jQuery.post( ajaxurl, {
 				pointer: this.options.audiothemeId,
@@ -33,7 +33,7 @@
 			this.options.disabled = true; // Prevents the pointer from being reopened.
 		},
 
-		_setAudiothemeButtons: function( event ) {
+		_setAudiothemeButtons: function() {
 			this.options.buttons = function( event, t ) {
 				var close  = ( wpPointerL10n ) ? wpPointerL10n.dismiss : 'Dismiss',
 					button = $('<a class="close" href="#">' + close + '</a>');

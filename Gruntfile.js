@@ -1,3 +1,5 @@
+/*jshint node:true */
+
 module.exports = function(grunt) {
 	'use strict';
 
@@ -121,18 +123,18 @@ module.exports = function(grunt) {
 		/**
 		 * Replace version numbers during a build.
 		 */
-		"string-replace": {
+		'string-replace': {
 			build: {
 				options: {
 					replacements: [{
 						pattern: /Version: .+/,
-						replacement: "Version: <%= version %>"
+						replacement: 'Version: <%= version %>'
 					}, {
 						pattern: /@version .+/,
-						replacement: "@version <%= version %>"
+						replacement: '@version <%= version %>'
 					}, {
 						pattern: /'AUDIOTHEME_VERSION', '[^']+'/,
-						replacement: "'AUDIOTHEME_VERSION', '<%= version %>'"
+						replacement: '\'AUDIOTHEME_VERSION\', \'<%= version %>\''
 					}]
 				},
 				files: {
@@ -144,7 +146,7 @@ module.exports = function(grunt) {
 				options: {
 					replacements: [{
 						pattern: /@since x\.x\.x/g,
-						replacement: "@since <%= version %>"
+						replacement: '@since <%= version %>'
 					}]
 				},
 				files: [

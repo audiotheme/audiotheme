@@ -235,7 +235,7 @@ jQuery(function($) {
 
 						return $helper;
 					},
-					update: function(e, ui) {
+					update: function() {
 						repeater.audiothemeRepeater('updateIndex');
 					},
 					change: function() {
@@ -271,7 +271,7 @@ jQuery(function($) {
 			repeater.audiothemeRepeater('clearList');
 
 			repeater.find('.audiotheme-repeater-items').append(itemTemplate.clone())
-				.children(':last-child').find('input,select,textarea').each(function(e) {
+				.children(':last-child').find('input,select,textarea').each(function() {
 					var $this = $(this);
 					$this.attr('name', $this.attr('name').replace('[0]', '[' + itemIndex + ']') );
 				}).end()

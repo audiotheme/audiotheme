@@ -9,8 +9,7 @@ jQuery(function($) {
 		$venueTzSearch = $('#gig-venue-timezone-search'),
 		ss = sessionStorage || {},
 		lastGigDate = 'lastGigDate' in ss ? new Date( ss.lastGigDate ) : null,
-		lastGigTime = 'lastGigTime' in ss ? new Date( ss.lastGigTime ) : null,
-		dummyCallback = function() {};
+		lastGigTime = 'lastGigTime' in ss ? new Date( ss.lastGigTime ) : null;
 
 	$venueTzGroup.pointer({ audiothemeId: 'at100_gigvenue_tz' });
 
@@ -37,7 +36,7 @@ jQuery(function($) {
 		$('.ui-timepicker-list').width( $(this).outerWidth() );
 	}) .on('hideTimepicker', function() {
 		$(this).removeClass('open');
-	}) .next().on('click', function(e) {
+	}) .next().on('click', function() {
 		$time.focus();
 	});
 

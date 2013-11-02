@@ -18,7 +18,7 @@ jQuery(function($) {
 				success: function( data ) {
 					response( $.map( data.geonames, function( item ) {
 						return {
-							label: item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName,
+							label: item.name + (item.adminName1 ? ', ' + item.adminName1 : '') + ', ' + item.countryName,
 							value: item.name,
 							adminCode: item.adminCode1,
 							countryName: item.countryName,
