@@ -45,6 +45,7 @@ function audiotheme_archives_init_admin() {
 	// Make archive links appear last.
 	add_action( 'admin_menu', 'audiotheme_archives_admin_menu', 100 );
 	add_action( 'add_meta_boxes_audiotheme_archive', 'audiotheme_archives_add_meta_boxes' );
+	add_action( 'audiotheme_archive_settings_meta_box', 'audiotheme_archive_settings_meta_box_fields', 15, 2 );
 }
 
 /**
@@ -265,6 +266,30 @@ function audiotheme_archive_save_hook( $post_id, $post ) {
 
 	$post_type = is_audiotheme_post_type_archive_id( $post->ID );
 	do_action( 'save_audiotheme_archive_settings', $post_id, $post, $post_type );
+
+	// Save default field data.
+	$fields = apply_filters( 'audiotheme_archive_settings_fields', array(), $post_type );
+
+	if ( ! empty( $fields['posts_per_archive_page'] ) && $fields['posts_per_archive_page'] ) {
+		$posts_per_archive_page = ( is_numeric( $_POST['posts_per_archive_page'] ) ) ? intval( $_POST['posts_per_archive_page'] ) : '';
+		update_post_meta( $post_id, 'posts_per_archive_page', $posts_per_archive_page );
+	}
+
+	if ( ! empty( $fields['columns'] ) && $fields['columns'] ) {
+		$choices = range( 3, 5 );
+		if ( ! empty( $fields['columns']['choices'] ) && is_array( $fields['columns']['choices'] ) ) {
+			$choices = array_map( 'absint', $fields['columns']['choices'] );
+		}
+
+		$value = absint( $_POST['columns'] );
+		if ( ! in_array( $value, $choices ) ) {
+			$choices_min = min( $choices );
+			$choices_max = max( $choices );
+			$value = min( max( absint( $_POST['columns'] ), $choices_min ), $choices_max );
+		}
+
+		update_post_meta( $post_id, 'columns', $value );
+	}
 }
 
 /**
@@ -282,6 +307,57 @@ function audiotheme_archive_settings_meta_box( $post ) {
 	wp_nonce_field( 'save-archive-meta_' . $post->ID, 'audiotheme_archive_nonce' );
 	do_action( 'audiotheme_archive_settings_meta_box', $post, $post_type );
 	do_action( 'audiotheme_archive_settings_meta_box_' . $post_type, $post );
+}
+
+/**
+ * Add fields to the archive settings meta box.
+ *
+ * @since x.x.x
+ *
+ * @param WP_Post $post Archive post.
+ */
+function audiotheme_archive_settings_meta_box_fields( $post, $post_type ) {
+	$fields = apply_filters( 'audiotheme_archive_settings_fields', array(), $post_type );
+
+	if ( empty( $fields ) ) {
+		return;
+	}
+
+	if ( ! empty( $fields['posts_per_archive_page'] ) && $fields['posts_per_archive_page'] ) {
+		$default = ( empty( $fields['posts_per_archive_page']['default'] ) ) ? '' : absint( $default );
+		$value = get_audiotheme_archive_meta( 'posts_per_archive_page', true, $default, $post_type );
+		?>
+		<p>
+			<label for="audiotheme-posts-per-archive-page"><?php _e( 'Posts per page:', 'audiotheme' ); ?></label>
+			<input type="text" name="posts_per_archive_page" id="audiotheme-posts-per-archive-page" value="<?php echo esc_attr( $value ); ?>" class="small-text">
+		</p>
+		<?php
+	}
+
+	if ( ! empty( $fields['columns'] ) && $fields['columns'] ) {
+		$default = ( empty( $fields['columns']['default'] ) ) ? 4 : absint( $default );
+		$value = get_audiotheme_archive_meta( 'columns', true, $default, $post_type );
+		$choices = range( 3, 5 );
+
+		if ( ! empty( $fields['columns']['choices'] ) && is_array( $fields['columns']['choices'] ) ) {
+			$choices = array_map( 'absint', $fields['columns']['choices'] );
+		}
+		?>
+		<p>
+			<label for="audiotheme-columns"><?php _e( 'Columns:', 'audiotheme' ); ?></label>
+			<select name="columns" id="audiotheme-columns">
+				<?php
+				foreach ( $choices as $number ) {
+					printf( '<option value="%1$d"%2$s>%1$d</option>',
+						$number,
+						selected( $number, $value, false )
+					);
+				}
+				?>
+			</select>
+		</p>
+		<?php
+	}
 }
 
 /**

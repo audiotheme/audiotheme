@@ -65,6 +65,60 @@ function register_audiotheme_archives() {
 	);
 
 	register_post_type( 'audiotheme_archive', apply_filters( 'audiotheme_archive_register_args', $args ) );
+
+	add_action( 'pre_get_posts', 'audiotheme_archive_query' );
+}
+
+/**
+ * Filter AudioTheme archive requests.
+ *
+ * Set the number of posts per archive page.
+ *
+ * @since x.x.x
+ * @todo Refactor to make it easier to retrieve settings and to define defaults in a single location.
+ * @todo Implement a "rows" setting for calculating "posts_per_archive_page".
+ *
+ * @param object $query The main WP_Query object. Passed by reference.
+ */
+function audiotheme_archive_query( $query ) {
+	if ( is_admin() || ! $query->is_main_query() || ! is_post_type_archive() ) {
+		return;
+	}
+
+	// Determine the current post type.
+	foreach ( array( 'gig', 'record', 'track', 'video' ) as $type ) {
+		if ( is_post_type_archive( 'audiotheme_' . $type ) ) {
+			$post_type = 'audiotheme_' . $type;
+			break;
+		}
+	}
+
+	if ( empty( $post_type ) ) {
+		return;
+	}
+
+	// Determine if the 'posts_per_archive_page' setting is active for the current post type.
+	$fields = apply_filters( 'audiotheme_archive_settings_fields', array(), $post_type );
+
+	$columns = 1;
+	if ( ! empty( $fields['columns'] ) && $fields['columns'] ) {
+		$default = empty( $fields['columns']['default'] ) ? 4 : absint( $fields['columns']['default'] );
+		$columns = get_audiotheme_archive_meta( 'columns', true, $default, $post_type );
+	}
+
+	if ( ! empty( $fields['posts_per_archive_page'] ) && $fields['posts_per_archive_page'] ) {
+		// Get the number of posts to display for this post type.
+		$posts_per_archive_page = get_audiotheme_archive_meta( 'posts_per_archive_page', true, '', $post_type );
+
+		if ( ! empty( $posts_per_archive_page ) ) {
+			$query->set( 'posts_per_archive_page', intval( $posts_per_archive_page ) );
+		}
+	}
+
+	if ( empty( $posts_per_archive_page ) && $columns > 1 ) {
+		// Default to three even rows.
+		$query->set( 'posts_per_archive_page', intval( $columns * 3 ) );
+	}
 }
 
 /**
