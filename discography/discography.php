@@ -553,11 +553,22 @@ function audiotheme_print_tracks_js() {
 
 	// Print a JavaScript object.
 	if ( ! empty( $lists ) ) {
-		echo "<script type='text/javascript'>\n";
-		echo "/* <![CDATA[ */\n";
-		echo "var AudiothemeTracks = " . json_encode( $lists ) . ";\n";
-		echo "/* ]]> */\n";
-		echo "</script>\n";
+		?>
+		<script type="text/javascript">
+		/* <![CDATA[ */
+		window.AudiothemeTracks = window.AudiothemeTracks || {};
+
+		( function( window ) {
+			var tracks = <?php echo json_encode( $lists ); ?>,
+				i;
+
+			for ( i in tracks ) {
+				window.AudiothemeTracks[ i ] = tracks[ i ];
+			}
+		} )( this );
+		/* ]]> */
+		</script>
+		<?php
 	}
 }
 
