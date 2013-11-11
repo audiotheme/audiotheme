@@ -195,7 +195,7 @@ function the_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null,
  *
  * The args are:
  * 'empty_time' - Default is '' (string). The text to display if the time doesn't exist.
- * 'translate' - Default is 'false' (bool). Whether to translate the time string.
+ * 'translate' - Default is 'true' (bool). Whether to translate the time string.
  *
  * @since 1.0.0
  *
@@ -207,11 +207,10 @@ function the_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null,
  * @return string
  */
 function get_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null, $post = null ) {
-	$defaults = array(
+	$args = wp_parse_args( $args, array(
 		'empty_time' => '', // displays if time hasn't been saved
-		'translate'  => false,
-	);
-	$args = wp_parse_args( $args, $defaults );
+		'translate'  => true,
+	) );
 	extract( $args, EXTR_SKIP );
 
 	$gig = get_audiotheme_gig( $post );
