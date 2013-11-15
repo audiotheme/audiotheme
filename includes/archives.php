@@ -74,7 +74,7 @@ function register_audiotheme_archives() {
  *
  * Set the number of posts per archive page.
  *
- * @since x.x.x
+ * @since 1.4.2
  * @todo Refactor to make it easier to retrieve settings and to define defaults in a single location.
  * @todo Implement a "rows" setting for calculating "posts_per_archive_page".
  *

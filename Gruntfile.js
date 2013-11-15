@@ -231,7 +231,7 @@ module.exports = function(grunt) {
 
 		grunt.config.set('version', version);
 		grunt.task.run('build:' + version);
-		//grunt.task.run('string-replace:release');
+		grunt.task.run('string-replace:release');
 		// @todo git tag, commit, and push to origin
 		grunt.task.run('sftp:release');
 	});

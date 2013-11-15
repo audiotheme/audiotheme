@@ -312,7 +312,7 @@ function audiotheme_archive_settings_meta_box( $post ) {
 /**
  * Add fields to the archive settings meta box.
  *
- * @since x.x.x
+ * @since 1.4.2
  *
  * @param WP_Post $post Archive post.
  */
