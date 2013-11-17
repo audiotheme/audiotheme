@@ -6,7 +6,7 @@
   "main": "Gruntfile.js",
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/audiotheme/plugin-audiotheme.git"
+    "url": "git://github.com/AudioTheme/audiotheme.git"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
