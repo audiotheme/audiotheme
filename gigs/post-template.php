@@ -1054,7 +1054,7 @@ function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 		$args['address'] = ( $args['address'] ) ? $venue->name . ', ' . $args['address'] : $venue->name;
 	}
 
-	$src = add_query_arg( array(
+	$args['embed_url'] = add_query_arg( array(
 		'f'       => 'q',
 		'source'  => 's_q',
 		'hl'      => 'en',
@@ -1064,8 +1064,10 @@ function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 		'iwloc'   => '',
 	), 'http://maps.google.com/maps' );
 
+	$args = apply_filters( 'audiotheme_google_map_embed_args', $args, $venue_id );
+
 	$iframe = sprintf( '<iframe src="%s" width="%s" height="%s" frameBorder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>',
-		esc_url( $src ),
+		esc_url( $args['embed_url'] ),
 		esc_attr( $args['width'] ),
 		esc_attr( $args['height'] )
 	);
@@ -1075,5 +1077,7 @@ function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 		$args['link_text']
 	);
 
-	return sprintf( $args['format'], $iframe, $link );
+	$output = sprintf( $args['format'], $iframe, $link );
+
+	return apply_filters( 'audiotheme_google_map_embed', $output, $args, $venue_id );
 }
