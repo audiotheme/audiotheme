@@ -40,7 +40,7 @@ function audiotheme_dashboard_admin_menu() {
 		'manage_options',
 		'audiotheme',
 		'audiotheme_dashboard_features_screen',
-		null,
+		audiotheme_encode_svg( 'admin/images/dashicons/audiotheme.svg' ),
 		3.901
 	);
 

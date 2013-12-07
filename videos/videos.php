@@ -44,6 +44,7 @@ function audiotheme_videos_init() {
 			'menu_name'          => __( 'Videos', 'audiotheme' ),
 			'name_admin_bar'     => _x( 'Video', 'add new on admin bar', 'audiotheme' ),
 		),
+		'menu_icon'              => audiotheme_encode_svg( 'admin/images/dashicons/videos.svg' ),
 		'menu_position'          => 514,
 		'public'                 => true,
 		'publicly_queryable'     => true,

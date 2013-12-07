@@ -63,7 +63,15 @@ function audiotheme_gigs_admin_menu() {
 	// Remove the default gigs menu item and replace it with the screen using the custom post list table.
 	remove_submenu_page( 'audiotheme-gigs', 'edit.php?post_type=audiotheme_gig' );
 
-	$manage_gigs_hook = add_menu_page( $gig_object->labels->name, $gig_object->labels->menu_name, 'edit_posts', 'audiotheme-gigs', 'audiotheme_gigs_manage_screen', null, 512 );
+	$manage_gigs_hook = add_menu_page(
+		$gig_object->labels->name,
+		$gig_object->labels->menu_name,
+		'edit_posts',
+		'audiotheme-gigs',
+		'audiotheme_gigs_manage_screen',
+		audiotheme_encode_svg( 'admin/images/dashicons/gigs.svg' ),
+		512
+	);
 		add_submenu_page( 'audiotheme-gigs', $gig_object->labels->name, $gig_object->labels->all_items, 'edit_posts', 'audiotheme-gigs', 'audiotheme_gigs_manage_screen' );
 		$edit_gig_hook = add_submenu_page( 'audiotheme-gigs', $gig_object->labels->add_new_item, $gig_object->labels->add_new, 'edit_posts', 'post-new.php?post_type=audiotheme_gig' );
 		$manage_venues_hook = add_submenu_page( 'audiotheme-gigs', $venue_object->labels->name, $venue_object->labels->menu_name, 'edit_posts', 'audiotheme-venues', 'audiotheme_venues_manage_screen' );

@@ -90,7 +90,15 @@ function audiotheme_discography_setup() {
  * @since 1.0.0
  */
 function audiotheme_discography_admin_menu() {
-	add_menu_page( __( 'Discography', 'audiotheme' ), __( 'Discography', 'audiotheme' ), 'edit_posts', 'edit.php?post_type=audiotheme_record', null, null, 513 );
+	add_menu_page(
+		__( 'Discography', 'audiotheme' ),
+		__( 'Discography', 'audiotheme' ),
+		'edit_posts',
+		'edit.php?post_type=audiotheme_record',
+		null,
+		audiotheme_encode_svg( 'admin/images/dashicons/discography.svg' ),
+		513
+	);
 }
 
 /**
