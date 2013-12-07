@@ -11,6 +11,22 @@ module.exports = function(grunt) {
 		version: '<%= pkg.version %>',
 
 		/**
+		 * Autoprefix CSS files.
+		 */
+		autoprefixer: {
+			options: {
+				browsers: ['> 1%', 'last 2 versions', 'ff 17', 'opera 12.1', 'android 4']
+			},
+			dist: {
+				files: [
+					{ src: 'admin/css/admin.min.css' },
+					{ src: 'admin/css/admin-legacy.min.css' },
+					{ src: 'includes/css/audiotheme.min.css' }
+				]
+			}
+		},
+
+		/**
 		 * Check JavaScript for errors and warnings.
 		 */
 		jshint: {
@@ -29,15 +45,27 @@ module.exports = function(grunt) {
 		},
 
 		/**
+		 * Minimize CSS files.
+		 */
+		cssmin: {
+			dist: {
+				files: [
+					{ src: 'admin/css/admin.min.css', dest: 'admin/css/admin.min.css' },
+					{ src: 'admin/css/admin-legacy.min.css', dest: 'admin/css/admin-legacy.min.css' },
+					{ src: 'includes/css/audiotheme.min.css', dest: 'includes/css/audiotheme.min.css' }
+				]
+			}
+		},
+
+		/**
 		 * Compile LESS style sheets.
 		 */
 		less: {
 			dist: {
-				options: {
-					yuicompress: true
-				},
 				files: [
-					{ src: 'includes/css/less/audiotheme.less', dest: 'includes/css/audiotheme.min.css' }
+					{ src: 'includes/css/less/audiotheme.less', dest: 'includes/css/audiotheme.min.css' },
+					{ src: 'admin/css/less/admin.less', dest: 'admin/css/admin.min.css' },
+					{ src: 'admin/css/less/admin-legacy.less', dest: 'admin/css/admin-legacy.min.css' }
 				]
 			}
 		},
@@ -68,8 +96,8 @@ module.exports = function(grunt) {
 				tasks: ['jshint', 'uglify']
 			},
 			less: {
-				files: ['includes/css/less/*.less'],
-				tasks: ['less']
+				files: ['includes/css/less/*.less', 'admin/css/less/*.less', 'admin/css/less/**/*.less'],
+				tasks: ['less', 'autoprefixer', 'cssmin']
 			}
 		},
 
@@ -82,7 +110,7 @@ module.exports = function(grunt) {
 		compress: {
 			build: {
 				options: {
-					archive: 'release/<%= pkg.slug %>-plugin-<%= version %>.zip'
+					archive: 'release/<%= pkg.name %>-plugin-<%= version %>.zip'
 				},
 				files: [
 					{
@@ -101,7 +129,7 @@ module.exports = function(grunt) {
 							'includes/lib/wp-less/lessc/lessc.inc.php',
 							'includes/lib/wp-less/wp-less.php'
 						],
-						dest: '<%= pkg.slug %>/'
+						dest: '<%= pkg.name %>/'
 					}
 				]
 			}
@@ -175,7 +203,7 @@ module.exports = function(grunt) {
 				},
 				files: [
 					{
-						src: [ 'release/<%= pkg.slug %>-plugin-<%= version %>.zip' ],
+						src: ['release/<%= pkg.name %>-plugin-<%= version %>.zip'],
 						dest: './'
 					}
 				]
@@ -187,12 +215,7 @@ module.exports = function(grunt) {
 	/**
 	 * Default task.
 	 */
-	grunt.registerTask('default', [
-		'jshint',
-		'less',
-		'uglify',
-		'watch'
-	]);
+	grunt.registerTask( 'default', ['jshint', 'uglify', 'less', 'autoprefixer', 'cssmin', 'watch'] );
 
 	/**
 	 * Build a release.
