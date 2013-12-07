@@ -388,3 +388,21 @@ function audiotheme_shortcode_bool( $var ) {
 	$falsey = array( 'false', '0', 'no', 'n' );
 	return ( ! $var || in_array( strtolower( $var ), $falsey ) ) ? false : true;
 }
+
+/**
+ * Return a base64 encoded SVG icon for use as a data URI.
+ *
+ * @since x.x.x
+ *
+ * @param string $path Path to SVG icon.
+ * @return string
+ */
+function audiotheme_encode_svg( $path ) {
+	$path = path_is_absolute( $path ) ? $path : AUDIOTHEME_DIR . $path;
+
+	if ( ! file_exists( $path ) || 'svg' != pathinfo( $path, PATHINFO_EXTENSION ) ) {
+		return '';
+	}
+
+	return 'data:image/svg+xml;base64,' . base64_encode( file_get_contents( $path ) );
+}
