@@ -39,31 +39,19 @@ body.edit-audiotheme_track select[name="m"] { display: none;}
 /* Field/icon button combo. */
 .audiotheme-input-append { display: inline-block; vertical-align: top;}
 .audiotheme-input-append input { margin-right: 0;
-	-webkit-border-top-right-radius: 0;
-	-webkit-border-bottom-right-radius: 0;
-	-moz-border-radius-topright: 0;
-	-moz-border-radius-bottomright: 0;
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;}
-.audiotheme-input-append .audiotheme-input-append-trigger,
-.audiotheme-input-append button.ui-datepicker-trigger { cursor: pointer; display: inline-block; margin: 0; padding: 0; width: 30px; height: 30px; line-height: 30px; text-align: center; vertical-align: middle;
+.audiotheme-input-append .audiotheme-input-append-trigger { cursor: pointer; display: inline-block; margin: 0; padding: 0; width: 30px; height: 30px; line-height: 30px; text-align: center; vertical-align: middle;
 	background: #f3f3f3;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#f4f4f4));
-	background-image: -webkit-linear-gradient(top, #fefefe, #f4f4f4);
-	background-image:    -moz-linear-gradient(top, #fefefe, #f4f4f4);
-	background-image:      -o-linear-gradient(top, #fefefe, #f4f4f4);
-	background-image:   linear-gradient(to bottom, #fefefe, #f4f4f4);
+	background-image: linear-gradient(to bottom, #fefefe, #f4f4f4);
 	border: 1px solid #dfdfdf;
 	border-left-width: 0;
-	-webkit-border-top-right-radius: 3px; -webkit-border-bottom-right-radius: 3px;
-	-moz-border-radius-topright: 3px; -moz-border-radius-bottomright: 3px;
 	border-top-right-radius: 3px; border-bottom-right-radius: 3px;
-	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;}
+	box-sizing: border-box;}
 .audiotheme-input-append .audiotheme-input-append-trigger img { display: inline-block; vertical-align: text-top;}
-.audiotheme-input-append.is-focused .audiotheme-input-append-trigger,
-.audiotheme-input-append.is-focused button.ui-datepicker-trigger { border-color: #bbb;
-	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+.audiotheme-input-append.is-focused .audiotheme-input-append-trigger { border-color: #bbb;
 	box-shadow: 1px 1px 2px rgba(0,0,0,0.1);}
+.audiotheme-input-append .audiotheme-input-append-trigger button.ui-datepicker-trigger { cursor: pointer; width: 100%; height: 100%; background: transparent; border-width: 0;}
 
 
 /* Dashboard
@@ -95,6 +83,53 @@ table.audiotheme-system-info { margin-bottom: 20px;}
 @media print, (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
 	.audiotheme-badge { background-image: url(../images/audiotheme-badge-2x.png); background-size: 180px 180px;}
 }
+
+
+/* Record Screens
+-------------------------------------------------------------- */
+
+/* Record Details */
+.ui-autocomplete { overflow-y: auto; overflow-x: hidden; max-height: 180px;}
+
+#audiotheme-record-types { margin: 1em 0;}
+#audiotheme-record-types li { margin: 0; vertical-align: middle;}
+#audiotheme-record-types li input { vertical-align: middle;}
+#audiotheme-record-types li label { margin: 0; font-weight: normal;}
+#audiotheme-record-types ul { margin-top: 3px; margin-bottom: 0;}
+
+#record-links { width: 100%; border-spacing: 0;}
+#record-links td { padding: 0 0 5px 0;}
+#record-links th { text-align: left;}
+#record-links tfoot td { padding-top: 5px;}
+#record-links tfoot td a { float: right; margin-left: 10px;}
+#record-links tfoot td .audiotheme-repeater-sort-warning { color: red;}
+#record-links .column-action { padding: 0 0 0 5px;}
+
+/* Tracklist */
+.audiotheme-repeater input:-moz-placeholder { color: #a9a9a9;}
+.audiotheme-repeater tbody tr { cursor: move; width: 100%; }
+.audiotheme-repeater tbody tr:last-child td { border-bottom: none; }
+.audiotheme-repeater tbody td { padding: 7px; }
+.audiotheme-repeater tbody td.track-number { width: 2em; text-align: right; vertical-align: middle;}
+.audiotheme-repeater .column-action { width: 16px; cursor: auto; text-align: right; vertical-align: middle;}
+.audiotheme-repeater .column-action a { cursor: pointer; font-family: sans-serif;}
+.audiotheme-repeater .column-action .audiotheme-repeater-remove-item { opacity: .2;}
+.audiotheme-repeater .column-action .audiotheme-repeater-remove-item:hover { opacity: 1;}
+.audiotheme-repeater .audiotheme-show-on-add { display: none;}
+.audiotheme-repeater-sort-warning { color: #ee0000;}
+
+.audiotheme-repeater .column-track-info { width: 48px; font-size: 12px; vertical-align: middle;}
+.audiotheme-repeater .column-track-info span { padding: 0 3px;}
+
+#record-tracklist.audiotheme-repeater tbody tr.audiotheme-repeater-active-item td { background: #ececec; border-top-color: #eee;}
+#record-tracklist.audiotheme-repeater tfoot td { padding: 5px 7px; background: #f5f5f5; border-top: 1px solid #dfdfdf;}
+#record-tracklist.audiotheme-repeater .ui-sortable-helper { background: #f9f9f9; border-top: 1px solid #dfdfdf; border-bottom: 1px solid #dfdfdf;}
+#record-tracklist.audiotheme-repeater .ui-sortable-helper td { border-top-width: 0; border-bottom-width: 0;}
+
+#record-tracklist .audiotheme-input-append { overflow: hidden; width: 100%;}
+#record-tracklist .audiotheme-input-append input { float: left; padding-right: 34px;}
+#record-tracklist .audiotheme-input-append-trigger { float: left; margin: 0 0 0 -30px; width: 30px; height: 23px; line-height: 23px; border-left-width: 1px;}
+
 
 /* Gig Screens
 -------------------------------------------------------------- */
@@ -147,13 +182,20 @@ body.gigs_page_venues .search-box { margin-bottom: 8px;}
 #venue-edit .form-table textarea#venue-address { width: 25em;}
 
 
+/* Video Screens
+-------------------------------------------------------------- */
+
+.audiotheme-video-preview-empty { padding: 20px 0; color: #aaa; font-size: 20px; text-align: center; border: 4px dashed #ddd;}
+#audiotheme-select-oembed-thumb { display: none; float: none; clear: both; margin-bottom: 10px; width: 100%;}
+#audiotheme-select-oembed-thumb .spinner { display: none; float: none; margin-top: 0; margin-left: 5px; vertical-align: middle;}
+
+
 /* Screen Icons
 -------------------------------------------------------------- */
 
 #icon-audiotheme { background: transparent url(../images/icons32.png) no-repeat -11px -14px;}
 #icon-audiotheme-gigs { background: transparent url(../images/icons32.png) no-repeat -71px -14px;}
 #icon-audiotheme-venues { background: transparent url(../images/icons32.png) no-repeat -371px -14px;}
-#icon-edit.icon32-posts-audiotheme_gallery { background: transparent url(../images/icons32.png) no-repeat -191px -14px;}
 .audiotheme_record-archive #icon-edit,
 #icon-edit.icon32-posts-audiotheme_record { background: transparent url(../images/icons32.png) no-repeat -131px -14px;}
 #icon-edit.icon32-posts-audiotheme_track { background: transparent url(../images/icons32.png) no-repeat -131px -14px;}
@@ -167,7 +209,6 @@ body.gigs_page_venues .search-box { margin-bottom: 8px;}
 
 #adminmenu #toplevel_page_audiotheme div.wp-menu-image,
 #adminmenu #toplevel_page_audiotheme-gigs div.wp-menu-image,
-#adminmenu #menu-posts-audiotheme_gallery div.wp-menu-image,
 #adminmenu #toplevel_page_edit-post_type-audiotheme_record div.wp-menu-image,
 #adminmenu #menu-posts-audiotheme_video div.wp-menu-image { background-color: transparent; background-image: url(../images/icons16.png); background-repeat: no-repeat;}
 
@@ -179,10 +220,6 @@ body.gigs_page_venues .search-box { margin-bottom: 8px;}
 #adminmenu #toplevel_page_audiotheme-gigs:hover div.wp-menu-image,
 #adminmenu #toplevel_page_audiotheme-gigs.wp-has-current-submenu div.wp-menu-image { background-position: -30px -32px;}
 
-#adminmenu #menu-posts-audiotheme_gallery div.wp-menu-image { background-position: -120px 0;}
-#adminmenu #menu-posts-audiotheme_gallery:hover div.wp-menu-image,
-#adminmenu #menu-posts-audiotheme_gallery.wp-has-current-submenu div.wp-menu-image { background-position: -120px -32px;}
-
 #adminmenu #toplevel_page_edit-post_type-audiotheme_record div.wp-menu-image { background-position: -60px 0;}
 #adminmenu #toplevel_page_edit-post_type-audiotheme_record:hover div.wp-menu-image,
 #adminmenu #toplevel_page_edit-post_type-audiotheme_record.wp-has-current-submenu div.wp-menu-image { background-position: -60px -32px;}
@@ -193,21 +230,18 @@ body.gigs_page_venues .search-box { margin-bottom: 8px;}
 
 #adminmenu #toplevel_page_audiotheme div.wp-menu-image img,
 #adminmenu #toplevel_page_audiotheme-gigs div.wp-menu-image img,
-#adminmenu #menu-posts-audiotheme_gallery div.wp-menu-image img,
 #adminmenu #toplevel_page_edit-post_type-audiotheme_record div.wp-menu-image img,
 #adminmenu #menu-posts-audiotheme_video div.wp-menu-image img { display: none;}
 
 @media print, (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
 	#adminmenu #toplevel_page_audiotheme div.wp-menu-image,
 	#adminmenu #toplevel_page_audiotheme-gigs div.wp-menu-image,
-	#adminmenu #menu-posts-audiotheme_gallery div.wp-menu-image,
 	#adminmenu #toplevel_page_edit-post_type-audiotheme_record div.wp-menu-image,
 	#adminmenu #menu-posts-audiotheme_video div.wp-menu-image { background-image: url(../images/icons32.png); background-size: 210px 64px;}
 
 	#icon-audiotheme,
 	#icon-audiotheme-gigs,
 	#icon-audiotheme-venues,
-	#icon-edit.icon32-posts-audiotheme_gallery,
 	#icon-edit.icon32-posts-audiotheme_record,
 	#icon-edit.icon32-posts-audiotheme_track,
 	#icon-edit.icon32-posts-audiotheme_video,

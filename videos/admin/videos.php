@@ -124,11 +124,6 @@ function audiotheme_video_after_title() {
 			?>
 		</div>
 	</div>
-	<style type="text/css">
-	.audiotheme-video-preview-empty { padding: 20px 0; color: #aaa; font-size: 20px; text-align: center; border: 4px dashed #ddd;}
-	#audiotheme-select-oembed-thumb { display: none; float: none; clear: both; margin-bottom: 10px; width: 100%;}
-	#audiotheme-select-oembed-thumb .spinner { display: none; float: none; margin-top: 0; margin-left: 5px; vertical-align: middle;}
-	</style>
 	<?php
 }
 

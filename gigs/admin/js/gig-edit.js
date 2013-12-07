@@ -24,7 +24,7 @@ jQuery(function($) {
 		defaultDate: lastGigDate,
 		showOn: 'both',
 		buttonImage: audiothemeGigsL10n.datepickerIcon
-	});
+	}).next('button').wrap('<span class="audiotheme-input-append-trigger">');
 
 	// Initialize the time picker.
 	$time.timepicker({

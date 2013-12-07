@@ -73,21 +73,3 @@ jQuery(function($) {
 	});
 });
 </script>
-
-<style type="text/css">
-.ui-autocomplete { overflow-y: auto; overflow-x: hidden; max-height: 180px;}
-
-#audiotheme-record-types { margin: 1em 0;}
-#audiotheme-record-types li { margin: 0; vertical-align: middle;}
-#audiotheme-record-types li input { vertical-align: middle;}
-#audiotheme-record-types li label { margin: 0; font-weight: normal;}
-#audiotheme-record-types ul { margin-top: 3px; margin-bottom: 0;}
-
-#record-links { width: 100%; border-spacing: 0;}
-#record-links td { padding: 0 0 5px 0;}
-#record-links th { text-align: left;}
-#record-links tfoot td { padding-top: 5px;}
-#record-links tfoot td a { float: right; margin-left: 10px;}
-#record-links tfoot td .audiotheme-repeater-sort-warning { color: red;}
-#record-links .column-action { padding: 0 0 0 5px;}
-</style>

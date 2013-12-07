@@ -1,0 +1,66 @@
+/* Settings Screens
+-------------------------------------------------------------- */
+
+.audiotheme-settings-screen {
+	h2.nav-tab-wrapper {
+		margin-bottom: 12px;
+	}
+
+	.form-table td .button.thickbox {
+		margin-left: 5px;
+	}
+}
+
+// Hide extra tab panels if javascript is enabled and the screen has tabs.
+.js .audiotheme-settings-screen-has-tabs {
+	.tab-panel {
+		display: none;
+	}
+
+	.tab-panel-active {
+		display: block;
+	}
+}
+
+// Error related styles.
+.audiotheme-settings-screen {
+	h2.nav-tab-wrapper {
+		a.nav-tab.audiotheme-settings-tab-has-error {
+			background: #fff6f6;
+			border-color: #eedddd;
+		}
+
+		a.nav-tab-active.audiotheme-settings-tab-has-error {
+			color: #464646;
+			background: #fff;
+			border-color: #ccc;
+			border-bottom-color: #fff;
+		}
+	}
+
+	.form-table tr.audiotheme-settings-error {
+		td input {
+			background-color: #fff6f6;
+			border-color: #ee9999;
+		}
+
+		th label {
+			color: #cc0000;
+			font-weight: bold;
+		}
+	}
+
+	.wp-picker-holder {
+		position: absolute;
+		z-index: 99999;
+	}
+}
+
+.audiotheme-response{
+	&.is-error { color: #cc0000;}
+	&.is-valid { color: #009900;}
+}
+
+@media only screen and (max-width: 860px) {
+	.audiotheme-feature-section img { float: none; display: block; width: 100%;}
+}

@@ -1,0 +1,64 @@
+.audiotheme-repeater {
+	input:-moz-placeholder {
+		color: #a9a9a9;
+	}
+
+	tbody {
+		tr {
+			cursor: move;
+			width: 100%;
+
+			&:last-child td {
+				border-bottom: none;
+			}
+		}
+
+		td {
+			padding: 7px;
+
+			&.track-number {
+				text-align: right;
+				vertical-align: middle;
+				width: 2em;
+			}
+		}
+	}
+
+	.column-action {
+		cursor: auto;
+		text-align: right;
+		vertical-align: middle;
+		width: 16px;
+
+		a {
+			cursor: pointer;
+			font-family: sans-serif;
+		}
+
+		.audiotheme-repeater-remove-item {
+			opacity: 0.2;
+
+			&:hover {
+				opacity: 1;
+			}
+		}
+	}
+
+	.column-track-info {
+		font-size: 12px;
+		vertical-align: middle;
+		width: 48px;
+
+		span {
+			padding: 0 3px;
+		}
+	}
+
+	.audiotheme-show-on-add {
+		display: none;
+	}
+
+	.audiotheme-repeater-sort-warning {
+		color: #ee0000;
+	}
+}

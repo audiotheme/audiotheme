@@ -35,32 +35,6 @@
 	</tbody>
 </table>
 
-<style type="text/css">
-.audiotheme-repeater input:-moz-placeholder { color: #a9a9a9;}
-.audiotheme-repeater tbody tr { cursor: move; width: 100%; }
-.audiotheme-repeater tbody tr:last-child td { border-bottom: none; }
-.audiotheme-repeater tbody td { padding: 7px; }
-.audiotheme-repeater tbody td.track-number { width: 2em; text-align: right; vertical-align: middle;}
-.audiotheme-repeater .column-action { width: 16px; cursor: auto; text-align: right; vertical-align: middle;}
-.audiotheme-repeater .column-action a { cursor: pointer; font-family: sans-serif;}
-.audiotheme-repeater .column-action .audiotheme-repeater-remove-item { opacity: .2;}
-.audiotheme-repeater .column-action .audiotheme-repeater-remove-item:hover { opacity: 1;}
-.audiotheme-repeater .audiotheme-show-on-add { display: none;}
-.audiotheme-repeater-sort-warning { color: #ee0000;}
-
-.audiotheme-repeater .column-track-info { width: 48px; font-size: 12px; vertical-align: middle;}
-.audiotheme-repeater .column-track-info span { padding: 0 3px;}
-
-#record-tracklist.audiotheme-repeater tbody tr.audiotheme-repeater-active-item td { background: #ececec; border-top-color: #eee;}
-#record-tracklist.audiotheme-repeater tfoot td { padding: 5px 7px; background: #f5f5f5; border-top: 1px solid #dfdfdf;}
-#record-tracklist.audiotheme-repeater .ui-sortable-helper { background: #f9f9f9; border-top: 1px solid #dfdfdf; border-bottom: 1px solid #dfdfdf;}
-#record-tracklist.audiotheme-repeater .ui-sortable-helper td { border-top-width: 0; border-bottom-width: 0;}
-
-#record-tracklist .audiotheme-input-append { overflow: hidden; width: 100%;}
-#record-tracklist .audiotheme-input-append input { float: left; padding-right: 34px;}
-#record-tracklist .audiotheme-input-append-trigger { float: left; margin: 0 0 0 -30px; width: 30px; height: 23px; line-height: 23px; border-left-width: 1px;}
-</style>
-
 <script type="text/html" id="tmpl-audiotheme-track">
 	<tr class="audiotheme-repeater-item">
 		<td class="track-number">

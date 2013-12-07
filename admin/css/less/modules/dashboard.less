@@ -1,0 +1,104 @@
+/* Dashboard
+-------------------------------------------------------------- */
+
+.audiotheme-dashboard .changelog {
+	margin-bottom: 40px;
+
+	p:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.audiotheme-dashboard-intro {
+	border-bottom: 1px solid #d6d6d6;
+	margin: 0 0 40px 0;
+}
+
+.audiotheme-badge {
+	background-color: #394f63;
+	background-image: url(../images/audiotheme-badge.png);
+	background-position: 0 0;
+	background-size: 180px 180px;
+	display: inline-block;
+	padding-top: 142px;
+	text-decoration: none;
+	width: 180px;
+
+	&:hover {
+		color: #e74c3c;
+	}
+}
+
+.audiotheme-about-banner {
+	padding: 20px 30px 40px;
+	color: #a3a4a6;
+	background: #34495e url(../images/intro-banner.jpg);
+
+	h2 {
+		margin: 0;
+		padding: 0;
+		color: #fff;
+		font-size: 20px;
+		text-shadow: 0 0;
+	}
+
+	p {
+		margin: 0;
+	}
+}
+
+.audiotheme-feature-section {
+	background: #f1f5f8;
+	border: 1px solid #8d8e90;
+	overflow: hidden;
+	padding: 30px;
+
+	h3 {
+		margin-top: 0;
+		padding-top: 0;
+	}
+
+	img {
+		float: left;
+		width: 65%;
+		margin: 0 30px 0 0;
+	}
+
+	img.stagger-right {
+		float: right;
+		margin: 0 0 0 30px;
+	}
+
+	p:last-child {
+		margin-bottom: 0;
+	}
+}
+
+table.audiotheme-system-info {
+	margin-bottom: 20px;
+
+	tbody th {
+		font-family: sans-serif;
+		font-size: 12px;
+		width: 20%;
+	}
+}
+
+.spinner {
+	&.audiotheme-license-spinner {
+		float: none;
+		margin-top: 0;
+		vertical-align: middle;
+	}
+
+	&.is-visible {
+		display: inline-block;
+	}
+}
+
+@media print, (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+	.audiotheme-badge {
+		background-image: url(../images/audiotheme-badge-2x.png);
+		background-size: 180px 180px;
+	}
+}

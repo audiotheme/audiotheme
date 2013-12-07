@@ -158,7 +158,9 @@ function audiotheme_admin_init() {
 	wp_register_script( 'audiotheme-pointer', AUDIOTHEME_URI . 'admin/js/pointer' . $suffix . '.js', array( 'wp-pointer' ) );
 	wp_register_script( 'audiotheme-settings', AUDIOTHEME_URI . 'admin/js/settings' . $suffix . '.js' );
 
-	wp_register_style( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/css/admin.css' );
+	$admin_styles  = AUDIOTHEME_URI . 'admin/css/';
+	$admin_styles .= version_compare( $GLOBALS['wp_version'], '3.8-alpha', '>' ) ? 'admin.min.css' : 'admin-legacy.min.css';
+	wp_register_style( 'audiotheme-admin', $admin_styles );
 	wp_register_style( 'jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css' );
 	wp_register_style( 'jquery-ui-theme-audiotheme', AUDIOTHEME_URI . 'admin/css/jquery-ui-audiotheme.css', array( 'jquery-ui-theme-smoothness' ) );
 
@@ -221,16 +223,20 @@ function audiotheme_enqueue_admin_scripts() {
  * @param string $class Body class.
  * @return string
  */
-function audiotheme_admin_body_class( $class ) {
+function audiotheme_admin_body_class( $classes ) {
 	global $post;
 
-	$class .= ' ' . sanitize_html_class( get_current_screen()->id );
+	$classes .= ' ' . sanitize_html_class( get_current_screen()->id );
 
 	if ( 'audiotheme_archive' == get_current_screen()->id && $post_type = is_audiotheme_post_type_archive_id( $post->ID )) {
-		$class .= ' ' . $post_type . '-archive';
+		$classes .= ' ' . $post_type . '-archive';
 	}
 
-	return $class;
+	if ( version_compare( $GLOBALS['wp_version'], '3.8-alpha', '<' ) ) {
+		$classes .= ' pre-mp6';
+	}
+
+	return implode( ' ', array_unique( explode( ' ', $classes ) ) );
 }
 
 /**
