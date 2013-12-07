@@ -1,18 +1,12 @@
 <div class="wrap about-wrap audiotheme-dashboard audiotheme-dashboard-features">
-	<div class="audiotheme-dashboard-intro">
-		<h1><?php _e( 'Welcome to AudioTheme', 'audiotheme' ); ?></h1>
-
-		<div class="about-text">
-			<?php _e( "A platform that makes managing music-related websites easy for anyone, while also improving the experience for everyone involved. We're excited for you try it out.", 'audiotheme' ); ?>
-		</div>
-
-		<a href="http://audiotheme.com/" target="_blank" class="wp-badge audiotheme-badge"><?php _e( sprintf( 'Version %s', AUDIOTHEME_VERSION ), 'audiotheme' ); ?></a>
-	</div>
-
 	<div class="audiotheme-about-banner">
-		<h2><?php _e( 'Premium Websites for<br>Bands, Artists, Musicians and Labels.', 'audiotheme' ); ?></h2>
+		<h1><?php _e( 'Welcome to AudioTheme', 'audiotheme' ); ?></h1>
+		<h2><?php _e( 'Premium Websites for<br>Bands, Musicians and Labels.', 'audiotheme' ); ?></h2>
 		<p>
 			<?php _e( 'Let your site be heard.', 'audiotheme' ); ?>
+		</p>
+		<p class="audiotheme-version">
+			<?php _e( sprintf( 'Version %s', AUDIOTHEME_VERSION ), 'audiotheme' ); ?>
 		</p>
 	</div>
 
@@ -93,19 +87,19 @@
 	<div class="changelog">
 		<h3><?php _e( 'Credits', 'audiotheme' ); ?></h3>
 		<p>
-			<?php _e( 'AudioTheme would not be possible without the incredible effort by countless individuals who contribute to the numerous projects on which the platform relies. A hearty thanks to all!', 'americanaura-i18n' ); ?>
+			<?php _e( 'AudioTheme would not be possible without the incredible effort by countless individuals who contribute to the numerous projects on which the platform is built. A hearty thanks to all!', 'audiotheme' ); ?>
 		</p>
 		<p>
-			<a href="http://wordpress.org/" target="_blank"><?php _e( 'WordPress', 'americanaura-i18n' ); ?></a>,
-			<a href="http://fitvidsjs.com/" target="_blank"><?php _e( 'FitVids.JS', 'americanaura-i18n' ); ?></a>,
-			<a href="http://www.jplayer.org/" target="_blank"><?php _e( 'jPlayer', 'americanaura-i18n' ); ?></a>,
-			<a href="http://jquery.com/" target="_blank"><?php _e( 'jQuery', 'americanaura-i18n' ); ?></a>,
-			<a href="https://github.com/mathiasbynens/jquery-placeholder" target="_blank"><?php _e( 'jQuery Placeholder', 'americanaura-i18n' ); ?></a>,
-			<a href="http://jonthornton.github.com/jquery-timepicker/" target="_blank"><?php _e( 'jQuery Timepicker', 'americanaura-i18n' ); ?></a>,
-			<a href="http://jqueryui.com/" target="_blank"><?php _e( 'jQuery UI', 'americanaura-i18n' ); ?></a>,
-			<a href="http://lesscss.org/" target="_blank"><?php _e( 'LESS', 'americanaura-i18n' ); ?></a>,
-			<a href="http://wordpress.org/extend/plugins/posts-to-posts/" target="_blank"><?php _e( 'Posts to Posts', 'americanaura-i18n' ); ?></a>,
-			<a href="https://github.com/sanchothefat/wp-less" target="_blank"><?php _e( 'wp-less', 'americanaura-i18n' ); ?></a>
+			<a href="http://wordpress.org/" target="_blank"><?php _e( 'WordPress', 'audiotheme' ); ?></a>,
+			<a href="http://fitvidsjs.com/" target="_blank"><?php _e( 'FitVids.JS', 'audiotheme' ); ?></a>,
+			<a href="http://www.jplayer.org/" target="_blank"><?php _e( 'jPlayer', 'audiotheme' ); ?></a>,
+			<a href="http://jquery.com/" target="_blank"><?php _e( 'jQuery', 'audiotheme' ); ?></a>,
+			<a href="https://github.com/mathiasbynens/jquery-placeholder" target="_blank"><?php _e( 'jQuery Placeholder', 'audiotheme' ); ?></a>,
+			<a href="http://jonthornton.github.com/jquery-timepicker/" target="_blank"><?php _e( 'jQuery Timepicker', 'audiotheme' ); ?></a>,
+			<a href="http://jqueryui.com/" target="_blank"><?php _e( 'jQuery UI', 'audiotheme' ); ?></a>,
+			<a href="http://lesscss.org/" target="_blank"><?php _e( 'LESS', 'audiotheme' ); ?></a>,
+			<a href="http://wordpress.org/extend/plugins/posts-to-posts/" target="_blank"><?php _e( 'Posts to Posts', 'audiotheme' ); ?></a>,
+			<a href="https://github.com/sanchothefat/wp-less" target="_blank"><?php _e( 'wp-less', 'audiotheme' ); ?></a>
 		</p>
 
 	</div>

@@ -14,25 +14,16 @@
 	margin: 0 0 40px 0;
 }
 
-.audiotheme-badge {
-	background-color: #394f63;
-	background-image: url(../images/audiotheme-badge.png);
-	background-position: 0 0;
-	background-size: 180px 180px;
-	display: inline-block;
-	padding-top: 142px;
-	text-decoration: none;
-	width: 180px;
-
-	&:hover {
-		color: #e74c3c;
-	}
-}
-
 .audiotheme-about-banner {
-	padding: 20px 30px 40px;
-	color: #a3a4a6;
 	background: #34495e url(../images/intro-banner.jpg);
+	color: #a3a4a6;
+	padding: 20px 30px;
+	position: relative;
+
+	h1 {
+		color: #fff;
+		margin: 0 0 20px 0;
+	}
 
 	h2 {
 		margin: 0;
@@ -44,6 +35,14 @@
 
 	p {
 		margin: 0;
+	}
+
+	.audiotheme-version {
+		color: #fff;
+		margin: 0;
+		position: absolute;
+		right: 30px;
+		bottom: 20px;
 	}
 }
 
@@ -93,12 +92,5 @@ table.audiotheme-system-info {
 
 	&.is-visible {
 		display: inline-block;
-	}
-}
-
-@media print, (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
-	.audiotheme-badge {
-		background-image: url(../images/audiotheme-badge-2x.png);
-		background-size: 180px 180px;
 	}
 }
