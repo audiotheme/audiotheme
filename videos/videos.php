@@ -156,7 +156,7 @@ function audiotheme_video_archive_post_class( $classes ) {
 	if ( $wp_query->is_main_query() && is_post_type_archive( 'audiotheme_video' ) ) {
 		$nth_child_classes = audiotheme_nth_child_classes( array(
 			'current' => $wp_query->current_post + 1,
-			'max'     => 4,
+			'max'     => get_audiotheme_archive_meta( 'columns', true, 4 ),
 		) );
 
 		$classes = array_merge( $classes, $nth_child_classes );
