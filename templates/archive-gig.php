@@ -12,9 +12,11 @@ get_header();
 
 <?php do_action( 'audiotheme_before_main_content' ); ?>
 
-<h1 class="audiotheme-archive-title"><?php the_audiotheme_archive_title(); ?></h1>
+<header class="audiotheme-archive-header archive-header">
+	<h1 class="audiotheme-archive-title archive-title"><?php the_audiotheme_archive_title(); ?></h1>
 
-<?php the_audiotheme_archive_description( '<div class="audiotheme-archive-intro">', '</div>' ); ?>
+	<?php the_audiotheme_archive_description( '<div class="audiotheme-archive-intro archive-intro">', '</div>' ); ?>
+</header>
 
 <ul id="audiotheme-gigs" class="audiotheme-gigs audiotheme-clearfix">
 
