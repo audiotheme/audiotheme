@@ -392,7 +392,7 @@ function audiotheme_shortcode_bool( $var ) {
 /**
  * Return a base64 encoded SVG icon for use as a data URI.
  *
- * @since x.x.x
+ * @since 1.4.3
  *
  * @param string $path Path to SVG icon.
  * @return string
