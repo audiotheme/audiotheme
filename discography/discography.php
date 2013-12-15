@@ -454,7 +454,6 @@ function audiotheme_track_unique_slug( $slug, $post_ID, $post_status, $post_type
  * JavaScript object.
  *
  * @since 1.1.0
- * @todo esc_url() strips spaces. No bueno.
  *
  * @param int|array $track Track ID or array of expected track properties.
  * @return array
@@ -491,11 +490,11 @@ function audiotheme_prepare_track_for_js( $track ) {
 		}
 
 		if ( isset( $track['file'] ) ) {
-			$data['mp3'] = esc_url( $track['file'] );
+			$data['mp3'] = esc_url_raw( audiotheme_encode_url_path( $track['file'] ) );
 		}
 
 		if ( isset( $track['mp3'] ) ) {
-			$data['mp3'] = esc_url( $track['mp3'] );
+			$data['mp3'] = esc_url_raw( audiotheme_encode_url_path( $track['mp3'] ) );
 		}
 
 		if ( isset( $track['title'] ) ) {
