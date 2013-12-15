@@ -41,8 +41,8 @@
 			<span class="audiotheme-repeater-index"></span>
 			<input type="hidden" name="audiotheme_tracks[__i__][post_id]" value="{{ data.id }}" class="post-id audiotheme-clear-on-add">
 		</td>
-		<td><input type="text" name="audiotheme_tracks[__i__][title]" placeholder="<?php esc_attr_e( 'Title', 'audiotheme' ) ?>" value="{{ data.title }}" class="widefat audiotheme-clear-on-add"></td>
-		<td><input type="text" name="audiotheme_tracks[__i__][artist]" placeholder="<?php esc_attr_e( 'Artist', 'audiotheme' ) ?>" value="{{ data.artist }}" class="widefat"></td>
+		<td><input type="text" name="audiotheme_tracks[__i__][title]" placeholder="<?php esc_attr_e( 'Title', 'audiotheme' ) ?>" value="{{{ data.title }}}" class="widefat audiotheme-clear-on-add"></td>
+		<td><input type="text" name="audiotheme_tracks[__i__][artist]" placeholder="<?php esc_attr_e( 'Artist', 'audiotheme' ) ?>" value="{{{ data.artist }}}" class="widefat"></td>
 		<td>
 			<div class="audiotheme-media-control audiotheme-input-append"
 				data-title="<?php esc_attr_e( 'Choose an MP3', 'audiotheme' ); ?>"
