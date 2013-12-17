@@ -296,7 +296,9 @@ function audiotheme_record_default_template_query( $query ) {
 	}
 
 	if ( is_audiotheme_default_template( audiotheme_locate_template( 'archive-record.php' ) ) ) {
-		$query->set( 'posts_per_archive_page', 12 );
+		if ( '' == $query->get( 'posts_per_archive_page' ) ) {
+			$query->set( 'posts_per_archive_page', 12 );
+		}
 	}
 }
 
