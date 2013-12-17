@@ -392,7 +392,7 @@ function audiotheme_shortcode_bool( $var ) {
 /**
  * Return a base64 encoded SVG icon for use as a data URI.
  *
- * @since x.x.x
+ * @since 1.4.3
  *
  * @param string $path Path to SVG icon.
  * @return string
@@ -405,4 +405,35 @@ function audiotheme_encode_svg( $path ) {
 	}
 
 	return 'data:image/svg+xml;base64,' . base64_encode( file_get_contents( $path ) );
+}
+
+/**
+ * Encode the path portion of a URL.
+ *
+ * Spaces in directory or filenames are stripped by esc_url() and can cause issues when requesting a URL programmatically. This method encodes spaces and other characters.
+ *
+ * @since x.x.x
+ *
+ * @param string $url A URL.
+ * @return string
+ */
+function audiotheme_encode_url_path( $url ) {
+	$parts = parse_url( $url );
+
+	$return  = isset( $parts['scheme'] ) ? $parts['scheme'] . '://' : '';
+	$return .= isset( $parts['host'] ) ? $parts['host'] : '';
+	$return .= isset( $parts['port'] ) ? ':' . $parts['port'] : '';
+	$user = isset( $parts['user'] ) ? $parts['user'] : '';
+	$pass = isset( $parts['pass'] ) ? ':' . $parts['pass']  : '';
+	$return .= ( $user || $pass ) ? "$pass@" : '';
+
+	if ( isset( $parts['path'] ) ) {
+		$path = implode( '/', array_map( 'rawurlencode', explode( '/', $parts['path'] ) ) );
+		$return .= $path;
+	}
+
+	$return .= isset( $parts['query'] ) ? '?' . $parts['query'] : '';
+	$return .= isset( $parts['fragment'] ) ? '#' . $parts['fragment'] : '';
+
+	return $return;
 }
