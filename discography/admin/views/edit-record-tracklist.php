@@ -47,7 +47,7 @@
 			<div class="audiotheme-media-control audiotheme-input-append"
 				data-title="<?php esc_attr_e( 'Choose an MP3', 'audiotheme' ); ?>"
 				data-update-text="<?php esc_attr_e( 'Update MP3', 'audiotheme' ); ?>"
-				data-file-type="audio"
+				data-file-type="audio/mpeg"
 				data-upload-extensions="mp3"
 				data-target=".track-file-url"
 				data-return-property="url">
