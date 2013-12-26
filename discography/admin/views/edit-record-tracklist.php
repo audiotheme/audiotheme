@@ -41,8 +41,8 @@
 			<span class="audiotheme-repeater-index"></span>
 			<input type="hidden" name="audiotheme_tracks[__i__][post_id]" value="{{ data.id }}" class="post-id audiotheme-clear-on-add">
 		</td>
-		<td><input type="text" name="audiotheme_tracks[__i__][title]" placeholder="<?php esc_attr_e( 'Title', 'audiotheme' ) ?>" value="{{{ data.title }}}" class="widefat audiotheme-clear-on-add"></td>
-		<td><input type="text" name="audiotheme_tracks[__i__][artist]" placeholder="<?php esc_attr_e( 'Artist', 'audiotheme' ) ?>" value="{{{ data.artist }}}" class="widefat"></td>
+		<td><input type="text" name="audiotheme_tracks[__i__][title]" placeholder="<?php esc_attr_e( 'Title', 'audiotheme' ) ?>" value="{{{ data.title }}}" class="audiotheme-tracklist-track-title widefat audiotheme-clear-on-add"></td>
+		<td><input type="text" name="audiotheme_tracks[__i__][artist]" placeholder="<?php esc_attr_e( 'Artist', 'audiotheme' ) ?>" value="{{{ data.artist }}}" class="audiotheme-tracklist-track-artist widefat"></td>
 		<td>
 			<div class="audiotheme-media-control audiotheme-input-append"
 				data-title="<?php esc_attr_e( 'Choose an MP3', 'audiotheme' ); ?>"
@@ -94,5 +94,19 @@ jQuery(function($) {
 				}
 			});
 		});
+
+	$('#record-tracklist').on('selectionChange.audiotheme', function( e, selection ) {
+		var $track = $( e.target ).closest( 'tr' ),
+			attachment = selection.first().toJSON();
+
+		_.each( [ 'title', 'artist' ], function( key ) {
+			var $field = $track.find( '.audiotheme-tracklist-track-' + key ),
+				value = $field.val();
+
+			if ( '' === value && value !== attachment.meta[ key ] ) {
+				$field.val( attachment.meta[ key ] ).trigger( 'change' );
+			}
+		} );
+	});
 });
 </script>
