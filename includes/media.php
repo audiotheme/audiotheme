@@ -269,3 +269,35 @@ function audiotheme_post_gallery( $output, $attr ) {
 
 	return $output;
 }
+
+/**
+ * Add audio metadata to attachment response object.
+ *
+ * @since x.x.x
+ *
+ * @param array $response Attachment data to send as JSON.
+ * @param WP_Post $attachment Attachment object.
+ * @param array $meta Attachment meta.
+ * @return array
+ */
+function audiotheme_wp_prepare_audio_attachment_for_js( $response, $attachment, $meta ) {
+	if ( 'audio' !== $response['type'] ) {
+		return $response;
+	}
+
+	if ( empty( $meta ) && ! get_post_meta( $attachment->ID, '_audiotheme_metadata_cached', true ) ) {
+		if ( ! class_exists( 'getID3' ) ) {
+			require( ABSPATH . WPINC . '/ID3/getid3.php' );
+		}
+
+		// Read and cache the audio metadata.
+		$file = get_attached_file( $attachment->ID );
+		$meta = wp_read_audio_metadata( $file );
+		update_post_meta( $attachment->ID, '_audiotheme_metadata_cached', true );
+	}
+
+	$response['meta'] = $meta;
+
+	return $response;
+}
+add_filter( 'wp_prepare_attachment_for_js', 'audiotheme_wp_prepare_audio_attachment_for_js', 10, 3 );
