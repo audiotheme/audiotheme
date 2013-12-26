@@ -45,7 +45,7 @@ function audiotheme_archives_init_admin() {
 	// Make archive links appear last.
 	add_action( 'admin_menu', 'audiotheme_archives_admin_menu', 100 );
 	add_action( 'add_meta_boxes_audiotheme_archive', 'audiotheme_archives_add_meta_boxes' );
-	add_action( 'audiotheme_archive_settings_meta_box', 'audiotheme_archive_settings_meta_box_fields', 15, 2 );
+	add_action( 'audiotheme_archive_settings_meta_box', 'audiotheme_archive_settings_meta_box_fields', 15, 3 );
 }
 
 /**
@@ -112,14 +112,20 @@ function audiotheme_archives_add_meta_boxes( $post ) {
 	$show = apply_filters( 'add_audiotheme_archive_settings_meta_box', false, $post_type );
 	$show_for_post_type = apply_filters( 'add_audiotheme_archive_settings_meta_box_' . $post_type, false );
 
-	if ( $show || $show_for_post_type ) {
+	// Show if any settings fields have been registered for the post type.
+	$fields = apply_filters( 'audiotheme_archive_settings_fields', array(), $post_type );
+
+	if ( $show || $show_for_post_type || ! empty( $fields ) ) {
 		add_meta_box(
 			'audiothemesettingsdiv',
 			__( 'Archive Settings', 'audiotheme' ),
 			'audiotheme_archive_settings_meta_box',
 			'audiotheme_archive',
 			'side',
-			'default'
+			'default',
+			array(
+				'fields' => $fields,
+			)
 		);
 	}
 }
@@ -302,11 +308,11 @@ function audiotheme_archive_save_hook( $post_id, $post ) {
  *
  * @param WP_Post $post Archive post.
  */
-function audiotheme_archive_settings_meta_box( $post ) {
+function audiotheme_archive_settings_meta_box( $post, $args = array() ) {
 	$post_type = is_audiotheme_post_type_archive_id( $post->ID );
 	wp_nonce_field( 'save-archive-meta_' . $post->ID, 'audiotheme_archive_nonce' );
-	do_action( 'audiotheme_archive_settings_meta_box', $post, $post_type );
-	do_action( 'audiotheme_archive_settings_meta_box_' . $post_type, $post );
+	do_action( 'audiotheme_archive_settings_meta_box', $post, $post_type, $args['args']['fields'] );
+	do_action( 'audiotheme_archive_settings_meta_box_' . $post_type, $post, $args['args']['fields'] );
 }
 
 /**
@@ -316,9 +322,7 @@ function audiotheme_archive_settings_meta_box( $post ) {
  *
  * @param WP_Post $post Archive post.
  */
-function audiotheme_archive_settings_meta_box_fields( $post, $post_type ) {
-	$fields = apply_filters( 'audiotheme_archive_settings_fields', array(), $post_type );
-
+function audiotheme_archive_settings_meta_box_fields( $post, $post_type, $fields = array() ) {
 	if ( empty( $fields ) ) {
 		return;
 	}
