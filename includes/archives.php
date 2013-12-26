@@ -67,6 +67,7 @@ function register_audiotheme_archives() {
 	register_post_type( 'audiotheme_archive', apply_filters( 'audiotheme_archive_register_args', $args ) );
 
 	add_action( 'pre_get_posts', 'audiotheme_archive_query' );
+	add_filter( 'get_audiotheme_archive_meta', 'audiotheme_sanitize_audiotheme_archive_columns', 10, 5 );
 }
 
 /**
@@ -195,6 +196,33 @@ function get_audiotheme_archive_meta( $key = '', $single = false, $default = nul
 
 	$value = get_post_meta( $archive_id, $key, $single );
 	if ( empty( $value ) && ! empty( $default ) ) {
+		$value = $default;
+	}
+
+	return apply_filters( 'get_audiotheme_archive_meta', $value, $key, $single, $default, $post_type );
+}
+
+/**
+ * Sanitize archive columns setting.
+ *
+ * The allowd columns value may be different between themes, so make sure it exists in the settings defined by the theme, otherwise, return the theme default.
+ *
+ * @since x.x.x
+ *
+ * @param mixed $value Existing meta value.
+ * @param string $key Optional. The meta key to retrieve. By default, returns data for all keys.
+ * @param bool $single Optional. Whether to return a single value.
+ * @param mixed $default Optional. A default value to return if the requested meta doesn't exist.
+ * @param string $post_type Optional. The post type archive to retrieve meta data for. Defaults to the current post type.
+ * @return mixed Will be an array if $single is false. Will be value of meta data field if $single is true.
+ */
+function audiotheme_sanitize_audiotheme_archive_columns( $value, $key, $single, $default, $post_type ) {
+	if ( $value === $default ) {
+		return $default;
+	}
+
+	$fields = apply_filters( 'audiotheme_archive_settings_fields', array(), $post_type );
+	if ( ! empty( $fields['columns']['choices'] ) && ! in_array( $value, $fields['columns']['choices'] ) ) {
 		$value = $default;
 	}
 
