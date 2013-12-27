@@ -271,7 +271,7 @@ function audiotheme_post_gallery( $output, $attr ) {
 }
 
 /**
- * Add audio metadata to attachment response object.
+ * Add audio metadata to attachment response objects.
  *
  * @since x.x.x
  *
@@ -286,13 +286,10 @@ function audiotheme_wp_prepare_audio_attachment_for_js( $response, $attachment, 
 	}
 
 	if ( empty( $meta ) && ! get_post_meta( $attachment->ID, '_audiotheme_metadata_cached', true ) ) {
-		if ( ! class_exists( 'getID3' ) ) {
-			require( ABSPATH . WPINC . '/ID3/getid3.php' );
-		}
-
 		// Read and cache the audio metadata.
 		$file = get_attached_file( $attachment->ID );
-		$meta = wp_read_audio_metadata( $file );
+		wp_update_attachment_metadata( $attachment->ID, wp_generate_attachment_metadata( $attachment->ID, $file ) );
+		$meta = wp_get_attachment_metadata( $attachment->ID );
 		update_post_meta( $attachment->ID, '_audiotheme_metadata_cached', true );
 	}
 
