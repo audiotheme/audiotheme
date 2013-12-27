@@ -217,8 +217,8 @@ function get_audiotheme_archive_meta( $key = '', $single = false, $default = nul
  * @return mixed Will be an array if $single is false. Will be value of meta data field if $single is true.
  */
 function audiotheme_sanitize_audiotheme_archive_columns( $value, $key, $single, $default, $post_type ) {
-	if ( $value === $default ) {
-		return $default;
+	if ( 'columns' !== $key || $value === $default ) {
+		return $value;
 	}
 
 	$fields = apply_filters( 'audiotheme_archive_settings_fields', array(), $post_type );
