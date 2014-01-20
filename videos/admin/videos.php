@@ -23,6 +23,11 @@ function audiotheme_load_videos_admin() {
 	add_filter( 'admin_post_thumbnail_html', 'audiotheme_video_admin_post_thumbnail_html', 10, 2 );
 
 	wp_register_script( 'audiotheme-video-edit', AUDIOTHEME_URI . 'videos/admin/js/video-edit.js', array( 'jquery' ) );
+
+	// Videos Archive
+	add_action( 'add_audiotheme_archive_settings_meta_box_audiotheme_video', '__return_true' );
+	add_action( 'save_audiotheme_archive_settings', 'audiotheme_video_archive_save_settings_hook', 10, 3 );
+	add_action( 'audiotheme_archive_settings_meta_box', 'audiotheme_video_archive_settings' );
 }
 
 /**
@@ -252,6 +257,68 @@ function audiotheme_video_save_post( $post_id, $post ) {
 	if( isset( $_POST['_video_url'] ) ) {
 		update_post_meta( $post_id, '_audiotheme_video_url', esc_url_raw( $_POST['_video_url'] ) );
 	}
+}
+
+/**
+ * Save video archive sort order.
+ *
+ * The $post_id and $post parameters will refer to the archive CPT, while the
+ * $post_type parameter references the type of post the archive is for.
+ *
+ * @since x.x.x
+ *
+ * @param int $post_id Post ID.
+ * @param WP_Post $post Post object.
+ * @param string $post_type The type of post the archive lists.
+ */
+function audiotheme_video_archive_save_settings_hook( $post_id, $post, $post_type ) {
+	if ( 'audiotheme_video' != $post_type ) {
+		return;
+	}
+
+	$orderby = ( isset( $_POST['audiotheme_orderby'] ) ) ? $_POST['audiotheme_orderby'] : '';
+	update_post_meta( $post_id, 'orderby', $orderby );
+}
+
+/**
+ * Add an orderby setting to the video archive.
+ *
+ * Allows for changing the sort order of videos. Custom would require a plugin
+ * like Simple Page Ordering.
+ *
+ * @since x.x.x
+ *
+ * @param WP_Post $post Post object.
+ */
+function audiotheme_video_archive_settings( $post ) {
+	$post_type = is_audiotheme_post_type_archive_id( $post->ID );
+	if ( 'audiotheme_video' != $post_type ) {
+		return;
+	}
+
+	$options = array(
+		'post_date'    => __( 'Publish Date', 'audiotheme' ),
+		'title'        => __( 'Title', 'audiotheme' ),
+		'custom'       => __( 'Custom', 'audiotheme' ),
+	);
+
+	$orderby = get_audiotheme_archive_meta( 'orderby', true, 'post_date', 'audiotheme_video' );
+	?>
+	<p>
+		<label for="audiotheme-orderby"><?php _e( 'Order by:', 'audiotheme' ); ?></label>
+		<select name="audiotheme_orderby" id="audiotheme-orderby">
+			<?php
+			foreach ( $options as $id => $value ) {
+				printf( '<option value="%s"%s>%s</option>',
+					esc_attr( $id ),
+					selected( $id, $orderby, false ),
+					esc_html( $value )
+				);
+			}
+			?>
+		</select>
+	</p>
+	<?php
 }
 
 /**
