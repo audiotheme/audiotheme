@@ -7,18 +7,12 @@
 			updateClasses;
 
 		updateClasses = function() {
-			var w = $el.outerWidth();
+			var w = $el.outerWidth(),
+				breakpoints = [ 400, 600 ],
+				i;
 
-			if ( w >= 400 ) {
-				$el.addClass('min-width-400');
-			} else {
-				$el.removeClass('min-width-400');
-			}
-
-			if ( w >= 600 ) {
-				$el.addClass('min-width-600');
-			} else {
-				$el.removeClass('min-width-600');
+			for ( i = 0; i < breakpoints.length; i++ ) {
+				$el.toggleClass( 'min-width-' + breakpoints[ i ], w >= breakpoints[ i ] );
 			}
 		};
 
