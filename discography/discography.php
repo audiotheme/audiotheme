@@ -199,8 +199,8 @@ function audiotheme_record_type_request( $query_vars ) {
  * order using the 'menu_order' value, which can be set using a plugin like
  * Simple Page Ordering.
  *
- * Alternatively, a plugin a plugin can hook into pre_get_posts at an earlier
- * priority and manually set the order.
+ * Alternatively, a plugin can hook into pre_get_posts at an earlier priority
+ * and manually set the order.
  *
  * @since 1.3.0
  *
@@ -220,7 +220,7 @@ function audiotheme_record_query_sort( $query ) {
 				$query->set( 'order', 'asc' );
 				break;
 
-			case 'title':
+			case 'title' :
 				$query->set( 'orderby', 'title' );
 				$query->set( 'order', 'asc' );
 				break;
@@ -246,7 +246,7 @@ function audiotheme_record_query_sort( $query ) {
 function audiotheme_record_query_sort_sql( $orderby ) {
 	global $wpdb;
 
-	return $orderby . ", {$wpdb->posts}.post_title asc";
+	return $orderby . ", {$wpdb->posts}.post_title ASC";
 }
 
 /**
