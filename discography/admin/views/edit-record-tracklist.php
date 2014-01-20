@@ -103,8 +103,8 @@ jQuery(function($) {
 			var $field = $track.find( '.audiotheme-tracklist-track-' + key ),
 				value = $field.val();
 
-			if ( '' === value && value !== attachment.meta[ key ] ) {
-				$field.val( attachment.meta[ key ] ).trigger( 'change' );
+			if ( '' === value && value !== attachment.audiotheme[ key ] ) {
+				$field.val( attachment.audiotheme[ key ] ).trigger( 'change' );
 			}
 		} );
 	});

@@ -285,15 +285,7 @@ function audiotheme_wp_prepare_audio_attachment_for_js( $response, $attachment, 
 		return $response;
 	}
 
-	if ( empty( $meta ) && ! get_post_meta( $attachment->ID, '_audiotheme_metadata_cached', true ) ) {
-		// Read and cache the audio metadata.
-		$file = get_attached_file( $attachment->ID );
-		wp_update_attachment_metadata( $attachment->ID, wp_generate_attachment_metadata( $attachment->ID, $file ) );
-		$meta = wp_get_attachment_metadata( $attachment->ID );
-		update_post_meta( $attachment->ID, '_audiotheme_metadata_cached', true );
-	}
-
-	$response['meta'] = $meta;
+	$response['audiotheme'] = $meta;
 
 	return $response;
 }
