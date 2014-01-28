@@ -311,24 +311,24 @@ class Audiotheme_Updater {
 
 		$messages['invalid_license']  = $args['prepend'];
 		$messages['invalid_license']  = __( 'Your license key appears to be invalid.', 'audiotheme' ) . ' ';
-		$messages['invalid_license'] .= sprintf( __( 'Verify that is has been <a href="%1$s">entered correctly</a> or <a href="%2$s" target="_blank">purchase one now.</a>', 'audiotheme-1i8n' ),
+		$messages['invalid_license'] .= sprintf( __( 'Verify that is has been <a href="%1$s">entered correctly</a> or <a href="%2$s" target="_blank">purchase one now.</a>', 'audiotheme' ),
 			esc_url( add_query_arg( 'page', 'audiotheme-settings', admin_url( 'admin.php' ) ) ),
 			esc_url( $args['framework_url'] )
 		);
 
 		$messages['not_activated']  = $args['prepend'];
-		$messages['not_activated']  = __( 'Your license has not been activated for this site.', 'audiotheme-18n' );
+		$messages['not_activated']  = __( 'Your license has not been activated for this site.', 'audiotheme' );
 		$messages['not_activated'] .= ' ' . sprintf( __( 'Manage your site activations in <a href="%s" target="_blank">your account on AudioTheme.com</a>.', 'audiotheme' ),
 			esc_url( $args['account_url'] )
 		);
 
 		$messages['expired_license']  = $args['prepend'];
-		$messages['expired_license']  = __( 'Your AudioTheme license has expired.', 'audiotheme-18n' ) . ' ';
-		$messages['expired_license'] .= sprintf( '<a href="%1$s">' . __( 'Renew here.', 'audiotheme-1i8n' ) . '</a>',
+		$messages['expired_license']  = __( 'Your AudioTheme license has expired.', 'audiotheme' ) . ' ';
+		$messages['expired_license'] .= sprintf( '<a href="%1$s">' . __( 'Renew here.', 'audiotheme' ) . '</a>',
 			esc_url( $args['framework_url'] )
 		);
 
-		$messages['generic'] = __( 'An unexpected error occurred while checking the update server.', 'audiotheme-1i8n' );
+		$messages['generic'] = __( 'An unexpected error occurred while checking the update server.', 'audiotheme' );
 
 		return $messages;
 	}
