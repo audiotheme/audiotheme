@@ -412,7 +412,7 @@ function audiotheme_encode_svg( $path ) {
  *
  * Spaces in directory or filenames are stripped by esc_url() and can cause issues when requesting a URL programmatically. This method encodes spaces and other characters.
  *
- * @since x.x.x
+ * @since 1.4.4
  *
  * @param string $url A URL.
  * @return string

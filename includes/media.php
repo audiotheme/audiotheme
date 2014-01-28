@@ -273,7 +273,7 @@ function audiotheme_post_gallery( $output, $attr ) {
 /**
  * Add audio metadata to attachment response objects.
  *
- * @since x.x.x
+ * @since 1.4.4
  *
  * @param array $response Attachment data to send as JSON.
  * @param WP_Post $attachment Attachment object.

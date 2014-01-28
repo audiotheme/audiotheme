@@ -265,7 +265,7 @@ function audiotheme_video_save_post( $post_id, $post ) {
  * The $post_id and $post parameters will refer to the archive CPT, while the
  * $post_type parameter references the type of post the archive is for.
  *
- * @since x.x.x
+ * @since 1.4.4
  *
  * @param int $post_id Post ID.
  * @param WP_Post $post Post object.
@@ -286,7 +286,7 @@ function audiotheme_video_archive_save_settings_hook( $post_id, $post, $post_typ
  * Allows for changing the sort order of videos. Custom would require a plugin
  * like Simple Page Ordering.
  *
- * @since x.x.x
+ * @since 1.4.4
  *
  * @param WP_Post $post Post object.
  */

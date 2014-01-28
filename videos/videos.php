@@ -86,7 +86,7 @@ function get_audiotheme_videos_rewrite_base() {
  * Defaults to sorting by publish date in descending order. A plugin can hook
  * into pre_get_posts at an earlier priority and manually set the order.
  *
- * @since x.x.x
+ * @since 1.4.4
  *
  * @param object $query The main WP_Query object. Passed by reference.
  */

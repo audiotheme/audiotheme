@@ -207,7 +207,7 @@ function get_audiotheme_archive_meta( $key = '', $single = false, $default = nul
  *
  * The allowd columns value may be different between themes, so make sure it exists in the settings defined by the theme, otherwise, return the theme default.
  *
- * @since x.x.x
+ * @since 1.4.4
  *
  * @param mixed $value Existing meta value.
  * @param string $key Optional. The meta key to retrieve. By default, returns data for all keys.
