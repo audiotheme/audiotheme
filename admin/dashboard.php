@@ -37,7 +37,7 @@ function audiotheme_dashboard_admin_menu() {
 	$pagehook = add_menu_page(
 		__( 'AudioTheme', 'audiotheme' ),
 		__( 'AudioTheme', 'audiotheme' ),
-		'manage_options',
+		'edit_posts',
 		'audiotheme',
 		'audiotheme_dashboard_features_screen',
 		audiotheme_encode_svg( 'admin/images/dashicons/audiotheme.svg' ),
@@ -48,7 +48,7 @@ function audiotheme_dashboard_admin_menu() {
 		'audiotheme',
 		__( 'Features', 'audiotheme' ),
 		__( 'Features', 'audiotheme' ),
-		'manage_options',
+		'edit_posts',
 		'audiotheme',
 		'audiotheme_dashboard_features_screen'
 	);
