@@ -10,6 +10,7 @@
  * Include discography admin dependencies.
  */
 require( AUDIOTHEME_DIR . 'discography/admin/ajax.php' );
+require( AUDIOTHEME_DIR . 'discography/admin/playlist.php' );
 require( AUDIOTHEME_DIR . 'discography/admin/record.php' );
 require( AUDIOTHEME_DIR . 'discography/admin/track.php' );
 
@@ -21,12 +22,20 @@ require( AUDIOTHEME_DIR . 'discography/admin/track.php' );
 function audiotheme_load_discography_admin() {
 	// Register AJAX admin actions.
 	add_action( 'wp_ajax_audiotheme_ajax_get_default_track', 'audiotheme_ajax_get_default_track' );
+	add_action( 'wp_ajax_audiotheme_ajax_get_playlist_track', 'audiotheme_ajax_get_playlist_track' );
+	add_action( 'wp_ajax_audiotheme_ajax_get_playlist_tracks', 'audiotheme_ajax_get_playlist_tracks' );
+	add_action( 'wp_ajax_audiotheme_ajax_get_playlist_records', 'audiotheme_ajax_get_playlist_records' );
 
 	// Set up the record type taxonomy.
-	add_action( 'admin_init', 'audiotheme_discography_setup' );
+	add_action( 'admin_init', 'audiotheme_discography_admin_setup' );
 
 	add_action( 'admin_menu', 'audiotheme_discography_admin_menu' );
 	add_filter( 'post_updated_messages', 'audiotheme_discography_post_updated_messages' );
+
+	// Playlists
+	add_filter( 'cue_playlist_args', 'audiotheme_playlist_args' );
+	add_action( 'admin_enqueue_scripts', 'audiotheme_playlist_admin_enqueue_scripts' );
+	add_action( 'print_media_templates', 'audiotheme_playlist_print_templates' );
 
 	// Records
 	add_action( 'save_post', 'audiotheme_record_save_post' );
@@ -71,7 +80,7 @@ function audiotheme_load_discography_admin() {
  *
  * @since 1.0.0
  */
-function audiotheme_discography_setup() {
+function audiotheme_discography_admin_setup() {
 	if ( taxonomy_exists( 'audiotheme_record_type' ) ) {
 		$record_types = get_audiotheme_record_type_slugs();
 		if ( $record_types ) {

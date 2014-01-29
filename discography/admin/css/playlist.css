@@ -1,0 +1,98 @@
+.media-audiotheme-playlist-tracks {
+	margin: 0 16px;
+}
+
+.audiotheme-playlist-record {
+	clear: both;
+}
+
+.audiotheme-playlist-record .audiotheme-playlist-record-header {
+	background: #f3f3f3;
+	margin: 0 0 20px 0;
+}
+
+.audiotheme-playlist-record .audiotheme-playlist-record-header:before,
+.audiotheme-playlist-record .audiotheme-playlist-record-header:after {
+	content: " ";
+	display: table;
+}
+
+.audiotheme-playlist-record .audiotheme-playlist-record-header:after {
+	clear: both;
+}
+
+.audiotheme-playlist-record .audiotheme-playlist-record-header img {
+	float: left;
+	height: 80px;
+	margin-right: 20px;
+	max-width: 80px;
+}
+
+.audiotheme-playlist-record .audiotheme-playlist-record-title {
+	color: #444;
+	font-size: 13px;
+	font-weight: 400;
+	margin: 20px 0 0 0;
+}
+
+.audiotheme-playlist-record .audiotheme-playlist-record-title em {
+	color: #222;
+	display: block;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 600;
+}
+
+.audiotheme-playlist-record .audiotheme-playlist-record-tracks {
+	counter-reset: li;
+	display: table;
+	margin: 0 0 20px 0;
+	width: 100%;
+}
+
+.audiotheme-playlist-record .audiotheme-playlist-record-track {
+	cursor: pointer;
+	display: table-row;
+	margin: 0;
+}
+
+.audiotheme-playlist-record .audiotheme-playlist-record-track:before {
+	content: counter(li);
+	counter-increment: li;
+	display: table-cell;
+	text-align: center;
+	width: 30px;
+}
+
+.audiotheme-playlist-record .audiotheme-playlist-record-track:hover {
+	background: #f9f9f9;
+}
+
+.audiotheme-playlist-record .audiotheme-playlist-record-track.is-selected {
+	background: #eee;
+}
+
+.audiotheme-playlist-record .audiotheme-playlist-record-track:hover:before,
+.audiotheme-playlist-record .audiotheme-playlist-record-track.is-selected:before {
+	color: #888;
+	content: "\f132";
+	display: table-cell;
+	font-family: "dashicons";
+	font-size: 20px;
+	-webkit-font-smoothing: antialiased;
+	padding-top: 3px;
+	vertical-align: middle;
+}
+
+.audiotheme-playlist-record .audiotheme-playlist-record-track.is-selected:before {
+	color: #1e8cbe;
+	content: "\f147";
+	font-size: 24px;
+}
+
+.audiotheme-playlist-record .audiotheme-playlist-record-track-cell {
+	display: table-cell;
+	font-size: 13px;
+	line-height: 1;
+	padding: 10px 0;
+}
