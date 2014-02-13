@@ -44,7 +44,18 @@ function get_audiotheme_record_type_strings() {
 		'record-type-album'  => _x( 'Album',  'Record type', 'audiotheme' ),
 		'record-type-single' => _x( 'Single', 'Record type', 'audiotheme' ),
 	);
-	return $strings;
+
+	/**
+	 * Filter the list of available of record types.
+	 *
+	 * Terms will be registered automatically for new record types. Keys must
+	 * be prefixed with 'record-type'.
+	 *
+	 * @since x.x.x
+	 *
+	 * @param array strings List of record types. Keys must be prefixed with 'record-type-'.
+	 */
+	return apply_filters( 'audiotheme_record_type_strings', $strings );
 }
 
 /**
