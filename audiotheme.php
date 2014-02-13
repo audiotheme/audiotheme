@@ -194,17 +194,12 @@ function audiotheme_register_scripts() {
 /**
  * Support localization for the plugin strings.
  *
- * @see http://www.geertdedeckere.be/article/loading-wordpress-language-files-the-right-way
- *
  * @since 1.0.0
  */
 function audiotheme_load_textdomain() {
-	$domain = 'audiotheme';
-	$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
-	load_textdomain( $domain, WP_LANG_DIR . '/audiotheme/' . $locale . '.mo' );
-	load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	load_plugin_textdomain( 'audiotheme', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }
-add_action( 'init', 'audiotheme_load_textdomain' );
+add_action( 'plugins_loaded', 'audiotheme_load_textdomain' );
 
 /**
  * Flush the rewrite rules if needed.
