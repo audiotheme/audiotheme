@@ -149,7 +149,8 @@ function get_audiotheme_record_artist( $post_id = null ) {
  */
 function get_audiotheme_record_links( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-	return get_post_meta( $post_id, '_audiotheme_record_links', true );
+	$links = array_filter( (array) get_post_meta( $post_id, '_audiotheme_record_links', true ) );
+	return apply_filters( 'audiotheme_record_links', $links );
 }
 
 
