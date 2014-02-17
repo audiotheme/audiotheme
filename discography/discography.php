@@ -512,7 +512,7 @@ function audiotheme_prepare_track_for_js( $track ) {
 }
 
 /**
- * Convert enqueue track lists into an array of tracks prepared for JavaScript
+ * Convert enqueued track lists into an array of tracks prepared for JavaScript
  * and output the JSON-encoded object in the footer.
  *
  * @since 1.1.0
@@ -559,14 +559,14 @@ function audiotheme_print_tracks_js() {
 		/* <![CDATA[ */
 		window.AudiothemeTracks = window.AudiothemeTracks || {};
 
-		( function( window ) {
+		(function( window ) {
 			var tracks = <?php echo json_encode( $lists ); ?>,
 				i;
 
 			for ( i in tracks ) {
 				window.AudiothemeTracks[ i ] = tracks[ i ];
 			}
-		} )( this );
+		})( this );
 		/* ]]> */
 		</script>
 		<?php
