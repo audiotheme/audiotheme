@@ -297,7 +297,7 @@ function audiotheme_gig_tickets_meta_box( $post ) {
 	</p>
 	<p class="audiotheme-field">
 		<label for="gig-tickets-url">Tickets URL:</label><br>
-		<input type="url" name="gig_tickets_url" id="gig-tickets-url" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_tickets_url', true ) ) ; ?>" class="large-text">
+		<input type="text" name="gig_tickets_url" id="gig-tickets-url" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_tickets_url', true ) ) ; ?>" class="large-text">
 	</p>
 	<?php
 }
