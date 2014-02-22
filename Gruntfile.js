@@ -125,8 +125,9 @@ module.exports = function(grunt) {
 							'!package.json',
 							'!phpunit.xml',
 							'!README.md',
+							'!includes/lib/lessphp/**',
 							'!includes/lib/wp-less/**',
-							'includes/lib/wp-less/lessc/lessc.inc.php',
+							'includes/lib/lessphp/lessc.inc.php',
 							'includes/lib/wp-less/wp-less.php'
 						],
 						dest: '<%= pkg.name %>/'

@@ -7,3 +7,6 @@
 [submodule "includes/lib/wp-less"]
 	path = includes/lib/wp-less
 	url = https://github.com/sanchothefat/wp-less.git
+[submodule "includes/lib/lessphp"]
+	path = includes/lib/lessphp
+	url = https://github.com/leafo/lessphp.git
