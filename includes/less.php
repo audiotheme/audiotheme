@@ -18,7 +18,10 @@
  */
 function audiotheme_less_setup() {
 	if ( $support = get_theme_support( 'audiotheme-less' ) ) {
-		require( AUDIOTHEME_DIR . 'includes/lib/lessphp/lessc.inc.php' );
+		if ( ! class_exists( 'lessc' ) ) {
+			require( AUDIOTHEME_DIR . 'includes/lib/lessphp/lessc.inc.php' );
+		}
+
 		require( AUDIOTHEME_DIR . 'includes/lib/wp-less/wp-less.php' );
 		wp_less::instance();
 
