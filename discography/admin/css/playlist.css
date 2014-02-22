@@ -1,5 +1,11 @@
 .media-audiotheme-playlist-tracks {
-	margin: 0 16px;
+	overflow: auto;
+	padding: 0 16px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 }
 
 .audiotheme-playlist-record {

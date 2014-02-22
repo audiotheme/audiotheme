@@ -55,17 +55,20 @@ function audiotheme_ajax_get_playlist_records() {
 	global $wpdb;
 
 	$data = array();
+	$page = isset( $_POST['paged'] ) ? absint( $_POST['paged'] ) : 1;
+	$posts_per_page = isset( $_POST['posts_per_page'] ) ? absint( $_POST['posts_per_page'] ) : 2;
 
-	$records = get_posts( array(
-		'post_type'   => 'audiotheme_record',
-		'post_status' => 'publish',
-		'numberposts' => -1,
-		'orderby'     => 'title',
-		'order'       => 'ASC',
+	$records = new WP_Query( array(
+		'post_type'      => 'audiotheme_record',
+		'post_status'    => 'publish',
+		'posts_per_page' => $posts_per_page,
+		'paged'          => $page,
+		'orderby'        => 'title',
+		'order'          => 'ASC',
 	) );
 
-	if ( $records ) {
-		foreach ( $records as $record ) {
+	if ( $records->have_posts() ) {
+		foreach ( $records->posts as $record ) {
 			$image = wp_get_attachment_image_src( get_post_thumbnail_id( $record->ID ), array( 120, 120 ) );
 
 			$data[ $record->ID ] = array(
@@ -105,5 +108,8 @@ function audiotheme_ajax_get_playlist_records() {
 		}
 	}
 
-	wp_send_json_success( array_values( $data ) );
+	$send['maxNumPages'] = $records->max_num_pages;
+	$send['records'] = array_values( $data );
+
+	wp_send_json_success( $send );
 }

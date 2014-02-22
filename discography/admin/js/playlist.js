@@ -81,34 +81,53 @@ window.cue = window.cue || {};
 		className: 'media-audiotheme-playlist-tracks',
 
 		initialize: function() {
+			this._paged = 1;
+			this._pending = false;
+
+			this.listenTo( this.collection, 'add', this.addRecord );
 			this.listenTo( this.collection, 'reset', this.render );
 		},
 
 		render: function() {
-			var selection = this.controller.state().get( 'selection' ).pluck( 'id' );
+			//var selection = this.controller.state().get( 'selection' ).pluck( 'id' );
 
 			if ( ! this.collection.length ) {
 				this.getRecords();
 			}
 
+			this.$el.off( 'scroll' ).on( 'scroll', _.bind( this.scroll, this ) );
+
 			this.$el.html( '<ul />' );
-
-			this.collection.each(function( record ) {
-				var recordView = new cue.view.AudiothemePlaylistRecord({
-					controller: this.controller,
-					model: record
-				}).render();
-
-				this.$el.children( 'ul' ).append( recordView.el );
-			}, this );
-
+			this.collection.each( this.addRecord, this );
 			return this;
+		},
+
+		addRecord: function( record ) {
+			var recordView = new cue.view.AudiothemePlaylistRecord({
+				controller: this.controller,
+				model: record
+			}).render();
+
+			this.$el.children( 'ul' ).append( recordView.el );
+		},
+
+		scroll: function() {
+			if ( ! this._pending && this.el.scrollHeight < this.el.scrollTop + this.el.clientHeight * 3 ) {
+				this._pending = true;
+				this.getRecords();
+			}
 		},
 
 		getRecords: function() {
 			var view = this;
-			wp.ajax.post( 'audiotheme_ajax_get_playlist_records').done(function( records ) {
-				view.collection.reset( records );
+			wp.ajax.post( 'audiotheme_ajax_get_playlist_records', { paged: view._paged }).done(function( data ) {
+				view.collection.add( data.records );
+
+				if ( view._paged <= data.maxNumPages ) {
+					view._paged++;
+					view._pending = false;
+					view.scroll();
+				}
 			});
 		}
 	});
