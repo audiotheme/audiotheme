@@ -49,6 +49,34 @@ function audiotheme_locate_template( $template_names, $load = false, $require_on
 }
 
 /**
+ * Load a template file.
+ *
+ * @since 1.5.0
+ *
+ * @param string|array $template_file Absolute path to a file or list of template parts.
+ * @param array $data Optional. List of variables to extract into the template scope.
+ * @param bool $locate Optional. Whether the $template_file argument should be located. Default false.
+ * @param bool $require_once Optional. Whether to require_once or require. Default false.
+ */
+function audiotheme_load_template( $template_file, $data = array(), $locate = false, $require_once = false ) {
+	if ( is_array( $data ) && ! empty( $data ) ) {
+		extract( $data, EXTR_SKIP );
+		unset( $data );
+	}
+
+	// Locate the template file specified as the first parameter.
+	if ( $locate ) {
+		$template_file = audiotheme_locate_template( $template_file );
+	}
+
+	if ( $require_once ) {
+		require_once( $template_file );
+	} else {
+		require( $template_file );
+	}
+}
+
+/**
  * Determine if a template file is being loaded from the plugin.
  *
  * @since 1.2.0
