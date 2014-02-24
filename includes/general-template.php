@@ -32,7 +32,7 @@ function audiotheme_locate_template( $template_names, $load = false, $require_on
 		if ( file_exists( get_stylesheet_directory() . '/audiotheme/' . $template_name ) ) {
 			$template = get_stylesheet_directory() . '/audiotheme/' . $template_name;
 			break;
-		} elseif ( file_exists( get_template_directory() . '/audiotheme/' . $template_name ) ) {
+		} elseif ( is_child_theme() && file_exists( get_template_directory() . '/audiotheme/' . $template_name ) ) {
 			$template = get_template_directory() . '/audiotheme/' . $template_name;
 			break;
 		} elseif ( file_exists( AUDIOTHEME_DIR . 'templates/' . $template_name ) ) {
