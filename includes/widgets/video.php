@@ -40,21 +40,24 @@ class Audiotheme_Widget_Video extends WP_Widget {
 
 			echo ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
 
-			if ( ! $output = apply_filters( 'audiotheme_widget_video_output', '', $instance, $args ) ) {
+			// Output filter is for backwards compatibility.
+			if ( $output = apply_filters( 'audiotheme_widget_video_output', '', $instance, $args ) ) {
+				echo $output;
+			} else {
 				$post = get_post( $instance['post_id'] );
 
 				$image_size = apply_filters( 'audiotheme_widget_video_image_size', 'thumbnail', $instance, $args );
 				$image_size = apply_filters( 'audiotheme_widget_video_image_size-' . $args['id'], $image_size, $instance, $args );
 
-				$output .= sprintf( '<p class="featured-image"><a href="%s">%s</a></p>',
-					get_permalink( $post->ID ),
-					get_the_post_thumbnail( $post->ID, $image_size )
-				);
+				$data = array();
+				$data['args'] = $args;
+				$data['image_size'] = $image_size;
+				$data['post'] = get_post( $instance['post_id'] );
+				$data = array_merge( $instance, $data );
 
-				$output .= ( empty( $instance['text'] ) ) ? '' : wpautop( $instance['text'] );
+				$template = audiotheme_locate_template( array( "widgets/{$args['id']}-video.php", "widgets/video.php" ) );
+				audiotheme_load_template( $template, $data );
 			}
-
-			echo $output;
 
 		echo $after_widget;
 	}

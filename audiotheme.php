@@ -59,7 +59,7 @@ require( AUDIOTHEME_DIR . 'includes/less.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/media.php' );
 require( AUDIOTHEME_DIR . 'includes/options.php' );
-require( AUDIOTHEME_DIR . 'widgets/widgets.php' );
+require( AUDIOTHEME_DIR . 'includes/widgets.php' );
 
 /**
  * Load AudioTheme CPTs and corresponding functionality.

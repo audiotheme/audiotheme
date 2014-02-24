@@ -37,35 +37,29 @@ class Audiotheme_Widget_Record extends WP_Widget {
 		$instance['title'] = apply_filters( 'audiotheme_widget_title', $instance['title'], $instance, $args, $this->id_base );
 
 		if ( isset( $instance['show_link'] ) && $instance['show_link'] && empty( $instance['link_text'] ) ) {
-			$instance['link_text'] = apply_filters( 'audiotheme_widget_record_default_link_text', __( 'View Details &rarr;', 'audiotheme' ) );
+			$instance['link_text'] = apply_filters( 'audiotheme_widget_record_default_link_text', __( 'View Details', 'audiotheme' ) );
 		}
 
 		echo $before_widget;
 
 			echo ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
 
-			if ( ! $output = apply_filters( 'audiotheme_widget_record_output', '', $instance, $args ) ) {
-				$post = get_post( $instance['post_id'] );
-
+			// Output filter is for backwards compatibility.
+			if ( $output = apply_filters( 'audiotheme_widget_record_output', '', $instance, $args ) ) {
+				echo $output;
+			} else {
 				$image_size = apply_filters( 'audiotheme_widget_record_image_size', 'thumbnail', $instance, $args );
 				$image_size = apply_filters( 'audiotheme_widget_record_image_size-' . $args['id'], $image_size, $instance, $args );
 
-				$output .= sprintf( '<p class="featured-image"><a href="%s">%s</a></p>',
-					get_permalink( $post->ID ),
-					get_the_post_thumbnail( $post->ID, $image_size )
-				);
+				$data = array();
+				$data['args'] = $args;
+				$data['image_size'] = $image_size;
+				$data['post'] = get_post( $instance['post_id'] );
+				$data = array_merge( $instance, $data );
 
-				$output .= ( empty( $instance['text'] ) ) ? '' : wpautop( $instance['text'] );
-
-				if ( isset( $instance['show_link'] ) && $instance['show_link'] && ! empty( $instance['link_text'] ) ) {
-					$output .= sprintf( '<p class="more"><a href="%s">%s</a></p>',
-						get_permalink( $post->ID ),
-						$instance['link_text']
-					);
-				}
+				$template = audiotheme_locate_template( array( "widgets/{$args['id']}-record.php", "widgets/record.php" ) );
+				audiotheme_load_template( $template, $data );
 			}
-
-			echo $output;
 
 		echo $after_widget;
 	}
