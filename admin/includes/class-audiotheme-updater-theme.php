@@ -27,6 +27,11 @@ class Audiotheme_Updater_Theme extends Audiotheme_Updater {
 
 		$theme = wp_get_theme( $this->slug );
 		$this->version = $theme->get( 'Version' );
+
+		if ( is_child_theme() ) {
+			$theme = wp_get_theme( get_stylesheet() );
+			$this->api_data['template_version'] = $theme->get( 'Template Version' );
+		}
 	}
 
 	/**
