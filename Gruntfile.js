@@ -136,16 +136,13 @@ module.exports = function(grunt) {
 			}
 		},
 
-		shell: {
-			/**
-			 * The custom AudioTheme version of WordPress' i18n tools needs to
-			 * exist at '/wp-content/i18n-tools/', with php-cli and gettext in
-			 * the system path to run this target.
-			 *
-			 * @link http://github.com/AudioTheme/i18n-tools/
-			 */
-			makepot: {
-				command: 'php ../../i18n-tools/makepot-audiotheme.php wp-plugin . languages/audiotheme.pot'
+		makepot: {
+			build: {
+				options: {
+					mainFile: 'audiotheme.php',
+					type: 'wp-plugin',
+					exclude: ['release/.*','tests/.*']
+				}
 			}
 		},
 
@@ -237,7 +234,7 @@ module.exports = function(grunt) {
 		grunt.task.run('jshint');
 		grunt.task.run('less');
 		grunt.task.run('uglify');
-		// @todo generate pot file
+		grunt.task.run('makepot');
 		grunt.task.run('compress:build');
 	});
 
