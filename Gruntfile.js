@@ -125,10 +125,10 @@ module.exports = function(grunt) {
 							'!package.json',
 							'!phpunit.xml',
 							'!README.md',
-							'!includes/lib/lessphp/**',
-							'!includes/lib/wp-less/**',
-							'includes/lib/lessphp/lessc.inc.php',
-							'includes/lib/wp-less/wp-less.php'
+							'!includes/vendor/lessphp/**',
+							'!includes/vendor/wp-less/**',
+							'includes/vendor/lessphp/lessc.inc.php',
+							'includes/vendor/wp-less/wp-less.php'
 						],
 						dest: '<%= pkg.name %>/'
 					}
@@ -272,7 +272,7 @@ module.exports = function(grunt) {
 				'-s',
 				'--standard=WordPress',
 				'--extensions=php',
-				'--ignore=*/node_modules/*,*/release/*,*/includes/lib/*',
+				'--ignore=*/node_modules/*,*/release/*,*/includes/vendor/*',
 				'--report-file=release/codesniffs.txt',
 				'.'
 			],
