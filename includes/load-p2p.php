@@ -10,7 +10,7 @@
 /**
  * Include the scbFramework.
  */
-require( AUDIOTHEME_DIR . 'includes/lib/scb/load.php' );
+require( AUDIOTHEME_DIR . 'includes/vendor/scb/load.php' );
 
 /**
  * Attach hook to load the Posts to Posts core.
@@ -44,7 +44,7 @@ function audiotheme_p2p_load_core() {
 		define( 'P2P_TEXTDOMAIN', 'audiotheme' );
 	}
 
-	require_once( AUDIOTHEME_DIR . 'includes/lib/p2p/init.php' );
+	require_once( AUDIOTHEME_DIR . 'includes/vendor/p2p/init.php' );
 
 	add_action( 'admin_init', array( 'P2P_Storage', 'install' ) );
 }

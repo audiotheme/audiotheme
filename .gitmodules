@@ -1,12 +1,14 @@
-[submodule "includes/scb"]
-	path = includes/lib/scb
-	url = https://github.com/scribu/wp-scb-framework.git
-[submodule "includes/p2p"]
-	path = includes/lib/p2p
-	url = https://github.com/AppThemes/wp-posts-to-posts-core.git
-[submodule "includes/lib/wp-less"]
-	path = includes/lib/wp-less
-	url = https://github.com/sanchothefat/wp-less.git
-[submodule "includes/lib/lessphp"]
-	path = includes/lib/lessphp
+[submodule "includes/vendor/lessphp"]
+	path = includes/vendor/lessphp
 	url = https://github.com/leafo/lessphp.git
+[submodule "includes/vendor/p2p"]
+	path = includes/vendor/p2p
+	url = https://github.com/AppThemes/wp-posts-to-posts-core.git
+	ignore = dirty
+[submodule "includes/vendor/scb"]
+	path = includes/vendor/scb
+	url = https://github.com/scribu/wp-scb-framework.git
+	ignore = dirty
+[submodule "includes/vendor/wp-less"]
+	path = includes/vendor/wp-less
+	url = https://github.com/sanchothefat/wp-less.git
