@@ -1,0 +1,2909 @@
+# Copyright (C) 2014 AudioTheme Framework
+# This file is distributed under the same license as the AudioTheme Framework package.
+msgid ""
+msgstr ""
+"Project-Id-Version: AudioTheme Framework 1.5.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/audiotheme\n"
+"POT-Creation-Date: 2014-03-16 21:24:08+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: admin/admin.php:120 admin/includes/class-audiotheme-updater.php:305
+msgid ""
+"<a href=\"%s\">Register your copy of AudioTheme</a> to receive automatic "
+"updates and support. Need a license key?"
+msgstr ""
+
+#: admin/admin.php:123 admin/includes/class-audiotheme-updater.php:308
+msgid "Purchase one now."
+msgstr ""
+
+#: admin/admin.php:183
+msgid "Choose an Attachment"
+msgstr ""
+
+#: admin/admin.php:184
+msgid "Update Attachment"
+msgstr ""
+
+#: admin/admin.php:288
+msgid "Twitter Username"
+msgstr ""
+
+#: admin/admin.php:289
+msgid "Facebook URL"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "AudioTheme"
+msgstr ""
+
+#: admin/dashboard.php:49 admin/dashboard.php:50
+msgid "Features"
+msgstr ""
+
+#: admin/dashboard.php:63 admin/dashboard.php:64 admin/dashboard.php:402
+#: includes/lib/scb/AdminPage.php:467
+msgid "Settings"
+msgstr ""
+
+#: admin/dashboard.php:75 admin/dashboard.php:79 admin/dashboard.php:411
+msgid "Directory Browsing"
+msgstr ""
+
+#: admin/dashboard.php:86
+msgid "License"
+msgstr ""
+
+#: admin/dashboard.php:91 admin/dashboard.php:404
+msgid "License Key"
+msgstr ""
+
+#: admin/dashboard.php:98 admin/dashboard.php:417
+msgid "System"
+msgstr ""
+
+#: admin/dashboard.php:104
+msgid "Export Data"
+msgstr ""
+
+#: admin/dashboard.php:145 admin/views/dashboard-features.php:93
+msgid "WordPress"
+msgstr ""
+
+#: admin/dashboard.php:149
+msgid "Environment"
+msgstr ""
+
+#: admin/dashboard.php:153
+msgid "Browser"
+msgstr ""
+
+#: admin/dashboard.php:242
+msgid ""
+"Find your license key in <a href=\"%s\" target=\"_blank\">your account</a> "
+"on AudioTheme.com. Your license key allows you to recieve automatic "
+"upgrades and support."
+msgstr ""
+
+#: admin/dashboard.php:257
+msgid "Activated!"
+msgstr ""
+
+#: admin/dashboard.php:266
+msgid "Activate"
+msgstr ""
+
+#: admin/dashboard.php:312
+msgid "Empty license key."
+msgstr ""
+
+#: admin/dashboard.php:313
+msgid "Invalid license key."
+msgstr ""
+
+#: admin/dashboard.php:314
+msgid "License key expired."
+msgstr ""
+
+#: admin/dashboard.php:314
+msgid "Renew now."
+msgstr ""
+
+#: admin/dashboard.php:315
+msgid "Activation limit reached."
+msgstr ""
+
+#: admin/dashboard.php:315
+msgid "Upgrade your license."
+msgstr ""
+
+#: admin/dashboard.php:320
+msgid "Oops, there was an error."
+msgstr ""
+
+#: admin/dashboard.php:394
+msgid "For more information:"
+msgstr ""
+
+#: admin/dashboard.php:395
+msgid "Find Your License"
+msgstr ""
+
+#: admin/dashboard.php:396
+msgid "Upgrade Your License"
+msgstr ""
+
+#: admin/dashboard.php:397
+msgid "Support Forum"
+msgstr ""
+
+#: admin/dashboard.php:405
+msgid ""
+"Your license key allows you to receive automatic updates and support for as "
+"long as your license is active. Don't worry, you won't lose any features "
+"you're currently using if it expires, however, it's a good idea to keep "
+"your license active to gain access to security upgrades, bug fixes, new "
+"features, or just to ask a question if you need a little help."
+msgstr ""
+
+#: admin/dashboard.php:406
+msgid ""
+"Your license key can be found in <a href='%s' target='_blank'>your "
+"account</a> on AudioTheme.com or in your purchase email. It's a random "
+"string consisting of 32 numbers or letters. Let us know if you need help "
+"finding it."
+msgstr ""
+
+#: admin/dashboard.php:407
+msgid "<strong>Example key:</strong>"
+msgstr ""
+
+#: admin/dashboard.php:408
+msgid ""
+"Simply copy and paste it into the <strong>License Key</strong> field and "
+"click the <strong>Activate</strong> button. If your license is valid, "
+"that's all you have to do."
+msgstr ""
+
+#: admin/dashboard.php:409
+msgid ""
+"If your license has expired or you want to use AudioTheme on more than one "
+"site, visit <a href='%s' target='_blank'>AudioTheme.com</a> to upgrade."
+msgstr ""
+
+#: admin/dashboard.php:412
+msgid ""
+"Most servers running WordPress have a feature referred to as directory "
+"browsing. When active, visitors can see a list of files in some folders on "
+"your server if they know where to look. These folders might contain music "
+"or pictures that you don't want to be easily accessed. While anything you "
+"make available online can't be completely protected, disabling directory "
+"browsing will help hide important files from prying eyes."
+msgstr ""
+
+#: admin/dashboard.php:419
+msgid ""
+"The <strong>System</strong> tab displays information about your system that "
+"may be useful for support requests."
+msgstr ""
+
+#: admin/dashboard.php:420
+msgid ""
+"At the bottom of the screen is a field to copy the information displayed, "
+"so you can send it along with a support request if needed."
+msgstr ""
+
+#: admin/functions.php:115 admin/functions.php:194 admin/functions.php:219
+msgid "Pending Review"
+msgstr ""
+
+#: admin/functions.php:134 gigs/admin/venues.php:92
+msgid "Save"
+msgstr ""
+
+#: admin/functions.php:145
+msgid "Save Draft"
+msgstr ""
+
+#: admin/functions.php:147
+msgid "Save as Pending"
+msgstr ""
+
+#: admin/functions.php:157
+msgid "Preview Changes"
+msgstr ""
+
+#: admin/functions.php:161 gigs/admin/class-audiotheme-gigs-list-table.php:504
+msgid "Preview"
+msgstr ""
+
+#: admin/functions.php:180
+msgid "Status:"
+msgstr ""
+
+#: admin/functions.php:185 admin/functions.php:213
+msgid "Privately Published"
+msgstr ""
+
+#: admin/functions.php:188 admin/functions.php:211
+msgid "Published"
+msgstr ""
+
+#: admin/functions.php:191 admin/functions.php:215
+msgid "Scheduled"
+msgstr ""
+
+#: admin/functions.php:198 admin/functions.php:223 admin/functions.php:225
+msgid "Draft"
+msgstr ""
+
+#: admin/functions.php:205 admin/functions.php:266 admin/functions.php:341
+#: discography/admin/views/edit-record-tracklist.php:69
+#: gigs/admin/class-audiotheme-gigs-list-table.php:484
+msgid "Edit"
+msgstr ""
+
+#: admin/functions.php:228 admin/functions.php:301
+msgid "OK"
+msgstr ""
+
+#: admin/functions.php:229 admin/functions.php:302
+msgid "Cancel"
+msgstr ""
+
+#: admin/functions.php:249 admin/functions.php:297
+msgid "Private"
+msgstr ""
+
+#: admin/functions.php:252 admin/functions.php:288
+msgid "Password protected"
+msgstr ""
+
+#: admin/functions.php:255
+msgid "Public, Sticky"
+msgstr ""
+
+#: admin/functions.php:258 admin/functions.php:276
+msgid "Public"
+msgstr ""
+
+#: admin/functions.php:262
+msgid "Visibility:"
+msgstr ""
+
+#: admin/functions.php:282
+msgid "Stick this post to the front page"
+msgstr ""
+
+#: admin/functions.php:291
+msgid "Password:"
+msgstr ""
+
+#: admin/functions.php:319 admin/includes/archives.php:182
+#: discography/admin/discography.php:138 discography/admin/discography.php:155
+#: gigs/admin/gigs.php:111 videos/admin/videos.php:58
+#. translators: Publish box date format, see http:php.net/date
+msgid "M j, Y @ G:i"
+msgstr ""
+
+#: admin/functions.php:322
+msgid "Scheduled for: <strong>%1$s</strong>"
+msgstr ""
+
+#: admin/functions.php:324
+msgid "Published on: <strong>%1$s</strong>"
+msgstr ""
+
+#: admin/functions.php:326 admin/functions.php:334
+msgid "Publish <strong>immediately</strong>"
+msgstr ""
+
+#: admin/functions.php:328
+msgid "Schedule for: <strong>%1$s</strong>"
+msgstr ""
+
+#: admin/functions.php:330
+msgid "Publish on: <strong>%1$s</strong>"
+msgstr ""
+
+#: admin/functions.php:364 gigs/admin/class-audiotheme-gigs-list-table.php:356
+#: gigs/admin/class-audiotheme-gigs-list-table.php:497
+#: gigs/admin/class-audiotheme-venues-list-table.php:174
+#: gigs/admin/venues.php:211
+msgid "Delete Permanently"
+msgstr ""
+
+#: admin/functions.php:365 gigs/admin/class-audiotheme-gigs-list-table.php:496
+#: gigs/admin/class-audiotheme-venues-list-table.php:294
+#: gigs/admin/venues.php:210
+msgid "Are you sure you want to delete this %s?"
+msgstr ""
+
+#: admin/functions.php:367 gigs/admin/class-audiotheme-gigs-list-table.php:358
+msgid "Move to Trash"
+msgstr ""
+
+#: admin/functions.php:381 admin/functions.php:382
+msgid "Schedule"
+msgstr ""
+
+#: admin/functions.php:384 admin/functions.php:385
+#: discography/admin/record.php:271 discography/admin/track.php:246
+#: gigs/admin/gigs.php:237 gigs/admin/venues.php:222
+msgid "Publish"
+msgstr ""
+
+#: admin/functions.php:388 admin/functions.php:390
+msgid "Submit for Review"
+msgstr ""
+
+#: admin/functions.php:393 admin/functions.php:394
+#: admin/includes/archives.php:104 gigs/admin/venues.php:227
+#: gigs/admin/venues.php:228
+msgid "Update"
+msgstr ""
+
+#: admin/functions.php:549
+msgid "Home URL"
+msgstr ""
+
+#: admin/functions.php:553
+msgid "Site URL"
+msgstr ""
+
+#: admin/functions.php:557
+msgid "WP Language"
+msgstr ""
+
+#: admin/functions.php:561
+msgid "WP Version"
+msgstr ""
+
+#: admin/functions.php:565
+msgid "Web Server Info"
+msgstr ""
+
+#: admin/functions.php:569
+msgid "PHP Version"
+msgstr ""
+
+#: admin/functions.php:573
+msgid "MySQL Version"
+msgstr ""
+
+#: admin/functions.php:577
+msgid "WP Memory Limit"
+msgstr ""
+
+#: admin/functions.php:581
+msgid "WP Debug Mode"
+msgstr ""
+
+#: admin/functions.php:582 admin/functions.php:598
+msgid "Yes"
+msgstr ""
+
+#: admin/functions.php:582 admin/functions.php:598
+msgid "No"
+msgstr ""
+
+#: admin/functions.php:585
+msgid "WP Max Upload Size"
+msgstr ""
+
+#: admin/functions.php:589
+msgid "PHP Post Max Size"
+msgstr ""
+
+#: admin/functions.php:593
+msgid "PHP Time Limit"
+msgstr ""
+
+#: admin/functions.php:597
+msgid "PHP Safe Mode"
+msgstr ""
+
+#: admin/functions.php:601
+msgid "User Agent"
+msgstr ""
+
+#: admin/functions.php:605
+msgid "AudioTheme Version"
+msgstr ""
+
+#: admin/functions.php:609
+msgid "Theme"
+msgstr ""
+
+#: admin/functions.php:613
+msgid "Theme Version"
+msgstr ""
+
+#: admin/functions.php:622 admin/functions.php:627
+msgid "Child Theme"
+msgstr ""
+
+#: admin/includes/archives.php:121
+msgid "Archive Settings"
+msgstr ""
+
+#: admin/includes/archives.php:171
+msgid "Archive updated. <a href=\"%s\">View Archive</a>"
+msgstr ""
+
+#: admin/includes/archives.php:172 discography/admin/discography.php:128
+#: discography/admin/discography.php:145 gigs/admin/gigs.php:101
+#: videos/admin/videos.php:48
+msgid "Custom field updated."
+msgstr ""
+
+#: admin/includes/archives.php:173 discography/admin/discography.php:129
+#: discography/admin/discography.php:146 gigs/admin/gigs.php:102
+#: videos/admin/videos.php:49
+msgid "Custom field deleted."
+msgstr ""
+
+#: admin/includes/archives.php:174
+msgid "Archive updated."
+msgstr ""
+
+#: admin/includes/archives.php:176
+#. translators: %s: date and time of the revision
+msgid "Archive restored to revision from %s"
+msgstr ""
+
+#: admin/includes/archives.php:177
+msgid "Archive published. <a href=\"%s\">View Archive</a>"
+msgstr ""
+
+#: admin/includes/archives.php:178
+msgid "Archive saved."
+msgstr ""
+
+#: admin/includes/archives.php:179
+msgid "Archive submitted. <a target=\"_blank\" href=\"%s\">Preview Archive</a>"
+msgstr ""
+
+#: admin/includes/archives.php:180
+msgid ""
+"Archive scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" "
+"href=\"%2$s\">Preview Archive</a>"
+msgstr ""
+
+#: admin/includes/archives.php:183
+msgid "Archive draft updated. <a target=\"_blank\" href=\"%s\">Preview Archive</a>"
+msgstr ""
+
+#: admin/includes/archives.php:335
+msgid "Posts per page:"
+msgstr ""
+
+#: admin/includes/archives.php:351
+msgid "Columns:"
+msgstr ""
+
+#: admin/includes/archives.php:379 discography/admin/record.php:464
+#: discography/admin/track.php:385 gigs/admin/gigs.php:417
+#: videos/admin/videos.php:382
+msgid "Standard Fields"
+msgstr ""
+
+#: admin/includes/archives.php:381
+msgid "<strong>Title</strong> - Enter the title of the archive screen."
+msgstr ""
+
+#: admin/includes/archives.php:382
+msgid ""
+"<strong>Editor</strong> - Enter an introduction for the archive. There are "
+"two modes of editing: Visual and Text. Choose the mode by clicking on the "
+"appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last "
+"icon in the row to get a second row of controls. The Text mode allows you "
+"to enter HTML along with your description text. Line breaks will be "
+"converted to paragraphs automatically. You can insert media files by "
+"clicking the icons above the editor and following the directions. You can "
+"go to the distraction-free writing screen via the Fullscreen icon in Visual "
+"mode (second to last in the top row) or the Fullscreen button in Text mode "
+"(last in the row). Once there, you can make buttons visible by hovering "
+"over the top area. Exit Fullscreen back to the regular editor."
+msgstr ""
+
+#: admin/includes/archives.php:383
+msgid "When you're done editing, click the Update button."
+msgstr ""
+
+#: admin/includes/archives.php:388
+msgid "Permalinks"
+msgstr ""
+
+#: admin/includes/archives.php:390
+msgid ""
+"Editing the permalink for an archive changes the URL for all content "
+"associated with that archive. For example, the default discography slug is "
+"<code>music</code>; changing it to <code>albums</code> would change your "
+"URLs like this:"
+msgstr ""
+
+#: admin/includes/archives.php:391
+msgid "Before:"
+msgstr ""
+
+#: admin/includes/archives.php:391
+msgid "After:"
+msgstr ""
+
+#: admin/includes/archives.php:392
+msgid ""
+"Taking this into consideration, you shouldn't change your slug on an "
+"established site, but it provides a powerful option to easily customize the "
+"structure of your URLs."
+msgstr ""
+
+#: admin/includes/class-audiotheme-settings.php:166
+msgid "Invalid screen: %s."
+msgstr ""
+
+#: admin/includes/class-audiotheme-settings.php:263
+msgid "Invalid screen tab: %s."
+msgstr ""
+
+#: admin/includes/class-audiotheme-settings.php:554
+msgid "Choose an Image"
+msgstr ""
+
+#: admin/includes/class-audiotheme-settings.php:556
+msgid "Use This Image"
+msgstr ""
+
+#: admin/includes/class-audiotheme-settings.php:557
+msgid "Choose Image"
+msgstr ""
+
+#: admin/includes/class-audiotheme-settings.php:712
+msgid "Change this setting in the %s"
+msgstr ""
+
+#: admin/includes/class-audiotheme-settings.php:713
+msgid "theme customizer"
+msgstr ""
+
+#: admin/includes/class-audiotheme-updater-plugin.php:92
+msgid ""
+"An unexpected error occurred. Something may be wrong with the update API or "
+"this server&#8217;s configuration."
+msgstr ""
+
+#: admin/includes/class-audiotheme-updater-theme.php:109
+msgid ""
+"Updating this theme will lose any customizations you have made. 'Cancel' to "
+"stop, 'OK' to update."
+msgstr ""
+
+#: admin/includes/class-audiotheme-updater-theme.php:112
+msgid "Check out what's new"
+msgstr ""
+
+#: admin/includes/class-audiotheme-updater-theme.php:116
+msgid "update now"
+msgstr ""
+
+#: admin/includes/class-audiotheme-updater.php:269
+msgid "Bad response."
+msgstr ""
+
+#: admin/includes/class-audiotheme-updater.php:313
+msgid "Your license key appears to be invalid."
+msgstr ""
+
+#: admin/includes/class-audiotheme-updater.php:314
+msgid ""
+"Verify that is has been <a href=\"%1$s\">entered correctly</a> or <a "
+"href=\"%2$s\" target=\"_blank\">purchase one now.</a>"
+msgstr ""
+
+#: admin/includes/class-audiotheme-updater.php:320
+msgid "Your license has not been activated for this site."
+msgstr ""
+
+#: admin/includes/class-audiotheme-updater.php:321
+msgid ""
+"Manage your site activations in <a href=\"%s\" target=\"_blank\">your "
+"account on AudioTheme.com</a>."
+msgstr ""
+
+#: admin/includes/class-audiotheme-updater.php:326
+msgid "Your AudioTheme license has expired."
+msgstr ""
+
+#: admin/includes/class-audiotheme-updater.php:327
+msgid "Renew here."
+msgstr ""
+
+#: admin/includes/class-audiotheme-updater.php:331
+msgid "An unexpected error occurred while checking the update server."
+msgstr ""
+
+#: admin/includes/settings-screens.php:96 includes/options.php:102
+msgid "Theme Options"
+msgstr ""
+
+#: admin/includes/settings-screens.php:270
+msgid "Settings saved."
+msgstr ""
+
+#: admin/includes/settings-screens.php:456
+msgid "It appears there was a problem with a value entered."
+msgstr ""
+
+#: admin/views/dashboard-features.php:3
+msgid "Welcome to AudioTheme"
+msgstr ""
+
+#: admin/views/dashboard-features.php:4
+msgid "Premium Websites for<br>Bands, Musicians and Labels."
+msgstr ""
+
+#: admin/views/dashboard-features.php:6
+msgid "Let your site be heard."
+msgstr ""
+
+#: admin/views/dashboard-features.php:14
+msgid "Take Control of Your Content"
+msgstr ""
+
+#: admin/views/dashboard-features.php:18
+msgid ""
+"AudioTheme gives you the <strong>power to manage your own content</strong>, "
+"including gigs, discography, videos and more."
+msgstr ""
+
+#: admin/views/dashboard-features.php:21
+msgid ""
+"Remember the days of having to rely on someone else to make updates to your "
+"website? Well, you can kiss those days adios."
+msgstr ""
+
+#: admin/views/dashboard-features.php:27
+msgid "With AudioTheme, you are in control."
+msgstr ""
+
+#: admin/views/dashboard-features.php:30
+msgid ""
+"Through WordPress, you can easily add, update and edit all of your content, "
+"from tour dates to video to audio to photos to&hellip; well, everything! "
+"This is your website and you have the power to reign over it."
+msgstr ""
+
+#: admin/views/dashboard-features.php:39
+msgid "Gigs &amp; Venues"
+msgstr ""
+
+#: admin/views/dashboard-features.php:42
+msgid ""
+"<strong>Keep fans updated with live performances, tour dates and venue "
+"information."
+msgstr ""
+
+#: admin/views/dashboard-features.php:45
+msgid ""
+"Schedule all the details about your next show, including location (address, "
+"city, state), dates, times, ticket prices and links to ticket purchasing. "
+"Set up your venue information by creating new venues and assigning shows to "
+"venues you've already created. You also have the ability to feature each "
+"venue's website, along with their contact information like email address "
+"and phone number."
+msgstr ""
+
+#: admin/views/dashboard-features.php:48 admin/views/dashboard-features.php:65
+#: admin/views/dashboard-features.php:82
+msgid "<strong>Try it out:"
+msgstr ""
+
+#: admin/views/dashboard-features.php:48
+msgid "Add a gig"
+msgstr ""
+
+#: admin/views/dashboard-features.php:56 discography/admin/discography.php:103
+#: discography/admin/discography.php:104
+msgid "Discography"
+msgstr ""
+
+#: admin/views/dashboard-features.php:59
+msgid ""
+"<strong>Put together your albums, assign tracks, plug in your cover art and "
+"go."
+msgstr ""
+
+#: admin/views/dashboard-features.php:62
+msgid ""
+"Upload cover images, place titles and assign tracks. Everything you need to "
+"build your discography is literally at your fingertips. You can also enter "
+"links to let your music fans know where they can buy your music. We help "
+"guide you through the process to create a dynamic, user friendly "
+"discography page to enhance your online presence."
+msgstr ""
+
+#: admin/views/dashboard-features.php:65
+msgid "Add a record"
+msgstr ""
+
+#: admin/views/dashboard-features.php:73 videos/videos.php:44
+msgid "Videos"
+msgstr ""
+
+#: admin/views/dashboard-features.php:76
+msgid ""
+"<strong>Easily build your video galleries from over a dozen popular video "
+"services."
+msgstr ""
+
+#: admin/views/dashboard-features.php:79
+msgid ""
+"Showcasing your videos doesn't need to be a hassle. All of our themes allow "
+"you the ability to create your video galleries by simply embedding your "
+"videos from a number of video services, including: YouTube, Vimeo, "
+"WordPress.tv, DailyMotion, blip.tv, Flickr (images and video), Viddler, "
+"Hulu, Qik, Revision3, and FunnyorDie.com."
+msgstr ""
+
+#: admin/views/dashboard-features.php:82
+msgid "Add a video"
+msgstr ""
+
+#: admin/views/dashboard-features.php:88
+msgid "Credits"
+msgstr ""
+
+#: admin/views/dashboard-features.php:90
+msgid ""
+"AudioTheme would not be possible without the incredible effort by countless "
+"individuals who contribute to the numerous projects on which the platform "
+"is built. A hearty thanks to all!"
+msgstr ""
+
+#: admin/views/dashboard-features.php:94
+msgid "FitVids.JS"
+msgstr ""
+
+#: admin/views/dashboard-features.php:95
+msgid "jPlayer"
+msgstr ""
+
+#: admin/views/dashboard-features.php:96
+msgid "jQuery"
+msgstr ""
+
+#: admin/views/dashboard-features.php:97
+msgid "jQuery Placeholder"
+msgstr ""
+
+#: admin/views/dashboard-features.php:98
+msgid "jQuery Timepicker"
+msgstr ""
+
+#: admin/views/dashboard-features.php:99
+msgid "jQuery UI"
+msgstr ""
+
+#: admin/views/dashboard-features.php:100
+msgid "LESS"
+msgstr ""
+
+#: admin/views/dashboard-features.php:101
+msgid "Posts to Posts"
+msgstr ""
+
+#: admin/views/dashboard-features.php:102
+msgid "wp-less"
+msgstr ""
+
+#: discography/admin/discography.php:127
+msgid "Record updated. <a href=\"%s\">View Record</a>"
+msgstr ""
+
+#: discography/admin/discography.php:130
+msgid "Record updated."
+msgstr ""
+
+#: discography/admin/discography.php:132
+#. translators: %s: date and time of the revision
+msgid "Record restored to revision from %s"
+msgstr ""
+
+#: discography/admin/discography.php:133
+msgid "Record published. <a href=\"%s\">View Record</a>"
+msgstr ""
+
+#: discography/admin/discography.php:134
+msgid "Record saved."
+msgstr ""
+
+#: discography/admin/discography.php:135
+msgid "Record submitted. <a target=\"_blank\" href=\"%s\">Preview Record</a>"
+msgstr ""
+
+#: discography/admin/discography.php:136
+msgid ""
+"Record scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" "
+"href=\"%2$s\">Preview Record</a>"
+msgstr ""
+
+#: discography/admin/discography.php:139
+msgid "Record draft updated. <a target=\"_blank\" href=\"%s\">Preview Record</a>"
+msgstr ""
+
+#: discography/admin/discography.php:144
+msgid "Track updated. <a href=\"%s\">View Track</a>"
+msgstr ""
+
+#: discography/admin/discography.php:147
+msgid "Track updated."
+msgstr ""
+
+#: discography/admin/discography.php:149
+#. translators: %s: date and time of the revision
+msgid "Track restored to revision from %s"
+msgstr ""
+
+#: discography/admin/discography.php:150
+msgid "Track published. <a href=\"%s\">View Track</a>"
+msgstr ""
+
+#: discography/admin/discography.php:151
+msgid "Track saved."
+msgstr ""
+
+#: discography/admin/discography.php:152
+msgid "Track submitted. <a target=\"_blank\" href=\"%s\">Preview Track</a>"
+msgstr ""
+
+#: discography/admin/discography.php:153
+msgid ""
+"Track scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" "
+"href=\"%2$s\">Preview Track</a>"
+msgstr ""
+
+#: discography/admin/discography.php:156
+msgid "Track draft updated. <a target=\"_blank\" href=\"%s\">Preview Track</a>"
+msgstr ""
+
+#: discography/admin/playlist.php:47
+msgid "AudioTheme Tracks"
+msgstr ""
+
+#: discography/admin/playlist.php:48
+msgid "Add from AudioTheme"
+msgstr ""
+
+#: discography/admin/playlist.php:49
+msgid "Add Tracks"
+msgstr ""
+
+#: discography/admin/record.php:278 discography/admin/record.php:482
+msgid "Record Details"
+msgstr ""
+
+#: discography/admin/record.php:384
+#: discography/admin/views/edit-record-details.php:2
+msgid "Release Year"
+msgstr ""
+
+#: discography/admin/record.php:385
+#: discography/admin/views/edit-record-tracklist.php:44
+#: videos/admin/videos.php:301
+msgid "Title"
+msgstr ""
+
+#: discography/admin/record.php:386 videos/admin/videos.php:302
+msgid "Custom"
+msgstr ""
+
+#: discography/admin/record.php:392 videos/admin/videos.php:308
+msgid "Order by:"
+msgstr ""
+
+#: discography/admin/record.php:420 discography/admin/track.php:339
+#: gigs/admin/gigs.php:378 gigs/admin/venues.php:264
+#: videos/admin/videos.php:336
+msgid "Overview"
+msgstr ""
+
+#: discography/admin/record.php:422 discography/admin/track.php:341
+msgid ""
+"Your discography is the window through which listeners are introduced to "
+"and discover your music. Encourage that discovery on your website through a "
+"detailed and organized history of your recorded output using the AudioTheme "
+"discography screen."
+msgstr ""
+
+#: discography/admin/record.php:423
+msgid ""
+"This screen provides access to all of your records. You can customize the "
+"display of this screen to suit your workflow."
+msgstr ""
+
+#: discography/admin/record.php:428 discography/admin/track.php:348
+#: gigs/admin/gigs.php:384 videos/admin/videos.php:344
+msgid "Screen Content"
+msgstr ""
+
+#: discography/admin/record.php:430 discography/admin/track.php:350
+#: gigs/admin/gigs.php:386 videos/admin/videos.php:346
+msgid ""
+"You can customize the appearance of this screen's content in a number of "
+"ways:"
+msgstr ""
+
+#: discography/admin/record.php:432
+msgid ""
+"You can hide or display columns based on your needs and decide how many "
+"records to list per screen using the Screen Options tab."
+msgstr ""
+
+#: discography/admin/record.php:433
+msgid ""
+"You can filter the list of records by status using the text links in the "
+"upper left to show All, Published, Draft, or Trashed records. The default "
+"view is to show all records."
+msgstr ""
+
+#: discography/admin/record.php:434
+msgid "You can also sort your records in any view by clicking the column headers."
+msgstr ""
+
+#: discography/admin/record.php:440 discography/admin/track.php:361
+#: gigs/admin/gigs.php:397 videos/admin/videos.php:357
+msgid "Available Actions"
+msgstr ""
+
+#: discography/admin/record.php:442
+msgid ""
+"Hovering over a row in the records list will display action links that "
+"allow you to manage your record. You can perform the following actions:"
+msgstr ""
+
+#: discography/admin/record.php:444
+msgid ""
+"<strong>Edit</strong> takes you to the editing screen for that record. You "
+"can also reach that screen by clicking on the record name."
+msgstr ""
+
+#: discography/admin/record.php:445
+msgid ""
+"<strong>Trash</strong> removes your record from this list and places it in "
+"the trash, from which you can permanently delete it."
+msgstr ""
+
+#: discography/admin/record.php:446
+msgid ""
+"<strong>Preview</strong> will show you what your draft record will look "
+"like if you publish it."
+msgstr ""
+
+#: discography/admin/record.php:447
+msgid ""
+"<strong>View</strong> will take you to your live site to view the record. "
+"Which link is available depends on your record's status."
+msgstr ""
+
+#: discography/admin/record.php:466
+msgid ""
+"<strong>Title</strong> - This is the name of your record. If your record is "
+"an album, put the album title here. If it's a single, enter the single's "
+"title. If you'd rather add all of your singles as a collection, then you'll "
+"need to give that collection a name here."
+msgstr ""
+
+#: discography/admin/record.php:467
+msgid ""
+"<strong>Editor</strong> - Describe your record. There are two modes of "
+"editing: Visual and Text. Choose the mode by clicking on the appropriate "
+"tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row "
+"to get a second row of controls. The Text mode allows you to enter HTML "
+"along with your description text. Line breaks will be converted to "
+"paragraphs automatically. You can insert media files by clicking the icons "
+"above the editor and following the directions. You can go to the "
+"distraction-free writing screen via the Fullscreen icon in Visual mode "
+"(second to last in the top row) or the Fullscreen button in Text mode (last "
+"in the row). Once there, you can make buttons visible by hovering over the "
+"top area. Exit Fullscreen back to the regular editor."
+msgstr ""
+
+#: discography/admin/record.php:468 templates/single-record.php:75
+msgid "Track List"
+msgstr ""
+
+#: discography/admin/record.php:469
+msgid ""
+"Tracks are the individual songs that make up your record. Use the Add Track "
+"button to quickly add as many as you'd like."
+msgstr ""
+
+#: discography/admin/record.php:471
+msgid "<strong>Title</strong> - Enter the title of your track/song here. "
+msgstr ""
+
+#: discography/admin/record.php:472
+msgid ""
+"<strong>Artist</strong> - Use this field for the track artist(s). Does the "
+"track feature a special guest? Put that here, too."
+msgstr ""
+
+#: discography/admin/record.php:474
+msgid ""
+"<strong>File URL</strong> - This field lets you attach audio for streaming "
+"or download."
+msgstr ""
+
+#: discography/admin/record.php:476
+msgid ""
+"When you're done adding a record, press the Publish button to make it "
+"available on your site. If you're not ready to publish, or want to finish "
+"updating your record later, press the Save Draft to privately save your "
+"progress. You can access your drafts at a later time through the "
+"<strong>Discography > All Records</strong> menu."
+msgstr ""
+
+#: discography/admin/record.php:477
+msgid ""
+"After saving the record, you can edit each track individually to add more "
+"information."
+msgstr ""
+
+#: discography/admin/record.php:484
+msgid "Provide additional context to your records using this box."
+msgstr ""
+
+#: discography/admin/record.php:486
+msgid ""
+"<strong>Release Year</strong> - Help fans differentiate between new and "
+"less new recordings."
+msgstr ""
+
+#: discography/admin/record.php:487 discography/admin/track.php:398
+msgid "<strong>Artist</strong> - Use this field for the main artist of the record."
+msgstr ""
+
+#: discography/admin/record.php:488
+msgid "<strong>Genre</strong> - What genre would you classify your record as?"
+msgstr ""
+
+#: discography/admin/record.php:489
+msgid "<strong>Type</strong> - Does your record consist of an album or single(s)?"
+msgstr ""
+
+#: discography/admin/record.php:490
+msgid ""
+"<strong>Links</strong> - This allows you to link to any additional "
+"resources. For example, if you want to direct fans to download your album "
+"on Amazon, enter 'Amazon' in the text field and put the web address to your "
+"record on Amazon in the URL field. Add as many resources as you would like "
+"using the Add URL button."
+msgstr ""
+
+#: discography/admin/record.php:496 videos/admin/videos.php:392
+msgid "Featured Image"
+msgstr ""
+
+#: discography/admin/record.php:497
+msgid ""
+"Use the featured image section to add cover art to your record. It's likely "
+"this will be used in various place in your theme, so it's best to upload "
+"high quality images. Find out more about <a "
+"href=\"http://codex.wordpress.org/Post_Thumbnails\" "
+"target=\"_blank\">setting featured images</a> in the WordPress Codex."
+msgstr ""
+
+#: discography/admin/record.php:502 discography/admin/track.php:408
+#: gigs/admin/gigs.php:429
+msgid "Inserting Media"
+msgstr ""
+
+#: discography/admin/record.php:504
+msgid ""
+"Use the Add Media button to attach media to your record. This might be a "
+"documentary about the recording process or promotional pictures. Don't add "
+"your cover art here, that should be added in the featured image area. Find "
+"out more about using the <a "
+"href=\"http://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#"
+"Step_2_.E2.80.93_Click_the_Add_Media_button\" target=\"_blank\">Add Media "
+"button</a> in the WordPress Codex."
+msgstr ""
+
+#: discography/admin/record.php:509 discography/admin/track.php:416
+#: gigs/admin/gigs.php:459 gigs/admin/venues.php:312
+#: videos/admin/videos.php:398
+msgid "Customize This Screen"
+msgstr ""
+
+#: discography/admin/record.php:510
+msgid ""
+"The title, big editing area, and track list are fixed in place, but you can "
+"reposition all the other boxes using drag and drop. You can also minimize "
+"or expand them by clicking the title bar of each box. Use the Screen "
+"Options tab to hide or unhide boxes or to choose a 1 or 2-column layout for "
+"this screen."
+msgstr ""
+
+#: discography/admin/track.php:184
+msgid "View all records"
+msgstr ""
+
+#: discography/admin/track.php:261 discography/admin/track.php:394
+msgid "Track Details"
+msgstr ""
+
+#: discography/admin/track.php:281
+msgid "Artist:"
+msgstr ""
+
+#: discography/admin/track.php:286
+#: discography/admin/views/edit-record-tracklist.php:48
+msgid "Choose an MP3"
+msgstr ""
+
+#: discography/admin/track.php:287
+msgid "Use MP3"
+msgstr ""
+
+#: discography/admin/track.php:291
+msgid "Audio File URL:"
+msgstr ""
+
+#: discography/admin/track.php:295
+msgid "Allow downloads?"
+msgstr ""
+
+#: discography/admin/track.php:297
+msgid "Upload MP3"
+msgstr ""
+
+#: discography/admin/track.php:301
+msgid "Purchase URL:"
+msgstr ""
+
+#: discography/admin/track.php:310 includes/widgets/record.php:98
+msgid "Record:"
+msgstr ""
+
+#: discography/admin/track.php:321
+msgid "Associate this track with a record."
+msgstr ""
+
+#: discography/admin/track.php:342
+msgid ""
+"This screen provides access to all of your tracks. You can customize the "
+"display of this screen to suit your workflow."
+msgstr ""
+
+#: discography/admin/track.php:343
+msgid ""
+"Tracks must be add/created through a record and cannot be added without "
+"being associated with a record."
+msgstr ""
+
+#: discography/admin/track.php:352
+msgid ""
+"You can hide or display columns based on your needs and decide how many "
+"tracks to list per screen using the Screen Options tab."
+msgstr ""
+
+#: discography/admin/track.php:353
+msgid ""
+"You can filter the list of tracks by status using the text links in the "
+"upper left to show All, Published, Draft, or Trashed records. The default "
+"view is to show all tracks."
+msgstr ""
+
+#: discography/admin/track.php:354
+msgid ""
+"You can refine the list to show only tracks for a specific record by using "
+"the dropdown menus above the tracks list. Click the Filter button after "
+"making your selection."
+msgstr ""
+
+#: discography/admin/track.php:355
+msgid "You can also sort your tracks in any view by clicking the column headers."
+msgstr ""
+
+#: discography/admin/track.php:363
+msgid ""
+"Hovering over a row in the tracks list will display action links that allow "
+"you to manage your track. You can perform the following actions:"
+msgstr ""
+
+#: discography/admin/track.php:365
+msgid ""
+"<strong>Edit</strong> takes you to the editing screen for that track. You "
+"can also reach that screen by clicking on the track name."
+msgstr ""
+
+#: discography/admin/track.php:366
+msgid ""
+"<strong>Trash</strong> removes your track from this list and places it in "
+"the trash, from which you can permanently delete it."
+msgstr ""
+
+#: discography/admin/track.php:367
+msgid ""
+"<strong>Preview</strong> will show you what your draft track will look like "
+"if you publish it."
+msgstr ""
+
+#: discography/admin/track.php:368
+msgid ""
+"<strong>View</strong> will take you to your live site to view the track. "
+"Which link is available depends on your track's status."
+msgstr ""
+
+#: discography/admin/track.php:387
+msgid "<strong>Title</strong> - Enter the title of your track/song."
+msgstr ""
+
+#: discography/admin/track.php:388
+msgid ""
+"<strong>Editor</strong> - Describe your track. There are two modes of "
+"editing: Visual and Text. Choose the mode by clicking on the appropriate "
+"tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row "
+"to get a second row of controls. The Text mode allows you to enter HTML "
+"along with your description text. Line breaks will be converted to "
+"paragraphs automatically. You can insert media files by clicking the icons "
+"above the editor and following the directions. You can go to the "
+"distraction-free writing screen via the Fullscreen icon in Visual mode "
+"(second to last in the top row) or the Fullscreen button in Text mode (last "
+"in the row). Once there, you can make buttons visible by hovering over the "
+"top area. Exit Fullscreen back to the regular editor."
+msgstr ""
+
+#: discography/admin/track.php:389
+msgid "When you're done editing a track, click the Update button."
+msgstr ""
+
+#: discography/admin/track.php:396
+msgid "Provide additional context to your tracks using this box."
+msgstr ""
+
+#: discography/admin/track.php:400
+msgid ""
+"<strong>File URL</strong> - This field lets you attach audio for streaming "
+"or download. To attach an audio file, see [How To: Adding Audio to Tracks]"
+msgstr ""
+
+#: discography/admin/track.php:401
+msgid ""
+"<strong>Allow Downloads</strong> - Check this field if you would like to "
+"allow your fans to download the track from your site."
+msgstr ""
+
+#: discography/admin/track.php:402
+msgid ""
+"<strong>Purchase URL</strong> - Enter a URL where the track can be "
+"purchased individually."
+msgstr ""
+
+#: discography/admin/track.php:410 gigs/admin/gigs.php:431
+msgid ""
+"You can upload and insert media (images, audio, documents, etc.) by "
+"clicking the Add Media button. You can select from the images and files "
+"already uploaded to the Media Library, or upload new media to add to your "
+"gig description. To create an image gallery, select the images to add and "
+"click the \"Create a new gallery\" button."
+msgstr ""
+
+#: discography/admin/track.php:411 gigs/admin/gigs.php:432
+msgid ""
+"You can also embed media from many popular websites including Twitter, "
+"YouTube, Flickr and others by pasting the media URL on its own line into "
+"the gig description editor. Please refer to the Codex to <a "
+"href=\"http://codex.wordpress.org/Embeds\">learn more about embeds</a>."
+msgstr ""
+
+#: discography/admin/track.php:417
+msgid ""
+"The title and big editing area are fixed in place, but you can reposition "
+"all the other boxes using drag and drop. You can also minimize or expand "
+"them by clicking the title bar of each box. Use the Screen Options tab to "
+"hide or unhide boxes or to choose a 1 or 2-column layout for this screen."
+msgstr ""
+
+#: discography/admin/views/edit-record-details.php:6
+#: discography/admin/views/edit-record-tracklist.php:45
+msgid "Artist"
+msgstr ""
+
+#: discography/admin/views/edit-record-details.php:10
+#: templates/single-record.php:46
+msgid "Genre"
+msgstr ""
+
+#: discography/admin/views/edit-record-details.php:16
+msgid "Type"
+msgstr ""
+
+#: discography/admin/views/edit-record-details.php:31
+msgid "Links"
+msgstr ""
+
+#: discography/admin/views/edit-record-details.php:37
+msgid "Add URL"
+msgstr ""
+
+#: discography/admin/views/edit-record-details.php:40
+#: discography/admin/views/edit-record-tracklist.php:18
+msgid "The order has been changed."
+msgstr ""
+
+#: discography/admin/views/edit-record-details.php:41
+#: discography/admin/views/edit-record-tracklist.php:19
+msgid "Save your changes."
+msgstr ""
+
+#: discography/admin/views/edit-record-details.php:54
+msgid "Text"
+msgstr ""
+
+#: discography/admin/views/edit-record-details.php:55
+msgid "URL"
+msgstr ""
+
+#: discography/admin/views/edit-record-details.php:56
+#: discography/admin/views/edit-record-tracklist.php:70
+msgid "Delete Item"
+msgstr ""
+
+#: discography/admin/views/edit-record-tracklist.php:4
+#: discography/discography.php:77
+msgid "Tracks"
+msgstr ""
+
+#: discography/admin/views/edit-record-tracklist.php:7
+#: discography/admin/views/edit-record-tracklist.php:25
+msgid "Add Track"
+msgstr ""
+
+#: discography/admin/views/edit-record-tracklist.php:49
+msgid "Update MP3"
+msgstr ""
+
+#: discography/admin/views/edit-record-tracklist.php:54
+msgid "File URL"
+msgstr ""
+
+#: discography/admin/views/edit-record-tracklist.php:55
+msgid "Choose MP3"
+msgstr ""
+
+#: discography/discography.php:37
+msgid "Add New Record"
+msgstr ""
+
+#: discography/discography.php:38
+msgid "Edit Record"
+msgstr ""
+
+#: discography/discography.php:39
+msgid "New Record"
+msgstr ""
+
+#: discography/discography.php:40
+msgid "View Record"
+msgstr ""
+
+#: discography/discography.php:41
+msgid "Search Records"
+msgstr ""
+
+#: discography/discography.php:42
+msgid "No records found."
+msgstr ""
+
+#: discography/discography.php:43
+msgid "No records found in Trash."
+msgstr ""
+
+#: discography/discography.php:44
+msgid "Parent Records:"
+msgstr ""
+
+#: discography/discography.php:45
+msgid "All Records"
+msgstr ""
+
+#: discography/discography.php:46
+msgid "Records"
+msgstr ""
+
+#: discography/discography.php:69
+msgid "Add New Track"
+msgstr ""
+
+#: discography/discography.php:70
+msgid "Edit Track"
+msgstr ""
+
+#: discography/discography.php:71
+msgid "New Track"
+msgstr ""
+
+#: discography/discography.php:72
+msgid "View Track"
+msgstr ""
+
+#: discography/discography.php:73
+msgid "Search Tracks"
+msgstr ""
+
+#: discography/discography.php:74
+msgid "No tracks found."
+msgstr ""
+
+#: discography/discography.php:75
+msgid "No tracks found in Trash."
+msgstr ""
+
+#: discography/discography.php:76
+msgid "All Tracks"
+msgstr ""
+
+#: discography/discography.php:97
+msgid "Search Record Types"
+msgstr ""
+
+#: discography/discography.php:98
+msgid "Popular Record Types"
+msgstr ""
+
+#: discography/discography.php:99
+msgid "All Record Types"
+msgstr ""
+
+#: discography/discography.php:100
+msgid "Parent Record Type"
+msgstr ""
+
+#: discography/discography.php:101
+msgid "Parent Record Type:"
+msgstr ""
+
+#: discography/discography.php:102
+msgid "Edit Record Type"
+msgstr ""
+
+#: discography/discography.php:103
+msgid "View Record Type"
+msgstr ""
+
+#: discography/discography.php:104
+msgid "Update Record Type"
+msgstr ""
+
+#: discography/discography.php:105
+msgid "Add New Record Type"
+msgstr ""
+
+#: discography/discography.php:106
+msgid "New Record Type Name"
+msgstr ""
+
+#: discography/discography.php:107
+msgid "Separate record types with commas"
+msgstr ""
+
+#: discography/discography.php:108
+msgid "Add or remove record types"
+msgstr ""
+
+#: discography/discography.php:109
+msgid "Choose from most used record types"
+msgstr ""
+
+#: functions.php:85
+msgid ""
+"You should <a href=\"%s\">delete the theme</a> and activate as a plugin "
+"instead."
+msgstr ""
+
+#: functions.php:90
+msgid "The AudioTheme framework appears to already exist as a plugin."
+msgstr ""
+
+#: functions.php:94
+msgid ""
+"The AudioTheme framework could not be moved to your plugins folder "
+"automatically. You should move it manually."
+msgstr ""
+
+#: functions.php:97
+msgid ""
+"<strong>The AudioTheme framework is not a theme.</strong> It should be "
+"installed as a plugin."
+msgstr ""
+
+#: functions.php:98
+msgid "Would you like to move it now?"
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:216
+msgid "Upcoming"
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:224
+msgid "Past"
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:296
+msgid "Filter"
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:352
+#: gigs/admin/class-audiotheme-gigs-list-table.php:490
+msgid "Restore"
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:396
+msgid "You are not allowed to move this item to the Trash."
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:399
+msgid "Error moving to Trash."
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:408
+msgid "You are not allowed to restore this item from the Trash."
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:411
+msgid "Error in restoring from Trash."
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:422
+#: gigs/admin/class-audiotheme-venues-list-table.php:239
+msgid "You are not allowed to delete this item."
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:425
+msgid "Error in deleting..."
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:472
+msgid "(no date)"
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:484
+msgid "Edit this item"
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:490
+msgid "Restore this item from the Trash"
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:492
+msgid "Move this item to the Trash"
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:492
+msgid "Trash"
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:497
+msgid "Delete this item permanently"
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:504
+msgid "Preview &#8220;%s&#8221;"
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:507
+msgid "View &#8220;%s&#8221;"
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:507
+msgid "View"
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:583
+msgid "Show all dates"
+msgstr ""
+
+#: gigs/admin/class-audiotheme-venues-list-table.php:242
+msgid "Error in deleting&hellip;"
+msgstr ""
+
+#: gigs/admin/class-audiotheme-venues-list-table.php:295
+msgid "Delete"
+msgstr ""
+
+#: gigs/admin/class-audiotheme-venues-list-table.php:318
+msgid "Visit venue website"
+msgstr ""
+
+#: gigs/admin/gigs.php:100
+msgid "Gig updated. <a href=\"%s\">View Gig</a>"
+msgstr ""
+
+#: gigs/admin/gigs.php:103
+msgid "Gig updated."
+msgstr ""
+
+#: gigs/admin/gigs.php:105
+#. translators: %s: date and time of the revision
+msgid "Gig restored to revision from %s"
+msgstr ""
+
+#: gigs/admin/gigs.php:106
+msgid "Gig published. <a href=\"%s\">View Gig</a>"
+msgstr ""
+
+#: gigs/admin/gigs.php:107
+msgid "Gig saved."
+msgstr ""
+
+#: gigs/admin/gigs.php:108
+msgid "Gig submitted. <a target=\"_blank\" href=\"%s\">Preview Gig</a>"
+msgstr ""
+
+#: gigs/admin/gigs.php:109
+msgid ""
+"Gig scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" "
+"href=\"%2$s\">Preview Gig</a>"
+msgstr ""
+
+#: gigs/admin/gigs.php:112
+msgid "Gig draft updated. <a target=\"_blank\" href=\"%s\">Preview Gig</a>"
+msgstr ""
+
+#: gigs/admin/gigs.php:229
+msgid ""
+"Be sure to set a timezone when you add new venues so you don't have to "
+"worry about converting dates and times."
+msgstr ""
+
+#: gigs/admin/gigs.php:230
+msgid ""
+"It also gives your visitors the ability to subscribe to your events in "
+"their own timezones."
+msgstr ""
+
+#: gigs/admin/gigs.php:232
+msgid "Venue Timezones"
+msgstr ""
+
+#: gigs/admin/gigs.php:245 gigs/admin/gigs.php:437
+msgid "Tickets"
+msgstr ""
+
+#: gigs/admin/gigs.php:379
+msgid ""
+"This screen provides access to all of your gigs. You can customize the "
+"display of this screen to suit your workflow."
+msgstr ""
+
+#: gigs/admin/gigs.php:388
+msgid ""
+"You can hide/display columns based on your needs and decide how many gigs "
+"to list per screen using the Screen Options tab."
+msgstr ""
+
+#: gigs/admin/gigs.php:389
+msgid ""
+"You can filter the list of gigs by status using the text links in the upper "
+"left to show Upcoming, Past, All, Published, Draft, or Trashed gigs. The "
+"default view is to show all upcoming gigs."
+msgstr ""
+
+#: gigs/admin/gigs.php:390
+msgid ""
+"You can refine the list to show only gigs for a specific venue or from a "
+"specific month by using the dropdown menus above the gigs list. Click the "
+"Filter button after making your selection."
+msgstr ""
+
+#: gigs/admin/gigs.php:391
+msgid "You can also sort your gigs in any view by clicking the column headers."
+msgstr ""
+
+#: gigs/admin/gigs.php:399
+msgid ""
+"Hovering over a row in the gigs list will display action links that allow "
+"you to manage your gig. You can perform the following actions:"
+msgstr ""
+
+#: gigs/admin/gigs.php:401
+msgid ""
+"<strong>Edit</strong> takes you to the editing screen for that gig. You can "
+"also reach that screen by clicking on the gig date."
+msgstr ""
+
+#: gigs/admin/gigs.php:402
+msgid ""
+"<strong>Trash</strong> removes your gig from this list and places it in the "
+"trash, from which you can permanently delete it."
+msgstr ""
+
+#: gigs/admin/gigs.php:403
+msgid ""
+"<strong>Preview</strong> will show you what your draft gig will look like "
+"if you publish it."
+msgstr ""
+
+#: gigs/admin/gigs.php:404
+msgid ""
+"<strong>View</strong> will take you to your live site to view the gig. "
+"Which link is available depends on your gig's status."
+msgstr ""
+
+#: gigs/admin/gigs.php:419
+msgid ""
+"<strong>Title</strong> - Enter a title for your gig. After you enter a "
+"title, you'll see the permalink below, which you can edit."
+msgstr ""
+
+#: gigs/admin/gigs.php:420
+msgid ""
+"<strong>Date</strong> - Choose the date of your gig or enter it in the "
+"<code>YYYY/MM/DD</code> format."
+msgstr ""
+
+#: gigs/admin/gigs.php:421
+msgid ""
+"<strong>Time</strong> - Choose the time of your gig. Leave it blank if you "
+"don't know it."
+msgstr ""
+
+#: gigs/admin/gigs.php:422
+msgid ""
+"<strong>Venue</strong> - Enter the name of a new venue, or select a saved "
+"venue. <em>It is important to select the time zone for new venues.</em> New "
+"venues will be saved to your venue database and you can update additional "
+"details on the Edit Venue screen."
+msgstr ""
+
+#: gigs/admin/gigs.php:423
+msgid "<strong>Note</strong> - Enter a short note about the gig."
+msgstr ""
+
+#: gigs/admin/gigs.php:424
+msgid ""
+"<strong>Editor</strong> - Enter a longer description for your gig. There "
+"are two modes of editing: Visual and Text. Choose the mode by clicking on "
+"the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last "
+"icon in the row to get a second row of controls. The Text mode allows you "
+"to enter HTML along with your description text. Line breaks will be "
+"converted to paragraphs automatically. You can insert media files by "
+"clicking the icons above the editor and following the directions. You can "
+"go to the distraction-free writing screen via the Fullscreen icon in Visual "
+"mode (second to last in the top row) or the Fullscreen button in Text mode "
+"(last in the row). Once there, you can make buttons visible by hovering "
+"over the top area. Exit Fullscreen back to the regular editor."
+msgstr ""
+
+#: gigs/admin/gigs.php:439
+msgid ""
+"The ticket box allows you to share information about ticket purchases and "
+"availability."
+msgstr ""
+
+#: gigs/admin/gigs.php:441
+msgid ""
+"<strong>Price</strong> - Does it cost money to attend your gig? Share that "
+"here so there aren't any surprises."
+msgstr ""
+
+#: gigs/admin/gigs.php:442
+msgid "<strong>URL</strong> - If tickets can be purchased online, provide a link."
+msgstr ""
+
+#: gigs/admin/gigs.php:448
+msgid "Publish Settings"
+msgstr ""
+
+#: gigs/admin/gigs.php:450
+msgid ""
+"Several boxes on this screen contain settings for how your content will be "
+"published, including:"
+msgstr ""
+
+#: gigs/admin/gigs.php:452
+msgid ""
+"<strong>Publish</strong> - When you're done adding a gig, click the Publish "
+"button to make it available on your site. If you're not ready to publish, "
+"or want to finish updating your gig later, click the Save Draft button to "
+"privately save your progress. You can access your drafts at a later time "
+"through the <strong>Gigs > All Gigs</strong> menu."
+msgstr ""
+
+#: gigs/admin/gigs.php:453
+msgid ""
+"<strong>Featured Image</strong> - If the author of your theme built in "
+"support for featured images, you can set those here. Find out more about <a "
+"href=\"http://codex.wordpress.org/Post_Thumbnails\" "
+"target=\"_blank\">setting featured images</a> in the WordPress Codex."
+msgstr ""
+
+#: gigs/admin/gigs.php:460
+msgid ""
+"The title, date, time, venue, note and big post editing area are fixed in "
+"place, but you can reposition all the other boxes using drag and drop. You "
+"can also minimize or expand them by clicking the title bar of each box. Use "
+"the Screen Options tab to hide or unhide boxes or to choose a 1 or 2-column "
+"layout for this screen."
+msgstr ""
+
+#: gigs/admin/venues.php:266
+msgid ""
+"This screen provides access to all of your venues. Think of it as a "
+"database or address book for all the venues where you have performed, will "
+"perform, or may potentially perform in the future."
+msgstr ""
+
+#: gigs/admin/venues.php:267
+msgid ""
+"You can customize the display of this screen to suit your workflow. Hide or "
+"display columns based on your needs and decide how many venues to list per "
+"screen using the Screen Options tab."
+msgstr ""
+
+#: gigs/admin/venues.php:279
+msgid "Venue Information"
+msgstr ""
+
+#: gigs/admin/venues.php:281
+msgid ""
+"The venue box allows you to manage the details of the venue. This "
+"information makes it easier for your fans to find out about the venue(s) "
+"where you perform. "
+msgstr ""
+
+#: gigs/admin/venues.php:283
+msgid "<strong>Name</strong> - Enter the name of the venue."
+msgstr ""
+
+#: gigs/admin/venues.php:284
+msgid "<strong>Address</strong> - Enter venue's street address."
+msgstr ""
+
+#: gigs/admin/venues.php:285
+msgid ""
+"<strong>City</strong> - Enter the city where the venue is located. After "
+"typing a city name, you may be presented with a list of cities to choose "
+"from. Selecting the correct city may help auto-complete additional address "
+"information."
+msgstr ""
+
+#: gigs/admin/venues.php:286
+msgid "<strong>State</strong> - Enter the state where the venue is located."
+msgstr ""
+
+#: gigs/admin/venues.php:287
+msgid ""
+"<strong>Country</strong> - Enter the name of the country where the venue is "
+"located."
+msgstr ""
+
+#: gigs/admin/venues.php:288
+msgid ""
+"<strong>Time zone</strong> - Choose the time zone. This is important. "
+"Choosing the time zone requires selecting the nearest city in the same time "
+"zone as the venue."
+msgstr ""
+
+#: gigs/admin/venues.php:289
+msgid "<strong>Website</strong> - Enter the URL to the venue's website."
+msgstr ""
+
+#: gigs/admin/venues.php:290
+msgid ""
+"<strong>Phone</strong> - Enter a phone number so that your visitors can "
+"easily contact the venue if needed."
+msgstr ""
+
+#: gigs/admin/venues.php:295
+msgid "Additional Information"
+msgstr ""
+
+#: gigs/admin/venues.php:297
+msgid ""
+"The contact and notes boxes allow you to save additional information about "
+"the venue for your own use."
+msgstr ""
+
+#: gigs/admin/venues.php:298
+msgid "Contact"
+msgstr ""
+
+#: gigs/admin/venues.php:299
+msgid ""
+"The contact box allows you to privately store the contact information of "
+"the person you communicate with at the venue."
+msgstr ""
+
+#: gigs/admin/venues.php:300
+msgid "Notes"
+msgstr ""
+
+#: gigs/admin/venues.php:301
+msgid ""
+"Store any relevant information about the venue in the notes box. Can't "
+"remember the doorman's name? Write it down here to refer to later. "
+"Maintaining a good relationship with a venue and its staff increases your "
+"chances of being invited back."
+msgstr ""
+
+#: gigs/admin/venues.php:306
+msgid "Saving Changes"
+msgstr ""
+
+#: gigs/admin/venues.php:307
+msgid ""
+"When you are done adding a venue press the Add New Venue or Update button "
+"to save your changes."
+msgstr ""
+
+#: gigs/admin/venues.php:313
+msgid ""
+"The venue box is fixed in place, but you can reposition all the other boxes "
+"using drag and drop. You can also minimize or expand them by clicking the "
+"title bar of each box. Use the Screen Options tab to hide or unhide boxes."
+msgstr ""
+
+#: gigs/admin/views/edit-gig.php:5
+msgid "Date"
+msgstr ""
+
+#: gigs/admin/views/edit-gig.php:13 templates/single-gig.php:53
+msgid "Time"
+msgstr ""
+
+#: gigs/admin/views/edit-gig.php:21
+msgid "Venue"
+msgstr ""
+
+#: gigs/admin/views/edit-gig.php:24
+msgid "Select Venue"
+msgstr ""
+
+#: gigs/admin/views/edit-gig.php:28
+msgid "Search time zone by city"
+msgstr ""
+
+#: gigs/admin/views/edit-gig.php:36
+msgid "Note"
+msgstr ""
+
+#: gigs/admin/views/edit-gig.php:39
+msgid ""
+"A description of the gig to display within the list of gigs. Who is the "
+"opening act, special guests, etc? Keep it short."
+msgstr ""
+
+#: gigs/admin/views/edit-venue-contact.php:3 gigs/admin/views/edit-venue.php:60
+msgid "Name"
+msgstr ""
+
+#: gigs/admin/views/edit-venue-contact.php:7 gigs/admin/views/edit-venue.php:97
+msgid "Phone"
+msgstr ""
+
+#: gigs/admin/views/edit-venue-contact.php:11
+msgid "Email"
+msgstr ""
+
+#: gigs/admin/views/edit-venue.php:19 gigs/admin/views/list-venues.php:25
+msgid "Venue added."
+msgstr ""
+
+#: gigs/admin/views/edit-venue.php:20
+msgid "Venue updated."
+msgstr ""
+
+#: gigs/admin/views/edit-venue.php:64
+msgid "Address"
+msgstr ""
+
+#: gigs/admin/views/edit-venue.php:68
+msgid "City"
+msgstr ""
+
+#: gigs/admin/views/edit-venue.php:72
+msgid "State"
+msgstr ""
+
+#: gigs/admin/views/edit-venue.php:76
+msgid "Postal Code"
+msgstr ""
+
+#: gigs/admin/views/edit-venue.php:80
+msgid "Country"
+msgstr ""
+
+#: gigs/admin/views/edit-venue.php:84
+msgid "Time zone"
+msgstr ""
+
+#: gigs/admin/views/edit-venue.php:89
+msgid "This is important."
+msgstr ""
+
+#: gigs/admin/views/edit-venue.php:93
+msgid "Website"
+msgstr ""
+
+#: gigs/admin/views/list-gigs.php:12 gigs/admin/views/list-venues.php:12
+msgid "Search results for &#8220;%s&#8221;"
+msgstr ""
+
+#: gigs/admin/views/list-gigs.php:24
+msgid "%s post updated."
+msgid_plural "%s posts updated."
+msgstr[0] ""
+msgstr[1] ""
+
+#: gigs/admin/views/list-gigs.php:32
+msgid "%s item not updated, somebody is editing it."
+msgid_plural "%s items not updated, somebody is editing them."
+msgstr[0] ""
+msgstr[1] ""
+
+#: gigs/admin/views/list-gigs.php:37
+msgid "Item permanently deleted."
+msgid_plural "%s items permanently deleted."
+msgstr[0] ""
+msgstr[1] ""
+
+#: gigs/admin/views/list-gigs.php:42
+msgid "Item moved to the Trash."
+msgid_plural "%s items moved to the Trash."
+msgstr[0] ""
+msgstr[1] ""
+
+#: gigs/admin/views/list-gigs.php:44
+msgid "Undo"
+msgstr ""
+
+#: gigs/admin/views/list-gigs.php:49
+msgid "Item restored from the Trash."
+msgid_plural "%s items restored from the Trash."
+msgstr[0] ""
+msgstr[1] ""
+
+#: gigs/admin/views/list-venues.php:33
+msgid "%s venue updated."
+msgid_plural "%s venues updated."
+msgstr[0] ""
+msgstr[1] ""
+
+#: gigs/admin/views/list-venues.php:38
+msgid "Venue permanently deleted."
+msgid_plural "%s venues permanently deleted."
+msgstr[0] ""
+msgstr[1] ""
+
+#: gigs/gigs.php:38
+msgid "Add New Gig"
+msgstr ""
+
+#: gigs/gigs.php:39
+msgid "Edit Gig"
+msgstr ""
+
+#: gigs/gigs.php:40
+msgid "New Gig"
+msgstr ""
+
+#: gigs/gigs.php:41
+msgid "View Gig"
+msgstr ""
+
+#: gigs/gigs.php:42
+msgid "Search Gigs"
+msgstr ""
+
+#: gigs/gigs.php:43
+msgid "No gigs found"
+msgstr ""
+
+#: gigs/gigs.php:44
+msgid "No gigs found in Trash"
+msgstr ""
+
+#: gigs/gigs.php:45
+msgid "All Gigs"
+msgstr ""
+
+#: gigs/gigs.php:46
+msgid "Gigs"
+msgstr ""
+
+#: gigs/gigs.php:67
+msgid "Add New Venue"
+msgstr ""
+
+#: gigs/gigs.php:68
+msgid "Edit Venue"
+msgstr ""
+
+#: gigs/gigs.php:69
+msgid "New Venue"
+msgstr ""
+
+#: gigs/gigs.php:70
+msgid "View Venue"
+msgstr ""
+
+#: gigs/gigs.php:71
+msgid "Search Venues"
+msgstr ""
+
+#: gigs/gigs.php:72
+msgid "No venues found"
+msgstr ""
+
+#: gigs/gigs.php:73
+msgid "No venues found in Trash"
+msgstr ""
+
+#: gigs/gigs.php:74
+msgid "All Venues"
+msgstr ""
+
+#: gigs/gigs.php:75
+msgid "Venues"
+msgstr ""
+
+#: gigs/gigs.php:273
+msgid "ERROR: %s is not a valid feed template."
+msgstr ""
+
+#: gigs/post-template.php:1038
+msgid "Get Directions"
+msgstr ""
+
+#: includes/archives.php:26
+msgid "Add New Archive"
+msgstr ""
+
+#: includes/archives.php:27
+msgid "Edit Archive"
+msgstr ""
+
+#: includes/archives.php:28
+msgid "New Archive"
+msgstr ""
+
+#: includes/archives.php:29
+msgid "View Archive"
+msgstr ""
+
+#: includes/archives.php:30
+msgid "Search Archives"
+msgstr ""
+
+#: includes/archives.php:31
+msgid "No archives found."
+msgstr ""
+
+#: includes/archives.php:32
+msgid "No archives found in Trash."
+msgstr ""
+
+#: includes/archives.php:33
+msgid "All Archives"
+msgstr ""
+
+#: includes/archives.php:34
+msgid "Archives"
+msgstr ""
+
+#: includes/functions.php:24
+msgid "Thumbnail"
+msgstr ""
+
+#: includes/functions.php:25
+msgid "Medium"
+msgstr ""
+
+#: includes/functions.php:26
+msgid "Large"
+msgstr ""
+
+#: includes/functions.php:27
+msgid "Full Size"
+msgstr ""
+
+#: includes/general-template.php:176
+msgid "&larr; Previous"
+msgstr ""
+
+#: includes/general-template.php:180
+msgid "Next &rarr;"
+msgstr ""
+
+#: includes/lib/p2p/connection-type.php:91
+msgid "Create connections"
+msgstr ""
+
+#: includes/lib/p2p/connection-type.php:109
+msgid "Connected %s"
+msgstr ""
+
+#: includes/lib/p2p/side-user.php:16
+msgid "Users"
+msgstr ""
+
+#: includes/lib/p2p/side-user.php:25
+msgid "User"
+msgstr ""
+
+#: includes/lib/p2p/side-user.php:26
+msgid "Search Users"
+msgstr ""
+
+#: includes/lib/p2p/side-user.php:27
+msgid "No users found."
+msgstr ""
+
+#: includes/lib/p2p/widget.php:19
+msgid "Posts 2 Posts"
+msgstr ""
+
+#: includes/lib/p2p/widget.php:20
+msgid "A list of posts connected to the current post"
+msgstr ""
+
+#: includes/lib/p2p/widget.php:37 includes/widgets/recent-posts.php:183
+#: includes/widgets/record.php:94 includes/widgets/track.php:96
+#: includes/widgets/twitter.php:100 includes/widgets/upcoming-gigs.php:107
+#: includes/widgets/video.php:89
+msgid "Title:"
+msgstr ""
+
+#: includes/lib/p2p/widget.php:44
+msgid "Connection type:"
+msgstr ""
+
+#: includes/lib/p2p/widget.php:49
+msgid "Connection listing:"
+msgstr ""
+
+#: includes/lib/p2p/widget.php:55
+msgid "connected"
+msgstr ""
+
+#: includes/lib/p2p/widget.php:56
+msgid "related"
+msgstr ""
+
+#: includes/lib/scb/AdminPage.php:228
+msgid "Settings <strong>saved</strong>."
+msgstr ""
+
+#: includes/widgets/recent-posts.php:20
+msgid "Display a list of recent posts"
+msgstr ""
+
+#: includes/widgets/recent-posts.php:21 includes/widgets/recent-posts.php:50
+msgid "Recent Posts"
+msgstr ""
+
+#: includes/widgets/recent-posts.php:113
+msgid "Feed"
+msgstr ""
+
+#: includes/widgets/recent-posts.php:188
+msgid "Show feed link in title?"
+msgstr ""
+
+#: includes/widgets/recent-posts.php:193
+msgid "Post Type:"
+msgstr ""
+
+#: includes/widgets/recent-posts.php:210
+msgid "Number of posts to show:"
+msgstr ""
+
+#: includes/widgets/recent-posts.php:215
+msgid "Show date?"
+msgstr ""
+
+#: includes/widgets/recent-posts.php:219
+msgid "Show excerpts?"
+msgstr ""
+
+#: includes/widgets/record.php:20
+msgid "Display a selected record"
+msgstr ""
+
+#: includes/widgets/record.php:21
+msgid "Record (AudioTheme)"
+msgstr ""
+
+#: includes/widgets/record.php:40 includes/widgets/track.php:40
+msgid "View Details"
+msgstr ""
+
+#: includes/widgets/record.php:115 includes/widgets/track.php:123
+msgid "More Link Text:"
+msgstr ""
+
+#: includes/widgets/record.php:120 includes/widgets/track.php:128
+msgid "Show more link?"
+msgstr ""
+
+#: includes/widgets/track.php:20
+msgid "Display a selected track"
+msgstr ""
+
+#: includes/widgets/track.php:21
+msgid "Track (AudioTheme)"
+msgstr ""
+
+#: includes/widgets/track.php:100
+msgid "Track:"
+msgstr ""
+
+#: includes/widgets/twitter.php:23
+msgid "Display your latest tweets"
+msgstr ""
+
+#: includes/widgets/twitter.php:24
+msgid "Twitter (AudioTheme)"
+msgstr ""
+
+#: includes/widgets/twitter.php:104
+msgid "Twitter username:"
+msgstr ""
+
+#: includes/widgets/twitter.php:108
+msgid "Tweets to show:"
+msgstr ""
+
+#: includes/widgets/twitter.php:113
+msgid "Hide replies?"
+msgstr ""
+
+#: includes/widgets/twitter.php:117
+msgid "Include retweets?"
+msgstr ""
+
+#: includes/widgets/twitter.php:162
+msgid "Twitter username cannot be empty."
+msgstr ""
+
+#: includes/widgets/twitter.php:163
+msgid "The screen name cannot be empty."
+msgstr ""
+
+#: includes/widgets/twitter.php:203
+msgid "Unknown response format received from Twitter."
+msgstr ""
+
+#: includes/widgets/twitter.php:209
+msgid "Remote response code: %s"
+msgstr ""
+
+#: includes/widgets/twitter.php:211
+msgid "Twitter did not respond. Please wait awhile and try again."
+msgstr ""
+
+#: includes/widgets/twitter.php:223
+msgid "There weren't any tweets."
+msgstr ""
+
+#: includes/widgets/upcoming-gigs.php:20
+msgid "Display a list of upcoming gigs"
+msgstr ""
+
+#: includes/widgets/upcoming-gigs.php:21
+msgid "Upcoming Gigs (AudioTheme)"
+msgstr ""
+
+#: includes/widgets/upcoming-gigs.php:47
+msgid "Upcoming Gigs"
+msgstr ""
+
+#: includes/widgets/upcoming-gigs.php:111
+msgid "Number of gigs to show:"
+msgstr ""
+
+#: includes/widgets/video.php:20
+msgid "Display a video"
+msgstr ""
+
+#: includes/widgets/video.php:21
+msgid "Video (AudioTheme)"
+msgstr ""
+
+#: includes/widgets/video.php:93
+msgid "Video:"
+msgstr ""
+
+#: templates/archive-gig.php:75 templates/single-gig.php:67
+msgid "Buy Tickets"
+msgstr ""
+
+#: templates/single-gig.php:54
+msgid "TBD"
+msgstr ""
+
+#: templates/single-gig.php:60
+msgid "Admission"
+msgstr ""
+
+#: templates/single-record.php:39
+msgid "Release"
+msgstr ""
+
+#: templates/single-record.php:56 templates/single-track.php:72
+msgid "Purchase"
+msgstr ""
+
+#: templates/single-track.php:66
+msgid "Download"
+msgstr ""
+
+#: templates/single-video.php:28
+msgid "Tags"
+msgstr ""
+
+#: videos/admin/videos.php:47
+msgid "Video updated. <a href=\"%s\">View Video</a>"
+msgstr ""
+
+#: videos/admin/videos.php:50
+msgid "Video updated."
+msgstr ""
+
+#: videos/admin/videos.php:52
+#. translators: %s: date and time of the revision
+msgid "Video restored to revision from %s"
+msgstr ""
+
+#: videos/admin/videos.php:53
+msgid "Video published. <a href=\"%s\">View Video</a>"
+msgstr ""
+
+#: videos/admin/videos.php:54
+msgid "Video saved."
+msgstr ""
+
+#: videos/admin/videos.php:55
+msgid "Video submitted. <a target=\"_blank\" href=\"%s\">Preview Video</a>"
+msgstr ""
+
+#: videos/admin/videos.php:56
+msgid ""
+"Video scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" "
+"href=\"%2$s\">Preview Video</a>"
+msgstr ""
+
+#: videos/admin/videos.php:59
+msgid "Video draft updated. <a target=\"_blank\" href=\"%s\">Preview Video</a>"
+msgstr ""
+
+#: videos/admin/videos.php:110
+msgid "Video URL:"
+msgstr ""
+
+#: videos/admin/videos.php:111
+msgid "Video URL"
+msgstr ""
+
+#: videos/admin/videos.php:115
+msgid "Enter a video URL from one of the %s."
+msgstr ""
+
+#: videos/admin/videos.php:116
+msgid "supported video services"
+msgstr ""
+
+#: videos/admin/videos.php:127
+msgid "Save the video after entering a URL to preview it."
+msgstr ""
+
+#: videos/admin/videos.php:155
+msgid "Get video thumbnail"
+msgstr ""
+
+#: videos/admin/videos.php:300
+msgid "Publish Date"
+msgstr ""
+
+#: videos/admin/videos.php:338
+msgid ""
+"Using the video panel, AudioTheme allows you to collect your videos from a "
+"wide variety of supported services and present them to your fans on your "
+"website."
+msgstr ""
+
+#: videos/admin/videos.php:339
+msgid ""
+"This screen provides access to all of your videos. You can customize the "
+"display of this screen to suit your workflow."
+msgstr ""
+
+#: videos/admin/videos.php:348
+msgid ""
+"You can hide or display columns based on your needs and decide how many "
+"videos to list per screen using the Screen Options tab."
+msgstr ""
+
+#: videos/admin/videos.php:349
+msgid ""
+"You can filter the list of videos by status using the text links in the "
+"upper left to show Upcoming, Past, All, Published, Draft, or Trashed "
+"videos. The default view is to show all videos."
+msgstr ""
+
+#: videos/admin/videos.php:350
+msgid ""
+"You can refine the list to show only videos from a specific month by using "
+"the dropdown menus above the videos list. Click the Filter button after "
+"making your selection."
+msgstr ""
+
+#: videos/admin/videos.php:351
+msgid "You can also sort your videos in any view by clicking the column headers."
+msgstr ""
+
+#: videos/admin/videos.php:359
+msgid ""
+"Hovering over a row in the videos list will display action links that allow "
+"you to manage your video. You can perform the following actions:"
+msgstr ""
+
+#: videos/admin/videos.php:361
+msgid ""
+"<strong>Edit</strong> takes you to the editing screen for that video. You "
+"can also reach that screen by clicking on the video title."
+msgstr ""
+
+#: videos/admin/videos.php:362
+msgid ""
+"<strong>Quick Edit</strong> provides inline access to the metadata of your "
+"video, allowing you to update video details without leaving this screen."
+msgstr ""
+
+#: videos/admin/videos.php:363
+msgid ""
+"<strong>Trash</strong> removes your video from this list and places it in "
+"the trash, from which you can permanently delete it."
+msgstr ""
+
+#: videos/admin/videos.php:364
+msgid ""
+"<strong>Preview</strong> will show you what your draft video will look like "
+"if you publish it."
+msgstr ""
+
+#: videos/admin/videos.php:365
+msgid ""
+"<strong>View</strong> will take you to your live site to view the video. "
+"Which link is available depends on your video's status."
+msgstr ""
+
+#: videos/admin/videos.php:384
+msgid ""
+"<strong>Title</strong> - Enter a title for your video. After you enter a "
+"title, you'll see the permalink below, which you can edit."
+msgstr ""
+
+#: videos/admin/videos.php:385
+msgid ""
+"<strong>Video URL</strong> - Enter the URL for your video. After saving a "
+"preview of the video will display below this field."
+msgstr ""
+
+#: videos/admin/videos.php:386
+msgid ""
+"<strong>Editor</strong> - Describe your video. There are two modes of "
+"editing: Visual and Text. Choose the mode by clicking on the appropriate "
+"tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row "
+"to get a second row of controls. The Text mode allows you to enter HTML "
+"along with your description text. Line breaks will be converted to "
+"paragraphs automatically. You can insert media files by clicking the icons "
+"above the editor and following the directions. You can go to the "
+"distraction-free writing screen via the Fullscreen icon in Visual mode "
+"(second to last in the top row) or the Fullscreen button in Text mode (last "
+"in the row). Once there, you can make buttons visible by hovering over the "
+"top area. Exit Fullscreen back to the regular editor."
+msgstr ""
+
+#: videos/admin/videos.php:387
+msgid ""
+"<strong>Excerpt</strong> - Depending on the theme you have activated, this "
+"is a brief expert that may appear in your list of videos. Visit the "
+"WordPress Support section to <a "
+"href=\"http://en.support.wordpress.com/splitting-content/excerpts/\" "
+"target=\"_blank\">learn more about excerpts</a>."
+msgstr ""
+
+#: videos/admin/videos.php:393
+msgid ""
+"This is used to set the thumbnail that will represent your video throughout "
+"your site. Make it interesting. You can choose the image through the normal "
+"process of setting or a featured image, or click the 'Get video thumbnail "
+"link' (you'll need to add a URL to the Video URL field for this to appear) "
+"to grab the image directly from the video service. Find out more about <a "
+"href=\"http://codex.wordpress.org/Post_Thumbnails\" "
+"target=\"_blank\">setting featured images</a> in the WordPress Codex."
+msgstr ""
+
+#: videos/admin/videos.php:399
+msgid ""
+"The title, video url, and big editing area are fixed in place, but you can "
+"reposition all the other boxes using drag and drop. You can also minimize "
+"or expand them by clicking the title bar of each box. Use the Screen "
+"Options tab to hide or unhide boxes or to choose a 1 or 2-column layout for "
+"this screen."
+msgstr ""
+
+#: videos/videos.php:36
+msgid "Add New Video"
+msgstr ""
+
+#: videos/videos.php:37
+msgid "Edit Video"
+msgstr ""
+
+#: videos/videos.php:38
+msgid "New Video"
+msgstr ""
+
+#: videos/videos.php:39
+msgid "View Video"
+msgstr ""
+
+#: videos/videos.php:40
+msgid "Search Videos"
+msgstr ""
+
+#: videos/videos.php:41
+msgid "No videos found"
+msgstr ""
+
+#: videos/videos.php:42
+msgid "No videos found in Trash"
+msgstr ""
+
+#: videos/videos.php:43
+msgid "All Videos"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "AudioTheme Framework"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://audiotheme.com/view/audiotheme/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"A platform for music-oriented websites, allowing for easy management of "
+"gigs, discography, videos and more."
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://audiotheme.com/"
+msgstr ""
+
+#: admin/includes/class-audiotheme-updater-plugin.php:124
+msgctxt "plugin name and version"
+msgid "%1$s %2$s is available."
+msgstr ""
+
+#: admin/includes/class-audiotheme-updater-theme.php:104
+msgctxt "theme name and version"
+msgid "<strong>%1$s %2$s</strong> is available."
+msgstr ""
+
+#: admin/includes/class-audiotheme-updater-theme.php:111
+msgctxt "theme changelog and update"
+msgid "%1$s or %2$s."
+msgstr ""
+
+#: discography/admin/record.php:50
+msgctxt "column_name"
+msgid "Record"
+msgstr ""
+
+#: discography/admin/record.php:54
+msgctxt "column_name"
+msgid "Released"
+msgstr ""
+
+#: discography/admin/track.php:53
+msgctxt "column_name"
+msgid "Track"
+msgstr ""
+
+#: discography/admin/record.php:53 videos/admin/videos.php:75
+msgctxt "column name"
+msgid "Image"
+msgstr ""
+
+#: discography/admin/record.php:58
+msgctxt "column name"
+msgid "Type"
+msgstr ""
+
+#: discography/admin/record.php:59
+msgctxt "column name"
+msgid "Tracks"
+msgstr ""
+
+#: discography/admin/track.php:56
+msgctxt "column name"
+msgid "Artist"
+msgstr ""
+
+#: discography/admin/track.php:57
+msgctxt "column name"
+msgid "Record"
+msgstr ""
+
+#: discography/admin/track.php:58
+msgctxt "column name"
+msgid "Audio File"
+msgstr ""
+
+#: discography/admin/track.php:59
+msgctxt "column name"
+msgid "Downloadable"
+msgstr ""
+
+#: discography/admin/track.php:60
+msgctxt "column name"
+msgid "Purchase URL"
+msgstr ""
+
+#: discography/discography.php:34
+msgctxt "post format general name"
+msgid "Records"
+msgstr ""
+
+#: discography/discography.php:66
+msgctxt "post format general name"
+msgid "Tracks"
+msgstr ""
+
+#: includes/archives.php:23
+msgctxt "post format general name"
+msgid "Archives"
+msgstr ""
+
+#: discography/discography.php:35
+msgctxt "post format singular name"
+msgid "Record"
+msgstr ""
+
+#: discography/discography.php:67
+msgctxt "post format singular name"
+msgid "Track"
+msgstr ""
+
+#: includes/archives.php:24
+msgctxt "post format singular name"
+msgid "Archive"
+msgstr ""
+
+#: discography/discography.php:36
+msgctxt "audiotheme_record"
+msgid "Add New"
+msgstr ""
+
+#: discography/discography.php:47
+msgctxt "add new on admin bar"
+msgid "Record"
+msgstr ""
+
+#: discography/discography.php:78
+msgctxt "add new on admin bar"
+msgid "Track"
+msgstr ""
+
+#: gigs/gigs.php:47
+msgctxt "add new on admin bar"
+msgid "Gigs"
+msgstr ""
+
+#: gigs/gigs.php:76
+msgctxt "add new on admin bar"
+msgid "Venues"
+msgstr ""
+
+#: includes/archives.php:35
+msgctxt "add new on admin bar"
+msgid "Archive"
+msgstr ""
+
+#: videos/videos.php:45
+msgctxt "add new on admin bar"
+msgid "Video"
+msgstr ""
+
+#: discography/discography.php:68
+msgctxt "audiotheme_track"
+msgid "Add New"
+msgstr ""
+
+#: discography/discography.php:95
+msgctxt "taxonomy general name"
+msgid "Record Types"
+msgstr ""
+
+#: discography/discography.php:96
+msgctxt "taxonomy singular name"
+msgid "Record Type"
+msgstr ""
+
+#: discography/post-template.php:44
+msgctxt "Record type"
+msgid "Album"
+msgstr ""
+
+#: discography/post-template.php:45
+msgctxt "Record type"
+msgid "Single"
+msgstr ""
+
+#: gigs/admin/class-audiotheme-gigs-list-table.php:230
+msgctxt "posts"
+msgid "All <span class=\"count\">(%s)</span>"
+msgid_plural "All <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: gigs/gigs.php:35
+msgctxt "post type general name"
+msgid "Gigs"
+msgstr ""
+
+#: gigs/gigs.php:64
+msgctxt "post type general name"
+msgid "Venues"
+msgstr ""
+
+#: videos/videos.php:33
+msgctxt "post type general name"
+msgid "Videos"
+msgstr ""
+
+#: gigs/gigs.php:36
+msgctxt "post type singular name"
+msgid "Gig"
+msgstr ""
+
+#: gigs/gigs.php:65
+msgctxt "post type singular name"
+msgid "Venue"
+msgstr ""
+
+#: videos/videos.php:34
+msgctxt "post type singular name"
+msgid "Video"
+msgstr ""
+
+#: gigs/gigs.php:37
+msgctxt "gig"
+msgid "Add New"
+msgstr ""
+
+#: gigs/gigs.php:66
+msgctxt "venue"
+msgid "Add New"
+msgstr ""
+
+#: includes/archives.php:25
+msgctxt "audiotheme_archive"
+msgid "Add New"
+msgstr ""
+
+#: videos/videos.php:35
+msgctxt "video"
+msgid "Add New"
+msgstr ""

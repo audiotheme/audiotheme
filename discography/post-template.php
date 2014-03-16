@@ -51,7 +51,7 @@ function get_audiotheme_record_type_strings() {
 	 * Terms will be registered automatically for new record types. Keys must
 	 * be prefixed with 'record-type'.
 	 *
-	 * @since x.x.x
+	 * @since 1.5.0
 	 *
 	 * @param array strings List of record types. Keys must be prefixed with 'record-type-'.
 	 */
