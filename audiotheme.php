@@ -53,6 +53,7 @@ if ( ! defined( 'AUDIOTHEME_URI' ) )
  */
 require( AUDIOTHEME_DIR . 'includes/archives.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
+require( AUDIOTHEME_DIR . 'includes/deprecated.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
 require( AUDIOTHEME_DIR . 'includes/general-template.php' );
 require( AUDIOTHEME_DIR . 'includes/less.php' );
@@ -87,10 +88,6 @@ function audiotheme_load() {
 	add_action( 'audiotheme_template_include', 'audiotheme_template_setup' );
 
 	add_filter( 'wp_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
-	add_filter( 'nav_menu_css_class', 'audiotheme_nav_menu_name_class', 10, 2 );
-	add_filter( 'get_pages', 'audiotheme_page_list' );
-	add_filter( 'page_css_class', 'audiotheme_page_list_classes', 10, 2 );
-	add_filter( 'dynamic_sidebar_params', 'audiotheme_widget_count_class' );
 
 	// Media hooks.
 	add_action( 'init', 'audiotheme_add_default_oembed_providers' );
@@ -123,6 +120,12 @@ function audiotheme_load() {
 	// Template hooks.
 	add_action( 'audiotheme_before_main_content', 'audiotheme_before_main_content' );
 	add_action( 'audiotheme_after_main_content', 'audiotheme_after_main_content' );
+
+	// Deprecated.
+	add_filter( 'dynamic_sidebar_params', 'audiotheme_widget_count_class' );
+	add_filter( 'get_pages', 'audiotheme_page_list' );
+	add_filter( 'page_css_class', 'audiotheme_page_list_classes', 10, 2 );
+	add_filter( 'nav_menu_css_class', 'audiotheme_nav_menu_name_class', 10, 2 );
 }
 add_action( 'after_setup_theme', 'audiotheme_load', 5 );
 
