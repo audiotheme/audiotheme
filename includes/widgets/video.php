@@ -55,7 +55,7 @@ class Audiotheme_Widget_Video extends WP_Widget {
 				$data['post'] = get_post( $instance['post_id'] );
 				$data = array_merge( $instance, $data );
 
-				$template = audiotheme_locate_template( array( "widgets/{$args['id']}-video.php", "widgets/video.php" ) );
+				$template = audiotheme_locate_template( array( "widgets/{$args['id']}_video.php", "widgets/video.php" ) );
 				audiotheme_load_template( $template, $data );
 			}
 

@@ -57,7 +57,7 @@ class Audiotheme_Widget_Record extends WP_Widget {
 				$data['post'] = get_post( $instance['post_id'] );
 				$data = array_merge( $instance, $data );
 
-				$template = audiotheme_locate_template( array( "widgets/{$args['id']}-record.php", "widgets/record.php" ) );
+				$template = audiotheme_locate_template( array( "widgets/{$args['id']}_record.php", "widgets/record.php" ) );
 				audiotheme_load_template( $template, $data );
 			}
 
