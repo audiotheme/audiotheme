@@ -469,10 +469,12 @@ function audiotheme_menu_move_item( $move_slug, $relative_slug, $position = 'aft
 	global $menu;
 
 	$move_key = audiotheme_menu_get_item_key( $move_slug );
-	$item = $menu[ $move_key ];
-	unset( $menu[ $move_key ] );
+	if ( $move_key ) {
+		$item = $menu[ $move_key ];
+		unset( $menu[ $move_key ] );
 
-	audiotheme_menu_insert_item( $item, $relative_slug, $position );
+		audiotheme_menu_insert_item( $item, $relative_slug, $position );
+	}
 }
 
 /**
