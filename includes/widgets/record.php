@@ -36,10 +36,6 @@ class Audiotheme_Widget_Record extends WP_Widget {
 		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? get_the_title( $instance['post_id'] ) : $instance['title'], $instance, $this->id_base );
 		$instance['title'] = apply_filters( 'audiotheme_widget_title', $instance['title'], $instance, $args, $this->id_base );
 
-		if ( isset( $instance['show_link'] ) && $instance['show_link'] && empty( $instance['link_text'] ) ) {
-			$instance['link_text'] = apply_filters( 'audiotheme_widget_record_default_link_text', __( 'View Details', 'audiotheme' ) );
-		}
-
 		echo $before_widget;
 
 			echo ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
@@ -75,7 +71,6 @@ class Audiotheme_Widget_Record extends WP_Widget {
 		$instance = wp_parse_args( (array) $instance, array(
 			'link_text' => '',
 			'post_id'   => '',
-			'show_link' => false,
 			'text'      => '',
 			'title'     => '',
 		) );
@@ -115,10 +110,6 @@ class Audiotheme_Widget_Record extends WP_Widget {
 			<label for="<?php echo $this->get_field_id( 'link_text' ); ?>"><?php _e( 'More Link Text:', 'audiotheme' ); ?></label>
 			<input type="text" name="<?php echo $this->get_field_name( 'link_text' ); ?>" id="<?php echo $this->get_field_id( 'link_text' ); ?>" value="<?php echo esc_attr( $instance['link_text'] ); ?>" class="widefat">
 		</p>
-		<p>
-			<input type="checkbox" name="<?php echo $this->get_field_name( 'show_link' ); ?>" id="<?php echo $this->get_field_id( 'show_link' ); ?>" value="1"<?php checked( $instance['show_link'] ); ?>>
-			<label for="<?php echo $this->get_field_id( 'show_link' ); ?>"><?php _e( 'Show more link?', 'audiotheme' ); ?></label>
-		</p>
 		<?php
 	}
 
@@ -136,7 +127,6 @@ class Audiotheme_Widget_Record extends WP_Widget {
 		$instance['title'] = wp_strip_all_tags( $new_instance['title'] );
 		$instance['text'] = wp_kses_data( $new_instance['text'] );
 		$instance['link_text'] = wp_kses_data( $new_instance['link_text'] );
-		$instance['show_link'] = ( isset( $new_instance['show_link'] ) ) ? 1 : 0;
 
 		return $instance;
 	}
