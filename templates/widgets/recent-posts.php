@@ -33,7 +33,7 @@ endif;
 
 			<?php
 			if ( $show_date ) :
-				$date_html = sprintf( '<time class="recent-posts-item-date" datetime="%s" pubdate="pubdate" class="published">%s</time>',
+				$date_html = sprintf( '<time class="recent-posts-item-date published" datetime="%s" pubdate="pubdate">%s</time>',
 					get_post_time( 'c', true ),
 					get_the_time( $date_format )
 				);
