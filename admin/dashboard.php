@@ -215,19 +215,16 @@ function audiotheme_dashboard_help_screen() {
 function audiotheme_dashboard_sort_menu() {
 	global $menu;
 
-	if ( is_network_admin() ) {
-		return;
-	}
-
-	if ( $menu ) {
+	if ( ! is_network_admin() && $menu ) {
 		$menu = array_values( $menu ); // Re-key the array.
 
 		$separator = array( '', 'read', 'separator-before-audiotheme', '', 'wp-menu-separator' );
 		audiotheme_menu_insert_item( $separator, 'audiotheme', 'before' );
 
+		// Reverse the order and always insert them after the main AudioTheme menu item.
+		audiotheme_menu_move_item( 'edit.php?post_type=audiotheme_video', 'audiotheme' );
+		audiotheme_menu_move_item( 'edit.php?post_type=audiotheme_record', 'audiotheme' );
 		audiotheme_menu_move_item( 'audiotheme-gigs', 'audiotheme' );
-		audiotheme_menu_move_item( 'edit.php?post_type=audiotheme_record', 'audiotheme-gigs' );
-		audiotheme_menu_move_item( 'edit.php?post_type=audiotheme_video', 'edit.php?post_type=audiotheme_record' );
 
 		audiotheme_submenu_move_after( 'audiotheme-settings', 'audiotheme', 'audiotheme' );
 	}
