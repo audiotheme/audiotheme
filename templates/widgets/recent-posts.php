@@ -41,7 +41,7 @@ endif;
 
 			<?php
 			if ( $show_excerpts ) :
-				$excerpt = wpautop( wp_html_excerpt( get_the_excerpt(), $excerpt_length ) . '...' );
+				$excerpt = wpautop( wp_html_excerpt( get_the_excerpt(), $excerpt_length, '&hellip;' ) );
 				echo apply_filters( 'audiotheme_widget_recent_posts_excerpt', $excerpt, $loop->post, $instance );
 			endif;
 			?>
