@@ -9,7 +9,7 @@
 /**
  * Include gig admin dependencies.
  */
-require( AUDIOTHEME_DIR . 'gigs/admin/ajax.php' );
+require( AUDIOTHEME_DIR . 'modules/gigs/admin/ajax.php' );
 
 /**
  * Attach hooks for loading and managing gigs in the admin dashboard.
@@ -29,13 +29,13 @@ function audiotheme_gigs_admin_setup() {
 	add_action( 'wp_ajax_audiotheme_ajax_is_new_venue', 'audiotheme_ajax_is_new_venue' );
 
 	// Register scripts.
-	wp_register_script( 'audiotheme-gig-edit', AUDIOTHEME_URI . 'gigs/admin/js/gig-edit.js', array( 'audiotheme-admin', 'audiotheme-pointer', 'jquery-timepicker', 'jquery-ui-autocomplete', 'jquery-ui-datepicker' ) );
+	wp_register_script( 'audiotheme-gig-edit', AUDIOTHEME_URI . 'modules/gigs/admin/js/gig-edit.js', array( 'audiotheme-admin', 'audiotheme-pointer', 'jquery-timepicker', 'jquery-ui-autocomplete', 'jquery-ui-datepicker' ) );
 	wp_localize_script( 'audiotheme-gig-edit', 'audiothemeGigsL10n', array(
 		'datepickerIcon' => AUDIOTHEME_URI . 'admin/images/calendar.png',
 		'timeFormat'     => get_option( 'time_format' ),
 	) );
 
-	wp_register_script( 'audiotheme-venue-edit', AUDIOTHEME_URI . 'gigs/admin/js/venue-edit.js', array( 'audiotheme-admin', 'jquery-ui-autocomplete', 'post' ) );
+	wp_register_script( 'audiotheme-venue-edit', AUDIOTHEME_URI . 'modules/gigs/admin/js/venue-edit.js', array( 'audiotheme-admin', 'jquery-ui-autocomplete', 'post' ) );
 
 	// Only run on the gig and venue Manage Screens.
 	if ( 'admin.php' == $pagenow && isset( $_GET['page'] ) && ( 'audiotheme-gigs' == $_GET['page'] || 'audiotheme-venues' == $_GET['page'] ) ) {
@@ -187,7 +187,7 @@ function audiotheme_gigs_manage_screen_setup() {
 	$title = $post_type_object->labels->name;
 	add_screen_option( 'per_page', array( 'label' => $title, 'default' => 20 ) );
 
-	require_once( AUDIOTHEME_DIR . 'gigs/admin/class-audiotheme-gigs-list-table.php' );
+	require_once( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-gigs-list-table.php' );
 
 	$gigs_list_table = new Audiotheme_Gigs_List_Table();
 	$gigs_list_table->process_actions();
@@ -204,7 +204,7 @@ function audiotheme_gigs_manage_screen() {
 	$gigs_list_table = new Audiotheme_Gigs_List_Table();
 	$gigs_list_table->prepare_items();
 
-	require( AUDIOTHEME_DIR . 'gigs/admin/views/list-gigs.php' );
+	require( AUDIOTHEME_DIR . 'modules/gigs/admin/views/list-gigs.php' );
 }
 
 /**
@@ -279,7 +279,7 @@ function audiotheme_edit_gig_fields() {
 	$gig_venue = ( isset( $gig->venue->name ) ) ? $gig->venue->name : '';
 	$timezone_string = ( isset( $gig->venue->timezone_string ) ) ? $gig->venue->timezone_string : '';
 
-	require( AUDIOTHEME_DIR . 'gigs/admin/views/edit-gig.php' );
+	require( AUDIOTHEME_DIR . 'modules/gigs/admin/views/edit-gig.php' );
 }
 
 /**

@@ -65,9 +65,9 @@ require( AUDIOTHEME_DIR . 'includes/widgets.php' );
 /**
  * Load AudioTheme CPTs and corresponding functionality.
  */
-require( AUDIOTHEME_DIR . 'discography/discography.php' );
-require( AUDIOTHEME_DIR . 'gigs/gigs.php' );
-require( AUDIOTHEME_DIR . 'videos/videos.php' );
+require( AUDIOTHEME_DIR . 'modules/discography/discography.php' );
+require( AUDIOTHEME_DIR . 'modules/gigs/gigs.php' );
+require( AUDIOTHEME_DIR . 'modules/videos/videos.php' );
 
 /**
  * AudioTheme setup.

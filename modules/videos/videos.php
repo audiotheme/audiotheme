@@ -9,13 +9,13 @@
 /**
  * Load the video template API.
  */
-require( AUDIOTHEME_DIR . 'videos/post-template.php' );
+require( AUDIOTHEME_DIR . 'modules/videos/post-template.php' );
 
 /**
  * Load the admin interface elements and functionality for videos.
  */
 if ( is_admin() ) {
-	require( AUDIOTHEME_DIR . 'videos/admin/videos.php' );
+	require( AUDIOTHEME_DIR . 'modules/videos/admin/videos.php' );
 }
 
 /**

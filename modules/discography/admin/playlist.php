@@ -32,11 +32,11 @@ function audiotheme_playlist_admin_enqueue_scripts() {
 		return;
 	}
 
-	wp_enqueue_style( 'audiotheme-playlist-admin', AUDIOTHEME_URI . 'discography/admin/css/playlist.css' );
+	wp_enqueue_style( 'modules/audiotheme-playlist-admin', AUDIOTHEME_URI . 'modules/discography/admin/css/playlist.css' );
 
 	wp_enqueue_script(
 		'audiotheme-playlist-admin',
-		AUDIOTHEME_URI . 'discography/admin/js/playlist.js',
+		AUDIOTHEME_URI . 'modules/discography/admin/js/playlist.js',
 		array( 'cue-admin' ),
 		'1.0.0',
 		true

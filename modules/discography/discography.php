@@ -9,13 +9,13 @@
 /**
  * Load the discography template API.
  */
-require( AUDIOTHEME_DIR . 'discography/post-template.php' );
+require( AUDIOTHEME_DIR . 'modules/discography/post-template.php' );
 
 /**
  * Load the admin interface and functionality for discography.
  */
 if ( is_admin() ) {
-	require( AUDIOTHEME_DIR . 'discography/admin/discography.php' );
+	require( AUDIOTHEME_DIR . 'modules/discography/admin/discography.php' );
 }
 
 /**

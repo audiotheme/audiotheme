@@ -316,7 +316,7 @@ function audiotheme_edit_record_tracklist() {
 		'height'    => 750,
 	), admin_url( 'media-upload.php' ) );
 
-	require( AUDIOTHEME_DIR . 'discography/admin/views/edit-record-tracklist.php' );
+	require( AUDIOTHEME_DIR . 'modules/discography/admin/views/edit-record-tracklist.php' );
 }
 
 /**
@@ -340,7 +340,7 @@ function audiotheme_record_details_meta_box( $post ) {
 	$record_link_source_names = array_keys( $record_link_sources );
 	sort( $record_link_source_names );
 
-	require( AUDIOTHEME_DIR . 'discography/admin/views/edit-record-details.php' );
+	require( AUDIOTHEME_DIR . 'modules/discography/admin/views/edit-record-details.php' );
 }
 
 /**

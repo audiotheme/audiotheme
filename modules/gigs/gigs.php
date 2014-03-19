@@ -9,14 +9,14 @@
 /**
  * Load the gig template API.
  */
-require( AUDIOTHEME_DIR . 'gigs/post-template.php' );
+require( AUDIOTHEME_DIR . 'modules/gigs/post-template.php' );
 
 /**
  * Load the admin interface and functionality for gigs and venues.
  */
 if ( is_admin() ) {
-	require( AUDIOTHEME_DIR . 'gigs/admin/gigs.php' );
-	require( AUDIOTHEME_DIR . 'gigs/admin/venues.php' );
+	require( AUDIOTHEME_DIR . 'modules/gigs/admin/gigs.php' );
+	require( AUDIOTHEME_DIR . 'modules/gigs/admin/venues.php' );
 }
 
 /**
@@ -257,17 +257,17 @@ function audiotheme_gig_template_redirect() {
 	if ( is_feed() && 'audiotheme_gig' == $wp_query->get( 'post_type' ) ) {
 		p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $wp_query );
 
-		require( AUDIOTHEME_DIR . 'gigs/feed.php' );
+		require( AUDIOTHEME_DIR . 'modules/gigs/feed.php' );
 
 		switch( $type ) {
 			case 'feed':
-				load_template( AUDIOTHEME_DIR . 'gigs/feed-rss2.php' );
+				load_template( AUDIOTHEME_DIR . 'modules/gigs/feed-rss2.php' );
 				break;
 			case 'ical':
-				load_template( AUDIOTHEME_DIR . 'gigs/feed-ical.php' );
+				load_template( AUDIOTHEME_DIR . 'modules/gigs/feed-ical.php' );
 				break;
 			case 'json':
-				load_template( AUDIOTHEME_DIR . 'gigs/feed-json.php' );
+				load_template( AUDIOTHEME_DIR . 'modules/gigs/feed-json.php' );
 				break;
 			default:
 				$message = sprintf( __( 'ERROR: %s is not a valid feed template.', 'audiotheme' ), esc_html( $type ) );

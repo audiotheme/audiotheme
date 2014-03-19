@@ -67,7 +67,7 @@
 		</td>
 		<td class="column-action">
 			<a href="<?php echo admin_url( 'post.php' ); ?>?post={{ data.id }}&amp;action=edit" class="audiotheme-remove-on-add"><?php esc_html_e( 'Edit', 'audiotheme' ); ?></a>
-			<a class="audiotheme-repeater-remove-item audiotheme-show-on-add"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/delete.png" width="16" height="16" alt="<?php esc_attr_e( 'Delete Item', 'audiotheme' ) ?>" title="<?php esc_attr_e( 'Delete Item', 'audiotheme' ) ?>" class="icon-delete"></a>
+			<a class="audiotheme-repeater-remove-item audiotheme-show-on-add"><img src="<?php echo AUDIOTHEME_URI; ?>admin/images/delete.png" width="16" height="16" alt="<?php esc_attr_e( 'Delete Item', 'audiotheme' ) ?>" title="<?php esc_attr_e( 'Delete Item', 'audiotheme' ) ?>" class="icon-delete"></a>
 		</td>
 	</tr>
 </script>

@@ -13,7 +13,7 @@
 			<th><label for="gig-time"><?php _e( 'Time', 'audiotheme' ) ?></label></th>
 			<td>
 				<div class="audiotheme-input-append">
-					<input type="text" name="gig_time" id="gig-time" value="<?php echo esc_attr( $gig_time ); ?>" placeholder="HH:MM" class="ui-autocomplete-input"><label for="gig-time" id="gig-time-select" class="audiotheme-input-append-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/clock.png" width="12" height="12"></label>
+					<input type="text" name="gig_time" id="gig-time" value="<?php echo esc_attr( $gig_time ); ?>" placeholder="HH:MM" class="ui-autocomplete-input"><label for="gig-time" id="gig-time-select" class="audiotheme-input-append-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>admin/images/clock.png" width="12" height="12"></label>
 				</div>
 			</td>
 		</tr>
@@ -21,7 +21,7 @@
 			<th><label for="gig-venue"><?php _e( 'Venue', 'audiotheme' ) ?></label></th>
 			<td>
 				<div class="audiotheme-input-append">
-					<input type="text" name="gig_venue" id="gig-venue" value="<?php echo esc_html( $gig_venue ); ?>"><label for="gig-venue" id="gig-venue-select" class="audiotheme-input-append-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>/admin/images/arrow-down.png" width="12" height="12" title="<?php esc_attr_e( 'Select Venue', 'audiotheme' ); ?>" alt="<?php esc_attr_e( 'Select Venue', 'audiotheme' ); ?>"></label>
+					<input type="text" name="gig_venue" id="gig-venue" value="<?php echo esc_html( $gig_venue ); ?>"><label for="gig-venue" id="gig-venue-select" class="audiotheme-input-append-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>admin/images/arrow-down.png" width="12" height="12" title="<?php esc_attr_e( 'Select Venue', 'audiotheme' ); ?>" alt="<?php esc_attr_e( 'Select Venue', 'audiotheme' ); ?>"></label>
 				</div>
 
 				<span id="gig-venue-timezone-group" class="hide-if-js">

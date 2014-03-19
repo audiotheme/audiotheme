@@ -22,7 +22,7 @@ function audiotheme_load_videos_admin() {
 	add_filter( 'manage_edit-audiotheme_video_columns', 'audiotheme_video_register_columns' );
 	add_filter( 'admin_post_thumbnail_html', 'audiotheme_video_admin_post_thumbnail_html', 10, 2 );
 
-	wp_register_script( 'audiotheme-video-edit', AUDIOTHEME_URI . 'videos/admin/js/video-edit.js', array( 'jquery' ) );
+	wp_register_script( 'audiotheme-video-edit', AUDIOTHEME_URI . 'modules/videos/admin/js/video-edit.js', array( 'jquery' ) );
 
 	// Videos Archive
 	add_action( 'add_audiotheme_archive_settings_meta_box_audiotheme_video', '__return_true' );

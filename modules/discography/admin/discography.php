@@ -9,10 +9,10 @@
 /**
  * Include discography admin dependencies.
  */
-require( AUDIOTHEME_DIR . 'discography/admin/ajax.php' );
-require( AUDIOTHEME_DIR . 'discography/admin/playlist.php' );
-require( AUDIOTHEME_DIR . 'discography/admin/record.php' );
-require( AUDIOTHEME_DIR . 'discography/admin/track.php' );
+require( AUDIOTHEME_DIR . 'modules/discography/admin/ajax.php' );
+require( AUDIOTHEME_DIR . 'modules/discography/admin/playlist.php' );
+require( AUDIOTHEME_DIR . 'modules/discography/admin/record.php' );
+require( AUDIOTHEME_DIR . 'modules/discography/admin/track.php' );
 
 /**
  * Attach hooks for loading and managing discography in the admin dashboard.
