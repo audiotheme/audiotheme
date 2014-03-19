@@ -112,6 +112,7 @@ class Audiotheme_Widget_Track extends WP_Widget {
 			</select>
 		</p>
 		<p>
+			<label for="<?php echo $this->get_field_id( 'text' ); ?>"><?php _e( 'Description:', 'audiotheme' ); ?></label>
 			<textarea name="<?php echo $this->get_field_name( 'text' ); ?>" id="<?php echo $this->get_field_id( 'text' ); ?>" cols="20" rows="5" class="widefat"><?php echo esc_textarea( $instance['text'] ); ?></textarea>
 		</p>
 		<p>
