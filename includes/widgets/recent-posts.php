@@ -101,54 +101,25 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 		if ( $inside = apply_filters( 'audiotheme_widget_recent_posts_output', '', $instance, $args ) ) {
 			$output .= $inside;
 		} else {
-			if ( ! empty( $instance['title'] ) ) {
-				$output .= $args['before_title'];
-					$output .= $instance['title'];
+			$data                   = array();
+			$data['args']           = $args;
+			$data['after_title']    = $args['after_title'];
+			$data['before_title']   = $args['before_title'];
+			$data['feed_link']      = ( 'post' == $instance['post_type'] ) ? get_bloginfo( 'rss2_url' ) : get_post_type_archive_feed_link( $instance['post_type'] );
+			$data['instance']       = $instance;
+			$data['loop']           = new WP_Query( $instance['loop_args'] );
+			$data['show_date']      = ! empty( $instance['show_date'] );
+			$data['show_excerpts']  = ! empty( $instance['show_excerpts'] );
+			$data['show_feed_link'] = ! empty( $instance['show_feed_link'] ) && ! empty( $data['feed_link'] );
+			$data['title']          = ( empty( $instance['title'] ) ) ? '' : $instance['title'];
+			$data                   = array_merge( $instance, $data );
 
-					if ( ! empty( $instance['show_feed_link'] ) ) {
-						$post_type_archive_feed_link = ( 'post' == $instance['post_type'] ) ? get_bloginfo( 'rss2_url' ) : get_post_type_archive_feed_link( $instance['post_type'] );
-						if ( $post_type_archive_feed_link ) {
-							$output .= sprintf( ' <a href="%s" target="_blank">%s</a>',
-								esc_url( $post_type_archive_feed_link ),
-								__( 'Feed', 'audiotheme' )
-							);
-						}
-					}
-				$output .= $args['after_title'];
-			}
+			ob_start();
+			$template = audiotheme_locate_template( array( "widgets/{$args['id']}_record.php", "widgets/recent-posts.php" ) );
+			audiotheme_load_template( $template, $data );
+			$output .= ob_get_clean();
 
-			$output .= '<ul>';
-				$loop = new WP_Query( $instance['loop_args'] );
-
-				if ( $loop->have_posts() ) :
-					while ( $loop->have_posts() ) :
-						$loop->the_post();
-
-						$output .= '<li>';
-							$output .= sprintf( '<h5><a href="%1$s" title="%2$s">%3$s</a></h5>',
-								esc_url( get_permalink() ),
-								esc_attr( get_the_title() ? get_the_title() : get_the_ID() ),
-								get_the_title()
-							);
-
-							if ( $instance['show_date'] ) {
-								$date_html = sprintf( '<time datetime="%s" pubdate="pubdate" class="published">%s</time>',
-									get_post_time( 'c', true ),
-									get_the_time( $instance['date_format'] )
-								);
-
-								$output.= apply_filters( 'audiotheme_widget_recent_posts_date_html', $date_html, $instance );
-							}
-
-							if ( ! empty( $instance['show_excerpts'] ) ) {
-								$excerpt = wpautop( wp_html_excerpt( get_the_excerpt(), $instance['excerpt_length'] ) . '...' );
-								$output .= apply_filters( 'audiotheme_widget_recent_posts_excerpt', $excerpt, $loop->post, $instance );
-							}
-						$output .= '</li>';
-					endwhile;
-				endif;
-				wp_reset_postdata();
-			$output .= '</ul>';
+			wp_reset_postdata();
 		}
 
 		$output .= $args['after_widget'];
