@@ -14,7 +14,7 @@ if ( ! empty( $title ) ) :
 		echo $title;
 
 		if ( $show_feed_link ) :
-			printf( '<a href="' . esc_url( $feed_link ) . '">' . __( 'Feed', 'audiotheme' ) . '</a>' );
+			echo '<a href="' . esc_url( $feed_link ) . '">' . __( 'Feed', 'audiotheme' ) . '</a>';
 		endif;
 
 	echo $after_title;
@@ -26,7 +26,7 @@ endif;
 
 	<?php while ( $loop->have_posts() ) : $loop->the_post(); ?>
 		<li>
-			<h5><a href="<?php echo esc_url( get_permalink() ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>"><?php echo get_the_title(); ?></a></h5>
+			<?php the_title( '<h5><a href="' . esc_url( get_permalink() ) . '">', '</a></h5>' ); ?>
 
 			<?php
 			if ( $show_date ) :
