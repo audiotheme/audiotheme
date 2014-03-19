@@ -17,3 +17,9 @@ if ( ! empty( $text ) ) :
 	echo wpautop( $text );
 endif;
 ?>
+
+<?php if ( ! empty( $link_text ) ) : ?>
+	<p class="more">
+		<a href="<?php echo esc_url( get_permalink( $post->ID ) ); ?>"><?php echo $link_text; ?></a>
+	</p>
+<?php endif; ?>

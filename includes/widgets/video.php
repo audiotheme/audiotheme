@@ -71,9 +71,10 @@ class Audiotheme_Widget_Video extends WP_Widget {
 	 */
 	function form( $instance ) {
 		$instance = wp_parse_args( (array) $instance, array(
-			'post_id' => '',
-			'text'    => '',
-			'title'   => '',
+			'link_text' => '',
+			'post_id'   => '',
+			'text'      => '',
+			'title'     => '',
 		) );
 
 		$title = wp_strip_all_tags( $instance['title'] );
@@ -106,6 +107,10 @@ class Audiotheme_Widget_Video extends WP_Widget {
 		<p>
 			<textarea name="<?php echo $this->get_field_name( 'text' ); ?>" id="<?php echo $this->get_field_id( 'text' ); ?>" cols="20" rows="5" class="widefat"><?php echo esc_textarea( $instance['text'] ); ?></textarea>
 		</p>
+		<p style="margin-bottom: 0.5em">
+			<label for="<?php echo $this->get_field_id( 'link_text' ); ?>"><?php _e( 'More Link Text:', 'audiotheme' ); ?></label>
+			<input type="text" name="<?php echo $this->get_field_name( 'link_text' ); ?>" id="<?php echo $this->get_field_id( 'link_text' ); ?>" value="<?php echo esc_attr( $instance['link_text'] ); ?>" class="widefat">
+		</p>
 		<?php
 	}
 
@@ -122,6 +127,7 @@ class Audiotheme_Widget_Video extends WP_Widget {
 
 		$instance['title'] = wp_strip_all_tags( $new_instance['title'] );
 		$instance['text'] = wp_kses_data( $new_instance['text'] );
+		$instance['link_text'] = wp_kses_data( $new_instance['link_text'] );
 
 		return $instance;
 	}
