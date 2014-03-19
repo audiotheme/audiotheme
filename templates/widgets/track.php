@@ -18,7 +18,7 @@ if ( ! empty( $text ) ) :
 endif;
 ?>
 
-<?php if ( isset( $show_link ) && $show_link ) : ?>
+<?php if ( ! empty( $link_text ) ) : ?>
 	<p class="more">
 		<a href="<?php echo esc_url( get_permalink( $post->ID ) ); ?>"><?php echo $link_text; ?></a>
 	</p>
