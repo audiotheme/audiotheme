@@ -28,7 +28,7 @@
 		<dd class="date">
 			<meta content="<?php echo esc_attr( get_audiotheme_gig_time( 'c' ) ); ?>" itemprop="startDate">
 			<time class="dtstart" datetime="<?php echo esc_attr( get_audiotheme_gig_time( 'c' ) ); ?>">
-				<?php echo get_audiotheme_gig_time( $instance['date_format'] ); ?>
+				<?php echo get_audiotheme_gig_time( $date_format ); ?>
 			</time>
 		</dd>
 
