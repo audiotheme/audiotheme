@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the AudioTheme Framework package.
 msgid ""
 msgstr ""
-"Project-Id-Version: AudioTheme Framework 1.5.0\n"
+"Project-Id-Version: AudioTheme Framework 1.5.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/audiotheme\n"
-"POT-Creation-Date: 2014-03-16 21:24:08+00:00\n"
+"POT-Creation-Date: 2014-03-20 14:54:41+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2256,7 +2256,7 @@ msgstr ""
 
 #: includes/lib/p2p/widget.php:37 includes/widgets/recent-posts.php:183
 #: includes/widgets/record.php:94 includes/widgets/track.php:96
-#: includes/widgets/twitter.php:100 includes/widgets/upcoming-gigs.php:107
+#: includes/widgets/twitter.php:100 includes/widgets/upcoming-gigs.php:106
 #: includes/widgets/video.php:89
 msgid "Title:"
 msgstr ""
@@ -2405,7 +2405,7 @@ msgstr ""
 msgid "Upcoming Gigs"
 msgstr ""
 
-#: includes/widgets/upcoming-gigs.php:111
+#: includes/widgets/upcoming-gigs.php:110
 msgid "Number of gigs to show:"
 msgstr ""
 
