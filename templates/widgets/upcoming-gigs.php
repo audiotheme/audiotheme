@@ -8,38 +8,42 @@
  */
 ?>
 
-<?php while ( $loop->have_posts() ) : $loop->the_post(); ?>
+<?php if ( $loop->have_posts() ) : ?>
 
-	<dl class="vevent" itemscope itemtype="http://schema.org/MusicEvent">
+	<?php while ( $loop->have_posts() ) : $loop->the_post(); ?>
 
-		<?php
-		$gig = get_audiotheme_gig();
-		$venue = get_audiotheme_venue( $gig->venue->ID );
+		<dl class="vevent" itemscope itemtype="http://schema.org/MusicEvent">
 
-		echo get_audiotheme_gig_link( $gig, array( 'before' => '<dt>', 'after' => '</dt>' ) );
-		?>
+			<?php
+			$gig = get_audiotheme_gig();
+			$venue = get_audiotheme_venue( $gig->venue->ID );
 
-		<?php if ( audiotheme_gig_has_venue() ) : ?>
-			<dd class="location">
-				<a href="<?php the_permalink(); ?>"><span class="gig-title"><?php echo get_audiotheme_gig_location(); ?></span></a>
+			echo get_audiotheme_gig_link( $gig, array( 'before' => '<dt>', 'after' => '</dt>' ) );
+			?>
+
+			<?php if ( audiotheme_gig_has_venue() ) : ?>
+				<dd class="location">
+					<a href="<?php the_permalink(); ?>"><span class="gig-title"><?php echo get_audiotheme_gig_location(); ?></span></a>
+				</dd>
+			<?php endif; ?>
+
+			<dd class="date">
+				<meta content="<?php echo esc_attr( get_audiotheme_gig_time( 'c' ) ); ?>" itemprop="startDate">
+				<time class="dtstart" datetime="<?php echo esc_attr( get_audiotheme_gig_time( 'c' ) ); ?>">
+					<?php echo get_audiotheme_gig_time( $date_format ); ?>
+				</time>
 			</dd>
-		<?php endif; ?>
 
-		<dd class="date">
-			<meta content="<?php echo esc_attr( get_audiotheme_gig_time( 'c' ) ); ?>" itemprop="startDate">
-			<time class="dtstart" datetime="<?php echo esc_attr( get_audiotheme_gig_time( 'c' ) ); ?>">
-				<?php echo get_audiotheme_gig_time( $date_format ); ?>
-			</time>
-		</dd>
+			<?php if ( ! empty( $gig->post_title ) && audiotheme_gig_has_venue() ) : ?>
+				<dd class="venue"><?php echo esc_html( $venue->name ); ?></dd>
+			<?php endif; ?>
 
-		<?php if ( ! empty( $gig->post_title ) && audiotheme_gig_has_venue() ) : ?>
-			<dd class="venue"><?php echo esc_html( $venue->name ); ?></dd>
-		<?php endif; ?>
+			<?php if ( $gig_description = get_audiotheme_gig_description() ) : ?>
+				<dd class="description"><?php echo wp_strip_all_tags( $gig_description ); ?></dd>
+			<?php endif; ?>
 
-		<?php if ( $gig_description = get_audiotheme_gig_description() ) : ?>
-			<dd class="description"><?php echo wp_strip_all_tags( $gig_description ); ?></dd>
-		<?php endif; ?>
+		</dl>
 
-	</dl>
+	<?php endwhile; ?>
 
-<?php endwhile; ?>
+<?php endif; ?>
