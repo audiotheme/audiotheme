@@ -58,28 +58,27 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 		// Add a class with the number of gigs to display.
 		$output = preg_replace( '/class="([^"]+)"/', 'class="$1 widget-items-' . $instance['number'] . '"', $before_widget );
 
-			$output .= ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
+		$output .= ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
 
-			if ( $loop->have_posts() ) :
-
-				if ( $inside = apply_filters( 'audiotheme_widget_upcoming_gigs_output', '', $instance, $args, $loop ) ) {
-					$output .= $inside;
-				} else {
-					$data = array();
-					$data['args'] = $args;
-					$data['loop'] = $loop;
-					$data = array_merge( $instance, $data );
-
-					ob_start();
-					$template = audiotheme_locate_template( array( "widgets/{$args['id']}-upcoming-gigs.php", "widgets/upcoming-gigs.php" ) );
-					audiotheme_load_template( $template, $data );
-					$output .= ob_get_clean();
-				}
-
-				wp_reset_postdata();
-			endif;
-
+		if ( $inside = apply_filters( 'audiotheme_widget_upcoming_gigs_output', '', $instance, $args, $loop ) ) {
+			// Call loop have_posts() for backwards compatibility with themes
+			// that don't call it in their filters.
+			$loop->have_posts();
 			$output .= $inside;
+			wp_reset_postdata();
+		} else {
+			$data = array();
+			$data['args'] = $args;
+			$data['loop'] = $loop;
+			$data = array_merge( $instance, $data );
+
+			ob_start();
+			$template = audiotheme_locate_template( array( "widgets/{$args['id']}-upcoming-gigs.php", "widgets/upcoming-gigs.php" ) );
+			audiotheme_load_template( $template, $data );
+			$output .= ob_get_clean();
+
+			wp_reset_postdata();
+		}
 
 		$output .= $after_widget;
 		echo $output;
