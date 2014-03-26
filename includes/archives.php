@@ -145,7 +145,11 @@ function get_audiotheme_post_type_archive( $post_type = null ) {
 	$post_type = ( $post_type ) ? $post_type : get_post_type();
 	$archives = get_audiotheme_archive_ids();
 
-	return ( empty( $archives[ $post_type ] ) ) ? null : $archives[ $post_type ];
+	if ( empty( $post_type ) ) {
+		$post_type = get_query_var( 'post_type' );
+	}
+
+	return empty( $archives[ $post_type ] ) ? null : $archives[ $post_type ];
 }
 
 /**
@@ -350,6 +354,10 @@ function audiotheme_archives_admin_bar_edit_menu( $wp_admin_bar ) {
 	if ( ! is_admin() && is_audiotheme_post_type_archive() ) {
 		$id = get_audiotheme_post_type_archive();
 		$post_type_object = get_post_type_object( get_post_type( $id ) );
+
+		if ( empty( $post_type_object ) ) {
+			return;
+		}
 
 		$wp_admin_bar->add_menu( array(
 			'id'    => 'edit',
