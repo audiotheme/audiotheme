@@ -1121,3 +1121,60 @@ function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 
 	return apply_filters( 'audiotheme_google_map_embed', $output, $args, $venue_id );
 }
+
+/**
+ * Retrieve the static Google map URL for an address/venue.
+ *
+ * @since x.x.x
+ * @link https://developers.google.com/maps/documentation/staticmaps/?csw=1
+ *
+ * @param array $args Array of args.
+ * @param int $venue_id Optional. Venue ID.
+ * @return string
+ */
+function get_audiotheme_google_static_map_url( $args = array(), $venue_id = 0 ) {
+	$args = wp_parse_args( $args, array(
+		'address'   => '',
+		'width'     => 640,
+		'height'    => 300,
+	) );
+
+	// Get the current post and determine if it's a gig with a venue.
+	if ( empty( $args['address'] ) && ( $gig = get_audiotheme_gig() ) ) {
+		if ( 'audiotheme_gig' == get_post_type( $gig ) && ! empty( $gig->venue->ID ) ) {
+			$venue_id = $gig->venue->ID;
+		}
+	}
+
+	// Retrieve the address for the venue.
+	if ( $venue_id ) {
+		$venue = get_audiotheme_venue( $venue_id );
+
+		$args['address'] = get_audiotheme_venue_address( $venue->ID );
+		$args['address'] = ( $args['address'] ) ? $venue->name . ', ' . $args['address'] : $venue->name;
+	}
+
+	$image_url = add_query_arg(
+		array(
+			'center'  => rawurlencode( $args['address'] ),
+			'size'    => $args['width'] . 'x' . $args['height'],
+			'scale'   => 2,
+			'format'  => 'jpg',
+			'sensor'  => 'false',
+			'markers' => 'size:small|color:0xff0000|' . rawurlencode( $args['address'] ),
+		),
+		'//maps.googleapis.com/maps/api/staticmap'
+	);
+
+	$image_url = apply_filters( 'audiotheme_google_static_map_url', $image_url, $args, $venue_id );
+
+	// @link https://developers.google.com/maps/documentation/staticmaps/?csw=1#StyledMaps
+	$map_styles = apply_filters( 'audiotheme_google_static_map_styles', array() );
+	if ( ! empty( $map_styles ) ) {
+		foreach ( $map_styles as $styles ) {
+			$image_url .= '&style=' . audiotheme_build_query( $styles );
+		}
+	}
+
+	return $image_url;
+}
