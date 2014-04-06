@@ -437,3 +437,18 @@ function audiotheme_encode_url_path( $url ) {
 
 	return $return;
 }
+
+/**
+ * Return key value pairs with argument and operation separators.
+ *
+ * @since x.x.x
+ *
+ * @param array $data Array of properties.
+ * @param string $arg_separator Separator between arguments.
+ * @param string $value_separator Separator between keys and values.
+ * @return array string
+ */
+function audiotheme_build_query( $data, $arg_separator = '|', $value_separator = ':' ) {
+	$output = http_build_query( $data, null, $arg_separator );
+	return str_replace( '=', $value_separator, $output );
+}
