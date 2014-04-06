@@ -1011,6 +1011,46 @@ function update_audiotheme_venue_gig_count( $venue_id, $count = 0 ) {
 }
 
 /**
+ * Build a URL to a Google Map.
+ *
+ * @since x.x.x
+ *
+ * @param array $args Array of args.
+ * @param int $venue_id Optional. Venue ID.
+ * @return string
+ */
+function get_audiotheme_google_map_url( $args = array(), $venue_id = 0 ) {
+	$args = wp_parse_args( $args, array(
+		'address'   => '',
+	) );
+
+	// Get the current post and determine if it's a gig with a venue.
+	if ( empty( $args['address'] ) && ( $gig = get_audiotheme_gig() ) ) {
+		if ( 'audiotheme_gig' == get_post_type( $gig ) && ! empty( $gig->venue->ID ) ) {
+			$venue_id = $gig->venue->ID;
+		}
+	}
+
+	// Retrieve the address for the venue.
+	if ( $venue_id ) {
+		$venue = get_audiotheme_venue( $venue_id );
+
+		$args['address'] = get_audiotheme_venue_address( $venue->ID );
+		$args['address'] = ( $args['address'] ) ? $venue->name . ', ' . $args['address'] : $venue->name;
+	}
+
+	$url = add_query_arg( array(
+		'f'       => 'q',
+		'source'  => 's_q',
+		'hl'      => 'en',
+		'geocode' => '',
+		'q'       => rawurlencode( $args['address'] ),
+	), '//maps.google.com/maps' );
+
+	return apply_filters( 'audiotheme_google_map_url', $url, $args, $venue_id );
+}
+
+/**
  * Generate a Google Map iframe for an address or venue.
  *
  * If a venue ID is passed as the second parameter, it's address will supercede
