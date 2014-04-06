@@ -1102,7 +1102,7 @@ function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 		'q'       => rawurlencode( $args['address'] ),
 		'output'  => 'embed',
 		'iwloc'   => '',
-	), 'http://maps.google.com/maps' );
+	), '//maps.google.com/maps' );
 
 	$args = apply_filters( 'audiotheme_google_map_embed_args', $args, $venue_id );
 
