@@ -180,6 +180,7 @@ function audiotheme_admin_init() {
 	wp_register_style( 'jquery-ui-theme-audiotheme', AUDIOTHEME_URI . 'admin/css/jquery-ui-audiotheme.css', array( 'jquery-ui-theme-smoothness' ) );
 
 	wp_localize_script( 'audiotheme-media', 'AudiothemeMediaControl', array(
+		'audioFiles'      => __( 'Audio files', 'audiotheme' ),
 		'frameTitle'      => __( 'Choose an Attachment', 'audiotheme' ),
 		'frameUpdateText' => __( 'Update Attachment', 'audiotheme' ),
 	) );
