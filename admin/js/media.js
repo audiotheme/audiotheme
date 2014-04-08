@@ -39,7 +39,7 @@ window.audiotheme = window.audiotheme || {};
  */
 jQuery(function($) {
 	var Attachment = wp.media.model.Attachment,
-		defaultExtensions = wp.Uploader.defaults.filters[0].extensions,
+		defaultExtensions = wp.Uploader.defaults.filters.mime_types || [],
 		$control, $controlTarget, mediaControl;
 
 	mediaControl = {
@@ -61,7 +61,10 @@ jQuery(function($) {
 				}
 
 				if ( $control.data('upload-extensions') ) {
-					wp.Uploader.defaults.filters[0].extensions = $control.data('upload-extensions');
+					wp.Uploader.defaults.filters.mime_types = [{
+						title: AudiothemeMediaControl.audioFiles,
+						extensions: $control.data('upload-extensions')
+					}];
 				}
 
 				mediaControl.frame().open();
@@ -117,7 +120,7 @@ jQuery(function($) {
 			});
 
 			this._frame.on( 'open', this.updateLibrarySelection ).on('close', function() {
-				wp.Uploader.defaults.filters[0].extensions = defaultExtensions;
+				wp.Uploader.defaults.filters.mime_types = defaultExtensions;
 			}).state('library').on('select', this.select);
 
 			return this._frame;
