@@ -479,6 +479,12 @@ function audiotheme_prepare_track_for_js( $track ) {
 		$data['record'] = $record->post_title;
 		$data['title'] = $track->post_title;
 
+		// WP playlist format.
+		$data['format'] = 'mp3';
+		$data['meta']['artist'] = $data['artist'];
+		$data['meta']['length_formatted'] = '0:00';
+		$data['src'] = $data['mp3'];
+
 		if ( $thumbnail_id = get_audiotheme_track_thumbnail_id( $track ) ) {
 			$image = wp_get_attachment_image_src( $thumbnail_id, apply_filters( 'audiotheme_track_js_artwork_size', 'thumbnail' ) );
 			$data['artwork'] = $image[0];
