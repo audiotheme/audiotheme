@@ -4,7 +4,7 @@
  *
  * @package AudioTheme_Framework
  * @subpackage Template
- * @since x.x.x
+ * @since 1.6.0
  */
 ?>
 

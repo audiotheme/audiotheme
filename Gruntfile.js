@@ -233,6 +233,8 @@ module.exports = function(grunt) {
 		grunt.task.run('string-replace:build');
 		grunt.task.run('jshint');
 		grunt.task.run('less');
+		grunt.task.run('autoprefixer');
+		grunt.task.run('cssmin');
 		grunt.task.run('uglify');
 		grunt.task.run('makepot');
 		grunt.task.run('compress:build');

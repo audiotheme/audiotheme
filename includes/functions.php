@@ -441,7 +441,7 @@ function audiotheme_encode_url_path( $url ) {
 /**
  * Return key value pairs with argument and operation separators.
  *
- * @since x.x.x
+ * @since 1.6.0
  *
  * @param array $data Array of properties.
  * @param string $arg_separator Separator between arguments.

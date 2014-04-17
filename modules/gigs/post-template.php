@@ -1013,7 +1013,7 @@ function update_audiotheme_venue_gig_count( $venue_id, $count = 0 ) {
 /**
  * Build a URL to a Google Map.
  *
- * @since x.x.x
+ * @since 1.6.0
  *
  * @param array $args Array of args.
  * @param int $venue_id Optional. Venue ID.
@@ -1125,7 +1125,7 @@ function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 /**
  * Retrieve the static Google map URL for an address/venue.
  *
- * @since x.x.x
+ * @since 1.6.0
  * @link https://developers.google.com/maps/documentation/staticmaps/?csw=1
  *
  * @param array $args Array of args.
