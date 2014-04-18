@@ -242,14 +242,10 @@ function audiotheme_enqueue_admin_scripts() {
 function audiotheme_admin_body_class( $classes ) {
 	global $post;
 
-	$classes .= ' ' . sanitize_html_class( get_current_screen()->id );
+	$classes .= ' screen-' . sanitize_html_class( get_current_screen()->id );
 
 	if ( 'audiotheme_archive' == get_current_screen()->id && $post_type = is_audiotheme_post_type_archive_id( $post->ID )) {
 		$classes .= ' ' . $post_type . '-archive';
-	}
-
-	if ( version_compare( $GLOBALS['wp_version'], '3.8-alpha', '<' ) ) {
-		$classes .= ' pre-mp6';
 	}
 
 	return implode( ' ', array_unique( explode( ' ', $classes ) ) );
