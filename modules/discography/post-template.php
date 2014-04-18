@@ -263,6 +263,20 @@ function get_audiotheme_track_file_url( $post_id = null ) {
 }
 
 /**
+ * Get the length of a track.
+ *
+ * @since 1.0.0
+ * @todo Determine if the track's file is an attachment and check its meta data.
+ *
+ * @param int $post_id Optional. Post ID.
+ * @return string
+ */
+function get_audiotheme_track_length( $post_id = null ) {
+	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
+	return get_post_meta( $post_id, '_audiotheme_length', true );
+}
+
+/**
  * Get the purchase URL for a track.
  *
  * @since 1.0.0

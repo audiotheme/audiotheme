@@ -202,6 +202,7 @@ function audiotheme_tracks_filters() {
  * Custom rules for saving a track.
  *
  * @since 1.0.0
+ * @todo Get ID3 info for remote files.
  *
  * @param int $post_id Post ID.
  */
@@ -217,9 +218,18 @@ function audiotheme_track_save_post( $post_id ) {
 
 	$track = get_post( $post_id );
 
-	$fields = array( 'artist', 'file_url', 'purchase_url' );
+	$fields = array( 'artist', 'file_url', 'length', 'purchase_url' );
 	foreach( $fields as $field ) {
 		$value = ( empty( $_POST[ $field ] ) ) ? '' : $_POST[ $field ];
+
+		if ( 'artist' == $field ) {
+			$value = sanitize_text_field( $value );
+		} elseif ( 'length' == $field ) {
+			$value = preg_replace( '/[^0-9:]/', '', $value );
+		} elseif ( ( 'file_url' == $field || 'purchase_url' == $field ) && ! empty( $value ) ) {
+			$value = esc_url_raw( $value );
+		}
+
 		update_post_meta( $post_id, '_audiotheme_' . $field, $value );
 	}
 
@@ -295,6 +305,11 @@ function audiotheme_track_details_meta_box( $post ) {
 		<label for="track-is-downloadable"><?php _e( 'Allow downloads?', 'audiotheme' ) ?></label>
 
 		<a href="#" class="button audiotheme-media-control-choose" style="float: right"><?php _e( 'Upload MP3', 'audiotheme' ); ?></a>
+	</p>
+
+	<p class="audiotheme-field">
+		<label for="track-length"><?php _e( 'Length:', 'audiotheme' ) ?></label>
+		<input type="text" name="length" id="track-length" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_length', true ) ) ; ?>" placeholder="00:00" class="widefat">
 	</p>
 
 	<p class="audiotheme-field">
