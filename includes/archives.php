@@ -336,7 +336,8 @@ function audiotheme_archive_class( $classes = array(), $args = array() ) {
 	}
 
 	if ( is_audiotheme_post_type_archive() ) {
-		$post_type_class = 'audiotheme-archive-' . str_replace( 'audiotheme_', '', get_post_type() );
+		$post_type = get_post_type() ? get_post_type() : get_query_var( 'post_type' );
+		$post_type_class = 'audiotheme-archive-' . str_replace( 'audiotheme_', '', $post_type );
 		$classes = array_merge( $classes, array( 'audiotheme-archive', $post_type_class ) );
 	}
 
