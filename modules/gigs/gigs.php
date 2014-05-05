@@ -225,7 +225,7 @@ function audiotheme_pre_gig_query( $query ) {
 		// Only show upcoming gigs.
 		$meta_query[] = array(
 			'key'     => '_audiotheme_gig_datetime',
-			'value'   => current_time( 'mysql' ),
+			'value'   => date( 'Y-m-d', current_time( 'timestamp' ) ),
 			'compare' => '>=',
 			'type'    => 'DATETIME',
 		);
@@ -420,7 +420,7 @@ class Audiotheme_Gig_Query extends WP_Query {
 			'meta_query'          => array(
 				array(
 					'key'     => '_audiotheme_gig_datetime',
-					'value'   => current_time( 'mysql' ),
+					'value'   => date( 'Y-m-d', current_time( 'timestamp' ) ),
 					'compare' => '>=',
 					'type'    => 'DATETIME',
 				)
