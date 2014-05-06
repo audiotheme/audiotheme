@@ -179,7 +179,7 @@ function audiotheme_timezone_choice( $selected_zone = null ) {
 		$choices = substr( $choices, 0, $pos );
 	}
 
-	return $choices;
+	return apply_filters( 'audiotheme_timezone_dropdown', $choices, $selected );
 }
 
 /**
