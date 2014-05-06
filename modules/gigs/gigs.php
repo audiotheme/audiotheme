@@ -103,10 +103,11 @@ function audiotheme_gigs_init() {
 	// Filter default permalinks to return the custom format.
 	add_filter( 'post_type_link', 'audiotheme_gig_permalink', 10, 4 );
 	add_filter( 'post_type_archive_link', 'audiotheme_gigs_archive_link', 10, 2 );
+	add_filter( 'wp_unique_post_slug', 'audiotheme_gig_unique_slug', 10, 6 );
+	add_action( 'save_post_audiotheme_gig', 'audiotheme_gig_update_bad_slug', 10, 2 );
 	add_filter( 'get_edit_post_link', 'get_audiotheme_venue_edit_link', 10, 2 );
 
 	add_action( 'before_delete_post', 'audiotheme_gig_before_delete' );
-
 	add_filter( 'post_class', 'audiotheme_gig_post_class', 10, 3 );
 }
 
@@ -318,7 +319,7 @@ function audiotheme_gig_template_include( $template ) {
 function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
 	$is_draft_or_pending = isset( $post->post_status ) && in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) );
 
-	if ( ! empty( $post->post_name ) && ! $is_draft_or_pending ) {
+	if ( ! $is_draft_or_pending || $sample ) {
 		$permalink = get_option( 'permalink_structure' );
 
 		if ( ! empty( $permalink ) && 'audiotheme_gig' == get_post_type( $post ) ) {
@@ -351,6 +352,84 @@ function audiotheme_gigs_archive_link( $link, $post_type ) {
 	}
 
 	return $link;
+}
+
+/**
+ * Prevent conflicts in gig permalinks.
+ *
+ * Gigs without titles will fall back to using the ID for the slug, however,
+ * when the ID is a 4 digit number, it will conflict with date-based permalinks.
+ * Any slugs that match the ID are preprended with 'gig-'.
+ *
+ * @since x.x.x
+ * @see wp_unique_post_slug()
+ *
+ * @param string $slug The desired slug (post_name).
+ * @param integer $post_ID
+ * @param string $post_status No uniqueness checks are made if the post is still draft or pending.
+ * @param string $post_type
+ * @param integer $post_parent
+ * @param string $original_slug Slug passed to the uniqueness method.
+ * @return string
+ */
+function audiotheme_gig_unique_slug( $slug, $post_ID, $post_status, $post_type, $post_parent, $original_slug = null ) {
+	global $wpdb, $wp_rewrite;
+
+	if ( 'audiotheme_gig' == $post_type ) {
+		$slug = $original_slug;
+
+		$feeds = $wp_rewrite->feeds;
+		if ( ! is_array( $feeds ) ) {
+			$feeds = array();
+		}
+
+		// Four-digit numeric slugs interfere with date-based archives.
+		if ( $slug == $post_ID ) {
+			$slug = 'gig-' . $slug;
+		}
+
+		// Make sure the gig slug is unique.
+		$check_sql = "SELECT post_name FROM $wpdb->posts WHERE post_name=%s AND post_type=%s AND ID!=%d LIMIT 1";
+		$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug, $post_type, $post_ID ) );
+
+		if ( $post_name_check || apply_filters( 'wp_unique_post_slug_is_bad_flat_slug', false, $slug, $post_type ) ) {
+			$suffix = 2;
+			do {
+				$alt_post_name = substr( $slug, 0, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
+				$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $alt_post_name, $post_type, $post_ID ) );
+				$suffix++;
+			} while ( $post_name_check );
+			$slug = $alt_post_name;
+		}
+	}
+
+	return $slug;
+}
+
+/**
+ * Prevent conflicts with numeric gig slugs.
+ *
+ * If a slug is empty when a post is published, wp_insert_post() will base the
+ * slug off the title/ID without a way to filter it until after the post is
+ * saved. If the saved slug matches the post ID for a gig, it's prefixed with
+ * 'gig-' here to mimic the behavior in audiotheme_gig_unique_slug().
+ *
+ * @since x.x.x
+ *
+ * @param int $post_id Post ID.
+ * @param WP_Post $post Post object.
+ */
+function audiotheme_gig_update_bad_slug( $post_id, $post ) {
+	global $wpdb;
+
+	if ( 'audiotheme_gig' !== $post->post_type ) {
+		return;
+	}
+
+	if ( $post->post_name == $post_id && ! in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) ) ) {
+		$slug = 'gig-' . $post->post_name;
+		$wpdb->update( $wpdb->posts, array( 'post_name' => $slug ), array( 'ID' => $post_id ) );
+	}
 }
 
 /**
