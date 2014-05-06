@@ -315,7 +315,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 				 * Publish date
 				 */
 				if ( $show_publish_date ) :
-					// translators: Publish box date format, see http://php.net/date
+					/* translators: Publish box date format, see http://php.net/date */
 					$datef = __( 'M j, Y @ G:i' );
 					if ( 0 != $post->ID ) {
 						if ( 'future' == $post->post_status ) { // scheduled for publishing at a future date

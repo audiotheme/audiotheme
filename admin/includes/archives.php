@@ -178,7 +178,7 @@ function audiotheme_archives_post_updated_messages( $messages ) {
 		7  => __( 'Archive saved.', 'audiotheme' ),
 		8  => sprintf( __( 'Archive submitted. <a target="_blank" href="%s">Preview Archive</a>', 'audiotheme' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
 		9  => sprintf( __( 'Archive scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Archive</a>', 'audiotheme' ),
-		      // translators: Publish box date format, see http://php.net/date
+		      /* translators: Publish box date format, see http://php.net/date */
 		      date_i18n( __( 'M j, Y @ G:i', 'audiotheme' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
 		10 => sprintf( __( 'Archive draft updated. <a target="_blank" href="%s">Preview Archive</a>', 'audiotheme' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
 	);
