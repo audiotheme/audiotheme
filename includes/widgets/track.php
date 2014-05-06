@@ -38,10 +38,9 @@ class Audiotheme_Widget_Track extends WP_Widget {
 
 		echo $before_widget;
 
-			echo ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
-
 			// Output filter is for backwards compatibility.
 			if ( $output = apply_filters( 'audiotheme_widget_track_output', '', $instance, $args ) ) {
+				echo ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
 				echo $output;
 			} else {
 				$post = get_post( $instance['post_id'] );
@@ -49,11 +48,13 @@ class Audiotheme_Widget_Track extends WP_Widget {
 				$image_size = apply_filters( 'audiotheme_widget_track_image_size', 'thumbnail', $instance, $args );
 				$image_size = apply_filters( 'audiotheme_widget_track_image_size-' . $args['id'], $image_size, $instance, $args );
 
-				$data = array();
-				$data['args'] = $args;
-				$data['image_size'] = $image_size;
-				$data['post'] = get_post( $instance['post_id'] );
-				$data = array_merge( $instance, $data );
+				$data                 = array();
+				$data['args']         = $args;
+				$data['after_title']  = $args['after_title'];
+				$data['before_title'] = $args['before_title'];
+				$data['image_size']   = $image_size;
+				$data['post']         = get_post( $instance['post_id'] );
+				$data                 = array_merge( $instance, $data );
 
 				$template = audiotheme_locate_template( array( "widgets/{$args['id']}_track.php", "widgets/track.php" ) );
 				audiotheme_load_template( $template, $data );

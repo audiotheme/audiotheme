@@ -58,18 +58,19 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 		// Add a class with the number of gigs to display.
 		$output = preg_replace( '/class="([^"]+)"/', 'class="$1 widget-items-' . $instance['number'] . '"', $before_widget );
 
-		$output .= ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
-
 		if ( $inside = apply_filters( 'audiotheme_widget_upcoming_gigs_output', '', $instance, $args, $loop ) ) {
 			// Call loop have_posts() for backwards compatibility with themes
 			// that don't call it in their filters.
 			$loop->have_posts();
+			$output .= ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
 			$output .= $inside;
 		} else {
-			$data = array();
-			$data['args'] = $args;
-			$data['loop'] = $loop;
-			$data = array_merge( $instance, $data );
+			$data                 = array();
+			$data['args']         = $args;
+			$data['after_title']  = $args['after_title'];
+			$data['before_title'] = $args['before_title'];
+			$data['loop']         = $loop;
+			$data                 = array_merge( $instance, $data );
 
 			ob_start();
 			$template = audiotheme_locate_template( array( "widgets/{$args['id']}_upcoming-gigs.php", "widgets/upcoming-gigs.php" ) );

@@ -8,6 +8,12 @@
  */
 ?>
 
+<?php
+if ( ! empty( $title ) ) :
+	echo $before_title . $title . $after_title;
+endif;
+?>
+
 <?php if ( $loop->have_posts() ) : ?>
 
 	<?php while ( $loop->have_posts() ) : $loop->the_post(); ?>
