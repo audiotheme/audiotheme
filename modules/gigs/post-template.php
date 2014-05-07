@@ -943,11 +943,8 @@ function save_audiotheme_venue( $data ) {
 		$venue_id = wp_insert_post( $venue );
 	} else {
 		$venue_id = absint( $data['ID'] );
-
-		if ( ! empty( $venue['post_title'] ) ) {
-			$venue['ID'] = $venue_id;
-			wp_update_post( $venue );
-		}
+		$venue['ID'] = $venue_id;
+		wp_update_post( $venue );
 	}
 
 	// Set the venue title as the venue ID if the name argument was empty.
