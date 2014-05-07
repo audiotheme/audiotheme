@@ -1037,11 +1037,7 @@ function get_audiotheme_google_map_url( $args = array(), $venue_id = 0 ) {
 	}
 
 	$url = add_query_arg( array(
-		'f'       => 'q',
-		'source'  => 's_q',
-		'hl'      => 'en',
-		'geocode' => '',
-		'q'       => rawurlencode( $args['address'] ),
+		'q' => rawurlencode( $args['address'] ),
 	), '//maps.google.com/maps' );
 
 	return apply_filters( 'audiotheme_google_map_url', $url, $args, $venue_id );
@@ -1092,13 +1088,8 @@ function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 	}
 
 	$args['embed_url'] = add_query_arg( array(
-		'f'       => 'q',
-		'source'  => 's_q',
-		'hl'      => 'en',
-		'geocode' => '',
-		'q'       => rawurlencode( $args['address'] ),
-		'output'  => 'embed',
-		'iwloc'   => '',
+		'q'      => rawurlencode( $args['address'] ),
+		'output' => 'embed',
 	), '//maps.google.com/maps' );
 
 	$args = apply_filters( 'audiotheme_google_map_embed_args', $args, $venue_id );
