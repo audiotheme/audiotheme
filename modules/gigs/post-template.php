@@ -1092,6 +1092,8 @@ function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 		'output' => 'embed',
 	), '//maps.google.com/maps' );
 
+	$args['link_url'] = add_query_arg( 'q', urlencode( $args['address'] ), 'https://maps.google.com/maps' );
+
 	$args = apply_filters( 'audiotheme_google_map_embed_args', $args, $venue_id );
 
 	$iframe = sprintf( '<iframe src="%s" width="%s" height="%s" frameBorder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>',
@@ -1100,10 +1102,7 @@ function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 		esc_attr( $args['height'] )
 	);
 
-	$link = sprintf( '<a href="%s" target="_blank">%s</a>',
-		esc_url( add_query_arg( 'q', urlencode( $args['address'] ), 'http://maps.google.com/maps' ) ),
-		$args['link_text']
-	);
+	$link = sprintf( '<a href="%s" target="_blank">%s</a>', esc_url( $args['link_url'] ), $args['link_text'] );
 
 	$output = sprintf( $args['format'], $iframe, $link );
 
