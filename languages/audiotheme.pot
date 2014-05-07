@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the AudioTheme Framework package.
 msgid ""
 msgstr ""
-"Project-Id-Version: AudioTheme Framework 1.6.0\n"
+"Project-Id-Version: AudioTheme Framework 1.6.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/audiotheme\n"
-"POT-Creation-Date: 2014-04-17 16:05:41+00:00\n"
+"POT-Creation-Date: 2014-05-07 15:47:28+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,11 +34,11 @@ msgstr ""
 msgid "Update Attachment"
 msgstr ""
 
-#: admin/admin.php:289
+#: admin/admin.php:285
 msgid "Twitter Username"
 msgstr ""
 
-#: admin/admin.php:290
+#: admin/admin.php:286
 msgid "Facebook URL"
 msgstr ""
 
@@ -343,7 +343,7 @@ msgstr ""
 
 #: admin/functions.php:384 admin/functions.php:385
 #: modules/discography/admin/record.php:271
-#: modules/discography/admin/track.php:246 modules/gigs/admin/gigs.php:237
+#: modules/discography/admin/track.php:256 modules/gigs/admin/gigs.php:237
 #: modules/gigs/admin/venues.php:222
 msgid "Publish"
 msgstr ""
@@ -500,7 +500,7 @@ msgid "Columns:"
 msgstr ""
 
 #: admin/includes/archives.php:379 modules/discography/admin/record.php:464
-#: modules/discography/admin/track.php:385 modules/gigs/admin/gigs.php:417
+#: modules/discography/admin/track.php:400 modules/gigs/admin/gigs.php:417
 #: modules/videos/admin/videos.php:382
 msgid "Standard Fields"
 msgstr ""
@@ -933,9 +933,9 @@ msgid "A list of posts connected to the current post"
 msgstr ""
 
 #: includes/vendor/p2p/widget.php:37 includes/widgets/recent-posts.php:154
-#: includes/widgets/record.php:89 includes/widgets/track.php:91
-#: includes/widgets/twitter.php:100 includes/widgets/upcoming-gigs.php:104
-#: includes/widgets/video.php:90
+#: includes/widgets/record.php:90 includes/widgets/track.php:92
+#: includes/widgets/twitter.php:100 includes/widgets/upcoming-gigs.php:105
+#: includes/widgets/video.php:91
 msgid "Title:"
 msgstr ""
 
@@ -995,17 +995,17 @@ msgstr ""
 msgid "Record (AudioTheme)"
 msgstr ""
 
-#: includes/widgets/record.php:93 modules/discography/admin/track.php:310
+#: includes/widgets/record.php:94 modules/discography/admin/track.php:325
 msgid "Record:"
 msgstr ""
 
-#: includes/widgets/record.php:107 includes/widgets/track.php:115
-#: includes/widgets/video.php:108
+#: includes/widgets/record.php:108 includes/widgets/track.php:116
+#: includes/widgets/video.php:109
 msgid "Description:"
 msgstr ""
 
-#: includes/widgets/record.php:111 includes/widgets/track.php:119
-#: includes/widgets/video.php:112
+#: includes/widgets/record.php:112 includes/widgets/track.php:120
+#: includes/widgets/video.php:113
 msgid "More Link Text:"
 msgstr ""
 
@@ -1017,7 +1017,7 @@ msgstr ""
 msgid "Track (AudioTheme)"
 msgstr ""
 
-#: includes/widgets/track.php:95
+#: includes/widgets/track.php:96
 msgid "Track:"
 msgstr ""
 
@@ -1081,7 +1081,7 @@ msgstr ""
 msgid "Upcoming Gigs"
 msgstr ""
 
-#: includes/widgets/upcoming-gigs.php:108
+#: includes/widgets/upcoming-gigs.php:109
 msgid "Number of gigs to show:"
 msgstr ""
 
@@ -1093,7 +1093,7 @@ msgstr ""
 msgid "Video (AudioTheme)"
 msgstr ""
 
-#: includes/widgets/video.php:94
+#: includes/widgets/video.php:95
 msgid "Video:"
 msgstr ""
 
@@ -1204,13 +1204,13 @@ msgid "Order by:"
 msgstr ""
 
 #: modules/discography/admin/record.php:420
-#: modules/discography/admin/track.php:339 modules/gigs/admin/gigs.php:378
+#: modules/discography/admin/track.php:354 modules/gigs/admin/gigs.php:378
 #: modules/gigs/admin/venues.php:264 modules/videos/admin/videos.php:336
 msgid "Overview"
 msgstr ""
 
 #: modules/discography/admin/record.php:422
-#: modules/discography/admin/track.php:341
+#: modules/discography/admin/track.php:356
 msgid ""
 "Your discography is the window through which listeners are introduced to "
 "and discover your music. Encourage that discovery on your website through a "
@@ -1225,13 +1225,13 @@ msgid ""
 msgstr ""
 
 #: modules/discography/admin/record.php:428
-#: modules/discography/admin/track.php:348 modules/gigs/admin/gigs.php:384
+#: modules/discography/admin/track.php:363 modules/gigs/admin/gigs.php:384
 #: modules/videos/admin/videos.php:344
 msgid "Screen Content"
 msgstr ""
 
 #: modules/discography/admin/record.php:430
-#: modules/discography/admin/track.php:350 modules/gigs/admin/gigs.php:386
+#: modules/discography/admin/track.php:365 modules/gigs/admin/gigs.php:386
 #: modules/videos/admin/videos.php:346
 msgid ""
 "You can customize the appearance of this screen's content in a number of "
@@ -1256,7 +1256,7 @@ msgid "You can also sort your records in any view by clicking the column headers
 msgstr ""
 
 #: modules/discography/admin/record.php:440
-#: modules/discography/admin/track.php:361 modules/gigs/admin/gigs.php:397
+#: modules/discography/admin/track.php:376 modules/gigs/admin/gigs.php:397
 #: modules/videos/admin/videos.php:357
 msgid "Available Actions"
 msgstr ""
@@ -1366,7 +1366,7 @@ msgid ""
 msgstr ""
 
 #: modules/discography/admin/record.php:487
-#: modules/discography/admin/track.php:398
+#: modules/discography/admin/track.php:413
 msgid "<strong>Artist</strong> - Use this field for the main artist of the record."
 msgstr ""
 
@@ -1401,7 +1401,7 @@ msgid ""
 msgstr ""
 
 #: modules/discography/admin/record.php:502
-#: modules/discography/admin/track.php:408 modules/gigs/admin/gigs.php:429
+#: modules/discography/admin/track.php:423 modules/gigs/admin/gigs.php:429
 msgid "Inserting Media"
 msgstr ""
 
@@ -1417,7 +1417,7 @@ msgid ""
 msgstr ""
 
 #: modules/discography/admin/record.php:509
-#: modules/discography/admin/track.php:416 modules/gigs/admin/gigs.php:459
+#: modules/discography/admin/track.php:431 modules/gigs/admin/gigs.php:459
 #: modules/gigs/admin/venues.php:312 modules/videos/admin/videos.php:398
 msgid "Customize This Screen"
 msgstr ""
@@ -1435,115 +1435,119 @@ msgstr ""
 msgid "View all records"
 msgstr ""
 
-#: modules/discography/admin/track.php:261
-#: modules/discography/admin/track.php:394
+#: modules/discography/admin/track.php:271
+#: modules/discography/admin/track.php:409
 msgid "Track Details"
 msgstr ""
 
-#: modules/discography/admin/track.php:281
+#: modules/discography/admin/track.php:291
 msgid "Artist:"
 msgstr ""
 
-#: modules/discography/admin/track.php:286
+#: modules/discography/admin/track.php:296
 #: modules/discography/admin/views/edit-record-tracklist.php:48
 msgid "Choose an MP3"
 msgstr ""
 
-#: modules/discography/admin/track.php:287
+#: modules/discography/admin/track.php:297
 msgid "Use MP3"
 msgstr ""
 
-#: modules/discography/admin/track.php:291
+#: modules/discography/admin/track.php:301
 msgid "Audio File URL:"
 msgstr ""
 
-#: modules/discography/admin/track.php:295
+#: modules/discography/admin/track.php:305
 msgid "Allow downloads?"
 msgstr ""
 
-#: modules/discography/admin/track.php:297
+#: modules/discography/admin/track.php:307
 msgid "Upload MP3"
 msgstr ""
 
-#: modules/discography/admin/track.php:301
+#: modules/discography/admin/track.php:311
+msgid "Length:"
+msgstr ""
+
+#: modules/discography/admin/track.php:316
 msgid "Purchase URL:"
 msgstr ""
 
-#: modules/discography/admin/track.php:321
+#: modules/discography/admin/track.php:336
 msgid "Associate this track with a record."
 msgstr ""
 
-#: modules/discography/admin/track.php:342
+#: modules/discography/admin/track.php:357
 msgid ""
 "This screen provides access to all of your tracks. You can customize the "
 "display of this screen to suit your workflow."
 msgstr ""
 
-#: modules/discography/admin/track.php:343
+#: modules/discography/admin/track.php:358
 msgid ""
 "Tracks must be add/created through a record and cannot be added without "
 "being associated with a record."
 msgstr ""
 
-#: modules/discography/admin/track.php:352
+#: modules/discography/admin/track.php:367
 msgid ""
 "You can hide or display columns based on your needs and decide how many "
 "tracks to list per screen using the Screen Options tab."
 msgstr ""
 
-#: modules/discography/admin/track.php:353
+#: modules/discography/admin/track.php:368
 msgid ""
 "You can filter the list of tracks by status using the text links in the "
 "upper left to show All, Published, Draft, or Trashed records. The default "
 "view is to show all tracks."
 msgstr ""
 
-#: modules/discography/admin/track.php:354
+#: modules/discography/admin/track.php:369
 msgid ""
 "You can refine the list to show only tracks for a specific record by using "
 "the dropdown menus above the tracks list. Click the Filter button after "
 "making your selection."
 msgstr ""
 
-#: modules/discography/admin/track.php:355
+#: modules/discography/admin/track.php:370
 msgid "You can also sort your tracks in any view by clicking the column headers."
 msgstr ""
 
-#: modules/discography/admin/track.php:363
+#: modules/discography/admin/track.php:378
 msgid ""
 "Hovering over a row in the tracks list will display action links that allow "
 "you to manage your track. You can perform the following actions:"
 msgstr ""
 
-#: modules/discography/admin/track.php:365
+#: modules/discography/admin/track.php:380
 msgid ""
 "<strong>Edit</strong> takes you to the editing screen for that track. You "
 "can also reach that screen by clicking on the track name."
 msgstr ""
 
-#: modules/discography/admin/track.php:366
+#: modules/discography/admin/track.php:381
 msgid ""
 "<strong>Trash</strong> removes your track from this list and places it in "
 "the trash, from which you can permanently delete it."
 msgstr ""
 
-#: modules/discography/admin/track.php:367
+#: modules/discography/admin/track.php:382
 msgid ""
 "<strong>Preview</strong> will show you what your draft track will look like "
 "if you publish it."
 msgstr ""
 
-#: modules/discography/admin/track.php:368
+#: modules/discography/admin/track.php:383
 msgid ""
 "<strong>View</strong> will take you to your live site to view the track. "
 "Which link is available depends on your track's status."
 msgstr ""
 
-#: modules/discography/admin/track.php:387
+#: modules/discography/admin/track.php:402
 msgid "<strong>Title</strong> - Enter the title of your track/song."
 msgstr ""
 
-#: modules/discography/admin/track.php:388
+#: modules/discography/admin/track.php:403
 msgid ""
 "<strong>Editor</strong> - Describe your track. There are two modes of "
 "editing: Visual and Text. Choose the mode by clicking on the appropriate "
@@ -1558,33 +1562,33 @@ msgid ""
 "top area. Exit Fullscreen back to the regular editor."
 msgstr ""
 
-#: modules/discography/admin/track.php:389
+#: modules/discography/admin/track.php:404
 msgid "When you're done editing a track, click the Update button."
 msgstr ""
 
-#: modules/discography/admin/track.php:396
+#: modules/discography/admin/track.php:411
 msgid "Provide additional context to your tracks using this box."
 msgstr ""
 
-#: modules/discography/admin/track.php:400
+#: modules/discography/admin/track.php:415
 msgid ""
 "<strong>File URL</strong> - This field lets you attach audio for streaming "
 "or download. To attach an audio file, see [How To: Adding Audio to Tracks]"
 msgstr ""
 
-#: modules/discography/admin/track.php:401
+#: modules/discography/admin/track.php:416
 msgid ""
 "<strong>Allow Downloads</strong> - Check this field if you would like to "
 "allow your fans to download the track from your site."
 msgstr ""
 
-#: modules/discography/admin/track.php:402
+#: modules/discography/admin/track.php:417
 msgid ""
 "<strong>Purchase URL</strong> - Enter a URL where the track can be "
 "purchased individually."
 msgstr ""
 
-#: modules/discography/admin/track.php:410 modules/gigs/admin/gigs.php:431
+#: modules/discography/admin/track.php:425 modules/gigs/admin/gigs.php:431
 msgid ""
 "You can upload and insert media (images, audio, documents, etc.) by "
 "clicking the Add Media button. You can select from the images and files "
@@ -1593,7 +1597,7 @@ msgid ""
 "click the \"Create a new gallery\" button."
 msgstr ""
 
-#: modules/discography/admin/track.php:411 modules/gigs/admin/gigs.php:432
+#: modules/discography/admin/track.php:426 modules/gigs/admin/gigs.php:432
 msgid ""
 "You can also embed media from many popular websites including Twitter, "
 "YouTube, Flickr and others by pasting the media URL on its own line into "
@@ -1601,7 +1605,7 @@ msgid ""
 "href=\"http://codex.wordpress.org/Embeds\">learn more about embeds</a>."
 msgstr ""
 
-#: modules/discography/admin/track.php:417
+#: modules/discography/admin/track.php:432
 msgid ""
 "The title and big editing area are fixed in place, but you can reposition "
 "all the other boxes using drag and drop. You can also minimize or expand "
@@ -2431,11 +2435,11 @@ msgstr ""
 msgid "Venues"
 msgstr ""
 
-#: modules/gigs/gigs.php:273
+#: modules/gigs/gigs.php:274
 msgid "ERROR: %s is not a valid feed template."
 msgstr ""
 
-#: modules/gigs/post-template.php:1078
+#: modules/gigs/post-template.php:1071
 msgid "Get Directions"
 msgstr ""
 

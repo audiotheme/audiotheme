@@ -361,7 +361,7 @@ function audiotheme_gigs_archive_link( $link, $post_type ) {
  * when the ID is a 4 digit number, it will conflict with date-based permalinks.
  * Any slugs that match the ID are preprended with 'gig-'.
  *
- * @since x.x.x
+ * @since 1.6.1
  * @see wp_unique_post_slug()
  *
  * @param string $slug The desired slug (post_name).
@@ -414,7 +414,7 @@ function audiotheme_gig_unique_slug( $slug, $post_ID, $post_status, $post_type, 
  * saved. If the saved slug matches the post ID for a gig, it's prefixed with
  * 'gig-' here to mimic the behavior in audiotheme_gig_unique_slug().
  *
- * @since x.x.x
+ * @since 1.6.1
  *
  * @param int $post_id Post ID.
  * @param WP_Post $post Post object.
