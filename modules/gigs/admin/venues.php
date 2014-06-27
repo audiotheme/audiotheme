@@ -73,6 +73,8 @@ function audiotheme_venues_manage_screen_notices() {
  * @since 1.0.0
  */
 function audiotheme_venue_edit_screen_setup() {
+	$screen = get_current_screen();
+
 	audiotheme_venue_edit_screen_process_actions();
 	audiotheme_venue_help();
 
@@ -85,11 +87,35 @@ function audiotheme_venue_edit_screen_setup() {
 		$values = wp_parse_args( get_object_vars( $venue_to_edit ), $values );
 	}
 
-	add_meta_box( 'venuecontactdiv', 'Contact <i>(Private)</i>', 'audiotheme_venue_contact_meta_box', 'gigs_page_audiotheme-venue', 'normal', 'core', $values );
-	add_meta_box( 'venuenotesdiv', 'Notes <i>(Private)</i>', 'audiotheme_venue_notes_meta_box', 'gigs_page_audiotheme-venue', 'normal', 'core', $values );
+	add_meta_box(
+		'venuecontactdiv',
+		__( 'Contact <i>(Private)</i>', 'audiotheme' ),
+		'audiotheme_venue_contact_meta_box',
+		$screen->id,
+		'normal',
+		'core',
+		$values
+	);
+
+	add_meta_box(
+		'venuenotesdiv',
+		__( 'Notes <i>(Private)</i>', 'audiotheme' ),
+		'audiotheme_venue_notes_meta_box',
+		$screen->id,
+		'normal',
+		'core',
+		$values
+	);
 
 	// The 'submitdiv' id prevents the meta box from being hidden.
-	add_meta_box( 'submitdiv', __( 'Save', 'audiotheme' ), 'audiotheme_venue_submit_meta_box', 'gigs_page_audiotheme-venue', 'side', 'high' );
+	add_meta_box(
+		'submitdiv',
+		__( 'Save', 'audiotheme' ),
+		'audiotheme_venue_submit_meta_box',
+		$screen->id,
+		'side',
+		'high'
+	);
 }
 
 /**
