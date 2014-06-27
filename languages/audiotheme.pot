@@ -1,16 +1,28 @@
-# Copyright (C) 2014 AudioTheme Framework
-# This file is distributed under the same license as the AudioTheme Framework package.
+# Copyright (C) 2014 AudioTheme
+# This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: AudioTheme Framework 1.6.1\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/audiotheme\n"
-"POT-Creation-Date: 2014-05-07 15:47:28+00:00\n"
+"Project-Id-Version: AudioTheme Framework 1.6.2\n"
+"Report-Msgid-Bugs-To: http://audiotheme.com/support/\n"
+"POT-Creation-Date: 2014-06-27 15:01:08+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: grunt-wp-i18n 0.4.5\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-Country: United States\n"
+"X-Poedit-KeywordsList: "
+"__;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c;_nc:1,2;_x:1,"
+"2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Textdomain-Support: yes\n"
 
 #: admin/admin.php:120 admin/includes/class-audiotheme-updater.php:305
 msgid ""
@@ -206,7 +218,7 @@ msgstr ""
 msgid "Pending Review"
 msgstr ""
 
-#: admin/functions.php:134 modules/gigs/admin/venues.php:92
+#: admin/functions.php:134 modules/gigs/admin/venues.php:113
 msgid "Save"
 msgstr ""
 
@@ -321,14 +333,14 @@ msgstr ""
 #: modules/gigs/admin/class-audiotheme-gigs-list-table.php:356
 #: modules/gigs/admin/class-audiotheme-gigs-list-table.php:497
 #: modules/gigs/admin/class-audiotheme-venues-list-table.php:174
-#: modules/gigs/admin/venues.php:211
+#: modules/gigs/admin/venues.php:237
 msgid "Delete Permanently"
 msgstr ""
 
 #: admin/functions.php:365
 #: modules/gigs/admin/class-audiotheme-gigs-list-table.php:496
 #: modules/gigs/admin/class-audiotheme-venues-list-table.php:294
-#: modules/gigs/admin/venues.php:210
+#: modules/gigs/admin/venues.php:236
 msgid "Are you sure you want to delete this %s?"
 msgstr ""
 
@@ -344,7 +356,7 @@ msgstr ""
 #: admin/functions.php:384 admin/functions.php:385
 #: modules/discography/admin/record.php:271
 #: modules/discography/admin/track.php:256 modules/gigs/admin/gigs.php:237
-#: modules/gigs/admin/venues.php:222
+#: modules/gigs/admin/venues.php:248
 msgid "Publish"
 msgstr ""
 
@@ -353,8 +365,8 @@ msgid "Submit for Review"
 msgstr ""
 
 #: admin/functions.php:393 admin/functions.php:394
-#: admin/includes/archives.php:104 modules/gigs/admin/venues.php:227
-#: modules/gigs/admin/venues.php:228
+#: admin/includes/archives.php:104 modules/gigs/admin/venues.php:253
+#: modules/gigs/admin/venues.php:254
 msgid "Update"
 msgstr ""
 
@@ -1205,7 +1217,7 @@ msgstr ""
 
 #: modules/discography/admin/record.php:420
 #: modules/discography/admin/track.php:354 modules/gigs/admin/gigs.php:378
-#: modules/gigs/admin/venues.php:264 modules/videos/admin/videos.php:336
+#: modules/gigs/admin/venues.php:290 modules/videos/admin/videos.php:336
 msgid "Overview"
 msgstr ""
 
@@ -1418,7 +1430,7 @@ msgstr ""
 
 #: modules/discography/admin/record.php:509
 #: modules/discography/admin/track.php:431 modules/gigs/admin/gigs.php:459
-#: modules/gigs/admin/venues.php:312 modules/videos/admin/videos.php:398
+#: modules/gigs/admin/venues.php:338 modules/videos/admin/videos.php:398
 msgid "Customize This Screen"
 msgstr ""
 
@@ -2110,40 +2122,48 @@ msgid ""
 "layout for this screen."
 msgstr ""
 
-#: modules/gigs/admin/venues.php:266
+#: modules/gigs/admin/venues.php:92
+msgid "Contact <i>(Private)</i>"
+msgstr ""
+
+#: modules/gigs/admin/venues.php:102
+msgid "Notes <i>(Private)</i>"
+msgstr ""
+
+#: modules/gigs/admin/venues.php:292
 msgid ""
 "This screen provides access to all of your venues. Think of it as a "
 "database or address book for all the venues where you have performed, will "
 "perform, or may potentially perform in the future."
 msgstr ""
 
-#: modules/gigs/admin/venues.php:267
+#: modules/gigs/admin/venues.php:293
 msgid ""
 "You can customize the display of this screen to suit your workflow. Hide or "
 "display columns based on your needs and decide how many venues to list per "
 "screen using the Screen Options tab."
 msgstr ""
 
-#: modules/gigs/admin/venues.php:279
+#: modules/gigs/admin/venues.php:305
 msgid "Venue Information"
 msgstr ""
 
-#: modules/gigs/admin/venues.php:281
+#: modules/gigs/admin/venues.php:307
 msgid ""
 "The venue box allows you to manage the details of the venue. This "
 "information makes it easier for your fans to find out about the venue(s) "
 "where you perform. "
 msgstr ""
 
-#: modules/gigs/admin/venues.php:283
+#: modules/gigs/admin/venues.php:309
 msgid "<strong>Name</strong> - Enter the name of the venue."
 msgstr ""
 
-#: modules/gigs/admin/venues.php:284
+#: modules/gigs/admin/venues.php:310
 msgid "<strong>Address</strong> - Enter venue's street address."
 msgstr ""
 
-#: modules/gigs/admin/venues.php:285
+#: modules/gigs/admin/venues.php:311
 msgid ""
 "<strong>City</strong> - Enter the city where the venue is located. After "
 "typing a city name, you may be presented with a list of cities to choose "
@@ -2151,58 +2171,58 @@ msgid ""
 "information."
 msgstr ""
 
-#: modules/gigs/admin/venues.php:286
+#: modules/gigs/admin/venues.php:312
 msgid "<strong>State</strong> - Enter the state where the venue is located."
 msgstr ""
 
-#: modules/gigs/admin/venues.php:287
+#: modules/gigs/admin/venues.php:313
 msgid ""
 "<strong>Country</strong> - Enter the name of the country where the venue is "
 "located."
 msgstr ""
 
-#: modules/gigs/admin/venues.php:288
+#: modules/gigs/admin/venues.php:314
 msgid ""
 "<strong>Time zone</strong> - Choose the time zone. This is important. "
 "Choosing the time zone requires selecting the nearest city in the same time "
 "zone as the venue."
 msgstr ""
 
-#: modules/gigs/admin/venues.php:289
+#: modules/gigs/admin/venues.php:315
 msgid "<strong>Website</strong> - Enter the URL to the venue's website."
 msgstr ""
 
-#: modules/gigs/admin/venues.php:290
+#: modules/gigs/admin/venues.php:316
 msgid ""
 "<strong>Phone</strong> - Enter a phone number so that your visitors can "
 "easily contact the venue if needed."
 msgstr ""
 
-#: modules/gigs/admin/venues.php:295
+#: modules/gigs/admin/venues.php:321
 msgid "Additional Information"
 msgstr ""
 
-#: modules/gigs/admin/venues.php:297
+#: modules/gigs/admin/venues.php:323
 msgid ""
 "The contact and notes boxes allow you to save additional information about "
 "the venue for your own use."
 msgstr ""
 
-#: modules/gigs/admin/venues.php:298
+#: modules/gigs/admin/venues.php:324
 msgid "Contact"
 msgstr ""
 
-#: modules/gigs/admin/venues.php:299
+#: modules/gigs/admin/venues.php:325
 msgid ""
 "The contact box allows you to privately store the contact information of "
 "the person you communicate with at the venue."
 msgstr ""
 
-#: modules/gigs/admin/venues.php:300
+#: modules/gigs/admin/venues.php:326
 msgid "Notes"
 msgstr ""
 
-#: modules/gigs/admin/venues.php:301
+#: modules/gigs/admin/venues.php:327
 msgid ""
 "Store any relevant information about the venue in the notes box. Can't "
 "remember the doorman's name? Write it down here to refer to later. "
@@ -2210,17 +2230,17 @@ msgid ""
 "chances of being invited back."
 msgstr ""
 
-#: modules/gigs/admin/venues.php:306
+#: modules/gigs/admin/venues.php:332
 msgid "Saving Changes"
 msgstr ""
 
-#: modules/gigs/admin/venues.php:307
+#: modules/gigs/admin/venues.php:333
 msgid ""
 "When you are done adding a venue press the Add New Venue or Update button "
 "to save your changes."
 msgstr ""
 
-#: modules/gigs/admin/venues.php:313
+#: modules/gigs/admin/venues.php:339
 msgid ""
 "The venue box is fixed in place, but you can reposition all the other boxes "
 "using drag and drop. You can also minimize or expand them by clicking the "
