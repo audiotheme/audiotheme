@@ -557,7 +557,7 @@ function audiotheme_system_info( $args = array() ) {
 		),
 		'wp_lang' => array(
 			'label' => __( 'WP Language', 'audiotheme' ),
-			'value' => WPLANG,
+			'value' => defined( 'WPLANG' ) ? WPLANG : get_option( 'WPLANG' ),
 		),
 		'wp_version' => array(
 			'label' => __( 'WP Version', 'audiotheme' ),

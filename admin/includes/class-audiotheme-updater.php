@@ -240,7 +240,7 @@ class Audiotheme_Updater {
 
 		$defaults = array(
 			'audiotheme' => AUDIOTHEME_VERSION,
-			'language'   => WPLANG,
+			'language'   => defined( WPLANG ) ? WPLANG : get_option( 'WPLANG' ),
 			'mysql'      => $wpdb->db_version(),
 			'php'        => phpversion(),
 			'slug'       => $this->slug,
