@@ -22,8 +22,6 @@ endif;
 
 			<?php
 			$gig = get_audiotheme_gig();
-			$venue = get_audiotheme_venue( $gig->venue->ID );
-
 			echo get_audiotheme_gig_link( $gig, array( 'before' => '<dt>', 'after' => '</dt>' ) );
 			?>
 
@@ -41,7 +39,7 @@ endif;
 			</dd>
 
 			<?php if ( ! empty( $gig->post_title ) && audiotheme_gig_has_venue() ) : ?>
-				<dd class="venue"><?php echo esc_html( $venue->name ); ?></dd>
+				<dd class="venue"><?php echo esc_html( get_audiotheme_venue( $gig->venue->ID )->name ); ?></dd>
 			<?php endif; ?>
 
 			<?php if ( $gig_description = get_audiotheme_gig_description() ) : ?>
