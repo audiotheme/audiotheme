@@ -328,6 +328,11 @@ class Audiotheme_Updater {
 			esc_url( $args['framework_url'] )
 		);
 
+		$messages['major_update']  = $args['prepend'];
+		$messages['major_update'] .= sprintf( __( 'This is a major update. Log in to <a href="%s" target="_blank">your account on AudioTheme.com</a> for information about how to install this update.', 'audiotheme' ),
+			esc_url( $args['account_url'] )
+		);
+
 		$messages['generic'] = __( 'An unexpected error occurred while checking the update server.', 'audiotheme' );
 
 		return $messages;

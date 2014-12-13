@@ -136,6 +136,11 @@ class Audiotheme_Updater_Theme extends Audiotheme_Updater {
 
 			// Determine which notice to display.
 			$notice = ( isset( $api_response->status ) && isset( $notices[ $api_response->status ] ) ) ? $notices[ $api_response->status ] : $notices['generic'];
+
+			// A custom message from the API server.
+			if ( ! empty( $api_response->notice ) ) {
+				$notice = wp_kses_data( $api_response->notice );
+			}
 		}
 
 		// Allow the notice to be filtered.
