@@ -95,9 +95,18 @@ function is_audiotheme_default_template( $template ) {
  * consistency. This should only be used in AudioTheme-specific template files.
  *
  * @since 1.0.0
+ *
+ * @see post_type_archive_title()
+ *
+ * @param string $before Optional. Content to prepend to the title. Default empty.
+ * @param string $after  Optional. Content to append to the title. Default empty.
  */
-function the_audiotheme_archive_title() {
-	post_type_archive_title();
+function the_audiotheme_archive_title( $before = '', $after = '' ) {
+	$title = post_type_archive_title( '', false );
+
+	if ( ! empty( $title ) ) {
+		echo $before . $title . $after;
+	}
 }
 
 /**
