@@ -40,7 +40,7 @@ get_header();
 			$artist = get_audiotheme_record_artist();
 			$year = get_audiotheme_record_release_year();
 
-			if ( $artist ) :
+			if ( $artist || $year ) :
 				?>
 				<p class="audiotheme-record-meta entry-meta">
 					<?php if ( $artist ) : ?>
