@@ -83,7 +83,7 @@ get_header();
 
 								<span class="audiotheme-track-meta">
 									<?php if ( $download_url = is_audiotheme_track_downloadable( $track->ID ) ) : ?>
-										<a href="<?php echo esc_url( $download_url ); ?>" class="audiotheme-track-download-link">Download</a>
+										<a href="<?php echo esc_url( $download_url ); ?>" class="audiotheme-track-download-link"><?php _e( 'Download', 'audiotheme' ) ?></a>
 									<?php endif; ?>
 
 									<span class="jp-current-time">-:--</span>
