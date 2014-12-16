@@ -19,7 +19,7 @@ get_header();
 		<?php if ( $thumbnail_id = get_audiotheme_track_thumbnail_id() ) : ?>
 
 			<p class="audiotheme-record-artwork">
-				<a href="<?php echo wp_get_attachment_url( $thumbnail_id ); ?>" itemprop="image">
+				<a href="<?php echo esc_url( wp_get_attachment_url( $thumbnail_id ) ); ?>" itemprop="image">
 					<?php echo wp_get_attachment_image( $thumbnail_id, 'record-thumbnail' ); ?>
 				</a>
 			</p>
