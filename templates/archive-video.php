@@ -28,10 +28,10 @@ get_header();
 		<li id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 			<p class="audiotheme-featured-image">
-				<a href="<?php echo get_permalink( $post->ID ); ?>"><?php echo get_the_post_thumbnail( $post->ID, 'video-thumbnail' ); ?></a>
+				<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'video-thumbnail' ); ?></a>
 			</p>
 
-			<?php the_title( '<h2 class="audiotheme-video-title entry-title"><a href="' . get_permalink() . '">', '</a></h2>' ); ?>
+			<?php the_title( '<h2 class="audiotheme-video-title entry-title"><a href="' . esc_url( get_permalink() ) . '">', '</a></h2>' ); ?>
 
 		</li>
 

@@ -33,7 +33,7 @@ get_header();
 				<h2 class="audiotheme-record-artist" itemprop="byArtist"><?php echo esc_html( $artist ); ?></h2>
 			<?php endif; ?>
 
-			<h3 class="audiotheme-record-subtitle"><a href="<?php echo get_permalink( $post->post_parent ); ?>"><em itemprop="inAlbum"><?php echo get_the_title( $post->post_parent ); ?></em></a></h3>
+			<h3 class="audiotheme-record-subtitle"><a href="<?php echo esc_url( get_permalink( $post->post_parent ) ); ?>"><em itemprop="inAlbum"><?php echo get_the_title( $post->post_parent ); ?></em></a></h3>
 		</header>
 
 		<div class="audiotheme-tracklist-section">
@@ -42,7 +42,7 @@ get_header();
 				<li id="track-<?php the_ID(); ?>" class="audiotheme-track">
 					<span class="audiotheme-track-info audiotheme-track-cell">
 						<span class="audiotheme-track-title"><?php the_title(); ?></span>
-						
+
 						<span class="audiotheme-track-meta">
 							<span class="jp-current-time">-:--</span>
 						</span>
