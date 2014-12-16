@@ -13,8 +13,7 @@ get_header();
 <?php do_action( 'audiotheme_before_main_content' ); ?>
 
 <header class="audiotheme-archive-header archive-header">
-	<h1 class="audiotheme-archive-title archive-title"><?php the_audiotheme_archive_title(); ?></h1>
-
+	<?php the_audiotheme_archive_title( '<h1 class="audiotheme-archive-title archive-title">', '</h1>' ); ?>
 	<?php the_audiotheme_archive_description( '<div class="audiotheme-archive-intro archive-intro">', '</div>' ); ?>
 </header>
 
