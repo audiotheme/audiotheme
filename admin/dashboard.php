@@ -63,7 +63,7 @@ function audiotheme_dashboard_register_settings() {
 	$screen = add_audiotheme_settings_screen( 'audiotheme-settings', __( 'Settings', 'audiotheme' ), array(
 		'menu_title'   => ( is_network_admin() ) ? __( 'AudioTheme', 'audiotheme' ) : __( 'Settings', 'audiotheme' ),
 		'option_group' => 'audiotheme_options',
-		'option_name'  => array( 'audiotheme_options', 'audiotheme_license_key', 'audiotheme_disable_directory_browsing' ),
+		'option_name'  => array( 'audiotheme_options', 'audiotheme_license_key' ),
 		'show_in_menu' => ( is_network_admin() ) ? 'settings.php' : 'audiotheme',
 		'capability'   => ( is_network_admin() ) ? 'manage_network_options' : 'manage_options',
 	) );
@@ -71,17 +71,6 @@ function audiotheme_dashboard_register_settings() {
 	if ( is_multisite() && ! is_network_admin() ) {
 		return;
 	}
-
-	$screen->add_section( 'directory_browsing', __( 'Directory Browsing', 'audiotheme' ), array(
-		'priority' => 50,
-	) );
-
-		$screen->add_field( 'audiotheme_disable_directory_browsing', __( 'Directory Browsing', 'audiotheme' ), 'checkbox', array(
-			'option_name' => 'audiotheme_disable_directory_browsing',
-			'choices'     => array(
-				'1' => 'Disable directory browsing?',
-			),
-		) );
 
 	$screen->add_section( 'license', __( 'License', 'audiotheme' ), array(
 		'priority' => 0,
@@ -120,9 +109,6 @@ function audiotheme_dashboard_save_network_settings() {
 
 	// Update the license key.
 	update_option( 'audiotheme_license_key', ( empty( $_POST['audiotheme_license_key'] ) ) ? '' : esc_html( $_POST['audiotheme_license_key'] ) );
-
-	// Update the directory browsing setting.
-	update_option( 'audiotheme_disable_directory_browsing', ( empty( $_POST['audiotheme_disable_directory_browsing'] ) ) ? '' : 1 );
 
 	wp_redirect( add_query_arg( 'page', 'audiotheme-settings', admin_url( 'network/settings.php' ) ) );
 	exit;

@@ -36,8 +36,6 @@ function audiotheme_admin_setup() {
 	add_action( 'http_request_args', 'audiotheme_update_request', 10, 2 );
 	add_action( 'admin_init', 'audiotheme_upgrade' );
 
-	add_action( 'update_option_audiotheme_disable_directory_browsing', 'audiotheme_disable_directory_browsing_option_update' );
-
 	add_action( 'admin_enqueue_scripts', 'audiotheme_enqueue_admin_scripts' );
 	add_action( 'admin_body_class', 'audiotheme_admin_body_class' );
 	add_filter( 'user_contactmethods', 'audiotheme_edit_user_contact_info' );
@@ -184,41 +182,6 @@ function audiotheme_admin_init() {
 		'frameTitle'      => __( 'Choose an Attachment', 'audiotheme' ),
 		'frameUpdateText' => __( 'Update Attachment', 'audiotheme' ),
 	) );
-}
-
-/**
- * Update directory browsing preference.
- *
- * Whenever the directory browsing setting is updated, update .htaccess
- *
- * @since 1.0.0
- */
-function audiotheme_disable_directory_browsing_option_update() {
-	audiotheme_save_htaccess();
-}
-
-/**
- * Save .htacess file.
- *
- * @see save_mod_rewrite_rules()
- *
- * @since 1.0.0
- * */
-function audiotheme_save_htaccess() {
-	$home_path = get_home_path();
-	$htaccess_file = $home_path . '.htaccess';
-
-	if ( ( ! file_exists( $htaccess_file ) && is_writable( $home_path ) ) || is_writable( $htaccess_file ) ) {
-		$htaccess_contents = file_get_contents( $htaccess_file );
-
-		$directive = 'Options All -Indexes';
-		$rules = array();
-		if ( get_option( 'audiotheme_disable_directory_browsing' ) && false === strpos( $htaccess_contents, $directive ) ) {
-			$rules[] = $directive;
-		}
-
-		insert_with_markers( $htaccess_file, 'AudioTheme', $rules );
-	}
 }
 
 /**
