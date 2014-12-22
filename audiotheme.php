@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: AudioTheme Framework
+ * Plugin Name: AudioTheme
  * Plugin URI: http://audiotheme.com/view/audiotheme/
  * Description: A platform for music-oriented websites, allowing for easy management of gigs, discography, videos and more.
  * Version: 1.6.2
