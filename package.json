@@ -1,6 +1,6 @@
 {
   "name": "audiotheme",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "AudioTheme Framework",
   "main": "Gruntfile.js",
   "repository": {
