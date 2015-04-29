@@ -145,7 +145,7 @@ function audiotheme_venue_edit_screen_process_actions() {
 			$sendback = add_query_arg( 'message', 2, $sendback );
 		}
 
-		wp_redirect( $sendback );
+		wp_safe_redirect( esc_url_raw( $sendback ) );
 		exit;
 	}
 }

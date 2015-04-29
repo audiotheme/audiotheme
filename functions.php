@@ -49,20 +49,22 @@ function audiotheme_framework_not_a_theme() {
 
 	// Check if the framework plugin directory already exists.
 	if ( is_dir( $plugin_dir ) ) {
-		wp_redirect( add_query_arg( 'atmovemsg', 'plugin-exists', admin_url( 'themes.php' ) ) );
+		$redirect = add_query_arg( 'atmovemsg', 'plugin-exists', admin_url( 'themes.php' ) );
+		wp_safe_redirect( esc_url_raw( $redirect ) );
 		exit;
 	}
 
 	// Move the plugin.
 	if ( $wp_filesystem->move( $theme_dir, $plugin_dir ) ) {
 		// @todo Any way to re-activate the previous theme?
-		wp_redirect( admin_url( 'plugins.php' ) );
+		wp_safe_redirect( esc_url_raw( admin_url( 'plugins.php' ) ) );
 		exit;
 	}
 
 	// Redirect to nag saying it didn't work. Move it manually.
 	else {
-		wp_redirect( add_query_arg( 'atmovemsg', 'move-failed', admin_url( 'themes.php' ) ) );
+		$redirect = add_query_arg( 'atmovemsg', 'move-failed', admin_url( 'themes.php' ) );
+		wp_safe_redirect( esc_url_raw( $redirect ) );
 		exit;
 	}
 }

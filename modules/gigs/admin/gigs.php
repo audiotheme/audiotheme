@@ -53,7 +53,7 @@ function audiotheme_gigs_admin_menu() {
 
 	// Redirect the default Manage Gigs screen.
 	if ( 'audiotheme_gig' === $typenow && 'edit.php' === $pagenow ) {
-		wp_redirect( get_audiotheme_gig_admin_url() );
+		wp_safe_redirect( esc_url_raw( get_audiotheme_gig_admin_url() ) );
 		exit;
 	}
 

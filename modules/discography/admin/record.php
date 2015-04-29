@@ -100,7 +100,7 @@ function audiotheme_record_display_columns( $column_name, $post_id ) {
 			);
 
 			printf( '<a href="%s">%s</a>',
-				add_query_arg( $args, esc_url( admin_url( 'edit.php' ) ) ),
+				esc_url( add_query_arg( $args, admin_url( 'edit.php' ) ) ),
 				get_post_meta( $post_id, '_audiotheme_track_count', true )
 			);
 			break;
@@ -283,14 +283,6 @@ function audiotheme_edit_record_tracklist() {
 			);
 		}
 	}
-
-	$thickbox_url = add_query_arg( array(
-		'post_id'   => $post->ID,
-		'type'      => 'audio',
-		'TB_iframe' => true,
-		'width'     => 640,
-		'height'    => 750,
-	), admin_url( 'media-upload.php' ) );
 
 	require( AUDIOTHEME_DIR . 'modules/discography/admin/views/edit-record-tracklist.php' );
 }

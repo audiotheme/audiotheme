@@ -211,7 +211,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 
 		$upcoming_count = $wpdb->get_var( $wpdb->prepare( $sql . ' AND pm.meta_value>=%s', current_time( 'mysql' ) ) );
 		$status_links['upcoming'] = sprintf( '<a href="%s"%s>%s <span class="count">(%d)</span></a>',
-			$base_url,
+			esc_url( $base_url ),
 			( 'upcoming' === $this->current_view ) ? ' class="current"' : '',
 			__( 'Upcoming', 'audiotheme' ),
 			$upcoming_count
@@ -219,14 +219,14 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 
 		$past_count = $wpdb->get_var( $wpdb->prepare( $sql . ' AND pm.meta_value<%s', current_time( 'mysql' ) ) );
 		$status_links['past'] = sprintf( '<a href="%s"%s>%s <span class="count">(%d)</span></a>',
-			add_query_arg( array( 'gig_date' => current_time( 'mysql' ), 'compare' => '<' ), $base_url ),
+			esc_url( add_query_arg( array( 'gig_date' => current_time( 'mysql' ), 'compare' => '<' ), $base_url ) ),
 			( 'past' === $this->current_view ) ? ' class="current"' : '',
 			__( 'Past', 'audiotheme' ),
 			$past_count
 		);
 
 		$class = ( 'any' === $this->current_view ) ? ' class="current"' : '';
-		$all_url = add_query_arg( 'post_status', 'any', $base_url );
+		$all_url = esc_url( add_query_arg( 'post_status', 'any', $base_url ) );
 		$status_links['all'] = "<a href='$all_url{$allposts}'$class>" . sprintf( _nx( 'All <span class="count">(%s)</span>', 'All <span class="count">(%s)</span>', $total_posts, 'posts' ), number_format_i18n( $total_posts ) ) . '</a>';
 
 		foreach ( get_post_stati( array( 'show_in_admin_status_list' => true ), 'objects' ) as $status ) {
@@ -245,7 +245,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 				$class = ' class="current"';
 			}
 
-			$status_url = add_query_arg( array( 'post_status' => $status_name, 'post_type' => $post_type ), $base_url );
+			$status_url = esc_url( add_query_arg( array( 'post_status' => $status_name, 'post_type' => $post_type ), $base_url ) );
 			$status_links[ $status_name ] = "<a href='$status_url'$class>" . sprintf( translate_nooped_plural( $status->label_count, $num_posts->$status_name ), number_format_i18n( $num_posts->$status_name ) ) . '</a>';
 		}
 
@@ -431,13 +431,14 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 			}
 
 			$sendback = remove_query_arg( array( 'action', 'action2' ), $sendback );
-			wp_redirect( $sendback );
+			wp_safe_redirect( esc_url_raw( $sendback ) );
 			exit;
 		}
 
 		if ( ! empty( $_REQUEST['_wp_http_referer'] ) ) {
-			 wp_redirect( remove_query_arg( array( '_wp_http_referer', '_wpnonce' ), stripslashes( $_SERVER['REQUEST_URI'] ) ) );
-			 exit;
+			$redirect = remove_query_arg( array( '_wp_http_referer', '_wpnonce' ), stripslashes( $_SERVER['REQUEST_URI'] ) );
+			wp_safe_redirect( esc_url_raw( $redirect ) );
+			exit;
 		}
 	}
 
@@ -503,7 +504,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 					$actions['view'] = '<a href="' . esc_url( add_query_arg( 'preview', 'true', get_permalink( $item->ID ) ) ) . '" title="' . esc_attr( sprintf( __( 'Preview &#8220;%s&#8221;', 'audiotheme' ), $item->post_title ) ) . '" rel="permalink">' . __( 'Preview', 'audiotheme' ) . '</a>';
 				}
 			} elseif ( 'trash' !== $item->post_status ) {
-				$actions['view'] = '<a href="' . get_permalink( $item->ID ) . '" title="' . esc_attr( sprintf( __( 'View &#8220;%s&#8221;', 'audiotheme' ), $item->post_title ) ) . '" rel="permalink">' . __( 'View', 'audiotheme' ) . '</a>';
+				$actions['view'] = '<a href="' . esc_url( get_permalink( $item->ID ) ) . '" title="' . esc_attr( sprintf( __( 'View &#8220;%s&#8221;', 'audiotheme' ), $item->post_title ) ) . '" rel="permalink">' . __( 'View', 'audiotheme' ) . '</a>';
 			}
 		}
 

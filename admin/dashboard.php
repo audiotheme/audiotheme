@@ -109,7 +109,8 @@ function audiotheme_dashboard_save_network_settings() {
 	// Update the license key.
 	update_option( 'audiotheme_license_key', ( empty( $_POST['audiotheme_license_key'] ) ) ? '' : esc_html( $_POST['audiotheme_license_key'] ) );
 
-	wp_redirect( add_query_arg( 'page', 'audiotheme-settings', admin_url( 'network/settings.php' ) ) );
+	$redirect = add_query_arg( 'page', 'audiotheme-settings', admin_url( 'network/settings.php' ) );
+	wp_safe_redirect( esc_url_raw( $redirect ) );
 	exit;
 }
 

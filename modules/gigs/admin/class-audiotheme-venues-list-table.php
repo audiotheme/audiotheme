@@ -249,13 +249,14 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 			}
 
 			$sendback = remove_query_arg( array( 'action', 'action2' ), $sendback );
-			wp_redirect( $sendback );
+			wp_safe_redirect( esc_url_raw( $sendback ) );
 			exit;
 		}
 
 		if ( ! empty( $_REQUEST['_wp_http_referer'] ) ) {
-			 wp_redirect( remove_query_arg( array( '_wp_http_referer', '_wpnonce' ), stripslashes( $_SERVER['REQUEST_URI'] ) ) );
-			 exit;
+			$redirect = remove_query_arg( array( '_wp_http_referer', '_wpnonce' ), stripslashes( $_SERVER['REQUEST_URI'] ) );
+			wp_safe_redirect( esc_url_raw( $redirect ) );
+			exit;
 		}
 	}
 
