@@ -84,11 +84,11 @@ function audiotheme_gigs_init() {
 
 	// Register the relationship between gigs and venues.
 	p2p_register_connection_type( array(
-        'name'        => 'audiotheme_venue_to_gig',
-        'from'        => 'audiotheme_venue',
-        'to'          => 'audiotheme_gig',
+		'name'        => 'audiotheme_venue_to_gig',
+		'from'        => 'audiotheme_venue',
+		'to'          => 'audiotheme_gig',
 		'cardinality' => 'one-to-many',
-    ) );
+	) );
 
 	// Hook into the rewrite generation filter and add custom rewrite rules.
 	add_filter( 'generate_rewrite_rules', 'audiotheme_gig_generate_rewrite_rules' );
@@ -288,7 +288,7 @@ function audiotheme_gig_template_redirect() {
 
 		require( AUDIOTHEME_DIR . 'modules/gigs/feed.php' );
 
-		switch( $type ) {
+		switch ( $type ) {
 			case 'feed':
 				load_template( AUDIOTHEME_DIR . 'modules/gigs/feed-rss2.php' );
 				break;

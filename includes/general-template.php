@@ -243,7 +243,7 @@ function audiotheme_class( $id, $classes = array(), $args = array() ) {
 			$mods = preg_split( '#\s+#', $mods );
 		}
 
-		foreach( $mods as $key => $mod ) {
+		foreach ( $mods as $key => $mod ) {
 			// If the class starts with a double minus, remove it from both arrays.
 			if ( 0 === strpos( $mod, '--' ) ) {
 				$unset_class = substr( $mod, 2 );

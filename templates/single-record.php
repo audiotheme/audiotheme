@@ -56,7 +56,7 @@ get_header();
 				<h2 class="audiotheme-record-links-title"><?php _e( 'Purchase', 'audiotheme' ); ?></h2>
 				<ul class="audiotheme-record-links-list">
 					<?php
-					foreach( $links as $link ) {
+					foreach ( $links as $link ) {
 						printf( '<li class="audiotheme-record-links-item"><a href="%s" class="audiotheme-record-link"%s itemprop="url">%s</a></li>',
 							$link['url'],
 							( false === strpos( $link['url'], home_url() ) ) ? ' target="_blank"' : '',

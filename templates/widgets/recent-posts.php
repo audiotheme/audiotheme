@@ -13,11 +13,11 @@ if ( ! empty( $title ) ) :
 	echo $before_title;
 		echo $title;
 
-		if ( $show_feed_link ) :
-			printf( '<a class="recent-posts-feed-link" href="%s">%s</a>',
-				esc_url( $feed_link ),
-				__( 'Feed', 'audiotheme' )
-			);
+	if ( $show_feed_link ) :
+		printf( '<a class="recent-posts-feed-link" href="%s">%s</a>',
+			esc_url( $feed_link ),
+			__( 'Feed', 'audiotheme' )
+		);
 		endif;
 
 	echo $after_title;

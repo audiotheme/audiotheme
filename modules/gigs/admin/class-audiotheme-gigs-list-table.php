@@ -11,8 +11,8 @@
 /**
  * Include the WP_List_Table depedency if it doesn't exist.
  */
-if( ! class_exists( 'WP_List_Table' ) ) {
-    require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+if ( ! class_exists( 'WP_List_Table' ) ) {
+	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
 /**
@@ -117,7 +117,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		}
 
 		if ( isset( $_REQUEST['orderby'] ) ) {
-			switch( $_REQUEST['orderby'] ) {
+			switch ( $_REQUEST['orderby'] ) {
 				case 'title':
 					$args['orderby'] = 'title';
 					break;
@@ -209,7 +209,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 			INNER JOIN $wpdb->postmeta pm ON p.ID=pm.post_id
 			WHERE p.post_type='audiotheme_gig' AND p.post_status!='auto-draft' AND pm.meta_key='_audiotheme_gig_datetime'";
 
-		$upcoming_count = $wpdb->get_var( $wpdb->prepare( $sql . " AND pm.meta_value>=%s", current_time( 'mysql' ) ) );
+		$upcoming_count = $wpdb->get_var( $wpdb->prepare( $sql . ' AND pm.meta_value>=%s', current_time( 'mysql' ) ) );
 		$status_links['upcoming'] = sprintf( '<a href="%s"%s>%s <span class="count">(%d)</span></a>',
 			$base_url,
 			( 'upcoming' === $this->current_view ) ? ' class="current"' : '',
@@ -217,7 +217,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 			$upcoming_count
 		);
 
-		$past_count = $wpdb->get_var( $wpdb->prepare( $sql . " AND pm.meta_value<%s", current_time( 'mysql' ) ) );
+		$past_count = $wpdb->get_var( $wpdb->prepare( $sql . ' AND pm.meta_value<%s', current_time( 'mysql' ) ) );
 		$status_links['past'] = sprintf( '<a href="%s"%s>%s <span class="count">(%d)</span></a>',
 			add_query_arg( array( 'gig_date' => current_time( 'mysql' ), 'compare' => '<' ), $base_url ),
 			( 'past' === $this->current_view ) ? ' class="current"' : '',
@@ -229,7 +229,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		$all_url = add_query_arg( 'post_status', 'any', $base_url );
 		$status_links['all'] = "<a href='$all_url{$allposts}'$class>" . sprintf( _nx( 'All <span class="count">(%s)</span>', 'All <span class="count">(%s)</span>', $total_posts, 'posts' ), number_format_i18n( $total_posts ) ) . '</a>';
 
-		foreach ( get_post_stati ( array( 'show_in_admin_status_list' => true ), 'objects' ) as $status ) {
+		foreach ( get_post_stati( array( 'show_in_admin_status_list' => true ), 'objects' ) as $status ) {
 			$class = '';
 			$status_name = $status->name;
 
@@ -381,34 +381,34 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		}
 
 		$sendback = remove_query_arg( array( 'trashed', 'untrashed', 'deleted', 'ids' ), wp_get_referer() );
-		if ( ! $sendback )
-			$sendback = get_audiotheme_gig_admin_url();
+		if ( ! $sendback ) {
+			$sendback = get_audiotheme_gig_admin_url(); }
 		$sendback = add_query_arg( 'paged', $this->get_pagenum(), $sendback );
 
 		if ( ! empty( $action ) ) {
 			check_admin_referer( 'bulk-' . $this->_args['plural'] );
 
-			switch( $action ) {
+			switch ( $action ) {
 				case 'trash':
 					$trashed = 0;
-					foreach( (array) $post_ids as $post_id ) {
-						if ( ! current_user_can( $post_type_object->cap->delete_post, $post_id ) )
-							wp_die( __( 'You are not allowed to move this item to the Trash.', 'audiotheme' ) );
+					foreach ( (array) $post_ids as $post_id ) {
+						if ( ! current_user_can( $post_type_object->cap->delete_post, $post_id ) ) {
+							wp_die( __( 'You are not allowed to move this item to the Trash.', 'audiotheme' ) ); }
 
-						if ( ! wp_trash_post( $post_id ) )
-							wp_die( __( 'Error moving to Trash.', 'audiotheme' ) );
+						if ( ! wp_trash_post( $post_id ) ) {
+							wp_die( __( 'Error moving to Trash.', 'audiotheme' ) ); }
 						$trashed++;
 					}
 					$sendback = add_query_arg( array( 'trashed' => $trashed, 'ids' => join( ',', $post_ids ) ), $sendback );
 					break;
 				case 'untrash':
 					$untrashed = 0;
-					foreach( (array) $post_ids as $post_id ) {
-						if ( ! current_user_can( $post_type_object->cap->delete_post, $post_id ) )
-							wp_die( __( 'You are not allowed to restore this item from the Trash.', 'audiotheme' ) );
+					foreach ( (array) $post_ids as $post_id ) {
+						if ( ! current_user_can( $post_type_object->cap->delete_post, $post_id ) ) {
+							wp_die( __( 'You are not allowed to restore this item from the Trash.', 'audiotheme' ) ); }
 
-						if ( ! wp_untrash_post( $post_id ) )
-							wp_die( __( 'Error in restoring from Trash.', 'audiotheme' ) );
+						if ( ! wp_untrash_post( $post_id ) ) {
+							wp_die( __( 'Error in restoring from Trash.', 'audiotheme' ) ); }
 
 						$untrashed++;
 					}
@@ -418,15 +418,15 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 				case 'delete':
 					$deleted = 0;
 					foreach ( $post_ids as $post_id ) {
-						if ( ! current_user_can( $post_type_object->cap->delete_post, $post_id ) )
-							wp_die( __( 'You are not allowed to delete this item.', 'audiotheme' ) );
+						if ( ! current_user_can( $post_type_object->cap->delete_post, $post_id ) ) {
+							wp_die( __( 'You are not allowed to delete this item.', 'audiotheme' ) ); }
 
-						if ( ! wp_delete_post( $post_id ) )
-							wp_die( __( 'Error in deleting...', 'audiotheme' ) );
+						if ( ! wp_delete_post( $post_id ) ) {
+							wp_die( __( 'Error in deleting...', 'audiotheme' ) ); }
 						$deleted++;
 					}
 					$sendback = add_query_arg( 'deleted', $deleted, $sendback );
-				default:
+					default:
 					break;
 			}
 
@@ -434,7 +434,6 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 			wp_redirect( $sendback );
 			exit;
 		}
-
 
 		if ( ! empty( $_REQUEST['_wp_http_referer'] ) ) {
 			 wp_redirect( remove_query_arg( array( '_wp_http_referer', '_wpnonce' ), stripslashes( $_SERVER['REQUEST_URI'] ) ) );
@@ -487,14 +486,14 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 
 		if ( current_user_can( $post_type_object->cap->delete_post, $item->ID ) ) {
 			if ( 'trash' === $item->post_status ) {
-				$actions['untrash'] = "<a title='" . esc_attr( __( 'Restore this item from the Trash', 'audiotheme' ) ) . "' href='" . wp_nonce_url( admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $item->ID ) ), 'untrash-post_' . $item->ID ) . "'>" . __( 'Restore', 'audiotheme' ) . "</a>";
+				$actions['untrash'] = "<a title='" . esc_attr( __( 'Restore this item from the Trash', 'audiotheme' ) ) . "' href='" . wp_nonce_url( admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $item->ID ) ), 'untrash-post_' . $item->ID ) . "'>" . __( 'Restore', 'audiotheme' ) . '</a>';
 			} elseif ( EMPTY_TRASH_DAYS ) {
-				$actions['trash'] = "<a class='submitdelete' title='" . esc_attr( __( 'Move this item to the Trash', 'audiotheme' ) ) . "' href='" . get_delete_post_link( $item->ID ) . "'>" . __( 'Trash', 'audiotheme' ) . "</a>";
+				$actions['trash'] = "<a class='submitdelete' title='" . esc_attr( __( 'Move this item to the Trash', 'audiotheme' ) ) . "' href='" . get_delete_post_link( $item->ID ) . "'>" . __( 'Trash', 'audiotheme' ) . '</a>';
 			}
 
 			if ( 'trash' === $item->post_status || ! EMPTY_TRASH_DAYS ) {
 				$onclick = " onclick=\"return confirm('" . esc_js( sprintf( __( 'Are you sure you want to delete this %s?', 'audiotheme' ), strtolower( $post_type_object->labels->singular_name ) ) ) . "');\"";
-				$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Delete this item permanently', 'audiotheme' ) ) . "' href='" . get_delete_post_link( $item->ID, '', true ) . "'$onclick>" . __( 'Delete Permanently', 'audiotheme' ) . "</a>";
+				$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Delete this item permanently', 'audiotheme' ) ) . "' href='" . get_delete_post_link( $item->ID, '', true ) . "'$onclick>" . __( 'Delete Permanently', 'audiotheme' ) . '</a>';
 			}
 		}
 
@@ -508,7 +507,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 			}
 		}
 
-		$out.= $this->row_actions( $actions );
+		$out .= $this->row_actions( $actions );
 
 		return $out;
 	}
@@ -523,7 +522,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 	 * @return string Column value for display.
 	 */
 	function column_default( $item, $column_name ) {
-		switch($column_name){
+		switch ( $column_name ){
 			case 'gig_time':
 				return mysql2date( get_option( 'time_format' ), $item->gig_datetime );
 			case 'post_title':

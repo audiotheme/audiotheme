@@ -54,8 +54,8 @@ function audiotheme_video_post_updated_messages( $messages ) {
 		7  => __( 'Video saved.', 'audiotheme' ),
 		8  => sprintf( __( 'Video submitted. <a target="_blank" href="%s">Preview Video</a>', 'audiotheme' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
 		9  => sprintf( __( 'Video scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Video</a>', 'audiotheme' ),
-		      /* translators: Publish box date format, see http://php.net/date */
-		      date_i18n( __( 'M j, Y @ G:i', 'audiotheme' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
+			/* translators: Publish box date format, see http://php.net/date */
+		date_i18n( __( 'M j, Y @ G:i', 'audiotheme' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
 		10 => sprintf( __( 'Video draft updated. <a target="_blank" href="%s">Preview Video</a>', 'audiotheme' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
 	);
 
@@ -121,7 +121,7 @@ function audiotheme_video_after_title() {
 
 		<div id="audiotheme-video-preview" class="audiotheme-video-preview<?php echo ( $video ) ? '' : ' audiotheme-video-preview-empty'; ?>">
 			<?php
-			if( $video ) {
+			if ( $video ) {
 				echo get_audiotheme_video( $post->ID, array( 'width' => 600 ) );
 			} else {
 				_e( 'Save the video after entering a URL to preview it.', 'audiotheme' );
@@ -200,7 +200,7 @@ function audiotheme_parse_video_oembed_data( $return, $data, $url ) {
 	global $post_id;
 
 	// Supports any oEmbed providers that respond with 'thumbnail_url'.
-	if( isset( $data->thumbnail_url ) ) {
+	if ( isset( $data->thumbnail_url ) ) {
 		$current_thumb_id = get_post_thumbnail_id( $post_id );
 		$oembed_thumb_id = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', true );
 		$oembed_thumb = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url', true );
@@ -250,11 +250,11 @@ function audiotheme_video_save_post( $post_id, $post ) {
 	$is_valid_nonce = ( isset( $_POST['audiotheme_save_video_meta_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_save_video_meta_nonce'], 'save-video-meta_' . $post_id ) ) ? true : false;
 
 	// Bail if the data shouldn't be saved or intention can't be verified.
-	if( $is_autosave || $is_revision || ! $is_valid_nonce ) {
+	if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
 		return;
 	}
 
-	if( isset( $_POST['_video_url'] ) ) {
+	if ( isset( $_POST['_video_url'] ) ) {
 		update_post_meta( $post_id, '_audiotheme_video_url', esc_url_raw( $_POST['_video_url'] ) );
 	}
 }
@@ -335,7 +335,7 @@ function audiotheme_video_list_help() {
 		'id'      => 'overview',
 		'title'   => __( 'Overview', 'audiotheme' ),
 		'content' =>
-			'<p>' . __( "Using the video panel, AudioTheme allows you to collect your videos from a wide variety of supported services and present them to your fans on your website.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( 'Using the video panel, AudioTheme allows you to collect your videos from a wide variety of supported services and present them to your fans on your website.', 'audiotheme' ) . '</p>' .
 			'<p>' . __( 'This screen provides access to all of your videos. You can customize the display of this screen to suit your workflow.', 'audiotheme' ) . '</p>',
 	) );
 
@@ -345,10 +345,10 @@ function audiotheme_video_list_help() {
 		'content' =>
 			'<p>' . __( "You can customize the appearance of this screen's content in a number of ways:", 'audiotheme' ) . '</p>' .
 			'<ul>' .
-			'<li>' . __( "You can hide or display columns based on your needs and decide how many videos to list per screen using the Screen Options tab.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "You can filter the list of videos by status using the text links in the upper left to show Upcoming, Past, All, Published, Draft, or Trashed videos. The default view is to show all videos.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "You can refine the list to show only videos from a specific month by using the dropdown menus above the videos list. Click the Filter button after making your selection.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "You can also sort your videos in any view by clicking the column headers.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( 'You can hide or display columns based on your needs and decide how many videos to list per screen using the Screen Options tab.', 'audiotheme' ) . '</li>' .
+			'<li>' . __( 'You can filter the list of videos by status using the text links in the upper left to show Upcoming, Past, All, Published, Draft, or Trashed videos. The default view is to show all videos.', 'audiotheme' ) . '</li>' .
+			'<li>' . __( 'You can refine the list to show only videos from a specific month by using the dropdown menus above the videos list. Click the Filter button after making your selection.', 'audiotheme' ) . '</li>' .
+			'<li>' . __( 'You can also sort your videos in any view by clicking the column headers.', 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
 
@@ -356,12 +356,12 @@ function audiotheme_video_list_help() {
 		'id'      => 'available-actions',
 		'title'   => __( 'Available Actions', 'audiotheme' ),
 		'content' =>
-			'<p>' . __( "Hovering over a row in the videos list will display action links that allow you to manage your video. You can perform the following actions:", 'audiotheme' ) . '</p>' .
+			'<p>' . __( 'Hovering over a row in the videos list will display action links that allow you to manage your video. You can perform the following actions:', 'audiotheme' ) . '</p>' .
 			'<ul>' .
-			'<li>' . __( "<strong>Edit</strong> takes you to the editing screen for that video. You can also reach that screen by clicking on the video title.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "<strong>Quick Edit</strong> provides inline access to the metadata of your video, allowing you to update video details without leaving this screen.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "<strong>Trash</strong> removes your video from this list and places it in the trash, from which you can permanently delete it.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "<strong>Preview</strong> will show you what your draft video will look like if you publish it.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>Edit</strong> takes you to the editing screen for that video. You can also reach that screen by clicking on the video title.', 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>Quick Edit</strong> provides inline access to the metadata of your video, allowing you to update video details without leaving this screen.', 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>Trash</strong> removes your video from this list and places it in the trash, from which you can permanently delete it.', 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>Preview</strong> will show you what your draft video will look like if you publish it.', 'audiotheme' ) . '</li>' .
 			'<li>' . __( "<strong>View</strong> will take you to your live site to view the video. Which link is available depends on your video's status.", 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
@@ -382,9 +382,9 @@ function audiotheme_video_help() {
 		'title'   => __( 'Standard Fields', 'audiotheme' ),
 		'content' =>
 			'<p>' . __( "<strong>Title</strong> - Enter a title for your video. After you enter a title, you'll see the permalink below, which you can edit.", 'audiotheme' ) . '</p>' .
-			'<p>' . __( "<strong>Video URL</strong> - Enter the URL for your video. After saving a preview of the video will display below this field.", 'audiotheme' ) . '</p>' .
-			'<p>' . __( "<strong>Editor</strong> - Describe your video. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.", 'audiotheme' ) . '</p>' .
-			'<p>' . __( "<strong>Excerpt</strong> - Depending on the theme you have activated, this is a brief expert that may appear in your list of videos. Visit the WordPress Support section to <a href=\"http://en.support.wordpress.com/splitting-content/excerpts/\" target=\"_blank\">learn more about excerpts</a>.", 'audiotheme' ) . '</p>',
+			'<p>' . __( '<strong>Video URL</strong> - Enter the URL for your video. After saving a preview of the video will display below this field.', 'audiotheme' ) . '</p>' .
+			'<p>' . __( '<strong>Editor</strong> - Describe your video. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.', 'audiotheme' ) . '</p>' .
+			'<p>' . __( '<strong>Excerpt</strong> - Depending on the theme you have activated, this is a brief expert that may appear in your list of videos. Visit the WordPress Support section to <a href="http://en.support.wordpress.com/splitting-content/excerpts/" target="_blank">learn more about excerpts</a>.', 'audiotheme' ) . '</p>',
 	) );
 
 	get_current_screen()->add_help_tab( array(

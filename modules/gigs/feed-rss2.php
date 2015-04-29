@@ -25,7 +25,7 @@ echo '<?xml version="1.0" encoding="' . get_option( 'blog_charset' ) . '"?>';
 	<atom:link href="<?php self_link(); ?>" rel="self" type="application/rss+xml" />
 	<link><?php bloginfo_rss( 'url' ) ?></link>
 	<description><?php bloginfo_rss( 'description' ) ?></description>
-	<?php while( have_posts()) : the_post(); ?>
+	<?php while ( have_posts() ) : the_post(); ?>
 		<item>
 			<title><?php echo get_audiotheme_gig_title(); ?></title>
 			<link><?php the_permalink_rss() ?></link>
@@ -34,7 +34,7 @@ echo '<?xml version="1.0" encoding="' . get_option( 'blog_charset' ) . '"?>';
 
 			<description><![CDATA[<?php echo get_audiotheme_gig_rss_description(); ?>]]></description>
 			<?php if ( strlen( $post->post_content ) > 0 ) : ?>
-				<content:encoded><![CDATA[<?php the_content_feed('rss2') ?>]]></content:encoded>
+				<content:encoded><![CDATA[<?php the_content_feed( 'rss2' ) ?>]]></content:encoded>
 			<?php endif; ?>
 
 			<ev:startdate><?php echo get_audiotheme_gig_time(); ?></ev:startdate>

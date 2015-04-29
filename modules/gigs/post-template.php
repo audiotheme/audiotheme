@@ -92,10 +92,10 @@ function get_audiotheme_gig_title( $post = null ) {
 function the_audiotheme_gig_link( $args = array(), $echo = true ) {
 	$html = get_audiotheme_gig_link( null, $args );
 
-	if ( $echo )
-		echo $html;
-	else
-		return $html;
+	if ( $echo ) {
+		echo $html; }
+	else {
+		return $html; }
 }
 
 /**
@@ -257,10 +257,10 @@ function the_audiotheme_gig_description( $before = '', $after = '', $echo = true
 
 	$html = ( empty( $description ) ) ? '' : $before . wpautop( $description ) . $after;
 
-	if ( $echo )
-		echo $html;
-	else
-		return $html;
+	if ( $echo ) {
+		echo $html; }
+	else {
+		return $html; }
 }
 
 /**
@@ -543,14 +543,14 @@ function get_audiotheme_venue( $post = null ) {
 
 	$defaults = get_default_audiotheme_venue_properties();
 	$meta = (array) get_post_custom( $post->ID );
-	foreach( $meta as $key => $val ) {
+	foreach ( $meta as $key => $val ) {
 		$meta[ str_replace( '_audiotheme_', '', $key ) ] = $val;
 		unset( $meta[ $key ] );
 	}
 
 	$properties = wp_parse_args( $meta, $defaults );
 
-	foreach( $properties as $key => $prop ) {
+	foreach ( $properties as $key => $prop ) {
 		if ( ! array_key_exists( $key, $defaults ) ) {
 			unset( $properties[ $key ] );
 		} elseif ( isset( $prop[0] ) ) {
@@ -986,7 +986,7 @@ function get_audiotheme_venue_gig_count( $venue_id ) {
 	$sql = $wpdb->prepare( "SELECT count( * )
 		FROM $wpdb->p2p
 		WHERE p2p_type='audiotheme_venue_to_gig' AND p2p_from=%d",
-		$venue_id );
+	$venue_id );
 	$count = $wpdb->get_var( $sql );
 
 	return ( empty( $count ) ) ? 0 : $count;

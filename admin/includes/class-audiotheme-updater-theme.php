@@ -93,7 +93,7 @@ class Audiotheme_Updater_Theme extends Audiotheme_Updater {
 		$notice = '';
 		$api_response = get_transient( $this->transient_key() );
 
-		if( ! $api_response || empty( $api_response->status ) ) {
+		if ( ! $api_response || empty( $api_response->status ) ) {
 			return;
 		}
 

@@ -153,7 +153,7 @@ function audiotheme_record_save_post( $post_id ) {
 	$is_valid_nonce = ( isset( $_POST['audiotheme_record_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_record_nonce'], 'update-record_' . $post_id ) ) ? true : false;
 
 	// Bail if the data shouldn't be saved or intention can't be verified.
-	if( $is_autosave || $is_revision || ! $is_valid_nonce ) {
+	if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
 		return;
 	}
 
@@ -161,7 +161,7 @@ function audiotheme_record_save_post( $post_id ) {
 
 	// Whitelisted fields.
 	$fields = array( 'release_year', 'artist', 'genre' );
-	foreach( $fields as $field ) {
+	foreach ( $fields as $field ) {
 		$value = ( empty( $_POST[ $field ] ) ) ? '' : $_POST[ $field ];
 		update_post_meta( $post_id, '_audiotheme_' . $field, $value );
 	}
@@ -169,7 +169,7 @@ function audiotheme_record_save_post( $post_id ) {
 	// Update purchase urls.
 	$record_links = array();
 	if ( isset( $_POST['record_links'] ) && is_array( $_POST['record_links'] ) ) {
-		foreach( $_POST['record_links'] as $link ) {
+		foreach ( $_POST['record_links'] as $link ) {
 			if ( ! empty( $link['name'] ) && ! empty( $link['url'] ) ) {
 				$link['url'] = esc_url_raw( $link['url'] );
 				$record_links[] = $link;
@@ -392,7 +392,7 @@ function audiotheme_record_list_help() {
 		'id'      => 'overview',
 		'title'   => __( 'Overview', 'audiotheme' ),
 		'content' =>
-			'<p>' . __( "Your discography is the window through which listeners are introduced to and discover your music. Encourage that discovery on your website through a detailed and organized history of your recorded output using the AudioTheme discography screen.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( 'Your discography is the window through which listeners are introduced to and discover your music. Encourage that discovery on your website through a detailed and organized history of your recorded output using the AudioTheme discography screen.', 'audiotheme' ) . '</p>' .
 			'<p>' . __( 'This screen provides access to all of your records. You can customize the display of this screen to suit your workflow.', 'audiotheme' ) . '</p>',
 	) );
 
@@ -402,9 +402,9 @@ function audiotheme_record_list_help() {
 		'content' =>
 			'<p>' . __( "You can customize the appearance of this screen's content in a number of ways:", 'audiotheme' ) . '</p>' .
 			'<ul>' .
-			'<li>' . __( "You can hide or display columns based on your needs and decide how many records to list per screen using the Screen Options tab.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "You can filter the list of records by status using the text links in the upper left to show All, Published, Draft, or Trashed records. The default view is to show all records.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "You can also sort your records in any view by clicking the column headers.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( 'You can hide or display columns based on your needs and decide how many records to list per screen using the Screen Options tab.', 'audiotheme' ) . '</li>' .
+			'<li>' . __( 'You can filter the list of records by status using the text links in the upper left to show All, Published, Draft, or Trashed records. The default view is to show all records.', 'audiotheme' ) . '</li>' .
+			'<li>' . __( 'You can also sort your records in any view by clicking the column headers.', 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
 
@@ -412,11 +412,11 @@ function audiotheme_record_list_help() {
 		'id'      => 'available-actions',
 		'title'   => __( 'Available Actions', 'audiotheme' ),
 		'content' =>
-			'<p>' . __( "Hovering over a row in the records list will display action links that allow you to manage your record. You can perform the following actions:", 'audiotheme' ) . '</p>' .
+			'<p>' . __( 'Hovering over a row in the records list will display action links that allow you to manage your record. You can perform the following actions:', 'audiotheme' ) . '</p>' .
 			'<ul>' .
-			'<li>' . __( "<strong>Edit</strong> takes you to the editing screen for that record. You can also reach that screen by clicking on the record name.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "<strong>Trash</strong> removes your record from this list and places it in the trash, from which you can permanently delete it.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "<strong>Preview</strong> will show you what your draft record will look like if you publish it.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>Edit</strong> takes you to the editing screen for that record. You can also reach that screen by clicking on the record name.', 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>Trash</strong> removes your record from this list and places it in the trash, from which you can permanently delete it.', 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>Preview</strong> will show you what your draft record will look like if you publish it.', 'audiotheme' ) . '</li>' .
 			'<li>' . __( "<strong>View</strong> will take you to your live site to view the record. Which link is available depends on your record's status.", 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
@@ -437,29 +437,29 @@ function audiotheme_record_help() {
 		'title'   => __( 'Standard Fields', 'audiotheme' ),
 		'content' =>
 			'<p>' . __( "<strong>Title</strong> - This is the name of your record. If your record is an album, put the album title here. If it's a single, enter the single's title. If you'd rather add all of your singles as a collection, then you'll need to give that collection a name here.", 'audiotheme' ) . '</p>' .
-			'<p>' . __( "<strong>Editor</strong> - Describe your record. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( '<strong>Editor</strong> - Describe your record. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.', 'audiotheme' ) . '</p>' .
 			'<h4>' . __( 'Track List', 'audiotheme' ) . '</h4>' .
 			'<p>' . __( "Tracks are the individual songs that make up your record. Use the Add Track button to quickly add as many as you'd like.", 'audiotheme' ) . '</p>' .
 			'<ul> ' .
-			'<li>' . __( "<strong>Title</strong> - Enter the title of your track/song here. ", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "<strong>Artist</strong> - Use this field for the track artist(s). Does the track feature a special guest? Put that here, too.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>Title</strong> - Enter the title of your track/song here. ', 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>Artist</strong> - Use this field for the track artist(s). Does the track feature a special guest? Put that here, too.', 'audiotheme' ) . '</li>' .
 			// @todo Add link.
-			'<li>' . __( "<strong>File URL</strong> - This field lets you attach audio for streaming or download.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>File URL</strong> - This field lets you attach audio for streaming or download.', 'audiotheme' ) . '</li>' .
 			'</ul>' .
 			'<p>' . __( "When you're done adding a record, press the Publish button to make it available on your site. If you're not ready to publish, or want to finish updating your record later, press the Save Draft to privately save your progress. You can access your drafts at a later time through the <strong>Discography > All Records</strong> menu.", 'audiotheme' ) . '</p>' .
-			'<p>' . __( "After saving the record, you can edit each track individually to add more information.", 'audiotheme' ) . '</p>',
+			'<p>' . __( 'After saving the record, you can edit each track individually to add more information.', 'audiotheme' ) . '</p>',
 	) );
 
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'record-details',
 		'title'		=> __( 'Record Details', 'audiotheme' ),
 		'content' 	=>
-			'<p>' . __( "Provide additional context to your records using this box." ) . '</p>' .
+			'<p>' . __( 'Provide additional context to your records using this box.' ) . '</p>' .
 			'<ul>' .
-			'<li>' . __( "<strong>Release Year</strong> - Help fans differentiate between new and less new recordings.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "<strong>Artist</strong> - Use this field for the main artist of the record.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "<strong>Genre</strong> - What genre would you classify your record as?", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "<strong>Type</strong> - Does your record consist of an album or single(s)?", 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>Release Year</strong> - Help fans differentiate between new and less new recordings.', 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>Artist</strong> - Use this field for the main artist of the record.', 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>Genre</strong> - What genre would you classify your record as?', 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>Type</strong> - Does your record consist of an album or single(s)?', 'audiotheme' ) . '</li>' .
 			'<li>' . __( "<strong>Links</strong> - This allows you to link to any additional resources. For example, if you want to direct fans to download your album on Amazon, enter 'Amazon' in the text field and put the web address to your record on Amazon in the URL field. Add as many resources as you would like using the Add URL button.", 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );

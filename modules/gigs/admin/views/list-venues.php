@@ -39,8 +39,8 @@
 					unset( $_REQUEST['deleted'] );
 				}
 
-				if ( $notices )
-					echo join( ' ', $notices );
+				if ( $notices ) {
+					echo join( ' ', $notices ); }
 				unset( $notices );
 
 				$_SERVER['REQUEST_URI'] = remove_query_arg( array( 'deleted', 'message', 'updated' ), $_SERVER['REQUEST_URI'] );

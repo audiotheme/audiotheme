@@ -25,8 +25,8 @@
 					unset( $_REQUEST['updated'] );
 				}
 
-				if ( isset( $_REQUEST['skipped'] ) && (int) $_REQUEST['skipped'] )
-					unset( $_REQUEST['skipped'] );
+				if ( isset( $_REQUEST['skipped'] ) && (int) $_REQUEST['skipped'] ) {
+					unset( $_REQUEST['skipped'] ); }
 
 				if ( isset( $_REQUEST['locked'] ) && (int) $_REQUEST['locked'] ) {
 					$messages[] = sprintf( _n( '%s item not updated, somebody is editing it.', '%s items not updated, somebody is editing them.', $_REQUEST['locked'] ), number_format_i18n( $_REQUEST['locked'] ) );
@@ -41,7 +41,7 @@
 				if ( isset( $_REQUEST['trashed'] ) && (int) $_REQUEST['trashed'] ) {
 					$messages[] = sprintf( _n( 'Item moved to the Trash.', '%s items moved to the Trash.', $_REQUEST['trashed'] ), number_format_i18n( $_REQUEST['trashed'] ) );
 					$ids = isset( $_REQUEST['ids'] ) ? $_REQUEST['ids'] : 0;
-					$messages[] = '<a href="' . esc_url( wp_nonce_url( get_audiotheme_gig_admin_url( "action=untrash&ids=$ids" ), "bulk-gigs" ) ) . '">' . __( 'Undo', 'audiotheme' ) . '</a>';
+					$messages[] = '<a href="' . esc_url( wp_nonce_url( get_audiotheme_gig_admin_url( "action=untrash&ids=$ids" ), 'bulk-gigs' ) ) . '">' . __( 'Undo', 'audiotheme' ) . '</a>';
 					unset( $_REQUEST['trashed'] );
 				}
 

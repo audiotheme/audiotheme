@@ -53,12 +53,12 @@ function get_audiotheme_venue_vcard_rss( $venue ) {
 		$address .= ( empty( $venue->postal_code ) ) ? '' : '<v:postal-code>' . esc_html( $venue->postal_code ) . '</v:postal-code>';
 		$address .= ( empty( $venue->country ) ) ? '' : '<v:country-name>' . $venue->country . '</v:country-name>';
 
-		if( ! empty( $address ) ) {
-			$output.= '<v:adr><rdf:Description>' . $address . '</rdf:Description></v:adr>';
-		}
+	if ( ! empty( $address ) ) {
+		$output .= '<v:adr><rdf:Description>' . $address . '</rdf:Description></v:adr>';
+	}
 
-		$output.= ( empty( $venue->phone ) ) ? '' : '<v:tel><rdf:Description><rdf:value>' . $venue->phone . '</rdf:value></rdf:Description></v:tel>';
-	$output.= '</v:VCard>';
+		$output .= ( empty( $venue->phone ) ) ? '' : '<v:tel><rdf:Description><rdf:value>' . $venue->phone . '</rdf:value></rdf:Description></v:tel>';
+	$output .= '</v:VCard>';
 
 	return $output;
 }
@@ -104,16 +104,16 @@ function get_audiotheme_venue_location_ical( $venue = null ) {
 }
 
 if ( ! function_exists( 'escape_ical_text' ) ) :
-/**
+	/**
  * Sanitize text for inclusion in an iCal feed.
  *
  * @param string $text String to sanitize.
  * @return string
  */
-function escape_ical_text( $text ) {
-	$search = array( '\\', ';', ',', "\n", "\r" );
-	$replace = array( '\\\\', '\;', '\,', ' ', ' ' );
+	function escape_ical_text( $text ) {
+		$search = array( '\\', ';', ',', "\n", "\r" );
+		$replace = array( '\\\\', '\;', '\,', ' ', ' ' );
 
-	return str_replace( $search, $replace, $text );
-}
+		return str_replace( $search, $replace, $text );
+	}
 endif;

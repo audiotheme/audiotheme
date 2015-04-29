@@ -77,7 +77,7 @@ function audiotheme_print_pointers() {
 
 	// @see WP_Scripts::localize()
 	foreach ( (array) $audiotheme_pointers as $id => $pointer ) {
-		foreach( $pointer as $key => $value ) {
+		foreach ( $pointer as $key => $value ) {
 			if ( ! is_scalar( $value ) ) {
 				continue;
 			}
@@ -90,7 +90,7 @@ function audiotheme_print_pointers() {
 	// CDATA and type='text/javascript' is not needed for HTML 5.
 	echo "<script type='text/javascript'>\n";
 	echo "/* <![CDATA[ */\n";
-	echo "var audiothemePointers = " . json_encode( $audiotheme_pointers ) . ";\n";
+	echo 'var audiothemePointers = ' . json_encode( $audiotheme_pointers ) . ";\n";
 	echo "/* ]]> */\n";
 	echo "</script>\n";
 }
@@ -284,7 +284,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 						<span id="post-visibility-display"><?php echo esc_html( $visibility_trans ); ?></span>
 
 						<?php if ( $can_publish ) { ?>
-							<a href="#visibility" class="edit-visibility hide-if-no-js"><?php _e( 'Edit', 'audiotheme'  ); ?></a>
+							<a href="#visibility" class="edit-visibility hide-if-no-js"><?php _e( 'Edit', 'audiotheme' ); ?></a>
 
 							<div id="post-visibility-select" class="hide-if-js">
 								<input type="hidden" name="hidden_post_password" id="hidden-post-password" value="<?php echo esc_attr( $post->post_password ); ?>">

@@ -298,9 +298,9 @@ function audiotheme_settings_display_screen() {
 				echo '<h2>' . $screen->name . '</h2>';
 			} else {
 				echo '<h2 class="nav-tab-wrapper">';
-					foreach ( $screen->tabs as $tab_id => $tab ) {
-						echo '<a href="#' . $tab_id . '-panel" class="nav-tab">' . esc_html( $tab['title'] ) . '</a>';
-					}
+				foreach ( $screen->tabs as $tab_id => $tab ) {
+					echo '<a href="#' . $tab_id . '-panel" class="nav-tab">' . esc_html( $tab['title'] ) . '</a>';
+				}
 				echo '</h2>';
 			}
 

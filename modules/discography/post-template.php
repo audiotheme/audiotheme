@@ -42,8 +42,8 @@ function get_audiotheme_record_type( $post_id = null ) {
 
 	$type = get_the_terms( $post_id, 'audiotheme_record_type' );
 
-	if ( empty( $type ) )
-		return false;
+	if ( empty( $type ) ) {
+		return false; }
 
 	$type = array_shift( $type );
 
@@ -141,11 +141,11 @@ function get_audiotheme_record_tracks( $post_id = null, $args = array() ) {
 
 	$tracks = get_posts( $query );
 
-    if ( ! $tracks ) {
-        $tracks = false;
-    }
+	if ( ! $tracks ) {
+		$tracks = false;
+	}
 
-    return $tracks;
+	return $tracks;
 }
 
 /**
@@ -183,7 +183,7 @@ function is_audiotheme_track_downloadable( $post_id = null ) {
  */
 function get_audiotheme_track_artist( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-    return get_post_meta( $post_id, '_audiotheme_artist', true );
+	return get_post_meta( $post_id, '_audiotheme_artist', true );
 }
 
 /**
@@ -242,7 +242,7 @@ function get_audiotheme_track_thumbnail_id( $post = null ) {
 
 	if ( has_post_thumbnail( $post->ID ) ) {
 		$thumbnail_id = get_post_thumbnail_id( $post->ID );
-	} elseif ( $post->post_parent && has_post_thumbnail( $post->post_parent) ) {
+	} elseif ( $post->post_parent && has_post_thumbnail( $post->post_parent ) ) {
 		$thumbnail_id = get_post_thumbnail_id( $post->post_parent );
 	}
 

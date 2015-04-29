@@ -78,7 +78,7 @@ function audiotheme_framework_not_a_theme_nag() {
 	$message_id = ( isset( $_REQUEST['atmovemsg'] ) ) ? $_REQUEST['atmovemsg'] : '';
 	$move_url = wp_nonce_url( 'themes.php', 'audiotheme-theme-to-plugin' );
 
-	switch( $message_id ) {
+	switch ( $message_id ) {
 		case 'plugin-exists' :
 			if ( ! is_multisite() && current_user_can( 'delete_themes' ) ) {
 				$stylesheet = get_template();

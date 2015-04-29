@@ -1,14 +1,14 @@
 <p class="audiotheme-field">
 	<label for="record-year"><?php _e( 'Release Year', 'audiotheme' ); ?></label>
-	<input type="text" name="release_year" id="record-year" value="<?php echo esc_attr( get_audiotheme_record_release_year( $post->ID ) ) ; ?>" class="widefat">
+	<input type="text" name="release_year" id="record-year" value="<?php echo esc_attr( get_audiotheme_record_release_year( $post->ID ) ); ?>" class="widefat">
 </p>
 <p class="audiotheme-field">
 	<label for="record-artist"><?php _e( 'Artist', 'audiotheme' ); ?></label>
-	<input type="text" name="artist" id="record-artist" value="<?php echo esc_attr( get_audiotheme_record_artist( $post->ID ) ) ; ?>" class="widefat">
+	<input type="text" name="artist" id="record-artist" value="<?php echo esc_attr( get_audiotheme_record_artist( $post->ID ) ); ?>" class="widefat">
 </p>
 <p class="audiotheme-field">
 	<label for="record-genre"><?php _e( 'Genre', 'audiotheme' ); ?></label>
-	<input type="text" name="genre" id="record-genre" value="<?php echo esc_attr( get_audiotheme_record_genre( $post->ID ) ) ; ?>" class="widefat">
+	<input type="text" name="genre" id="record-genre" value="<?php echo esc_attr( get_audiotheme_record_genre( $post->ID ) ); ?>" class="widefat">
 </p>
 
 <table class="audiotheme-repeater" id="record-links">
@@ -33,7 +33,7 @@
 	</tfoot>
 	<tbody class="audiotheme-repeater-items">
 		<?php
-		foreach( $record_links as $i => $link ) :
+		foreach ( $record_links as $i => $link ) :
 			$link = wp_parse_args( $link, array( 'name' => '', 'url' => '' ) );
 			?>
 			<tr class="audiotheme-repeater-item">

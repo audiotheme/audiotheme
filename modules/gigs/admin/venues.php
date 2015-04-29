@@ -304,16 +304,16 @@ function audiotheme_venue_help() {
 		'id'      => 'default-fields',
 		'title'   => __( 'Venue Information', 'audiotheme' ),
 		'content' =>
-			'<p>' . __( "The venue box allows you to manage the details of the venue. This information makes it easier for your fans to find out about the venue(s) where you perform. ", 'audiotheme' ) .
+			'<p>' . __( 'The venue box allows you to manage the details of the venue. This information makes it easier for your fans to find out about the venue(s) where you perform. ', 'audiotheme' ) .
 
-			'<p>' . __( "<strong>Name</strong> - Enter the name of the venue.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( '<strong>Name</strong> - Enter the name of the venue.', 'audiotheme' ) . '</p>' .
 			'<p>' . __( "<strong>Address</strong> - Enter venue's street address.", 'audiotheme' ) . '</p>' .
-			'<p>' . __( "<strong>City</strong> - Enter the city where the venue is located. After typing a city name, you may be presented with a list of cities to choose from. Selecting the correct city may help auto-complete additional address information.", 'audiotheme' ) . '</p>' .
-			'<p>' . __( "<strong>State</strong> - Enter the state where the venue is located.", 'audiotheme' ) . '</p>' .
-			'<p>' . __( "<strong>Country</strong> - Enter the name of the country where the venue is located.", 'audiotheme' ) . '</p>' .
-			'<p>' . __( "<strong>Time zone</strong> - Choose the time zone. This is important. Choosing the time zone requires selecting the nearest city in the same time zone as the venue.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( '<strong>City</strong> - Enter the city where the venue is located. After typing a city name, you may be presented with a list of cities to choose from. Selecting the correct city may help auto-complete additional address information.', 'audiotheme' ) . '</p>' .
+			'<p>' . __( '<strong>State</strong> - Enter the state where the venue is located.', 'audiotheme' ) . '</p>' .
+			'<p>' . __( '<strong>Country</strong> - Enter the name of the country where the venue is located.', 'audiotheme' ) . '</p>' .
+			'<p>' . __( '<strong>Time zone</strong> - Choose the time zone. This is important. Choosing the time zone requires selecting the nearest city in the same time zone as the venue.', 'audiotheme' ) . '</p>' .
 			'<p>' . __( "<strong>Website</strong> - Enter the URL to the venue's website.", 'audiotheme' ) . '</p>' .
-			'<p>' . __( "<strong>Phone</strong> - Enter a phone number so that your visitors can easily contact the venue if needed.", 'audiotheme' ) . '</p>',
+			'<p>' . __( '<strong>Phone</strong> - Enter a phone number so that your visitors can easily contact the venue if needed.', 'audiotheme' ) . '</p>',
 	) );
 
 	get_current_screen()->add_help_tab( array(
@@ -322,7 +322,7 @@ function audiotheme_venue_help() {
 		'content' 	=>
 			'<p>' . __( 'The contact and notes boxes allow you to save additional information about the venue for your own use.', 'audiotheme' ) . '</p>' .
 			'<h4>' . __( 'Contact', 'audiotheme' ) . '</h4>' .
-			'<p>' . __( "The contact box allows you to privately store the contact information of the person you communicate with at the venue.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( 'The contact box allows you to privately store the contact information of the person you communicate with at the venue.', 'audiotheme' ) . '</p>' .
 			'<h4>' . __( 'Notes', 'audiotheme' ) . '</h4>' .
 			'<p>' . __( "Store any relevant information about the venue in the notes box. Can't remember the doorman's name? Write it down here to refer to later. Maintaining a good relationship with a venue and its staff increases your chances of being invited back.", 'audiotheme' ) . '</p>',
 	) );

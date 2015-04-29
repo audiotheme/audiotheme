@@ -467,20 +467,20 @@ class Audiotheme_Settings {
 		$class = $this->get_field_class( 'audiotheme-settings-checkbox', $args );
 		echo '<div class="audiotheme-settings-checkbox ' . $class . '">';
 			$i = 0;
-			foreach ( $choices as $val => $label ) {
-				$choice_class = 'audiotheme-settings-checkbox-choice audiotheme-settings-checkbox-choice' . $i;
+		foreach ( $choices as $val => $label ) {
+			$choice_class = 'audiotheme-settings-checkbox-choice audiotheme-settings-checkbox-choice' . $i;
 
-				printf( '<label for="%1$s"><input type="checkbox" name="%2$s" id="%1$s" value="%3$s"%4$s class="%5$s"> %6$s</label>',
-					esc_attr( $field_id ),
-					esc_attr( $field_name ),
-					esc_attr( $val ),
-					checked( $val, $value, false ),
-					$choice_class,
-					( isset( $field_label ) ) ? esc_html( $field_label ) : esc_html( $label )
-				);
+			printf( '<label for="%1$s"><input type="checkbox" name="%2$s" id="%1$s" value="%3$s"%4$s class="%5$s"> %6$s</label>',
+				esc_attr( $field_id ),
+				esc_attr( $field_name ),
+				esc_attr( $val ),
+				checked( $val, $value, false ),
+				$choice_class,
+				( isset( $field_label ) ) ? esc_html( $field_label ) : esc_html( $label )
+			);
 
-				$i ++;
-			}
+			$i ++;
+		}
 		echo '</div>';
 
 		echo $this->get_field_description( $args );
@@ -496,7 +496,7 @@ class Audiotheme_Settings {
 	public function render_color_field( $args ) {
 		extract( $args );
 
-		$value = get_audiotheme_option( $option_name, $key, $default  );
+		$value = get_audiotheme_option( $option_name, $key, $default );
 
 		printf( '<input type="text" name="%1$s" id="%2$s" value="%3$s" data-default-color="%3$s" class="%4$s">',
 			esc_attr( $field_name ),
@@ -533,7 +533,7 @@ class Audiotheme_Settings {
 	public function render_image_field( $args ) {
 		extract( $args );
 
-		$value = get_audiotheme_option( $option_name, $key, $default  );
+		$value = get_audiotheme_option( $option_name, $key, $default );
 
 		$controls = array( 'media_frame', 'thickbox' ); // Whitelist the allowed image controls.
 		$control = ( ! isset( $control ) || ! in_array( $control ) ) ? 'thickbox' : $control;
@@ -591,26 +591,26 @@ class Audiotheme_Settings {
 	public function render_radio_field( $args ) {
 		extract( $args );
 
-		$value = get_audiotheme_option( $option_name, $key, $default  );
+		$value = get_audiotheme_option( $option_name, $key, $default );
 		$choices = ( isset( $choices ) && is_array( $choices ) ) ? $choices : array( '' => '' );
 
 		$class = $this->get_field_class( 'audiotheme-settings-radio', $args );
 		echo '<div class="' . $class . '">';
 			$i = 0;
-			foreach ( $choices as $val => $label ) {
-				$choice_class = 'audiotheme-settings-radio-choice audiotheme-settings-radio-choice' . $i;
+		foreach ( $choices as $val => $label ) {
+			$choice_class = 'audiotheme-settings-radio-choice audiotheme-settings-radio-choice' . $i;
 
-				printf( '<label><input type="radio" name="%s" id="%s" value="%s"%s class="%s"> %s</label><br>',
-					esc_attr( $field_name ),
-					esc_attr( $field_id . $i ),
-					esc_attr( $val ),
-					checked( $val, $value, false ),
-					$choice_class,
-					esc_html( $label )
-				);
+			printf( '<label><input type="radio" name="%s" id="%s" value="%s"%s class="%s"> %s</label><br>',
+				esc_attr( $field_name ),
+				esc_attr( $field_id . $i ),
+				esc_attr( $val ),
+				checked( $val, $value, false ),
+				$choice_class,
+				esc_html( $label )
+			);
 
-				$i ++;
-			}
+			$i ++;
+		}
 		echo '</div>';
 
 		echo $this->get_field_description( $args );
@@ -626,18 +626,18 @@ class Audiotheme_Settings {
 	public function render_select_field( $args ) {
 		extract( $args );
 
-		$value = get_audiotheme_option( $option_name, $key, $default  );
+		$value = get_audiotheme_option( $option_name, $key, $default );
 		$choices = ( isset( $choices ) && is_array( $choices ) ) ? $choices : array( '' => '' );
 
 		$class = $this->get_field_class( 'audiotheme-settings-select', $args );
 		echo '<select name="' . esc_attr( $field_name ) . '" id="' . esc_attr( $field_id ) . '" class="' . $class . '">';
-			foreach ( $choices as $val => $label ) {
-				printf( '<option value="%s"%s>%s</option>',
-					esc_attr( $val ),
-					selected( $value, $val, false ),
-					esc_html( $label )
-				);
-			}
+		foreach ( $choices as $val => $label ) {
+			printf( '<option value="%s"%s>%s</option>',
+				esc_attr( $val ),
+				selected( $value, $val, false ),
+				esc_html( $label )
+			);
+		}
 		echo '</select>';
 
 		echo $this->get_field_description( $args );
@@ -653,7 +653,7 @@ class Audiotheme_Settings {
 	public function render_text_field( $args ) {
 		extract( $args );
 
-		$value = get_audiotheme_option( $option_name, $key, $default  );
+		$value = get_audiotheme_option( $option_name, $key, $default );
 
 		printf( '<input type="text" name="%s" id="%s" value="%s" class="%s">',
 			esc_attr( $field_name ),
@@ -675,7 +675,7 @@ class Audiotheme_Settings {
 	public function render_textarea_field( $args ) {
 		extract( $args );
 
-		$value = get_audiotheme_option( $option_name, $key, $default  );
+		$value = get_audiotheme_option( $option_name, $key, $default );
 
 		printf( '<textarea name="%s" id="%s" rows="%d" class="%s">%s</textarea>',
 			esc_attr( $field_name ),
@@ -699,7 +699,7 @@ class Audiotheme_Settings {
 	public function render_customizer_sync_field( $args ) {
 		extract( $args );
 
-		$value = get_audiotheme_option( $option_name, $key, $default  );
+		$value = get_audiotheme_option( $option_name, $key, $default );
 		$value = maybe_serialize( $value );
 
 		printf( '<input type="hidden" name="%s" id="%s" value="%s" class="audiotheme-settings-hidden-field">',

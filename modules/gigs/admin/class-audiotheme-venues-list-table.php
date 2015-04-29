@@ -11,8 +11,8 @@
 /**
  * Include the WP_List_Table depedency if it doesn't exist.
  */
-if( ! class_exists( 'WP_List_Table' ) ) {
-    require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+if ( ! class_exists( 'WP_List_Table' ) ) {
+	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
 /**
@@ -67,7 +67,7 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 		);
 
 		if ( isset( $_REQUEST['orderby'] ) ) {
-			switch( $_REQUEST['orderby'] ) {
+			switch ( $_REQUEST['orderby'] ) {
 				case 'gigs':
 					$args['meta_key'] = '_audiotheme_gig_count';
 					$args['orderby'] = 'meta_value_num';
@@ -221,7 +221,7 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 		}
 
 		if ( ! empty( $action ) ) {
-			switch( $action ) {
+			switch ( $action ) {
 				case 'add':
 				case 'edit':
 					$venue_id = save_audiotheme_venue( $data );
@@ -235,11 +235,11 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 				case 'delete':
 					$deleted = 0;
 					foreach ( $post_ids as $post_id ) {
-						if ( ! current_user_can( $post_type_object->cap->delete_post, $post_id ) )
-							wp_die( __( 'You are not allowed to delete this item.', 'audiotheme' ) );
+						if ( ! current_user_can( $post_type_object->cap->delete_post, $post_id ) ) {
+							wp_die( __( 'You are not allowed to delete this item.', 'audiotheme' ) ); }
 
-						if ( ! wp_delete_post( $post_id ) )
-							wp_die( __( 'Error in deleting&hellip;', 'audiotheme' ) );
+						if ( ! wp_delete_post( $post_id ) ) {
+							wp_die( __( 'Error in deleting&hellip;', 'audiotheme' ) ); }
 						$deleted++;
 					}
 					$sendback = add_query_arg( 'deleted', $deleted, $sendback );
@@ -284,7 +284,7 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 
 		$output = sprintf( '<strong><a href="%s" class="row-title">%s</a></strong><br>',
 			esc_url( get_edit_post_link( $item->ID ) ),
-			$item->name );
+		$item->name );
 
 		$actions['edit'] = sprintf( '<a href="%s">Edit</a>', get_edit_post_link( $item->ID ) );
 
@@ -309,7 +309,7 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 	 * @return string Column value for display.
 	 */
 	function column_default( $item, $column_name ) {
-		switch($column_name){
+		switch ( $column_name ){
 			case 'gigs':
 				$count = get_post_meta( $item->ID, '_audiotheme_gig_count', true );
 				$admin_url = get_audiotheme_gig_admin_url( array( 'post_type' => 'audiotheme_gig', 'post_status' => 'any', 'venue' => $item->ID ) );

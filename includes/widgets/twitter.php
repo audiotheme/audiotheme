@@ -45,25 +45,25 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 
 		echo $before_widget;
 
-			if ( ! empty( $instance['title'] ) ) {
-				echo $before_title;
-					echo $instance['title'];
-					printf( ' <a href="%s" target="_blank" title="@%s">@%s</a>',
-						esc_url( 'http://twitter.com/' . $instance['screen_name'] ),
-						esc_attr( $instance['screen_name'] ),
-						$instance['screen_name']
-					);
+		if ( ! empty( $instance['title'] ) ) {
+			echo $before_title;
+				echo $instance['title'];
+				printf( ' <a href="%s" target="_blank" title="@%s">@%s</a>',
+					esc_url( 'http://twitter.com/' . $instance['screen_name'] ),
+					esc_attr( $instance['screen_name'] ),
+					$instance['screen_name']
+				);
 				echo $after_title;
-			}
+		}
 
 			$output = '<ul>';
-				for ( $i = 0; $i < $instance['count']; $i ++ ) {
-					if ( ! isset( $tweets[ $i ] ) ) {
-						break;
-					}
+		for ( $i = 0; $i < $instance['count']; $i ++ ) {
+			if ( ! isset( $tweets[ $i ] ) ) {
+				break;
+			}
 
-					$output .= sprintf( '<li>%1$s</li>', $tweets[ $i ]['html'] );
-				}
+			$output .= sprintf( '<li>%1$s</li>', $tweets[ $i ]['html'] );
+		}
 			$output .= '</ul>';
 
 			// Be sure to respect the count parameter.
@@ -159,7 +159,7 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 		$error_key = 'audiotheme_twitter_widget_error-' . $this->number;
 
 		if ( empty( $args['screen_name'] ) ) {
-			set_transient( $error_key, __( 'Twitter username cannot be empty.', 'audiotheme' ), 60*5 );
+			set_transient( $error_key, __( 'Twitter username cannot be empty.', 'audiotheme' ), 60 * 5 );
 			return new WP_Error( 'empty_screen_name', __( 'The screen name cannot be empty.' ) );
 		}
 
@@ -185,7 +185,7 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 				$results = json_decode( wp_remote_retrieve_body( $response ), true );
 				if ( is_array( $results ) && ! isset( $results['errors'] ) ) { // Make sure there's not a Twitter error.
 					$tweets = array();
-					foreach( $results as $tweet ) {
+					foreach ( $results as $tweet ) {
 						$tweets[] = array(
 							'id_str'     => $tweet['id_str'],
 							'created_at' => $tweet['created_at'],
@@ -241,9 +241,9 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 		if ( isset( $tweet['entities'] ) ) {
 			$entities = array();
 			// Flatten entity array so we can sort them by starting indice.
-			foreach( $tweet['entities'] as $type => $type_entities ) {
+			foreach ( $tweet['entities'] as $type => $type_entities ) {
 				if ( ! empty( $type_entities ) ) {
-					foreach( $type_entities as $key => $entity ) {
+					foreach ( $type_entities as $key => $entity ) {
 						$entity['type'] = $type;
 						$entities[] = $entity;
 					}
@@ -252,7 +252,7 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 			usort( $entities, array( $this, 'sort_tweet_entities' ) );
 
 			$shift = 0;
-			foreach( $entities as $entity ) {
+			foreach ( $entities as $entity ) {
 				$start = $entity['indices'][0] + $shift;
 				$length = $entity['indices'][1] - $entity['indices'][0];
 				$match = mb_substr( $text, $start, $length );
@@ -260,7 +260,7 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 				$before = ( 0 !== $start ) ? mb_substr( $text, 0, $start ) : '';
 				$after = ( $length ) ? mb_substr( $text, $start + $length ) : '';
 
-				switch( $entity['type'] ) {
+				switch ( $entity['type'] ) {
 					case 'hashtags' :
 						$replace = sprintf( '<a href="%s" target="_blank">%s</a>',
 							esc_url( 'http://twitter.com/search/#' . $entity['text'] ),
@@ -301,8 +301,8 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 	 */
 	function sort_tweet_entities( $a, $b ) {
 		if ( $a['indices'][0] === $b['indices'][0] ) {
-        	return 0;
-    	}
+			return 0;
+		}
 
 		return ( $a['indices'][0] < $b['indices'][0] ) ? -1 : 1;
 	}

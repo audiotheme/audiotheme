@@ -39,24 +39,24 @@ class Audiotheme_Widget_Record extends WP_Widget {
 		echo $before_widget;
 
 			// Output filter is for backwards compatibility.
-			if ( $output = apply_filters( 'audiotheme_widget_record_output', '', $instance, $args ) ) {
-				echo ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
-				echo $output;
-			} else {
-				$image_size = apply_filters( 'audiotheme_widget_record_image_size', 'thumbnail', $instance, $args );
-				$image_size = apply_filters( 'audiotheme_widget_record_image_size-' . $args['id'], $image_size, $instance, $args );
+		if ( $output = apply_filters( 'audiotheme_widget_record_output', '', $instance, $args ) ) {
+			echo ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
+			echo $output;
+		} else {
+			$image_size = apply_filters( 'audiotheme_widget_record_image_size', 'thumbnail', $instance, $args );
+			$image_size = apply_filters( 'audiotheme_widget_record_image_size-' . $args['id'], $image_size, $instance, $args );
 
-				$data                 = array();
-				$data['args']         = $args;
-				$data['after_title']  = $args['after_title'];
-				$data['before_title'] = $args['before_title'];
-				$data['image_size']   = $image_size;
-				$data['post']         = get_post( $instance['post_id'] );
-				$data                 = array_merge( $instance, $data );
+			$data                 = array();
+			$data['args']         = $args;
+			$data['after_title']  = $args['after_title'];
+			$data['before_title'] = $args['before_title'];
+			$data['image_size']   = $image_size;
+			$data['post']         = get_post( $instance['post_id'] );
+			$data                 = array_merge( $instance, $data );
 
-				$template = audiotheme_locate_template( array( "widgets/{$args['id']}_record.php", "widgets/record.php" ) );
-				audiotheme_load_template( $template, $data );
-			}
+			$template = audiotheme_locate_template( array( "widgets/{$args['id']}_record.php", 'widgets/record.php' ) );
+			audiotheme_load_template( $template, $data );
+		}
 
 		echo $after_widget;
 	}

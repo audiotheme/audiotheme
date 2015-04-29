@@ -48,7 +48,7 @@ function audiotheme_image_size_names() {
  * @return mixed True or false if operator is supplied. -1, 0, or 1 if operator is empty.
  */
 function audiotheme_version_compare( $version, $version2, $operator = null ) {
-	switch( $version ) {
+	switch ( $version ) {
 		case 'audiotheme' :
 			$version = AUDIOTHEME_VERSION;
 			break;
@@ -125,7 +125,7 @@ class Audiotheme_Sort_Objects {
 			$a_value = $a;
 			$b_value = $b;
 
-			foreach( $this->orderby as $prop ) {
+			foreach ( $this->orderby as $prop ) {
 				$a_value = ( isset( $a_value->$prop ) ) ? $a_value->$prop : '';
 				$b_value = ( isset( $b_value->$prop ) ) ? $b_value->$prop : '';
 			}
@@ -134,13 +134,12 @@ class Audiotheme_Sort_Objects {
 		if ( $a_value === $b_value ) {
 			if ( ! empty( $this->fallback ) ) {
 				$properties = explode( ',', $this->fallback );
-				foreach( $properties as $prop ) {
+				foreach ( $properties as $prop ) {
 					if ( $a->$prop !== $b->$prop ) {
 						#printf( '(%s - %s) - (%s - %s)<br>', $a_value, $a->$prop, $b_value, $b->$prop );
 						return $this->compare( $a->$prop, $b->$prop );
 					}
 				}
-
 			}
 
 			return 0;
@@ -190,9 +189,9 @@ function audiotheme_timezone_choice( $selected_zone = null ) {
  * @param mixed $var
  */
 if ( ! function_exists( 'vd' ) ) :
-function vd( $var ) {
-	echo '<pre style="font-size: 12px; text-align: left">' . print_r( $var, true ) . '</pre>';
-}
+	function vd( $var ) {
+		echo '<pre style="font-size: 12px; text-align: left">' . print_r( $var, true ) . '</pre>';
+	}
 endif;
 
 /**

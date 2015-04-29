@@ -107,8 +107,8 @@ function audiotheme_gig_post_updated_messages( $messages ) {
 		7  => __( 'Gig saved.', 'audiotheme' ),
 		8  => sprintf( __( 'Gig submitted. <a target="_blank" href="%s">Preview Gig</a>', 'audiotheme' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
 		9  => sprintf( __( 'Gig scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Gig</a>', 'audiotheme' ),
-		      /* translators: Publish box date format, see http://php.net/date */
-		      date_i18n( __( 'M j, Y @ G:i', 'audiotheme' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
+			/* translators: Publish box date format, see http://php.net/date */
+		date_i18n( __( 'M j, Y @ G:i', 'audiotheme' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
 		10 => sprintf( __( 'Gig draft updated. <a target="_blank" href="%s">Preview Gig</a>', 'audiotheme' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
 	);
 
@@ -293,11 +293,11 @@ function audiotheme_gig_tickets_meta_box( $post ) {
 	?>
 	<p class="audiotheme-field">
 		<label for="gig-tickets-price">Price:</label><br>
-		<input type="text" name="gig_tickets_price" id="gig-tickets-price" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_tickets_price', true ) ) ; ?>" class="large-text">
+		<input type="text" name="gig_tickets_price" id="gig-tickets-price" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_tickets_price', true ) ); ?>" class="large-text">
 	</p>
 	<p class="audiotheme-field">
 		<label for="gig-tickets-url">Tickets URL:</label><br>
-		<input type="text" name="gig_tickets_url" id="gig-tickets-url" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_tickets_url', true ) ) ; ?>" class="large-text">
+		<input type="text" name="gig_tickets_url" id="gig-tickets-url" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_tickets_url', true ) ); ?>" class="large-text">
 	</p>
 	<?php
 }
@@ -316,7 +316,7 @@ function audiotheme_gig_save_post( $post_id, $post ) {
 	$is_valid_nonce = ( isset( $_POST['audiotheme_save_gig_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_save_gig_nonce'], 'save-gig_' . $post_id ) ) ? true : false;
 
 	// Bail if the data shouldn't be saved or intention can't be verified.
-	if( $is_autosave || $is_revision || ! $is_valid_nonce ) {
+	if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
 		return;
 	}
 
@@ -336,7 +336,7 @@ function audiotheme_gig_save_post( $post_id, $post ) {
 				zeroise( $dt['day'], 2 ),
 				zeroise( $dt['hour'], 2 ),
 				zeroise( $dt['minute'], 2 ),
-				zeroise( $dt['second'], 2 ) );
+			zeroise( $dt['second'], 2 ) );
 
 			update_post_meta( $post_id, '_audiotheme_gig_datetime', $datetime );
 
@@ -358,7 +358,7 @@ function audiotheme_gig_save_post( $post_id, $post ) {
 			$time = sprintf( '%s:%s:%s',
 				zeroise( $t['hour'], 2 ),
 				zeroise( $t['minute'], 2 ),
-				zeroise( $t['second'], 2 ) );
+			zeroise( $t['second'], 2 ) );
 		}
 
 		update_post_meta( $post_id, '_audiotheme_gig_time', $time );
@@ -385,10 +385,10 @@ function audiotheme_gig_list_help() {
 		'content' =>
 			'<p>' . __( "You can customize the appearance of this screen's content in a number of ways:", 'audiotheme' ) . '</p>' .
 			'<ul>' .
-			'<li>' . __( "You can hide/display columns based on your needs and decide how many gigs to list per screen using the Screen Options tab.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "You can filter the list of gigs by status using the text links in the upper left to show Upcoming, Past, All, Published, Draft, or Trashed gigs. The default view is to show all upcoming gigs.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "You can refine the list to show only gigs for a specific venue or from a specific month by using the dropdown menus above the gigs list. Click the Filter button after making your selection.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "You can also sort your gigs in any view by clicking the column headers.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( 'You can hide/display columns based on your needs and decide how many gigs to list per screen using the Screen Options tab.', 'audiotheme' ) . '</li>' .
+			'<li>' . __( 'You can filter the list of gigs by status using the text links in the upper left to show Upcoming, Past, All, Published, Draft, or Trashed gigs. The default view is to show all upcoming gigs.', 'audiotheme' ) . '</li>' .
+			'<li>' . __( 'You can refine the list to show only gigs for a specific venue or from a specific month by using the dropdown menus above the gigs list. Click the Filter button after making your selection.', 'audiotheme' ) . '</li>' .
+			'<li>' . __( 'You can also sort your gigs in any view by clicking the column headers.', 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
 
@@ -396,11 +396,11 @@ function audiotheme_gig_list_help() {
 		'id'      => 'available-actions',
 		'title'   => __( 'Available Actions', 'audiotheme' ),
 		'content' =>
-			'<p>' . __( "Hovering over a row in the gigs list will display action links that allow you to manage your gig. You can perform the following actions:", 'audiotheme' ) . '</p>' .
+			'<p>' . __( 'Hovering over a row in the gigs list will display action links that allow you to manage your gig. You can perform the following actions:', 'audiotheme' ) . '</p>' .
 			'<ul>' .
-			'<li>' . __( "<strong>Edit</strong> takes you to the editing screen for that gig. You can also reach that screen by clicking on the gig date.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "<strong>Trash</strong> removes your gig from this list and places it in the trash, from which you can permanently delete it.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "<strong>Preview</strong> will show you what your draft gig will look like if you publish it.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>Edit</strong> takes you to the editing screen for that gig. You can also reach that screen by clicking on the gig date.', 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>Trash</strong> removes your gig from this list and places it in the trash, from which you can permanently delete it.', 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>Preview</strong> will show you what your draft gig will look like if you publish it.', 'audiotheme' ) . '</li>' .
 			'<li>' . __( "<strong>View</strong> will take you to your live site to view the gig. Which link is available depends on your gig's status.", 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
@@ -417,11 +417,11 @@ function audiotheme_gig_help() {
 		'title'   => __( 'Standard Fields', 'audiotheme' ),
 		'content' =>
 			'<p>' . __( "<strong>Title</strong> - Enter a title for your gig. After you enter a title, you'll see the permalink below, which you can edit.", 'audiotheme' ) . '</p>' .
-			'<p>' . __( "<strong>Date</strong> - Choose the date of your gig or enter it in the <code>YYYY/MM/DD</code> format.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( '<strong>Date</strong> - Choose the date of your gig or enter it in the <code>YYYY/MM/DD</code> format.', 'audiotheme' ) . '</p>' .
 			'<p>' . __( "<strong>Time</strong> - Choose the time of your gig. Leave it blank if you don't know it.", 'audiotheme' ) . '</p>' .
-			'<p>' . __( "<strong>Venue</strong> - Enter the name of a new venue, or select a saved venue. <em>It is important to select the time zone for new venues.</em> New venues will be saved to your venue database and you can update additional details on the Edit Venue screen.", 'audiotheme' ) . '</p>' .
-			'<p>' . __( "<strong>Note</strong> - Enter a short note about the gig.", 'audiotheme' ) . '</p>' .
-			'<p>' . __( "<strong>Editor</strong> - Enter a longer description for your gig. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.", 'audiotheme' ) . '</p>',
+			'<p>' . __( '<strong>Venue</strong> - Enter the name of a new venue, or select a saved venue. <em>It is important to select the time zone for new venues.</em> New venues will be saved to your venue database and you can update additional details on the Edit Venue screen.', 'audiotheme' ) . '</p>' .
+			'<p>' . __( '<strong>Note</strong> - Enter a short note about the gig.', 'audiotheme' ) . '</p>' .
+			'<p>' . __( '<strong>Editor</strong> - Enter a longer description for your gig. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.', 'audiotheme' ) . '</p>',
 	) );
 
 	get_current_screen()->add_help_tab( array(
@@ -439,7 +439,7 @@ function audiotheme_gig_help() {
 			'<p>' . __( 'The ticket box allows you to share information about ticket purchases and availability.', 'audiotheme' ) . '</p>' .
 			'<ul>' .
 			'<li>' . __( "<strong>Price</strong> - Does it cost money to attend your gig? Share that here so there aren't any surprises.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( "<strong>URL</strong> - If tickets can be purchased online, provide a link.", 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>URL</strong> - If tickets can be purchased online, provide a link.', 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
 

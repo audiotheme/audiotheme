@@ -39,26 +39,26 @@ function audiotheme_add_default_oembed_providers() {
 function audiotheme_oembed_html( $html, $url = null, $attr = null, $post_id = null ) {
 	$wrapped = '<div class="audiotheme-embed">' . $html . '</div>';
 
-    if ( empty( $url ) && 'video_embed_html' === current_filter() ) { // Jetpack
-        $html = $wrapped;
-    } elseif ( ! empty( $url ) ) {
-        $players = array( 'youtube', 'youtu.be', 'vimeo', 'dailymotion', 'hulu', 'blip.tv', 'wordpress.tv', 'viddler', 'revision3' );
+	if ( empty( $url ) && 'video_embed_html' === current_filter() ) { // Jetpack
+		$html = $wrapped;
+	} elseif ( ! empty( $url ) ) {
+		$players = array( 'youtube', 'youtu.be', 'vimeo', 'dailymotion', 'hulu', 'blip.tv', 'wordpress.tv', 'viddler', 'revision3' );
 
-        foreach ( $players as $player ) {
-            if ( false !== strpos( $url, $player ) ) {
-                if ( false !== strpos( $url, 'youtube' ) && false !== strpos( $html, '<iframe' ) && false === strpos( $html, 'wmode' ) ) {
-                    $html = preg_replace_callback( '|https?://[^"]+|im', '_audiotheme_oembed_youtube_wmode_parameter', $html );
-                }
+		foreach ( $players as $player ) {
+			if ( false !== strpos( $url, $player ) ) {
+				if ( false !== strpos( $url, 'youtube' ) && false !== strpos( $html, '<iframe' ) && false === strpos( $html, 'wmode' ) ) {
+					$html = preg_replace_callback( '|https?://[^"]+|im', '_audiotheme_oembed_youtube_wmode_parameter', $html );
+				}
 
-                $html = $wrapped;
-                break;
-            }
-        }
-    }
+				$html = $wrapped;
+				break;
+			}
+		}
+	}
 
-    if ( false !== strpos( $html, '<embed' ) && false === strpos( $html, 'wmode' ) ) {
-        $html = str_replace( '</param><embed', '</param><param name="wmode" value="opaque"></param><embed wmode="opaque"', $html );
-    }
+	if ( false !== strpos( $html, '<embed' ) && false === strpos( $html, 'wmode' ) ) {
+		$html = str_replace( '</param><embed', '</param><param name="wmode" value="opaque"></param><embed wmode="opaque"', $html );
+	}
 
 	return $html;
 }
@@ -245,24 +245,23 @@ function audiotheme_post_gallery( $output, $attr ) {
 					$image .= ( $href ) ? '</a>' : '';
 
 					// Some plugins use this filter, so mimic it as best we can.
-					if ( 'none' !== $link ) {
-						$permalink = in_array( $link, array( 'file', 'link' ) ) ? false: true;
-						$icon = $text = false;
-						$image = apply_filters( 'wp_get_attachment_link', $image, $attachment->ID, $size, $permalink, $icon, $text );
-					}
+			if ( 'none' !== $link ) {
+				$permalink = in_array( $link, array( 'file', 'link' ) ) ? false: true;
+				$icon = $text = false;
+				$image = apply_filters( 'wp_get_attachment_link', $image, $attachment->ID, $size, $permalink, $icon, $text );
+			}
 
 					$output .= $image;
 				$output .= '</' . $icontag . '>';
 
-				if ( $captiontag && trim( $attachment->post_excerpt ) ) {
-					$output .= '<' . $captiontag . ' class="wp-caption-text gallery-caption">';
-						$output .= wptexturize( $attachment->post_excerpt );
-					$output .= '</' . $captiontag . '>';
-				}
+			if ( $captiontag && trim( $attachment->post_excerpt ) ) {
+				$output .= '<' . $captiontag . ' class="wp-caption-text gallery-caption">';
+					$output .= wptexturize( $attachment->post_excerpt );
+				$output .= '</' . $captiontag . '>';
+			}
 
 			$output .= '</' . $itemtag .'>';
 		}
-
 
 		$output .= "\n</div>\n"; // Close the default gallery wrapper.
 	}

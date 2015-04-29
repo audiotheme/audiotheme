@@ -116,7 +116,7 @@ function audiotheme_update() {
 function audiotheme_update_notice( $notice ) {
 	$settings_page = is_network_admin() ? 'network/settings.php' : 'admin.php';
 
-	$notice  =  sprintf( __( '<a href="%s">Register your copy of AudioTheme</a> to receive automatic updates and support. Need a license key?', 'audiotheme' ),
+	$notice  = sprintf( __( '<a href="%s">Register your copy of AudioTheme</a> to receive automatic updates and support. Need a license key?', 'audiotheme' ),
 		esc_url( add_query_arg( 'page', 'audiotheme-settings', admin_url( $settings_page ) ) )
 	);
 	$notice .= ' <a href="https://audiotheme.com/view/audiotheme/" target="_blank">' . __( 'Purchase one now.', 'audiotheme' ) . '</a>';
@@ -208,7 +208,7 @@ function audiotheme_admin_body_class( $classes ) {
 
 	$classes .= ' screen-' . sanitize_html_class( get_current_screen()->id );
 
-	if ( 'audiotheme_archive' === get_current_screen()->id && $post_type = is_audiotheme_post_type_archive_id( $post->ID )) {
+	if ( 'audiotheme_archive' === get_current_screen()->id && $post_type = is_audiotheme_post_type_archive_id( $post->ID ) ) {
 		$classes .= ' ' . $post_type . '-archive';
 	}
 
