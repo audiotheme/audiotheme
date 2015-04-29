@@ -223,12 +223,12 @@ function audiotheme_class( $id, $classes = array(), $args = array() ) {
 	}
 
 	// Add support for the body element.
-	if ( 'body' == $id ) {
+	if ( 'body' === $id ) {
 		$classes = array_merge( get_body_class(), $classes );
 	}
 
 	// Add support for post classes.
-	if ( 'post' == $id ) {
+	if ( 'post' === $id ) {
 		$classes = array_merge( get_post_class( '', $args['post_id'] ), $classes );
 	}
 

@@ -14,7 +14,7 @@
  * @param object $wp_query The main WP_Query object. Passed by reference.
  */
 function audiotheme_records_admin_query( $wp_query ) {
-	if ( is_admin() && isset( $_GET['post_type'] ) && 'audiotheme_record' == $_GET['post_type'] ) {
+	if ( is_admin() && isset( $_GET['post_type'] ) && 'audiotheme_record' === $_GET['post_type'] ) {
 		$sortable_keys = array( 'artist', 'release_year', 'tracks' );
 		if ( ! empty( $_GET['orderby'] ) && in_array( $_GET['orderby'], $sortable_keys ) ) {
 			switch ( $_GET['orderby'] ) {
@@ -28,7 +28,7 @@ function audiotheme_records_admin_query( $wp_query ) {
 					break;
 			}
 
-			$order = ( isset( $_GET['order'] ) && 'desc' == $_GET['order'] ) ? 'desc' : 'asc';
+			$order = ( isset( $_GET['order'] ) && 'desc' === $_GET['order'] ) ? 'desc' : 'asc';
 			$orderby = ( empty( $orderby ) ) ? 'meta_value' : $orderby;
 
 			$wp_query->set( 'meta_key', $meta_key );
@@ -117,7 +117,7 @@ function audiotheme_record_display_columns( $column_name, $post_id ) {
  * @return array
  */
 function audiotheme_record_list_table_actions( $actions, $post ) {
-	if ( 'audiotheme_record' == get_post_type( $post ) ) {
+	if ( 'audiotheme_record' === get_post_type( $post ) ) {
 		unset( $actions['inline hide-if-no-js'] );
 	}
 
@@ -329,7 +329,7 @@ function audiotheme_record_details_meta_box( $post ) {
  * @param string $post_type The type of post the archive lists.
  */
 function audiotheme_record_archive_save_settings_hook( $post_id, $post, $post_type ) {
-	if ( 'audiotheme_record' != $post_type ) {
+	if ( 'audiotheme_record' !== $post_type ) {
 		return;
 	}
 
@@ -349,7 +349,7 @@ function audiotheme_record_archive_save_settings_hook( $post_id, $post, $post_ty
  */
 function audiotheme_record_archive_settings( $post ) {
 	$post_type = is_audiotheme_post_type_archive_id( $post->ID );
-	if ( 'audiotheme_record' != $post_type ) {
+	if ( 'audiotheme_record' !== $post_type ) {
 		return;
 	}
 
@@ -384,7 +384,7 @@ function audiotheme_record_archive_settings( $post ) {
  * @since 1.0.0
  */
 function audiotheme_record_list_help() {
-	if ( 'audiotheme_record' != get_current_screen()->post_type ) {
+	if ( 'audiotheme_record' !== get_current_screen()->post_type ) {
 		return;
 	}
 
@@ -428,7 +428,7 @@ function audiotheme_record_list_help() {
  * @since 1.0.0
  */
 function audiotheme_record_help() {
-	if ( 'audiotheme_record' != get_current_screen()->post_type ) {
+	if ( 'audiotheme_record' !== get_current_screen()->post_type ) {
 		return;
 	}
 

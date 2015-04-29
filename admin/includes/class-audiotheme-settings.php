@@ -60,7 +60,7 @@ class Audiotheme_Settings {
 	 * @since 1.0.0
 	 */
 	public static function instance() {
-		if ( null == self::$instance ) {
+		if ( null === self::$instance ) {
 			self::$instance = new self;
 		}
 
@@ -226,7 +226,7 @@ class Audiotheme_Settings {
 				'sections' => array(),
 			), $args );
 
-			$tab['priority'] = ( $tab_id == $screen->screen_id ) ? -1 : absint( $tab['priority'] );
+			$tab['priority'] = ( $tab_id === $screen->screen_id ) ? -1 : absint( $tab['priority'] );
 
 			$screen->tabs[ $tab_id ] = $tab;
 
@@ -254,7 +254,7 @@ class Audiotheme_Settings {
 	public function set_tab( $tab_id ) {
 		$screen = $this->get_current_screen();
 
-		if ( 'customizer' == $screen->screen_id ) {
+		if ( 'customizer' === $screen->screen_id ) {
 			$this->current_tab = 'customizer';
 		} elseif ( isset( $screen->tabs[ $tab_id ] ) ) {
 			$this->current_tab = $tab_id;
@@ -296,7 +296,7 @@ class Audiotheme_Settings {
 			$section['title'] = ( 0 === strpos( $section_id, '_default' ) ) ? '' : $title;
 
 			// Sanitize the priority.
-			$section['priority'] = ( '_default' == $section_id ) ? -1 : absint( $section['priority'] );
+			$section['priority'] = ( '_default' === $section_id ) ? -1 : absint( $section['priority'] );
 
 			$screen->tabs[ $tab_id ]['sections'][ $section_id ] = $section;
 		}
@@ -321,7 +321,7 @@ class Audiotheme_Settings {
 		$screen = $this->get_current_screen();
 		$tab_id = $this->get_current_tab_id();
 
-		if ( 'customizer' == $screen->screen_id ) {
+		if ( 'customizer' === $screen->screen_id ) {
 			$this->current_section = $section_id;
 		} elseif ( ! isset( $screen->tabs[ $tab_id ]['sections'][ $section_id ] ) ) {
 			$section_id = '_default';
@@ -359,7 +359,7 @@ class Audiotheme_Settings {
 		$key = $id;
 
 		// Used for the name attribute in the WP Settings API, to generate the field id attribute, and as the $id for customizer settings.
-		$id = ( $key == $option_name ) ? $key : $option_name . '[' . $id . ']';
+		$id = ( $key === $option_name ) ? $key : $option_name . '[' . $id . ']';
 
 		// Determine the default callback for rendering the field.
 		$field_types = array( 'checkbox', 'color', 'html', 'image', 'radio', 'select', 'text', 'textarea' );
@@ -387,7 +387,7 @@ class Audiotheme_Settings {
 		// Sanitize and reset some args.
 		$args['priority'] = absint( $args['priority'] );
 
-		if ( 'checkbox' == $type || 'radio' == $type ) {
+		if ( 'checkbox' === $type || 'radio' === $type ) {
 			$args['label_for'] = '';
 		}
 
@@ -413,10 +413,10 @@ class Audiotheme_Settings {
 		}
 
 		// Set up customizer specific arguments.
-		if ( 'customizer' == $screen->screen_id || ( false !== $args['customizer'] ) ) {
+		if ( 'customizer' === $screen->screen_id || ( false !== $args['customizer'] ) ) {
 			$setting['show_in_customizer'] = true;
 
-			if ( 'customizer' == $screen->screen_id ) {
+			if ( 'customizer' === $screen->screen_id ) {
 				$setting['show_on_settings_screen'] = false;
 			}
 
@@ -538,7 +538,7 @@ class Audiotheme_Settings {
 		$controls = array( 'media_frame', 'thickbox' ); // Whitelist the allowed image controls.
 		$control = ( ! isset( $control ) || ! in_array( $control ) ) ? 'thickbox' : $control;
 
-		if ( 'thickbox' == $control ) {
+		if ( 'thickbox' === $control ) {
 			printf( '<input type="text" name="%s" id="%s" value="%s" class="%s">',
 				esc_attr( $field_name ),
 				esc_attr( $field_id ),
@@ -877,14 +877,14 @@ class Audiotheme_Settings {
 
 								add_settings_field( $setting['key'], $setting['label'], $setting['field_callback'], $setting['wp_settings_section'], $setting['section'], $args );
 							}
-						} elseif ( 'audiotheme-theme-options' == $tab_id && '_default' == $section_id ) {
+						} elseif ( 'audiotheme-theme-options' === $tab_id && '_default' === $section_id ) {
 							// Make sure the default theme options section gets registered for any Theme Customizer settings to be synced.
 							add_settings_section( '_default', '', '__return_false', 'audiotheme-theme-options' );
 						}
 					}
 
 					// If this is the main theme options tab, output any settings that are customizer only so they don't get stomped on when the screen is saved.
-					if ( 'audiotheme-theme-options' == $tab_id ) {
+					if ( 'audiotheme-theme-options' === $tab_id ) {
 						$settings = wp_list_filter( $this->settings, array( 'screen' => 'customizer' ) );
 						if ( $settings ) {
 							foreach ( $settings as $setting ) {
@@ -1010,7 +1010,7 @@ class Audiotheme_Settings {
 	 * @return string A section id for the WordPress Settings API.
 	 */
 	protected function get_wp_settings_section_id( $screen_id, $tab_id = null ) {
-		return ( $screen_id == $tab_id ) ?  $screen_id : $screen_id . '-' . $tab_id;
+		return ( $screen_id === $tab_id ) ?  $screen_id : $screen_id . '-' . $tab_id;
 	}
 
 	/**
@@ -1030,12 +1030,12 @@ class Audiotheme_Settings {
 		$ap = $a['priority'];
 		$bp = $b['priority'];
 
-		if ( $ap == $bp ) {
+		if ( $ap === $bp ) {
 			// Sort by title or label instead since this isn't a stable sort.
 			$at = ( isset( $a['label'] ) ) ? $a['label'] : $a['title'];
 			$bt = ( isset( $b['label'] ) ) ? $b['label'] : $b['title'];
 
-			if ( $at == $bt ) {
+			if ( $at === $bt ) {
 				return 0;
 			}
 

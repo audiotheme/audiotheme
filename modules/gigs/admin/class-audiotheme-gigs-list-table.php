@@ -45,13 +45,13 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 
 		if ( ( isset( $_REQUEST['gig_date'] ) && empty( $_REQUEST['m'] ) && ( empty( $_REQUEST['compare'] ) || false !== strpos( $_REQUEST['compare'], '>' ) ) ) || ( empty( $_REQUEST['post_status'] ) && empty( $_REQUEST['gig_date'] ) ) ) {
 			$this->current_view = 'upcoming';
-		} elseif ( isset( $_REQUEST['gig_date'] ) && isset( $_REQUEST['compare'] ) && '<' == $_REQUEST['compare'] && empty( $_REQUEST['m'] ) ) {
+		} elseif ( isset( $_REQUEST['gig_date'] ) && isset( $_REQUEST['compare'] ) && '<' === $_REQUEST['compare'] && empty( $_REQUEST['m'] ) ) {
 			$this->current_view = 'past';
 		} elseif ( ! empty( $_REQUEST['post_status'] ) ) {
 			$this->current_view = $_REQUEST['post_status'];
 		}
 
-		$this->is_trash = isset( $_REQUEST['post_status'] ) && $_REQUEST['post_status'] == 'trash';
+		$this->is_trash = isset( $_REQUEST['post_status'] ) && $_REQUEST['post_status'] === 'trash';
 	}
 
 	/**
@@ -79,12 +79,12 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		// Compile the WP_Query args based on the current view and user options.
 		$args = array(
 			'post_type'      => 'audiotheme_gig',
-			'order'          => ( isset( $_REQUEST['order'] ) && 'asc' == strtolower( $_REQUEST['order'] ) ) ? 'asc' : 'desc',
+			'order'          => ( isset( $_REQUEST['order'] ) && 'asc' === strtolower( $_REQUEST['order'] ) ) ? 'asc' : 'desc',
 			'post_status'    => ( isset( $_REQUEST['post_status'] ) ) ? $_REQUEST['post_status'] : 'publish,draft',
 			'posts_per_page' => $per_page,
 		);
 
-		if ( empty( $_REQUEST['m'] ) && ( 'upcoming' == $this->current_view || 'past' == $this->current_view ) ) {
+		if ( empty( $_REQUEST['m'] ) && ( 'upcoming' === $this->current_view || 'past' === $this->current_view ) ) {
 			$args['meta_query'][] = array(
 				'key'     => '_audiotheme_gig_datetime',
 				'value'   => ( isset( $_REQUEST['gig_date'] ) ) ? urldecode( $_REQUEST['gig_date'] ) : current_time( 'mysql' ),
@@ -93,7 +93,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 			);
 
 			// Sort upcoming in ascending order by default.
-			$args['order'] = ( 'upcoming' == $this->current_view && ! isset( $_REQUEST['order'] ) ) ? 'asc' : $args['order'];
+			$args['order'] = ( 'upcoming' === $this->current_view && ! isset( $_REQUEST['order'] ) ) ? 'asc' : $args['order'];
 		} elseif ( ! empty( $_REQUEST['m'] ) ) {
 			$m = absint( substr( $_REQUEST['m'], 4 ) );
 			$y = absint( substr( $_REQUEST['m'], 0, 4 ) );
@@ -151,7 +151,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 			}
 
 			// Sort by venue.
-			if ( ! empty( $_GET['orderby'] ) && 'venue' == $_GET['orderby'] ) {
+			if ( ! empty( $_GET['orderby'] ) && 'venue' === $_GET['orderby'] ) {
 				$items = audiotheme_sort_objects( $items, array( 'venue', 'name' ), $args['order'], true, 'gig_datetime' );
 			}
 		}
@@ -203,7 +203,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		foreach ( get_post_stati( array( 'show_in_admin_all_list' => false ) ) as $status ) {
 			$total_posts -= $num_posts->$status;
 		}
-		
+
 		$sql = "SELECT COUNT( DISTINCT p.ID )
 			FROM $wpdb->posts p
 			INNER JOIN $wpdb->postmeta pm ON p.ID=pm.post_id
@@ -212,7 +212,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		$upcoming_count = $wpdb->get_var( $wpdb->prepare( $sql . " AND pm.meta_value>=%s", current_time( 'mysql' ) ) );
 		$status_links['upcoming'] = sprintf( '<a href="%s"%s>%s <span class="count">(%d)</span></a>',
 			$base_url,
-			( 'upcoming' == $this->current_view ) ? ' class="current"' : '',
+			( 'upcoming' === $this->current_view ) ? ' class="current"' : '',
 			__( 'Upcoming', 'audiotheme' ),
 			$upcoming_count
 		);
@@ -220,12 +220,12 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		$past_count = $wpdb->get_var( $wpdb->prepare( $sql . " AND pm.meta_value<%s", current_time( 'mysql' ) ) );
 		$status_links['past'] = sprintf( '<a href="%s"%s>%s <span class="count">(%d)</span></a>',
 			add_query_arg( array( 'gig_date' => current_time( 'mysql' ), 'compare' => '<' ), $base_url ),
-			( 'past' == $this->current_view ) ? ' class="current"' : '',
+			( 'past' === $this->current_view ) ? ' class="current"' : '',
 			__( 'Past', 'audiotheme' ),
 			$past_count
 		);
 
-		$class = ( 'any' == $this->current_view ) ? ' class="current"' : '';
+		$class = ( 'any' === $this->current_view ) ? ' class="current"' : '';
 		$all_url = add_query_arg( 'post_status', 'any', $base_url );
 		$status_links['all'] = "<a href='$all_url{$allposts}'$class>" . sprintf( _nx( 'All <span class="count">(%s)</span>', 'All <span class="count">(%s)</span>', $total_posts, 'posts' ), number_format_i18n( $total_posts ) ) . '</a>';
 
@@ -241,7 +241,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 				continue;
 			}
 
-			if ( $status_name == $this->current_view ) {
+			if ( $status_name === $this->current_view ) {
 				$class = ' class="current"';
 			}
 
@@ -266,7 +266,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		?>
 		<div class="alignleft actions">
 			<?php
-			if ( 'top' == $which ) {
+			if ( 'top' === $which ) {
 				$this->months_dropdown( 'audiotheme_gig' );
 
 				$venues = $wpdb->get_results( "SELECT p.ID, p.post_title
@@ -467,7 +467,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 	 */
 	function column_title( $item ) {
 		$statuses = get_post_statuses();
-		$status = ( 'publish' != $item->post_status && array_key_exists( $item->post_status, $statuses ) ) ? ' - <strong>' . esc_html( $statuses[ $item->post_status ] ) . '</strong>' : '';
+		$status = ( 'publish' !== $item->post_status && array_key_exists( $item->post_status, $statuses ) ) ? ' - <strong>' . esc_html( $statuses[ $item->post_status ] ) . '</strong>' : '';
 
 		$date = ( empty( $item->gig_datetime ) ) ? __( '(no date)', 'audiotheme' ) : mysql2date( get_option( 'date_format' ), $item->gig_datetime );
 		$out = sprintf( '<strong><a href="%1$s" class="row-title">%2$s</a></strong> - %3$s%4$s<br>',
@@ -479,20 +479,20 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 
 		$post_type_object = get_post_type_object( $item->post_type );
 		$can_edit_post = current_user_can( $post_type_object->cap->edit_post, $item->ID );
-		
-		if ( $can_edit_post && 'trash' != $item->post_status ) {
+
+		if ( $can_edit_post && 'trash' !== $item->post_status ) {
 			$actions['edit'] = '<a href="' . get_edit_post_link( $item->ID, true ) . '" title="' . esc_attr( __( 'Edit this item', 'audiotheme' ) ) . '">' . __( 'Edit', 'audiotheme' ) . '</a>';
 			#$actions['inline hide-if-no-js'] = '<a href="#" class="editinline" title="' . esc_attr( __( 'Edit this item inline' ) ) . '">' . __( 'Quick&nbsp;Edit' ) . '</a>';
 		}
 
 		if ( current_user_can( $post_type_object->cap->delete_post, $item->ID ) ) {
-			if ( 'trash' == $item->post_status ) {
+			if ( 'trash' === $item->post_status ) {
 				$actions['untrash'] = "<a title='" . esc_attr( __( 'Restore this item from the Trash', 'audiotheme' ) ) . "' href='" . wp_nonce_url( admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $item->ID ) ), 'untrash-post_' . $item->ID ) . "'>" . __( 'Restore', 'audiotheme' ) . "</a>";
 			} elseif ( EMPTY_TRASH_DAYS ) {
 				$actions['trash'] = "<a class='submitdelete' title='" . esc_attr( __( 'Move this item to the Trash', 'audiotheme' ) ) . "' href='" . get_delete_post_link( $item->ID ) . "'>" . __( 'Trash', 'audiotheme' ) . "</a>";
 			}
 
-			if ( 'trash' == $item->post_status || ! EMPTY_TRASH_DAYS ) {
+			if ( 'trash' === $item->post_status || ! EMPTY_TRASH_DAYS ) {
 				$onclick = " onclick=\"return confirm('" . esc_js( sprintf( __( 'Are you sure you want to delete this %s?', 'audiotheme' ), strtolower( $post_type_object->labels->singular_name ) ) ) . "');\"";
 				$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Delete this item permanently', 'audiotheme' ) ) . "' href='" . get_delete_post_link( $item->ID, '', true ) . "'$onclick>" . __( 'Delete Permanently', 'audiotheme' ) . "</a>";
 			}
@@ -503,7 +503,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 				if ( $can_edit_post ) {
 					$actions['view'] = '<a href="' . esc_url( add_query_arg( 'preview', 'true', get_permalink( $item->ID ) ) ) . '" title="' . esc_attr( sprintf( __( 'Preview &#8220;%s&#8221;', 'audiotheme' ), $item->post_title ) ) . '" rel="permalink">' . __( 'Preview', 'audiotheme' ) . '</a>';
 				}
-			} elseif ( 'trash' != $item->post_status ) {
+			} elseif ( 'trash' !== $item->post_status ) {
 				$actions['view'] = '<a href="' . get_permalink( $item->ID ) . '" title="' . esc_attr( sprintf( __( 'View &#8220;%s&#8221;', 'audiotheme' ), $item->post_title ) ) . '" rel="permalink">' . __( 'View', 'audiotheme' ) . '</a>';
 			}
 		}
@@ -573,7 +573,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 
 		$month_count = count( $months );
 
-		if ( ! $month_count || ( 1 == $month_count && 0 == $months[0]->month ) ) {
+		if ( ! $month_count || ( 1 === $month_count && 0 === $months[0]->month ) ) {
 			return;
 		}
 
@@ -583,7 +583,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 			<option value="0" <?php selected( $m, 0 ); ?>><?php _e( 'Show all dates', 'audiotheme' ); ?></option>
 			<?php
 			foreach ( $months as $arc_row ) {
-				if ( 0 == $arc_row->year ) {
+				if ( 0 === $arc_row->year ) {
 					continue;
 				}
 

@@ -71,7 +71,7 @@
 		<input type="hidden" name="post_status" value="<?php echo ! empty( $_REQUEST['post_status'] ) ? esc_attr( $_REQUEST['post_status'] ) : 'any'; ?>">
 		<input type="hidden" name="post_type" value="<?php echo $post_type_object->name; ?>">
 
-		<?php if ( 'upcoming' == $gigs_list_table->current_view || 'past' == $gigs_list_table->current_view ) : ?>
+		<?php if ( 'upcoming' === $gigs_list_table->current_view || 'past' === $gigs_list_table->current_view ) : ?>
 			<input type="hidden" name="gig_date" value="<?php echo esc_attr( current_time( 'mysql' ) ); ?>">
 		<?php endif; ?>
 

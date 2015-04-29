@@ -23,7 +23,7 @@ if ( ! function_exists( 'get_audiotheme_option' ) ) :
 function get_audiotheme_option( $option_name, $key = null, $default = null ) {
 	$option = get_option( $option_name );
 
-	if ( $key == $option_name || empty( $key ) ) {
+	if ( $key === $option_name || empty( $key ) ) {
 		return ( $option ) ? $option : $default;
 	}
 

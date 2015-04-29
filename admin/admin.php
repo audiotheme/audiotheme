@@ -99,7 +99,7 @@ function audiotheme_update() {
 			}
 		}
 
-		if ( count( $check ) != count( $themes ) ) {
+		if ( count( $check ) !== count( $themes ) ) {
 			update_site_option( 'audiotheme_themes', $check );
 		}
 	}
@@ -208,7 +208,7 @@ function audiotheme_admin_body_class( $classes ) {
 
 	$classes .= ' screen-' . sanitize_html_class( get_current_screen()->id );
 
-	if ( 'audiotheme_archive' == get_current_screen()->id && $post_type = is_audiotheme_post_type_archive_id( $post->ID )) {
+	if ( 'audiotheme_archive' === get_current_screen()->id && $post_type = is_audiotheme_post_type_archive_id( $post->ID )) {
 		$classes .= ' ' . $post_type . '-archive';
 	}
 
@@ -293,7 +293,7 @@ function audiotheme_upgrade() {
 		audiotheme_upgrade_170();
 	}
 
-	if ( '0' == $saved_version || version_compare( $saved_version, $current_version, '<' ) ) {
+	if ( '0' === $saved_version || version_compare( $saved_version, $current_version, '<' ) ) {
 		update_option( 'audiotheme_version', AUDIOTHEME_VERSION );
 	}
 }

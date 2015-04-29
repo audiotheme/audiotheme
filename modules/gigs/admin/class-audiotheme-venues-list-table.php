@@ -61,7 +61,7 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 		// Compile the WP_Query args based on the current view and user options.
 		$args = array(
 			'post_type'      => 'audiotheme_venue',
-			'order'          => ( isset( $_REQUEST['order'] ) && 'desc' == strtolower( $_REQUEST['order'] ) ) ? 'desc' : 'asc',
+			'order'          => ( isset( $_REQUEST['order'] ) && 'desc' === strtolower( $_REQUEST['order'] ) ) ? 'desc' : 'asc',
 			'orderby'        => ( ! isset( $_REQUEST['orderby'] ) ) ? 'title' : $_REQUEST['orderby'],
 			'posts_per_page' => $per_page,
 		);
@@ -204,7 +204,7 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 			if ( check_admin_referer( $nonce_action, 'audiotheme_venue_nonce' ) ) {
 				$action = ( ! empty( $data['ID'] ) ) ? 'edit' : 'add';
 			}
-		} elseif ( isset( $_REQUEST['action'] ) && 'delete' == $_REQUEST['action'] && ! empty( $_REQUEST['venue_id'] ) ) {
+		} elseif ( isset( $_REQUEST['action'] ) && 'delete' === $_REQUEST['action'] && ! empty( $_REQUEST['venue_id'] ) ) {
 			$post_ids = array( absint( $_REQUEST['venue_id'] ) );
 
 			if ( wp_verify_nonce( $_REQUEST['_wpnonce'], 'delete-venue_' . $post_ids[0] ) ) {
@@ -226,9 +226,9 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 				case 'edit':
 					$venue_id = save_audiotheme_venue( $data );
 
-					if ( $venue_id && 'add' == $action ) {
+					if ( $venue_id && 'add' === $action ) {
 						$sendback = add_query_arg( 'message', 1, $sendback );
-					} elseif ( $venue_id && 'edit' == $action ) {
+					} elseif ( $venue_id && 'edit' === $action ) {
 						$sendback = add_query_arg( 'updated', 1, $sendback );
 					}
 					break;

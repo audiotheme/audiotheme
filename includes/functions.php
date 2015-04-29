@@ -112,7 +112,7 @@ class Audiotheme_Sort_Objects {
 
 	// Fallback is limited to working with properties of the parent object.
 	function __construct( $orderby, $order, $fallback = null ) {
-		$this->order = ( 'desc' == strtolower( $order ) ) ? 'DESC' : 'ASC';
+		$this->order = ( 'desc' === strtolower( $order ) ) ? 'DESC' : 'ASC';
 		$this->orderby = $orderby;
 		$this->fallback = $fallback;
 	}
@@ -131,11 +131,11 @@ class Audiotheme_Sort_Objects {
 			}
 		}
 
-		if ( $a_value == $b_value ) {
+		if ( $a_value === $b_value ) {
 			if ( ! empty( $this->fallback ) ) {
 				$properties = explode( ',', $this->fallback );
 				foreach( $properties as $prop ) {
-					if ( $a->$prop != $b->$prop ) {
+					if ( $a->$prop !== $b->$prop ) {
 						#printf( '(%s - %s) - (%s - %s)<br>', $a_value, $a->$prop, $b_value, $b->$prop );
 						return $this->compare( $a->$prop, $b->$prop );
 					}
@@ -151,9 +151,9 @@ class Audiotheme_Sort_Objects {
 
 	function compare( $a, $b ) {
 		if ( $a < $b ) {
-			return ( 'ASC' == $this->order ) ? -1 : 1;
+			return ( 'ASC' === $this->order ) ? -1 : 1;
 		} else {
-			return ( 'ASC' == $this->order ) ? 1 : -1;
+			return ( 'ASC' === $this->order ) ? 1 : -1;
 		}
 	}
 }
@@ -224,13 +224,13 @@ function audiotheme_array_asplice( $input, $offset, $length = 0, $replacement = 
 	$end = array_slice( $input, $offset + $length, null, true );
 
 	// Discard elements in $replacement whose keys match keys in $input.
-	if ( 'input' == $primary ) {
+	if ( 'input' === $primary ) {
 		$replacement = array_diff_key( $replacement, $input );
 	}
 
 	// Discard elements in $start and $end whose keys match keys in $replacement.
 	// Could change the size of $input, so this is done after slicing the start and end.
-	elseif ( 'replacement' == $primary ) {
+	elseif ( 'replacement' === $primary ) {
 		$start = array_diff_key( $start, $replacement );
 		$end = array_diff_key( $end, $replacement );
 	}
@@ -370,7 +370,7 @@ function audiotheme_array_sort_array( $array, $order, $keep_diff = 'bottom', $di
 	}
 
 	if ( 'discard' !== $keep_diff ) {
-		$sorted = ( 'top' == $keep_diff ) ? $diff + $sorted : $sorted + $diff;
+		$sorted = ( 'top' === $keep_diff ) ? $diff + $sorted : $sorted + $diff;
 	}
 
 	return $sorted;
@@ -400,7 +400,7 @@ function audiotheme_shortcode_bool( $var ) {
 function audiotheme_encode_svg( $path ) {
 	$path = path_is_absolute( $path ) ? $path : AUDIOTHEME_DIR . $path;
 
-	if ( ! file_exists( $path ) || 'svg' != pathinfo( $path, PATHINFO_EXTENSION ) ) {
+	if ( ! file_exists( $path ) || 'svg' !== pathinfo( $path, PATHINFO_EXTENSION ) ) {
 		return '';
 	}
 

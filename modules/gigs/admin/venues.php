@@ -45,7 +45,7 @@ function audiotheme_venues_manage_screen() {
 	$nonce_field = wp_nonce_field( 'add-venue', 'audiotheme_venue_nonce', true, false );
 	$values = get_default_audiotheme_venue_properties();
 
-	if ( isset( $_GET['action'] ) && 'edit' == $_GET['action'] && isset( $_GET['venue_id'] ) && is_numeric( $_GET['venue_id'] ) ) {
+	if ( isset( $_GET['action'] ) && 'edit' === $_GET['action'] && isset( $_GET['venue_id'] ) && is_numeric( $_GET['venue_id'] ) ) {
 		$venue_to_edit = get_audiotheme_venue( $_GET['venue_id'] );
 
 		$action = 'edit';
@@ -82,7 +82,7 @@ function audiotheme_venue_edit_screen_setup() {
 	wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
 
 	$values = get_default_audiotheme_venue_properties();
-	if ( isset( $_GET['action'] ) && 'edit' == $_GET['action'] && isset( $_GET['venue_id'] ) && is_numeric( $_GET['venue_id'] ) ) {
+	if ( isset( $_GET['action'] ) && 'edit' === $_GET['action'] && isset( $_GET['venue_id'] ) && is_numeric( $_GET['venue_id'] ) ) {
 		$venue_to_edit = get_audiotheme_venue( $_GET['venue_id'] );
 		$values = wp_parse_args( get_object_vars( $venue_to_edit ), $values );
 	}
@@ -139,9 +139,9 @@ function audiotheme_venue_edit_screen_process_actions() {
 		$venue_id = save_audiotheme_venue( $data );
 		$sendback = get_edit_post_link( $venue_id );
 
-		if ( $venue_id && 'add' == $action ) {
+		if ( $venue_id && 'add' === $action ) {
 			$sendback = add_query_arg( 'message', 1, $sendback );
-		} elseif ( $venue_id && 'edit' == $action ) {
+		} elseif ( $venue_id && 'edit' === $action ) {
 			$sendback = add_query_arg( 'message', 2, $sendback );
 		}
 
@@ -163,7 +163,7 @@ function audiotheme_venue_edit_screen() {
 	$nonce_field = wp_nonce_field( 'add-venue', 'audiotheme_venue_nonce', true, false );
 	$values = get_default_audiotheme_venue_properties();
 
-	if ( isset( $_GET['action'] ) && 'edit' == $_GET['action'] && isset( $_GET['venue_id'] ) && is_numeric( $_GET['venue_id'] ) ) {
+	if ( isset( $_GET['action'] ) && 'edit' === $_GET['action'] && isset( $_GET['venue_id'] ) && is_numeric( $_GET['venue_id'] ) ) {
 		$venue_to_edit = get_audiotheme_venue( $_GET['venue_id'] );
 
 		$action = 'edit';
@@ -226,7 +226,7 @@ function audiotheme_venue_submit_meta_box( $post ) {
 
 		<div id="major-publishing-actions">
 
-			<?php if ( 'auto-draft' != $post->post_status && 'draft' != $post->post_status ) : ?>
+			<?php if ( 'auto-draft' !== $post->post_status && 'draft' !== $post->post_status ) : ?>
 				<div id="delete-action">
 					<?php
 					if ( current_user_can( $post_type_object->cap->delete_post, $post->ID ) ) {
@@ -243,7 +243,7 @@ function audiotheme_venue_submit_meta_box( $post ) {
 			<div id="publishing-action">
 				<?php audiotheme_admin_spinner( array( 'id' => 'ajax-loading' ) ); ?>
 				<?php
-				if ( ! in_array( $post->post_status, array( 'publish', 'future', 'private' ) ) || 0 == $post->ID ) {
+				if ( ! in_array( $post->post_status, array( 'publish', 'future', 'private' ) ) || 0 === $post->ID ) {
 					?>
 					<input type="hidden" name="original_publish" id="original_publish" value="<?php esc_attr_e( 'Publish', 'audiotheme' ) ?>">
 					<?php

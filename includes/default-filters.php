@@ -19,7 +19,7 @@
 function audiotheme_archives_post_type_link( $permalink, $post, $leavename ) {
 	global $wp_rewrite;
 
-	if ( 'audiotheme_archive' == $post->post_type  ) {
+	if ( 'audiotheme_archive' === $post->post_type  ) {
 		$post_type = is_audiotheme_post_type_archive_id( $post->ID );
 		$post_type_object = get_post_type_object( $post_type );
 
@@ -122,8 +122,8 @@ function audiotheme_nav_menu_classes( $items, $args ) {
 	$post_type_archive_link = get_post_type_archive_link( get_post_type() );
 
 	foreach ( $items as $key => $item ) {
-		if ( 0 == $item->menu_item_parent ) {
-			$first_top = ( -1 == $first_top ) ? $key : $first_top;
+		if ( 0 === $item->menu_item_parent ) {
+			$first_top = ( -1 === $first_top ) ? $key : $first_top;
 			$last_top = $key;
 		} else {
 			if ( ! isset( $classes['first-child-items'][ $item->menu_item_parent ] ) ) {
@@ -135,19 +135,19 @@ function audiotheme_nav_menu_classes( $items, $args ) {
 
 		if ( ! is_404() && ! is_search() ) {
 			if (
-				'audiotheme_archive' == $item->object &&
-				$post_type_archive_id == $item->object_id &&
-				trailingslashit( $item->url ) == $current_url
+				'audiotheme_archive' === $item->object &&
+				$post_type_archive_id === $item->object_id &&
+				trailingslashit( $item->url ) === $current_url
 			) {
 				$items[ $key ]->classes[] = 'current-menu-item';
 			}
 
-			if ( $is_blog_post && $blog_page_id == $item->object_id ) {
+			if ( $is_blog_post && $blog_page_id === $item->object_id ) {
 				$items[ $key ]->classes[] = 'current-menu-parent';
 			}
 
 			// Add 'current-menu-parent' class to CPT archive links when viewing a singular template.
-			if ( $is_audiotheme_post_type && $post_type_archive_link == $item->url ) {
+			if ( $is_audiotheme_post_type && $post_type_archive_link === $item->url ) {
 				$items[ $key ]->classes[] = 'current-menu-parent';
 			}
 		}

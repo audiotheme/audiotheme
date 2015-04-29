@@ -14,7 +14,7 @@
  * @param object $wp_query The main WP_Query object. Passed by reference.
  */
 function audiotheme_tracks_admin_query( $wp_query ) {
-	if ( isset( $_GET['post_type'] ) && 'audiotheme_track' == $_GET['post_type'] ) {
+	if ( isset( $_GET['post_type'] ) && 'audiotheme_track' === $_GET['post_type'] ) {
 		$sortable_keys = array( 'artist' );
 		if ( ! empty( $_GET['orderby'] ) && in_array( $_GET['orderby'], $sortable_keys ) ) {
 			switch ( $_GET['orderby'] ) {
@@ -23,7 +23,7 @@ function audiotheme_tracks_admin_query( $wp_query ) {
 					break;
 			}
 
-			$order = ( isset( $_GET['order'] ) && 'desc' == $_GET['order'] ) ? 'desc' : 'asc';
+			$order = ( isset( $_GET['order'] ) && 'desc' === $_GET['order'] ) ? 'desc' : 'asc';
 			$orderby = ( empty( $orderby ) ) ? 'meta_value' : $orderby;
 
 			$wp_query->set( 'meta_key', $meta_key );
@@ -146,7 +146,7 @@ function audiotheme_track_display_columns( $column_name, $post_id ) {
  * @return array
  */
 function audiotheme_track_list_table_actions( $actions, $post ) {
-	if ( 'audiotheme_track' == get_post_type( $post ) ) {
+	if ( 'audiotheme_track' === get_post_type( $post ) ) {
 		unset( $actions['inline hide-if-no-js'] );
 	}
 
@@ -177,7 +177,7 @@ function audiotheme_tracks_filters() {
 	$screen = get_current_screen();
 	$post_parent = empty( $_GET['post_parent'] ) ? 0 : absint( $_GET['post_parent'] );
 
-	if ( 'edit-audiotheme_track' == $screen->id ) {
+	if ( 'edit-audiotheme_track' === $screen->id ) {
 		$records = $wpdb->get_results( "SELECT ID, post_title FROM $wpdb->posts WHERE post_type='audiotheme_record' AND post_status!='auto-draft' ORDER BY post_title ASC" );
 		?>
 		<select name="post_parent">
@@ -222,11 +222,11 @@ function audiotheme_track_save_post( $post_id ) {
 	foreach( $fields as $field ) {
 		$value = ( empty( $_POST[ $field ] ) ) ? '' : $_POST[ $field ];
 
-		if ( 'artist' == $field ) {
+		if ( 'artist' === $field ) {
 			$value = sanitize_text_field( $value );
-		} elseif ( 'length' == $field ) {
+		} elseif ( 'length' === $field ) {
 			$value = preg_replace( '/[^0-9:]/', '', $value );
-		} elseif ( ( 'file_url' == $field || 'purchase_url' == $field ) && ! empty( $value ) ) {
+		} elseif ( ( 'file_url' === $field || 'purchase_url' === $field ) && ! empty( $value ) ) {
 			$value = esc_url_raw( $value );
 		}
 
@@ -345,10 +345,10 @@ function audiotheme_track_details_meta_box( $post ) {
  * @since 1.0.0
  */
 function audiotheme_track_list_help() {
-	if ( 'audiotheme_track' != get_current_screen()->post_type ) {
+	if ( 'audiotheme_track' !== get_current_screen()->post_type ) {
 		return;
 	}
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'overview',
 		'title'   => __( 'Overview', 'audiotheme' ),
@@ -357,7 +357,7 @@ function audiotheme_track_list_help() {
 			'<p>' . __( "This screen provides access to all of your tracks. You can customize the display of this screen to suit your workflow.", 'audiotheme' ) . '</p>' .
 			'<p><strong><em>' . __( "Tracks must be add/created through a record and cannot be added without being associated with a record.", 'audiotheme' ) . '</em></strong></p>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'screen-content',
 		'title'   => __( 'Screen Content', 'audiotheme' ),
@@ -370,7 +370,7 @@ function audiotheme_track_list_help() {
 			'<li>' . __( "You can also sort your tracks in any view by clicking the column headers.", 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'available-actions',
 		'title'   => __( 'Available Actions', 'audiotheme' ),
@@ -391,10 +391,10 @@ function audiotheme_track_list_help() {
  * @since 1.0.0
  */
 function audiotheme_track_help() {
-	if ( 'audiotheme_track' != get_current_screen()->post_type ) {
+	if ( 'audiotheme_track' !== get_current_screen()->post_type ) {
 		return;
 	}
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'standard-fields',
 		'title'   => __( 'Standard Fields', 'audiotheme' ),
@@ -403,7 +403,7 @@ function audiotheme_track_help() {
 			'<p>' . __( "<strong>Editor</strong> - Describe your track. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.", 'audiotheme' ) . '</p>' .
 			'<p>' . __( "When you're done editing a track, click the Update button.", 'audiotheme' ) . '</p>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'track-details',
 		'title'		=> __( 'Track Details', 'audiotheme' ),
@@ -417,7 +417,7 @@ function audiotheme_track_help() {
 			'<li>' . __( "<strong>Purchase URL</strong> - Enter a URL where the track can be purchased individually.", 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'inserting-media',
 		'title'		=> __( 'Inserting Media', 'audiotheme' ),
@@ -425,7 +425,7 @@ function audiotheme_track_help() {
 			'<p>' . __( 'You can upload and insert media (images, audio, documents, etc.) by clicking the Add Media button. You can select from the images and files already uploaded to the Media Library, or upload new media to add to your gig description. To create an image gallery, select the images to add and click the "Create a new gallery" button.', 'audiotheme' ) . '</p>' .
 			'<p>' . __( 'You can also embed media from many popular websites including Twitter, YouTube, Flickr and others by pasting the media URL on its own line into the gig description editor. Please refer to the Codex to <a href="http://codex.wordpress.org/Embeds">learn more about embeds</a>.', 'audiotheme' ) . '</p>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'customize-display',
 		'title'   => __( 'Customize This Screen', 'audiotheme' ),

@@ -181,7 +181,7 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 
 			$response = wp_remote_get( add_query_arg( $remote_args, 'http://api.twitter.com/1/statuses/user_timeline.json' ) );
 
-			if ( 200 == wp_remote_retrieve_response_code( $response ) ) {
+			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
 				$results = json_decode( wp_remote_retrieve_body( $response ), true );
 				if ( is_array( $results ) && ! isset( $results['errors'] ) ) { // Make sure there's not a Twitter error.
 					$tweets = array();
@@ -300,7 +300,7 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 	 * @since 1.0.0
 	 */
 	function sort_tweet_entities( $a, $b ) {
-		if ( $a['indices'][0] == $b['indices'][0] ) {
+		if ( $a['indices'][0] === $b['indices'][0] ) {
         	return 0;
     	}
 

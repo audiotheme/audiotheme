@@ -132,7 +132,7 @@ function audiotheme_settings_init() {
  * @since 1.3.0
  */
 function audiotheme_settings_save_network_options() {
-	if ( ! is_network_admin() || empty( $_GET['action'] ) || 'audiotheme-save-network-settings' != $_GET['action'] ) {
+	if ( ! is_network_admin() || empty( $_GET['action'] ) || 'audiotheme-save-network-settings' !== $_GET['action'] ) {
 		return;
 	}
 
@@ -312,7 +312,7 @@ function audiotheme_settings_display_screen() {
 				echo '<div class="tab-panel" id="' . $tab_id . '-panel">';
 					do_action( $screen->option_group . '_' . $tab_id . '_fields_before' );
 
-					$wp_settings_section = ( $screen->screen_id == $tab_id ) ? $screen->screen_id : $screen->screen_id . '-' . $tab_id;
+					$wp_settings_section = ( $screen->screen_id === $tab_id ) ? $screen->screen_id : $screen->screen_id . '-' . $tab_id;
 					do_settings_sections( $wp_settings_section );
 
 					do_action( $screen->option_group . '_' . $tab_id . '_fields_after' );
@@ -363,7 +363,7 @@ function audiotheme_settings_sanitize_option( $value, $option ) {
 					continue;
 				}
 
-				if ( isset( $field['args']['option_name'] ) && $option == $field['args']['option_name'] && ! in_array( $field_name, $customizer ) ) {
+				if ( isset( $field['args']['option_name'] ) && $option === $field['args']['option_name'] && ! in_array( $field_name, $customizer ) ) {
 					$value = audiotheme_settings_sanitize_field( $field, $value );
 
 					if ( ! audiotheme_settings_validate_field( $field, $option, $value ) ) {

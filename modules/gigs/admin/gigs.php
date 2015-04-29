@@ -38,7 +38,7 @@ function audiotheme_gigs_admin_setup() {
 	wp_register_script( 'audiotheme-venue-edit', AUDIOTHEME_URI . 'modules/gigs/admin/js/venue-edit.js', array( 'audiotheme-admin', 'jquery-ui-autocomplete', 'post' ) );
 
 	// Only run on the gig and venue Manage Screens.
-	if ( 'admin.php' == $pagenow && isset( $_GET['page'] ) && ( 'audiotheme-gigs' == $_GET['page'] || 'audiotheme-venues' == $_GET['page'] ) ) {
+	if ( 'admin.php' === $pagenow && isset( $_GET['page'] ) && ( 'audiotheme-gigs' === $_GET['page'] || 'audiotheme-venues' === $_GET['page'] ) ) {
 		add_filter( 'set-screen-option', 'audiotheme_gigs_screen_options', 999, 3 );
 	}
 }
@@ -52,7 +52,7 @@ function audiotheme_gigs_admin_menu() {
 	global $pagenow, $plugin_page, $typenow;
 
 	// Redirect the default Manage Gigs screen.
-	if ( 'audiotheme_gig' == $typenow && 'edit.php' == $pagenow ) {
+	if ( 'audiotheme_gig' === $typenow && 'edit.php' === $pagenow ) {
 		wp_redirect( get_audiotheme_gig_admin_url() );
 		exit;
 	}
@@ -132,7 +132,7 @@ function audiotheme_gig_post_updated_messages( $messages ) {
  * @return mixed The sanitized value.
  */
 function audiotheme_gigs_screen_options( $return, $option, $value ) {
-	if ( 'toplevel_page_audiotheme_gigs_per_page' == $option || 'gigs_page_audiotheme_venues_per_page' == $option ) {
+	if ( 'toplevel_page_audiotheme_gigs_per_page' === $option || 'gigs_page_audiotheme_venues_per_page' === $option ) {
 		$return = absint( $value );
 	}
 
@@ -151,19 +151,19 @@ function audiotheme_gigs_screen_options( $return, $option, $value ) {
 function audiotheme_gigs_admin_menu_highlight( $parent_file ) {
 	global $pagenow, $post_type, $submenu, $submenu_file;
 
-	if ( 'audiotheme_gig' == $post_type ) {
+	if ( 'audiotheme_gig' === $post_type ) {
 		$parent_file = 'audiotheme-gigs';
-		$submenu_file = ( 'post.php' == $pagenow ) ? 'audiotheme-gigs' : $submenu_file;
+		$submenu_file = ( 'post.php' === $pagenow ) ? 'audiotheme-gigs' : $submenu_file;
 	}
 
-	if ( 'audiotheme-gigs' == $parent_file && isset( $_GET['page'] ) && 'audiotheme-venue' == $_GET['page'] ) {
+	if ( 'audiotheme-gigs' === $parent_file && isset( $_GET['page'] ) && 'audiotheme-venue' === $_GET['page'] ) {
 		$submenu_file = 'audiotheme-venues';
 	}
 
 	// Remove the Add New Venue submenu item.
 	if ( isset( $submenu['audiotheme-gigs'] ) ) {
 		foreach ( $submenu['audiotheme-gigs'] as $key => $sm ) {
-			if ( isset( $sm[0] ) && 'audiotheme-venue' == $sm[2] ) {
+			if ( isset( $sm[0] ) && 'audiotheme-venue' === $sm[2] ) {
 				unset( $submenu['audiotheme-gigs'][ $key ] );
 			}
 		}
@@ -181,7 +181,7 @@ function audiotheme_gigs_admin_menu_highlight( $parent_file ) {
  * @since 1.0.0
  */
 function audiotheme_gigs_manage_screen_setup() {
-	audiotheme_gig_list_help();	
+	audiotheme_gig_list_help();
 
 	$post_type_object = get_post_type_object( 'audiotheme_gig' );
 	$title = $post_type_object->labels->name;
@@ -218,7 +218,7 @@ function audiotheme_gigs_manage_screen() {
  * @param WP_Post $post The gig post object being edited.
  */
 function audiotheme_gig_edit_screen_setup( $post ) {
-	audiotheme_gig_help();	
+	audiotheme_gig_help();
 
 	wp_enqueue_script( 'audiotheme-gig-edit' );
 	wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
@@ -378,7 +378,7 @@ function audiotheme_gig_list_help() {
 		'title'   => __( 'Overview', 'audiotheme' ),
 		'content' => '<p>' . __( 'This screen provides access to all of your gigs. You can customize the display of this screen to suit your workflow.', 'audiotheme' ) . '</p>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'screen-content',
 		'title'   => __( 'Screen Content', 'audiotheme' ),
@@ -391,7 +391,7 @@ function audiotheme_gig_list_help() {
 			'<li>' . __( "You can also sort your gigs in any view by clicking the column headers.", 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'available-actions',
 		'title'   => __( 'Available Actions', 'audiotheme' ),
@@ -423,7 +423,7 @@ function audiotheme_gig_help() {
 			'<p>' . __( "<strong>Note</strong> - Enter a short note about the gig.", 'audiotheme' ) . '</p>' .
 			'<p>' . __( "<strong>Editor</strong> - Enter a longer description for your gig. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.", 'audiotheme' ) . '</p>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'inserting-media',
 		'title'		=> __( 'Inserting Media', 'audiotheme' ),
@@ -431,7 +431,7 @@ function audiotheme_gig_help() {
 			'<p>' . __( 'You can upload and insert media (images, audio, documents, etc.) by clicking the Add Media button. You can select from the images and files already uploaded to the Media Library, or upload new media to add to your gig description. To create an image gallery, select the images to add and click the "Create a new gallery" button.', 'audiotheme' ) . '</p>' .
 			'<p>' . __( 'You can also embed media from many popular websites including Twitter, YouTube, Flickr and others by pasting the media URL on its own line into the gig description editor. Please refer to the Codex to <a href="http://codex.wordpress.org/Embeds">learn more about embeds</a>.', 'audiotheme' ) . '</p>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'tickets',
 		'title'		=> __( 'Tickets', 'audiotheme' ),
@@ -442,7 +442,7 @@ function audiotheme_gig_help() {
 			'<li>' . __( "<strong>URL</strong> - If tickets can be purchased online, provide a link.", 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'publish-settings',
 		'title'		=> __( 'Publish Settings', 'audiotheme' ),
@@ -453,7 +453,7 @@ function audiotheme_gig_help() {
 			'<li>' . __( '<strong>Featured Image</strong> - If the author of your theme built in support for featured images, you can set those here. Find out more about <a href="http://codex.wordpress.org/Post_Thumbnails" target="_blank">setting featured images</a> in the WordPress Codex.', 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'customize-display',
 		'title'   => __( 'Customize This Screen', 'audiotheme' ),

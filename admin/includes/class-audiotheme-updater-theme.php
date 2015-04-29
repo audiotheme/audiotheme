@@ -103,7 +103,7 @@ class Audiotheme_Updater_Theme extends Audiotheme_Updater {
 		if ( isset( $api_response->theme->current_version ) && version_compare( $theme->get( 'Version' ), $api_response->theme->current_version, '<' ) ) {
 			$notice = sprintf( _x( '<strong>%1$s %2$s</strong> is available.', 'theme name and version', 'audiotheme' ), $theme->get( 'Name' ), $api_response->theme->current_version ) . ' ';
 
-			if ( 'ok' == $api_response->status ) {
+			if ( 'ok' === $api_response->status ) {
 				// If status is ok and there's a new version, display a message to update.'
 				$update_url = wp_nonce_url( 'update.php?action=upgrade-theme&amp;theme=' . urlencode( $this->slug ), 'upgrade-theme_' . $this->slug );
 				$update_onclick = ' onclick="if ( confirm(\'' . esc_js( __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update.", 'audiotheme' ) ) . '\') ) {return true;}return false;"';

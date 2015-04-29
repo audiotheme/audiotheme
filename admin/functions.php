@@ -162,9 +162,9 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 			?>
 			<div id="minor-publishing-actions">
 				<div id="save-action">
-					<?php if ( 'publish' != $post->post_status && 'future' != $post->post_status && 'pending' != $post->post_status ) { ?>
-						<input type="submit" name="save" id="save-post" value="<?php esc_attr_e( 'Save Draft', 'audiotheme' ); ?>" class="button" <?php if ( 'private' == $post->post_status ) { echo 'style="display: none"'; } ?>>
-					<?php } elseif ( 'pending' == $post->post_status && $can_publish ) { ?>
+					<?php if ( 'publish' !== $post->post_status && 'future' !== $post->post_status && 'pending' !== $post->post_status ) { ?>
+						<input type="submit" name="save" id="save-post" value="<?php esc_attr_e( 'Save Draft', 'audiotheme' ); ?>" class="button" <?php if ( 'private' === $post->post_status ) { echo 'style="display: none"'; } ?>>
+					<?php } elseif ( 'pending' === $post->post_status && $can_publish ) { ?>
 						<input type="submit" name="save" id="save-post" value="<?php esc_attr_e( 'Save as Pending', 'audiotheme' ); ?>" class="button">
 					<?php } ?>
 
@@ -173,7 +173,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 
 				<div id="preview-action">
 					<?php
-					if ( 'publish' == $post->post_status ) {
+					if ( 'publish' === $post->post_status ) {
 						$preview_link = get_permalink( $post->ID );
 						$preview_button = __( 'Preview Changes', 'audiotheme' );
 					} else {
@@ -222,17 +222,17 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 							?>
 						</span>
 
-						<?php if ( 'publish' == $post->post_status || 'private' == $post->post_status || ( $can_publish && count( $show_statuses ) ) ) { ?>
-							<a href="#post_status" class="edit-post-status hide-if-no-js" <?php if ( 'private' == $post->post_status ) { echo 'style="display: none"'; } ?>><?php _e( 'Edit', 'audiotheme' ) ?></a>
+						<?php if ( 'publish' === $post->post_status || 'private' === $post->post_status || ( $can_publish && count( $show_statuses ) ) ) { ?>
+							<a href="#post_status" class="edit-post-status hide-if-no-js" <?php if ( 'private' === $post->post_status ) { echo 'style="display: none"'; } ?>><?php _e( 'Edit', 'audiotheme' ) ?></a>
 
 							<div id="post-status-select" class="hide-if-js">
-								<input type="hidden" name="hidden_post_status" id="hidden_post_status" value="<?php echo esc_attr( ( 'auto-draft' == $post->post_status ) ? 'draft' : $post->post_status ); ?>">
+								<input type="hidden" name="hidden_post_status" id="hidden_post_status" value="<?php echo esc_attr( ( 'auto-draft' === $post->post_status ) ? 'draft' : $post->post_status ); ?>">
 								<select name="post_status" id="post_status">
-									<?php if ( 'publish' == $post->post_status ) : ?>
+									<?php if ( 'publish' === $post->post_status ) : ?>
 										<option value="publish" <?php selected( $post->post_status, 'publish' ); ?>><?php _e( 'Published', 'audiotheme' ) ?></option>
-									<?php elseif ( 'private' == $post->post_status ) : ?>
+									<?php elseif ( 'private' === $post->post_status ) : ?>
 										<option value="publish" <?php selected( $post->post_status, 'private' ); ?>><?php _e( 'Privately Published', 'audiotheme' ) ?></option>
-									<?php elseif ( 'future' == $post->post_status ) : ?>
+									<?php elseif ( 'future' === $post->post_status ) : ?>
 										<option value="future" <?php selected( $post->post_status, 'future' ); ?>><?php _e( 'Scheduled', 'audiotheme' ) ?></option>
 									<?php endif; ?>
 
@@ -240,7 +240,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 										<option value="pending" <?php selected( $post->post_status, 'pending' ); ?>><?php _e( 'Pending Review', 'audiotheme' ) ?></option>
 									<?php endif; ?>
 
-									<?php if ( 'auto-draft' == $post->post_status ) : ?>
+									<?php if ( 'auto-draft' === $post->post_status ) : ?>
 										<option value="draft" <?php selected( $post->post_status, 'auto-draft' ); ?>><?php _e( 'Draft', 'audiotheme' ) ?></option>
 									<?php else : ?>
 										<option value="draft" <?php selected( $post->post_status, 'draft' ); ?>><?php _e( 'Draft', 'audiotheme' ) ?></option>
@@ -264,14 +264,14 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 				if ( $show_visibility ) : ?>
 					<div class="misc-pub-section" id="visibility">
 						<?php
-						if ( 'private' == $post->post_status ) {
+						if ( 'private' === $post->post_status ) {
 							$post->post_password = '';
 							$visibility = 'private';
 							$visibility_trans = __( 'Private', 'audiotheme' );
-						} elseif ( !empty( $post->post_password ) ) {
+						} elseif ( ! empty( $post->post_password ) ) {
 							$visibility = 'password';
 							$visibility_trans = __( 'Password protected', 'audiotheme' );
-						} elseif ( $post_type == 'post' && is_sticky( $post->ID ) ) {
+						} elseif ( 'post' === $post_type && is_sticky( $post->ID ) ) {
 							$visibility = 'public';
 							$visibility_trans = __( 'Public, Sticky', 'audiotheme' );
 						} else {
@@ -288,7 +288,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 
 							<div id="post-visibility-select" class="hide-if-js">
 								<input type="hidden" name="hidden_post_password" id="hidden-post-password" value="<?php echo esc_attr( $post->post_password ); ?>">
-								<?php if ( 'post' == $post_type ) : ?>
+								<?php if ( 'post' === $post_type ) : ?>
 									<input type="checkbox" name="hidden_post_sticky" id="hidden-post-sticky" value="sticky" <?php checked( is_sticky( $post->ID ) ); ?> style="display: none">
 								<?php endif; ?>
 								<input type="hidden" name="hidden_post_visibility" id="hidden-post-visibility" value="<?php echo esc_attr( $visibility ); ?>">
@@ -297,7 +297,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 								<label for="visibility-radio-public" class="selectit"><?php _e( 'Public', 'audiotheme' ); ?></label>
 								<br>
 
-								<?php if ( 'post' == $post_type && current_user_can( 'edit_others_posts' ) ) : ?>
+								<?php if ( 'post' === $post_type && current_user_can( 'edit_others_posts' ) ) : ?>
 									<span id="sticky-span">
 										<input type="checkbox" name="sticky" id="sticky" value="sticky" <?php checked( is_sticky( $post->ID ) ); ?>>
 										<label for="sticky" class="selectit"><?php _e( 'Stick this post to the front page', 'audiotheme' ); ?></label>
@@ -338,12 +338,12 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 				if ( $show_publish_date ) :
 					/* translators: Publish box date format, see http://php.net/date */
 					$datef = __( 'M j, Y @ G:i' );
-					if ( 0 != $post->ID ) {
-						if ( 'future' == $post->post_status ) { // scheduled for publishing at a future date
+					if ( 0 !== $post->ID ) {
+						if ( 'future' === $post->post_status ) { // scheduled for publishing at a future date
 							$stamp = __( 'Scheduled for: <strong>%1$s</strong>', 'audiotheme' );
-						} elseif ( 'publish' == $post->post_status || 'private' == $post->post_status ) { // already published
+						} elseif ( 'publish' === $post->post_status || 'private' === $post->post_status ) { // already published
 							$stamp = __( 'Published on: <strong>%1$s</strong>', 'audiotheme' );
-						} elseif ( '0000-00-00 00:00:00' == $post->post_date_gmt ) { // draft, 1 or more saves, no date specified
+						} elseif ( '0000-00-00 00:00:00' === $post->post_date_gmt ) { // draft, 1 or more saves, no date specified
 							$stamp = __( 'Publish <strong>immediately</strong>', 'audiotheme' );
 						} elseif ( time() < strtotime( $post->post_date_gmt . ' +0000' ) ) { // draft, 1 or more saves, future date specified
 							$stamp = __( 'Schedule for: <strong>%1$s</strong>', 'audiotheme' );
@@ -360,7 +360,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 						<div class="misc-pub-section curtime">
 							<span id="timestamp"><?php printf( $stamp, $date ); ?></span>
 							<a href="#edit_timestamp" class="edit-timestamp hide-if-no-js"><?php _e( 'Edit', 'audiotheme' ) ?></a>
-							<div id="timestampdiv" class="hide-if-js"><?php touch_time( ( 'edit' == $action ), 1 ); ?></div>
+							<div id="timestampdiv" class="hide-if-js"><?php touch_time( ( 'edit' === $action ), 1 ); ?></div>
 						</div>
 					<?php
 					endif;
@@ -376,7 +376,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 		<div id="major-publishing-actions">
 			<?php do_action( 'post_submitbox_start' ); ?>
 
-			<?php if ( 'auto-draft' != $post->post_status ) : ?>
+			<?php if ( 'auto-draft' !== $post->post_status ) : ?>
 				<div id="delete-action">
 					<?php
 					if ( current_user_can( 'delete_post', $post->ID ) ) {
@@ -396,7 +396,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 			<div id="publishing-action">
 				<?php audiotheme_admin_spinner( array( 'id' => 'ajax-loading' ) ); ?>
 				<?php
-				if ( ! in_array( $post->post_status, array( 'publish', 'future', 'private' ) ) || 0 == $post->ID ) {
+				if ( ! in_array( $post->post_status, array( 'publish', 'future', 'private' ) ) || 0 === $post->ID ) {
 					if ( $can_publish ) :
 						if ( ! empty( $post->post_date_gmt ) && time() < strtotime( $post->post_date_gmt . ' +0000' ) ) : ?>
 							<input type="hidden" name="original_publish" id="original_publish" value="<?php esc_attr_e( 'Schedule', 'audiotheme' ); ?>">
@@ -472,7 +472,7 @@ function audiotheme_menu_insert_item( $item, $relative_slug, $position = 'after'
 	global $menu;
 
 	$relative_key = audiotheme_menu_get_item_key( $relative_slug );
-	$before = ( 'before' == $position ) ? $relative_key : $relative_key + 1;
+	$before = ( 'before' === $position ) ? $relative_key : $relative_key + 1;
 
 	array_splice( $menu, $before, 0, array( $item ) );
 }
@@ -510,7 +510,7 @@ function audiotheme_menu_get_item_key( $menu_slug ) {
 	global $menu;
 
 	foreach ( $menu as $key => $item ) {
-		if ( $menu_slug == $item[2] ) {
+		if ( $menu_slug === $item[2] ) {
 			return $key;
 		}
 	}
@@ -532,9 +532,9 @@ function audiotheme_submenu_move_after( $move_slug, $after_slug, $menu_slug ) {
 
 	if ( isset( $submenu[ $menu_slug ] ) ) {
 		foreach ( $submenu[ $menu_slug ] as $key => $item ) {
-			if ( $item[2] == $move_slug ) {
+			if ( $item[2] === $move_slug ) {
 				$move_key = $key;
-			} elseif ( $item[2] == $after_slug ) {
+			} elseif ( $item[2] === $after_slug ) {
 				$after_key = $key;
 			}
 		}
@@ -638,7 +638,7 @@ function audiotheme_system_info( $args = array() ) {
 		),
 	);
 
-	if ( get_template() != get_stylesheet() ) {
+	if ( get_template() !== get_stylesheet() ) {
 		$theme = wp_get_theme();
 
 		$data['child_theme'] = array(
@@ -652,7 +652,7 @@ function audiotheme_system_info( $args = array() ) {
 		);
 	}
 
-	if ( 'plaintext' == $args['format'] ) {
+	if ( 'plaintext' === $args['format'] ) {
 		$plain = '';
 
 		foreach ( $data as $key => $info ) {
@@ -681,7 +681,7 @@ function audiotheme_update_themes_list( $theme, $api_args = array() ) {
 
 	$themes = (array) get_site_option( 'audiotheme_themes' );
 
-	if ( ! array_key_exists( $theme, $themes ) || $themes[ $theme ] != $api_args ) {
+	if ( ! array_key_exists( $theme, $themes ) || $themes[ $theme ] !== $api_args ) {
 		$themes[ $theme ] = wp_parse_args( $api_args, array( 'slug' => $theme ) );
 		update_site_option( 'audiotheme_themes', $themes );
 	}

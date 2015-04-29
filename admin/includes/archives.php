@@ -75,7 +75,7 @@ function audiotheme_archives_admin_menu() {
 			continue;
 		}
 
-		$parent_slug = ( 'audiotheme_gig' == $post_type ) ? 'audiotheme-gigs' : 'edit.php?post_type=' . $post_type;
+		$parent_slug = ( 'audiotheme_gig' === $post_type ) ? 'audiotheme-gigs' : 'edit.php?post_type=' . $post_type;
 
 		// Add the submenu item.
 		add_submenu_page(
@@ -142,12 +142,12 @@ function audiotheme_archives_add_meta_boxes( $post ) {
 function audiotheme_archives_parent_file( $parent_file ) {
 	global $post, $submenu_file;
 
-	if ( $post && 'audiotheme_archive' == get_current_screen()->id && $post_type = is_audiotheme_post_type_archive_id( $post->ID ) ) {
+	if ( $post && 'audiotheme_archive' === get_current_screen()->id && $post_type = is_audiotheme_post_type_archive_id( $post->ID ) ) {
 		$parent_file = 'edit.php?post_type=' . $post_type;
 		$submenu_file = add_query_arg( array( 'post' => $post->ID, 'action' => 'edit' ), 'post.php' );
 
 		// The Gigs list has a custom slug.
-		if ( 'audiotheme_gig' == $post_type ) {
+		if ( 'audiotheme_gig' === $post_type ) {
 			$parent_file = 'audiotheme-gigs';
 		}
 	}
@@ -370,7 +370,7 @@ function audiotheme_archive_settings_meta_box_fields( $post, $post_type, $fields
  * @since 1.0.0
  */
 function audiotheme_archive_help() {
-	if ( 'audiotheme_archive' != get_current_screen()->post_type ) {
+	if ( 'audiotheme_archive' !== get_current_screen()->post_type ) {
 		return;
 	}
 

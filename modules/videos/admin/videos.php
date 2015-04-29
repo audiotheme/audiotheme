@@ -147,7 +147,7 @@ function audiotheme_video_after_title() {
  * @return string
  */
 function audiotheme_video_admin_post_thumbnail_html( $content, $post_id ) {
-	if ( 'audiotheme_video' == get_post_type( $post_id ) ) {
+	if ( 'audiotheme_video' === get_post_type( $post_id ) ) {
 		$thumbnail_id = get_post_thumbnail_id( $post_id );
 		$oembed_thumb_id = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', true );
 
@@ -205,10 +205,10 @@ function audiotheme_parse_video_oembed_data( $return, $data, $url ) {
 		$oembed_thumb_id = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', true );
 		$oembed_thumb = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url', true );
 
-		if ( ( ! $current_thumb_id || $current_thumb_id != $oembed_thumb_id ) && $data->thumbnail_url == $oembed_thumb ) {
+		if ( ( ! $current_thumb_id || $current_thumb_id !== $oembed_thumb_id ) && $data->thumbnail_url === $oembed_thumb ) {
 			// Re-use the existing oEmbed data instead of making another copy of the thumbnail.
 			set_post_thumbnail( $post_id, $oembed_thumb_id );
-		} elseif ( ! $current_thumb_id || $data->thumbnail_url != $oembed_thumb ) {
+		} elseif ( ! $current_thumb_id || $data->thumbnail_url !== $oembed_thumb ) {
 			// Add new thumbnail if the returned URL doesn't match the
 			// oEmbed thumb URL or if there isn't a current thumbnail.
 			add_action( 'add_attachment', 'audiotheme_add_video_thumbnail' );
@@ -272,7 +272,7 @@ function audiotheme_video_save_post( $post_id, $post ) {
  * @param string $post_type The type of post the archive lists.
  */
 function audiotheme_video_archive_save_settings_hook( $post_id, $post, $post_type ) {
-	if ( 'audiotheme_video' != $post_type ) {
+	if ( 'audiotheme_video' !== $post_type ) {
 		return;
 	}
 
@@ -292,7 +292,7 @@ function audiotheme_video_archive_save_settings_hook( $post_id, $post, $post_typ
  */
 function audiotheme_video_archive_settings( $post ) {
 	$post_type = is_audiotheme_post_type_archive_id( $post->ID );
-	if ( 'audiotheme_video' != $post_type ) {
+	if ( 'audiotheme_video' !== $post_type ) {
 		return;
 	}
 
@@ -327,7 +327,7 @@ function audiotheme_video_archive_settings( $post ) {
  * @since 1.0.0
  */
 function audiotheme_video_list_help() {
-	if ( 'audiotheme_video' != get_current_screen()->post_type ) {
+	if ( 'audiotheme_video' !== get_current_screen()->post_type ) {
 		return;
 	}
 
@@ -373,7 +373,7 @@ function audiotheme_video_list_help() {
  * @since 1.0.0
  */
 function audiotheme_video_help() {
-	if ( 'audiotheme_video' != get_current_screen()->post_type ) {
+	if ( 'audiotheme_video' !== get_current_screen()->post_type ) {
 		return;
 	}
 

@@ -105,7 +105,7 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 			$data['args']           = $args;
 			$data['after_title']    = $args['after_title'];
 			$data['before_title']   = $args['before_title'];
-			$data['feed_link']      = ( 'post' == $instance['post_type'] ) ? get_bloginfo( 'rss2_url' ) : get_post_type_archive_feed_link( $instance['post_type'] );
+			$data['feed_link']      = ( 'post' === $instance['post_type'] ) ? get_bloginfo( 'rss2_url' ) : get_post_type_archive_feed_link( $instance['post_type'] );
 			$data['instance']       = $instance;
 			$data['loop']           = new WP_Query( $instance['loop_args'] );
 			$data['show_date']      = ! empty( $instance['show_date'] );
@@ -148,7 +148,7 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 
 		$title = wp_strip_all_tags( $instance['title'] );
 		$number = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
-		$selected_post_type = ( array_key_exists( $instance['post_type'], $post_types ) || 'any' == $instance['post_type'] ) ? $instance['post_type'] : 'post';
+		$selected_post_type = ( array_key_exists( $instance['post_type'], $post_types ) || 'any' === $instance['post_type'] ) ? $instance['post_type'] : 'post';
 		?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'audiotheme' ); ?></label>

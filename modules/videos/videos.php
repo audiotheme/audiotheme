@@ -180,7 +180,7 @@ function audiotheme_video_default_template_query( $query ) {
 	// The default video archive template uses a 4-column grid.
 	// If it's being loaded from the plugin, set the posts per page arg to a multiple of 4.
 	if ( is_audiotheme_default_template( audiotheme_locate_template( 'archive-video.php' ) ) ) {
-		if ( '' == $query->get( 'posts_per_archive_page' ) ) {
+		if ( '' === $query->get( 'posts_per_archive_page' ) ) {
 			$query->set( 'posts_per_archive_page', 12 );
 		}
 	}

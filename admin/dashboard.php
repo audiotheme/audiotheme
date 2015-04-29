@@ -245,7 +245,7 @@ function audiotheme_dashboard_license_input( $args ) {
 		esc_attr( $value )
 	);
 
-	if ( ! isset( $status->status ) || 'ok' != $status->status ) {
+	if ( ! isset( $status->status ) || 'ok' !== $status->status ) {
 		echo '<input type="button" value="' . __( 'Activate', 'audiotheme' ) . '" disabled="disabled" class="audiotheme-settings-license-button button button-primary">';
 		audiotheme_admin_spinner( array( 'class' => 'audiotheme-license-spinner' ) );
 		echo '<br><span class="audiotheme-response"></span>';
@@ -328,7 +328,7 @@ function audiotheme_ajax_activate_license() {
 
 		update_option( 'audiotheme_license_status', $response );
 
-		if ( isset( $response->status ) && 'ok' == $response->status ) {
+		if ( isset( $response->status ) && 'ok' === $response->status ) {
 			// @todo Clear the last update status check with a 'not_activated' response.
 			update_option( 'audiotheme_license_key', $_POST['license'] );
 		}

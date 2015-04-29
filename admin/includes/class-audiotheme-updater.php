@@ -101,23 +101,23 @@ class Audiotheme_Updater {
 		$api_version = floatval( $matches['version'] );
 
 		$entities = $r['body'][ $api_type ];
-		$entities = ( 1.0 == $api_version ) ? unserialize( $entities ) : json_decode( $entities, true );
+		$entities = ( 1.0 === $api_version ) ? unserialize( $entities ) : json_decode( $entities, true );
 
-		if ( 'plugins' == $api_type ) {
+		if ( 'plugins' === $api_type ) {
 			$entities = (array) $entities;
 
 			unset( $entities['plugins'][ $this->id ] );
 			unset( $entities['active'][ array_search( $this->id, $entities['active'] ) ] );
 
 			// Cast back to an object.
-			if ( 1.0 == $api_version ) {
+			if ( 1.0 === $api_version ) {
 				$entities = (object) $entities;
 			}
-		} elseif ( 'themes' == $api_type ) {
+		} elseif ( 'themes' === $api_type ) {
 			unset( $entities[ $this->id ] );
 		}
 
-		$r['body'][ $api_type ] = ( 1.0 == $api_version ) ? serialize( $entities ) : json_encode( $entities );
+		$r['body'][ $api_type ] = ( 1.0 === $api_version ) ? serialize( $entities ) : json_encode( $entities );
 
 		return $r;
 	}
@@ -139,7 +139,7 @@ class Audiotheme_Updater {
 	 * @return array
 	 */
 	public function update_transient( $value ) {
-		$data_source = ( ! empty( $this->last_checked ) && $this->last_checked == $value->last_checked ) ? 'transient' : 'api';
+		$data_source = ( ! empty( $this->last_checked ) && $this->last_checked === $value->last_checked ) ? 'transient' : 'api';
 		$this->last_checked = $value->last_checked;
 
 		$update_data = $this->check_for_update( $data_source );
@@ -164,7 +164,7 @@ class Audiotheme_Updater {
 	 * @return bool|object Update args expected by WordPress API or false if there isn't an update.
 	 */
 	public function check_for_update( $source = 'transient' ) {
-		$response = ( 'transient' == $source ) ? get_transient( $this->transient_key() ) : false;
+		$response = ( 'transient' === $source ) ? get_transient( $this->transient_key() ) : false;
 
 		if ( ! $response && apply_filters( 'do_audiotheme_update_request', true, $this ) ) {
 			$response = $this->api_request( array(
@@ -180,7 +180,7 @@ class Audiotheme_Updater {
 				set_transient( $this->transient_key(), $data, strtotime( '+3 hours' ) );
 			} else {
 				// Set the slug for the API. Unnecessary for themes.
-				if ( 'plugin' == $this->type ) {
+				if ( 'plugin' === $this->type ) {
 					if ( ! isset( $response->wpargs ) ) {
 						$response->wpargs = new stdClass;
 					}
@@ -265,7 +265,7 @@ class Audiotheme_Updater {
 		);
 
 		// Make sure the response was successful.
-		if ( is_wp_error( $response ) || 200 != wp_remote_retrieve_response_code( $response ) ) {
+		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
 			return new WP_Error( 'bad_response', __( 'Bad response.', 'audiotheme' ) );
 		}
 

@@ -239,7 +239,7 @@ function audiotheme_pre_gig_query( $query ) {
 			$query->set( 'monthnum', null );
 			$query->set( 'year', null );
 		}
-	} elseif ( 'past' == $query->get( 'audiotheme_gig_range' ) ){
+	} elseif ( 'past' === $query->get( 'audiotheme_gig_range' ) ){
 		$meta_query[] = array(
 			'key'     => '_audiotheme_gig_datetime',
 			'value'   => date( 'Y-m-d', current_time( 'timestamp' ) ),
@@ -283,7 +283,7 @@ function audiotheme_gig_template_redirect() {
 	}
 
 	$type = $wp_query->get( 'feed' );
-	if ( is_feed() && 'audiotheme_gig' == $wp_query->get( 'post_type' ) ) {
+	if ( is_feed() && 'audiotheme_gig' === $wp_query->get( 'post_type' ) ) {
 		p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $wp_query );
 
 		require( AUDIOTHEME_DIR . 'modules/gigs/feed.php' );
@@ -350,7 +350,7 @@ function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
 	if ( ! $is_draft_or_pending || $sample ) {
 		$permalink = get_option( 'permalink_structure' );
 
-		if ( ! empty( $permalink ) && 'audiotheme_gig' == get_post_type( $post ) ) {
+		if ( ! empty( $permalink ) && 'audiotheme_gig' === get_post_type( $post ) ) {
 			$base = audiotheme_gigs_rewrite_base();
 			$slug = ( $leavename ) ? '%postname%' : $post->post_name;
 
@@ -372,10 +372,10 @@ function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
  * @return string The gig archive URL.
  */
 function audiotheme_gigs_archive_link( $link, $post_type ) {
-	if ( 'audiotheme_gig' == $post_type && get_option( 'permalink_structure' ) ) {
+	if ( 'audiotheme_gig' === $post_type && get_option( 'permalink_structure' ) ) {
 		$base = audiotheme_gigs_rewrite_base();
 		$link = home_url( '/' . $base . '/' );
-	} elseif ( 'audiotheme_gig' == $post_type ) {
+	} elseif ( 'audiotheme_gig' === $post_type ) {
 		$link = add_query_arg( 'post_type', 'audiotheme_gig', home_url( '/' ) );
 	}
 
@@ -403,7 +403,7 @@ function audiotheme_gigs_archive_link( $link, $post_type ) {
 function audiotheme_gig_unique_slug( $slug, $post_ID, $post_status, $post_type, $post_parent, $original_slug = null ) {
 	global $wpdb, $wp_rewrite;
 
-	if ( 'audiotheme_gig' == $post_type ) {
+	if ( 'audiotheme_gig' === $post_type ) {
 		$slug = $original_slug;
 
 		$feeds = $wp_rewrite->feeds;
@@ -412,7 +412,7 @@ function audiotheme_gig_unique_slug( $slug, $post_ID, $post_status, $post_type, 
 		}
 
 		// Four-digit numeric slugs interfere with date-based archives.
-		if ( $slug == $post_ID ) {
+		if ( $slug === $post_ID ) {
 			$slug = 'gig-' . $slug;
 		}
 
@@ -454,7 +454,7 @@ function audiotheme_gig_update_bad_slug( $post_id, $post ) {
 		return;
 	}
 
-	if ( $post->post_name == $post_id && ! in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) ) ) {
+	if ( $post->post_name === $post_id && ! in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) ) ) {
 		$slug = 'gig-' . $post->post_name;
 		$wpdb->update( $wpdb->posts, array( 'post_name' => $slug ), array( 'ID' => $post_id ) );
 	}
@@ -471,7 +471,7 @@ function audiotheme_gig_update_bad_slug( $post_id, $post ) {
  * @param int $post_id ID of the gig being deleted.
  */
 function audiotheme_gig_before_delete( $post_id ) {
-	if ( 'audiotheme_gig' == get_post_type( $post_id ) ) {
+	if ( 'audiotheme_gig' === get_post_type( $post_id ) ) {
 		$gig = get_audiotheme_gig( $post_id );
 		if ( isset( $gig->venue->ID ) ) {
 			$count = get_audiotheme_venue_gig_count( $gig->venue->ID );
@@ -491,7 +491,7 @@ function audiotheme_gig_before_delete( $post_id ) {
  * @return array Array of classes.
  */
 function audiotheme_gig_post_class( $classes, $class, $post_id ) {
-	if ( 'audiotheme_gig' == get_post_type( $post_id ) && audiotheme_gig_has_ticket_meta() ) {
+	if ( 'audiotheme_gig' === get_post_type( $post_id ) && audiotheme_gig_has_ticket_meta() ) {
 		$classes[] = 'has-audiotheme-ticket-meta';
 	}
 

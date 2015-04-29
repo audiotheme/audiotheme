@@ -39,7 +39,7 @@ function audiotheme_add_default_oembed_providers() {
 function audiotheme_oembed_html( $html, $url = null, $attr = null, $post_id = null ) {
 	$wrapped = '<div class="audiotheme-embed">' . $html . '</div>';
 
-    if ( empty( $url ) && 'video_embed_html' == current_filter() ) { // Jetpack
+    if ( empty( $url ) && 'video_embed_html' === current_filter() ) { // Jetpack
         $html = $wrapped;
     } elseif ( ! empty( $url ) ) {
         $players = array( 'youtube', 'youtu.be', 'vimeo', 'dailymotion', 'hulu', 'blip.tv', 'wordpress.tv', 'viddler', 'revision3' );
@@ -133,7 +133,7 @@ function audiotheme_post_gallery( $output, $attr ) {
 	), $attr, 'gallery' );
 
 	$attr['id'] = absint( $attr['id'] );
-	if ( 'RAND' == $attr['order'] ) {
+	if ( 'RAND' === $attr['order'] ) {
 		$attr['orderby'] = 'none';
 	}
 
@@ -200,7 +200,7 @@ function audiotheme_post_gallery( $output, $attr ) {
 	$output = apply_filters( 'audiotheme_post_gallery_output', $wrapper, $attachments, $attr, $instance );
 
 	// Skip output generation if a hook modified the output.
-	if ( empty( $output ) || $wrapper == $output ) {
+	if ( empty( $output ) || $wrapper === $output ) {
 		// If $output is empty for some reason, restart the output with the default wrapper.
 		if ( empty( $output ) ) {
 			$output = $wrapper;
@@ -208,13 +208,13 @@ function audiotheme_post_gallery( $output, $attr ) {
 
 		foreach ( $attachments as $i => $attachment ) {
 			// More 'link' options have been added.
-			if ( 'none' == $link ) {
+			if ( 'none' === $link ) {
 				// Don't link the thumbnails in the gallery.
 				$href = '';
-			} elseif ( 'file' == $link ) {
+			} elseif ( 'file' === $link ) {
 				// Link directly to the attachment.
 				$href = wp_get_attachment_url( $attachment->ID );
-			} elseif ( 'link' == $link ) {
+			} elseif ( 'link' === $link ) {
 				// Use a custom meta field associated with the image for the link.
 				$href = get_post_meta( $attachment->ID, '_audiotheme_attachment_url', true );
 			} else {

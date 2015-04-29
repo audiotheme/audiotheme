@@ -98,8 +98,8 @@ class Audiotheme_Widget_Track extends WP_Widget {
 				<?php
 				$last_record = '';
 				foreach ( $tracks as $key => $track ) {
-					echo ( 0 !== $key && $last_record != $track->record ) ? '</optgroup>' : '';
-					echo ( $last_record != $track->record ) ? '<optgroup label="' . esc_attr( $track->record ) . '">' : '';
+					echo ( 0 !== $key && $last_record !== $track->record ) ? '</optgroup>' : '';
+					echo ( $last_record !== $track->record ) ? '<optgroup label="' . esc_attr( $track->record ) . '">' : '';
 					$last_record = $track->record;
 
 					printf( '<option value="%s"%s>%s</option>',

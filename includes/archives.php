@@ -257,7 +257,7 @@ function audiotheme_archives_save_active_archives( $ids ) {
 	$archives = get_audiotheme_archive_ids();
 	$diff = array_diff_key( $archives, $ids );
 
-	if ( count( $ids ) != count( $archives ) || $diff ) {
+	if ( count( $ids ) !== count( $archives ) || $diff ) {
 		$inactive = (array) get_option( 'audiotheme_archives_inactive' );
 
 		// Remove $ids from $inactive.
@@ -288,7 +288,7 @@ function audiotheme_archives_save_active_archives( $ids ) {
  * @param WP_Post $post_before Post object before udpate.
  */
 function audiotheme_archives_post_updated( $post_id, $post_after, $post_before ) {
-	if ( ( $post_type = is_audiotheme_post_type_archive_id( $post_id ) ) && $post_after->post_name != $post_before->post_name ) {
+	if ( ( $post_type = is_audiotheme_post_type_archive_id( $post_id ) ) && $post_after->post_name !== $post_before->post_name ) {
 		audiotheme_archives_update_post_type_rewrite_base( $post_type, $post_id );
 		flush_rewrite_rules();
 	}
@@ -302,7 +302,7 @@ function audiotheme_archives_post_updated( $post_id, $post_after, $post_before )
  * @param int $post_id Post ID.
  */
 function audiotheme_archives_deleted_post( $post_id ) {
-	if ( 'audiotheme_archive' != get_post_type( $post_id ) ) {
+	if ( 'audiotheme_archive' !== get_post_type( $post_id ) ) {
 		return;
 	}
 

@@ -82,7 +82,7 @@ function audiotheme_widget_count_class( $params ) {
 	$class = '';
 	$sidebar_widgets = wp_get_sidebars_widgets();
 	$order = array_search( $params[0]['widget_id'], $sidebar_widgets[ $params[0]['id'] ] ) + 1;
-	if ( $order == count( $sidebar_widgets[ $params[0]['id'] ] ) ) {
+	if ( $order === count( $sidebar_widgets[ $params[0]['id'] ] ) ) {
 		$class = ' widget-last';
 	}
 
@@ -165,8 +165,8 @@ function audiotheme_page_list_classes( $classes, $page ) {
 	$depth = $audiotheme_page_depth_classes;
 
 	if ( 0 === $page->post_parent ) { $class[] = 'top-level-item'; }
-	if ( isset( $depth['first-top-level-page'] ) && $page->ID == $depth['first-top-level-page'] ) { $classes[] = 'first-item'; }
-	if ( isset( $depth['last-top-level-page'] ) && $page->ID == $depth['last-top-level-page'] ) { $classes[] = 'last-item'; }
+	if ( isset( $depth['first-top-level-page'] ) && $page->ID === $depth['first-top-level-page'] ) { $classes[] = 'first-item'; }
+	if ( isset( $depth['last-top-level-page'] ) && $page->ID === $depth['last-top-level-page'] ) { $classes[] = 'last-item'; }
 	if ( isset( $depth['first-child-pages'] ) && in_array( $page->ID, $depth['first-child-pages'] ) ) { $classes[] = 'first-child-item'; }
 	if ( isset( $depth['last-child-pages'] ) && in_array( $page->ID, $depth['last-child-pages'] ) ) { $classes[] = 'last-child-item'; }
 

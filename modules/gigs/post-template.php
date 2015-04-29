@@ -218,7 +218,7 @@ function get_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null,
 	if ( empty( $gig->gig_time ) ) {
 		// ISO 8601 without time component or timezone component.
 		// @todo Need to verify Google Calendar support.
-		$d = ( 'c' == $d ) ? 'Y-m-d' : $d;
+		$d = ( 'c' === $d ) ? 'Y-m-d' : $d;
 		$format = $d;
 	} else {
 		$format = ( empty( $t ) ) ? $d : $d . $t;
@@ -486,7 +486,7 @@ function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
 
 	if ( empty( $venue_name ) ) {
 		p2p_delete_connections( 'audiotheme_venue_to_gig', array( 'to' => $gig_id ) );
-	} elseif ( ! isset( $gig->venue->name ) || $venue_name != $gig->venue->name ) {
+	} elseif ( ! isset( $gig->venue->name ) || $venue_name !== $gig->venue->name ) {
 		p2p_delete_connections( 'audiotheme_venue_to_gig', array( 'to' => $gig_id ) );
 
 		$new_venue = get_audiotheme_venue_by( 'name', $venue_name );
@@ -867,7 +867,7 @@ function get_audiotheme_venues_admin_url( $args = '' ) {
  * @since 1.0.0
  */
 function get_audiotheme_venue_edit_link( $admin_url, $post_id ) {
-	if ( 'audiotheme_venue' == get_post_type( $post_id ) ) {
+	if ( 'audiotheme_venue' === get_post_type( $post_id ) ) {
 		$args = array(
 			'action'   => 'edit',
 			'venue_id' => $post_id,
@@ -928,14 +928,14 @@ function save_audiotheme_venue( $data ) {
 	if ( isset( $data['name'] ) && ! empty( $data['name'] ) ) {
 		$post_title = get_unique_audiotheme_venue_name( $data['name'], $data['ID'] );
 
-		if ( ! isset( $current_venue ) || $post_title != $current_venue->name ) {
+		if ( ! isset( $current_venue ) || $post_title !== $current_venue->name ) {
 			$venue['post_title'] = $post_title;
 			$venue['post_name'] = '';
 		}
 	}
 
 	// Insert the post container.
-	if ( 'insert' == $action ) {
+	if ( 'insert' === $action ) {
 		$venue['post_author'] = $current_user->ID;
 		$venue['post_status'] = 'publish';
 		$venue['post_type'] = 'audiotheme_venue';
@@ -1023,7 +1023,7 @@ function get_audiotheme_google_map_url( $args = array(), $venue_id = 0 ) {
 
 	// Get the current post and determine if it's a gig with a venue.
 	if ( empty( $args['address'] ) && ( $gig = get_audiotheme_gig() ) ) {
-		if ( 'audiotheme_gig' == get_post_type( $gig ) && ! empty( $gig->venue->ID ) ) {
+		if ( 'audiotheme_gig' === get_post_type( $gig ) && ! empty( $gig->venue->ID ) ) {
 			$venue_id = $gig->venue->ID;
 		}
 	}
@@ -1074,7 +1074,7 @@ function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 
 	// Get the current post and determine if it's a gig with a venue.
 	if ( empty( $args['address'] ) && ( $gig = get_audiotheme_gig() ) ) {
-		if ( 'audiotheme_gig' == get_post_type( $gig ) && ! empty( $gig->venue->ID ) ) {
+		if ( 'audiotheme_gig' === get_post_type( $gig ) && ! empty( $gig->venue->ID ) ) {
 			$venue_id = $gig->venue->ID;
 		}
 	}
@@ -1128,7 +1128,7 @@ function get_audiotheme_google_static_map_url( $args = array(), $venue_id = 0 ) 
 
 	// Get the current post and determine if it's a gig with a venue.
 	if ( empty( $args['address'] ) && ( $gig = get_audiotheme_gig() ) ) {
-		if ( 'audiotheme_gig' == get_post_type( $gig ) && ! empty( $gig->venue->ID ) ) {
+		if ( 'audiotheme_gig' === get_post_type( $gig ) && ! empty( $gig->venue->ID ) ) {
 			$venue_id = $gig->venue->ID;
 		}
 	}

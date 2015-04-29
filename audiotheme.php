@@ -211,7 +211,7 @@ add_action( 'plugins_loaded', 'audiotheme_load_textdomain' );
  * @since 1.0.0
  */
 function audiotheme_loaded() {
-	if ( ! is_network_admin() && 'no' != get_option( 'audiotheme_flush_rewrite_rules' ) ) {
+	if ( ! is_network_admin() && 'no' !== get_option( 'audiotheme_flush_rewrite_rules' ) ) {
 		update_option( 'audiotheme_flush_rewrite_rules', 'no' );
 		flush_rewrite_rules();
 	}
