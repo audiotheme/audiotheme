@@ -1,5 +1,5 @@
-.DS_STORE
 .DS_Store
-node_modules
-release
 config.json
+node_modules
+phpcs.log
+release
