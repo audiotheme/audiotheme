@@ -102,7 +102,7 @@ function is_audiotheme_default_template( $template ) {
  * @param string $after  Optional. Content to append to the title. Default empty.
  */
 function the_audiotheme_archive_title( $before = '', $after = '' ) {
-	$title = post_type_archive_title( '', false );
+	$title = apply_filters( 'audiotheme_archive_title', post_type_archive_title( '', false ) );
 
 	if ( ! empty( $title ) ) {
 		echo $before . $title . $after;

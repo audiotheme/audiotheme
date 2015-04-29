@@ -189,7 +189,11 @@ function is_audiotheme_post_type_archive_id( $archive_id ) {
  */
 function get_audiotheme_archive_meta( $key = '', $single = false, $default = null, $post_type = null ) {
 	$post_type = ( empty( $post_type ) ) ? get_post_type() : $post_type;
-	if ( ! $post_type && ! is_audiotheme_post_type_archive() ) {
+
+	if (
+		! $post_type &&
+		( ! is_audiotheme_post_type_archive() || ! is_tax( 'audiotheme_record_type' ) )
+	) {
 		return null;
 	}
 

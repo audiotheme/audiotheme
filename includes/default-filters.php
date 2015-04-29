@@ -60,6 +60,22 @@ function audiotheme_archives_post_type_archive_link( $link, $post_type ) {
 }
 
 /**
+ * Filter record type archive titles.
+ *
+ * @since 1.7.0
+ *
+ * @param string $title Archive title.
+ * @return string
+ */
+function audiotheme_archives_record_type_title( $title ) {
+	if ( is_tax( 'audiotheme_record_type' ) ) {
+		$title = get_queried_object()->name;
+	}
+
+	return $title;
+}
+
+/**
  * Filter the default post_type_archive_title() template tag and replace with
  * custom archive title.
  *
