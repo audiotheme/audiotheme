@@ -67,8 +67,8 @@ function audiotheme_archives_post_type_archive_link( $link, $post_type ) {
  * @param string $title Archive title.
  * @return string
  */
-function audiotheme_archives_record_type_title( $title ) {
-	if ( is_tax( 'audiotheme_record_type' ) ) {
+function audiotheme_archives_taxonomy_title( $title ) {
+	if ( is_tax() ) {
 		$title = get_queried_object()->name;
 	}
 

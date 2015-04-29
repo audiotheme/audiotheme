@@ -25,6 +25,40 @@ if ( is_admin() ) {
  * @uses register_post_type()
  */
 function audiotheme_videos_init() {
+	register_taxonomy( 'audiotheme_video_category', 'audiotheme_video', array(
+		'args'                           => array( 'orderby' => 'term_order' ),
+		'hierarchical'                   => true,
+		'labels'                         => array(
+			'name'                       => _x( 'Categories', 'taxonomy general name', 'bandstand' ),
+			'singular_name'              => _x( 'Category', 'taxonomy singular name', 'bandstand' ),
+			'search_items'               => __( 'Search Categories', 'bandstand' ),
+			'popular_items'              => __( 'Popular Categories', 'bandstand' ),
+			'all_items'                  => __( 'All Categories', 'bandstand' ),
+			'parent_item'                => __( 'Parent Category', 'bandstand' ),
+			'parent_item_colon'          => __( 'Parent Category:', 'bandstand' ),
+			'edit_item'                  => __( 'Edit Category', 'bandstand' ),
+			'view_item'                  => __( 'View Category', 'bandstand' ),
+			'update_item'                => __( 'Update Category', 'bandstand' ),
+			'add_new_item'               => __( 'Add New Category', 'bandstand' ),
+			'new_item_name'              => __( 'New Category Name', 'bandstand' ),
+			'separate_items_with_commas' => __( 'Separate categories with commas', 'bandstand' ),
+			'add_or_remove_items'        => __( 'Add or remove categories', 'bandstand' ),
+			'choose_from_most_used'      => __( 'Choose from most used categories', 'bandstand' ),
+			'menu_name'                  => __( 'Categories', 'bandstand' ),
+		),
+		'meta_box_cb'                    => 'audiotheme_taxonomy_checkbox_list_meta_box',
+		'public'                         => true,
+		'query_var'                      => true,
+		'rewrite'                        => array(
+			'slug'                       => get_audiotheme_videos_rewrite_base() . '/category',
+			'with_front'                 => false,
+		),
+		'show_ui'                        => true,
+		'show_admin_column'              => true,
+		'show_in_nav_menus'              => true,
+		'show_tagcloud'                  => false,
+	) );
+
 	// Register the video custom post type.
 	register_post_type( 'audiotheme_video', array(
 		'has_archive'            => get_audiotheme_videos_rewrite_base(),
@@ -57,7 +91,6 @@ function audiotheme_videos_init() {
 		'show_in_menu'           => true,
 		'show_in_nav_menus'      => false,
 		'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments', 'revisions', 'author' ),
-		'taxonomies'             => array( 'post_tag' ),
 	) );
 
 	add_action( 'pre_get_posts', 'audiotheme_video_query_sort' );
@@ -91,7 +124,11 @@ function get_audiotheme_videos_rewrite_base() {
  * @param object $query The main WP_Query object. Passed by reference.
  */
 function audiotheme_video_query_sort( $query ) {
-	if ( is_admin() || ! $query->is_main_query() || ! is_post_type_archive( 'audiotheme_video' ) ) {
+	if (
+		is_admin() ||
+		! $query->is_main_query() ||
+		! ( is_post_type_archive( 'audiotheme_video' ) || is_tax( 'audiotheme_video_category' ) )
+	) {
 		return;
 	}
 
@@ -131,7 +168,12 @@ function audiotheme_video_query_sort( $query ) {
 function audiotheme_video_default_template_query( $query ) {
 	global $wpdb;
 
-	if ( is_admin() || ! $query->is_main_query() || ! is_post_type_archive( 'audiotheme_video' ) ) {
+	if (
+		is_admin() ||
+		! $query->is_main_query() ||
+		! is_post_type_archive( 'audiotheme_video' ) ||
+		! is_tax( 'audiotheme_video_category' )
+	) {
 		return;
 	}
 
@@ -155,7 +197,7 @@ function audiotheme_video_default_template_query( $query ) {
  * @return string
  */
 function audiotheme_video_template_include( $template ) {
-	if ( is_post_type_archive( 'audiotheme_video' ) ) {
+	if ( is_post_type_archive( 'audiotheme_video' ) || is_tax( 'audiotheme_video_category' ) ) {
 		$template = audiotheme_locate_template( 'archive-video.php' );
 		do_action( 'audiotheme_template_include', $template );
 	} elseif ( is_singular( 'audiotheme_video' ) ) {

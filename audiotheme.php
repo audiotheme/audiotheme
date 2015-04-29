@@ -100,7 +100,7 @@ function audiotheme_load() {
 	add_filter( 'post_type_link', 'audiotheme_archives_post_type_link', 10, 3 );
 	add_filter( 'post_type_archive_link', 'audiotheme_archives_post_type_archive_link', 10, 2 );
 	add_filter( 'post_type_archive_title', 'audiotheme_archives_post_type_archive_title' );
-	add_filter( 'audiotheme_archive_title', 'audiotheme_archives_record_type_title' );
+	add_filter( 'audiotheme_archive_title', 'audiotheme_archives_taxonomy_title' );
 
 	add_action( 'admin_bar_menu', 'audiotheme_archives_admin_bar_edit_menu', 80 );
 	add_action( 'post_updated', 'audiotheme_archives_post_updated', 10, 3 );

@@ -192,7 +192,10 @@ function get_audiotheme_archive_meta( $key = '', $single = false, $default = nul
 
 	if (
 		! $post_type &&
-		( ! is_audiotheme_post_type_archive() || ! is_tax( 'audiotheme_record_type' ) )
+		(
+			! is_audiotheme_post_type_archive() ||
+			! is_tax( array( 'audiotheme_record_type', 'audiotheme_video_category' ) )
+		)
 	) {
 		return null;
 	}
