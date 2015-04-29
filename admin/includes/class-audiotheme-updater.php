@@ -10,7 +10,7 @@ class Audiotheme_Updater {
 	/**
 	 * @var string
 	 */
-	protected $api_url = 'http://audiotheme.com/api/';
+	protected $api_url = 'https://audiotheme.com/api/';
 
 	/**
 	 * Additional data to send to pass through the API.
@@ -296,9 +296,9 @@ class Audiotheme_Updater {
 	public function get_license_error_messages( $args = array() ) {
 		$args = wp_parse_args( $args, array(
 			'prepend'       => '',
-			'account_url'   => 'http://audiotheme.com/account/',
-			'framework_url' => 'http://audiotheme.com/view/audiotheme/',
-			'product_url'   => 'http://audiotheme.com/shop/',
+			'account_url'   => 'https://audiotheme.com/account/',
+			'framework_url' => 'https://audiotheme.com/view/audiotheme/',
+			'product_url'   => 'https://audiotheme.com/shop/',
 		) );
 
 		$messages['empty_license']  = $args['prepend'];

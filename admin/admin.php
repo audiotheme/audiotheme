@@ -118,7 +118,7 @@ function audiotheme_update_notice( $notice ) {
 	$notice  =  sprintf( __( '<a href="%s">Register your copy of AudioTheme</a> to receive automatic updates and support. Need a license key?', 'audiotheme' ),
 		esc_url( add_query_arg( 'page', 'audiotheme-settings', admin_url( $settings_page ) ) )
 	);
-	$notice .= ' <a href="http://audiotheme.com/view/audiotheme/" target="_blank">' . __( 'Purchase one now.', 'audiotheme' ) . '</a>';
+	$notice .= ' <a href="https://audiotheme.com/view/audiotheme/" target="_blank">' . __( 'Purchase one now.', 'audiotheme' ) . '</a>';
 
 	return $notice;
 }

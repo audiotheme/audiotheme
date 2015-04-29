@@ -142,7 +142,7 @@ module.exports = function(grunt) {
 					exclude: ['.git/.*', 'node_modules/.*', 'release/.*', 'tests/.*'],
 					mainFile: 'audiotheme.php',
 					potHeaders: {
-						'report-msgid-bugs-to': 'http://audiotheme.com/support/',
+						'report-msgid-bugs-to': 'https://audiotheme.com/support/',
 						'language': 'en',
 						'plural-forms': 'nplurals=2; plural=(n != 1);',
 						'x-poedit-basepath': '../',

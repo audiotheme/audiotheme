@@ -222,7 +222,7 @@ function audiotheme_dashboard_sort_menu() {
  * @since 1.0.0
  */
 function audiotheme_dashboard_settings_license_section( $section ) {
-	echo sprintf( __( 'Find your license key in <a href="%s" target="_blank">your account</a> on AudioTheme.com. Your license key allows you to recieve automatic upgrades and support.', 'audiotheme' ), 'http://audiotheme.com/account/' );
+	echo sprintf( __( 'Find your license key in <a href="%s" target="_blank">your account</a> on AudioTheme.com. Your license key allows you to recieve automatic upgrades and support.', 'audiotheme' ), 'https://audiotheme.com/account/' );
 }
 
 /**
@@ -294,8 +294,8 @@ function audiotheme_dashboard_license_input( $args ) {
 						// ok|empty|unknown|invalid|expired|limit_reached|failed
 						errors['empty']         = '<?php echo esc_js( __( 'Empty license key.', 'audiotheme' ) ); ?>';
 						errors['invalid']       = '<?php echo esc_js( __( 'Invalid license key.', 'audiotheme' ) ); ?>';
-						errors['expired']       = '<?php echo esc_js( __( 'License key expired.', 'audiotheme' ) ) .' <a href="http://audiotheme.com/view/audiotheme/" target="_blank">' . esc_js( __( 'Renew now.', 'audiotheme' ) ) . '</a>'; ?>';
-						errors['limit_reached'] = '<?php echo esc_js( __( 'Activation limit reached.', 'audiotheme' ) ) . ' <a href="http://audiotheme.com/view/audiotheme/" target="_blank">' . esc_js( __( 'Upgrade your license.', 'audiotheme' ) ) . '</a>'; ?>';
+						errors['expired']       = '<?php echo esc_js( __( 'License key expired.', 'audiotheme' ) ) .' <a href="https://audiotheme.com/view/audiotheme/" target="_blank">' . esc_js( __( 'Renew now.', 'audiotheme' ) ) . '</a>'; ?>';
+						errors['limit_reached'] = '<?php echo esc_js( __( 'Activation limit reached.', 'audiotheme' ) ) . ' <a href="https://audiotheme.com/view/audiotheme/" target="_blank">' . esc_js( __( 'Upgrade your license.', 'audiotheme' ) ) . '</a>'; ?>';
 
 						if ( 'status' in data && data.status in errors ) {
 							$response.html( errors[ data.status ] );
@@ -375,9 +375,9 @@ function audiotheme_license_clear_status( $response ) {
  */
 function audiotheme_dashboard_settings_help() {
 	$content  = '<h4>' . __( 'For more information:', 'audiotheme' ) . '</h4>';
-	$content .= '<p><a href="http://audiotheme.com/account/" target="_blank">' . __( "Find Your License", 'audiotheme' ) . '</a></p>';
-	$content .= '<p><a href="http://audiotheme.com/view/audiotheme/" target="_blank">' . __( "Upgrade Your License", 'audiotheme' ) . '</a></p>';
-	$content .= '<p><a href="http://audiotheme.com/support/" target="_blank">' . __( "Support Forum", 'audiotheme' ) . '</a></p>';
+	$content .= '<p><a href="https://audiotheme.com/account/" target="_blank">' . __( "Find Your License", 'audiotheme' ) . '</a></p>';
+	$content .= '<p><a href="https://audiotheme.com/view/audiotheme/" target="_blank">' . __( "Upgrade Your License", 'audiotheme' ) . '</a></p>';
+	$content .= '<p><a href="https://audiotheme.com/support/" target="_blank">' . __( "Support Forum", 'audiotheme' ) . '</a></p>';
 	get_current_screen()->set_help_sidebar( $content );
 
 	get_current_screen()->add_help_tab( array(
@@ -386,10 +386,10 @@ function audiotheme_dashboard_settings_help() {
 		'content' =>
 			'<h4>' . __( 'License Key', 'audiotheme' ) . '</h4>' .
 			'<p>' . __( "Your license key allows you to receive automatic updates and support for as long as your license is active. Don't worry, you won't lose any features you're currently using if it expires, however, it's a good idea to keep your license active to gain access to security upgrades, bug fixes, new features, or just to ask a question if you need a little help.", 'audiotheme' ) . '</p>' .
-			'<p>' . sprintf( __( "Your license key can be found in <a href='%s' target='_blank'>your account</a> on AudioTheme.com or in your purchase email. It's a random string consisting of 32 numbers or letters. Let us know if you need help finding it.", 'audiotheme' ), 'http://audiotheme.com/account/' ) . '</p>' .
+			'<p>' . sprintf( __( "Your license key can be found in <a href='%s' target='_blank'>your account</a> on AudioTheme.com or in your purchase email. It's a random string consisting of 32 numbers or letters. Let us know if you need help finding it.", 'audiotheme' ), 'https://audiotheme.com/account/' ) . '</p>' .
 			'<p><em>' . __( "<strong>Example key:</strong>", 'audiotheme' ) . ' <code>a72fdacfb04efa15976ed843d0bc7fec</code></em></p>' .
 			'<p>' . __( "Simply copy and paste it into the <strong>License Key</strong> field and click the <strong>Activate</strong> button. If your license is valid, that's all you have to do.", 'audiotheme' ) . '</p>' .
-			'<p><em>' . sprintf( __( "If your license has expired or you want to use AudioTheme on more than one site, visit <a href='%s' target='_blank'>AudioTheme.com</a> to upgrade.", 'audiotheme' ), 'http://audiotheme.com/view/audiotheme/' ) . '</em></p>' .
+			'<p><em>' . sprintf( __( "If your license has expired or you want to use AudioTheme on more than one site, visit <a href='%s' target='_blank'>AudioTheme.com</a> to upgrade.", 'audiotheme' ), 'https://audiotheme.com/view/audiotheme/' ) . '</em></p>' .
 
 			'<h4>' . __( 'Directory Browsing', 'audiotheme' ) . '</h4>' .
 			'<p>' . __( "Most servers running WordPress have a feature referred to as directory browsing. When active, visitors can see a list of files in some folders on your server if they know where to look. These folders might contain music or pictures that you don't want to be easily accessed. While anything you make available online can't be completely protected, disabling directory browsing will help hide important files from prying eyes.", 'audiotheme' ) . '</p>',

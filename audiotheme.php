@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: AudioTheme
- * Plugin URI: http://audiotheme.com/view/audiotheme/
+ * Plugin URI: https://audiotheme.com/view/audiotheme/
  * Description: A platform for music-oriented websites, allowing for easy management of gigs, discography, videos and more.
  * Version: 1.6.3
  * Author: AudioTheme
- * Author URI: http://audiotheme.com/
+ * Author URI: https://audiotheme.com/
  * Requires at least: 3.5.0
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -29,7 +29,7 @@
  * @package AudioTheme_Framework
  * @version 1.6.3
  * @author AudioTheme
- * @link http://audiotheme.com/
+ * @link https://audiotheme.com/
  * @copyright Copyright 2012 AudioTheme
  * @license GPL-2.0+
 */
