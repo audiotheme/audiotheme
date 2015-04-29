@@ -1,13 +1,12 @@
 /*jshint node:true */
 
-module.exports = function(grunt) {
+module.exports = function( grunt ) {
 	'use strict';
 
-	require('matchdep').filterDev('grunt-*').forEach( grunt.loadNpmTasks );
+	require( 'matchdep' ).filterDev( 'grunt-*' ).forEach( grunt.loadNpmTasks );
 
 	grunt.initConfig({
-		pkg: grunt.file.readJSON('package.json'),
-		config: grunt.file.readJSON('config.json'),
+		pkg: grunt.file.readJSON( 'package.json' ),
 		version: '<%= pkg.version %>',
 
 		/**
@@ -15,7 +14,7 @@ module.exports = function(grunt) {
 		 */
 		autoprefixer: {
 			options: {
-				browsers: ['> 1%', 'last 2 versions', 'ff 17', 'opera 12.1', 'android 4']
+				browsers: [ '> 1%', 'last 2 versions', 'ff 17', 'opera 12.1', 'android 4' ]
 			},
 			dist: {
 				files: [
@@ -92,17 +91,17 @@ module.exports = function(grunt) {
 		 */
 		watch: {
 			js: {
-				files: ['<%= jshint.all %>'],
-				tasks: ['jshint', 'uglify']
+				files: [ '<%= jshint.all %>' ],
+				tasks: [ 'jshint', 'uglify' ]
 			},
 			less: {
-				files: ['includes/css/less/*.less', 'admin/css/less/*.less', 'admin/css/less/**/*.less'],
-				tasks: ['less', 'autoprefixer', 'cssmin']
+				files: [ 'includes/css/less/*.less', 'admin/css/less/*.less', 'admin/css/less/**/*.less' ],
+				tasks: [ 'less', 'autoprefixer', 'cssmin' ]
 			}
 		},
 
 		/**
-		 * Archive the plugin in the /release directory, excluding development
+		 * Archive the plugin in the /dist directory, excluding development
 		 * and build related files.
 		 *
 		 * The zip archive will be named: audiotheme-plugin-{{version}}.zip
@@ -110,17 +109,17 @@ module.exports = function(grunt) {
 		compress: {
 			build: {
 				options: {
-					archive: 'release/<%= pkg.name %>-plugin-<%= version %>.zip'
+					archive: 'dist/<%= pkg.name %>-plugin-<%= version %>.zip'
 				},
 				files: [
 					{
 						src: [
 							'**',
+							'!dist/**',
 							'!node_modules/**',
 							'!release/**',
 							'!tests/**',
 							'!.jshintrc',
-							'!config.json',
 							'!Gruntfile.js',
 							'!package.json',
 							'!phpunit.xml',
@@ -139,19 +138,11 @@ module.exports = function(grunt) {
 		makepot: {
 			build: {
 				options: {
-					exclude: ['.git/.*', 'node_modules/.*', 'release/.*', 'tests/.*'],
+					exclude: [ '.git/.*', 'dist/.*', 'node_modules/.*', 'release/.*', 'tests/.*' ],
 					mainFile: 'audiotheme.php',
 					potHeaders: {
 						'report-msgid-bugs-to': 'https://audiotheme.com/support/',
-						'language': 'en',
-						'plural-forms': 'nplurals=2; plural=(n != 1);',
-						'x-poedit-basepath': '../',
-						'x-poedit-bookmarks': '',
-						'x-poedit-country': 'United States',
-						'x-poedit-keywordslist': '__;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c;_nc:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;',
-						'x-poedit-searchpath-0': '.',
-						'x-poedit-sourcecharset': 'utf-8',
-						'x-textdomain-support': 'yes'
+						'poedit': true
 					},
 					type: 'wp-plugin'
 				}
@@ -179,53 +170,15 @@ module.exports = function(grunt) {
 					'audiotheme.php': 'audiotheme.php',
 					'style.css': 'style.css'
 				}
-			},
-			release: {
-				options: {
-					replacements: [{
-						pattern: /@since x\.x\.x/g,
-						replacement: '@since <%= version %>'
-					}]
-				},
-				files: [
-					{
-						src: [
-							'*.php',
-							'**/*.php'
-						],
-						dest: './'
-					}
-				]
 			}
 		},
-
-		/**
-		 * Upload a release build to the production server.
-		 */
-		sftp: {
-			release: {
-				options: {
-					path: '<%= config.production.releasePath %>',
-					srcBasePath: 'release/',
-					host: '<%= config.production.host %>',
-					username: '<%= config.production.username %>',
-					password: '<%= config.production.password %>'
-				},
-				files: [
-					{
-						src: ['release/<%= pkg.name %>-plugin-<%= version %>.zip'],
-						dest: './'
-					}
-				]
-			}
-		}
 
 	});
 
 	/**
 	 * Default task.
 	 */
-	grunt.registerTask( 'default', ['jshint', 'uglify', 'less', 'autoprefixer', 'cssmin', 'watch'] );
+	grunt.registerTask( 'default', [ 'jshint', 'uglify', 'less', 'autoprefixer', 'cssmin', 'watch' ] );
 
 	/**
 	 * Build a release.
@@ -234,64 +187,25 @@ module.exports = function(grunt) {
 	 * specific version number can be passed as the first argument.
 	 * Ex: grunt release:1.2.3
 	 *
-	 * The project is then zipped into an archive in the release directory,
+	 * The project is then zipped into an archive in the /dist directory,
 	 * excluding unnecessary source files in the process.
 	 */
-	grunt.registerTask('build', function(arg1) {
-		var pkg = grunt.file.readJSON('package.json'),
+	grunt.registerTask( 'package', function( arg1 ) {
+		var pkg = grunt.file.readJSON( 'package.json' ),
 			version = 0 === arguments.length ? pkg.version : arg1;
 
-		grunt.config.set('version', version);
-		grunt.task.run('string-replace:build');
-		grunt.task.run('jshint');
-		grunt.task.run('less');
-		grunt.task.run('autoprefixer');
-		grunt.task.run('cssmin');
-		grunt.task.run('uglify');
-		grunt.task.run('makepot');
-		grunt.task.run('compress:build');
-	});
+		grunt.config.set( 'version', version );
 
-	/**
-	 * Release a new version.
-	 *
-	 * Builds a release and pushes it to the remote git repo and uploads it to
-	 * the production server.
-	 *
-	 * @todo "@since x.x.x" tags are also replaced with the new version number.
-	 */
-	grunt.registerTask('release', function(arg1) {
-		var pkg = grunt.file.readJSON('package.json'),
-			version = 0 === arguments.length ? pkg.version : arg1;
-
-		grunt.config.set('version', version);
-		grunt.task.run('build:' + version);
-		grunt.task.run('string-replace:release');
-		// @todo git tag, commit, and push to origin
-		grunt.task.run('sftp:release');
-	});
-
-	/**
-	 * PHP Code Sniffer using WordPress Coding Standards.
-	 *
-	 * @link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards
-	 */
-	grunt.registerTask('phpcs', function() {
-		var done = this.async();
-
-		grunt.util.spawn({
-			cmd: 'phpcs',
-			args: [
-				'-p',
-				'-s',
-				'--standard=WordPress',
-				'--extensions=php',
-				'--ignore=*/node_modules/*,*/release/*,*/includes/vendor/*',
-				'--report-file=release/codesniffs.txt',
-				'.'
-			],
-			opts: { stdio: 'inherit' }
-		}, done);
+		grunt.task.run([
+			'string-replace:build',
+			'jshint',
+			'less',
+			'autoprefixer',
+			'cssmin',
+			'uglify',
+			'makepot',
+			'compress:build'
+		]);
 	});
 
 };
