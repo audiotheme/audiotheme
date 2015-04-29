@@ -55,7 +55,6 @@ function audiotheme_record_register_columns( $columns ) {
 	$columns = audiotheme_array_insert_after_key( $columns, 'cb', $image_column );
 	$columns = audiotheme_array_insert_after_key( $columns, 'title', $release_column );
 
-	$columns['record_type'] = _x( 'Type', 'column name', 'audiotheme' );
 	$columns['track_count'] = _x( 'Tracks', 'column name', 'audiotheme' );
 
 	unset( $columns['date'] );
@@ -90,25 +89,6 @@ function audiotheme_record_display_columns( $column_name, $post_id ) {
 	global $post;
 
 	switch ( $column_name ) {
-		case 'record_type' :
-			$taxonomy = 'audiotheme_record_type';
-			$post_type = get_post_type( $post_id );
-			$terms = wp_get_object_terms( $post_id, $taxonomy, array( 'fields' => 'slugs' ) );
-
-			if ( ! empty( $terms ) ) {
-				$record_types = get_audiotheme_record_type_strings();
-				foreach ( $terms as $term ) {
-					if ( isset( $record_types[ $term ] ) ) {
-						$names[] = $record_types[ $term ];
-					}
-				}
-
-				if ( ! empty( $names ) ) {
-					echo join( ', ', $names );
-				}
-			}
-			break;
-
 		case 'release_year' :
 			echo get_audiotheme_record_release_year( $post_id );
 			break;
@@ -197,10 +177,6 @@ function audiotheme_record_save_post( $post_id ) {
 		}
 	}
 	update_post_meta( $post_id, '_audiotheme_record_links', $record_links );
-
-	// Update record type.
-	$record_types = ( empty( $_POST['record_type'] ) ) ? '' : $_POST['record_type'];
-	wp_set_object_terms( $post_id, $record_types, 'audiotheme_record_type' );
 
 	// Update tracklist.
 	if ( ! empty( $_POST['audiotheme_tracks'] ) ) {
@@ -329,9 +305,6 @@ function audiotheme_edit_record_tracklist() {
 function audiotheme_record_details_meta_box( $post ) {
 	// Nonce to verify intention later.
 	wp_nonce_field( 'update-record_' . $post->ID, 'audiotheme_record_nonce' );
-
-	$record_types = get_audiotheme_record_type_strings();
-	$selected_record_type = wp_get_object_terms( $post->ID, 'audiotheme_record_type', array( 'fields' => 'slugs' ) );
 
 	$record_links = (array) get_audiotheme_record_links( $post->ID );
 	$record_links = ( empty( $record_links ) ) ? array( '' ) : $record_links;

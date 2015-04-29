@@ -11,20 +11,6 @@
 	<input type="text" name="genre" id="record-genre" value="<?php echo esc_attr( get_audiotheme_record_genre( $post->ID ) ) ; ?>" class="widefat">
 </p>
 
-<?php if ( $record_types ) : ?>
-	<p id="audiotheme-record-types" class="audiotheme-field">
-		<label><?php _e( 'Type', 'audiotheme' ) ?></label><br />
-		<?php
-		foreach ( $record_types as $slug => $name ) {
-			echo sprintf( '<input type="radio" name="record_type[]" id="%1$s" value="%1$s"%2$s> <label for="%1$s">%3$s</label><br />',
-				esc_attr( $slug ),
-				checked( in_array( $slug, $selected_record_type ), true, false ),
-				esc_attr( $name ) );
-		}
-		?>
-	</p>
-<?php endif; ?>
-
 <table class="audiotheme-repeater" id="record-links">
 	<thead>
 		<tr>

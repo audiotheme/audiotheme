@@ -38,6 +38,7 @@ function audiotheme_admin_setup() {
 
 	add_action( 'admin_enqueue_scripts', 'audiotheme_enqueue_admin_scripts' );
 	add_action( 'admin_body_class', 'audiotheme_admin_body_class' );
+	add_action( 'save_post', 'audiotheme_update_post_terms', 10, 2 );
 	add_filter( 'user_contactmethods', 'audiotheme_edit_user_contact_info' );
 
 	add_action( 'manage_pages_custom_column', 'audiotheme_display_custom_column', 10, 2 );
@@ -237,6 +238,34 @@ function audiotheme_display_custom_column( $column_name, $post_id ) {
 }
 
 /**
+ * Save custom taxonomy terms when a post is saved.
+ *
+ * @since 1.7.0
+ *
+ * @param int $post_id Post ID.
+ * @param WP_Post $post Post object.
+ */
+function audiotheme_update_post_terms( $post_id, $post ) {
+	$is_autosave = defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE;
+	$is_revision = wp_is_post_revision( $post_id );
+
+	// Bail if the data shouldn't be saved.
+	if ( $is_autosave || $is_revision || empty( $_POST['audiotheme_post_terms'] ) ) {
+		return;
+	}
+
+	foreach ( $_POST['audiotheme_post_terms'] as $taxonomy => $term_ids ) {
+		// Don't save if intention can't be verified.
+		if ( ! isset( $_POST[ $taxonomy . '_nonce' ] ) || ! wp_verify_nonce( $_POST[ $taxonomy . '_nonce' ], 'save-post-terms_' . $post_id ) ) {
+			continue;
+		}
+
+		$term_ids = array_map( 'absint', $term_ids );
+		wp_set_object_terms( $post_id, $term_ids, $taxonomy );
+	}
+}
+
+/**
  * Custom user contact fields.
  *
  * @since 1.0.0
@@ -257,9 +286,43 @@ function audiotheme_edit_user_contact_info( $contactmethods ) {
  * @since 1.0.0
  */
 function audiotheme_upgrade() {
-	$saved_version = get_option( 'audiotheme_version' );
+	$saved_version = get_option( 'audiotheme_version', '0' );
+	$current_version = AUDIOTHEME_VERSION;
 
-	if ( ! $saved_version || audiotheme_version_compare( $saved_version, '1.0.0', '<' ) ) {
+	if ( version_compare( $saved_version, '1.7.0', '<' ) ) {
+		audiotheme_upgrade_170();
+	}
+
+	if ( '0' == $saved_version || version_compare( $saved_version, $current_version, '<' ) ) {
 		update_option( 'audiotheme_version', AUDIOTHEME_VERSION );
+	}
+}
+
+/**
+ * Upgrade routine for version 1.7.0.
+ *
+ * @since 1.7.0
+ */
+function audiotheme_upgrade_170() {
+	// Update record types.
+	$terms = get_terms( 'audiotheme_record_type', array( 'get' => 'all' ) );
+	if ( ! empty( $terms ) ) {
+		foreach ( $terms as $term ) {
+			$name = get_audiotheme_record_type_string( $term->slug );
+			$name = empty( $name ) ? ucwords( str_replace( array( 'record-type-', '-' ), array( '', ' ' ), $term->name ) ) : $name;
+			$slug = str_replace( 'record-type-', '', $term->slug );
+
+			$result = wp_update_term( $term->term_id, 'audiotheme_record_type', array(
+				'name' => $name,
+				'slug' => $slug,
+			) );
+
+			if ( is_wp_error( $result ) ) {
+				// Update the name only. We'll account for the 'record-type-' prefix.
+				wp_update_term( $term->term_id, 'audiotheme_record_type', array(
+					'name' => $name,
+				) );
+			}
+		}
 	}
 }

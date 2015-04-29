@@ -4,6 +4,69 @@
  */
 
 /**
+ * Get record type strings.
+ *
+ * List of default record types to better define the record, much like a post
+ * format.
+ *
+ * @since 1.0.0
+ * @deprecated 1.7.0
+ *
+ * @return array List of record types.
+ */
+function get_audiotheme_record_type_strings() {
+	$strings = array(
+		'album'              => _x( 'Album',  'Record type', 'audiotheme' ),
+		'record-type-album'  => _x( 'Album',  'Record type', 'audiotheme' ),
+		'single'             => _x( 'Single', 'Record type', 'audiotheme' ),
+		'record-type-single' => _x( 'Single', 'Record type', 'audiotheme' ),
+	);
+
+	/**
+	 * Filter the list of available of record types.
+	 *
+	 * Terms will be registered automatically for new record types. Keys must
+	 * be prefixed with 'record-type'.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array strings List of record types. Keys must be prefixed with 'record-type-'.
+	 */
+	return apply_filters( 'audiotheme_record_type_strings', $strings );
+}
+
+/**
+ * Get record type slugs.
+ *
+ * Gets an array of available record type slugs from record type strings.
+ *
+ * @since 1.0.0
+ * @deprecated 1.7.0
+ *
+ * @return array List of record type slugs.
+ */
+function get_audiotheme_record_type_slugs() {
+	$slugs = array_keys( get_audiotheme_record_type_strings() );
+	return $slugs;
+}
+
+/**
+ * Get record type string.
+ *
+ * Sets default value of record type if option is not set.
+ *
+ * @since 1.0.0
+ * @deprecated 1.7.0
+ *
+ * @param string Record type slug.
+ * @return string Record type label.
+ */
+function get_audiotheme_record_type_string( $slug ) {
+	$term = get_term_by( 'slug', $slug, 'audiotheme_record_type' );
+	return $term ? $term->name : _x( 'Album', 'Record type', 'audiotheme' );
+}
+
+/**
  * Add widget count classes so they can be targeted based on their position.
  *
  * Adds a class to widgets containing it's position in the sidebar it belongs

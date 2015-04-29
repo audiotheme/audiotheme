@@ -26,9 +26,6 @@ function audiotheme_load_discography_admin() {
 	add_action( 'wp_ajax_audiotheme_ajax_get_playlist_tracks', 'audiotheme_ajax_get_playlist_tracks' );
 	add_action( 'wp_ajax_audiotheme_ajax_get_playlist_records', 'audiotheme_ajax_get_playlist_records' );
 
-	// Set up the record type taxonomy.
-	add_action( 'admin_init', 'audiotheme_discography_admin_setup' );
-
 	add_action( 'admin_menu', 'audiotheme_discography_admin_menu' );
 	add_filter( 'post_updated_messages', 'audiotheme_discography_post_updated_messages' );
 
@@ -70,27 +67,6 @@ function audiotheme_load_discography_admin() {
 	add_action( 'add_audiotheme_archive_settings_meta_box_audiotheme_record', '__return_true' );
 	add_action( 'save_audiotheme_archive_settings', 'audiotheme_record_archive_save_settings_hook', 10, 3 );
 	add_action( 'audiotheme_archive_settings_meta_box', 'audiotheme_record_archive_settings' );
-}
-
-/**
- * Add initial discography data.
- *
- * Ensures the record type taxonomies exist. Runs anytime themes.php is
- * visited to ensure record types exist.
- *
- * @since 1.0.0
- */
-function audiotheme_discography_admin_setup() {
-	if ( taxonomy_exists( 'audiotheme_record_type' ) ) {
-		$record_types = get_audiotheme_record_type_slugs();
-		if ( $record_types ) {
-			foreach( $record_types as $type_slug ) {
-				if ( ! term_exists( $type_slug, 'audiotheme_record_type' ) ) {
-					wp_insert_term( $type_slug, 'audiotheme_record_type', array( 'slug' => $type_slug ) );
-				}
-			}
-		}
-	}
 }
 
 /**
