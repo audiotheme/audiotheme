@@ -198,7 +198,15 @@ function audiotheme_video_default_template_query( $query ) {
  */
 function audiotheme_video_template_include( $template ) {
 	if ( is_post_type_archive( 'audiotheme_video' ) || is_tax( 'audiotheme_video_category' ) ) {
-		$template = audiotheme_locate_template( 'archive-video.php' );
+		if ( is_tax() ) {
+			$term = get_queried_object();
+			$taxonomy = str_replace( 'audiotheme_', '', $term->taxonomy );
+			$templates[] = "taxonomy-$taxonomy-{$term->slug}.php";
+			$templates[] = "taxonomy-$taxonomy.php";
+		}
+
+		$templates[] = 'archive-video.php';
+		$template = audiotheme_locate_template( $templates );
 		do_action( 'audiotheme_template_include', $template );
 	} elseif ( is_singular( 'audiotheme_video' ) ) {
 		$template = audiotheme_locate_template( 'single-video.php' );
