@@ -122,7 +122,7 @@ function audiotheme_nav_menu_classes( $items, $args ) {
 	$post_type_archive_link = get_post_type_archive_link( get_post_type() );
 
 	foreach ( $items as $key => $item ) {
-		if ( 0 === $item->menu_item_parent ) {
+		if ( empty( $item->menu_item_parent ) ) {
 			$first_top = ( -1 === $first_top ) ? $key : $first_top;
 			$last_top = $key;
 		} else {
