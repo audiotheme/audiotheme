@@ -120,16 +120,16 @@ class Audiotheme_Venues_List_Table extends WP_List_Table {
 	function get_columns() {
 		$columns = array(
 			'cb'            => '<input type="checkbox">',
-			'name'          => 'Name',
-			'city'          => 'City',
-			'state'         => 'State',
-			'country'       => 'Country',
-			'phone'         => 'Phone',
-			'contact_name'  => 'Contact',
-			'contact_phone' => 'Contact Phone',
-			'contact_email' => 'Contact Email',
-			'gigs'          => 'Gigs',
-			'website'       => '<span class="audiotheme-column-icon">Website</span>',
+			'name'          => __( 'Name', 'audiotheme' ),
+			'city'          => __( 'City', 'audiotheme' ),
+			'state'         => __( 'State', 'audiotheme' ),
+			'country'       => __( 'Country', 'audiotheme' ),
+			'phone'         => __( 'Phone', 'audiotheme' ),
+			'contact_name'  => __( 'Contact', 'audiotheme' ),
+			'contact_phone' => __( 'Contact Phone', 'audiotheme' ),
+			'contact_email' => __( 'Contact Email', 'audiotheme' ),
+			'gigs'          => __( 'Gigs', 'audiotheme' ),
+			'website'       => sprintf( '<span class="audiotheme-column-icon">%s</span>', __( 'Website', 'audiotheme' ) ),
 		);
 
 		// The screen id is used when managing column visibility.
