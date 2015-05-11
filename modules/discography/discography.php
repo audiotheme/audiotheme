@@ -183,7 +183,11 @@ function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
  * @param object $query The main WP_Query object. Passed by reference.
  */
 function audiotheme_record_query_sort( $query ) {
-	if ( is_admin() || ! $query->is_main_query() || ! ( is_post_type_archive( 'audiotheme_record' ) || is_tax( 'audiotheme_record_type' ) ) ) {
+	if (
+		is_admin() ||
+		! $query->is_main_query() ||
+		! ( is_post_type_archive( 'audiotheme_record' ) || is_tax( 'audiotheme_record_type' ) )
+	) {
 		return;
 	}
 

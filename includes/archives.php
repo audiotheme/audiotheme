@@ -82,17 +82,15 @@ function register_audiotheme_archives() {
  * @param object $query The main WP_Query object. Passed by reference.
  */
 function audiotheme_archive_query( $query ) {
-	if ( is_admin() || ! $query->is_main_query() || ! is_post_type_archive() ) {
+	if (
+		is_admin() ||
+		! $query->is_main_query() ||
+		! ( is_post_type_archive() || is_tax() )
+	) {
 		return;
 	}
 
-	// Determine the current post type.
-	foreach ( array( 'gig', 'record', 'track', 'video' ) as $type ) {
-		if ( is_post_type_archive( 'audiotheme_' . $type ) ) {
-			$post_type = 'audiotheme_' . $type;
-			break;
-		}
-	}
+	$post_type = get_audiotheme_current_archive_post_type();
 
 	if ( empty( $post_type ) ) {
 		return;
@@ -120,6 +118,60 @@ function audiotheme_archive_query( $query ) {
 		// Default to three even rows.
 		$query->set( 'posts_per_archive_page', intval( $columns * 3 ) );
 	}
+}
+
+/**
+ * Retrieve the AudioTheme post type for the current archive.
+ *
+ * @since 1.7.0
+ *
+ * @return string
+ */
+function get_audiotheme_current_archive_post_type() {
+	$post_type = '';
+
+	// Determine the current post type.
+	if ( is_tax() ) {
+		$post_type = get_audiotheme_current_taxonomy_archive_post_type();
+	} elseif ( is_post_type_archive() ) {
+		foreach ( array( 'gig', 'record', 'track', 'video' ) as $type ) {
+			if ( ! is_post_type_archive( 'audiotheme_' . $type ) ) {
+				continue;
+			}
+
+			$post_type = 'audiotheme_' . $type;
+			break;
+		}
+	}
+
+	return $post_type;
+}
+
+/**
+ * Retrieve the AudioTheme post type for the current taxonomy archive.
+ *
+ * @since 1.7.0
+ *
+ * @return string
+ */
+function get_audiotheme_current_taxonomy_archive_post_type() {
+	$post_type = '';
+	$taxonomy  = get_taxonomy( get_queried_object()->taxonomy );
+
+	if ( empty( $taxonomy->object_type ) ) {
+		return $post_type;
+	}
+
+	foreach ( $taxonomy->object_type as $type ) {
+		if ( false === strpos( $type, 'audiotheme_' ) ) {
+			continue;
+		}
+
+		$post_type = $type;
+		break;
+	}
+
+	return $post_type;
 }
 
 /**
