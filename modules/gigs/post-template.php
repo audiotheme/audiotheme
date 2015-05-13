@@ -744,7 +744,7 @@ function get_audiotheme_venue_vcard( $venue_id, $args = array() ) {
 	$region  = '';
 	$region .= ( empty( $venue->city ) ) ? '' : '<span class="locality" itemprop="addressLocality">' . $venue->city . '</span>';
 	$region .= ( ! empty( $venue->city ) && ! empty( $venue->state ) ) ? ', ' : '';
-	$region .= ( empty( $venue->state ) ) ? '' : '<span class="region" itempprop="addressRegion">' . $venue->state . '</span>';
+	$region .= ( empty( $venue->state ) ) ? '' : '<span class="region" itemprop="addressRegion">' . $venue->state . '</span>';
 	$region .= ( empty( $venue->postal_code ) ) ? '' : ' <span class="postal-code" itemprop="postalCode">' . $venue->postal_code . '</span>';
 
 	$address .= ( ! empty( $address ) && ! empty( $region ) ) ? '<span class="sep sep-street-address">' . $args['separator_address'] . '</span>' : '';
