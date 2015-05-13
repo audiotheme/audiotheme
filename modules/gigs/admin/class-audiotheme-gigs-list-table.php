@@ -219,7 +219,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 
 		$past_count = $wpdb->get_var( $wpdb->prepare( $sql . ' AND pm.meta_value<%s', current_time( 'mysql' ) ) );
 		$status_links['past'] = sprintf( '<a href="%s"%s>%s <span class="count">(%d)</span></a>',
-			esc_url( add_query_arg( array( 'gig_date' => current_time( 'mysql' ), 'compare' => '<' ), $base_url ) ),
+			esc_url( add_query_arg( array( 'gig_date' => current_time( 'mysql' ), 'compare' => '%3C' ), $base_url ) ),
 			( 'past' === $this->current_view ) ? ' class="current"' : '',
 			__( 'Past', 'audiotheme' ),
 			$past_count
