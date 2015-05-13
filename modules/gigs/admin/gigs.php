@@ -32,7 +32,7 @@ function audiotheme_gigs_admin_setup() {
 	wp_register_script( 'audiotheme-gig-edit', AUDIOTHEME_URI . 'modules/gigs/admin/js/gig-edit.js', array( 'audiotheme-admin', 'audiotheme-pointer', 'jquery-timepicker', 'jquery-ui-autocomplete', 'jquery-ui-datepicker' ) );
 	wp_localize_script( 'audiotheme-gig-edit', 'audiothemeGigsL10n', array(
 		'datepickerIcon' => AUDIOTHEME_URI . 'admin/images/calendar.png',
-		'timeFormat'     => get_option( 'time_format' ),
+		'timeFormat'     => audiotheme_compatible_time_format(),
 	) );
 
 	wp_register_script( 'audiotheme-venue-edit', AUDIOTHEME_URI . 'modules/gigs/admin/js/venue-edit.js', array( 'audiotheme-admin', 'jquery-ui-autocomplete', 'post' ) );
@@ -269,10 +269,7 @@ function audiotheme_edit_gig_fields() {
 
 		$t = date_parse( $gig->gig_time );
 		if ( empty( $t['errors'] ) ) {
-			$gig_time = date( get_option( 'time_format' ), $timestamp );
-		} else {
-			// No values allowed other than valid times.
-			$gig_time = '';
+			$gig_time = date( audiotheme_compatible_time_format(), $timestamp );
 		}
 	}
 

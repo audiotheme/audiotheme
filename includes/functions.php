@@ -451,3 +451,23 @@ function audiotheme_build_query( $data, $arg_separator = '|', $value_separator =
 	$output = http_build_query( $data, null, $arg_separator );
 	return str_replace( '=', $value_separator, $output );
 }
+
+/**
+ * Attempt to make custom time formats more compatible between JavaScript and PHP.
+ *
+ * If the time format option has an escape sequences, use a default format
+ * determined by whether or not the option uses 24 hour format or not.
+ *
+ * @since 1.7.0
+ *
+ * @return string
+ */
+function audiotheme_compatible_time_format() {
+	$time_format = get_option( 'time_format' );
+
+	if ( false !== strpos( $time_format, '\\' ) ) {
+		$time_format = false !== strpbrk( $time_format, 'GH' ) ? 'G:i' : 'g:i a';
+	}
+
+	return $time_format;
+}
