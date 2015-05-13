@@ -426,7 +426,7 @@ function audiotheme_gig_help() {
 		'title'		=> __( 'Inserting Media', 'audiotheme' ),
 		'content' 	=>
 			'<p>' . __( 'You can upload and insert media (images, audio, documents, etc.) by clicking the Add Media button. You can select from the images and files already uploaded to the Media Library, or upload new media to add to your gig description. To create an image gallery, select the images to add and click the "Create a new gallery" button.', 'audiotheme' ) . '</p>' .
-			'<p>' . __( 'You can also embed media from many popular websites including Twitter, YouTube, Flickr and others by pasting the media URL on its own line into the gig description editor. Please refer to the Codex to <a href="http://codex.wordpress.org/Embeds">learn more about embeds</a>.', 'audiotheme' ) . '</p>',
+			'<p>' . __( 'You can also embed media from many popular websites including Twitter, YouTube, Flickr and others by pasting the media URL on its own line into the gig description editor. Please refer to the Codex to <a href="https://codex.wordpress.org/Embeds">learn more about embeds</a>.', 'audiotheme' ) . '</p>',
 	) );
 
 	get_current_screen()->add_help_tab( array(
@@ -447,7 +447,7 @@ function audiotheme_gig_help() {
 			'<p>' . __( 'Several boxes on this screen contain settings for how your content will be published, including:', 'audiotheme' ) . '</p>' .
 			'<ul>' .
 			'<li>' . __( "<strong>Publish</strong> - When you're done adding a gig, click the Publish button to make it available on your site. If you're not ready to publish, or want to finish updating your gig later, click the Save Draft button to privately save your progress. You can access your drafts at a later time through the <strong>Gigs > All Gigs</strong> menu.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( '<strong>Featured Image</strong> - If the author of your theme built in support for featured images, you can set those here. Find out more about <a href="http://codex.wordpress.org/Post_Thumbnails" target="_blank">setting featured images</a> in the WordPress Codex.', 'audiotheme' ) . '</li>' .
+			'<li>' . __( '<strong>Featured Image</strong> - If the author of your theme built in support for featured images, you can set those here. Find out more about <a href="https://codex.wordpress.org/Post_Thumbnails" target="_blank">setting featured images</a> in the WordPress Codex.', 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
 

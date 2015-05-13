@@ -13,8 +13,8 @@
  * supported by default.
  *
  * @since 1.0.0
- * @link http://core.trac.wordpress.org/ticket/15734
- * @link http://core.trac.wordpress.org/ticket/21635#comment:8
+ * @link https://core.trac.wordpress.org/ticket/15734
+ * @link https://core.trac.wordpress.org/ticket/21635#comment:8
  */
 function audiotheme_add_default_oembed_providers() {
 	#wp_oembed_add_provider( 'http://snd.sc/*', 'http://soundcloud.com/oembed' );

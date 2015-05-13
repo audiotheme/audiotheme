@@ -49,7 +49,7 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 			echo $before_title;
 				echo $instance['title'];
 				printf( ' <a href="%s" target="_blank" title="@%s">@%s</a>',
-					esc_url( 'http://twitter.com/' . $instance['screen_name'] ),
+					esc_url( 'https://twitter.com/' . $instance['screen_name'] ),
 					esc_attr( $instance['screen_name'] ),
 					$instance['screen_name']
 				);
@@ -263,7 +263,7 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 				switch ( $entity['type'] ) {
 					case 'hashtags' :
 						$replace = sprintf( '<a href="%s" target="_blank">%s</a>',
-							esc_url( 'http://twitter.com/search/#' . $entity['text'] ),
+							esc_url( 'https://twitter.com/search/#' . $entity['text'] ),
 							$match
 						);
 						break;
@@ -275,7 +275,7 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 						break;
 					case 'user_mentions' :
 						$replace = sprintf( '<a href="%s" target="_blank">%s</a>',
-							esc_url( 'http://twitter.com/' . $entity['screen_name'] ),
+							esc_url( 'https://twitter.com/' . $entity['screen_name'] ),
 							$match
 						);
 						break;

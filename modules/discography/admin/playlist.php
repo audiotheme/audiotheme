@@ -6,7 +6,7 @@
  *
  * @package AudioTheme_Framework
  * @subpackage Discography
- * @link http://wordpress.org/plugins/cue/
+ * @link https://wordpress.org/plugins/cue/
  */
 
 /**

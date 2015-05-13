@@ -95,7 +95,7 @@ jQuery(function($) {
 	$venueTzSearch.autocomplete({
 		source: function( request, response ) {
 			$.ajax({
-				url: 'http://api.wordpress.org/core/name-to-zoneinfo/1.0/',
+				url: 'https://api.wordpress.org/core/name-to-zoneinfo/1.0/',
 				type: 'GET',
 				data: {
 					s: $venueTzSearch.val()

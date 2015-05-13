@@ -7,7 +7,7 @@
  * @subpackage Settings
  *
  * @since 1.0.0
- * @link http://core.trac.wordpress.org/ticket/18285
+ * @link https://core.trac.wordpress.org/ticket/18285
  */
 class Audiotheme_Settings {
 	/**
@@ -1024,7 +1024,7 @@ class Audiotheme_Settings {
 	 *
 	 * @access protected
 	 * @since 1.0.0
-	 * @link http://core.trac.wordpress.org/ticket/22487
+	 * @link https://core.trac.wordpress.org/ticket/22487
 	 */
 	protected function sort_by_priority( $a, $b ) {
 		$ap = $a['priority'];

@@ -164,7 +164,7 @@ function audiotheme_settings_register_customizer_settings( $wp_customize ) {
  * with a setting.
  *
  * @since 1.0.0
- * @todo http://make.wordpress.org/themes/2011/07/01/wordpress-3-2-fixing-the-edit_theme_optionsmanage_options-bug/
+ * @todo https://make.wordpress.org/themes/2011/07/01/wordpress-3-2-fixing-the-edit_theme_optionsmanage_options-bug/
  */
 function audiotheme_settings_add_admin_menus() {
 	$settings = Audiotheme_Settings::instance();

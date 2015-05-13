@@ -178,7 +178,7 @@ add_action( 'after_setup_theme', 'audiotheme_load_admin', 5 );
  * Register frontend scripts and styles for enqueuing when needed.
  *
  * @since 1.0.0
- * @link http://core.trac.wordpress.org/ticket/18909
+ * @link https://core.trac.wordpress.org/ticket/18909
  */
 function audiotheme_register_scripts() {
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';

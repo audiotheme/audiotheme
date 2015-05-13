@@ -13,7 +13,7 @@
  * sizes added using add_image_size().
  *
  * @see image_size_input_fields()
- * @see http://core.trac.wordpress.org/ticket/20663
+ * @see https://core.trac.wordpress.org/ticket/20663
  *
  * @since 1.0.0
  *

@@ -401,7 +401,7 @@ function get_audiotheme_gig_gcal_link( $post = null ) {
 		'sprop'    => rawurlencode( home_url( '/' ) ),
 	);
 
-	$link = add_query_arg( $args, 'http://www.google.com/calendar/event' );
+	$link = add_query_arg( $args, 'https://www.google.com/calendar/event' );
 
 	return $link;
 }

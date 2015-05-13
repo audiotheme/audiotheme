@@ -113,7 +113,7 @@ function audiotheme_video_after_title() {
 			<span class="description">
 				<?php
 				printf( __( 'Enter a video URL from one of the %s.', 'audiotheme' ),
-					'<a href="http://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F" target="_blank">' . __( 'supported video services', 'audiotheme' ) . '</a>'
+					'<a href="https://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F" target="_blank">' . __( 'supported video services', 'audiotheme' ) . '</a>'
 				);
 				?>
 			</span>
@@ -384,13 +384,13 @@ function audiotheme_video_help() {
 			'<p>' . __( "<strong>Title</strong> - Enter a title for your video. After you enter a title, you'll see the permalink below, which you can edit.", 'audiotheme' ) . '</p>' .
 			'<p>' . __( '<strong>Video URL</strong> - Enter the URL for your video. After saving a preview of the video will display below this field.', 'audiotheme' ) . '</p>' .
 			'<p>' . __( '<strong>Editor</strong> - Describe your video. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.', 'audiotheme' ) . '</p>' .
-			'<p>' . __( '<strong>Excerpt</strong> - Depending on the theme you have activated, this is a brief expert that may appear in your list of videos. Visit the WordPress Support section to <a href="http://en.support.wordpress.com/splitting-content/excerpts/" target="_blank">learn more about excerpts</a>.', 'audiotheme' ) . '</p>',
+			'<p>' . __( '<strong>Excerpt</strong> - Depending on the theme you have activated, this is a brief expert that may appear in your list of videos. Visit the WordPress Support section to <a href="https://en.support.wordpress.com/splitting-content/excerpts/" target="_blank">learn more about excerpts</a>.', 'audiotheme' ) . '</p>',
 	) );
 
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'featured-image',
 		'title'		=> __( 'Featured Image', 'audiotheme' ),
-		'content' 	=> '<p>' . __( "This is used to set the thumbnail that will represent your video throughout your site. Make it interesting. You can choose the image through the normal process of setting or a featured image, or click the 'Get video thumbnail link' (you'll need to add a URL to the Video URL field for this to appear) to grab the image directly from the video service. Find out more about <a href=\"http://codex.wordpress.org/Post_Thumbnails\" target=\"_blank\">setting featured images</a> in the WordPress Codex.", 'audiotheme' ) . '</p>',
+		'content' 	=> '<p>' . __( "This is used to set the thumbnail that will represent your video throughout your site. Make it interesting. You can choose the image through the normal process of setting or a featured image, or click the 'Get video thumbnail link' (you'll need to add a URL to the Video URL field for this to appear) to grab the image directly from the video service. Find out more about <a href=\"https://codex.wordpress.org/Post_Thumbnails\" target=\"_blank\">setting featured images</a> in the WordPress Codex.", 'audiotheme' ) . '</p>',
 	) );
 
 	get_current_screen()->add_help_tab( array(

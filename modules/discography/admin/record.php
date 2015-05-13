@@ -459,14 +459,14 @@ function audiotheme_record_help() {
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'featured-image',
 		'title'		=> __( 'Featured Image', 'audiotheme' ),
-		'content' 	=> '<p>' . __( "Use the featured image section to add cover art to your record. It's likely this will be used in various place in your theme, so it's best to upload high quality images. Find out more about <a href=\"http://codex.wordpress.org/Post_Thumbnails\" target=\"_blank\">setting featured images</a> in the WordPress Codex.", 'audiotheme' ) . '</p>',
+		'content' 	=> '<p>' . __( "Use the featured image section to add cover art to your record. It's likely this will be used in various place in your theme, so it's best to upload high quality images. Find out more about <a href=\"https://codex.wordpress.org/Post_Thumbnails\" target=\"_blank\">setting featured images</a> in the WordPress Codex.", 'audiotheme' ) . '</p>',
 	) );
 
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'inserting-media',
 		'title'		=> __( 'Inserting Media', 'audiotheme' ),
 		'content' 	=>
-			'<p>' . __( "Use the Add Media button to attach media to your record. This might be a documentary about the recording process or promotional pictures. Don't add your cover art here, that should be added in the featured image area. Find out more about using the <a href=\"http://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Step_2_.E2.80.93_Click_the_Add_Media_button\" target=\"_blank\">Add Media button</a> in the WordPress Codex." ) . '</p>',
+			'<p>' . __( "Use the Add Media button to attach media to your record. This might be a documentary about the recording process or promotional pictures. Don't add your cover art here, that should be added in the featured image area. Find out more about using the <a href=\"https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Step_2_.E2.80.93_Click_the_Add_Media_button\" target=\"_blank\">Add Media button</a> in the WordPress Codex." ) . '</p>',
 	) );
 
 	get_current_screen()->add_help_tab( array(

@@ -7,7 +7,7 @@ jQuery(function($) {
 	$city.autocomplete({
 		source: function( request, response ) {
 			$.ajax({
-				url: 'http://ws.geonames.org/searchJSON',
+				url: 'https://ws.geonames.org/searchJSON',
 				data: {
 					featureClass: 'P',
 					style: 'full',
@@ -45,7 +45,7 @@ jQuery(function($) {
 	/*$city.autocomplete({
 		source: function( request, response ) {
 			$.ajax({
-				url: 'http://ws.geonames.org/searchJSON',
+				url: 'https://ws.geonames.org/searchJSON',
 				data: {
 					featureClass: 'P',
 					style: 'full',
