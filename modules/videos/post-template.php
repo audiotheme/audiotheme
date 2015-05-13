@@ -67,5 +67,9 @@ function get_audiotheme_video( $post_id = null, $args = array(), $query_args = a
 		$wp_embed->usecache = $restore_usecache;
 	}
 
+	if ( false !== strpos( $html, '[video' ) ) {
+		$html = do_shortcode( $html );
+	}
+
 	return apply_filters( 'audiotheme_video_html', $html, $post_id, $video_url, $args, $query_args );
 }
