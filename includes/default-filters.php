@@ -19,12 +19,16 @@
 function audiotheme_archives_post_type_link( $permalink, $post, $leavename ) {
 	global $wp_rewrite;
 
-	if ( 'audiotheme_archive' === $post->post_type  ) {
+	if ( 'audiotheme_archive' === $post->post_type ) {
 		$post_type = is_audiotheme_post_type_archive_id( $post->ID );
 		$post_type_object = get_post_type_object( $post_type );
 
 		if ( get_option( 'permalink_structure' ) ) {
 			$front = '/';
+			if ( $wp_rewrite->using_index_permalinks() ) {
+				$front .= $wp_rewrite->index . '/';
+			}
+
 			if ( isset( $post_type_object->rewrite ) && $post_type_object->rewrite['with_front'] ) {
 				$front = $wp_rewrite->front;
 			}

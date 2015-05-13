@@ -133,8 +133,16 @@ function audiotheme_gigs_register_query_vars( $vars ) {
  * @return string
  */
 function audiotheme_gigs_rewrite_base() {
+	global $wp_rewrite;
+
+	$front = '';
+	if ( $wp_rewrite->using_index_permalinks() ) {
+		$front = $wp_rewrite->index . '/';
+	}
+
 	$base = get_option( 'audiotheme_gig_rewrite_base' );
-	return ( empty( $base ) ) ? 'shows' : $base;
+	$front .= ( empty( $base ) ) ? 'shows' : $base;
+	return $front;
 }
 
 /**

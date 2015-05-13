@@ -143,8 +143,16 @@ function audiotheme_discography_init() {
  * @return string
  */
 function get_audiotheme_discography_rewrite_base() {
+	global $wp_rewrite;
+
+	$front = '';
+	if ( $wp_rewrite->using_index_permalinks() ) {
+		$front = $wp_rewrite->index . '/';
+	}
+
 	$base = get_option( 'audiotheme_record_rewrite_base' );
-	return ( empty( $base ) ) ? 'music' : $base;
+	$front .= ( empty( $base ) ) ? 'music' : $base;
+	return $front;
 }
 
 /**
