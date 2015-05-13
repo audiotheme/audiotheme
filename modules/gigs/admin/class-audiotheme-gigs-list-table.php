@@ -180,7 +180,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		$post_type_object = get_post_type_object( $post_type );
 		$avail_post_stati = get_available_post_statuses( $post_type );
 
-		$base_url = add_query_arg( 'page', 'audiotheme-gigs', admin_url() );
+		$base_url = get_audiotheme_gig_admin_url();
 		$status_links = array();
 		$num_posts = wp_count_posts( $post_type, 'readable' );
 		$allposts = '';

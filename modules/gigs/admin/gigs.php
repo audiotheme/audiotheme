@@ -77,7 +77,7 @@ function audiotheme_gigs_admin_menu() {
 		$manage_venues_hook = add_submenu_page( 'audiotheme-gigs', $venue_object->labels->name, $venue_object->labels->menu_name, 'edit_posts', 'audiotheme-venues', 'audiotheme_venues_manage_screen' );
 		$edit_venue_hook = add_submenu_page( 'audiotheme-gigs', $venue_object->labels->add_new_item, $venue_object->labels->add_new_item, 'edit_posts', 'audiotheme-venue', 'audiotheme_venue_edit_screen' );
 
-	add_action( 'parent_file', 'audiotheme_gigs_admin_menu_highlight' );
+	add_filter( 'parent_file', 'audiotheme_gigs_admin_menu_highlight' );
 	add_action( 'load-' . $manage_gigs_hook, 'audiotheme_gigs_manage_screen_setup' );
 	add_action( 'load-' . $edit_gig_hook, 'audiotheme_gig_edit_screen_setup' );
 	add_action( 'load-' . $manage_venues_hook, 'audiotheme_venues_manage_screen_setup' );
