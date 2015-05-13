@@ -184,7 +184,7 @@ function audiotheme_register_scripts() {
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 	wp_register_script( 'audiotheme', AUDIOTHEME_URI . 'includes/js/audiotheme' . $suffix . '.js', array( 'jquery', 'jquery-jplayer', 'jquery-fitvids' ), '1.0', true );
-	wp_register_script( 'jquery-fitvids', AUDIOTHEME_URI . 'includes/js/jquery.fitvids.min.js', array( 'jquery' ), '1.0', true );
+	wp_register_script( 'jquery-fitvids', AUDIOTHEME_URI . 'includes/js/jquery.fitvids.min.js', array( 'jquery' ), '1.1.0', true );
 	wp_register_script( 'jquery-jplayer', AUDIOTHEME_URI . 'includes/js/jquery.jplayer.min.js', array( 'jquery' ), '2.2.19', true );
 	wp_register_script( 'jquery-jplayer-playlist', AUDIOTHEME_URI . 'includes/js/jquery.jplayer.playlist.min.js', array( 'jquery-jplayer' ), '2.2.2', true );
 	wp_register_script( 'jquery-placeholder', AUDIOTHEME_URI . 'includes/js/jquery.placeholder.min.js', array( 'jquery' ), '2.0.7', true );
