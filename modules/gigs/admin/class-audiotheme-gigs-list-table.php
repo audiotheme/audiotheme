@@ -583,7 +583,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 			<option value="0" <?php selected( $m, 0 ); ?>><?php _e( 'Show all dates', 'audiotheme' ); ?></option>
 			<?php
 			foreach ( $months as $arc_row ) {
-				if ( 0 === $arc_row->year ) {
+				if ( empty( $arc_row->year ) ) {
 					continue;
 				}
 
