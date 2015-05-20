@@ -16,9 +16,7 @@
  */
 function get_audiotheme_record_type_strings() {
 	$strings = array(
-		'album'              => _x( 'Album',  'Record type', 'audiotheme' ),
 		'record-type-album'  => _x( 'Album',  'Record type', 'audiotheme' ),
-		'single'             => _x( 'Single', 'Record type', 'audiotheme' ),
 		'record-type-single' => _x( 'Single', 'Record type', 'audiotheme' ),
 	);
 
@@ -62,6 +60,13 @@ function get_audiotheme_record_type_slugs() {
  * @return string Record type label.
  */
 function get_audiotheme_record_type_string( $slug ) {
+	if ( false !== strpos( $slug, 'record-type-' ) ) {
+		$strings = get_audiotheme_record_type_strings();
+		if ( isset( $strings[ $slug ] ) ) {
+			return $strings[ $slug ];
+		}
+	}
+
 	$term = get_term_by( 'slug', $slug, 'audiotheme_record_type' );
 	return $term ? $term->name : _x( 'Album', 'Record type', 'audiotheme' );
 }
