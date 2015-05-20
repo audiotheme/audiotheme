@@ -118,17 +118,19 @@ function the_audiotheme_archive_title( $before = '', $after = '' ) {
  * @param string $after Content to display after the description.
  */
 function the_audiotheme_archive_description( $before = '', $after = '' ) {
-	if ( ! is_post_type_archive() ) {
-		return;
+	if ( is_post_type_archive() ) {
+		$post_type_object = get_queried_object();
+
+		if ( $archive_id = get_audiotheme_post_type_archive( $post_type_object->name ) ) {
+			$archive = get_post( $archive_id );
+			if ( ! empty( $archive->post_content ) ) {
+				echo $before . apply_filters( 'the_content', $archive->post_content ) . $after;
+			}
+		}
 	}
 
-	$post_type_object = get_queried_object();
-
-	if ( $archive_id = get_audiotheme_post_type_archive( $post_type_object->name ) ) {
-		$archive = get_post( $archive_id );
-		if ( ! empty( $archive->post_content ) ) {
-			echo $before . apply_filters( 'the_content', $archive->post_content ) . $after;
-		}
+	if ( is_tax() && ! empty( get_queried_object()->description ) ) {
+		echo $before . apply_filters( 'the_content', term_description() ) . $after;
 	}
 }
 
