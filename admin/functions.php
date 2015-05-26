@@ -106,7 +106,7 @@ function audiotheme_taxonomy_checkbox_list_meta_box( $post, $metabox ) {
 
 	$selected     = wp_get_object_terms( $post->ID, $taxonomy, array( 'fields' => 'all' ) );
 	$selected_ids = wp_list_pluck( $selected, 'term_id' );
-	$selected     = array_combine( $selected_ids, wp_list_pluck( $selected, 'name' ) );
+	$selected     = empty( $selected ) || empty( $selected_ids ) ? array() : array_combine( $selected_ids, wp_list_pluck( $selected, 'name' ) );
 	$terms        = get_terms( $taxonomy, array( 'fields' => 'id=>name', 'hide_empty' => false, 'exclude' => $selected_ids ) );
 	$terms        = $selected + $terms;
 
