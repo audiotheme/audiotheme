@@ -1,43 +1,17 @@
 <div class="wrap about-wrap audiotheme-dashboard audiotheme-dashboard-features">
-	<div class="audiotheme-about-banner">
+	<div class="audiotheme-dashboard-header">
 		<h1><?php _e( 'Welcome to AudioTheme', 'audiotheme' ); ?></h1>
-		<h2><?php _e( 'Premium Websites for<br>Bands, Musicians and Labels.', 'audiotheme' ); ?></h2>
-		<p>
-			<?php _e( 'Let your site be heard.', 'audiotheme' ); ?>
-		</p>
+		<h2><?php _e( 'Websites for people who make music.', 'audiotheme' ); ?></h2>
 		<p class="audiotheme-version">
 			<?php _e( sprintf( 'Version %s', AUDIOTHEME_VERSION ), 'audiotheme' ); ?>
 		</p>
 	</div>
 
-	<div class="changelog">
-		<h3><?php _e( 'Take Control of Your Content', 'audiotheme' ); ?></h3>
-		<div class="feature-section col two-col">
-			<div class="">
-				<p>
-					<?php _e( 'AudioTheme gives you the <strong>power to manage your own content</strong>, including gigs, discography, videos and more.', 'audiotheme' ); ?>
-				</p>
-				<p>
-					<?php _e( 'Remember the days of having to rely on someone else to make updates to your website? Well, you can kiss those days adios.', 'audiotheme' ); ?>
-				</p>
-			</div>
-
-			<div class="last-feature">
-				<p>
-					<?php _e( 'With AudioTheme, you are in control.', 'audiotheme' ); ?>
-				</p>
-				<p>
-					<?php _e( 'Through WordPress, you can easily add, update and edit all of your content, from tour dates to video to audio to photos to&hellip; well, everything! This is your website and you have the power to reign over it.', 'audiotheme' ); ?>
-				</p>
-			</div>
-		</div>
-	</div>
-
-	<div class="changelog audiotheme-feature-section">
+	<div class="audiotheme-feature-section">
 		<img src="<?php echo AUDIOTHEME_URI; ?>admin/images/screenshots/gigs.jpg" class="stagger-right">
 
 		<h3><?php _e( 'Gigs &amp; Venues', 'audiotheme' ); ?></h3>
-		<div class="feature-section">
+		<div class="audiotheme-feature-body">
 			<p>
 				<?php _e( '<strong>Keep fans updated with live performances, tour dates and venue information.', 'audiotheme' ); ?></strong>
 			</p>
@@ -50,11 +24,11 @@
 		</div>
 	</div>
 
-	<div class="changelog audiotheme-feature-section">
+	<div class="audiotheme-feature-section">
 		<img src="<?php echo AUDIOTHEME_URI; ?>admin/images/screenshots/discography.jpg">
 
 		<h3><?php _e( 'Discography', 'audiotheme' ); ?></h3>
-		<div class="feature-section">
+		<div class="audiotheme-feature-body">
 			<p>
 				<?php _e( '<strong>Put together your albums, assign tracks, plug in your cover art and go.', 'audiotheme' ); ?></strong>
 			</p>
@@ -67,11 +41,11 @@
 		</div>
 	</div>
 
-	<div class="changelog audiotheme-feature-section">
+	<div class="audiotheme-feature-section">
 		<img src="<?php echo AUDIOTHEME_URI; ?>admin/images/screenshots/videos.jpg" class="stagger-right">
 
 		<h3><?php _e( 'Videos', 'audiotheme' ); ?></h3>
-		<div class="feature-section">
+		<div class="audiotheme-feature-body">
 			<p>
 				<?php _e( '<strong>Easily build your video galleries from over a dozen popular video services.', 'audiotheme' ); ?></strong>
 			</p>
