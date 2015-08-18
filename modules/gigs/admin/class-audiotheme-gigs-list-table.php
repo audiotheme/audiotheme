@@ -85,10 +85,18 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		);
 
 		if ( empty( $_REQUEST['m'] ) && ( 'upcoming' === $this->current_view || 'past' === $this->current_view ) ) {
+			if ( isset( $_REQUEST['gig_date'] ) ) {
+				$date = urldecode( $_REQUEST['gig_date'] );
+			} elseif ( 'upcoming' === $this->current_view ) {
+				$date = date( 'Y-m-d', current_time( 'timestamp' ) - DAY_IN_SECONDS );
+			} else {
+				$date = current_time( 'mysql' );
+			}
+
 			$args['meta_query'][] = array(
 				'key'     => '_audiotheme_gig_datetime',
-				'value'   => ( isset( $_REQUEST['gig_date'] ) ) ? urldecode( $_REQUEST['gig_date'] ) : current_time( 'mysql' ),
-				'compare' => ( isset( $_REQUEST['compare'] ) ) ? urldecode( $_REQUEST['compare'] ) : '>=',
+				'value'   => $date,
+				'compare' => isset( $_REQUEST['compare'] ) ? urldecode( $_REQUEST['compare'] ) : '>=',
 				'type'    => 'DATETIME',
 			);
 

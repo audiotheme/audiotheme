@@ -262,7 +262,7 @@ function audiotheme_pre_gig_query( $query ) {
 		// Only show upcoming gigs.
 		$meta_query[] = array(
 			'key'     => '_audiotheme_gig_datetime',
-			'value'   => date( 'Y-m-d', current_time( 'timestamp' ) ),
+			'value'   => date( 'Y-m-d', current_time( 'timestamp' ) - DAY_IN_SECONDS ),
 			'compare' => '>=',
 			'type'    => 'DATETIME',
 		);
