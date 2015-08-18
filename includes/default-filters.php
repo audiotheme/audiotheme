@@ -117,18 +117,18 @@ function audiotheme_nav_menu_classes( $items, $args ) {
 	$classes = array();
 	$first_top = -1;
 
-	$current_url = trailingslashit( home_url( add_query_arg( array(), $wp->request ) ) );
+	$current_url  = trailingslashit( home_url( add_query_arg( array(), $wp->request ) ) );
 	$blog_page_id = get_option( 'page_for_posts' );
 	$is_blog_post = is_singular( 'post' );
 
 	$is_audiotheme_post_type = is_singular( array( 'audiotheme_gig', 'audiotheme_record', 'audiotheme_track', 'audiotheme_video' ) );
-	$post_type_archive_id = get_audiotheme_post_type_archive( get_post_type() );
-	$post_type_archive_link = get_post_type_archive_link( get_post_type() );
+	$post_type_archive_id    = get_audiotheme_post_type_archive( get_post_type() );
+	$post_type_archive_link  = get_post_type_archive_link( get_post_type() );
 
 	foreach ( $items as $key => $item ) {
 		if ( empty( $item->menu_item_parent ) ) {
 			$first_top = ( -1 === $first_top ) ? $key : $first_top;
-			$last_top = $key;
+			$last_top  = $key;
 		} else {
 			if ( ! isset( $classes['first-child-items'][ $item->menu_item_parent ] ) ) {
 				$classes['first-child-items'][ $item->menu_item_parent ] = $key;
@@ -140,7 +140,7 @@ function audiotheme_nav_menu_classes( $items, $args ) {
 		if ( ! is_404() && ! is_search() ) {
 			if (
 				'audiotheme_archive' === $item->object &&
-				$post_type_archive_id === $item->object_id &&
+				$post_type_archive_id === (int) $item->object_id &&
 				trailingslashit( $item->url ) === $current_url
 			) {
 				$items[ $key ]->classes[] = 'current-menu-item';
