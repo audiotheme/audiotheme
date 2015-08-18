@@ -22,7 +22,7 @@ function audiotheme_load_videos_admin() {
 	add_filter( 'manage_edit-audiotheme_video_columns', 'audiotheme_video_register_columns' );
 	add_filter( 'admin_post_thumbnail_html', 'audiotheme_video_admin_post_thumbnail_html', 10, 2 );
 
-	wp_register_script( 'audiotheme-video-edit', AUDIOTHEME_URI . 'modules/videos/admin/js/video-edit.js', array( 'jquery' ) );
+	wp_register_script( 'audiotheme-video-edit', AUDIOTHEME_URI . 'modules/videos/admin/js/video-edit.js', array( 'jquery', 'post', 'wp-backbone', 'wp-util' ) );
 
 	// Videos Archive
 	add_action( 'add_audiotheme_archive_settings_meta_box_audiotheme_video', '__return_true' );
@@ -118,16 +118,6 @@ function audiotheme_video_after_title() {
 				?>
 			</span>
 		</p>
-
-		<div id="audiotheme-video-preview" class="audiotheme-video-preview<?php echo ( $video ) ? '' : ' audiotheme-video-preview-empty'; ?>">
-			<?php
-			if ( $video ) {
-				echo get_audiotheme_video( $post->ID, array( 'width' => 600 ) );
-			} else {
-				_e( 'Save the video after entering a URL to preview it.', 'audiotheme' );
-			}
-			?>
-		</div>
 	</div>
 	<?php
 }
@@ -147,17 +137,25 @@ function audiotheme_video_after_title() {
  * @return string
  */
 function audiotheme_video_admin_post_thumbnail_html( $content, $post_id ) {
-	if ( 'audiotheme_video' === get_post_type( $post_id ) ) {
-		$thumbnail_id = get_post_thumbnail_id( $post_id );
-		$oembed_thumb_id = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', true );
-
-		$content .= sprintf( '<p id="audiotheme-select-oembed-thumb" class="hide-if-no-js" data-thumb-id="%s" data-oembed-thumb-id="%s">', $thumbnail_id, $oembed_thumb_id );
-			$content .= sprintf( '<a href="#" id="audiotheme-select-oembed-thumb-button">%s</a>', __( 'Get video thumbnail', 'audiotheme' ) );
-			$content .= audiotheme_admin_spinner( array( 'echo' => false ) );
-		$content .= '</p>';
-
-		$content .= '<script>AudioThemeToggleVideoThumbLink();</script>';
+	if ( 'audiotheme_video' != get_post_type( $post_id ) ) {
+		return $content;
 	}
+
+	$data = array(
+		'thumbnailId'       => get_post_thumbnail_id( $post_id ),
+		'oembedThumbnailId' => get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', true ),
+	);
+
+	ob_start();
+	?>
+	<p id="audiotheme-select-oembed-thumb" class="hide-if-no-js">
+		<a href="#" id="audiotheme-select-oembed-thumb-button"><?php _e( 'Get video thumbnail', 'audiotheme' ); ?></a>
+		<span class="spinner"></span>
+	</p>
+	<script id="audiotheme-video-thumbnail-data" type="application/json"><?php echo json_encode( $data ); ?></script>
+	<script>if ( '_audiothemeVideoThumbnailPing' in window ) { _audiothemeVideoThumbnailPing(); }</script>
+	<?php
+	$content .= ob_get_clean();
 
 	return $content;
 }
@@ -171,69 +169,111 @@ function audiotheme_ajax_get_video_oembed_data() {
 	global $post_id;
 
 	$post_id = absint( $_POST['post_id'] );
-	$json['post_id'] = $post_id;
+	$json['postId'] = $post_id;
 
-	add_filter( 'oembed_dataparse', 'audiotheme_parse_video_oembed_data', 1, 3 );
-	$oembed = wp_oembed_get( $_POST['video_url'] );
-
-	if ( $thumbnail_id = get_post_thumbnail_id( $post_id ) ) {
-		$json['thumbnail_id'] = $thumbnail_id;
-		$json['thumbnail_url'] = wp_get_attachment_url( $thumbnail_id );
-		$json['thumbnail_meta_box_html'] = _wp_post_thumbnail_html( $thumbnail_id, $post_id );
+	if ( empty( $_POST['video_url'] ) ) {
+		wp_send_json_error();
 	}
 
-	wp_send_json( $json );
+	audiotheme_video_sideload_thumbnail( $post_id, $_POST['video_url'] );
+
+	if ( $thumbnail_id = get_post_thumbnail_id( $post_id ) ) {
+		$json['oembedThumbnailId']    = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', true );
+		$json['thumbnailId']          = $thumbnail_id;
+		$json['thumbnailUrl']         = wp_get_attachment_url( $thumbnail_id );
+		$json['thumbnailMetaBoxHtml'] = _wp_post_thumbnail_html( $thumbnail_id, $post_id );
+	}
+
+	wp_send_json_success( $json );
 }
 
 /**
- * Parse video oEmbed data.
+ * Import a video thumbnail from an oEmbed endpoint into the media library.
  *
- * @since 1.0.0
- * @see WP_oEmbed->data2html()
+ * @todo Considering doing video URL comparison rather than oembed thumbnail
+ *       comparison?
  *
- * @param string $return Embed HTML.
- * @param object $data Data returned from the oEmbed request.
- * @param string $url The URL used for the oEmbed request.
- * @return string
+ * @since 1.8.0
+ *
+ * @param int $post_id Video post ID.
+ * @param string $url Video URL.
  */
-function audiotheme_parse_video_oembed_data( $return, $data, $url ) {
-	global $post_id;
+function audiotheme_video_sideload_thumbnail( $post_id, $url ) {
+	require_once( ABSPATH . WPINC . '/class-oembed.php' );
 
-	// Supports any oEmbed providers that respond with 'thumbnail_url'.
-	if ( isset( $data->thumbnail_url ) ) {
-		$current_thumb_id = get_post_thumbnail_id( $post_id );
-		$oembed_thumb_id = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', true );
-		$oembed_thumb = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url', true );
+	$oembed   = new \WP_oEmbed();
+	$provider = $oembed->get_provider( $url );
 
-		if ( ( ! $current_thumb_id || $current_thumb_id !== $oembed_thumb_id ) && $data->thumbnail_url === $oembed_thumb ) {
-			// Re-use the existing oEmbed data instead of making another copy of the thumbnail.
-			set_post_thumbnail( $post_id, $oembed_thumb_id );
-		} elseif ( ! $current_thumb_id || $data->thumbnail_url !== $oembed_thumb ) {
-			// Add new thumbnail if the returned URL doesn't match the
-			// oEmbed thumb URL or if there isn't a current thumbnail.
-			add_action( 'add_attachment', 'audiotheme_add_video_thumbnail' );
-			media_sideload_image( $data->thumbnail_url, $post_id );
-			remove_action( 'add_attachment', 'audiotheme_add_video_thumbnail' );
+	if (
+		! $provider ||
+		false === ( $data = $oembed->fetch( $provider, $url ) ) ||
+		! isset( $data->thumbnail_url )
+	) {
+		return;
+	}
 
-			if ( $thumbnail_id = get_post_thumbnail_id( $post_id ) ) {
-				// Store the oEmbed thumb data so the same image isn't copied on repeated requests.
-				update_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', $thumbnail_id, true );
-				update_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url', $data->thumbnail_url, true );
-			}
+	$current_thumb_id = get_post_thumbnail_id( $post_id );
+	$oembed_thumb_id  = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', true );
+	$oembed_thumb_url = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url', true );
+
+	// Re-use the existing oEmbed data instead of making another copy of the thumbnail.
+	if ( $data->thumbnail_url == $oembed_thumb_url && ( ! $current_thumb_id || $current_thumb_id != $oembed_thumb_id ) ) {
+		set_post_thumbnail( $post_id, $oembed_thumb_id );
+	}
+
+	// Add new thumbnail if the returned URL doesn't match the
+	// oEmbed thumb URL or if there isn't a current thumbnail.
+	elseif ( ! $current_thumb_id || $data->thumbnail_url != $oembed_thumb_url ) {
+		$attachment_id = audiotheme_video_sideload_image( $data->thumbnail_url, $post_id );
+
+		if ( ! empty( $attachment_id ) && ! is_wp_error( $attachment_id ) ) {
+			set_post_thumbnail( $post_id, $attachment_id );
+
+			// Store the oEmbed thumb data so the same image isn't copied on repeated requests.
+			update_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', $attachment_id );
+			update_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url', $data->thumbnail_url );
+		}
+	}
+}
+
+/**
+ * Download an image from the specified URL and attach it to a post.
+ *
+ * @since 1.8.0
+ *
+ * @see media_sideload_image()
+ *
+ * @param string $url The URL of the image to download.
+ * @param int $post_id The post ID the media is to be associated with.
+ * @param string $desc Optional. Description of the image.
+ * @return int|WP_Error Populated HTML img tag on success.
+ */
+function audiotheme_video_sideload_image( $url, $post_id, $desc = null ) {
+	$id = 0;
+
+	if ( ! empty( $url ) ) {
+		// Set variables for storage, fix file filename for query strings.
+		preg_match( '/[^\?]+\.(jpe?g|jpe|gif|png)\b/i', $url, $matches );
+
+		$file_array             = array();
+		$file_array['name']     = basename( $matches[0] );
+		$file_array['tmp_name'] = download_url( $url );
+
+		// If error storing temporarily, return the error.
+		if ( is_wp_error( $file_array['tmp_name'] ) ) {
+			return $file_array['tmp_name'];
+		}
+
+		// Do the validation and storage stuff.
+		$id = media_handle_sideload( $file_array, $post_id, $desc );
+
+		// If error storing permanently, unlink.
+		if ( is_wp_error( $id ) ) {
+			@unlink( $file_array['tmp_name'] );
 		}
 	}
 
-	return $return;
-}
-
-/**
- * Set a video post's featured image.
- *
- * @since 1.0.0
- */
-function audiotheme_add_video_thumbnail( $attachment_id ) {
-	global $post_id;
-	set_post_thumbnail( $post_id, $attachment_id );
+	return $id;
 }
 
 /**
@@ -245,9 +285,9 @@ function audiotheme_add_video_thumbnail( $attachment_id ) {
  * @param object $post The post object.
  */
 function audiotheme_video_save_post( $post_id, $post ) {
-	$is_autosave = ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ? true : false;
-	$is_revision = wp_is_post_revision( $post_id );
-	$is_valid_nonce = ( isset( $_POST['audiotheme_save_video_meta_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_save_video_meta_nonce'], 'save-video-meta_' . $post_id ) ) ? true : false;
+	$is_autosave    = defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE;
+	$is_revision    = wp_is_post_revision( $post_id );
+	$is_valid_nonce = isset( $_POST['audiotheme_save_video_meta_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_save_video_meta_nonce'], 'save-video-meta_' . $post_id );
 
 	// Bail if the data shouldn't be saved or intention can't be verified.
 	if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {

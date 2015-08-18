@@ -177,3 +177,56 @@ function audiotheme_page_list_classes( $classes, $page ) {
 
 	return $classes;
 }
+
+/**
+ * Parse video oEmbed data.
+ *
+ * @since 1.0.0
+ * @deprecated 1.8.0
+ * @see WP_oEmbed->data2html()
+ *
+ * @param string $return Embed HTML.
+ * @param object $data Data returned from the oEmbed request.
+ * @param string $url The URL used for the oEmbed request.
+ * @return string
+ */
+function audiotheme_parse_video_oembed_data( $return, $data, $url ) {
+	global $post_id;
+
+	// Supports any oEmbed providers that respond with 'thumbnail_url'.
+	if ( isset( $data->thumbnail_url ) ) {
+		$current_thumb_id = get_post_thumbnail_id( $post_id );
+		$oembed_thumb_id = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', true );
+		$oembed_thumb = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url', true );
+
+		if ( ( ! $current_thumb_id || $current_thumb_id !== $oembed_thumb_id ) && $data->thumbnail_url === $oembed_thumb ) {
+			// Re-use the existing oEmbed data instead of making another copy of the thumbnail.
+			set_post_thumbnail( $post_id, $oembed_thumb_id );
+		} elseif ( ! $current_thumb_id || $data->thumbnail_url !== $oembed_thumb ) {
+			// Add new thumbnail if the returned URL doesn't match the
+			// oEmbed thumb URL or if there isn't a current thumbnail.
+			add_action( 'add_attachment', 'audiotheme_add_video_thumbnail' );
+			media_sideload_image( $data->thumbnail_url, $post_id );
+			remove_action( 'add_attachment', 'audiotheme_add_video_thumbnail' );
+
+			if ( $thumbnail_id = get_post_thumbnail_id( $post_id ) ) {
+				// Store the oEmbed thumb data so the same image isn't copied on repeated requests.
+				update_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', $thumbnail_id, true );
+				update_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url', $data->thumbnail_url, true );
+			}
+		}
+	}
+
+	return $return;
+}
+
+/**
+ * Set a video post's featured image.
+ *
+ * @since 1.0.0
+ * @deprecated 1.8.0
+ */
+function audiotheme_add_video_thumbnail( $attachment_id ) {
+	global $post_id;
+	set_post_thumbnail( $post_id, $attachment_id );
+}
