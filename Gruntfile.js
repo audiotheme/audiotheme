@@ -115,6 +115,7 @@ module.exports = function( grunt ) {
 					{
 						src: [
 							'**',
+							'!admin/css/less/**',
 							'!dist/**',
 							'!node_modules/**',
 							'!release/**',
@@ -122,6 +123,7 @@ module.exports = function( grunt ) {
 							'!.jshintrc',
 							'!Gruntfile.js',
 							'!package.json',
+							'!phpcs.xml',
 							'!phpunit.xml',
 							'!README.md',
 							'!includes/vendor/lessphp/**',
