@@ -1,18 +1,24 @@
 <div class="wrap">
 	<div id="icon-audiotheme-gigs" class="icon32"><br></div>
-	<h2>
+	<h1>
 		<?php
 		echo $post_type_object->labels->name;
 
 		if ( current_user_can( $post_type_object->cap->create_posts ) ) {
-			printf( '<a href="post-new.php?post_type=audiotheme_gig" class="add-new-h2">%s</a>', esc_html( $post_type_object->labels->add_new ) );
+			printf(
+				' <a href="post-new.php?post_type=audiotheme_gig" class="page-title-action add-new-h2">%s</a>',
+				esc_html( $post_type_object->labels->add_new )
+			);
 		}
 
 		if ( ! empty( $_REQUEST['s'] ) ) {
-			printf( ' <span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;', 'audiotheme' ) . '</span>', get_search_query() );
+			printf(
+				' <span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;', 'audiotheme' ) . '</span>',
+				esc_html( get_search_query() )
+			);
 		}
 		?>
-	</h2>
+	</h1>
 
 	<?php
 	if ( isset( $_REQUEST['locked'] ) || isset( $_REQUEST['skipped'] ) || isset( $_REQUEST['updated'] ) || isset( $_REQUEST['deleted'] ) || isset( $_REQUEST['trashed'] ) || isset( $_REQUEST['untrashed'] ) ) {
