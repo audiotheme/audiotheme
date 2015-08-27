@@ -41,7 +41,7 @@ function audiotheme_dashboard_admin_menu() {
 		'audiotheme',
 		'audiotheme_dashboard_features_screen',
 		audiotheme_encode_svg( 'admin/images/dashicons/audiotheme.svg' ),
-		3.901
+		511
 	);
 
 	add_submenu_page(
@@ -203,6 +203,8 @@ function audiotheme_dashboard_sort_menu() {
 
 	if ( ! is_network_admin() && $menu ) {
 		$menu = array_values( $menu ); // Re-key the array.
+
+		audiotheme_menu_move_item( 'audiotheme', 'separator1', 'before' );
 
 		$separator = array( '', 'read', 'separator-before-audiotheme', '', 'wp-menu-separator' );
 		audiotheme_menu_insert_item( $separator, 'audiotheme', 'before' );
