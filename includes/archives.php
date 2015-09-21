@@ -57,7 +57,7 @@ function register_audiotheme_archives() {
 		'publicly_queryable'         => false,
 		'rewrite'                    => 'audiotheme_archive', // Allows slug to be edited. Extra rules wont' be generated.
 		'query_var'                  => false,
-		'show_ui'                    => false,
+		'show_ui'                    => true,
 		'show_in_admin_bar'          => true,
 		'show_in_menu'               => false,
 		'show_in_nav_menus'          => true,
