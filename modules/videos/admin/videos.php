@@ -216,22 +216,37 @@ function audiotheme_video_sideload_thumbnail( $post_id, $url ) {
 	$oembed_thumb_id  = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', true );
 	$oembed_thumb_url = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url', true );
 
+	$thumbnail_url = $data->thumbnail_url;
+
+	// Try to retrieve a higher resolution YouTube thumbnail.
+	if ( audiotheme_video_is_youtube_url( $url ) ) {
+		$youtube_thumbnail_url = audiotheme_video_get_max_youtube_thumbnail( $url );
+		if ( ! empty( $youtube_thumbnail_url ) ) {
+			$thumbnail_url = $youtube_thumbnail_url;
+		}
+
+	}
+
 	// Re-use the existing oEmbed data instead of making another copy of the thumbnail.
-	if ( $data->thumbnail_url == $oembed_thumb_url && ( ! $current_thumb_id || $current_thumb_id != $oembed_thumb_id ) ) {
+	if ( $thumbnail_url == $oembed_thumb_url && ( ! $current_thumb_id || $current_thumb_id != $oembed_thumb_id ) ) {
 		set_post_thumbnail( $post_id, $oembed_thumb_id );
 	}
 
 	// Add new thumbnail if the returned URL doesn't match the
 	// oEmbed thumb URL or if there isn't a current thumbnail.
-	elseif ( ! $current_thumb_id || $data->thumbnail_url != $oembed_thumb_url ) {
-		$attachment_id = audiotheme_video_sideload_image( $data->thumbnail_url, $post_id );
+	elseif ( ! $current_thumb_id || $thumbnail_url != $oembed_thumb_url ) {
+		$attachment_id = audiotheme_video_sideload_image( $thumbnail_url, $post_id );
 
 		if ( ! empty( $attachment_id ) && ! is_wp_error( $attachment_id ) ) {
+			if ( audiotheme_video_is_youtube_url( $url ) ) {
+				audiotheme_trim_image_letterbox( $attachment_id );
+			}
+
 			set_post_thumbnail( $post_id, $attachment_id );
 
 			// Store the oEmbed thumb data so the same image isn't copied on repeated requests.
 			update_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', $attachment_id );
-			update_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url', $data->thumbnail_url );
+			update_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url', $thumbnail_url );
 		}
 	}
 }

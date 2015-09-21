@@ -259,3 +259,57 @@ function audiotheme_video_archive_post_class( $classes ) {
 
 	return $classes;
 }
+
+/**
+ * Whether a URL points to YouTube.
+ *
+ * @since 1.9.0
+ *
+ * @param string $url Video URL.
+ * @return bool
+ */
+function audiotheme_video_is_youtube_url( $url ) {
+	return false !== strpos( $url, 'youtube.com' ) || false !== strpos( $url, 'youtu.be' );
+}
+
+/**
+ * Parse a YouTube URL to retrieve the ID.
+ *
+ * @since 1.9.0
+ *
+ * @link http://stackoverflow.com/a/27728417
+ *
+ * @param string $url Video URL.
+ * @return string
+ */
+function audiotheme_video_get_youtube_id( $url ) {
+	preg_match( '/^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))(?<id>[^#\&\?]*).*/', $url, $matches );
+	return empty( $matches['id'] ) ? '' : $matches['id'];
+}
+
+/**
+ * Retrieve the largest possible thumbnail for a YouTube video.
+ *
+ * @since 1.9.0
+ *
+ * @param string $url Video URL.
+ */
+function audiotheme_video_get_max_youtube_thumbnail( $url ) {
+	$video_id      = audiotheme_video_get_youtube_id( $url );
+	$sizes         = array( 'maxresdefault', 'sddefault', 'hqdefault', '0' );
+	$thumbnail_url = '';
+
+	foreach ( $sizes as $size ) {
+		$test_url = sprintf( 'https://img.youtube.com/vi/%s/%s.jpg', $video_id, $size );
+		$response = wp_remote_head( $test_url );
+
+		if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
+			continue;
+		}
+
+		$thumbnail_url = $test_url;
+		break;
+	}
+
+	return $thumbnail_url;
+}

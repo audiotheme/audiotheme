@@ -7,19 +7,58 @@
  */
 
 /**
- * Register custom oEmbed providers.
+ * Register custom image editors.
  *
- * Post content is filtered on display, so limited services should be
- * supported by default.
+ * @since 1.9.0
  *
- * @since 1.0.0
- * @link https://core.trac.wordpress.org/ticket/15734
- * @link https://core.trac.wordpress.org/ticket/21635#comment:8
+ * @param array $editors Array of image editors.
+ * @return array
  */
-function audiotheme_add_default_oembed_providers() {
-	#wp_oembed_add_provider( 'http://snd.sc/*', 'http://soundcloud.com/oembed' );
-	#wp_oembed_add_provider( 'http://www.rdio.com/#artist/*album/*', 'http://www.rdio.com/api/oembed/' );
-	#wp_oembed_add_provider( 'http://rd.io/*', 'http://www.rdio.com/api/oembed/' );
+function audiotheme_register_image_editors( $editors ) {
+	include_once( AUDIOTHEME_DIR . 'includes/class-audiotheme-image-editor-gd.php' );
+	include_once( AUDIOTHEME_DIR . 'includes/class-audiotheme-image-editor-imagick.php' );
+	include_once( AUDIOTHEME_DIR . 'includes/class-audiotheme-image-pixel-gd.php' );
+
+	array_unshift( $editors, 'AudioTheme_Image_Editor_GD' );
+	array_unshift( $editors, 'AudioTheme_Image_Editor_Imagick' );
+
+	return $editors;
+}
+
+/**
+ * Remove letterbox matte from an image attachment.
+ *
+ * Overwrites the existing attachment and regenerates all sizes.
+ *
+ * @since 1.9.0
+ *
+ * @param int $attachment_id Attachment ID.
+ */
+function audiotheme_trim_image_letterbox( $attachment_id ) {
+	require_once( ABSPATH . 'wp-admin/includes/image.php' );
+
+	$file  = get_attached_file( $attachment_id );
+
+	$image = wp_get_image_editor( $file, array(
+		'methods' => array( 'trim' )
+	) );
+
+	if ( is_wp_error( $image ) ) {
+		return;
+	}
+
+	// Delete intermediate sizes.
+	$meta  = wp_get_attachment_metadata( $attachment_id );
+	foreach ( $meta['sizes'] as $size ) {
+		$path = path_join( dirname( $file ), $size['file'] );
+		wp_delete_file( $path );
+	}
+
+	$image->trim( 10 );
+	$saved = $image->save( $file );
+
+	$meta = wp_generate_attachment_metadata( $attachment_id, $saved['path'] );
+	wp_update_attachment_metadata( $attachment_id, $meta );
 }
 
 /**

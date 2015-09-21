@@ -92,7 +92,7 @@ function audiotheme_load() {
 	add_filter( 'wp_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
 
 	// Media hooks.
-	add_action( 'init', 'audiotheme_add_default_oembed_providers' );
+	add_filter( 'wp_image_editors', 'audiotheme_register_image_editors' );
 	add_filter( 'embed_oembed_html', 'audiotheme_oembed_html', 10, 4 );
 	add_filter( 'embed_handler_html', 'audiotheme_oembed_html', 10, 4 );
 	add_filter( 'video_embed_html', 'audiotheme_oembed_html', 10 ); // Jetpack compat.
