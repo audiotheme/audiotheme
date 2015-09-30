@@ -187,16 +187,16 @@ function audiotheme_register_scripts() {
 	$suffix   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 	wp_register_script( 'audiotheme', $base_url  .'/audiotheme' . $suffix . '.js', array( 'jquery', 'jquery-jplayer', 'jquery-fitvids' ), '1.0', true );
-	wp_register_script( 'jquery-fitvids', $base_url  .'/jquery.fitvids.min.js', array( 'jquery' ), '1.1.0', true );
-	wp_register_script( 'jquery-jplayer', $base_url  .'/jquery.jplayer.min.js', array( 'jquery' ), '2.2.19', true );
-	wp_register_script( 'jquery-jplayer-playlist', $base_url  .'/jquery.jplayer.playlist.min.js', array( 'jquery-jplayer' ), '2.2.2', true );
-	wp_register_script( 'jquery-placeholder', $base_url  .'/jquery.placeholder.min.js', array( 'jquery' ), '2.0.7', true );
-	wp_register_script( 'jquery-timepicker', $base_url  .'/jquery.timepicker.min.js', array( 'jquery' ), '1.6.11', true );
-	wp_register_script( 'moment', $base_url  .'/moment.min.js', array(), '2.10.6', true );
-	wp_register_script( 'pikaday', $base_url  .'/pikaday.min.js', array( 'moment'), '1.3.3', true );
+	wp_register_script( 'jquery-fitvids', $base_url  .'/vendor/jquery.fitvids.min.js', array( 'jquery' ), '1.1.0', true );
+	wp_register_script( 'jquery-jplayer', $base_url  .'/vendor/jquery.jplayer.min.js', array( 'jquery' ), '2.2.19', true );
+	wp_register_script( 'jquery-jplayer-playlist', $base_url  .'/vendor/jquery.jplayer.playlist.min.js', array( 'jquery-jplayer' ), '2.2.2', true );
+	wp_register_script( 'jquery-placeholder', $base_url  .'/vendor/jquery.placeholder.min.js', array( 'jquery' ), '2.0.7', true );
+	wp_register_script( 'jquery-timepicker', $base_url  .'/vendor/jquery.timepicker.min.js', array( 'jquery' ), '1.6.11', true );
+	wp_register_script( 'moment', $base_url  .'/vendor/moment.min.js', array(), '2.10.6', true );
+	wp_register_script( 'pikaday', $base_url  .'/vendor/pikaday.min.js', array( 'moment'), '1.3.3', true );
 
 	wp_localize_script( 'jquery-jplayer', 'AudiothemeJplayer', array(
-		'swfPath' => $base_url,
+		'swfPath' => $base_url . '/vendor',
 	) );
 
 	wp_localize_script( 'pikaday', '_pikadayL10n', array(

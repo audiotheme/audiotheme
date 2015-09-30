@@ -41,7 +41,8 @@ module.exports = function( grunt ) {
 				'gigs/admin/js/*.js',
 				'!gigs/admin/js/*.min.js',
 				'includes/js/*.js',
-				'!includes/js/*.min.js'
+				'!includes/js/*.min.js',
+				'!includes/js/vendor/*.js'
 			]
 		},
 
