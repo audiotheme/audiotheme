@@ -326,7 +326,7 @@ function audiotheme_archives_save_active_archives( $ids ) {
 			audiotheme_archives_update_post_type_rewrite_base( $post_type, $id );
 		}
 
-		flush_rewrite_rules();
+		update_option( 'audiotheme_flush_rewrite_rules', 'yes' );
 	}
 }
 
@@ -342,7 +342,7 @@ function audiotheme_archives_save_active_archives( $ids ) {
 function audiotheme_archives_post_updated( $post_id, $post_after, $post_before ) {
 	if ( ( $post_type = is_audiotheme_post_type_archive_id( $post_id ) ) && $post_after->post_name !== $post_before->post_name ) {
 		audiotheme_archives_update_post_type_rewrite_base( $post_type, $post_id );
-		flush_rewrite_rules();
+		update_option( 'audiotheme_flush_rewrite_rules', 'yes' );
 	}
 }
 
