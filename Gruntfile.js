@@ -78,9 +78,9 @@ module.exports = function( grunt ) {
 		less: {
 			dist: {
 				files: [
-					{ src: 'includes/css/less/audiotheme.less', dest: 'includes/css/audiotheme.min.css' },
-					{ src: 'admin/css/less/admin.less', dest: 'admin/css/admin.min.css' },
-					{ src: 'admin/css/less/venue-manager.less', dest: 'admin/css/venue-manager.min.css' }
+					{ src: 'includes/less/audiotheme.less', dest: 'includes/css/audiotheme.min.css' },
+					{ src: 'admin/less/admin.less', dest: 'admin/css/admin.min.css' },
+					{ src: 'admin/less/venue-manager.less', dest: 'admin/css/venue-manager.min.css' }
 				]
 			}
 		},
@@ -112,9 +112,9 @@ module.exports = function( grunt ) {
 			},
 			less: {
 				files: [
-					'includes/css/less/*.less',
-					'admin/css/less/*.less',
-					'admin/css/less/**/*.less'
+					'includes/less/*.less',
+					'admin/less/*.less',
+					'admin/less/**/*.less'
 				],
 				tasks: [ 'less', 'autoprefixer', 'cssmin' ]
 			}
@@ -135,7 +135,7 @@ module.exports = function( grunt ) {
 					{
 						src: [
 							'**',
-							'!admin/css/less/**',
+							'!admin/less/**',
 							'!dist/**',
 							'!node_modules/**',
 							'!release/**',
