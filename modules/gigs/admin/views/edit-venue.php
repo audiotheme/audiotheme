@@ -51,13 +51,14 @@
 		<div id="poststuff">
 			<div id="post-body" class="metabox-holder columns-2">
 
-
 				<div id="post-body-content">
 
-					<div id="venuediv" class="stuffbox">
-						<h3><?php echo $post_type_object->labels->singular_name; ?></h3>
+					<div id="audiotheme-venue-meta-box" class="audiotheme-meta-box">
+						<div class="audiotheme-meta-box-header">
+							<h3 class="audiotheme-meta-box-title" style="padding: 0"><?php echo $post_type_object->labels->singular_name; ?></h3>
+						</div>
+						<div class="audiotheme-meta-box-body">
 
-						<div class="inside">
 							<table class="form-table" >
 								<tr>
 									<th><label for="venue-name"><?php _e( 'Name', 'audiotheme' ) ?></label></th>
