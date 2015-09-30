@@ -1,32 +1,5 @@
 /*global AudiothemeMediaControl:false, wp:false */
 
-/*(function($) {
-	AudiothemeMediaControl.updateSizeDropdownOptions = function( field, sizes ) {
-		var currentValue = field.val(),
-			options;
-
-		if ( sizes ) {
-			$.each( sizes, function( key, size ) {
-				var name;
-
-				if ( key in AudiothemeMediaControl.imageSizeNames ) {
-					name = AudiothemeMediaControl.imageSizeNames[ key ];
-				}
-
-				options += '<option value="' + key + '">' + name + ' (' + size.width + '&times;' + size.height + ')</option>';
-			});
-		}
-
-		if ( ! options ) {
-			name = AudiothemeMediaControl.imageSizeNames['full'] || AudiothemeMediaControl.fullSizeLabel;
-			options = '<option value="full">' + name + '</option>';
-		}
-
-		// Try to maintain the previously selected size if it still exists.
-		field.html( options ).val( currentValue ).removeAttr('disabled');
-	};
-})(jQuery);*/
-
 /**
  * Media control frame popup.
  *
