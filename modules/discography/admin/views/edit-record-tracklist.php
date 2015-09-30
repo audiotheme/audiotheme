@@ -1,7 +1,7 @@
 <table id="record-tracklist" class="audiotheme-repeater audiotheme-edit-after-editor widefat" data-item-template-id="audiotheme-track">
 	<thead>
 		<tr>
-			<th colspan="5"><?php _e( 'Tracks', 'audiotheme' ) ?></th>
+			<th colspan="4"><?php _e( 'Tracks', 'audiotheme' ) ?></th>
 			<th class="column-action">
 				<?php if ( current_user_can( 'publish_posts' ) ) : ?>
 					<a class="button audiotheme-repeater-add-item"><?php _e( 'Add Track', 'audiotheme' ) ?></a>
@@ -12,7 +12,7 @@
 
 	<tfoot>
 	    <tr>
-	    	<td colspan="5">
+	    	<td colspan="4">
 	    		<?php
 	    		printf( '<span class="audiotheme-repeater-sort-warning" style="display: none">%1$s <em>%2$s</em></span>',
 	    			esc_html__( 'The order has been changed.', 'audiotheme' ),
@@ -30,7 +30,7 @@
 
 	<tbody class="audiotheme-repeater-items is-empty">
 		<tr>
-			<td colspan="6"><?php echo get_post_type_object( 'audiotheme_track' )->labels->not_found; ?></td>
+			<td colspan="5"><?php echo get_post_type_object( 'audiotheme_track' )->labels->not_found; ?></td>
 		</tr>
 	</tbody>
 </table>
@@ -44,26 +44,16 @@
 		<td><input type="text" name="audiotheme_tracks[__i__][title]" placeholder="<?php esc_attr_e( 'Title', 'audiotheme' ) ?>" value="{{{ data.title }}}" class="audiotheme-tracklist-track-title widefat audiotheme-clear-on-add"></td>
 		<td><input type="text" name="audiotheme_tracks[__i__][artist]" placeholder="<?php esc_attr_e( 'Artist', 'audiotheme' ) ?>" value="{{{ data.artist }}}" class="audiotheme-tracklist-track-artist widefat"></td>
 		<td>
-			<div class="audiotheme-media-control audiotheme-input-append"
+			<div class="audiotheme-media-control audiotheme-input-group"
 				data-title="<?php esc_attr_e( 'Choose an MP3', 'audiotheme' ); ?>"
 				data-update-text="<?php esc_attr_e( 'Update MP3', 'audiotheme' ); ?>"
 				data-file-type="audio/mpeg"
 				data-upload-extensions="mp3"
 				data-target=".track-file-url"
 				data-return-property="url">
-				<input type="text" name="audiotheme_tracks[__i__][file_url]" id="track-file-url-__i__" placeholder="<?php esc_attr_e( 'File URL', 'audiotheme' ) ?>" value="{{ data.fileUrl }}" class="track-file-url widefat audiotheme-clear-on-add">
-				<a href="#" class="audiotheme-media-control-choose audiotheme-input-append-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>admin/images/music-note.png" width="12" height="12" alt="<?php esc_attr_e( 'Choose MP3', 'audiotheme' ); ?>"></a>
+				<input type="text" name="audiotheme_tracks[__i__][file_url]" id="track-file-url-__i__" placeholder="<?php esc_attr_e( 'File URL', 'audiotheme' ) ?>" value="{{ data.fileUrl }}" class="track-file-url widefat audiotheme-input-group-field audiotheme-clear-on-add">
+				<a href="#" class="audiotheme-media-control-choose audiotheme-input-group-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>admin/images/music-note.png" width="12" height="12" alt="<?php esc_attr_e( 'Choose MP3', 'audiotheme' ); ?>"></a>
 			</div>
-		</td>
-		<td class="column-track-info">
-			<# if ( data.downloadable ) { #>
-				<span class="has-download audiotheme-remove-on-add"><img src="<?php echo AUDIOTHEME_URI; ?>admin/images/download.png" width="12" height="12"></span>
-			<# } #>
-
-			<# if ( data.purchaseUrl ) { #>
-				<span class="has-purchase-url audiotheme-remove-on-add"><img src="<?php echo AUDIOTHEME_URI; ?>admin/images/buy.png" width="12" height="12"></span>
-			<# } #>
-			&nbsp;
 		</td>
 		<td class="column-action">
 			<a href="<?php echo admin_url( 'post.php' ); ?>?post={{ data.id }}&amp;action=edit" class="audiotheme-remove-on-add"><?php esc_html_e( 'Edit', 'audiotheme' ); ?></a>
