@@ -172,9 +172,7 @@ function audiotheme_admin_init() {
 	wp_register_script( 'audiotheme-pointer', AUDIOTHEME_URI . 'admin/js/pointer' . $suffix . '.js', array( 'wp-pointer' ), AUDIOTHEME_VERSION, true );
 	wp_register_script( 'audiotheme-settings', AUDIOTHEME_URI . 'admin/js/settings' . $suffix . '.js', array(), AUDIOTHEME_VERSION, true );
 
-	$admin_styles  = AUDIOTHEME_URI . 'admin/css/';
-	$admin_styles .= version_compare( $GLOBALS['wp_version'], '3.8-alpha', '>' ) ? 'admin.min.css' : 'admin-legacy.min.css';
-	wp_register_style( 'audiotheme-admin', $admin_styles );
+	wp_register_style( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/css/admin.min.css' );
 	wp_register_style( 'jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css' );
 	wp_register_style( 'jquery-ui-theme-audiotheme', AUDIOTHEME_URI . 'admin/css/jquery-ui-audiotheme.css', array( 'jquery-ui-theme-smoothness' ) );
 
