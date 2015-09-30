@@ -525,7 +525,38 @@ function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
 		update_audiotheme_venue_gig_count( $venue_id );
 	}
 
-	return ( empty( $venue_id ) ) ? false : get_audiotheme_venue( $venue_id );
+	return empty( $venue_id ) ? false : get_audiotheme_venue( $venue_id );
+}
+
+/**
+ * Update a gig's venue and the gig count for any modified venues.
+ *
+ * @since 1.9.0
+ *
+ * @param int $gig_id Gig ID.
+ * @param int $venue_id Venue ID.
+ * @return object Venue object.
+ */
+function set_audiotheme_gig_venue_id( $gig_id, $venue_id ) {
+	$gig_id   = absint( $gig_id );
+	$venue_id = absint( $venue_id );
+
+	p2p_delete_connections(
+		'audiotheme_venue_to_gig',
+		array( 'to' => $gig_id )
+	);
+
+	p2p_create_connection(
+		'audiotheme_venue_to_gig',
+		array(
+			'from' => $venue_id,
+			'to'   => $gig_id,
+		)
+	);
+
+	update_audiotheme_venue_gig_count( $venue_id );
+
+	return get_audiotheme_venue( $venue_id );
 }
 
 /**
@@ -613,6 +644,29 @@ function get_default_audiotheme_venue_properties() {
 	);
 
 	return $args;
+}
+
+/**
+ * Prepare a venue for use in JavaScript.
+ *
+ * @since 1.9.0
+ *
+ * @param int $venue_id Venue ID.
+ * @return object Venue object.
+ */
+function prepare_audiotheme_venue_for_js( $venue_id ) {
+	if ( empty( $venue_id ) ) {
+		$post = get_default_audiotheme_venue_properties();
+	} else {
+		$post = (array) get_audiotheme_venue( $venue_id );
+	}
+
+	$post['nonces']['update'] = false;
+	if ( current_user_can( 'edit_post', $post['ID'] ) ) {
+		$post['nonces']['update'] = wp_create_nonce( 'update-post_' . $post['ID'] );
+	}
+
+	return (object) $post;
 }
 
 /**
@@ -888,7 +942,7 @@ function get_unique_audiotheme_venue_name( $name, $venue_id = 0 ) {
 	global $wpdb;
 
 	$suffix = 2;
-	while ( $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_title=%s AND post_type='audiotheme_venue' AND ID!=%d", $name, $venue_id ) ) ) {
+	while ( $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_title = %s AND post_type = 'audiotheme_venue' AND ID != %d", $name, $venue_id ) ) ) {
 		$name .= ' ' . $suffix;
 	}
 
@@ -906,26 +960,26 @@ function get_unique_audiotheme_venue_name( $name, $venue_id = 0 ) {
 function save_audiotheme_venue( $data ) {
 	global $wpdb;
 
-	$action = 'update';
+	$action       = 'update';
 	$current_user = wp_get_current_user();
-	$defaults = get_default_audiotheme_venue_properties();
+	$defaults     = get_default_audiotheme_venue_properties();
 
 	// New venue.
 	if ( empty( $data['ID'] ) ) {
 		$action = 'insert';
-		$data = wp_parse_args( $data, $defaults );
+		$data   = wp_parse_args( $data, $defaults );
 	} else {
 		$current_venue = get_audiotheme_venue( $data['ID'] );
 	}
 
 	// Copy gig count before cleaning the data array.
-	$gig_count = ( isset( $data['gig_count'] ) && is_numeric( $data['gig_count'] ) ) ? absint( $data['gig_count'] ) : 0;
+	$gig_count = isset( $data['gig_count'] ) && is_numeric( $data['gig_count'] ) ? absint( $data['gig_count'] ) : 0;
 
 	// Remove properties that aren't whitelisted.
 	$data = array_intersect_key( $data, $defaults );
 
 	// Map the 'name' property to the 'post_title' field.
-	if ( isset( $data['name'] ) && ! empty( $data['name'] ) ) {
+	if ( ! empty( $data['name'] ) ) {
 		$post_title = get_unique_audiotheme_venue_name( $data['name'], $data['ID'] );
 
 		if ( ! isset( $current_venue ) || $post_title !== $current_venue->name ) {

@@ -167,10 +167,10 @@ function audiotheme_theme_headers( $headers ) {
 function audiotheme_admin_init() {
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
-	wp_register_script( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/js/admin' . $suffix . '.js', array( 'underscore', 'jquery-ui-sortable' ) );
-	wp_register_script( 'audiotheme-media', AUDIOTHEME_URI . 'admin/js/media' . $suffix . '.js', array( 'jquery' ) );
-	wp_register_script( 'audiotheme-pointer', AUDIOTHEME_URI . 'admin/js/pointer' . $suffix . '.js', array( 'wp-pointer' ) );
-	wp_register_script( 'audiotheme-settings', AUDIOTHEME_URI . 'admin/js/settings' . $suffix . '.js' );
+	wp_register_script( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/js/admin.bundle' . $suffix . '.js', array( 'jquery-ui-sortable', 'underscore' ), AUDIOTHEME_VERSION, true );
+	wp_register_script( 'audiotheme-media', AUDIOTHEME_URI . 'admin/js/media' . $suffix . '.js', array( 'jquery' ), AUDIOTHEME_VERSION, true );
+	wp_register_script( 'audiotheme-pointer', AUDIOTHEME_URI . 'admin/js/pointer' . $suffix . '.js', array( 'wp-pointer' ), AUDIOTHEME_VERSION, true );
+	wp_register_script( 'audiotheme-settings', AUDIOTHEME_URI . 'admin/js/settings' . $suffix . '.js', array(), AUDIOTHEME_VERSION, true );
 
 	$admin_styles  = AUDIOTHEME_URI . 'admin/css/';
 	$admin_styles .= version_compare( $GLOBALS['wp_version'], '3.8-alpha', '>' ) ? 'admin.min.css' : 'admin-legacy.min.css';

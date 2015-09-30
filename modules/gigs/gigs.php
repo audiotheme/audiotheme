@@ -79,6 +79,8 @@ function audiotheme_gigs_init() {
 		'publicly_queryable'     => false,
 		'query_var'              => 'audiotheme_venue',
 		'rewrite'                => false,
+		'show_in_menu'           => 'admin.php?page=audiotheme-gigs',
+		'show_ui'                => true,
 		'supports'               => array( '' ),
 	) );
 

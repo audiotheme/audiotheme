@@ -13,7 +13,7 @@
 	<div class="audiotheme-dashboard-body">
 		<div class="audiotheme-dashboard-lead">
 			<p>
-				<?php _e( 'Gigs, Discography, and Videos are the backbone of AudioTheme. Explore each feature below or use the menu options to the left to get started.', 'bandstand' ); ?>
+				<?php _e( 'Gigs, Discography, and Videos are the backbone of AudioTheme. Explore each feature below or use the menu options to the left to get started.', 'audiotheme' ); ?>
 			</p>
 		</div>
 

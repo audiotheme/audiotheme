@@ -1,125 +1,93 @@
-/*global ajaxurl:false, audiothemeGigsL10n:false, isRtl:false */
+/*jshint browserify:true */
+/*global _audiothemeGigEditSettings:false, _pikadayL10n:false, isRtl:false, Pikaday:false */
 
-jQuery(function($) {
-	var $date = $('#gig-date'),
-		$time = $('#gig-time'),
-		$venue = $('#gig-venue'),
-		$venueTzGroup = $('#gig-venue-timezone-group'),
-		$venueTz = $('#gig-venue-timezone'),
-		$venueTzSearch = $('#gig-venue-timezone-search'),
-		ss = sessionStorage || {},
-		lastGigDate = 'lastGigDate' in ss ? new Date( ss.lastGigDate ) : null,
-		lastGigTime = 'lastGigTime' in ss ? new Date( ss.lastGigTime ) : null;
+'use strict';
 
-	$venueTzGroup.pointer({ audiothemeId: 'at100_gigvenue_tz' });
+var frame, settings, wpScreen,
+	$ = require( 'jquery' ),
+	app = require( 'audiotheme' ),
+	Backbone = require( 'backbone' ),
+	$date = $( '#gig-date' ),
+	$time = $( '#gig-time' ),
+	ss = sessionStorage || {},
+	lastGigDate = 'lastGigDate' in ss ? new Date( ss.lastGigDate ) : null,
+	lastGigTime = 'lastGigTime' in ss ? new Date( ss.lastGigTime ) : null,
+	$venueIdField = $( '#gig-venue-id' );
 
-	// Add a day to the last saved gig date.
-	if ( lastGigDate ) {
-		lastGigDate.setDate( lastGigDate.getDate() + 1 );
+settings = app.settings( _audiothemeGigEditSettings );
+
+app.view.GigVenueMetaBox = require( './gigs/views/meta-box/gig-venue' );
+app.view.GigVenueDetails = require( './gigs/views/gig-venue-details' );
+app.view.GigVenueSelectButton = require( './gigs/views/button/gig-venue-select' );
+
+// Add a day to the last saved gig date.
+if ( lastGigDate ) {
+	lastGigDate.setDate( lastGigDate.getDate() + 1 );
+}
+
+// Initialize the time picker.
+$time.timepicker({
+	'scrollDefaultTime': lastGigTime || '',
+	'timeFormat': settings.timeFormat,
+	'className': 'ui-autocomplete'
+}).on( 'showTimepicker', function() {
+	$( this ).addClass( 'open' );
+	$( '.ui-timepicker-list' ).width( $( this ).outerWidth() );
+}) .on( 'hideTimepicker', function() {
+	$( this ).removeClass( 'open' );
+}) .next().on( 'click', function() {
+	$time.focus();
+});
+
+// Add the last saved date and time to session storage
+// when the gig is saved.
+$( '#publish' ).on( 'click', function() {
+	var date = $date.datepicker( 'getDate' ),
+		time = $time.timepicker( 'getTime' );
+
+	if ( ss && '' !== date ) {
+		ss.lastGigDate = date;
 	}
 
-	// Intialize the date picker.
-	$date.datepicker({
-		dateFormat: 'yy/mm/dd',
-		defaultDate: lastGigDate,
-		showOn: 'both',
-		buttonImage: audiothemeGigsL10n.datepickerIcon
-	}).next('button').wrap('<span class="audiotheme-input-append-trigger">');
-
-	// Initialize the time picker.
-	$time.timepicker({
-		'scrollDefaultTime': lastGigTime || '',
-		'timeFormat': audiothemeGigsL10n.timeFormat,
-		'className': 'ui-autocomplete'
-	}).on('showTimepicker', function() {
-		$(this).addClass('open');
-		$('.ui-timepicker-list').width( $(this).outerWidth() );
-	}) .on('hideTimepicker', function() {
-		$(this).removeClass('open');
-	}) .next().on('click', function() {
-		$time.focus();
-	});
-
-	// Add the last saved date and time to session storage
-	// when the gig is saved.
-	$('#publish').on('click', function() {
-		var date = $date.datepicker('getDate'),
-			time = $time.timepicker('getTime');
-
-		if ( ss && '' !== date ) {
-			ss.lastGigDate = date;
-		}
-
-		if ( ss && '' !== time ) {
-			ss.lastGigTime = time;
-		}
-	});
-
-	// Autocomplete venue names.
-	// If the venue is new, show the time zone selection ui.
-	$venue.autocomplete({
-		change: function() {
-			if ( '' !== $venue.val() ) {
-				$.ajax({
-					url: ajaxurl,
-					data: {
-						action: 'audiotheme_ajax_is_new_venue',
-						name: $venue.val()
-					},
-					dataType: 'json',
-					success: function( data ) {
-						if ( data.length ) {
-							$venueTzGroup.hide().pointer('close');
-						} else {
-							$venueTzGroup.show().pointer('audiothemeOpen');
-						}
-					}
-				});
-			} else {
-				$venueTzGroup.hide().pointer('close');
-			}
-		},
-		select: function() { $venueTzGroup.hide().pointer('close'); },
-		source: ajaxurl + '?action=audiotheme_ajax_get_venue_matches',
-		minLength: 0,
-		position:  ( 'undefined' !== typeof isRtl && isRtl ) ? { my: 'right top', at: 'right bottom', offset: '0, -1' } : { offset: '0, -1' },
-		open: function() { $(this).addClass('open'); },
-		close: function() { $(this).removeClass('open'); }
-	});
-
-	$('#gig-venue-select').on('click', function() {
-		$venue.focus().autocomplete('search','');
-	});
-
-	// Automcomplete the search for a city.
-	$venueTzSearch.autocomplete({
-		source: function( request, response ) {
-			$.ajax({
-				url: 'https://api.wordpress.org/core/name-to-zoneinfo/1.0/',
-				type: 'GET',
-				data: {
-					s: $venueTzSearch.val()
-				},
-				dataType: 'jsonp',
-				jsonpCallback: 'dummyCallback',
-				success: function( data ) {
-					response( $.map( data, function( item ) {
-						return {
-							label: item.name + ', ' + item.location + ' - ' + item.timezone,
-							value: item.timezone,
-							location: item.location,
-							timezone: item.timezone
-						};
-					}));
-				}
-			});
-		},
-		minLength: 2,
-		select: function(e, ui) {
-			$venueTz.find('option[value="' + ui.item.timezone + '"]').attr('selected','selected');
-		},
-		position:  ( 'undefined' !== typeof isRtl && isRtl ) ? { my: 'right top', at: 'right bottom', offset: '0, -1' } : { offset: '0, -1' },
-		open: function() { $(this).addClass('open'); },
-		close: function() { $(this).removeClass('open'); }
-	});
+	if ( ss && '' !== time ) {
+		ss.lastGigTime = time;
+	}
 });
+
+// Initialize the date picker.
+new Pikaday({
+	bound: false,
+	container: document.getElementById( 'audiotheme-gig-start-date-picker' ),
+	field: $( '.audiotheme-gig-date-picker-start' ).find( 'input' ).get( 0 ),
+	format: 'YYYY/MM/DD',
+	i18n: _pikadayL10n || {},
+	isRTL: isRtl,
+	theme: 'audiotheme-pikaday'
+});
+
+// Initialize the venue frame.
+frame = new app.view.VenueFrame({
+	title: app.l10n.venues || 'Venues',
+	button: {
+		text: app.l10n.selectVenue || 'Select Venue'
+	}
+});
+
+// Refresh venue in case data was edited in the modal.
+frame.on( 'close', function() {
+	wpScreen.get( 'venue' ).fetch();
+});
+
+frame.on( 'insert', function( selection ) {
+	wpScreen.set( 'venue', selection.first() );
+	$venueIdField.val( selection.first().get( 'ID' ) );
+});
+
+wpScreen = new Backbone.Model({
+	frame: frame,
+	venue: new app.model.Venue( settings.venue || {} )
+});
+
+new app.view.GigVenueMetaBox({
+	controller: wpScreen
+}).render();

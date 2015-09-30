@@ -1,7 +1,5 @@
 /*global AudiothemeMediaControl:false, wp:false */
 
-window.audiotheme = window.audiotheme || {};
-
 /*(function($) {
 	AudiothemeMediaControl.updateSizeDropdownOptions = function( field, sizes ) {
 		var currentValue = field.val(),

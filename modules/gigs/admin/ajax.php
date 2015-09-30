@@ -27,3 +27,63 @@ function audiotheme_ajax_is_new_venue() {
 
 	wp_send_json( $venue );
 }
+
+/**
+ * Retrieve a venue.
+ *
+ * @since 1.9.0
+ */
+function audiotheme_ajax_get_venue() {
+	$venue = prepare_audiotheme_venue_for_js( absint( $_POST['ID'] ) );
+	wp_send_json_success( $venue );
+}
+
+/**
+ * Retrieve venues.
+ *
+ * @since 1.9.0
+ */
+function audiotheme_ajax_get_venues() {
+	$response = array();
+
+	$query_args = isset( $_REQUEST['query_args'] ) ? (array) $_REQUEST['query_args'] : array();
+	$query_args = array_intersect_key( $query_args, array_flip( array( 'paged', 'posts_per_page', 's' ) ) );
+	$query_args = wp_parse_args( $query_args, array(
+		'post_type'      => 'audiotheme_venue',
+		'post_status'    => 'publish',
+		'orderby'        => 'title',
+		'order'          => 'ASC',
+	) );
+
+	$query = new WP_Query( $query_args );
+
+	if ( $query->have_posts() ) {
+		foreach ( $query->posts as $post ) {
+			$response[] = prepare_audiotheme_venue_for_js( $post->ID );
+		}
+	}
+
+	wp_send_json_success( $response );
+}
+
+/**
+ * Create or update a venue.
+ *
+ * @since 1.9.0
+ */
+function audiotheme_ajax_save_venue() {
+	$data = $_POST['model'];
+
+	if ( empty( $data['ID'] ) ) {
+		check_ajax_referer( 'insert-venue', 'nonce' );
+	} else {
+		check_ajax_referer( 'update-post_' . $data['ID'], 'nonce' );
+	}
+
+	if ( empty( $data['post_status'] ) ) {
+		$data['post_status'] = 'publish';
+	}
+
+	$venue_id = save_audiotheme_venue( $data );
+	wp_send_json_success( prepare_audiotheme_venue_for_js( $venue_id ) );
+}

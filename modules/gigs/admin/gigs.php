@@ -26,16 +26,43 @@ function audiotheme_gigs_admin_setup() {
 
 	// Register ajax admin actions.
 	add_action( 'wp_ajax_audiotheme_ajax_get_venue_matches', 'audiotheme_ajax_get_venue_matches' );
-	add_action( 'wp_ajax_audiotheme_ajax_is_new_venue', 'audiotheme_ajax_is_new_venue' );
+	add_action( 'wp_ajax_audiotheme_ajax_is_new_venue',      'audiotheme_ajax_is_new_venue' );
+	add_action( 'wp_ajax_audiotheme_ajax_get_venue',         'audiotheme_ajax_get_venue' );
+	add_action( 'wp_ajax_audiotheme_ajax_get_venues',        'audiotheme_ajax_get_venues' );
+	add_action( 'wp_ajax_audiotheme_ajax_save_venue',        'audiotheme_ajax_save_venue' );
 
-	// Register scripts.
-	wp_register_script( 'audiotheme-gig-edit', AUDIOTHEME_URI . 'modules/gigs/admin/js/gig-edit.js', array( 'audiotheme-admin', 'audiotheme-pointer', 'jquery-timepicker', 'jquery-ui-autocomplete', 'jquery-ui-datepicker' ) );
-	wp_localize_script( 'audiotheme-gig-edit', 'audiothemeGigsL10n', array(
-		'datepickerIcon' => AUDIOTHEME_URI . 'admin/images/calendar.png',
-		'timeFormat'     => audiotheme_compatible_time_format(),
-	) );
+	// Register assets.
+	$post_type_object = get_post_type_object( 'audiotheme_venue' );
+	$base_url = set_url_scheme( AUDIOTHEME_URI . 'modules/gigs/admin' );
 
-	wp_register_script( 'audiotheme-venue-edit', AUDIOTHEME_URI . 'modules/gigs/admin/js/venue-edit.js', array( 'audiotheme-admin', 'jquery-ui-autocomplete', 'post' ) );
+	wp_register_script( 'audiotheme-gig-edit', $base_url . '/js/gig-edit.bundle.min.js', array( 'audiotheme-admin', 'audiotheme-venue-manager', 'jquery-timepicker', 'jquery-ui-autocomplete', 'pikaday', 'underscore', 'wp-backbone', 'wp-util' ), AUDIOTHEME_VERSION, true );
+	wp_register_script( 'audiotheme-venue-edit', $base_url . '/js/venue-edit.js', array( 'audiotheme-admin', 'jquery-ui-autocomplete', 'post', 'underscore' ), AUDIOTHEME_VERSION, true );
+	wp_register_script( 'audiotheme-venue-manager', $base_url . '/js/venue-manager.bundle.min.js', array( 'audiotheme-admin', 'jquery', 'media-models', 'media-views', 'underscore', 'wp-backbone', 'wp-util' ), AUDIOTHEME_VERSION, true );
+	wp_register_style( 'audiotheme-venue-manager', AUDIOTHEME_URI . 'admin/css/venue-manager.min.css', array(), '1.0.0' );
+
+	$settings = array(
+		'canPublishVenues'      => false,
+		'canEditVenues'         => current_user_can( $post_type_object->cap->edit_posts ),
+		'defaultTimezoneString' => get_option( 'timezone_string' ),
+		'insertVenueNonce'      => false,
+		'l10n'                  => array(
+			'addNewVenue'  => $post_type_object->labels->add_new_item,
+			'addVenue'     => esc_html__( 'Add a Venue', 'audiotheme' ),
+			'edit'         => esc_html__( 'Edit', 'audiotheme' ),
+			'manageVenues' => esc_html__( 'Select Venue', 'audiotheme' ),
+			'select'       => esc_html__( 'Select', 'audiotheme' ),
+			'selectVenue'  => esc_html__( 'Select Venue', 'audiotheme' ),
+			'venues'       => $post_type_object->labels->name,
+			'view'         => esc_html__( 'View', 'audiotheme' ),
+		),
+	);
+
+	if ( current_user_can( $post_type_object->cap->publish_posts ) ) {
+		$settings['canPublishVenues'] = true;
+		$settings['insertVenueNonce'] = wp_create_nonce( 'insert-venue' );
+	}
+
+	wp_localize_script( 'audiotheme-venue-manager', '_audiothemeVenueManagerSettings', $settings );
 
 	// Only run on the gig and venue Manage Screens.
 	if ( 'admin.php' === $pagenow && isset( $_GET['page'] ) && ( 'audiotheme-gigs' === $_GET['page'] || 'audiotheme-venues' === $_GET['page'] ) ) {
@@ -221,6 +248,8 @@ function audiotheme_gig_edit_screen_setup( $post ) {
 	audiotheme_gig_help();
 
 	wp_enqueue_script( 'audiotheme-gig-edit' );
+	wp_enqueue_style( 'audiotheme-admin' );
+	wp_enqueue_style( 'audiotheme-venue-manager' );
 	wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
 
 	if ( ! is_audiotheme_pointer_dismissed( 'at100_gigvenue_tz' ) ) {
@@ -246,6 +275,7 @@ function audiotheme_gig_edit_screen_setup( $post ) {
 
 	// Display the main gig fields after the title.
 	add_action( 'edit_form_after_title', 'audiotheme_edit_gig_fields' );
+	add_action( 'admin_footer', 'audiotheme_edit_gig_print_templates' );
 }
 
 /**
@@ -258,9 +288,8 @@ function audiotheme_edit_gig_fields() {
 
 	$gig = get_audiotheme_gig( $post->ID );
 
-	$gig_date = '';
-	$gig_time = '';
-	$gig_venue = '';
+	$gig_date  = '';
+	$gig_time  = '';
 
 	if ( $gig->gig_datetime ) {
 		$timestamp = strtotime( $gig->gig_datetime );
@@ -273,8 +302,14 @@ function audiotheme_edit_gig_fields() {
 		}
 	}
 
-	$gig_venue = ( isset( $gig->venue->name ) ) ? $gig->venue->name : '';
-	$timezone_string = ( isset( $gig->venue->timezone_string ) ) ? $gig->venue->timezone_string : '';
+	$gig_venue       = isset( $gig->venue->name ) ? $gig->venue->name : '';
+	$timezone_string = isset( $gig->venue->timezone_string ) ? $gig->venue->timezone_string : '';
+	$venue_id        = isset( $gig->venue->ID ) ? $gig->venue->ID : 0;
+
+	wp_localize_script( 'audiotheme-gig-edit', '_audiothemeGigEditSettings', array(
+		'venue'      => prepare_audiotheme_venue_for_js( $venue_id ),
+		'timeFormat' => audiotheme_compatible_time_format(),
+	) );
 
 	require( AUDIOTHEME_DIR . 'modules/gigs/admin/views/edit-gig.php' );
 }
@@ -300,6 +335,16 @@ function audiotheme_gig_tickets_meta_box( $post ) {
 }
 
 /**
+ * Print Underscore.js templates.
+ *
+ * @since 1.9.0
+ */
+function audiotheme_edit_gig_print_templates() {
+	include( AUDIOTHEME_DIR . 'modules/gigs/admin/views/templates-gig.php' );
+	include( AUDIOTHEME_DIR . 'modules/gigs/admin/views/templates-venue.php' );
+}
+
+/**
  * Process and save gig info when the CPT is saved.
  *
  * @since 1.0.0
@@ -308,9 +353,9 @@ function audiotheme_gig_tickets_meta_box( $post ) {
  * @param WP_Post $post Gig post object.
  */
 function audiotheme_gig_save_post( $post_id, $post ) {
-	$is_autosave = ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ? true : false;
-	$is_revision = wp_is_post_revision( $post_id );
-	$is_valid_nonce = ( isset( $_POST['audiotheme_save_gig_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_save_gig_nonce'], 'save-gig_' . $post_id ) ) ? true : false;
+	$is_autosave    = defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE;
+	$is_revision    = wp_is_post_revision( $post_id );
+	$is_valid_nonce = isset( $_POST['audiotheme_save_gig_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_save_gig_nonce'], 'save-gig_' . $post_id );
 
 	// Bail if the data shouldn't be saved or intention can't be verified.
 	if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
@@ -319,7 +364,7 @@ function audiotheme_gig_save_post( $post_id, $post ) {
 
 	$post_type_object = get_post_type_object( 'audiotheme_gig' );
 	if ( isset( $_POST['gig_date'] ) && isset( $_POST['gig_time'] ) && current_user_can( $post_type_object->cap->edit_post, $post_id ) ) {
-		$venue = set_audiotheme_gig_venue( $post_id, $_POST['gig_venue'] );
+		set_audiotheme_gig_venue_id( $post_id, $_POST['gig_venue_id'] );
 
 		$dt = date_parse( $_POST['gig_date'] . ' ' . $_POST['gig_time'] );
 

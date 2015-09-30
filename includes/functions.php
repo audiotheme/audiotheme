@@ -169,8 +169,8 @@ class Audiotheme_Sort_Objects {
  * @return string
  */
 function audiotheme_timezone_choice( $selected_zone = null ) {
-	$selected = ( empty( $selected_zone ) ) ? get_option( 'timezone_string' ) : $selected_zone;
-	$choices = wp_timezone_choice( $selected );
+	$selected = empty( $selected_zone ) ? get_option( 'timezone_string' ) : $selected_zone;
+	$choices  = wp_timezone_choice( $selected );
 
 	// Remove the manual offsets optgroup.
 	$pos = strrpos( $choices, '<optgroup' );

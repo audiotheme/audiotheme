@@ -1,8 +1,22 @@
-@import 'modules/general';
-@import 'modules/dashboard';
-@import 'modules/discography';
-@import 'modules/gigs';
-@import 'modules/venues';
-@import 'modules/videos';
-@import 'modules/repeater';
-@import 'modules/settings';
+.clearfix() {
+	&:before,
+	&:after {
+		content: " ";
+		display: table;
+	}
+
+	&:after {
+		clear: both;
+	}
+}
+
+@import "modules/general";
+@import "modules/dashboard";
+@import "modules/date-picker";
+@import "modules/discography";
+@import "modules/gigs";
+@import "modules/venues";
+@import "modules/videos";
+@import "modules/repeater";
+@import "modules/settings";
+@import "vendor/pikaday";

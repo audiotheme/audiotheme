@@ -1,6 +1,8 @@
-/*global _:false, ajaxurl:false, audiotheme:false, tb_remove:false */
+/*jshint browserify:true */
+/*global ajaxurl:false, tb_remove:false */
 
-window.audiotheme = window.audiotheme || {};
+var _ = require( 'underscore' ),
+	audiotheme = require( 'audiotheme' );
 
 (function($) {
 	/**
@@ -106,9 +108,9 @@ window.audiotheme = window.audiotheme || {};
 })(jQuery);
 
 jQuery(function($) {
-	$('.wrap').on('focus', '.audiotheme-input-append input', function() {
+	$('.wrap').on('focus', '.audiotheme-input-group input', function() {
 		$(this).parent().addClass('is-focused');
-	}).on('blur', '.audiotheme-input-append input', function() {
+	}).on('blur', '.audiotheme-input-group input', function() {
 		$(this).parent().removeClass('is-focused');
 	});
 });

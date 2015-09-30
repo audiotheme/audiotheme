@@ -20,7 +20,23 @@ module.exports = function( grunt ) {
 				files: [
 					{ src: 'admin/css/admin.min.css' },
 					{ src: 'admin/css/admin-legacy.min.css' },
+					{ src: 'admin/css/venue-manager.min.css' },
 					{ src: 'includes/css/audiotheme.min.css' }
+				]
+			}
+		},
+
+		browserify: {
+			options: {
+				alias: {
+					audiotheme: './includes/js/application.js'
+				}
+			},
+			build: {
+				files: [
+					{ src: 'admin/js/admin.js', dest: 'admin/js/admin.bundle.js' },
+					{ src: 'modules/gigs/admin/js/gig-edit.js', dest: 'modules/gigs/admin/js/gig-edit.bundle.min.js' },
+					{ src: 'modules/gigs/admin/js/venue-manager.js', dest: 'modules/gigs/admin/js/venue-manager.bundle.min.js' }
 				]
 			}
 		},
@@ -35,6 +51,7 @@ module.exports = function( grunt ) {
 			all: [
 				'Gruntfile.js',
 				'admin/js/*.js',
+				'!admin/js/*.bundle.js',
 				'!admin/js/*.min.js',
 				'gigs/admin/js/*.js',
 				'!gigs/admin/js/*.min.js',
@@ -51,6 +68,7 @@ module.exports = function( grunt ) {
 				files: [
 					{ src: 'admin/css/admin.min.css', dest: 'admin/css/admin.min.css' },
 					{ src: 'admin/css/admin-legacy.min.css', dest: 'admin/css/admin-legacy.min.css' },
+					{ src: 'admin/css/venue-manager.min.css', dest: 'admin/css/venue-manager.min.css' },
 					{ src: 'includes/css/audiotheme.min.css', dest: 'includes/css/audiotheme.min.css' }
 				]
 			}
@@ -64,7 +82,8 @@ module.exports = function( grunt ) {
 				files: [
 					{ src: 'includes/css/less/audiotheme.less', dest: 'includes/css/audiotheme.min.css' },
 					{ src: 'admin/css/less/admin.less', dest: 'admin/css/admin.min.css' },
-					{ src: 'admin/css/less/admin-legacy.less', dest: 'admin/css/admin-legacy.min.css' }
+					{ src: 'admin/css/less/admin-legacy.less', dest: 'admin/css/admin-legacy.min.css' },
+					{ src: 'admin/css/less/venue-manager.less', dest: 'admin/css/venue-manager.min.css' }
 				]
 			}
 		},
@@ -75,12 +94,13 @@ module.exports = function( grunt ) {
 		uglify: {
 			dist: {
 				files: [
-					{ src: 'admin/js/admin.js', dest: 'admin/js/admin.min.js' },
+					{ src: 'admin/js/admin.bundle.js', dest: 'admin/js/admin.bundle.min.js' },
 					{ src: 'admin/js/media.js', dest: 'admin/js/media.min.js' },
 					{ src: 'admin/js/pointer.js', dest: 'admin/js/pointer.min.js' },
 					{ src: 'admin/js/settings.js', dest: 'admin/js/settings.min.js' },
-					{ src: 'modules/gigs/admin/js/gig-edit.js', dest: 'modules/gigs/admin/js/gig-edit.min.js' },
+					{ src: 'modules/gigs/admin/js/gig-edit.bundle.min.js', dest: 'modules/gigs/admin/js/gig-edit.bundle.min.js' },
 					{ src: 'modules/gigs/admin/js/venue-edit.js', dest: 'modules/gigs/admin/js/venue-edit.min.js' },
+					{ src: 'modules/gigs/admin/js/venue-manager.bundle.min.js', dest: 'modules/gigs/admin/js/venue-manager.bundle.min.js' },
 					{ src: 'includes/js/audiotheme.js', dest: 'includes/js/audiotheme.min.js' }
 				]
 			}
@@ -95,7 +115,11 @@ module.exports = function( grunt ) {
 				tasks: [ 'jshint', 'uglify' ]
 			},
 			less: {
-				files: [ 'includes/css/less/*.less', 'admin/css/less/*.less', 'admin/css/less/**/*.less' ],
+				files: [
+					'includes/css/less/*.less',
+					'admin/css/less/*.less',
+					'admin/css/less/**/*.less'
+				],
 				tasks: [ 'less', 'autoprefixer', 'cssmin' ]
 			}
 		},
@@ -180,7 +204,7 @@ module.exports = function( grunt ) {
 	/**
 	 * Default task.
 	 */
-	grunt.registerTask( 'default', [ 'jshint', 'uglify', 'less', 'autoprefixer', 'cssmin', 'watch' ] );
+	grunt.registerTask( 'default', [ 'jshint', 'browserify', 'uglify', 'less', 'autoprefixer', 'cssmin', 'watch' ] );
 
 	/**
 	 * Build a release.
@@ -204,6 +228,7 @@ module.exports = function( grunt ) {
 			'less',
 			'autoprefixer',
 			'cssmin',
+			'browserify',
 			'uglify',
 			'makepot',
 			'compress:build'
