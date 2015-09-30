@@ -230,3 +230,96 @@ function audiotheme_add_video_thumbnail( $attachment_id ) {
 	global $post_id;
 	set_post_thumbnail( $post_id, $attachment_id );
 }
+
+
+/**
+ * Helper function to enqueue a pointer.
+ *
+ * The $id will be used to reference the pointer in javascript as well as the
+ * key it's saved with in the dismissed pointers user meta. $content will be
+ * wrapped in wpautop(). Passing a pointer arg will allow the position of the
+ * pointer to be changed.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $id Pointer id.
+ * @param string $title Pointer title.
+ * @param string $content Pointer content.
+ * @param array $args Additional args.
+ */
+function audiotheme_enqueue_pointer( $id, $title, $content, $args = array() ) {
+	global $audiotheme_pointers;
+
+	$id = sanitize_key( $id );
+
+	$args = wp_parse_args( $args, array(
+		'position' => 'left',
+	) );
+
+	$content = sprintf( '<h3>%s</h3>%s', $title, wpautop( $content ) );
+
+	$audiotheme_pointers[ $id ] = array(
+		'id'       => $id,
+		'content'  => $content,
+		'position' => $args['position'],
+	);
+}
+
+/**
+ * Check to see if a pointer has been dismissed.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $id The pointer id.
+ * @return bool
+ */
+function is_audiotheme_pointer_dismissed( $id ) {
+	$dismissed = explode( ',', (string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
+
+	return in_array( $id, $dismissed );
+}
+
+/**
+ * Print enqueued pointers to a global javascript variable.
+ *
+ * Dismissed pointers are automatically removed.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_print_pointers() {
+	global $audiotheme_pointers;
+
+	if ( empty( $audiotheme_pointers ) ) {
+		return;
+	}
+
+	// Remove dismissed pointers.
+	$dismissed = explode( ',', (string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
+	$audiotheme_pointers = array_diff_key( $audiotheme_pointers, array_flip( $dismissed ) );
+
+	if ( empty( $audiotheme_pointers ) ) {
+		return;
+	}
+
+	// @see WP_Scripts::localize()
+	foreach ( (array) $audiotheme_pointers as $id => $pointer ) {
+		foreach ( $pointer as $key => $value ) {
+			if ( ! is_scalar( $value ) ) {
+				continue;
+			}
+
+			$audiotheme_pointers[ $id ][ $key ] = html_entity_decode( (string) $value, ENT_QUOTES, 'UTF-8' );
+		}
+	}
+
+	// Output the object directly since there isn't really have a script to attach it to.
+	// CDATA and type='text/javascript' is not needed for HTML 5.
+	echo "<script type='text/javascript'>\n";
+	echo "/* <![CDATA[ */\n";
+	echo 'var audiothemePointers = ' . json_encode( $audiotheme_pointers ) . ";\n";
+	echo "/* ]]> */\n";
+	echo "</script>\n";
+}
