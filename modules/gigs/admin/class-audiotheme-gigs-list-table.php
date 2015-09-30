@@ -133,7 +133,8 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 					// Handled after the query is run.
 					break;
 				default:
-					$args['meta_key'] = '_audiotheme_' . $_REQUEST['orderby'];
+					$orderby = sanitize_key( $_REQUEST['orderby'] );
+					$args['meta_key'] = '_audiotheme_' . $orderby;
 					$args['orderby'] = 'meta_value';
 					break;
 			}
@@ -475,14 +476,14 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 	 */
 	function column_title( $item ) {
 		$statuses = get_post_statuses();
-		$status = ( 'publish' !== $item->post_status && array_key_exists( $item->post_status, $statuses ) ) ? ' - <strong>' . esc_html( $statuses[ $item->post_status ] ) . '</strong>' : '';
+		$status = ( 'publish' !== $item->post_status && array_key_exists( $item->post_status, $statuses ) ) ? $statuses[ $item->post_status ] : '';
 
 		$date = ( empty( $item->gig_datetime ) ) ? __( '(no date)', 'audiotheme' ) : mysql2date( get_option( 'date_format' ), $item->gig_datetime );
-		$out = sprintf( '<strong><a href="%1$s" class="row-title">%2$s</a></strong> - %3$s%4$s<br>',
+		$out = sprintf( '<strong><a href="%1$s" class="row-title">%2$s</a> - <span class="gig-time">%3$s</span>%4$s</strong>',
 			esc_url( get_edit_post_link( $item->ID ) ),
 			esc_html( $date ),
 			esc_html( empty( $item->gig_time ) ? 'TBD' : $item->gig_time ),
-			$status
+			empty( $status ) ? '' : sprintf( ' - <span class="post-state">%s</span>', esc_html( $status ) )
 		);
 
 		$post_type_object = get_post_type_object( $item->post_type );
