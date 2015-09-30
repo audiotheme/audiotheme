@@ -35,22 +35,22 @@
  * class of 'audiotheme-media-control'. When the click is detected it looks for
  * custom data attributes to modify the behavior of the media manager.
  */
-jQuery(function($) {
+jQuery(function( $ ) {
 	var Attachment = wp.media.model.Attachment,
 		defaultExtensions = wp.Uploader.defaults.filters.mime_types || [],
 		$control, $controlTarget, mediaControl;
 
 	mediaControl = {
 		init: function() {
-			$('#wpbody').on('click', '.audiotheme-media-control-choose', function(e) {
+			$( '#wpbody' ).on( 'click', '.audiotheme-media-control-choose', function( e ) {
 				var targetSelector;
 
 				e.preventDefault();
 
-				$control = $(this).closest('.audiotheme-media-control');
+				$control = $( this ).closest( '.audiotheme-media-control' );
 
-				targetSelector = $control.data('target') || '.audiotheme-media-control-target';
-				if ( 0 === targetSelector.indexOf('#') ) {
+				targetSelector = $control.data( 'target' ) || '.audiotheme-media-control-target';
+				if ( 0 === targetSelector.indexOf( '#' ) ) {
 					// Context doesn't matter if the selector is an ID.
 					$controlTarget = $( targetSelector );
 				} else {
@@ -58,11 +58,11 @@ jQuery(function($) {
 					$controlTarget = $control.find( targetSelector );
 				}
 
-				if ( $control.data('upload-extensions') ) {
-					wp.Uploader.defaults.filters.mime_types = [{
+				if ( $control.data( 'upload-extensions' ) ) {
+					wp.Uploader.defaults.filters.mime_types = [ {
 						title: AudiothemeMediaControl.audioFiles,
-						extensions: $control.data('upload-extensions')
-					}];
+						extensions: $control.data( 'upload-extensions' )
+					} ];
 				}
 
 				mediaControl.frame().open();
@@ -71,8 +71,8 @@ jQuery(function($) {
 
 		// Updates the control when an image is selected from the media library.
 		select: function() {
-			var selection = this.get('selection'),
-				returnProperty = $control.data('return-property') || 'id';
+			var selection = this.get( 'selection' ),
+				returnProperty = $control.data( 'return-property' ) || 'id';
 
 			// Insert the selected attachment ids into the target element.
 			if ( $controlTarget.length ) {
@@ -80,12 +80,12 @@ jQuery(function($) {
 			}
 
 			// Trigger an event on the control to allow custom updates.
-			$control.trigger( 'selectionChange.audiotheme', [ selection ] );
+			$control.trigger( 'selectionChange.audiotheme', [ selection ]);
 		},
 
 		// Updates the selected image in the media library based on the image in the control.
 		updateLibrarySelection: function() {
-			var selection = this.get('library').get('selection'),
+			var selection = this.get( 'library' ).get( 'selection' ),
 				attachment, selectedIds;
 
 			if ( $controlTarget.length ) {
@@ -107,19 +107,19 @@ jQuery(function($) {
 			}
 
 			this._frame = wp.media({
-				title: $control.data('title') || AudiothemeMediaControl.frameTitle,
+				title: $control.data( 'title' ) || AudiothemeMediaControl.frameTitle,
 				library: {
-					type: $control.data('file-type') || 'image'
+					type: $control.data( 'file-type' ) || 'image'
 				},
 				button: {
-					text: $control.data('update-text') || AudiothemeMediaControl.frameUpdateText
+					text: $control.data( 'update-text' ) || AudiothemeMediaControl.frameUpdateText
 				},
 				multiple: $control.data( 'select-multiple' ) || false
 			});
 
-			this._frame.on( 'open', this.updateLibrarySelection ).on('close', function() {
+			this._frame.on( 'open', this.updateLibrarySelection ).on( 'close', function() {
 				wp.Uploader.defaults.filters.mime_types = defaultExtensions;
-			}).state('library').on('select', this.select);
+			}).state( 'library' ).on( 'select', this.select );
 
 			return this._frame;
 		}
