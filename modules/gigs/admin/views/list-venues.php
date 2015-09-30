@@ -1,6 +1,5 @@
 <div class="wrap">
-	<div id="icon-audiotheme-venues" class="icon32"><br></div>
-	<h2>
+	<h1>
 		<?php
 		echo $post_type_object->labels->name;
 
@@ -12,7 +11,7 @@
 			printf( ' <span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;', 'audiotheme' ) . '</span>', get_search_query() );
 		}
 		?>
-	</h2>
+	</h1>
 
 	<?php
 	if ( isset( $_REQUEST['deleted'] ) || isset( $_REQUEST['message'] ) || isset( $_REQUEST['updated'] ) ) {

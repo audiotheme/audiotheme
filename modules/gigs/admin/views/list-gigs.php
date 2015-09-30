@@ -1,5 +1,4 @@
 <div class="wrap">
-	<div id="icon-audiotheme-gigs" class="icon32"><br></div>
 	<h1>
 		<?php
 		echo $post_type_object->labels->name;

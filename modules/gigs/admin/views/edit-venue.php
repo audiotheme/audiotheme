@@ -1,5 +1,4 @@
 <div class="wrap columns-2" id="venue-edit">
-	<div id="icon-audiotheme-venues" class="icon32"><br></div>
 	<h1><?php
 		if ( 'edit' === $action ) {
 			printf(
