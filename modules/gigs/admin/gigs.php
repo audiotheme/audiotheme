@@ -202,14 +202,12 @@ function audiotheme_gigs_admin_menu_highlight( $parent_file ) {
 /**
  * Set up the gig Manage Screen.
  *
- * Adds a help tab, initializes the custom post list table, and processes any
- * actions that need to be handled.
+ * Initializes the custom post list table, and processes any actions that need
+ * to be handled.
  *
  * @since 1.0.0
  */
 function audiotheme_gigs_manage_screen_setup() {
-	audiotheme_gig_list_help();
-
 	$post_type_object = get_post_type_object( 'audiotheme_gig' );
 	$title = $post_type_object->labels->name;
 	add_screen_option( 'per_page', array( 'label' => $title, 'default' => 20 ) );
@@ -245,8 +243,6 @@ function audiotheme_gigs_manage_screen() {
  * @param WP_Post $post The gig post object being edited.
  */
 function audiotheme_gig_edit_screen_setup( $post ) {
-	audiotheme_gig_help();
-
 	wp_enqueue_script( 'audiotheme-gig-edit' );
 	wp_enqueue_style( 'audiotheme-admin' );
 	wp_enqueue_style( 'audiotheme-venue-manager' );
@@ -398,98 +394,4 @@ function audiotheme_gig_save_post( $post_id, $post ) {
 		update_post_meta( $post_id, '_audiotheme_tickets_price', $_POST['gig_tickets_price'] );
 		update_post_meta( $post_id, '_audiotheme_tickets_url', $_POST['gig_tickets_url'] );
 	}
-}
-
-/**
- * Add a help tab to the gig list screen.
- *
- * @since 1.0.0
- */
-function audiotheme_gig_list_help() {
-	get_current_screen()->add_help_tab( array(
-		'id'      => 'overview',
-		'title'   => __( 'Overview', 'audiotheme' ),
-		'content' => '<p>' . __( 'This screen provides access to all of your gigs. You can customize the display of this screen to suit your workflow.', 'audiotheme' ) . '</p>',
-	) );
-
-	get_current_screen()->add_help_tab( array(
-		'id'      => 'screen-content',
-		'title'   => __( 'Screen Content', 'audiotheme' ),
-		'content' =>
-			'<p>' . __( "You can customize the appearance of this screen's content in a number of ways:", 'audiotheme' ) . '</p>' .
-			'<ul>' .
-			'<li>' . __( 'You can hide/display columns based on your needs and decide how many gigs to list per screen using the Screen Options tab.', 'audiotheme' ) . '</li>' .
-			'<li>' . __( 'You can filter the list of gigs by status using the text links in the upper left to show Upcoming, Past, All, Published, Draft, or Trashed gigs. The default view is to show all upcoming gigs.', 'audiotheme' ) . '</li>' .
-			'<li>' . __( 'You can refine the list to show only gigs for a specific venue or from a specific month by using the dropdown menus above the gigs list. Click the Filter button after making your selection.', 'audiotheme' ) . '</li>' .
-			'<li>' . __( 'You can also sort your gigs in any view by clicking the column headers.', 'audiotheme' ) . '</li>' .
-			'</ul>',
-	) );
-
-	get_current_screen()->add_help_tab( array(
-		'id'      => 'available-actions',
-		'title'   => __( 'Available Actions', 'audiotheme' ),
-		'content' =>
-			'<p>' . __( 'Hovering over a row in the gigs list will display action links that allow you to manage your gig. You can perform the following actions:', 'audiotheme' ) . '</p>' .
-			'<ul>' .
-			'<li>' . __( '<strong>Edit</strong> takes you to the editing screen for that gig. You can also reach that screen by clicking on the gig date.', 'audiotheme' ) . '</li>' .
-			'<li>' . __( '<strong>Trash</strong> removes your gig from this list and places it in the trash, from which you can permanently delete it.', 'audiotheme' ) . '</li>' .
-			'<li>' . __( '<strong>Preview</strong> will show you what your draft gig will look like if you publish it.', 'audiotheme' ) . '</li>' .
-			'<li>' . __( "<strong>View</strong> will take you to your live site to view the gig. Which link is available depends on your gig's status.", 'audiotheme' ) . '</li>' .
-			'</ul>',
-	) );
-}
-
-/**
- * Add a help tab to the add/edit gig screen.
- *
- * @since 1.0.0
- */
-function audiotheme_gig_help() {
-	get_current_screen()->add_help_tab( array(
-		'id'      => 'standard-fields',
-		'title'   => __( 'Standard Fields', 'audiotheme' ),
-		'content' =>
-			'<p>' . __( "<strong>Title</strong> - Enter a title for your gig. After you enter a title, you'll see the permalink below, which you can edit.", 'audiotheme' ) . '</p>' .
-			'<p>' . __( '<strong>Date</strong> - Choose the date of your gig or enter it in the <code>YYYY/MM/DD</code> format.', 'audiotheme' ) . '</p>' .
-			'<p>' . __( "<strong>Time</strong> - Choose the time of your gig. Leave it blank if you don't know it.", 'audiotheme' ) . '</p>' .
-			'<p>' . __( '<strong>Venue</strong> - Enter the name of a new venue, or select a saved venue. <em>It is important to select the time zone for new venues.</em> New venues will be saved to your venue database and you can update additional details on the Edit Venue screen.', 'audiotheme' ) . '</p>' .
-			'<p>' . __( '<strong>Note</strong> - Enter a short note about the gig.', 'audiotheme' ) . '</p>' .
-			'<p>' . __( '<strong>Editor</strong> - Enter a longer description for your gig. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.', 'audiotheme' ) . '</p>',
-	) );
-
-	get_current_screen()->add_help_tab( array(
-		'id'		=> 'inserting-media',
-		'title'		=> __( 'Inserting Media', 'audiotheme' ),
-		'content' 	=>
-			'<p>' . __( 'You can upload and insert media (images, audio, documents, etc.) by clicking the Add Media button. You can select from the images and files already uploaded to the Media Library, or upload new media to add to your gig description. To create an image gallery, select the images to add and click the "Create a new gallery" button.', 'audiotheme' ) . '</p>' .
-			'<p>' . __( 'You can also embed media from many popular websites including Twitter, YouTube, Flickr and others by pasting the media URL on its own line into the gig description editor. Please refer to the Codex to <a href="https://codex.wordpress.org/Embeds">learn more about embeds</a>.', 'audiotheme' ) . '</p>',
-	) );
-
-	get_current_screen()->add_help_tab( array(
-		'id'		=> 'tickets',
-		'title'		=> __( 'Tickets', 'audiotheme' ),
-		'content' 	=>
-			'<p>' . __( 'The ticket box allows you to share information about ticket purchases and availability.', 'audiotheme' ) . '</p>' .
-			'<ul>' .
-			'<li>' . __( "<strong>Price</strong> - Does it cost money to attend your gig? Share that here so there aren't any surprises.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( '<strong>URL</strong> - If tickets can be purchased online, provide a link.', 'audiotheme' ) . '</li>' .
-			'</ul>',
-	) );
-
-	get_current_screen()->add_help_tab( array(
-		'id'		=> 'publish-settings',
-		'title'		=> __( 'Publish Settings', 'audiotheme' ),
-		'content' 	=>
-			'<p>' . __( 'Several boxes on this screen contain settings for how your content will be published, including:', 'audiotheme' ) . '</p>' .
-			'<ul>' .
-			'<li>' . __( "<strong>Publish</strong> - When you're done adding a gig, click the Publish button to make it available on your site. If you're not ready to publish, or want to finish updating your gig later, click the Save Draft button to privately save your progress. You can access your drafts at a later time through the <strong>Gigs > All Gigs</strong> menu.", 'audiotheme' ) . '</li>' .
-			'<li>' . __( '<strong>Featured Image</strong> - If the author of your theme built in support for featured images, you can set those here. Find out more about <a href="https://codex.wordpress.org/Post_Thumbnails" target="_blank">setting featured images</a> in the WordPress Codex.', 'audiotheme' ) . '</li>' .
-			'</ul>',
-	) );
-
-	get_current_screen()->add_help_tab( array(
-		'id'      => 'customize-display',
-		'title'   => __( 'Customize This Screen', 'audiotheme' ),
-		'content' => '<p>' . __( 'The title, date, time, venue, note and big post editing area are fixed in place, but you can reposition all the other boxes using drag and drop. You can also minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to hide or unhide boxes or to choose a 1 or 2-column layout for this screen.', 'audiotheme' ) . '</p>',
-	) );
 }

@@ -15,9 +15,6 @@ function audiotheme_load_videos_admin() {
 	add_action( 'save_post', 'audiotheme_video_save_post', 10, 2 );
 	add_action( 'wp_ajax_audiotheme_get_video_oembed_data', 'audiotheme_ajax_get_video_oembed_data' );
 
-	add_action( 'load-edit.php', 'audiotheme_video_list_help' );
-	add_action( 'load-post.php', 'audiotheme_video_help' );
-	add_action( 'load-post-new.php', 'audiotheme_video_help' );
 	add_filter( 'post_updated_messages', 'audiotheme_video_post_updated_messages' );
 	add_filter( 'manage_edit-audiotheme_video_columns', 'audiotheme_video_register_columns' );
 	add_filter( 'admin_post_thumbnail_html', 'audiotheme_video_admin_post_thumbnail_html', 10, 2 );
@@ -374,83 +371,4 @@ function audiotheme_video_archive_settings( $post ) {
 		</select>
 	</p>
 	<?php
-}
-
-/**
- * Add a help tab to the video list screen.
- *
- * @since 1.0.0
- */
-function audiotheme_video_list_help() {
-	if ( 'audiotheme_video' !== get_current_screen()->post_type ) {
-		return;
-	}
-
-	get_current_screen()->add_help_tab( array(
-		'id'      => 'overview',
-		'title'   => __( 'Overview', 'audiotheme' ),
-		'content' =>
-			'<p>' . __( 'Using the video panel, AudioTheme allows you to collect your videos from a wide variety of supported services and present them to your fans on your website.', 'audiotheme' ) . '</p>' .
-			'<p>' . __( 'This screen provides access to all of your videos. You can customize the display of this screen to suit your workflow.', 'audiotheme' ) . '</p>',
-	) );
-
-	get_current_screen()->add_help_tab( array(
-		'id'      => 'screen-content',
-		'title'   => __( 'Screen Content', 'audiotheme' ),
-		'content' =>
-			'<p>' . __( "You can customize the appearance of this screen's content in a number of ways:", 'audiotheme' ) . '</p>' .
-			'<ul>' .
-			'<li>' . __( 'You can hide or display columns based on your needs and decide how many videos to list per screen using the Screen Options tab.', 'audiotheme' ) . '</li>' .
-			'<li>' . __( 'You can filter the list of videos by status using the text links in the upper left to show Upcoming, Past, All, Published, Draft, or Trashed videos. The default view is to show all videos.', 'audiotheme' ) . '</li>' .
-			'<li>' . __( 'You can refine the list to show only videos from a specific month by using the dropdown menus above the videos list. Click the Filter button after making your selection.', 'audiotheme' ) . '</li>' .
-			'<li>' . __( 'You can also sort your videos in any view by clicking the column headers.', 'audiotheme' ) . '</li>' .
-			'</ul>',
-	) );
-
-	get_current_screen()->add_help_tab( array(
-		'id'      => 'available-actions',
-		'title'   => __( 'Available Actions', 'audiotheme' ),
-		'content' =>
-			'<p>' . __( 'Hovering over a row in the videos list will display action links that allow you to manage your video. You can perform the following actions:', 'audiotheme' ) . '</p>' .
-			'<ul>' .
-			'<li>' . __( '<strong>Edit</strong> takes you to the editing screen for that video. You can also reach that screen by clicking on the video title.', 'audiotheme' ) . '</li>' .
-			'<li>' . __( '<strong>Quick Edit</strong> provides inline access to the metadata of your video, allowing you to update video details without leaving this screen.', 'audiotheme' ) . '</li>' .
-			'<li>' . __( '<strong>Trash</strong> removes your video from this list and places it in the trash, from which you can permanently delete it.', 'audiotheme' ) . '</li>' .
-			'<li>' . __( '<strong>Preview</strong> will show you what your draft video will look like if you publish it.', 'audiotheme' ) . '</li>' .
-			'<li>' . __( "<strong>View</strong> will take you to your live site to view the video. Which link is available depends on your video's status.", 'audiotheme' ) . '</li>' .
-			'</ul>',
-	) );
-}
-
-/**
- * Add a help tab to the add/edit video screen.
- *
- * @since 1.0.0
- */
-function audiotheme_video_help() {
-	if ( 'audiotheme_video' !== get_current_screen()->post_type ) {
-		return;
-	}
-
-	get_current_screen()->add_help_tab( array(
-		'id'      => 'standard-fields',
-		'title'   => __( 'Standard Fields', 'audiotheme' ),
-		'content' =>
-			'<p>' . __( "<strong>Title</strong> - Enter a title for your video. After you enter a title, you'll see the permalink below, which you can edit.", 'audiotheme' ) . '</p>' .
-			'<p>' . __( '<strong>Video URL</strong> - Enter the URL for your video. After saving a preview of the video will display below this field.', 'audiotheme' ) . '</p>' .
-			'<p>' . __( '<strong>Editor</strong> - Describe your video. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.', 'audiotheme' ) . '</p>' .
-			'<p>' . __( '<strong>Excerpt</strong> - Depending on the theme you have activated, this is a brief expert that may appear in your list of videos. Visit the WordPress Support section to <a href="https://en.support.wordpress.com/splitting-content/excerpts/" target="_blank">learn more about excerpts</a>.', 'audiotheme' ) . '</p>',
-	) );
-
-	get_current_screen()->add_help_tab( array(
-		'id'		=> 'featured-image',
-		'title'		=> __( 'Featured Image', 'audiotheme' ),
-		'content' 	=> '<p>' . __( "This is used to set the thumbnail that will represent your video throughout your site. Make it interesting. You can choose the image through the normal process of setting or a featured image, or click the 'Get video thumbnail link' (you'll need to add a URL to the Video URL field for this to appear) to grab the image directly from the video service. Find out more about <a href=\"https://codex.wordpress.org/Post_Thumbnails\" target=\"_blank\">setting featured images</a> in the WordPress Codex.", 'audiotheme' ) . '</p>',
-	) );
-
-	get_current_screen()->add_help_tab( array(
-		'id'      => 'customize-display',
-		'title'   => __( 'Customize This Screen', 'audiotheme' ),
-		'content' => '<p>' . __( 'The title, video url, and big editing area are fixed in place, but you can reposition all the other boxes using drag and drop. You can also minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to hide or unhide boxes or to choose a 1 or 2-column layout for this screen.', 'audiotheme' ) . '</p>',
-	) );
 }
