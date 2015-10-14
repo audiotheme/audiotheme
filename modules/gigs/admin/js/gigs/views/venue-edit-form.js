@@ -1,6 +1,7 @@
 var VenueEditForm,
 	$ = require( 'jquery' ),
-	wp = require( 'wp' );
+	wp = require( 'wp' ),
+	cityTypeahead = require( '../utils/city-typeahead' );
 
 VenueEditForm = wp.media.View.extend({
 	tagName: 'div',
@@ -24,6 +25,13 @@ VenueEditForm = wp.media.View.extend({
 		if ( tzString ) {
 			this.$el.find( '#venue-timezone-string' ).find( 'option[value="' + tzString + '"]' ).prop( 'selected', true );
 		}
+
+		cityTypeahead(
+			this.$el.find( '[data-setting="city"]' ),
+			this.$el.find( '[data-setting="state"]' ),
+			this.$el.find( '[data-setting="country"]' ),
+			this.$el.find( '[data-setting="timezone_string"]' )
+		);
 
 		return this;
 	},

@@ -163,6 +163,7 @@ function audiotheme_theme_headers( $headers ) {
  */
 function audiotheme_admin_init() {
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+	$status = get_option( 'audiotheme_license_status' );
 
 	wp_register_script( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/js/admin.bundle' . $suffix . '.js', array( 'jquery-ui-sortable', 'underscore', 'wp-util' ), AUDIOTHEME_VERSION, true );
 	wp_register_script( 'audiotheme-media', AUDIOTHEME_URI . 'admin/js/media' . $suffix . '.js', array( 'jquery' ), AUDIOTHEME_VERSION, true );
@@ -171,6 +172,11 @@ function audiotheme_admin_init() {
 	wp_register_style( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/css/admin.min.css' );
 	wp_register_style( 'jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css' );
 	wp_register_style( 'jquery-ui-theme-audiotheme', AUDIOTHEME_URI . 'admin/css/jquery-ui-audiotheme.css', array( 'jquery-ui-theme-smoothness' ) );
+
+	wp_localize_script( 'audiotheme-admin', '_audiothemeAdminSettings', array(
+		'licenseKey'    => get_option( 'audiotheme_license_key', '' ),
+		'licenseStatus' => empty( $status ) || 'ok' !== $status->status ? 'inactive' : 'active',
+	) );
 
 	wp_localize_script( 'audiotheme-media', 'AudiothemeMediaControl', array(
 		'audioFiles'      => __( 'Audio files', 'audiotheme' ),

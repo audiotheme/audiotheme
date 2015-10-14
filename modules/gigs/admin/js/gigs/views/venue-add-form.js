@@ -1,6 +1,7 @@
 var VenueAddForm,
 	$ = require( 'jquery' ),
-	wp = require( 'wp' );
+	wp = require( 'wp' ),
+	cityTypeahead = require( '../utils/city-typeahead' );
 
 /**
  *
@@ -23,6 +24,14 @@ VenueAddForm = wp.media.View.extend({
 
 	render: function() {
 		this.$el.html( this.template( this.model.toJSON() ) );
+
+		cityTypeahead(
+			this.$el.find( '[data-setting="city"]' ),
+			this.$el.find( '[data-setting="state"]' ),
+			this.$el.find( '[data-setting="country"]' ),
+			this.$el.find( '[data-setting="timezone_string"]' )
+		);
+
 		//this.$button = this.controller.toolbar.view.views.first( '.media-frame-toolbar' ).primary.get( 'save' ).$el;
 		return this;
 	},

@@ -21,6 +21,7 @@ module.exports = function( grunt ) {
 				files: [
 					{ src: 'admin/js/admin.js', dest: 'admin/js/admin.bundle.js' },
 					{ src: 'modules/gigs/admin/js/gig-edit.js', dest: 'modules/gigs/admin/js/gig-edit.bundle.min.js' },
+					{ src: 'modules/gigs/admin/js/venue-edit.js', dest: 'modules/gigs/admin/js/venue-edit.bundle.min.js' },
 					{ src: 'modules/gigs/admin/js/venue-manager.js', dest: 'modules/gigs/admin/js/venue-manager.bundle.min.js' }
 				]
 			}
@@ -103,7 +104,7 @@ module.exports = function( grunt ) {
 					{ src: 'admin/js/media.js', dest: 'admin/js/media.min.js' },
 					{ src: 'admin/js/settings.js', dest: 'admin/js/settings.min.js' },
 					{ src: 'modules/gigs/admin/js/gig-edit.bundle.min.js', dest: 'modules/gigs/admin/js/gig-edit.bundle.min.js' },
-					{ src: 'modules/gigs/admin/js/venue-edit.js', dest: 'modules/gigs/admin/js/venue-edit.min.js' },
+					{ src: 'modules/gigs/admin/js/venue-edit.bundle.min.js', dest: 'modules/gigs/admin/js/venue-edit.bundle.min.js' },
 					{ src: 'modules/gigs/admin/js/venue-manager.bundle.min.js', dest: 'modules/gigs/admin/js/venue-manager.bundle.min.js' },
 					{ src: 'includes/js/audiotheme.js', dest: 'includes/js/audiotheme.min.js' }
 				]
