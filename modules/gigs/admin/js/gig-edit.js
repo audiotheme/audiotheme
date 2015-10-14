@@ -16,9 +16,9 @@ var frame, settings, wpScreen,
 
 settings = app.settings( _audiothemeGigEditSettings );
 
-app.view.GigVenueMetaBox = require( './gigs/views/meta-box/gig-venue' );
-app.view.GigVenueDetails = require( './gigs/views/gig-venue-details' );
-app.view.GigVenueSelectButton = require( './gigs/views/button/gig-venue-select' );
+app.view.GigVenueMetaBox = require( './views/meta-box/gig-venue' );
+app.view.GigVenueDetails = require( './views/gig-venue-details' );
+app.view.GigVenueSelectButton = require( './views/button/gig-venue-select' );
 
 // Add a day to the last saved gig date.
 if ( lastGigDate ) {

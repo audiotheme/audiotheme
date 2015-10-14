@@ -4,7 +4,7 @@
 
 var $ = require( 'jquery' );
 
-require( './gigs/utils/city-typeahead' )(
+require( './utils/city-typeahead' )(
 	$( '#venue-city' ),
 	$( '#venue-state' ),
 	$( '#venue-country' ),
