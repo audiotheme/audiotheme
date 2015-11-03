@@ -26,8 +26,14 @@ VenuesListItem = wp.media.View.extend({
 	},
 
 	updateSelected: function() {
-		var isSelected = this.controller.state( 'audiotheme-venues' ).get( 'selection' ).first() === this.model;
+		var state = this.controller.state( 'audiotheme-venues' ),
+			isSelected =state.get( 'selection' ).first() === this.model;
+
 		this.$el.toggleClass( 'is-selected', isSelected );
+
+		if ( isSelected ) {
+			state.set( 'selectedItem', this.$el );
+		}
 	}
 });
 

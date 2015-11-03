@@ -5,7 +5,7 @@ var Frame,
 Frame = wp.media.view.Frame.extend({
 	className: 'media-frame',
 	template: wp.media.template( 'media-frame' ),
-	regions: ['menu', 'title', 'content', 'toolbar'],
+	regions: [ 'menu', 'title', 'content', 'toolbar' ],
 
 	initialize: function() {
 		wp.media.view.Frame.prototype.initialize.apply( this, arguments );

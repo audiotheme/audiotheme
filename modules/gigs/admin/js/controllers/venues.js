@@ -29,6 +29,7 @@ VenuesController = wp.media.controller.State.extend({
 		this.set( 'search', search );
 		this.set( 'venues', venues );
 		this.set( 'selection', new Venues() );
+		this.set( 'selectedItem', Backbone.$() );
 
 		// Synchronize changes to models in each collection.
 		search.observe( venues );

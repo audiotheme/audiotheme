@@ -19,6 +19,7 @@ VenuesList = wp.media.View.extend({
 		this.listenTo( this.collection, 'add', this.addVenue );
 		this.listenTo( this.collection, 'reset', this.render );
 		this.listenTo( state.get( 'search' ), 'reset', this.render );
+		this.listenTo( state, 'change:selectedItem', this.maybeMakeItemVisible );
 	},
 
 	render: function() {
@@ -42,6 +43,18 @@ VenuesList = wp.media.View.extend({
 		}).render();
 
 		this.$el.children( 'ul' ).append( view.el );
+	},
+
+	maybeMakeItemVisible: function() {
+		var $item = this.controller.state().get( 'selectedItem' ),
+			itemHeight = $item.outerHeight(),
+			itemTop = $item.position().top;
+
+		if ( itemTop > this.el.clientHeight + this.el.scrollTop - itemHeight ) {
+			this.el.scrollTop = itemTop - this.el.clientHeight + itemHeight;
+		} else if ( itemTop < this.el.scrollTop ) {
+			this.el.scrollTop = itemTop;
+		}
 	},
 
 	scroll: function() {
