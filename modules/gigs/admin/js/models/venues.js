@@ -8,7 +8,7 @@ Venues = Backbone.Collection.extend({
 	model: Venue,
 
 	comparator: function( model ) {
-		return model.get( 'name' );
+		return model.get( 'name' ).toLowerCase();
 	}
 });
 
