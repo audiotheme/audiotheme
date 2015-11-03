@@ -35,6 +35,26 @@ VenuesController = wp.media.controller.State.extend({
 		venues.observe( search );
 	},
 
+	next: function() {
+		var provider = this.get( 'provider' ),
+			collection = this.get( provider ),
+			currentIndex = collection.indexOf( this.get( 'selection' ).at( 0 ) );
+
+		if ( collection.length - 1 !== currentIndex ) {
+			this.get( 'selection' ).reset( collection.at( currentIndex + 1 ) );
+		}
+	},
+
+	previous: function() {
+		var provider = this.get( 'provider' ),
+			collection = this.get( provider ),
+			currentIndex = collection.indexOf( this.get( 'selection' ).at( 0 ) );
+
+		if ( 0 !== currentIndex ) {
+			this.get( 'selection' ).reset( collection.at( currentIndex - 1 ) );
+		}
+	},
+
 	search: function( query ) {
 		// Restore the original state if the text in the search field
 		// is less than 3 characters.

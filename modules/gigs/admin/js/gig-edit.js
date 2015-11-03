@@ -91,3 +91,21 @@ wpScreen = new Backbone.Model({
 new app.view.GigVenueMetaBox({
 	controller: wpScreen
 }).render();
+
+
+$( window ).on( 'keyup', function( e ) {
+	// Only handle key events when the venue list state is active.
+	if ( ! frame.$el.is( ':visible' ) || 'audiotheme-venues' !== window.frame.state().id ) {
+		return;
+	}
+
+	// Up arrow.
+	if ( 38 === e.keyCode ) {
+		frame.state().previous();
+	}
+
+	// Down arrow.
+	if ( 40 === e.keyCode ) {
+		frame.state().next();
+	}
+});
