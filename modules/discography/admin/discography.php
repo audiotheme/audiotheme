@@ -64,11 +64,15 @@ function audiotheme_load_discography_admin() {
 }
 
 /**
- * Discography admin menu.
+ * Rename the top level Records menu item to Discography.
  *
  * @since 1.0.0
+ *
+ * @link https://core.trac.wordpress.org/ticket/23316
  */
 function audiotheme_discography_admin_menu() {
+	remove_menu_page( 'edit.php?post_type=audiotheme_record' );
+
 	add_menu_page(
 		__( 'Discography', 'audiotheme' ),
 		__( 'Discography', 'audiotheme' ),
