@@ -6,7 +6,8 @@
 			<# if ( data.address ) { #>
 				{{ data.address }}<br>
 			<# } #>
-			{{ data.city }}, {{ data.state }} {{ data.postal_code }}, {{ data.country }}
+			{{ data.formatCityStatePostalCode() }}<# if ( '' !== data.formatCityStatePostalCode() ) { #>,<# } #>
+			{{ data.country }}
 		</p>
 	<# } #>
 
