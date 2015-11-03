@@ -28,7 +28,7 @@ function audiotheme_playlist_args( $args ) {
  * @since 1.5.0
  */
 function audiotheme_playlist_admin_enqueue_scripts() {
-	if ( 'cue_playlist' !== get_post_type() ) {
+	if ( 'cue_playlist' !== get_current_screen()->id ) {
 		return;
 	}
 
