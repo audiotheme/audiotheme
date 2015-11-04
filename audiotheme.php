@@ -167,6 +167,7 @@ function audiotheme_load_admin() {
 
 		// Load gigs admin.
 		add_action( 'init', 'audiotheme_gigs_admin_setup' );
+		add_action( 'init', 'audiotheme_venues_manage_screen_setup' );
 
 		// Load videos admin.
 		add_action( 'init', 'audiotheme_load_videos_admin' );

@@ -17,6 +17,7 @@ require( AUDIOTHEME_DIR . 'modules/gigs/post-template.php' );
 if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'modules/gigs/admin/gigs.php' );
 	require( AUDIOTHEME_DIR . 'modules/gigs/admin/venues.php' );
+	require( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-screen-managevenues.php' );
 }
 
 /**

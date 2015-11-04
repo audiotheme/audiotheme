@@ -9,49 +9,11 @@
 /**
  * Set up the venue Manage Screen.
  *
- * Adds a screen option, initializes the custom post list table, and processes
- * any actions that need to be handled.
- *
  * @since 1.0.0
  */
 function audiotheme_venues_manage_screen_setup() {
-	$post_type_object = get_post_type_object( 'audiotheme_venue' );
-	$title = $post_type_object->labels->name;
-	add_screen_option( 'per_page', array( 'label' => $title, 'default' => 20 ) );
-
-	require( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-venues-list-table.php' );
-
-	$venues_list_table = new Audiotheme_Venues_List_Table();
-	$venues_list_table->process_actions();
-}
-
-/**
- * Display the venue manage screen.
- *
- * @since 1.0.0
- */
-function audiotheme_venues_manage_screen() {
-	$venues_list_table = new Audiotheme_Venues_List_Table();
-	$venues_list_table->prepare_items();
-
-	$post_type_object = get_post_type_object( 'audiotheme_venue' );
-
-	$action = 'add';
-	$title = $post_type_object->labels->name;
-	$nonce_field = wp_nonce_field( 'add-venue', 'audiotheme_venue_nonce', true, false );
-	$values = get_default_audiotheme_venue_properties();
-
-	if ( isset( $_GET['action'] ) && 'edit' === $_GET['action'] && isset( $_GET['venue_id'] ) && is_numeric( $_GET['venue_id'] ) ) {
-		$venue_to_edit = get_audiotheme_venue( $_GET['venue_id'] );
-
-		$action = 'edit';
-		$nonce_field = wp_nonce_field( 'update-venue_' . $venue_to_edit->ID, 'audiotheme_venue_nonce', true, false );
-		$values = wp_parse_args( get_object_vars( $venue_to_edit ), $values );
-	}
-
-	extract( $values, EXTR_SKIP );
-
-	require( AUDIOTHEME_DIR . 'modules/gigs/admin/views/list-venues.php' );
+	$screen = new AudioTheme_Screen_ManageVenues();
+	$screen->register_hooks();
 }
 
 /**
