@@ -95,7 +95,7 @@ new app.view.GigVenueMetaBox({
 
 $( window ).on( 'keyup', function( e ) {
 	// Only handle key events when the venue list state is active.
-	if ( ! frame.$el.is( ':visible' ) || 'audiotheme-venues' !== window.frame.state().id ) {
+	if ( ! frame.$el.is( ':visible' ) || 'audiotheme-venues' !== frame.state().id ) {
 		return;
 	}
 
