@@ -40,13 +40,13 @@
 							<iframe src="https://www.youtube.com/embed/3ApVW-5MLLU?rel=0"></iframe>
 						</figure>
 						<p>
-							<?php esc_html_e( '<strong>Keep fans updated with live performances, tour dates and venue information.', 'audiotheme' ); ?></strong>
+							<strong><?php esc_html_e( 'Keep fans updated with live performances, tour dates and venue information.', 'audiotheme' ); ?></strong>
 						</p>
 						<p>
 							<?php esc_html_e( "Schedule all the details about your next show, including location (address, city, state), dates, times, ticket prices and links to ticket purchasing. Set up your venue information by creating new venues and assigning shows to venues you've already created. You also have the ability to feature each venue's website, along with their contact information like email address and phone number.", 'audiotheme' ); ?>
 						</p>
 						<p>
-							<?php esc_html_e( '<strong>Try it out:', 'audiotheme' ); ?></strong> <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=audiotheme_gig' ) ); ?>"><?php esc_html_e( 'Add a gig', 'audiotheme' ); ?></a>
+							<strong><?php esc_html_e( 'Try it out:', 'audiotheme' ); ?></strong> <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=audiotheme_gig' ) ); ?>"><?php esc_html_e( 'Add a gig', 'audiotheme' ); ?></a>
 						</p>
 					<?php elseif ( 'videos' == $module_id ) : ?>
 						<figure class="audiotheme-module-card-overview-media">
