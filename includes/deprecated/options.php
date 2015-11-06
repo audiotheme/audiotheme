@@ -7,6 +7,8 @@
  *
  * @package AudioTheme_Framework
  * @subpackage Settings
+ * @since 1.0.0
+ * @deprecated 1.9.0
  */
 
 if ( ! function_exists( 'get_audiotheme_option' ) ) :
@@ -14,6 +16,7 @@ if ( ! function_exists( 'get_audiotheme_option' ) ) :
  * Returns an option value.
  *
  * @since 1.0.0
+ * @deprecated 1.9.0
  *
  * @param string $option_name Option name as stored in database.
  * @param string $key Optional. Index of value in the option array.
@@ -41,7 +44,7 @@ if ( ! function_exists( 'get_audiotheme_theme_option' ) ) :
  * Note that this function footprint is slightly different than get_audiotheme_option(). While working in themes, the $option_name shouldn't necessarily need to be known or required, so it should be slightly easier to use while in a theme.
  *
  * @since 1.0.0
- * @uses get_audiotheme_option()
+ * @deprecated 1.9.0
  *
  * @param string The option key
  * @param mixed Optional. Default value to return if option key doesn't exist.
@@ -60,7 +63,7 @@ if ( ! function_exists( 'get_audiotheme_theme_options_name' ) ) :
  * Retrieve the registered option name for theme options.
  *
  * @since 1.0.0
- * @uses get_audiotheme_theme_options_support()
+ * @deprecated 1.9.0
  */
 	function get_audiotheme_theme_options_name() {
 		static $option_name;
@@ -75,7 +78,7 @@ if ( ! function_exists( 'get_audiotheme_theme_options_name' ) ) :
 endif;
 
 if ( ! function_exists( 'get_audiotheme_theme_options_support' ) ) :
-	/**
+/**
  * Check if the theme supports theme options and return registered arguments
  * with supplied defaults.
  *
@@ -87,7 +90,7 @@ if ( ! function_exists( 'get_audiotheme_theme_options_support' ) ) :
  * options. Otherwise, it should be an array of arguments.
  *
  * @since 1.0.0
- * @uses get_theme_support()
+ * @deprecated 1.9.0
  *
  * @param string $var Optional. Specific argument to return.
  * @return mixed Value of requested argument or theme option support arguments.

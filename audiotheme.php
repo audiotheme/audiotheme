@@ -55,14 +55,14 @@ if ( ! defined( 'AUDIOTHEME_URI' ) ) {
  */
 require( AUDIOTHEME_DIR . 'includes/archives.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
-require( AUDIOTHEME_DIR . 'includes/deprecated.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
 require( AUDIOTHEME_DIR . 'includes/general-template.php' );
 require( AUDIOTHEME_DIR . 'includes/less.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/media.php' );
-require( AUDIOTHEME_DIR . 'includes/options.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets.php' );
+require( AUDIOTHEME_DIR . 'includes/deprecated/deprecated.php' );
+require( AUDIOTHEME_DIR . 'includes/deprecated/options.php' );
 
 /**
  * Load AudioTheme CPTs and corresponding functionality.

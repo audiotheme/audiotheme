@@ -21,6 +21,8 @@
  *
  * @package AudioTheme_Framework
  * @subpackage Settings
+ * @since 1.0.0
+ * @deprecated 1.9.0
  */
 
 /*
@@ -31,6 +33,7 @@
  * Get the settings object instance.
  *
  * @since 1.0.0
+ * @deprecated 1.9.0
  *
  * @return Audiotheme_Settings The main settings object.
  */
@@ -42,7 +45,7 @@ function get_audiotheme_settings() {
  * Add a settings screen.
  *
  * @since 1.0.0
- * @uses Audiotheme_Settings::add_screen()
+ * @deprecated 1.9.0
  *
  * @param string $screen_id A screen identifier.
  * @param string $title The screen name. Also used as the first tab.
@@ -61,7 +64,7 @@ function add_audiotheme_settings_screen( $screen_id, $title, $args = array() ) {
  * Get a settings screen.
  *
  * @since 1.0.0
- * @uses Audiotheme_Settings::set_screen()
+ * @deprecated 1.9.0
  *
  * @param string $screen_id The screen id. Defaults to 'audiotheme-theme-options'.
  * @return Audiotheme_Settings The main settings object.
@@ -87,6 +90,7 @@ function get_audiotheme_settings_screen( $screen_id = 'audiotheme-theme-options'
  * Hooked on 'init' in audiotheme_admin_setup().
  *
  * @since 1.0.0
+ * @deprecated 1.9.0
  */
 function audiotheme_settings_init() {
 	// Add theme options support.
@@ -130,6 +134,7 @@ function audiotheme_settings_init() {
  * the same action.
  *
  * @since 1.3.0
+ * @deprecated 1.9.0
  */
 function audiotheme_settings_save_network_options() {
 	if ( ! is_network_admin() || empty( $_GET['action'] ) || 'audiotheme-save-network-settings' !== $_GET['action'] ) {
@@ -143,11 +148,11 @@ function audiotheme_settings_save_network_options() {
  * Register Theme Customizer settings.
  *
  * @since 1.0.0
- * @uses Audiotheme_Settings::register_customizer_settings()
+ * @deprecated 1.9.0
  */
 function audiotheme_settings_register_customizer_settings( $wp_customize ) {
 	// Include custom Theme Customizer controls.
-	require( AUDIOTHEME_DIR . 'admin/includes/settings-theme-customizer-controls.php' );
+	require( AUDIOTHEME_DIR . 'admin/deprecated/settings-theme-customizer-controls.php' );
 
 	do_action( 'audiotheme_settings_before_customizer' );
 
@@ -164,6 +169,8 @@ function audiotheme_settings_register_customizer_settings( $wp_customize ) {
  * with a setting.
  *
  * @since 1.0.0
+ * @deprecated 1.9.0
+ *
  * @todo https://make.wordpress.org/themes/2011/07/01/wordpress-3-2-fixing-the-edit_theme_optionsmanage_options-bug/
  */
 function audiotheme_settings_add_admin_menus() {
@@ -197,6 +204,7 @@ function audiotheme_settings_add_admin_menus() {
  * Change the capability required for modifying a particular option.
  *
  * @since 1.0.0
+ * @deprecated 1.9.0
  *
  * @return string
  */
@@ -208,7 +216,7 @@ function audiotheme_settings_page_capability() {
  * Register sections and settings with the WordPress Settings API.
  *
  * @since 1.0.0
- * @uses Audiotheme_Settings::register_wp_settings()
+ * @deprecated 1.9.0
  */
 function audiotheme_settings_register_wp_settings_api() {
 	$settings = Audiotheme_Settings::instance();
@@ -219,6 +227,7 @@ function audiotheme_settings_register_wp_settings_api() {
  * Enqueue thickbox functionality for selecting media files.
  *
  * @since 1.0.0
+ * @deprecated 1.9.0
  */
 function audiotheme_settings_screen_load() {
 	wp_enqueue_media();
@@ -240,6 +249,7 @@ function audiotheme_settings_screen_load() {
  * specific field and moved with javascript.
  *
  * @since 1.0.0
+ * @deprecated 1.9.0
  */
 function audiotheme_settings_screen_notices() {
 	global $plugin_page;
@@ -279,6 +289,7 @@ function audiotheme_settings_screen_notices() {
  * attaching error messages to fields and their parent tabs.
  *
  * @since 1.0.0
+ * @deprecated 1.9.0
  */
 function audiotheme_settings_display_screen() {
 	global $plugin_page;
@@ -341,6 +352,7 @@ function audiotheme_settings_display_screen() {
  * revert to the old value, otherwise, it discards the new value.
  *
  * @since 1.0.0
+ * @deprecated 1.9.0
  *
  * @param mixed $value Value to sanitize/validate.
  * @param string $option Name of the option.
@@ -394,6 +406,7 @@ function audiotheme_settings_sanitize_option( $value, $option ) {
  * callback, it will be skipped.
  *
  * @since 1.0.0
+ * @deprecated 1.9.0
  *
  * @param array $field Settings field properties.
  * @param mixed $option_value The option value to sanitize.
@@ -438,6 +451,7 @@ function audiotheme_settings_sanitize_field( $field, $option_value ) {
  * error message isn't registered, a default message will be shown.
  *
  * @since 1.0.0
+ * @deprecated 1.9.0
  *
  * @param array $field Settings field properties.
  * @param mixed $option_value The option name.

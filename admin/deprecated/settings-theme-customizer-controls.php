@@ -9,6 +9,8 @@
  *
  * @package AudioTheme_Framework
  * @subpackage Settings
+ * @since 1.0.0
+ * @deprecated 1.9.0
  */
 
 /**
@@ -18,16 +20,19 @@
  * @subpackage Settings
  *
  * @since 1.0.0
+ * @deprecated 1.9.0
  */
 class Audiotheme_Settings_Customize_Textarea_Control extends WP_Customize_Control {
 	/**
-	 * @access public
+	 * @since 1.0.0
+	 * @deprecated 1.9.0
 	 * @var string
 	 */
 	public $type = 'textarea';
 
 	/**
-	 * @access public
+	 * @since 1.0.0
+	 * @deprecated 1.9.0
 	 * @var int
 	 */
 	public $rows = 4;
@@ -38,6 +43,7 @@ class Audiotheme_Settings_Customize_Textarea_Control extends WP_Customize_Contro
 	 * Overrides the parent constructor to support the rows argument, then calls the parent constructor to continue setup.
 	 *
 	 * @since 1.0.0
+	 * @deprecated 1.9.0
 	 *
 	 * @param WP_Customize_Manager $manager
 	 * @param string $id
@@ -52,6 +58,7 @@ class Audiotheme_Settings_Customize_Textarea_Control extends WP_Customize_Contro
 	 * Render the control's content.
 	 *
 	 * @since 1.0.0
+	 * @deprecated 1.9.0
 	 */
 	public function render_content() {
 		?>
