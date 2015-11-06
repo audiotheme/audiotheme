@@ -6,5 +6,5 @@
  * Its purpose is to allow WordPress to recognize the framework as a basic theme
  * in order to present more helpful error messages in functions.php.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  */

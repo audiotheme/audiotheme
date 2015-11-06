@@ -3,8 +3,7 @@
  * Class to abstract and extend the WordPress Settings API and Theme
  * Customizer and provide a generic API for interacting with them.
  *
- * @package AudioTheme_Framework
- * @subpackage Settings
+ * @package AudioTheme\Settings
  *
  * @since 1.0.0
  * @deprecated 1.9.0

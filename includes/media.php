@@ -3,7 +3,7 @@
  * AudioTheme API for working with media and defines filters for modifying
  * WordPress behavior related to media.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  */
 
 /**

@@ -2,8 +2,7 @@
 /**
  * The template to display a list of gigs.
  *
- * @package AudioTheme
- * @subpackage Template
+ * @package AudioTheme\Template
  * @since 1.2.0
  */
 

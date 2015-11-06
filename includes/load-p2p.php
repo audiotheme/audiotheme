@@ -2,7 +2,7 @@
 /**
  * Loads the Posts to Posts library and dependencies.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @link https://github.com/AppThemes/wp-posts-to-posts-core
  * @link https://github.com/AppThemes/wp-posts-to-posts-core/wiki/Bundling-in-a-plugin
  */

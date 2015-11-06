@@ -4,8 +4,7 @@
  *
  * Consists of the top-level AudioTheme menu and the various submenus.
  *
- * @package AudioTheme_Framework
- * @subpackage Administration
+ * @package AudioTheme\Administration
  * @since 1.0.0
  * @deprecated 1.9.0
  */
@@ -169,32 +168,6 @@ function audiotheme_dashboard_settings_system_section() {
  */
 function audiotheme_dashboard_features_screen() {
 	include( AUDIOTHEME_DIR . 'admin/views/dashboard-features.php' );
-}
-
-/**
- * Sort the admin menu.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_dashboard_sort_menu() {
-	global $menu;
-
-	if ( ! is_network_admin() && $menu ) {
-		$menu = array_values( $menu ); // Re-key the array.
-
-		audiotheme_menu_move_item( 'audiotheme', 'separator1', 'before' );
-
-		$separator = array( '', 'read', 'separator-before-audiotheme', '', 'wp-menu-separator' );
-		audiotheme_menu_insert_item( $separator, 'audiotheme', 'before' );
-
-		// Reverse the order and always insert them after the main AudioTheme menu item.
-		audiotheme_menu_move_item( 'edit.php?post_type=audiotheme_video', 'audiotheme' );
-		audiotheme_menu_move_item( 'edit.php?post_type=audiotheme_record', 'audiotheme' );
-		audiotheme_menu_move_item( 'audiotheme-gigs', 'audiotheme' );
-
-		audiotheme_submenu_move_after( 'audiotheme-settings', 'audiotheme', 'audiotheme' );
-	}
 }
 
 /**

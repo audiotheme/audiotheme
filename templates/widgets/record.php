@@ -2,8 +2,7 @@
 /**
  * Template to display a Record widget.
  *
- * @package AudioTheme_Framework
- * @subpackage Template
+ * @package AudioTheme\Template
  * @since 1.5.0
  */
 ?>

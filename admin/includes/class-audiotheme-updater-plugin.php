@@ -8,7 +8,7 @@ require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
  * @see wp-admin/includes/update.php
  * @see wp-admin/includes/plugin-install.php
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  *
  * @since 1.0.0
  */

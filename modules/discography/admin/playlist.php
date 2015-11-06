@@ -4,8 +4,7 @@
  *
  * Playlist functionality extends the Cue plugin.
  *
- * @package AudioTheme_Framework
- * @subpackage Discography
+ * @package AudioTheme\Discography
  * @link https://wordpress.org/plugins/cue/
  */
 

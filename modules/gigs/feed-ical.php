@@ -2,8 +2,7 @@
 /**
  * Gigs iCal feed template.
  *
- * @package AudioTheme_Framework
- * @subpackage Gigs
+ * @package AudioTheme\Gigs
  */
 
 header( 'Content-type: text/calendar' );

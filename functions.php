@@ -7,7 +7,7 @@
  * display an alert to users who mistakenly install the framework as a theme and
  * give them the option to move it automatically if possible.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  */
 
 /**
@@ -15,17 +15,17 @@
  *
  * @since 1.2.0
  */
-function audiotheme_framework_not_a_theme_setup_as_theme() {
+function AudioTheme_not_a_theme_setup_as_theme() {
 	load_theme_textdomain( 'audiotheme', get_template_directory() . '/languages' );
 }
-add_action( 'after_setup_theme', 'audiotheme_framework_not_a_theme_setup_as_theme' );
+add_action( 'after_setup_theme', 'AudioTheme_not_a_theme_setup_as_theme' );
 
 /**
  * Move the framework to the plugins directory.
  *
  * @since 1.2.0
  */
-function audiotheme_framework_not_a_theme() {
+function AudioTheme_not_a_theme() {
 	global $wp_filesystem;
 
 	if ( ! isset( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'audiotheme-theme-to-plugin' ) ) {
@@ -68,14 +68,14 @@ function audiotheme_framework_not_a_theme() {
 		exit;
 	}
 }
-add_action( 'admin_init', 'audiotheme_framework_not_a_theme' );
+add_action( 'admin_init', 'AudioTheme_not_a_theme' );
 
 /**
  * Display a nag in the dashboard to alert the user that the framework is not a theme.
  *
  * @since 1.2.0
  */
-function audiotheme_framework_not_a_theme_nag() {
+function AudioTheme_not_a_theme_nag() {
 	$notice = '';
 	$message_id = ( isset( $_REQUEST['atmovemsg'] ) ) ? $_REQUEST['atmovemsg'] : '';
 	$move_url = wp_nonce_url( 'themes.php', 'audiotheme-theme-to-plugin' );
@@ -108,4 +108,4 @@ function audiotheme_framework_not_a_theme_nag() {
 		<?php
 	endif;
 }
-add_action( 'admin_notices', 'audiotheme_framework_not_a_theme_nag' );
+add_action( 'admin_notices', 'AudioTheme_not_a_theme_nag' );

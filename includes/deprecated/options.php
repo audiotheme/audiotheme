@@ -5,8 +5,7 @@
  * These functions are duplicated in the theme drop-in, so they're wrapped in
  * 'function_exists()' checks to prevent conflicts.
  *
- * @package AudioTheme_Framework
- * @subpackage Settings
+ * @package AudioTheme\Settings
  * @since 1.0.0
  * @deprecated 1.9.0
  */

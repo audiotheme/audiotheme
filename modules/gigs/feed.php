@@ -2,8 +2,7 @@
 /**
  * Gigs feed functions.
  *
- * @package AudioTheme_Framework
- * @subpackage Gigs
+ * @package AudioTheme\Gigs
  */
 
 /**

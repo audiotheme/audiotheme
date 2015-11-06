@@ -7,8 +7,7 @@
  *
  * @see _wp_customize_include()
  *
- * @package AudioTheme_Framework
- * @subpackage Settings
+ * @package AudioTheme\Settings
  * @since 1.0.0
  * @deprecated 1.9.0
  */
@@ -16,8 +15,7 @@
 /**
  * Theme Customizer textarea control.
  *
- * @package AudioTheme_Framework
- * @subpackage Settings
+ * @package AudioTheme
  *
  * @since 1.0.0
  * @deprecated 1.9.0

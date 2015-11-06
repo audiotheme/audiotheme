@@ -2,15 +2,13 @@
 /**
  * GD image editor.
  *
- * @package AudioTheme_Framework
- * @subpackage Media
+ * @package AudioTheme\Media
  */
 
 /**
  * Class for the GD image editor.
  *
- * @package AudioTheme_Framework
- * @subpackage Media
+ * @package AudioTheme\Media
  */
 class AudioTheme_Image_Editor_GD extends WP_Image_Editor_GD {
 	/**

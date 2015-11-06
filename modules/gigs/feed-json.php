@@ -2,8 +2,7 @@
 /**
  * Gigs JSON feed template.
  *
- * @package AudioTheme_Framework
- * @subpackage Gigs
+ * @package AudioTheme\Gigs
  */
 
 @header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );

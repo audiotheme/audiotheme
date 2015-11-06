@@ -2,7 +2,7 @@
 /**
  * Define default filters for modifying WordPress behavior.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  */
 
 /**

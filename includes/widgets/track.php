@@ -4,8 +4,7 @@
  *
  * Display a selected track in a widget area.
  *
- * @package AudioTheme_Framework
- * @subpackage Widgets
+ * @package AudioTheme\Widgets
  *
  * @since 1.0.0
  */

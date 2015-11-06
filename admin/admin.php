@@ -2,8 +2,7 @@
 /**
  * AudioTheme framework administration bootstrap.
  *
- * @package AudioTheme_Framework
- * @subpackage Administration
+ * @package AudioTheme\Administration
  */
 
 /**

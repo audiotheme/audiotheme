@@ -2,8 +2,7 @@
 /**
  * Video template functions.
  *
- * @package AudioTheme_Framework
- * @subpackage Template
+ * @package AudioTheme\Template
  */
 
 /**

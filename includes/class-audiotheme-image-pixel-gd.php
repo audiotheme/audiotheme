@@ -2,15 +2,13 @@
 /**
  * GD image pixel.
  *
- * @package AudioTheme_Framework
- * @subpackage Media
+ * @package AudioTheme\Media
  */
 
 /**
  * Class for a single pixel in an image.
  *
- * @package AudioTheme_Framework
- * @subpackage Media
+ * @package AudioTheme\Media
  */
 class AudioTheme_Image_Pixel_GD {
 	/**

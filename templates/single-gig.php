@@ -2,8 +2,7 @@
 /**
  * The template for displaying a single gig.
  *
- * @package AudioTheme
- * @subpackage Template
+ * @package AudioTheme\Template
  * @since 1.2.0
  */
 
@@ -83,12 +82,12 @@ while ( have_posts() ) :
 					'separator_country' => ', ',
 				) );
 				?>
-				
+
 				<div class="audiotheme-venue-meta">
 					<?php if ( $venue->phone ) : ?>
 						<span class="audiotheme-venue-phone"><?php echo esc_html( $venue->phone ); ?></span>
 					<?php endif; ?>
-					
+
 					<?php if ( $venue->website ) : ?>
 						<span class="audiotheme-venue-website"><a href="<?php echo esc_url( $venue->website ); ?>" itemprop="url"><?php echo audiotheme_simplify_url( $venue->website ); ?></a></span>
 					<?php endif; ?>

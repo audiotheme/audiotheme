@@ -2,8 +2,7 @@
 /**
  * Venue-related functionality in the admin dashboard.
  *
- * @package AudioTheme_Framework
- * @subpackage Gigs
+ * @package AudioTheme\Gigs
  */
 
 /**

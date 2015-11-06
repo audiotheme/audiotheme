@@ -26,7 +26,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc., 59
  * Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @version 1.8.0
  * @author AudioTheme
  * @link https://audiotheme.com/

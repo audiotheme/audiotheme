@@ -2,7 +2,7 @@
 /**
  * Generic utility functions.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  */
 
 /**

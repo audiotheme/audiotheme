@@ -2,8 +2,7 @@
 /**
  * The template for displaying a single record.
  *
- * @package AudioTheme
- * @subpackage Template
+ * @package AudioTheme\Template
  * @since 1.2.0
  */
 

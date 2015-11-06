@@ -19,8 +19,7 @@
  * Finally, settings are registered with the WordPress Settings API during
  * 'admin_init'.
  *
- * @package AudioTheme_Framework
- * @subpackage Settings
+ * @package AudioTheme\Settings
  * @since 1.0.0
  * @deprecated 1.9.0
  */
