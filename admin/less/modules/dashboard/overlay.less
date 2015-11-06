@@ -1,0 +1,164 @@
+/* Overlay
+-------------------------------------------------------------- */
+
+.audiotheme-overlay,
+.audiotheme-overlay * {
+	box-sizing: border-box;
+}
+
+.audiotheme-overlay {
+	background: #fff;
+	box-shadow: 0 1px 20px 5px rgba(0, 0, 0, 0.1);
+	clear: both;
+	display: none;
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	z-index: 20;
+}
+
+.audiotheme-overlay-content {
+	overflow: auto;
+	padding: 2% 4%;
+	position: absolute;
+	top: 49px;
+	bottom: 57px;
+	left: 0;
+	right: 0;
+
+	p {
+		font-size: 14px;
+	}
+}
+
+.audiotheme-overlay-content-title {
+	margin-top: 0;
+}
+
+.audiotheme-overlay-content-primary {
+	float: right;
+	width: 48%;
+}
+
+.audiotheme-overlay-content-secondary {
+	float: left;
+	width: 48%;
+}
+
+.audiotheme-overlay-footer {
+	background: #f3f3f3;
+	border-top: 1px solid #eee;
+	padding: 10px 25px 5px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	text-align: right;
+	z-index: 30;
+
+	.button {
+		margin-right: 5px;
+		margin-bottom: 5px;
+	}
+
+	.spinner {
+		float: none;
+		margin-top: 4px;
+		vertical-align: middle;
+	}
+}
+
+.audiotheme-overlay-header {
+	border-bottom: 1px solid #ddd;
+	height: 48px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+
+	button {
+		background-color: transparent;
+		border: 0;
+		border-right: 1px solid #ddd;
+		color: #777;
+		cursor: pointer;
+		height: 48px;
+		float: left;
+		text-align: center;
+		transition: color .1s ease-in-out, background .1s ease-in-out;
+		width: 54px;
+
+		&:before {
+			font-weight: 300;
+		}
+
+		&:focus,
+		&:hover {
+			background: #ddd;
+			border-color: #ccc;
+			color: #000;
+		}
+
+		&:focus {
+			box-shadow: none;
+			outline: none;
+		}
+	}
+
+	button.close {
+		border-right: 0;
+		border-left: 1px solid #ddd;
+		float: right;
+		width: 48px;
+
+		&:before {
+			content: "\f335";
+		}
+	}
+
+	button.left:before {
+		content: "\f341";
+	}
+
+	button.right:before {
+		content: "\f345";
+	}
+}
+
+.audiotheme-overlay-backdrop {
+	background: #f1f1f1;
+	background: rgba( 238, 238, 238, 0.9 );
+	display: none;
+	position: absolute;
+	left: -20px;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 10;
+}
+
+@media (min-width: 600px) {
+	.audiotheme-overlay {
+		position: fixed;
+		top: 46px;
+		right: 0;
+		left: 0;
+		bottom: 0;
+	}
+}
+
+@media (min-width: 782px) {
+	.audiotheme-overlay {
+		position: fixed;
+		top: 52px;
+		left: 190px;
+		right: 30px;
+		bottom: 20px;
+
+		.folded & {
+			left: 65px;
+		}
+	}
+}

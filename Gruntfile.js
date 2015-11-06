@@ -54,6 +54,7 @@ module.exports = function( grunt ) {
 			dist: {
 				files: [
 					{ src: 'admin/css/admin.min.css', dest: 'admin/css/admin.min.css' },
+					{ src: 'admin/css/dashboard.min.css', dest: 'admin/css/dashboard.min.css' },
 					{ src: 'admin/css/venue-manager.min.css', dest: 'admin/css/venue-manager.min.css' },
 					{ src: 'includes/css/audiotheme.min.css', dest: 'includes/css/audiotheme.min.css' }
 				]
@@ -68,6 +69,7 @@ module.exports = function( grunt ) {
 				files: [
 					{ src: 'includes/less/audiotheme.less', dest: 'includes/css/audiotheme.min.css' },
 					{ src: 'admin/less/admin.less', dest: 'admin/css/admin.min.css' },
+					{ src: 'admin/less/dashboard.less', dest: 'admin/css/dashboard.min.css' },
 					{ src: 'admin/less/venue-manager.less', dest: 'admin/css/venue-manager.min.css' }
 				]
 			}
@@ -88,6 +90,7 @@ module.exports = function( grunt ) {
 			dist: {
 				files: [
 					{ src: 'admin/css/admin.min.css' },
+					{ src: 'admin/css/dashboard.min.css' },
 					{ src: 'admin/css/venue-manager.min.css' },
 					{ src: 'includes/css/audiotheme.min.css' }
 				]

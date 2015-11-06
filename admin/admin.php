@@ -12,6 +12,7 @@
  */
 require( AUDIOTHEME_DIR . 'admin/functions.php' );
 require( AUDIOTHEME_DIR . 'admin/includes/archives.php' );
+require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen.php' );
 require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen-dashboard.php' );
 require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen-network-settings.php' );
 require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen-settings.php' );
@@ -55,8 +56,10 @@ function audiotheme_admin_setup() {
  * @since 1.0.0
  */
 function audiotheme_dashboard_init() {
+	global $audiotheme;
+
 	$screen = new AudioTheme_Screen_Dashboard();
-	$screen->register_hooks();
+	$screen->set_plugin( $audiotheme )->register_hooks();
 
 	$screen = new AudioTheme_Screen_Settings();
 	$screen->register_hooks();
@@ -218,17 +221,27 @@ function audiotheme_admin_init() {
 	$status = get_option( 'audiotheme_license_status' );
 
 	wp_register_script( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/js/admin.bundle' . $suffix . '.js', array( 'jquery-ui-sortable', 'underscore', 'wp-util' ), AUDIOTHEME_VERSION, true );
-	wp_register_script( 'audiotheme-license', AUDIOTHEME_URI . 'admin/js/license.js', array( 'jquery', 'wp-util' ), '1.9.0', true );
+	wp_register_script( 'audiotheme-dashboard', AUDIOTHEME_URI . 'admin/js/dashboard.js',array( 'jquery', 'wp-backbone', 'wp-util' ), AUDIOTHEME_VERSION, true );
+	wp_register_script( 'audiotheme-license', AUDIOTHEME_URI . 'admin/js/license.js', array( 'jquery', 'wp-util' ), AUDIOTHEME_VERSION, true );
 	wp_register_script( 'audiotheme-media', AUDIOTHEME_URI . 'admin/js/media' . $suffix . '.js', array( 'jquery' ), AUDIOTHEME_VERSION, true );
 	wp_register_script( 'audiotheme-settings', AUDIOTHEME_URI . 'admin/js/settings' . $suffix . '.js', array(), AUDIOTHEME_VERSION, true );
 
 	wp_register_style( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/css/admin.min.css' );
+	wp_register_style( 'audiotheme-dashboard', AUDIOTHEME_URI. 'admin/css/dashboard.min.css' );
 	wp_register_style( 'jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css' );
 	wp_register_style( 'jquery-ui-theme-audiotheme', AUDIOTHEME_URI . 'admin/css/jquery-ui-audiotheme.css', array( 'jquery-ui-theme-smoothness' ) );
 
 	wp_localize_script( 'audiotheme-admin', '_audiothemeAdminSettings', array(
 		'licenseKey'    => get_option( 'audiotheme_license_key', '' ),
 		'licenseStatus' => empty( $status ) || 'ok' !== $status->status ? 'inactive' : 'active',
+	) );
+
+	wp_localize_script( 'audiotheme-dashboard', '_audiothemeDashboardSettings', array(
+		'canActivateModules' => current_user_can( 'activate_plugins' ),
+		'l10n'               => array(
+			'activate'   => __( 'Activate', 'bandstand' ),
+			'deactivate' => __( 'Deactivate', 'bandstand' ),
+		),
 	) );
 
 	wp_localize_script( 'audiotheme-license', '_audiothemeLicenseSettings', array(

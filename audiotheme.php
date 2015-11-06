@@ -32,7 +32,12 @@
  * @link https://audiotheme.com/
  * @copyright Copyright 2012 AudioTheme
  * @license GPL-2.0+
-*/
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * The AudioTheme version.
@@ -54,6 +59,9 @@ if ( ! defined( 'AUDIOTHEME_URI' ) ) {
  * Load additional helper functions and libraries.
  */
 require( AUDIOTHEME_DIR . 'includes/archives.php' );
+require( AUDIOTHEME_DIR . 'includes/class-audiotheme-plugin.php' );
+require( AUDIOTHEME_DIR . 'includes/class-audiotheme-module-collection.php' );
+require( AUDIOTHEME_DIR . 'includes/class-audiotheme-module.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
 require( AUDIOTHEME_DIR . 'includes/general-template.php' );
@@ -67,21 +75,47 @@ require( AUDIOTHEME_DIR . 'includes/deprecated/options.php' );
 /**
  * Load AudioTheme CPTs and corresponding functionality.
  */
+require( AUDIOTHEME_DIR . 'modules/discography/class-audiotheme-module-discography.php' );
 require( AUDIOTHEME_DIR . 'modules/discography/discography.php' );
+require( AUDIOTHEME_DIR . 'modules/gigs/class-audiotheme-module-gigs.php' );
 require( AUDIOTHEME_DIR . 'modules/gigs/gigs.php' );
+require( AUDIOTHEME_DIR . 'modules/videos/class-audiotheme-module-videos.php' );
 require( AUDIOTHEME_DIR . 'modules/videos/videos.php' );
+
+/**
+ * Retrieve the AudioTheme plugin instance.
+ *
+ * @since 1.9.0
+ *
+ * @return AudioTheme_PLugin
+ */
+function audiotheme() {
+	static $instance;
+
+	if ( null === $instance ) {
+		$instance = new AudioTheme_Plugin;
+	}
+
+	return $instance;
+}
+
+$audiotheme = audiotheme();
+$audiotheme
+	->set_directory( plugin_dir_path( __FILE__ ) )
+	->set_file( __FILE__ )
+	->set_slug( 'audiotheme' )
+	->set_url( plugin_dir_url( __FILE__ ) );
 
 /**
  * AudioTheme setup.
  *
  * Begin setting up the framework during the after_setup_theme action.
  *
- * Ideally all functionality should be loaded via hooks so it can be disabled
- * or replaced by a theme or plugin if necessary.
- *
  * @since 1.0.0
  */
 function audiotheme_load() {
+	audiotheme()->load();
+
 	// Default hooks.
 	add_action( 'init', 'audiotheme_register_scripts' );
 	add_action( 'init', 'audiotheme_less_setup' );
