@@ -12,7 +12,7 @@ GigVenueMetaBox = wp.media.View.extend({
 	},
 
 	render: function() {
-		this.views.add( '.audiotheme-meta-box-body', [
+		this.views.add( '.audiotheme-panel-body', [
 			new GigVenueDetails({
 				controller: this.controller
 			}),

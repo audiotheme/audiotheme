@@ -53,11 +53,11 @@
 
 				<div id="post-body-content">
 
-					<div id="audiotheme-venue-meta-box" class="audiotheme-meta-box">
-						<div class="audiotheme-meta-box-header">
-							<h3 class="audiotheme-meta-box-title" style="padding: 0"><?php echo $post_type_object->labels->singular_name; ?></h3>
+					<div id="audiotheme-venue-meta-box" class="audiotheme-panel">
+						<div class="audiotheme-panel-header">
+							<h3 class="audiotheme-panel-title" style="padding: 0"><?php echo $post_type_object->labels->singular_name; ?></h3>
 						</div>
-						<div class="audiotheme-meta-box-body">
+						<div class="audiotheme-panel-body">
 
 							<table class="form-table" >
 								<tr>

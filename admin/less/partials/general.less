@@ -202,25 +202,53 @@ body.screen-edit-audiotheme_track select[name="m"] {
 }
 
 
-/* Meta Box
+/* Panel
 -------------------------------------------------------------- */
 
-.audiotheme-meta-box {
+.audiotheme-panel {
 	background: #fff;
 	border: 1px solid #dedede;
 	margin-bottom: 20px;
 }
 
-.audiotheme-meta-box-body {
+.audiotheme-panel-body {
 	padding: 14px;
+
+	.form-table {
+		td {
+			padding-top: 0;
+			padding-bottom: 15px;
+		}
+
+		th {
+			padding-top: 5px;
+			padding-bottom: 20px;
+		}
+
+		tr:last-child td,
+		tr:last-child th {
+			padding-bottom: 0;
+		}
+	}
+
+	> :first-child {
+		margin-top: 0;
+	}
+
+	> :last-child {
+		margin-bottom: 0;
+		padding-bottom: 0;
+	}
 }
 
-.audiotheme-meta-box-header {
+.audiotheme-panel-header {
+	.clearfix();
+
 	border-bottom: 1px solid #dedede;
 	padding: 14px;
 }
 
-.audiotheme-meta-box-title {
+.audiotheme-panel-title {
 	font-size: 14px;
 	margin: 0;
 }

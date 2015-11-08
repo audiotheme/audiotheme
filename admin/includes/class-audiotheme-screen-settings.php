@@ -26,7 +26,7 @@ class AudioTheme_Screen_Settings {
 	/**
 	 * Add the settings menu item.
 	 *
-	 * @since 1.0.0
+	 * @since 1.9.0
 	 */
 	public function add_menu_item() {
 		add_submenu_page(
@@ -42,7 +42,7 @@ class AudioTheme_Screen_Settings {
 	/**
 	 * Add settings sections.
 	 *
-	 * @since 1.0.0
+	 * @since 1.9.0
 	 */
 	public function add_sections() {
 		add_settings_section(
@@ -56,7 +56,7 @@ class AudioTheme_Screen_Settings {
 	/**
 	 * Display the screen.
 	 *
-	 * @since 1.0.0
+	 * @since 1.9.0
 	 */
 	public function render_screen() {
 		include( AUDIOTHEME_DIR . 'admin/views/screen-settings.php' );
