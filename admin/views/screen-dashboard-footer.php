@@ -17,7 +17,7 @@
 		</p>
 		<form action="//audiotheme.us2.list-manage.com/subscribe/post?u=09290a3b20d0fa9f786ecf6a0&amp;id=1e2ba34b92" method="post" target="_blank" novalidate>
 			<label for="mce-EMAIL" class="screen-reader-text"><?php _e( 'Email Address', 'audiotheme' ); ?></label>
-			<input type="email" id="mce-EMAIL" name="EMAIL" value="">
+			<input type="email" id="mce-EMAIL" name="EMAIL" value="<?php echo esc_attr( wp_get_current_user()->user_email ); ?>">
 			<input type="hidden" name="SOURCE" id="mce-SOURCE" value="Plugin">
 			<input type="submit" name="subscribe" id="mc-embedded-subscribe" value="Subscribe" class="button button-primary">
 		</form>
