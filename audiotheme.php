@@ -59,6 +59,7 @@ if ( ! defined( 'AUDIOTHEME_URI' ) ) {
  * Load additional helper functions and libraries.
  */
 require( AUDIOTHEME_DIR . 'includes/archives.php' );
+require( AUDIOTHEME_DIR . 'includes/class-audiotheme-plugin-base.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-plugin.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-module-collection.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-module.php' );
