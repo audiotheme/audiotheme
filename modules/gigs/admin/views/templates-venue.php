@@ -32,10 +32,10 @@
 			</tr>
 		<# } #>
 
-		<# if ( data.url ) { #>
+		<# if ( data.website ) { #>
 			<tr>
 				<th><?php esc_html_e( 'Website:', 'audiotheme' ); ?></th>
-				<td>{{ data.url }}</td>
+				<td>{{ data.website }}</td>
 			</tr>
 		<# } #>
 	</table>
@@ -94,9 +94,9 @@
 			</td>
 		</tr>
 		<tr>
-			<th><label for="venue-url"><?php esc_html_e( 'Website', 'audiotheme' ) ?></label></th>
+			<th><label for="venue-website"><?php esc_html_e( 'Website', 'audiotheme' ) ?></label></th>
 			<td>
-				<input type="text" name="audiotheme_venue[url]" id="venue-url" class="regular-text" value="{{ data.url }}" data-setting="url">
+				<input type="text" name="audiotheme_venue[website]" id="venue-website" class="regular-text" value="{{ data.website }}" data-setting="website">
 			</td>
 		</tr>
 	</table>

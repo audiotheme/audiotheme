@@ -17,7 +17,7 @@ Venue = Backbone.Model.extend({
 		country: '',
 		phone: '',
 		timezone_string: settings.defaultTimezoneString || '',
-		url: ''
+		website: ''
 	},
 
 	sync: function( method, model, options ) {
