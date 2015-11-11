@@ -137,7 +137,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 					$args['orderby'] = 'meta_value';
 					break;
 			}
-		} else {
+		} elseif ( empty( $_REQUEST['post_status'] ) || 'draft' !== $_REQUEST['post_status'] ) {
 			$args['meta_key'] = '_audiotheme_gig_datetime';
 			$args['orderby'] = 'meta_value';
 		}
