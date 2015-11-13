@@ -22,13 +22,20 @@ class AudioTheme_Plugin extends AudioTheme_Plugin_Base {
 	protected $modules;
 
 	/**
+	 * Constructor method.
+	 *
+	 * @since 1.9.0
+	 */
+	public function __construct() {
+		$this->modules = new AudioTheme_Module_Collection();
+	}
+
+	/**
 	 * Load the plugin.
 	 *
 	 * @since 1.9.0
 	 */
 	public function load() {
-		$this->modules = new AudioTheme_Module_Collection();
-
 		$this->get_modules()->register_module( 'gigs', new AudioTheme_Module_Gigs() );
 		$this->get_modules()->register_module( 'discography', new AudioTheme_Module_Discography() );
 		$this->get_modules()->register_module( 'videos', new AudioTheme_Module_Videos() );

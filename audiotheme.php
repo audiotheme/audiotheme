@@ -94,7 +94,7 @@ function audiotheme() {
 	static $instance;
 
 	if ( null === $instance ) {
-		$instance = new AudioTheme_Plugin;
+		$instance = new AudioTheme_Plugin();
 	}
 
 	return $instance;
@@ -107,6 +107,8 @@ $audiotheme
 	->set_slug( 'audiotheme' )
 	->set_url( plugin_dir_url( __FILE__ ) );
 
+add_action( 'plugins_loaded', array( $audiotheme, 'load' ), 9 );
+
 /**
  * AudioTheme setup.
  *
@@ -115,8 +117,6 @@ $audiotheme
  * @since 1.0.0
  */
 function audiotheme_load() {
-	audiotheme()->load();
-
 	// Default hooks.
 	add_action( 'init', 'audiotheme_register_scripts' );
 	add_action( 'init', 'audiotheme_less_setup' );
