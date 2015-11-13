@@ -107,7 +107,9 @@ $audiotheme
 	->set_slug( 'audiotheme' )
 	->set_url( plugin_dir_url( __FILE__ ) );
 
-add_action( 'plugins_loaded', array( $audiotheme, 'load' ), 9 );
+$audiotheme->get_modules()->register_module( 'gigs', new AudioTheme_Module_Gigs() );
+$audiotheme->get_modules()->register_module( 'discography', new AudioTheme_Module_Discography() );
+$audiotheme->get_modules()->register_module( 'videos', new AudioTheme_Module_Videos() );
 
 /**
  * AudioTheme setup.
@@ -117,6 +119,8 @@ add_action( 'plugins_loaded', array( $audiotheme, 'load' ), 9 );
  * @since 1.0.0
  */
 function audiotheme_load() {
+	audiotheme()->load();
+
 	// Default hooks.
 	add_action( 'init', 'audiotheme_register_scripts' );
 	add_action( 'init', 'audiotheme_less_setup' );

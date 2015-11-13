@@ -44,8 +44,17 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	 *
 	 * @since 1.9.0
 	 */
-	public function __construct( $args = array() ) {
+	public function __construct() {
 		$this->set_name( __( 'Gigs & Venues', 'audiotheme' ) );
 		$this->set_description( __( 'Share event details with your fans, include: location, venue, date, time, and ticket prices.', 'audiotheme' ) );
+	}
+
+	/**
+	 * Register module hooks.
+	 *
+	 * @since 1.9.0
+	 */
+	public function register_hooks() {
+
 	}
 }

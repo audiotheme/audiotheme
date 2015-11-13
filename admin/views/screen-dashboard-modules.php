@@ -21,7 +21,7 @@
 					<?php echo wpautop( esc_html( $module->description ) ); ?>
 				</div>
 				<div class="audiotheme-module-card-overview">
-					<?php if ( 'discography' == $module_id ) : ?>
+					<?php if ( 'discography' === $module_id ) : ?>
 						<figure class="audiotheme-module-card-overview-media">
 							<iframe src="https://www.youtube.com/embed/ZopsZEiv1F0?rel=0" frameborder="0" allowfullscreen></iframe>
 						</figure>
@@ -34,7 +34,7 @@
 						<p>
 							<strong><?php esc_html_e( 'Try it out:', 'audiotheme' ); ?></strong> <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=audiotheme_record' ) ); ?>"><?php esc_html_e( 'Add a record', 'audiotheme' ); ?></a>
 						</p>
-					<?php elseif ( 'gigs' == $module_id ) : ?>
+					<?php elseif ( 'gigs' === $module_id ) : ?>
 						<figure class="audiotheme-module-card-overview-media">
 							<iframe src="https://www.youtube.com/embed/3ApVW-5MLLU?rel=0"></iframe>
 						</figure>
@@ -47,7 +47,7 @@
 						<p>
 							<strong><?php esc_html_e( 'Try it out:', 'audiotheme' ); ?></strong> <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=audiotheme_gig' ) ); ?>"><?php esc_html_e( 'Add a gig', 'audiotheme' ); ?></a>
 						</p>
-					<?php elseif ( 'videos' == $module_id ) : ?>
+					<?php elseif ( 'videos' === $module_id ) : ?>
 						<figure class="audiotheme-module-card-overview-media">
 							<iframe src="https://www.youtube.com/embed/9x47jmTRUtk?rel=0"></iframe>
 						</figure>
@@ -70,7 +70,7 @@
 				<div class="audiotheme-module-card-actions-primary">
 					<?php if ( current_user_can( 'activate_plugins' ) ) : ?>
 						<span class="spinner"></span>
-						<button class="button button-primary button-activate js-toggle-module"><?php _e( 'Activate', 'audiotheme' ); ?></button>
+						<button class="button button-primary button-activate js-toggle-module"><?php esc_html_e( 'Activate', 'audiotheme' ); ?></button>
 					<?php endif; ?>
 
 					<?php if ( 'discography' == $module_id ) : ?>

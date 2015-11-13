@@ -48,4 +48,13 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 		$this->set_name( __( 'Videos', 'audiotheme' ) );
 		$this->set_description( __( 'Embed videos from services like YouTube and Vimeo to create your own video library.', 'audiotheme' ) );
 	}
+
+	/**
+	 * Register module hooks.
+	 *
+	 * @since 1.9.0
+	 */
+	public function register_hooks() {
+
+	}
 }

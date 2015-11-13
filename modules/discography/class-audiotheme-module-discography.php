@@ -44,8 +44,17 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 	 *
 	 * @since 1.9.0
 	 */
-	public function __construct( $args = array() ) {
+	public function __construct() {
 		$this->set_name( __( 'Discography', 'audiotheme' ) );
 		$this->set_description( __( 'Upload album artwork, assign titles and tracks, add audio files, and enter links to purchase your music.', 'audiotheme' ) );
+	}
+
+	/**
+	 * Register module hooks.
+	 *
+	 * @since 1.9.0
+	 */
+	public function register_hooks() {
+
 	}
 }

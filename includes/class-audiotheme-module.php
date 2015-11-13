@@ -88,9 +88,7 @@ abstract class AudioTheme_Module {
 	 *
 	 * @since 1.9.0
 	 */
-	public function register_hooks() {
-
-	}
+	abstract public function register_hooks();
 
 	/**
 	 * Whether the module is a core module.

@@ -36,10 +36,6 @@ class AudioTheme_Plugin extends AudioTheme_Plugin_Base {
 	 * @since 1.9.0
 	 */
 	public function load() {
-		$this->get_modules()->register_module( 'gigs', new AudioTheme_Module_Gigs() );
-		$this->get_modules()->register_module( 'discography', new AudioTheme_Module_Discography() );
-		$this->get_modules()->register_module( 'videos', new AudioTheme_Module_Videos() );
-
 		$this->load_modules();
 	}
 
