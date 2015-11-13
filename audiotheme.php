@@ -229,7 +229,7 @@ function audiotheme_register_scripts() {
 	wp_register_script( 'jquery-placeholder', $base_url  .'/vendor/jquery.placeholder.min.js', array( 'jquery' ), '2.0.7', true );
 	wp_register_script( 'jquery-timepicker', $base_url  .'/vendor/jquery.timepicker.min.js', array( 'jquery' ), '1.6.11', true );
 	wp_register_script( 'moment', $base_url  .'/vendor/moment.min.js', array(), '2.10.6', true );
-	wp_register_script( 'pikaday', $base_url  .'/vendor/pikaday.min.js', array( 'moment'), '1.3.3', true );
+	wp_register_script( 'pikaday', $base_url  .'/vendor/pikaday.min.js', array( 'moment'), '1.4.0', true );
 
 	wp_localize_script( 'jquery-jplayer', 'AudiothemeJplayer', array(
 		'swfPath' => $base_url . '/vendor',
