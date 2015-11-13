@@ -48,6 +48,14 @@ abstract class AudioTheme_Module {
 	protected $is_core_module = false;
 
 	/**
+	 * Whether the module should show on the dashboard.
+	 *
+	 * @since 1.9.0
+	 * @var bool
+	 */
+	protected $show_in_dashboard = false;
+
+	/**
 	 * Magic getter.
 	 *
 	 * @since 1.9.0
@@ -119,5 +127,14 @@ abstract class AudioTheme_Module {
 	protected function set_name( $name ) {
 		$this->name = $name;
 		return $this;
+	}
+
+	/**
+	 * Whether the module should show on the dashboard.
+	 *
+	 * @since 1.9.0
+	 */
+	public function show_in_dashboard() {
+		return (bool) $this->show_in_dashboard;
 	}
 }

@@ -6,8 +6,7 @@
 
 <div class="audiotheme-module-cards">
 
-	<?php foreach ( array( 'gigs', 'discography', 'videos' ) as $module_id ) :
-		$module    = $modules[ $module_id ];
+	<?php foreach ( $modules as $module_id => $module ) :
 		$classes   = array( 'audiotheme-module-card', 'audiotheme-module-card--' . $module_id );
 		$classes[] = $modules->is_active( $module_id ) ? 'is-active' : 'is-inactive';
 		$nonce     = wp_create_nonce( 'toggle-module_' . $module_id );

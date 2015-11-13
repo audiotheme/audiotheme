@@ -32,6 +32,14 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 	protected $is_core_module = true;
 
 	/**
+	 * Whether the module should show on the dashboard.
+	 *
+	 * @since 1.9.0
+	 * @var bool
+	 */
+	protected $show_in_dashboard = true;
+
+	/**
 	 * Constructor method.
 	 *
 	 * @since 1.9.0

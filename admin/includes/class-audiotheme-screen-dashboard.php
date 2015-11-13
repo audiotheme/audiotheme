@@ -105,6 +105,11 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen {
 	 */
 	public function render_screen() {
 		$modules = $this->plugin->get_modules();
+		foreach ( $modules as $id => $module ) {
+			if ( ! $module->show_in_dashboard() ) {
+				unset( $modules[ $id ] );
+			}
+		}
 
 		$this->render_screen_header();
 		include( $this->plugin->get_path( 'admin/views/screen-dashboard-modules.php' ) );
@@ -129,7 +134,7 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen {
 		$modules = $this->plugin->get_modules();
 		$module  = $modules[ $module_id ];
 
-		if ( $module->is_core() && $modules->is_active( $module_id ) ) {
+		if ( $modules->is_active( $module_id ) ) {
 			$modules->deactivate( $module_id );
 		} else {
 			$modules->activate( $module_id );
