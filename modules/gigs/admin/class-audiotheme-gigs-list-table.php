@@ -649,10 +649,8 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 	 * Display the venues filter dropdown.
 	 *
 	 * @since 1.9.0
-	 *
-	 * @param string $post_type Post type.
 	 */
-	protected function venues_dropdown( $post_type ) {
+	protected function venues_dropdown() {
 		global $wpdb;
 
 		$venues = $wpdb->get_results(
