@@ -253,7 +253,7 @@ function audiotheme_admin_init() {
 			'invalid'       => __( 'Invalid license key.', 'audiotheme' ),
 			'expired'       => __( 'License key expired.', 'audiotheme' ) .' <a href="https://audiotheme.com/view/audiotheme/" target="_blank">' . __( 'Renew now.', 'audiotheme' ) . '</a>',
 			'limit_reached' => __( 'Activation limit reached.', 'audiotheme' ) . ' <a href="https://audiotheme.com/view/audiotheme/" target="_blank">' . __( 'Upgrade your license.', 'audiotheme' ) . '</a>',
-			'generic'       => __( 'Uh oh, there was an unknown error.', 'audiotheme' ),
+			'generic'       => __( 'An unknown error occurred while checking the licensing server.', 'audiotheme' ),
 		),
 	) );
 
