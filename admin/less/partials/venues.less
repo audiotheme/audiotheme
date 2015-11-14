@@ -1,5 +1,13 @@
-/* Venue Screens
--------------------------------------------------------------- */
+/**
+ * Header
+ * -----------------------------------------------------------------------------
+ */
+
+
+/* Manage Venues Screen
+------------------------------------------------------------------------------*/
+
+// Website link icon.
 #screen-meta .audiotheme-column-header-icon,
 .column-website .audiotheme-column-header-label {
 	display: none;
@@ -14,19 +22,37 @@
 	text-align: center;
 }
 
-#venue-edit .form-table {
-	margin: 5px 0;
 
-	td,
-	th {
-		padding: 5px 10px;
+/* Edit Venue Screen
+------------------------------------------------------------------------------*/
+
+.screen-audiotheme_venue {
+	.audiotheme-panel,
+	.postbox-container {
+		.form-table {
+			margin: 5px 0;
+
+			td,
+			th {
+				padding: 5px 10px;
+			}
+
+			th {
+				width: 120px;
+			}
+
+			textarea#venue-address {
+				width: 25em;
+			}
+		}
 	}
 
-	th {
-		width: 120px;
+	.misc-pub-post-status,
+	.misc-pub-visibility {
+		display: none;
 	}
+}
 
-	textarea#venue-address {
-		width: 25em;
-	}
+#audiotheme-venue-details-panel {
+	margin: 10px 0 0;
 }

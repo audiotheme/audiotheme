@@ -9,6 +9,7 @@
  * Load the gig template API.
  */
 require( AUDIOTHEME_DIR . 'modules/gigs/post-template.php' );
+require( AUDIOTHEME_DIR . 'modules/gigs/deprecated.php' );
 
 /**
  * Load the admin interface and functionality for gigs and venues.
@@ -81,7 +82,7 @@ function audiotheme_gigs_init() {
 		'rewrite'                => false,
 		'show_in_menu'           => 'admin.php?page=audiotheme-gigs',
 		'show_ui'                => true,
-		'supports'               => array( '' ),
+		'supports'               => array( 'title' ),
 	) );
 
 	// Register the relationship between gigs and venues.
@@ -108,7 +109,6 @@ function audiotheme_gigs_init() {
 	add_filter( 'post_type_archive_link', 'audiotheme_gigs_archive_link', 10, 2 );
 	add_filter( 'wp_unique_post_slug', 'audiotheme_gig_unique_slug', 10, 6 );
 	add_action( 'save_post_audiotheme_gig', 'audiotheme_gig_update_bad_slug', 10, 2 );
-	add_filter( 'get_edit_post_link', 'get_audiotheme_venue_edit_link', 10, 2 );
 
 	add_action( 'before_delete_post', 'audiotheme_gig_before_delete' );
 	add_filter( 'post_class', 'audiotheme_gig_post_class', 10, 3 );

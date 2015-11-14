@@ -877,62 +877,6 @@ function get_audiotheme_venue_location( $venue_id, $args = array() ) {
 }
 
 /**
- * Get the base admin panel URL for adding a venue.
- *
- * @since 1.0.0
- */
-function get_audiotheme_venue_admin_url( $args = '' ) {
-	$admin_url = admin_url( 'admin.php?page=audiotheme-venue' );
-
-	if ( ! empty( $args ) ) {
-		if ( is_array( $args ) ) {
-			$admin_url = add_query_arg( $args, $admin_url );
-		} else {
-			$admin_url = ( 0 !== strpos( $args, '&' ) ) ? '&' . $admin_url : $admin_url;
-		}
-	}
-
-	return $admin_url;
-}
-
-/**
- * Get the admin panel URL for viewing all venues.
- *
- * @since 1.0.0
- */
-function get_audiotheme_venues_admin_url( $args = '' ) {
-	$admin_url = admin_url( 'admin.php?page=audiotheme-venues' );
-
-	if ( ! empty( $args ) ) {
-		if ( is_array( $args ) ) {
-			$admin_url = add_query_arg( $args, $admin_url );
-		} else {
-			$admin_url = ( 0 !== strpos( $args, '&' ) ) ? '&' . $admin_url : $admin_url;
-		}
-	}
-
-	return $admin_url;
-}
-
-/**
- * Get the admin panel URL for editing a venue.
- *
- * @since 1.0.0
- */
-function get_audiotheme_venue_edit_link( $admin_url, $post_id ) {
-	if ( 'audiotheme_venue' === get_post_type( $post_id ) ) {
-		$args = array(
-			'action'   => 'edit',
-			'venue_id' => $post_id,
-		);
-
-		$admin_url = get_audiotheme_venue_admin_url( $args );
-	}
-
-	return $admin_url;
-}
-
-/**
  * Return a unique venue name.
  *
  * @since 1.0.0

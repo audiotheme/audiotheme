@@ -18,7 +18,8 @@ require( AUDIOTHEME_DIR . 'modules/gigs/admin/ajax.php' );
 function audiotheme_gigs_admin_setup() {
 	global $pagenow;
 
-	add_action( 'save_post', 'audiotheme_gig_save_post', 10, 2 );
+	add_action( 'save_post_audiotheme_gig', 'audiotheme_gig_save_post', 10, 2 );
+	add_action( 'save_post_audiotheme_venue', 'audiotheme_venue_save_post', 10, 2 );
 
 	add_action( 'admin_menu', 'audiotheme_gigs_admin_menu' );
 	add_filter( 'post_updated_messages', 'audiotheme_gig_post_updated_messages' );
@@ -102,12 +103,12 @@ function audiotheme_gigs_admin_menu() {
 	add_submenu_page( 'audiotheme-gigs', $gig_object->labels->name, $gig_object->labels->all_items, 'edit_posts', 'audiotheme-gigs', 'audiotheme_gigs_manage_screen' );
 	$edit_gig_hook = add_submenu_page( 'audiotheme-gigs', $gig_object->labels->add_new_item, $gig_object->labels->add_new, 'edit_posts', 'post-new.php?post_type=audiotheme_gig' );
 	add_submenu_page( 'audiotheme-gigs', $venue_object->labels->name, $venue_object->labels->menu_name, 'edit_posts', 'edit.php?post_type=audiotheme_venue' );
-	$edit_venue_hook = add_submenu_page( 'audiotheme-gigs', $venue_object->labels->add_new_item, $venue_object->labels->add_new_item, 'edit_posts', 'audiotheme-venue', 'audiotheme_venue_edit_screen' );
 
 	add_filter( 'parent_file', 'audiotheme_gigs_admin_menu_highlight' );
 	add_action( 'load-' . $manage_gigs_hook, 'audiotheme_gigs_manage_screen_setup' );
 	add_action( 'load-' . $edit_gig_hook, 'audiotheme_gig_edit_screen_setup' );
-	add_action( 'load-' . $edit_venue_hook, 'audiotheme_venue_edit_screen_setup' );
+	add_action( 'load-post.php', 'audiotheme_venue_edit_screen_setup' );
+	add_action( 'load-post-new.php', 'audiotheme_venue_edit_screen_setup' );
 }
 
 /**
@@ -184,6 +185,10 @@ function audiotheme_gigs_admin_menu_highlight( $parent_file ) {
 
 	if ( 'audiotheme-gigs' === $parent_file && isset( $_GET['page'] ) && 'audiotheme-venue' === $_GET['page'] ) {
 		$submenu_file = 'audiotheme-venues';
+	}
+
+	if ( 'audiotheme_venue' === $post_type ) {
+		$parent_file = 'audiotheme-gigs';
 	}
 
 	// Remove the Add New Venue submenu item.
