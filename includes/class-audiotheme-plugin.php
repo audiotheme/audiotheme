@@ -14,6 +14,14 @@
  */
 class AudioTheme_Plugin extends AudioTheme_Plugin_Base {
 	/**
+	 * License.
+	 *
+	 * @since 1.9.0
+	 * @var AudioTheme_License
+	 */
+	protected $license;
+
+	/**
 	 * Modules.
 	 *
 	 * @since 1.9.0
@@ -27,6 +35,7 @@ class AudioTheme_Plugin extends AudioTheme_Plugin_Base {
 	 * @since 1.9.0
 	 */
 	public function __construct() {
+		$this->license = new AudioTheme_License();
 		$this->modules = new AudioTheme_Module_Collection();
 	}
 
@@ -50,6 +59,17 @@ class AudioTheme_Plugin extends AudioTheme_Plugin_Base {
 	public function register_hooks( $provider ) {
 		$provider->register_hooks();
 		return $this;
+	}
+
+	/**
+	 * Retrieve the license.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return AudioTheme_License
+	 */
+	public function get_license() {
+		return $this->license;
 	}
 
 	/**

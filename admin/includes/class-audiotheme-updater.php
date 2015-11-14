@@ -207,24 +207,6 @@ class Audiotheme_Updater {
 	}
 
 	/**
-	 * Activate a license key.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $key License key.
-	 * @return object
-	 */
-	public function activate_license( $key ) {
-		$response = $this->api_request( array(
-			'entity'  => 'license',
-			'method'  => 'activate',
-			'license' => $key,
-		) );
-
-		return $response;
-	}
-
-	/**
 	 * Do a remote API request.
 	 *
 	 * Merges the $api_data property, default arguments, and the $args
@@ -336,5 +318,24 @@ class Audiotheme_Updater {
 		$messages['generic'] = __( 'An unexpected error occurred while checking the update server.', 'audiotheme' );
 
 		return $messages;
+	}
+
+	/**
+	 * Activate a license key.
+	 *
+	 * @deprecated 1.9.0
+	 * @since 1.0.0
+	 *
+	 * @param string $key License key.
+	 * @return object
+	 */
+	public function activate_license( $key ) {
+		$response = $this->api_request( array(
+			'entity'  => 'license',
+			'method'  => 'activate',
+			'license' => $key,
+		) );
+
+		return $response;
 	}
 }

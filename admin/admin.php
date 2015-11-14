@@ -69,7 +69,8 @@ function audiotheme_dashboard_init() {
 		$screen->register_hooks();
 	}
 
-	$setting = new AudioTheme_Setting_LicenseKey();
+	$license = audiotheme()->get_license();
+	$setting = new AudioTheme_Setting_LicenseKey( $license );
 	$setting->register_hooks();
 }
 
@@ -83,10 +84,10 @@ function audiotheme_update() {
 		return;
 	}
 
-	$license = get_option( 'audiotheme_license_key' );
+	$license = audiotheme()->get_license();
 
 	// Don't do the remote request if a license key hasn't been entered.
-	if ( ! $license ) {
+	if ( ! $license->has_key() ) {
 		add_filter( 'do_audiotheme_update_request', '__return_false' );
 		add_filter( 'audiotheme_update_plugin_notice-audiotheme', 'audiotheme_update_notice' );
 	}
@@ -217,8 +218,8 @@ function audiotheme_dashboard_sort_menu() {
  * @since 1.0.0
  */
 function audiotheme_admin_init() {
-	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-	$status = get_option( 'audiotheme_license_status' );
+	$suffix  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+	$license = audiotheme()->get_license();
 
 	wp_register_script( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/js/admin.bundle' . $suffix . '.js', array( 'jquery-ui-sortable', 'underscore', 'wp-util' ), AUDIOTHEME_VERSION, true );
 	wp_register_script( 'audiotheme-dashboard', AUDIOTHEME_URI . 'admin/js/dashboard.js',array( 'jquery', 'wp-backbone', 'wp-util' ), AUDIOTHEME_VERSION, true );
@@ -232,8 +233,8 @@ function audiotheme_admin_init() {
 	wp_register_style( 'jquery-ui-theme-audiotheme', AUDIOTHEME_URI . 'admin/css/jquery-ui-audiotheme.css', array( 'jquery-ui-theme-smoothness' ) );
 
 	wp_localize_script( 'audiotheme-admin', '_audiothemeAdminSettings', array(
-		'licenseKey'    => get_option( 'audiotheme_license_key', '' ),
-		'licenseStatus' => empty( $status ) || 'ok' !== $status->status ? 'inactive' : 'active',
+		'licenseKey'    => $license->get_key(),
+		'licenseStatus' => $license->is_valid() ? 'active' : 'inactive',
 	) );
 
 	wp_localize_script( 'audiotheme-dashboard', '_audiothemeDashboardSettings', array(

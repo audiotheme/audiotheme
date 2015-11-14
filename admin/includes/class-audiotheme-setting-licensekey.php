@@ -14,6 +14,14 @@
  */
 class AudioTheme_Setting_LicenseKey {
 	/**
+	 * License.
+	 *
+	 * @since 1.9.0
+	 * @var AudioTheme_License
+	 */
+	protected $license;
+
+	/**
 	 * Option group.
 	 *
 	 * @since 1.9.0
@@ -27,14 +35,17 @@ class AudioTheme_Setting_LicenseKey {
 	 * @since 1.9.0
 	 * @var string
 	 */
-	protected $option_name = 'audiotheme_license_key';
+	protected $option_name;
 
 	/**
 	 * Constructor method.
 	 *
 	 * @since 1.9.0
 	 */
-	public function __construct() {
+	public function __construct( $license ) {
+		$this->license     = $license;
+		$this->option_name = constant( get_class( $license ) . '::OPTION_NAME' );
+
 		if ( is_multisite() ) {
 			$this->page = 'audiotheme-network-settings';
 		}
@@ -118,13 +129,11 @@ class AudioTheme_Setting_LicenseKey {
 	 * @since 1.9.0
 	 */
 	public function display_field() {
-		$value  = get_option( $this->option_name, '' );
-		$status = get_option( 'audiotheme_license_status' );
 		?>
 		<p>
-			<input type="text" name="<?php echo $this->option_name; ?>" id="audiotheme-license-key" value="<?php echo esc_attr( $value ); ?>" class="audiotheme-settings-license-text audiotheme-settings-text regular-text">
+			<input type="text" name="<?php echo $this->option_name; ?>" id="audiotheme-license-key" value="<?php echo esc_attr( $this->license->get_key() ); ?>" class="audiotheme-settings-license-text audiotheme-settings-text regular-text">
 
-			<?php if ( ! isset( $status->status ) || 'ok' !== $status->status ) : ?>
+			<?php if ( ! $this->license->is_valid() ) : ?>
 				<input type="button" value="<?php esc_attr_e( 'Activate', 'audiotheme' ); ?>" disabled="disabled" class="audiotheme-settings-license-button button button-primary">
 				<span class="spinner" style="float: none; margin-top: 0; vertical-align: middle"></span>
 				<br><span class="audiotheme-response"></span>
@@ -144,16 +153,13 @@ class AudioTheme_Setting_LicenseKey {
 	public function ajax_activate_license() {
 		check_ajax_referer( 'audiotheme-activate-license', 'nonce' );
 
-		$key = sanitize_key( $_POST['license'] );
-		update_option( $this->option_name, $key );
-
-		$updater = new Audiotheme_Updater();
-		$response = $updater->activate_license( $key );
-		update_option( 'audiotheme_license_status', $response );
+		$response = $this->license
+			->set_key( sanitize_key( $_POST['license'] ) )
+			->save()
+			->activate();
 
 		if ( isset( $response->status ) && 'ok' === $response->status ) {
 			// @todo Clear the last update status check with a 'not_activated' response.
-			update_option( $this->option_name, $key );
 		}
 
 		wp_send_json_success( $response );
@@ -167,7 +173,7 @@ class AudioTheme_Setting_LicenseKey {
 	 * @since 1.9.0
 	 */
 	public function on_option_update() {
-		update_option( 'audiotheme_license_status', '' );
+		$this->license->reset();
 	}
 
 	/**
@@ -188,7 +194,7 @@ class AudioTheme_Setting_LicenseKey {
 		);
 
 		if ( ! isset( $response->status ) || in_array( $response->status, $license_errors ) ) {
-			update_option( 'audiotheme_license_status', '' );
+			$this->license->reset();
 		}
 	}
 
@@ -205,7 +211,10 @@ class AudioTheme_Setting_LicenseKey {
 		}
 
 		// Update the license key.
-		$key = empty( $_POST[ $this->option_name ] ) ? '' : sanitize_key( $_POST[ $this->option_name ] );
-		update_option( $this->option_name, $key );
+		if ( ! empty( $_POST[ $this->option_name ] ) ) {
+			$this->license
+				->set_key( sanitize_key( $_POST[ $this->option_name ] ) )
+				->save();
+		}
 	}
 }
