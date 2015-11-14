@@ -177,7 +177,7 @@ function audiotheme_dashboard_features_screen() {
  * @deprecated 1.9.0
  */
 function audiotheme_dashboard_settings_license_section( $section ) {
-	echo sprintf( __( 'Find your license key in <a href="%s" target="_blank">your account</a> on AudioTheme.com. Your license key allows you to recieve automatic upgrades and support.', 'audiotheme' ), 'https://audiotheme.com/account/' );
+	echo sprintf( __( 'Find your license key in <a href="%s" target="_blank">your account</a> on AudioTheme.com. Your license key allows you to receive automatic upgrades and support.', 'audiotheme' ), 'https://audiotheme.com/account/' );
 }
 
 /**

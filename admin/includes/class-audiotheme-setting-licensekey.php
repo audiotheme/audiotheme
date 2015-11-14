@@ -105,7 +105,7 @@ class AudioTheme_Setting_LicenseKey {
 	 */
 	public function display_section_description() {
 		printf(
-			__( 'Find your license key in <a href="%s" target="_blank">your account</a> on AudioTheme.com. Your license key allows you to recieve automatic upgrades and support.', 'audiotheme' ),
+			__( 'Find your license key in <a href="%s" target="_blank">your account</a> on AudioTheme.com. Your license key allows you to receive automatic upgrades and support.', 'audiotheme' ),
 			'https://audiotheme.com/account/'
 		);
 
