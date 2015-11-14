@@ -74,7 +74,10 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen {
 		// Hide menu items for inactive modules on initial load.
 		$styles = '';
 		foreach ( $modules->get_inactive_keys() as $module_id ) {
-			$styles .= sprintf( '#%s { display: none;}', $modules[ $module_id ]->admin_menu_id );
+			$styles .= sprintf(
+				'#%1$s, .wp-submenu > li.%1$s { display: none;}',
+				$modules[ $module_id ]->admin_menu_id
+			);
 		}
 
 		wp_add_inline_style( 'audiotheme-dashboard', $styles );

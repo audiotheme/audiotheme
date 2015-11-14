@@ -67,7 +67,7 @@
 				nonce: this.get( 'toggleNonce' )
 			}).done(function( response ) {
 				module.set( 'isActive', response.isActive );
-				$( '#' + response.adminMenuId ).toggle( response.isActive );
+				$( '#' + response.adminMenuId + ', .wp-submenu > .' + response.adminMenuId ).toggle( response.isActive );
 			}).fail(function() {
 
 			});
