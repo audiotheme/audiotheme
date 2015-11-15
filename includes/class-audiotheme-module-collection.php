@@ -40,10 +40,12 @@ class AudioTheme_Module_Collection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Register a module.
 	 *
+	 * @since 1.9.0
+	 *
 	 * @param  AudioTheme_Module $module Module object.
 	 * @return $this
 	 */
-	public function register_module( $id, $module ) {
+	public function register( $id, $module ) {
 		$this->modules[ $id ] = $module;
 		return $this;
 	}
@@ -114,11 +116,13 @@ class AudioTheme_Module_Collection implements ArrayAccess, Countable, Iterator {
 	 * @since 1.9.0
 	 *
 	 * @param string $module_id Module identifier.
+	 * @return $this
 	 */
 	public function activate( $module_id ) {
 		$modules = $this->get_inactive_keys();
 		unset( $modules[ array_search( $module_id, $modules ) ] );
 		update_option( 'audiotheme_inactive_modules', array_values( $modules ) );
+		return $this;
 	}
 
 	/**
@@ -127,12 +131,14 @@ class AudioTheme_Module_Collection implements ArrayAccess, Countable, Iterator {
 	 * @since 1.9.0
 	 *
 	 * @param string $module_id Module identifier.
+	 * @return $this
 	 */
 	public function deactivate( $module_id ) {
 		$modules = $this->get_inactive_keys();
 		$modules = array_unique( array_merge( $modules, array( $module_id ) ) );
 		sort( $modules );
 		update_option( 'audiotheme_inactive_modules', $modules );
+		return $this;
 	}
 
 	/**

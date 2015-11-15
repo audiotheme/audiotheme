@@ -108,9 +108,9 @@ $audiotheme
 	->set_slug( 'audiotheme' )
 	->set_url( plugin_dir_url( __FILE__ ) );
 
-$audiotheme->get_modules()->register_module( 'gigs', new AudioTheme_Module_Gigs() );
-$audiotheme->get_modules()->register_module( 'discography', new AudioTheme_Module_Discography() );
-$audiotheme->get_modules()->register_module( 'videos', new AudioTheme_Module_Videos() );
+$audiotheme->get_modules()->register( 'gigs', new AudioTheme_Module_Gigs() );
+$audiotheme->get_modules()->register( 'discography', new AudioTheme_Module_Discography() );
+$audiotheme->get_modules()->register( 'videos', new AudioTheme_Module_Videos() );
 
 /**
  * AudioTheme setup.
