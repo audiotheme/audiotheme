@@ -7,6 +7,124 @@
  */
 
 /**
+ * Get the admin panel URL for gigs.
+ *
+ * @deprecated 1.9.0
+ * @since 1.0.0
+ */
+function get_audiotheme_gig_admin_url( $args = '' ) {
+	$admin_url = admin_url( 'admin.php?page=audiotheme-gigs' );
+
+	if ( ! empty( $args ) ) {
+		if ( is_array( $args ) ) {
+			$admin_url = add_query_arg( $args, $admin_url );
+		} else {
+			$admin_url = ( 0 !== strpos( $args, '&' ) ) ? '&' . $admin_url : $admin_url;
+		}
+	}
+
+	return $admin_url;
+}
+
+/**
+ * Higlight the correct top level and sub menu items for the gig screen being
+ * displayed.
+ *
+ * @deprecated 1.9.0
+ * @since 1.0.0
+ *
+ * @param string $parent_file The screen being displayed.
+ * @return string The menu item to highlight.
+ */
+function audiotheme_gigs_admin_menu_highlight( $parent_file ) {
+	global $pagenow, $post_type, $submenu, $submenu_file;
+
+	if ( 'audiotheme_gig' === $post_type ) {
+		$parent_file = 'audiotheme-gigs';
+		$submenu_file = ( 'post.php' === $pagenow ) ? 'audiotheme-gigs' : $submenu_file;
+	}
+
+	if ( 'audiotheme-gigs' === $parent_file && isset( $_GET['page'] ) && 'audiotheme-venue' === $_GET['page'] ) {
+		$submenu_file = 'audiotheme-venues';
+	}
+
+	if ( 'audiotheme_venue' === $post_type ) {
+		$parent_file = 'audiotheme-gigs';
+	}
+
+	// Remove the Add New Venue submenu item.
+	if ( isset( $submenu['audiotheme-gigs'] ) ) {
+		foreach ( $submenu['audiotheme-gigs'] as $key => $sm ) {
+			if ( isset( $sm[0] ) && 'audiotheme-venue' === $sm[2] ) {
+				unset( $submenu['audiotheme-gigs'][ $key ] );
+			}
+		}
+	}
+
+	return $parent_file;
+}
+
+/**
+ * Sanitize the 'per_page' screen option on the Manage Gigs and Manage Venues
+ * screens.
+ *
+ * Apparently any other hook attached to the same filter that runs after this
+ * will stomp all over it. To prevent this filter from doing the same, it's
+ * only attached on the screens that require it. The priority should be set
+ * extremely low to help ensure the correct value gets returned.
+ *
+ * @deprecated 1.9.0
+ * @since 1.0.0
+ *
+ * @param bool $return Default is 'false'.
+ * @param string $option The option name.
+ * @param mixed $value The value to sanitize.
+ * @return mixed The sanitized value.
+ */
+function audiotheme_gigs_screen_options( $return, $option, $value ) {
+	if ( 'toplevel_page_audiotheme_gigs_per_page' === $option || 'gigs_page_audiotheme_venues_per_page' === $option ) {
+		$return = absint( $value );
+	}
+
+	return $return;
+}
+
+/**
+ * Set up the gig Manage Screen.
+ *
+ * Initializes the custom post list table, and processes any actions that need
+ * to be handled.
+ *
+ * @deprecated 1.9.0
+ * @since 1.0.0
+ */
+function audiotheme_gigs_manage_screen_setup() {
+	$post_type_object = get_post_type_object( 'audiotheme_gig' );
+	$title = $post_type_object->labels->name;
+	add_screen_option( 'per_page', array( 'label' => $title, 'default' => 20 ) );
+
+	require_once( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-gigs-list-table.php' );
+
+	$gigs_list_table = new Audiotheme_Gigs_List_Table();
+	$gigs_list_table->process_actions();
+}
+
+/**
+ * Display the gig Manage Screen.
+ *
+ * @deprecated 1.9.0
+ * @since 1.0.0
+ */
+function audiotheme_gigs_manage_screen() {
+	$post_type_object = get_post_type_object( 'audiotheme_gig' );
+
+	$gigs_list_table = new Audiotheme_Gigs_List_Table();
+	$gigs_list_table->prepare_items();
+
+	require( AUDIOTHEME_DIR . 'modules/gigs/admin/views/list-gigs.php' );
+}
+
+/**
  * Get the base admin panel URL for adding a venue.
  *
  * @deprecated 1.9.0

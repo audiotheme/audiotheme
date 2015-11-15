@@ -17,6 +17,7 @@ require( AUDIOTHEME_DIR . 'modules/gigs/deprecated.php' );
 if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'modules/gigs/admin/gigs.php' );
 	require( AUDIOTHEME_DIR . 'modules/gigs/admin/venues.php' );
+	require( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-screen-managegigs.php' );
 	require( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-screen-managevenues.php' );
 }
 
@@ -47,12 +48,12 @@ function audiotheme_gigs_init() {
 			'menu_name'          => __( 'Gigs', 'audiotheme' ),
 			'name_admin_bar'     => _x( 'Gigs', 'add new on admin bar', 'audiotheme' ),
 		),
+		'menu_icon'              => audiotheme_encode_svg( 'admin/images/dashicons/gigs.svg' ),
 		'menu_position'          => 512,
 		'public'                 => true,
-		'register_meta_box_cb'   => 'audiotheme_gig_edit_screen_setup',
 		'rewrite'                => false,
 		'show_in_admin_bar'      => true,
-		'show_in_menu'           => 'audiotheme-gigs',
+		'show_in_menu'           => true,
 		'show_in_nav_menus'      => false,
 		'supports'               => array( 'title', 'editor', 'thumbnail' ),
 	) );
@@ -72,7 +73,7 @@ function audiotheme_gigs_init() {
 			'search_items'       => __( 'Search Venues', 'audiotheme' ),
 			'not_found'          => __( 'No venues found', 'audiotheme' ),
 			'not_found_in_trash' => __( 'No venues found in Trash', 'audiotheme' ),
-			'all_items'          => __( 'All Venues', 'audiotheme' ),
+			'all_items'          => __( 'Venues', 'audiotheme' ),
 			'menu_name'          => __( 'Venues', 'audiotheme' ),
 			'name_admin_bar'     => _x( 'Venues', 'add new on admin bar', 'audiotheme' ),
 		),
@@ -80,7 +81,7 @@ function audiotheme_gigs_init() {
 		'publicly_queryable'     => false,
 		'query_var'              => 'audiotheme_venue',
 		'rewrite'                => false,
-		'show_in_menu'           => 'admin.php?page=audiotheme-gigs',
+		'show_in_menu'           => 'edit.php?post_type=audiotheme_gig',
 		'show_ui'                => true,
 		'supports'               => array( 'title' ),
 	) );

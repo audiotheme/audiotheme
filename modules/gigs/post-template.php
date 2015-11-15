@@ -456,25 +456,6 @@ function audiotheme_gig_has_venue( $post = null ) {
 }
 
 /**
- * Get the admin panel URL for gigs.
- *
- * @since 1.0.0
- */
-function get_audiotheme_gig_admin_url( $args = '' ) {
-	$admin_url = admin_url( 'admin.php?page=audiotheme-gigs' );
-
-	if ( ! empty( $args ) ) {
-		if ( is_array( $args ) ) {
-			$admin_url = add_query_arg( $args, $admin_url );
-		} else {
-			$admin_url = ( 0 !== strpos( $args, '&' ) ) ? '&' . $admin_url : $admin_url;
-		}
-	}
-
-	return $admin_url;
-}
-
-/**
  * Update a gig's venue and the gig count for any modified venues.
  *
  * @since 1.0.0

@@ -21,7 +21,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	 * @since 1.9.0
 	 * @var string
 	 */
-	protected $admin_menu_id = 'toplevel_page_audiotheme-gigs';
+	protected $admin_menu_id = 'menu-posts-audiotheme_gig';
 
 	/**
 	 * Whether the module is a core module.

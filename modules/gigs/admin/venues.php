@@ -25,7 +25,7 @@ function audiotheme_venue_edit_screen_setup() {
 		return;
 	}
 
-	add_action( 'add_meta_boxes_audiotheme_venue', 'audiotheme_edit_venue_meta_boxes' );
+	add_action( 'add_meta_boxes_audiotheme_venue', 'audiotheme_venue_edit_meta_boxes' );
 	add_action( 'admin_enqueue_scripts', 'audiotheme_venue_edit_assets' );
 	add_action( 'edit_form_after_title', 'audiotheme_venue_details_fields' );
 }
@@ -35,7 +35,7 @@ function audiotheme_venue_edit_screen_setup() {
  *
  * @since 1.9.0
  */
-function audiotheme_edit_venue_meta_boxes() {
+function audiotheme_venue_edit_meta_boxes() {
 	add_meta_box(
 		'venuecontactdiv',
 		__( 'Contact <i>(Private)</i>', 'audiotheme' ),

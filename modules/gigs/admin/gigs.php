@@ -63,11 +63,6 @@ function audiotheme_gigs_admin_setup() {
 	}
 
 	wp_localize_script( 'audiotheme-venue-manager', '_audiothemeVenueManagerSettings', $settings );
-
-	// Only run on the gig and venue Manage Screens.
-	if ( 'admin.php' === $pagenow && isset( $_GET['page'] ) && ( 'audiotheme-gigs' === $_GET['page'] || 'audiotheme-venues' === $_GET['page'] ) ) {
-		add_filter( 'set-screen-option', 'audiotheme_gigs_screen_options', 999, 3 );
-	}
 }
 
 /**
@@ -76,37 +71,11 @@ function audiotheme_gigs_admin_setup() {
  * @since 1.0.0
  */
 function audiotheme_gigs_admin_menu() {
-	global $pagenow, $plugin_page, $typenow;
+	$screen = new AudioTheme_Screen_ManageGigs();
+	$screen->register_hooks();
 
-	// Redirect the default Manage Gigs screen.
-	if ( 'audiotheme_gig' === $typenow && 'edit.php' === $pagenow ) {
-		wp_safe_redirect( esc_url_raw( get_audiotheme_gig_admin_url() ) );
-		exit;
-	}
-
-	$gig_object = get_post_type_object( 'audiotheme_gig' );
-	$venue_object = get_post_type_object( 'audiotheme_venue' );
-
-	// Remove the default gigs menu item and replace it with the screen using the custom post list table.
-	remove_submenu_page( 'audiotheme-gigs', 'edit.php?post_type=audiotheme_gig' );
-
-	$manage_gigs_hook = add_menu_page(
-		$gig_object->labels->name,
-		$gig_object->labels->menu_name,
-		'edit_posts',
-		'audiotheme-gigs',
-		'audiotheme_gigs_manage_screen',
-		audiotheme_encode_svg( 'admin/images/dashicons/gigs.svg' ),
-		512
-	);
-
-	add_submenu_page( 'audiotheme-gigs', $gig_object->labels->name, $gig_object->labels->all_items, 'edit_posts', 'audiotheme-gigs', 'audiotheme_gigs_manage_screen' );
-	$edit_gig_hook = add_submenu_page( 'audiotheme-gigs', $gig_object->labels->add_new_item, $gig_object->labels->add_new, 'edit_posts', 'post-new.php?post_type=audiotheme_gig' );
-	add_submenu_page( 'audiotheme-gigs', $venue_object->labels->name, $venue_object->labels->menu_name, 'edit_posts', 'edit.php?post_type=audiotheme_venue' );
-
-	add_filter( 'parent_file', 'audiotheme_gigs_admin_menu_highlight' );
-	add_action( 'load-' . $manage_gigs_hook, 'audiotheme_gigs_manage_screen_setup' );
-	add_action( 'load-' . $edit_gig_hook, 'audiotheme_gig_edit_screen_setup' );
+	add_action( 'load-post.php', 'audiotheme_gig_edit_screen_setup' );
+	add_action( 'load-post-new.php', 'audiotheme_gig_edit_screen_setup' );
 	add_action( 'load-post.php', 'audiotheme_venue_edit_screen_setup' );
 	add_action( 'load-post-new.php', 'audiotheme_venue_edit_screen_setup' );
 }
@@ -143,100 +112,6 @@ function audiotheme_gig_post_updated_messages( $messages ) {
 }
 
 /**
- * Sanitize the 'per_page' screen option on the Manage Gigs and Manage Venues
- * screens.
- *
- * Apparently any other hook attached to the same filter that runs after this
- * will stomp all over it. To prevent this filter from doing the same, it's
- * only attached on the screens that require it. The priority should be set
- * extremely low to help ensure the correct value gets returned.
- *
- * @since 1.0.0
- *
- * @param bool $return Default is 'false'.
- * @param string $option The option name.
- * @param mixed $value The value to sanitize.
- * @return mixed The sanitized value.
- */
-function audiotheme_gigs_screen_options( $return, $option, $value ) {
-	if ( 'toplevel_page_audiotheme_gigs_per_page' === $option || 'gigs_page_audiotheme_venues_per_page' === $option ) {
-		$return = absint( $value );
-	}
-
-	return $return;
-}
-
-/**
- * Higlight the correct top level and sub menu items for the gig screen being
- * displayed.
- *
- * @since 1.0.0
- *
- * @param string $parent_file The screen being displayed.
- * @return string The menu item to highlight.
- */
-function audiotheme_gigs_admin_menu_highlight( $parent_file ) {
-	global $pagenow, $post_type, $submenu, $submenu_file;
-
-	if ( 'audiotheme_gig' === $post_type ) {
-		$parent_file = 'audiotheme-gigs';
-		$submenu_file = ( 'post.php' === $pagenow ) ? 'audiotheme-gigs' : $submenu_file;
-	}
-
-	if ( 'audiotheme-gigs' === $parent_file && isset( $_GET['page'] ) && 'audiotheme-venue' === $_GET['page'] ) {
-		$submenu_file = 'audiotheme-venues';
-	}
-
-	if ( 'audiotheme_venue' === $post_type ) {
-		$parent_file = 'audiotheme-gigs';
-	}
-
-	// Remove the Add New Venue submenu item.
-	if ( isset( $submenu['audiotheme-gigs'] ) ) {
-		foreach ( $submenu['audiotheme-gigs'] as $key => $sm ) {
-			if ( isset( $sm[0] ) && 'audiotheme-venue' === $sm[2] ) {
-				unset( $submenu['audiotheme-gigs'][ $key ] );
-			}
-		}
-	}
-
-	return $parent_file;
-}
-
-/**
- * Set up the gig Manage Screen.
- *
- * Initializes the custom post list table, and processes any actions that need
- * to be handled.
- *
- * @since 1.0.0
- */
-function audiotheme_gigs_manage_screen_setup() {
-	$post_type_object = get_post_type_object( 'audiotheme_gig' );
-	$title = $post_type_object->labels->name;
-	add_screen_option( 'per_page', array( 'label' => $title, 'default' => 20 ) );
-
-	require_once( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-gigs-list-table.php' );
-
-	$gigs_list_table = new Audiotheme_Gigs_List_Table();
-	$gigs_list_table->process_actions();
-}
-
-/**
- * Display the gig Manage Screen.
- *
- * @since 1.0.0
- */
-function audiotheme_gigs_manage_screen() {
-	$post_type_object = get_post_type_object( 'audiotheme_gig' );
-
-	$gigs_list_table = new Audiotheme_Gigs_List_Table();
-	$gigs_list_table->prepare_items();
-
-	require( AUDIOTHEME_DIR . 'modules/gigs/admin/views/list-gigs.php' );
-}
-
-/**
  * Set up the gig Add/Edit screen.
  *
  * Add custom meta boxes, enqueues scripts and styles, and hook up the action
@@ -247,26 +122,61 @@ function audiotheme_gigs_manage_screen() {
  * @param WP_Post $post The gig post object being edited.
  */
 function audiotheme_gig_edit_screen_setup( $post ) {
+	if ( 'audiotheme_gig' !== get_current_screen()->id ) {
+		return;
+	}
+
+	add_action( 'add_meta_boxes', 'audiotheme_gig_edit_meta_boxes' );
+	add_action( 'admin_enqueue_scripts', 'audiotheme_gig_edit_assets' );
+	add_action( 'edit_form_after_title', 'audiotheme_edit_gig_fields' );
+	add_action( 'admin_footer', 'audiotheme_edit_gig_print_templates' );
+}
+
+/**
+ * Register meta boxes for the Edit Gig screen.
+ *
+ * @since 1.9.0
+ */
+function audiotheme_gig_edit_meta_boxes() {
+	// Add a customized submit meta box.
+	remove_meta_box( 'submitdiv', 'audiotheme_gig', 'side' );
+
+	add_meta_box(
+		'submitdiv',
+		__( 'Publish', 'audiotheme' ),
+		'audiotheme_post_submit_meta_box',
+		'audiotheme_gig',
+		'side',
+		'high',
+		array(
+			'force_delete'      => false,
+			'show_publish_date' => false,
+			'show_statuses'     => array(),
+			'show_visibility'   => false,
+		)
+	);
+
+	// Add a meta box for entering ticket information.
+	add_meta_box(
+		'audiothemegigticketsdiv',
+		__( 'Tickets', 'audiotheme' ),
+		'audiotheme_gig_tickets_meta_box',
+		'audiotheme_gig',
+		'side',
+		'default'
+	);
+}
+
+/**
+ * Enqueue assets for the Edit Gig screen.
+ *
+ * @since 1.9.0
+ */
+function audiotheme_gig_edit_assets() {
 	wp_enqueue_script( 'audiotheme-gig-edit' );
 	wp_enqueue_style( 'audiotheme-admin' );
 	wp_enqueue_style( 'audiotheme-venue-manager' );
 	wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
-
-	// Add a customized submit meta box.
-	remove_meta_box( 'submitdiv', 'audiotheme_gig', 'side' );
-	add_meta_box( 'submitdiv', __( 'Publish', 'audiotheme' ), 'audiotheme_post_submit_meta_box', 'audiotheme_gig', 'side', 'high', array(
-		'force_delete'      => false,
-		'show_publish_date' => false,
-		'show_statuses'     => array(),
-		'show_visibility'   => false,
-	) );
-
-	// Add a meta box for entering ticket information.
-	add_meta_box( 'audiothemegigticketsdiv', __( 'Tickets', 'audiotheme' ), 'audiotheme_gig_tickets_meta_box', 'audiotheme_gig', 'side', 'default' );
-
-	// Display the main gig fields after the title.
-	add_action( 'edit_form_after_title', 'audiotheme_edit_gig_fields' );
-	add_action( 'admin_footer', 'audiotheme_edit_gig_print_templates' );
 }
 
 /**

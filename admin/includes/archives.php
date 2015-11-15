@@ -73,11 +73,9 @@ function audiotheme_archives_admin_menu() {
 			continue;
 		}
 
-		$parent_slug = ( 'audiotheme_gig' === $post_type ) ? 'audiotheme-gigs' : 'edit.php?post_type=' . $post_type;
-
 		// Add the submenu item.
 		add_submenu_page(
-			$parent_slug,
+			'edit.php?post_type=' . $post_type,
 			$archive_type_object->labels->singular_name,
 			$archive_type_object->labels->singular_name,
 			$archive_type_object->cap->edit_posts,
@@ -143,11 +141,6 @@ function audiotheme_archives_parent_file( $parent_file ) {
 	if ( $post && 'audiotheme_archive' === get_current_screen()->id && $post_type = is_audiotheme_post_type_archive_id( $post->ID ) ) {
 		$parent_file = 'edit.php?post_type=' . $post_type;
 		$submenu_file = add_query_arg( array( 'post' => $post->ID, 'action' => 'edit' ), 'post.php' );
-
-		// The Gigs list has a custom slug.
-		if ( 'audiotheme_gig' === $post_type ) {
-			$parent_file = 'audiotheme-gigs';
-		}
 	}
 
 	return $parent_file;

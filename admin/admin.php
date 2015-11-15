@@ -207,7 +207,7 @@ function audiotheme_dashboard_sort_menu() {
 	// Reverse the order and always insert them after the main AudioTheme menu item.
 	audiotheme_menu_move_item( 'edit.php?post_type=audiotheme_video', 'audiotheme' );
 	audiotheme_menu_move_item( 'edit.php?post_type=audiotheme_record', 'audiotheme' );
-	audiotheme_menu_move_item( 'audiotheme-gigs', 'audiotheme' );
+	audiotheme_menu_move_item( 'edit.php?post_type=audiotheme_gig', 'audiotheme' );
 
 	audiotheme_submenu_move_after( 'audiotheme-settings', 'audiotheme', 'audiotheme' );
 }
