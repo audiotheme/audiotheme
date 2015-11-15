@@ -22,6 +22,22 @@ class AudioTheme_Module_Collection implements ArrayAccess, Countable, Iterator {
 	protected $modules;
 
 	/**
+	 * Retrieve a module by ID.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param string $id Module ID.
+	 * @return AudioTheme_Module
+	 */
+	public function get( $id ) {
+		$module = null;
+		if ( isset( $this->modules[ $id ] ) ) {
+			$module = $this->modules[ $id ];
+		}
+		return $module;
+	}
+
+	/**
 	 * Register a module.
 	 *
 	 * @param  AudioTheme_Module $module Module object.
