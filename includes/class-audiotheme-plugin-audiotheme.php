@@ -90,6 +90,7 @@ class AudioTheme_Plugin_AudioTheme extends AudioTheme_Plugin {
 
 		foreach ( $module_ids as $module_id ) {
 			$modules[ $module_id ]->load();
+			$this->register_hooks( $modules[ $module_id ] );
 		}
 	}
 

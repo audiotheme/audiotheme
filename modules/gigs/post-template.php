@@ -939,9 +939,16 @@ function save_audiotheme_venue( $data ) {
 		unset( $data['ID'] );
 		unset( $data['name'] );
 
-		foreach ( $data as $key => $val ) {
-			$key = '_audiotheme_' . $key;
-			update_post_meta( $venue_id, $key, $val );
+		foreach ( $data as $key => $value ) {
+			$meta_key = '_audiotheme_' . $key;
+
+			if ( 'website' === $key ) {
+				$value = esc_url_raw( $value );
+			} else {
+				$value = sanitize_text_field( $value );
+			}
+
+			update_post_meta( $venue_id, $meta_key, $value );
 		}
 
 		// Update gig count.

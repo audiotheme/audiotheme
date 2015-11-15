@@ -1,13 +1,13 @@
 <?php
 /**
- * Manage venues administration screen functionality.
+ * Manage Venues administration screen integration.
  *
  * @package AudioTheme\Gigs
  * @since 1.9.0
  */
 
 /**
- * Manage venues administration screen class.
+ * Class providing integration with the Manage Venues administration screen.
  *
  * @package AudioTheme\Gigs
  * @since 1.9.0
@@ -88,16 +88,16 @@ class AudioTheme_Screen_ManageVenues {
 	 * @return array Filtered array of column names.
 	 */
 	public function register_columns( $columns ) {
-		$columns['title']     = _x( 'Name', 'column name', 'audiotheme' );
-		$columns['city']      = __( 'City', 'audiotheme' );
-		$columns['state']     = __( 'State', 'audiotheme' );
-		$columns['country']   = __( 'Country', 'audiotheme' );
-		$columns['phone']     = __( 'Phone', 'audiotheme' );
-		$columns['gig_count'] = __( 'Gigs', 'audiotheme' );
+		$columns['title']     = esc_html_x( 'Name', 'column name', 'audiotheme' );
+		$columns['city']      = esc_html__( 'City', 'audiotheme' );
+		$columns['state']     = esc_html__( 'State', 'audiotheme' );
+		$columns['country']   = esc_html__( 'Country', 'audiotheme' );
+		$columns['phone']     = esc_html__( 'Phone', 'audiotheme' );
+		$columns['gig_count'] = esc_html__( 'Gigs', 'audiotheme' );
 
 		$columns['website']   = sprintf(
 			'<span class="audiotheme-column-header-icon dashicons dashicons-admin-links"></span><span class="audiotheme-column-header-label">%s</span>',
-			__( 'Website', 'audiotheme' )
+			esc_html__( 'Website', 'audiotheme' )
 		);
 
 		unset( $columns['date'] );
@@ -211,7 +211,7 @@ class AudioTheme_Screen_ManageVenues {
 			$url = sprintf(
 				'<a href="%s" class="venue-website-link" target="_blank"><span class="dashicons dashicons-admin-links"></span><span class="screen-reader-text">%s</span></a>',
 				esc_url( $url ),
-				esc_attr( __( 'Visit venue website', 'audiotheme' ) )
+				esc_attr__( 'Visit venue website', 'audiotheme' )
 			);
 		}
 

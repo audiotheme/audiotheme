@@ -64,6 +64,7 @@ require( AUDIOTHEME_DIR . 'includes/class-audiotheme-plugin.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-plugin-audiotheme.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-module-collection.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-module.php' );
+require( AUDIOTHEME_DIR . 'includes/class-audiotheme-posttype.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
 require( AUDIOTHEME_DIR . 'includes/general-template.php' );
@@ -80,7 +81,6 @@ require( AUDIOTHEME_DIR . 'includes/deprecated/options.php' );
 require( AUDIOTHEME_DIR . 'modules/discography/class-audiotheme-module-discography.php' );
 require( AUDIOTHEME_DIR . 'modules/discography/discography.php' );
 require( AUDIOTHEME_DIR . 'modules/gigs/class-audiotheme-module-gigs.php' );
-require( AUDIOTHEME_DIR . 'modules/gigs/gigs.php' );
 require( AUDIOTHEME_DIR . 'modules/videos/class-audiotheme-module-videos.php' );
 require( AUDIOTHEME_DIR . 'modules/videos/videos.php' );
 
@@ -154,9 +154,6 @@ function audiotheme_load() {
 	// Load discography.
 	add_action( 'init', 'audiotheme_discography_init' );
 
-	// Load gigs.
-	add_action( 'init', 'audiotheme_gigs_init' );
-
 	// Load videos.
 	add_action( 'init', 'audiotheme_videos_init' );
 
@@ -204,10 +201,6 @@ function audiotheme_load_admin() {
 	if ( is_admin() ) {
 		// Load discography admin.
 		add_action( 'init', 'audiotheme_load_discography_admin' );
-
-		// Load gigs admin.
-		add_action( 'init', 'audiotheme_gigs_admin_setup' );
-		add_action( 'init', 'audiotheme_venues_manage_screen_setup' );
 
 		// Load videos admin.
 		add_action( 'init', 'audiotheme_load_videos_admin' );

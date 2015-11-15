@@ -30,23 +30,34 @@ require( AUDIOTHEME_DIR . 'includes/widgets/video.php' );
  */
 function audiotheme_widgets_init() {
 	$widgets = array(
-		'recent-posts'  => 'Audiotheme_Widget_Recent_Posts',
-		'record'        => 'Audiotheme_Widget_Record',
-		'track'         => 'Audiotheme_Widget_Track',
+		'recent-posts'  => array( 'class' => 'Audiotheme_Widget_Recent_Posts' ),
+		'record'        => array( 'class' => 'Audiotheme_Widget_Record',        'module' => 'discography' ),
+		'track'         => array( 'class' => 'Audiotheme_Widget_Track',         'module' => 'discography' ),
 		// 'twitter'       => 'Audiotheme_Widget_Twitter',
-		'upcoming-gigs' => 'Audiotheme_Widget_Upcoming_Gigs',
-		'video'         => 'Audiotheme_Widget_Video',
+		'upcoming-gigs' => array( 'class' => 'Audiotheme_Widget_Upcoming_Gigs', 'module' => 'gigs' ),
+		'video'         => array( 'class' => 'Audiotheme_Widget_Video',         'module' => 'videos' ),
 	);
 
-	if ( $support = get_theme_support( 'audiotheme-widgets' ) ) {
-		if ( is_array( $support ) ) {
-			$widgets = array_intersect_key( $widgets, array_flip( $support[0] ) );
+	$support = get_theme_support( 'audiotheme-widgets' );
+	if ( empty( $support ) ) {
+		return;
+	}
+
+	if ( is_array( $support ) ) {
+		$widgets = array_intersect_key( $widgets, array_flip( $support[0] ) );
+	}
+
+	if ( empty( $widgets ) ) {
+		return;
+	}
+
+	$modules = audiotheme()->get_modules();
+
+	foreach ( $widgets as $widget_id => $details ) {
+		if ( isset( $details['module'] ) && ! $modules->is_active( $details['module'] ) ) {
+			continue;
 		}
 
-		if ( ! empty( $widgets ) ) {
-			foreach ( $widgets as $widget_id => $widget_class ) {
-				register_widget( $widget_class );
-			}
-		}
+		register_widget( $details['class'] );
 	}
 }

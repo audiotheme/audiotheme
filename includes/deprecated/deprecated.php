@@ -235,7 +235,6 @@ function audiotheme_add_video_thumbnail( $attachment_id ) {
 	set_post_thumbnail( $post_id, $attachment_id );
 }
 
-
 /**
  * Helper function to enqueue a pointer.
  *
@@ -327,3 +326,476 @@ function audiotheme_print_pointers() {
 	echo "/* ]]> */\n";
 	echo "</script>\n";
 }
+
+/**
+ * Register gig and venue post types and attach hooks to load related
+ * functionality.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_gigs_init() {}
+
+/**
+ * Register query variables.
+ *
+ * @since 1.6.3
+ * @deprecated 1.9.0
+ *
+ * @param array $vars Array of valid query variables.
+ * @return array
+ */
+function audiotheme_gigs_register_query_vars( $vars ) {}
+
+/**
+ * Filter gigs requests.
+ *
+ * Automatically sorts gigs in ascending order by the gig date, but limits to
+ * showing upcoming gigs unless a specific date range is requested (year,
+ * month, day).
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param object $query The main WP_Query object. Passed by reference.
+ */
+function audiotheme_pre_gig_query( $query ) {}
+
+/**
+ * Filter gig permalinks to match the custom rewrite rules.
+ *
+ * Allows the standard WordPress API function get_permalink() to return the
+ * correct URL when used with a gig post type.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ * @see get_post_permalink()
+ *
+ * @param string $post_link The default gig URL.
+ * @param object $post_link The gig to get the permalink for.
+ * @param bool $leavename Whether to keep the post name.
+ * @param bool $sample Is it a sample permalink.
+ * @return string The gig permalink.
+ */
+function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
+	return $post_link;
+}
+
+/**
+ * Filter the permalink for the gigs archive.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $link The default archive URL.
+ * @param string $post_type Post type.
+ * @return string The gig archive URL.
+ */
+function audiotheme_gigs_archive_link( $link, $post_type ) {
+	return $link;
+}
+
+/**
+ * Prevent conflicts in gig permalinks.
+ *
+ * Gigs without titles will fall back to using the ID for the slug, however,
+ * when the ID is a 4 digit number, it will conflict with date-based permalinks.
+ * Any slugs that match the ID are preprended with 'gig-'.
+ *
+ * @since 1.6.1
+ * @deprecated 1.9.0
+ * @see wp_unique_post_slug()
+ *
+ * @param string $slug The desired slug (post_name).
+ * @param integer $post_ID
+ * @param string $post_status No uniqueness checks are made if the post is still draft or pending.
+ * @param string $post_type
+ * @param integer $post_parent
+ * @param string $original_slug Slug passed to the uniqueness method.
+ * @return string
+ */
+function audiotheme_gig_unique_slug( $slug, $post_ID, $post_status, $post_type, $post_parent, $original_slug = null ) {
+	return $slug;
+}
+
+/**
+ * Prevent conflicts with numeric gig slugs.
+ *
+ * If a slug is empty when a post is published, wp_insert_post() will base the
+ * slug off the title/ID without a way to filter it until after the post is
+ * saved. If the saved slug matches the post ID for a gig, it's prefixed with
+ * 'gig-' here to mimic the behavior in audiotheme_gig_unique_slug().
+ *
+ * @since 1.6.1
+ * @deprecated 1.9.0
+ *
+ * @param int $post_id Post ID.
+ * @param WP_Post $post Post object.
+ */
+function audiotheme_gig_update_bad_slug( $post_id, $post ) {}
+
+/**
+ * Update a venue's cached gig count when gig is deleted.
+ *
+ * Determines if a venue's gig_count meta field needs to be updated
+ * when a gig is deleted.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param int $post_id ID of the gig being deleted.
+ */
+function audiotheme_gig_before_delete( $post_id ) {}
+
+/**
+ * Add useful classes to gig posts.
+ *
+ * @since 1.1.0
+ * @deprecated 1.9.0
+ *
+ * @param array $classes List of classes.
+ * @param string|array $class One or more classes to add to the class list.
+ * @param int $post_id An optional post ID.
+ * @return array Array of classes.
+ */
+function audiotheme_gig_post_class( $classes, $class, $post_id ) {
+	return $classes;
+}
+
+/**
+ * Get the gigs rewrite base. Defaults to 'shows'.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @return string
+ */
+function audiotheme_gigs_rewrite_base() {
+	return audiotheme()->get_modules()->get( 'gigs' )->get_rewrite_base();
+}
+
+/**
+ * Add custom gig rewrite rules.
+ *
+ * /base/YYYY/MM/DD/(feed|ical|json)/
+ * /base/YYYY/MM/DD/
+ * /base/YYYY/MM/(feed|ical|json)/
+ * /base/YYYY/MM/
+ * /base/YYYY/(feed|ical|json)/
+ * /base/YYYY/
+ * /base/(feed|ical|json)/
+ * /base/%postname%/
+ * /base/
+ *
+ * @todo /base/tour/%tourname%/
+ *       /base/past/page/2/
+ *       /base/past/
+ *       /base/YYYY/page/2/
+ *       etc.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param object $wp_rewrite The main rewrite object. Passed by reference.
+ */
+function audiotheme_gig_generate_rewrite_rules( $wp_rewrite ) {
+	audiotheme()->get_modules()->get( 'gigs' )->generate_rewrite_rules( $wp_rewrite );
+}
+
+/**
+ * Gig feeds and venue connections.
+ *
+ * Caches gig->venue connections and reroutes feed requests to
+ * the appropriate template for processing.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ * @uses $wp_query
+ * @uses p2p_type()->each_connected()
+ */
+function audiotheme_gig_template_redirect() {
+	audiotheme()->get_modules()->get( 'gigs' )->template_redirect();
+}
+
+/**
+ * Load gig templates.
+ *
+ * Templates should be included in an /audiotheme/ directory within the theme.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $template Template path.
+ * @return string
+ */
+function audiotheme_gig_template_include( $template ) {
+	return $template;
+}
+
+/**
+ * Get the admin panel URL for gigs.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function get_audiotheme_gig_admin_url( $args = '' ) {
+	$admin_url = admin_url( 'edit.php?post_type=audiotheme_gig' );
+
+	if ( ! empty( $args ) ) {
+		if ( is_array( $args ) ) {
+			$admin_url = add_query_arg( $args, $admin_url );
+		} else {
+			$admin_url = ( 0 !== strpos( $args, '&' ) ) ? '&' . $admin_url : $admin_url;
+		}
+	}
+
+	return $admin_url;
+}
+
+/**
+ * Attach hooks for loading and managing gigs in the admin dashboard.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_gigs_admin_setup() {}
+
+/**
+ * Add the admin menu items for gigs.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_gigs_admin_menu() {}
+
+/**
+ * Higlight the correct top level and sub menu items for the gig screen being
+ * displayed.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $parent_file The screen being displayed.
+ * @return string The menu item to highlight.
+ */
+function audiotheme_gigs_admin_menu_highlight( $parent_file ) {
+	return $parent_file;
+}
+
+/**
+ * Set up the gig Manage Screen.
+ *
+ * Initializes the custom post list table, and processes any actions that need
+ * to be handled.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_gigs_manage_screen_setup() {}
+
+/**
+ * Display the gig Manage Screen.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_gigs_manage_screen() {}
+
+/**
+ * Sanitize the 'per_page' screen option on the Manage Gigs and Manage Venues
+ * screens.
+ *
+ * Apparently any other hook attached to the same filter that runs after this
+ * will stomp all over it. To prevent this filter from doing the same, it's
+ * only attached on the screens that require it. The priority should be set
+ * extremely low to help ensure the correct value gets returned.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param bool $return Default is 'false'.
+ * @param string $option The option name.
+ * @param mixed $value The value to sanitize.
+ * @return mixed The sanitized value.
+ */
+function audiotheme_gigs_screen_options( $return, $option, $value ) {
+	return $return;
+}
+
+/**
+ * Set up the gig Add/Edit screen.
+ *
+ * Add custom meta boxes, enqueues scripts and styles, and hook up the action
+ * to display the edit fields after the title.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param WP_Post $post The gig post object being edited.
+ */
+function audiotheme_gig_edit_screen_setup( $post ) {}
+
+/**
+ * Setup and display the main gig fields for editing.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_edit_gig_fields() {}
+
+/**
+ * Gig tickets meta box.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param WP_Post $post The gig post object being edited.
+ */
+function audiotheme_gig_tickets_meta_box( $post ) {}
+
+/**
+ * Process and save gig info when the CPT is saved.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param int $gig_id Gig post ID.
+ * @param WP_Post $post Gig post object.
+ */
+function audiotheme_gig_save_post( $post_id, $post ) {}
+
+/**
+ * Gig update messages.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @see /wp-admin/edit-form-advanced.php
+ *
+ * @param array $messages The array of post update messages.
+ * @return array
+ */
+function audiotheme_gig_post_updated_messages( $messages ) {
+	return $messages;
+}
+
+/**
+ * Get the base admin panel URL for adding a venue.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function get_audiotheme_venue_admin_url( $args = '' ) {
+	$admin_url = admin_url( 'admin.php?page=audiotheme-venue' );
+
+	if ( ! empty( $args ) ) {
+		if ( is_array( $args ) ) {
+			$admin_url = add_query_arg( $args, $admin_url );
+		} else {
+			$admin_url = ( 0 !== strpos( $args, '&' ) ) ? '&' . $admin_url : $admin_url;
+		}
+	}
+
+	return $admin_url;
+}
+
+/**
+ * Get the admin panel URL for viewing all venues.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function get_audiotheme_venues_admin_url( $args = '' ) {
+	$admin_url = admin_url( 'admin.php?page=audiotheme-venues' );
+
+	if ( ! empty( $args ) ) {
+		if ( is_array( $args ) ) {
+			$admin_url = add_query_arg( $args, $admin_url );
+		} else {
+			$admin_url = ( 0 !== strpos( $args, '&' ) ) ? '&' . $admin_url : $admin_url;
+		}
+	}
+
+	return $admin_url;
+}
+
+/**
+ * Get the admin panel URL for editing a venue.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function get_audiotheme_venue_edit_link( $admin_url, $post_id ) {
+	if ( 'audiotheme_venue' === get_post_type( $post_id ) ) {
+		$args = array(
+			'action'   => 'edit',
+			'venue_id' => $post_id,
+		);
+
+		$admin_url = get_audiotheme_venue_admin_url( $args );
+	}
+
+	return $admin_url;
+}
+
+/**
+ * Set up the Manage Venues screen.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_venues_manage_screen_setup() {}
+
+/**
+ * Set up the Edit Venue screen.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_venue_edit_screen_setup() {}
+
+/**
+ * Process venue add/edit actions.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_venue_edit_screen_process_actions() {}
+
+/**
+ * Display the venue add/edit screen.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_venue_edit_screen() {}
+
+/**
+ * Display venue contact information meta box.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param WP_Post $post Venue post object.
+ */
+function audiotheme_venue_contact_meta_box( $post ) {}
+
+/**
+ * Display venue notes meta box.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param WP_Post $post Venue post object.
+ */
+function audiotheme_venue_notes_meta_box( $post ) {}
+
+/**
+ * Display custom venue submit meta box.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param WP_Post $post Venue post object.
+ */
+function audiotheme_venue_submit_meta_box( $post ) {}

@@ -1,13 +1,13 @@
 <?php
 /**
- * Manage gigs administration screen functionality.
+ * Manage Gigs administration screen integration.
  *
  * @package AudioTheme\Gigs
  * @since 1.9.0
  */
 
 /**
- * Manage gigs administration screen class.
+ * Class providing integration with the Manage Gigs administration screen.
  *
  * @package AudioTheme\Gigs
  * @since 1.9.0
@@ -250,9 +250,9 @@ class AudioTheme_Screen_ManageGigs {
 				$year  = $arc_row->year;
 
 				printf(
-					'<option %s value="%s">%s</option>',
-					selected( $m, $year . $month, false ),
+					'<option value="%s"%s>%s</option>',
 					esc_attr( $year . $month ),
+					selected( $m, $year . $month, false ),
 					esc_html( sprintf( '%s %s', $wp_locale->get_month( $month ), $year ) )
 				);
 			}
@@ -282,7 +282,7 @@ class AudioTheme_Screen_ManageGigs {
 			<option value=""><?php esc_html_e( 'All venues', 'audiotheme' ); ?></option>
 			<?php
 			if ( $venues ) {
-				$selected = ( ! empty( $_REQUEST['venue'] ) ) ? absint( $_REQUEST['venue'] ) : '';
+				$selected = ! empty( $_REQUEST['venue'] ) ? absint( $_REQUEST['venue'] ) : '';
 				foreach ( $venues as $venue ) {
 					printf( '<option value="%s"%s>%s</option>',
 						$venue->ID,
@@ -307,7 +307,7 @@ class AudioTheme_Screen_ManageGigs {
 	public function register_columns( $columns ) {
 		$title_column = $columns['title'];
 
-		$columns['gig_date'] = _x( 'Date', 'column name', 'audiotheme' );
+		$columns['gig_date'] = esc_html_x( 'Date', 'column name', 'audiotheme' );
 
 		// Move the title column after the date column.
 		if ( version_compare( get_bloginfo( 'version' ), '4.3.0', '>=' ) ) {
@@ -315,7 +315,7 @@ class AudioTheme_Screen_ManageGigs {
 			$columns['title'] = $title_column;
 		}
 
-		$columns['venue']    = __( 'Venue', 'audiotheme' );
+		$columns['venue'] = esc_html__( 'Venue', 'audiotheme' );
 		unset( $columns['date'] );
 
 		return $columns;
@@ -379,12 +379,12 @@ class AudioTheme_Screen_ManageGigs {
 	 * @param WP_Post $gig Gig post object.
 	 */
 	protected function display_date_column( $gig ) {
-		$title = __( '(no date)', 'audiotheme' );
+		$title = esc_html__( '(no date)', 'audiotheme' );
 		if ( ! empty( $gig->gig_datetime ) ) {
 			$title = mysql2date( get_option( 'date_format' ), $gig->gig_datetime );
 		}
 
-		$time = __( 'TBD', 'audiotheme' );
+		$time = esc_html__( 'TBD', 'audiotheme' );
 		if ( ! empty( $gig->gig_time ) ) {
 			$time = mysql2date( get_option( 'time_format' ), $gig->gig_datetime );
 		}
@@ -420,7 +420,7 @@ class AudioTheme_Screen_ManageGigs {
 		) {
 			$view = 'past';
 		} elseif ( ! empty( $_REQUEST['post_status'] ) ) {
-			$view = $_REQUEST['post_status'];
+			$view = sanitize_text_field( $_REQUEST['post_status'] );
 		}
 
 		return $view;

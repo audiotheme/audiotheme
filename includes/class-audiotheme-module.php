@@ -75,13 +75,11 @@ abstract class AudioTheme_Module {
 	/**
 	 * Method for loading the module.
 	 *
-	 * Typically occurs at plugins_loaded:10 after the text domain has been loaded.
+	 * Typically occurs after the text domain has been loaded.
 	 *
 	 * @since 1.9.0
 	 */
-	public function load() {
-		$this->register_hooks();
-	}
+	public function load() {}
 
 	/**
 	 * Register module hooks.
