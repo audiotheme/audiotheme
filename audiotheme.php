@@ -60,8 +60,8 @@ if ( ! defined( 'AUDIOTHEME_URI' ) ) {
  */
 require( AUDIOTHEME_DIR . 'includes/archives.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-license.php' );
-require( AUDIOTHEME_DIR . 'includes/class-audiotheme-plugin-base.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-plugin.php' );
+require( AUDIOTHEME_DIR . 'includes/class-audiotheme-plugin-audiotheme.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-module-collection.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-module.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
@@ -95,7 +95,7 @@ function audiotheme() {
 	static $instance;
 
 	if ( null === $instance ) {
-		$instance = new AudioTheme_Plugin();
+		$instance = new AudioTheme_Plugin_AudioTheme();
 	}
 
 	return $instance;
