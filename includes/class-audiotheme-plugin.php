@@ -153,4 +153,21 @@ abstract class AudioTheme_Plugin {
 		$this->url = rtrim( $url, '/' ) . '/';
 		return $this;
 	}
+
+	/**
+	 * Register a hook provider.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param  object $provider Hook provider.
+	 * @return $this
+	 */
+	public function register_hooks( $provider ) {
+		if ( method_exists( $provider, 'set_plugin' ) ) {
+			$provider->set_plugin( $this );
+		}
+
+		$provider->register_hooks();
+		return $this;
+	}
 }

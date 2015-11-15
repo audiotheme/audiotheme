@@ -49,19 +49,6 @@ class AudioTheme_Plugin_AudioTheme extends AudioTheme_Plugin {
 	}
 
 	/**
-	 * Register a hook provider.
-	 *
-	 * @since 1.9.0
-	 *
-	 * @param  object $provider Hook provider.
-	 * @return $this
-	 */
-	public function register_hooks( $provider ) {
-		$provider->register_hooks();
-		return $this;
-	}
-
-	/**
 	 * Retrieve the license.
 	 *
 	 * @since 1.9.0
