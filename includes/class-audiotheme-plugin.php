@@ -14,6 +14,16 @@
  */
 abstract class AudioTheme_Plugin {
 	/**
+	 * Plugin basename.
+	 *
+	 * Ex: plugin-name/plugin-name.php
+	 *
+	 * @since 1.9.0
+	 * @var string
+	 */
+	protected $basename;
+
+	/**
 	 * Absolute path to the main plugin directory.
 	 *
 	 * @since 1.9.0
@@ -44,6 +54,32 @@ abstract class AudioTheme_Plugin {
 	 * @var string
 	 */
 	protected $url;
+
+	/**
+	 * Retrieve the absolute path for the main plugin file.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return string
+	 */
+	public function get_basename() {
+		return $this->basename;
+	}
+
+	/**
+	 * Set the plugin basename.
+	 *
+	 * The basename is the relative path from the main plugin directory.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param string $file Absolute path to the main plugin file.
+	 * @return string
+	 */
+	protected function set_basename( $file ) {
+		$this->basename = plugin_basename( $file );
+		return $this;
+	}
 
 	/**
 	 * Retrieve the plugin directory.
@@ -102,6 +138,7 @@ abstract class AudioTheme_Plugin {
 	 */
 	public function set_file( $file ) {
 		$this->file = $file;
+		$this->set_basename( $file );
 		return $this;
 	}
 
