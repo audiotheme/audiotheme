@@ -49,7 +49,7 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 		$instance['date_format'] = apply_filters( 'audiotheme_widget_upcoming_gigs_date_format', get_option( 'date_format' ) );
 		$instance['number'] = ( empty( $instance['number'] ) || ! absint( $instance['number'] ) ) ? 5 : absint( $instance['number'] );
 
-		$loop = new AudioTheme_Query_Gig( apply_filters( 'audiotheme_widget_upcoming_gigs_loop_args', array(
+		$loop = new AudioTheme_Gig_Query( apply_filters( 'audiotheme_widget_upcoming_gigs_loop_args', array(
 			'no_found_rows'  => true,
 			'posts_per_page' => $instance['number'],
 		) ) );
