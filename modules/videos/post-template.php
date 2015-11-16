@@ -3,6 +3,7 @@
  * Video template functions.
  *
  * @package AudioTheme\Template
+ * @since 1.0.0
  */
 
 /**

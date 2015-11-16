@@ -799,3 +799,262 @@ function audiotheme_venue_notes_meta_box( $post ) {}
  * @param WP_Post $post Venue post object.
  */
 function audiotheme_venue_submit_meta_box( $post ) {}
+
+/**
+ * Register video post type and attach hooks to load related functionality.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_videos_init() {}
+
+/**
+ * Get the videos rewrite base. Defaults to 'videos'.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @return string
+ */
+function get_audiotheme_videos_rewrite_base() {
+	return audiotheme()->get_modules()->get( 'videos' )->get_rewrite_base();
+}
+
+/**
+ * Sort video archive requests.
+ *
+ * Defaults to sorting by publish date in descending order. A plugin can hook
+ * into pre_get_posts at an earlier priority and manually set the order.
+ *
+ * @since 1.4.4
+ * @deprecated 1.9.0
+ *
+ * @param object $query The main WP_Query object. Passed by reference.
+ */
+function audiotheme_video_query_sort( $query ) {}
+
+/**
+ * Set posts per page for video archives if the default templates are being
+ * loaded.
+ *
+ * The default video archive template uses a 4-column grid. If it's loaded from
+ * the plugin, set the posts per page arg to a multiple of 4.
+ *
+ * @since 1.3.0
+ * @deprecated 1.9.0
+ *
+ * @param object $query The main WP_Query object. Passed by reference.
+ */
+function audiotheme_video_default_template_query( $query ) {}
+
+/**
+ * Load video templates.
+ *
+ * Templates should be included in an /audiotheme/ directory within the theme.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $template Template path.
+ * @return string
+ */
+function audiotheme_video_template_include( $template ) {
+	audiotheme()->get_modules()->get( 'videos' )->template_include( $template );
+}
+
+/**
+ * Delete oEmbed thumbnail post meta if the associated attachment is deleted.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param int $attachment_id The ID of the attachment being deleted.
+ */
+function audiotheme_video_delete_attachment( $attachment_id ) {
+	global $wpdb;
+
+	$post_id = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key='_audiotheme_oembed_thumbnail_id' AND meta_value=%d", $attachment_id ) );
+	if ( $post_id ) {
+		delete_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id' );
+		delete_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url' );
+	}
+}
+
+/**
+ * Add classes to video posts on the archive page.
+ *
+ * Classes serve as helpful hooks to aid in styling across various browsers.
+ *
+ * - Adds nth-child classes to video posts.
+ *
+ * @since 1.2.0
+ * @deprecated 1.9.0
+ *
+ * @param array $classes Default post classes.
+ * @return array
+ */
+function audiotheme_video_archive_post_class( $classes ) {
+	global $wp_query;
+
+	if ( $wp_query->is_main_query() && is_post_type_archive( 'audiotheme_video' ) ) {
+		$nth_child_classes = audiotheme_nth_child_classes( array(
+			'current' => $wp_query->current_post + 1,
+			'max'     => get_audiotheme_archive_meta( 'columns', true, 4 ),
+		) );
+
+		$classes = array_merge( $classes, $nth_child_classes );
+	}
+
+	return $classes;
+}
+
+/**
+ * Attach hooks for loading and managing videos in the admin dashboard.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_load_videos_admin() {}
+
+/**
+ * Video update messages.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param array $messages The array of existing post update messages.
+ * @return array
+ */
+function audiotheme_video_post_updated_messages( $messages ) {
+	return $messages;
+}
+
+/**
+ * Register video columns.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param array $columns An array of the column names to display.
+ * @return array The filtered array of column names.
+ */
+function audiotheme_video_register_columns( $columns ) {
+	return $columns;
+}
+
+/**
+ * Register video meta boxes.
+ *
+ * This callback is defined in the video CPT registration function. Meta boxes
+ * or any other functionality that should be limited to the Add/Edit Video
+ * screen and should occur after 'do_meta_boxes' can be registered here.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_video_meta_boxes() {}
+
+/**
+ * Display a field to enter a video URL after the post title.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_video_after_title() {}
+
+/**
+ * Add a link to get the video thumbnail from an oEmbed endpoint.
+ *
+ * Adds data about the current thumbnail and a previously fetched thumbnail
+ * from an oEmbed endpoint so the link can be hidden or shown as necessary. A
+ * function is also fired each time the HTML is output in order to determine
+ * whether the link should be displayed.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $content Default post thumbnail HTML.
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function audiotheme_video_admin_post_thumbnail_html( $content, $post_id ) {
+	return $content;
+}
+
+/**
+ * AJAX method to retrieve the thumbnail for a video.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_ajax_get_video_oembed_data() {}
+
+/**
+ * Import a video thumbnail from an oEmbed endpoint into the media library.
+ *
+ * @todo Considering doing video URL comparison rather than oembed thumbnail
+ *       comparison?
+ *
+ * @since 1.8.0
+ * @deprecated 1.9.0
+ *
+ * @param int $post_id Video post ID.
+ * @param string $url Video URL.
+ */
+function audiotheme_video_sideload_thumbnail( $post_id, $url ) {}
+
+/**
+ * Download an image from the specified URL and attach it to a post.
+ *
+ * @since 1.8.0
+ * @deprecated 1.9.0
+ *
+ * @see media_sideload_image()
+ *
+ * @param string $url The URL of the image to download.
+ * @param int $post_id The post ID the media is to be associated with.
+ * @param string $desc Optional. Description of the image.
+ * @return int|WP_Error Populated HTML img tag on success.
+ */
+function audiotheme_video_sideload_image( $url, $post_id, $desc = null ) {
+	return $id;
+}
+
+/**
+ * Save custom video data.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param int $post_id The ID of the post.
+ * @param object $post The post object.
+ */
+function audiotheme_video_save_post( $post_id, $post ) {}
+
+/**
+ * Save video archive sort order.
+ *
+ * The $post_id and $post parameters will refer to the archive CPT, while the
+ * $post_type parameter references the type of post the archive is for.
+ *
+ * @since 1.4.4
+ * @deprecated 1.9.0
+ *
+ * @param int $post_id Post ID.
+ * @param WP_Post $post Post object.
+ * @param string $post_type The type of post the archive lists.
+ */
+function audiotheme_video_archive_save_settings_hook( $post_id, $post, $post_type ) {}
+
+/**
+ * Add an orderby setting to the video archive.
+ *
+ * Allows for changing the sort order of videos. Custom would require a plugin
+ * like Simple Page Ordering.
+ *
+ * @since 1.4.4
+ * @deprecated 1.9.0
+ *
+ * @param WP_Post $post Post object.
+ */
+function audiotheme_video_archive_settings( $post ) {}

@@ -82,7 +82,6 @@ require( AUDIOTHEME_DIR . 'modules/discography/class-audiotheme-module-discograp
 require( AUDIOTHEME_DIR . 'modules/discography/discography.php' );
 require( AUDIOTHEME_DIR . 'modules/gigs/class-audiotheme-module-gigs.php' );
 require( AUDIOTHEME_DIR . 'modules/videos/class-audiotheme-module-videos.php' );
-require( AUDIOTHEME_DIR . 'modules/videos/videos.php' );
 
 /**
  * Retrieve the AudioTheme plugin instance.
@@ -154,9 +153,6 @@ function audiotheme_load() {
 	// Load discography.
 	add_action( 'init', 'audiotheme_discography_init' );
 
-	// Load videos.
-	add_action( 'init', 'audiotheme_videos_init' );
-
 	// Template hooks.
 	add_action( 'audiotheme_before_main_content', 'audiotheme_before_main_content' );
 	add_action( 'audiotheme_after_main_content', 'audiotheme_after_main_content' );
@@ -201,9 +197,6 @@ function audiotheme_load_admin() {
 	if ( is_admin() ) {
 		// Load discography admin.
 		add_action( 'init', 'audiotheme_load_discography_admin' );
-
-		// Load videos admin.
-		add_action( 'init', 'audiotheme_load_videos_admin' );
 	}
 }
 add_action( 'after_setup_theme', 'audiotheme_load_admin', 5 );
