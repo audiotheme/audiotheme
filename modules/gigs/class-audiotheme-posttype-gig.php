@@ -193,17 +193,14 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType {
 	 * @return string The gig permalink.
 	 */
 	public function post_permalink( $post_link, $post, $leavename, $sample ) {
-		$is_draft_or_pending = isset( $post->post_status ) && in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) );
+		if ( ( $this->is_draft_or_pending( $post ) && ! $sample ) || 'audiotheme_gig' !== get_post_type( $post ) ) {
+			return $post_link;
+		}
 
-		if ( ! $is_draft_or_pending || $sample ) {
-			$permalink = get_option( 'permalink_structure' );
-
-			if ( ! empty( $permalink ) && 'audiotheme_gig' === get_post_type( $post ) ) {
-				$base = $this->module->get_rewrite_base();
-				$slug = ( $leavename ) ? '%postname%' : $post->post_name;
-
-				$post_link = home_url( sprintf( '/%s/%s/', $base, $slug ) );
-			}
+		if ( get_option( 'permalink_structure' ) ) {
+			$base      = $this->module->get_rewrite_base();
+			$slug      = $leavename ? '%postname%' : $post->post_name;
+			$post_link = home_url( sprintf( '/%s/%s/', $base, $slug ) );
 		}
 
 		return $post_link;

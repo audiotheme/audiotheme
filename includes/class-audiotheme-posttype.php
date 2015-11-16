@@ -90,4 +90,16 @@ abstract class AudioTheme_PostType {
 
 		return $messages;
 	}
+
+	/**
+	 * Whether a post has a draft or pending status.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param WP_Post $post Post object.
+	 * @return bool
+	 */
+	protected function is_draft_or_pending( $post ) {
+		return isset( $post->post_status ) && in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) );
+	}
 }
