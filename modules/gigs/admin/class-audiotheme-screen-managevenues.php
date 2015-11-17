@@ -20,11 +20,9 @@ class AudioTheme_Screen_ManageVenues {
 	 */
 	public function register_hooks() {
 		add_filter( 'parse_query',                                   array( $this, 'parse_admin_query' ) );
-		add_filter( 'bulk_actions-edit-audiotheme_venue',            array( $this, 'bulk_actions' ) );
 		add_filter( 'manage_audiotheme_venue_posts_columns',         array( $this, 'register_columns' ) );
 		add_action( 'manage_posts_custom_column',                    array( $this, 'display_columns' ), 10, 2 );
 		add_action( 'manage_edit-audiotheme_venue_sortable_columns', array( $this, 'register_sortable_columns' ) );
-		add_filter( 'post_row_actions',                              array( $this, 'post_row_actions' ), 10, 2 );
 	}
 
 	/**

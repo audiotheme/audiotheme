@@ -20,9 +20,7 @@ class AudioTheme_Screen_ManageTracks {
 	 */
 	public function register_hooks() {
 		add_filter( 'parse_query',                                   array( $this, 'admin_query' ) );
-		add_action( 'post_row_actions',                              array( $this, 'list_table_actions' ), 10, 2 );
 		add_action( 'restrict_manage_posts',                         array( $this, 'list_table_filters' ) );
-		add_filter( 'bulk_actions-edit-audiotheme_track',            array( $this, 'list_table_bulk_actions' ) );
 		add_filter( 'manage_edit-audiotheme_track_columns',          array( $this, 'register_columns' ) );
 		add_action( 'manage_edit-audiotheme_track_sortable_columns', array( $this, 'register_sortable_columns' ) );
 		add_action( 'manage_posts_custom_column',                    array( $this, 'display_columns' ), 10, 2 );
@@ -63,33 +61,6 @@ class AudioTheme_Screen_ManageTracks {
 		if ( ! empty( $_GET['post_parent'] ) ) {
 			$wp_query->set( 'post_parent', absint( $_GET['post_parent'] ) );
 		}
-	}
-
-	/**
-	 * Remove quick edit from the track list table.
-	 *
-	 * @since 1.9.0
-	 *
-	 * @param array $actions List of actions.
-	 * @param WP_Post $post A post.
-	 * @return array
-	 */
-	public function list_table_actions( $actions, $post ) {
-		if ( 'audiotheme_track' === get_post_type( $post ) ) {
-			unset( $actions['inline hide-if-no-js'] );
-		}
-
-		return $actions;
-	}
-
-	/**
-	 * Remove bulk edit from the track list table.
-	 *
-	 * @since 1.9.0
-	 */
-	public function list_table_bulk_actions( $actions ) {
-		unset( $actions['edit'] );
-		return $actions;
 	}
 
 	/**

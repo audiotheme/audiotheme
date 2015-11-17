@@ -23,8 +23,6 @@ class AudioTheme_Screen_ManageRecords {
 		add_filter( 'manage_edit-audiotheme_record_columns',          array( $this, 'register_columns' ) );
 		add_action( 'manage_edit-audiotheme_record_sortable_columns', array( $this, 'register_sortable_columns' ) );
 		add_action( 'manage_pages_custom_column',                     array( $this, 'display_columns' ), 10, 2 );
-		add_filter( 'bulk_actions-edit-audiotheme_record',            array( $this, 'list_table_bulk_actions' ) );
-		add_action( 'page_row_actions',                               array( $this, 'list_table_actions' ), 10, 2 );
 	}
 
 	/**
@@ -131,35 +129,5 @@ class AudioTheme_Screen_ManageRecords {
 				);
 				break;
 		}
-	}
-
-	/**
-	 * Remove quick edit from the record list table.
-	 *
-	 * @since 1.9.0
-	 *
-	 * @param array $actions List of actions.
-	 * @param WP_Post $post Post object.
-	 * @return array
-	 */
-	public function list_table_actions( $actions, $post ) {
-		if ( 'audiotheme_record' === get_post_type( $post ) ) {
-			unset( $actions['inline hide-if-no-js'] );
-		}
-
-		return $actions;
-	}
-
-	/**
-	 * Remove bulk edit from the record list table.
-	 *
-	 * @since 1.9.0
-	 *
-	 * @param array $actions Array of actions.
-	 * @return array
-	 */
-	public function list_table_bulk_actions( $actions ) {
-		unset( $actions['edit'] );
-		return $actions;
 	}
 }
