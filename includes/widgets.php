@@ -13,7 +13,6 @@
 require( AUDIOTHEME_DIR . 'includes/widgets/recent-posts.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets/record.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets/track.php' );
-// require( AUDIOTHEME_DIR . 'includes/widgets/twitter.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets/upcoming-gigs.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets/video.php' );
 
