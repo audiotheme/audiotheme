@@ -65,11 +65,7 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType {
 	 * @param WP_Query $wp_query The main WP_Query object. Passed by reference.
 	 */
 	public function sort_query( $wp_query ) {
-		if (
-			is_admin() ||
-			! $wp_query->is_main_query() ||
-			! ( is_post_type_archive( 'audiotheme_video' ) || is_tax( 'audiotheme_video_category' ) )
-		) {
+		if ( is_admin() || ! $wp_query->is_main_query() || ! $this->is_archive_request() ) {
 			return;
 		}
 
@@ -110,12 +106,7 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType {
 	 * @param WP_Query $wp_query The main WP_Query object. Passed by reference.
 	 */
 	public function default_template_archive_query( $wp_query ) {
-		if (
-			is_admin() ||
-			! $wp_query->is_main_query() ||
-			! is_post_type_archive( 'audiotheme_video' ) ||
-			! ( is_post_type_archive( 'audiotheme_video' ) || is_tax( 'audiotheme_video_category' ) )
-		) {
+		if ( is_admin() || ! $wp_query->is_main_query() || ! $this->is_archive_request() ) {
 			return;
 		}
 
@@ -266,5 +257,16 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType {
 			'preview' => esc_html__( 'Preview video', 'audiotheme' ),
 			'view'    => esc_html__( 'View video', 'audiotheme' ),
 		);
+	}
+
+	/**
+	 * Whether the current request is for a video archive.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return bool
+	 */
+	protected function is_archive_request() {
+		return is_post_type_archive( $this->post_type ) || is_tax( 'audiotheme_video_category' );
 	}
 }
