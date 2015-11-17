@@ -48,24 +48,6 @@ class AudioTheme_Screen_EditGig {
 	 * @param WP_Post $post The gig post object being edited.
 	 */
 	public function register_meta_boxes( $post ) {
-		// Add a customized submit meta box.
-		remove_meta_box( 'submitdiv', 'audiotheme_gig', 'side' );
-
-		add_meta_box(
-			'submitdiv',
-			esc_html__( 'Publish', 'audiotheme' ),
-			'audiotheme_post_submit_meta_box',
-			'audiotheme_gig',
-			'side',
-			'high',
-			array(
-				'force_delete'      => false,
-				'show_publish_date' => false,
-				'show_statuses'     => array(),
-				'show_visibility'   => false,
-			)
-		);
-
 		add_meta_box(
 			'audiotheme-gig-tickets',
 			esc_html__( 'Tickets', 'audiotheme' ),
