@@ -20,8 +20,8 @@
  */
 function get_audiotheme_record_type_strings() {
 	$strings = array(
-		'record-type-album'  => _x( 'Album',  'Record type', 'audiotheme' ),
-		'record-type-single' => _x( 'Single', 'Record type', 'audiotheme' ),
+		'record-type-album'  => 'Album',
+		'record-type-single' => 'Single',
 	);
 
 	/**
@@ -72,7 +72,7 @@ function get_audiotheme_record_type_string( $slug ) {
 	}
 
 	$term = get_term_by( 'slug', $slug, 'audiotheme_record_type' );
-	return $term ? $term->name : _x( 'Album', 'Record type', 'audiotheme' );
+	return $term ? $term->name : 'Album';
 }
 
 /**
@@ -197,6 +197,8 @@ function audiotheme_page_list_classes( $classes, $page ) {
 function audiotheme_parse_video_oembed_data( $return, $data, $url ) {
 	global $post_id;
 
+	_deprecated_function( __FUNCTION__, '1.8.0' );
+
 	// Supports any oEmbed providers that respond with 'thumbnail_url'.
 	if ( isset( $data->thumbnail_url ) ) {
 		$current_thumb_id = get_post_thumbnail_id( $post_id );
@@ -232,6 +234,7 @@ function audiotheme_parse_video_oembed_data( $return, $data, $url ) {
  */
 function audiotheme_add_video_thumbnail( $attachment_id ) {
 	global $post_id;
+	_deprecated_function( __FUNCTION__, '1.8.0' );
 	set_post_thumbnail( $post_id, $attachment_id );
 }
 
@@ -253,6 +256,8 @@ function audiotheme_add_video_thumbnail( $attachment_id ) {
  */
 function audiotheme_enqueue_pointer( $id, $title, $content, $args = array() ) {
 	global $audiotheme_pointers;
+
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 
 	$id = sanitize_key( $id );
 
@@ -279,8 +284,8 @@ function audiotheme_enqueue_pointer( $id, $title, $content, $args = array() ) {
  * @return bool
  */
 function is_audiotheme_pointer_dismissed( $id ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	$dismissed = explode( ',', (string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
-
 	return in_array( $id, $dismissed );
 }
 
@@ -294,6 +299,8 @@ function is_audiotheme_pointer_dismissed( $id ) {
  */
 function audiotheme_print_pointers() {
 	global $audiotheme_pointers;
+
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 
 	if ( empty( $audiotheme_pointers ) ) {
 		return;
@@ -334,7 +341,9 @@ function audiotheme_print_pointers() {
  * @since 1.0.0
  * @deprecated 1.9.0
  */
-function audiotheme_discography_init() {}
+function audiotheme_discography_init() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Get the discography rewrite base. Defaults to 'music'.
@@ -345,6 +354,7 @@ function audiotheme_discography_init() {}
  * @return string
  */
 function get_audiotheme_discography_rewrite_base() {
+	_deprecated_function( __FUNCTION__, '1.9.0', 'AudioTheme_Module_Discography::get_rewrite_base()' );
 	return audiotheme()->get_modules()->get( 'discography' )->get_rewrite_base();
 }
 
@@ -357,6 +367,7 @@ function get_audiotheme_discography_rewrite_base() {
  * @param object $wp_rewrite The main rewrite object. Passed by reference.
  */
 function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	audiotheme()->get_modules()->get( 'discography' )->generate_rewrite_rules( $wp_rewrite );
 }
 
@@ -376,7 +387,9 @@ function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
  *
  * @param object $query The main WP_Query object. Passed by reference.
  */
-function audiotheme_record_query_sort( $query ) {}
+function audiotheme_record_query_sort( $query ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Sort records by title after sorting by release year.
@@ -389,6 +402,7 @@ function audiotheme_record_query_sort( $query ) {}
  */
 function audiotheme_record_query_sort_sql( $orderby ) {
 	global $wpdb;
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $orderby . ", {$wpdb->posts}.post_title ASC";
 }
 
@@ -403,7 +417,9 @@ function audiotheme_record_query_sort_sql( $orderby ) {
  *
  * @param object $query The main WP_Query object. Passed by reference.
  */
-function audiotheme_track_query( $query ) {}
+function audiotheme_track_query( $query ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Set posts per page for record archives if the default templates are being
@@ -417,7 +433,9 @@ function audiotheme_track_query( $query ) {}
  *
  * @param object $query The main WP_Query object. Passed by reference.
  */
-function audiotheme_record_default_template_query( $query ) {}
+function audiotheme_record_default_template_query( $query ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Load discography templates.
@@ -431,6 +449,7 @@ function audiotheme_record_default_template_query( $query ) {}
  * @return string
  */
 function audiotheme_discography_template_include( $template ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return audiotheme()->get_modules()->get( 'discography' )->template_include( $template );
 }
 
@@ -450,6 +469,7 @@ function audiotheme_discography_template_include( $template ) {
  * @return string The record or track permalink.
  */
 function audiotheme_discography_permalinks( $post_link, $post, $leavename, $sample ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $post_link;
 }
 
@@ -464,6 +484,7 @@ function audiotheme_discography_permalinks( $post_link, $post, $leavename, $samp
  * @return string The discography archive URL.
  */
 function audiotheme_discography_archive_link( $link, $post_type ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $link;
 }
 
@@ -485,6 +506,7 @@ function audiotheme_discography_archive_link( $link, $post_type ) {
  * @return string
  */
 function audiotheme_track_unique_slug( $slug, $post_ID, $post_status, $post_type, $post_parent, $original_slug = null ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $slug;
 }
 
@@ -499,6 +521,8 @@ function audiotheme_track_unique_slug( $slug, $post_ID, $post_status, $post_type
  * @return array
  */
 function audiotheme_prepare_track_for_js( $track ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
 	$data = array(
 		'artist'  => '',
 		'artwork' => '',
@@ -564,6 +588,8 @@ function audiotheme_prepare_track_for_js( $track ) {
  */
 function audiotheme_print_tracks_js() {
 	global $audiotheme_enqueued_tracks;
+
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 
 	if ( empty( $audiotheme_enqueued_tracks ) || ! is_array( $audiotheme_enqueued_tracks ) ) {
 		return;
@@ -632,6 +658,7 @@ function audiotheme_print_tracks_js() {
  * @return array
  */
 function audiotheme_record_archive_post_class( $classes ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $classes;
 }
 
@@ -641,7 +668,9 @@ function audiotheme_record_archive_post_class( $classes ) {
  * @since 1.0.0
  * @deprecated 1.9.0
  */
-function audiotheme_load_discography_admin() {}
+function audiotheme_load_discography_admin() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Rename the top level Records menu item to Discography.
@@ -651,7 +680,9 @@ function audiotheme_load_discography_admin() {}
  *
  * @link https://core.trac.wordpress.org/ticket/23316
  */
-function audiotheme_discography_admin_menu() {}
+function audiotheme_discography_admin_menu() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Discography update messages.
@@ -663,6 +694,7 @@ function audiotheme_discography_admin_menu() {}
  * @return array
  */
 function audiotheme_discography_post_updated_messages( $messages ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $messages;
 }
 
@@ -676,6 +708,7 @@ function audiotheme_discography_post_updated_messages( $messages ) {
  * @return array
  */
 function audiotheme_playlist_args( $args ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	$args['show_in_menu'] = 'edit.php?post_type=audiotheme_record';
 	return $args;
 }
@@ -686,7 +719,9 @@ function audiotheme_playlist_args( $args ) {
  * @since 1.5.0
  * @deprecated 1.9.0
  */
-function audiotheme_playlist_admin_enqueue_scripts() {}
+function audiotheme_playlist_admin_enqueue_scripts() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Print playlist JavaScript templates.
@@ -694,7 +729,9 @@ function audiotheme_playlist_admin_enqueue_scripts() {}
  * @since 1.5.0
  * @deprecated 1.9.0
  */
-function audiotheme_playlist_print_templates() {}
+function audiotheme_playlist_print_templates() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Convert a track into the format expected by the Cue plugin.
@@ -706,6 +743,8 @@ function audiotheme_playlist_print_templates() {}
  * @return object Track object expected by Cue.
  */
 function get_audiotheme_playlist_track( $post = 0 ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
 	$post = get_post( $post );
 	$track = new stdClass;
 
@@ -732,7 +771,9 @@ function get_audiotheme_playlist_track( $post = 0 ) {
  *
  * @param object $wp_query The main WP_Query object. Passed by reference.
  */
-function audiotheme_records_admin_query( $wp_query ) {}
+function audiotheme_records_admin_query( $wp_query ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Register record columns.
@@ -744,6 +785,7 @@ function audiotheme_records_admin_query( $wp_query ) {}
  * @return array Filtered array of column names.
  */
 function audiotheme_record_register_columns( $columns ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $columns;
 }
 
@@ -756,6 +798,7 @@ function audiotheme_record_register_columns( $columns ) {
  * @return array
  */
 function audiotheme_record_register_sortable_columns( $columns ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $columns;
 }
 
@@ -768,7 +811,9 @@ function audiotheme_record_register_sortable_columns( $columns ) {
  * @param string $column_id The id of the column to display.
  * @param int $post_id Post ID.
  */
-function audiotheme_record_display_columns( $column_name, $post_id ) {}
+function audiotheme_record_display_columns( $column_name, $post_id ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Remove quick edit from the record list table.
@@ -781,6 +826,7 @@ function audiotheme_record_display_columns( $column_name, $post_id ) {}
  * @return array
  */
 function audiotheme_record_list_table_actions( $actions, $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $actions;
 }
 
@@ -794,6 +840,7 @@ function audiotheme_record_list_table_actions( $actions, $post ) {
  * @return array
  */
 function audiotheme_record_list_table_bulk_actions( $actions ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $actions;
 }
 
@@ -807,7 +854,9 @@ function audiotheme_record_list_table_bulk_actions( $actions ) {
  *
  * @param int $post_id Post ID.
  */
-function audiotheme_record_save_post( $post_id ) {}
+function audiotheme_record_save_post( $post_id ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Register record meta boxes.
@@ -817,7 +866,9 @@ function audiotheme_record_save_post( $post_id ) {}
  *
  * @param WP_Post $post The record post object being edited.
  */
-function audiotheme_edit_record_meta_boxes( $post ) {}
+function audiotheme_edit_record_meta_boxes( $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Tracklist editor.
@@ -825,7 +876,9 @@ function audiotheme_edit_record_meta_boxes( $post ) {}
  * @since 1.0.0
  * @deprecated 1.9.0
  */
-function audiotheme_edit_record_tracklist() {}
+function audiotheme_edit_record_tracklist() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Record details meta box.
@@ -835,7 +888,9 @@ function audiotheme_edit_record_tracklist() {}
  *
  * @param WP_Post $post The record post object being edited.
  */
-function audiotheme_record_details_meta_box( $post ) {}
+function audiotheme_record_details_meta_box( $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Save record archive sort order.
@@ -850,7 +905,9 @@ function audiotheme_record_details_meta_box( $post ) {}
  * @param WP_Post $post Post object.
  * @param string $post_type The type of post the archive lists.
  */
-function audiotheme_record_archive_save_settings_hook( $post_id, $post, $post_type ) {}
+function audiotheme_record_archive_save_settings_hook( $post_id, $post, $post_type ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Add an orderby setting to the record archive.
@@ -863,7 +920,9 @@ function audiotheme_record_archive_save_settings_hook( $post_id, $post, $post_ty
  *
  * @param WP_Post $post Post object.
  */
-function audiotheme_record_archive_settings( $post ) {}
+function audiotheme_record_archive_settings( $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Custom sort tracks on the Manage Tracks screen.
@@ -873,7 +932,9 @@ function audiotheme_record_archive_settings( $post ) {}
  *
  * @param object $wp_query The main WP_Query object. Passed by reference.
  */
-function audiotheme_tracks_admin_query( $wp_query ) {}
+function audiotheme_tracks_admin_query( $wp_query ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Register track columns.
@@ -885,6 +946,7 @@ function audiotheme_tracks_admin_query( $wp_query ) {}
  * @return array The filtered array of column names.
  */
 function audiotheme_track_register_columns( $columns ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $columns;
 }
 
@@ -898,6 +960,7 @@ function audiotheme_track_register_columns( $columns ) {
  * @return array
  */
 function audiotheme_track_register_sortable_columns( $columns ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $columns;
 }
 
@@ -910,7 +973,9 @@ function audiotheme_track_register_sortable_columns( $columns ) {
  * @param string $column_id The id of the column to display.
  * @param int $post_id Post ID.
  */
-function audiotheme_track_display_columns( $column_name, $post_id ) {}
+function audiotheme_track_display_columns( $column_name, $post_id ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Remove quick edit from the track list table.
@@ -923,6 +988,7 @@ function audiotheme_track_display_columns( $column_name, $post_id ) {}
  * @return array
  */
 function audiotheme_track_list_table_actions( $actions, $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $actions;
 }
 
@@ -933,6 +999,7 @@ function audiotheme_track_list_table_actions( $actions, $post ) {
  * @deprecated 1.9.0
  */
 function audiotheme_track_list_table_bulk_actions( $actions ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $actions;
 }
 
@@ -945,7 +1012,9 @@ function audiotheme_track_list_table_bulk_actions( $actions ) {
  * @param array $actions List of actions.
  * @return array
  */
-function audiotheme_tracks_filters() {}
+function audiotheme_tracks_filters() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Custom rules for saving a track.
@@ -955,7 +1024,9 @@ function audiotheme_tracks_filters() {}
  *
  * @param int $post_id Post ID.
  */
-function audiotheme_track_save_post( $post_id ) {}
+function audiotheme_track_save_post( $post_id ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Register track meta boxes.
@@ -965,7 +1036,9 @@ function audiotheme_track_save_post( $post_id ) {}
  *
  * @param int $post_id Track ID.
  */
-function audiotheme_edit_track_meta_boxes( $post ) {}
+function audiotheme_edit_track_meta_boxes( $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 
 /**
@@ -976,7 +1049,9 @@ function audiotheme_edit_track_meta_boxes( $post ) {}
  *
  * @param WP_Post $post The track post object being edited.
  */
-function audiotheme_track_details_meta_box( $post ) {}
+function audiotheme_track_details_meta_box( $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Register gig and venue post types and attach hooks to load related
@@ -985,7 +1060,9 @@ function audiotheme_track_details_meta_box( $post ) {}
  * @since 1.0.0
  * @deprecated 1.9.0
  */
-function audiotheme_gigs_init() {}
+function audiotheme_gigs_init() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Register query variables.
@@ -996,7 +1073,9 @@ function audiotheme_gigs_init() {}
  * @param array $vars Array of valid query variables.
  * @return array
  */
-function audiotheme_gigs_register_query_vars( $vars ) {}
+function audiotheme_gigs_register_query_vars( $vars ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Filter gigs requests.
@@ -1010,7 +1089,9 @@ function audiotheme_gigs_register_query_vars( $vars ) {}
  *
  * @param object $query The main WP_Query object. Passed by reference.
  */
-function audiotheme_pre_gig_query( $query ) {}
+function audiotheme_pre_gig_query( $query ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Filter gig permalinks to match the custom rewrite rules.
@@ -1029,6 +1110,7 @@ function audiotheme_pre_gig_query( $query ) {}
  * @return string The gig permalink.
  */
 function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $post_link;
 }
 
@@ -1043,6 +1125,7 @@ function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
  * @return string The gig archive URL.
  */
 function audiotheme_gigs_archive_link( $link, $post_type ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $link;
 }
 
@@ -1066,6 +1149,7 @@ function audiotheme_gigs_archive_link( $link, $post_type ) {
  * @return string
  */
 function audiotheme_gig_unique_slug( $slug, $post_ID, $post_status, $post_type, $post_parent, $original_slug = null ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $slug;
 }
 
@@ -1083,7 +1167,9 @@ function audiotheme_gig_unique_slug( $slug, $post_ID, $post_status, $post_type, 
  * @param int $post_id Post ID.
  * @param WP_Post $post Post object.
  */
-function audiotheme_gig_update_bad_slug( $post_id, $post ) {}
+function audiotheme_gig_update_bad_slug( $post_id, $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Update a venue's cached gig count when gig is deleted.
@@ -1096,7 +1182,9 @@ function audiotheme_gig_update_bad_slug( $post_id, $post ) {}
  *
  * @param int $post_id ID of the gig being deleted.
  */
-function audiotheme_gig_before_delete( $post_id ) {}
+function audiotheme_gig_before_delete( $post_id ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Add useful classes to gig posts.
@@ -1110,6 +1198,7 @@ function audiotheme_gig_before_delete( $post_id ) {}
  * @return array Array of classes.
  */
 function audiotheme_gig_post_class( $classes, $class, $post_id ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $classes;
 }
 
@@ -1122,6 +1211,7 @@ function audiotheme_gig_post_class( $classes, $class, $post_id ) {
  * @return string
  */
 function audiotheme_gigs_rewrite_base() {
+	_deprecated_function( __FUNCTION__, '1.9.0', 'AudioTheme_Module_Gigs::get_rewrite_base()' );
 	return audiotheme()->get_modules()->get( 'gigs' )->get_rewrite_base();
 }
 
@@ -1150,6 +1240,7 @@ function audiotheme_gigs_rewrite_base() {
  * @param object $wp_rewrite The main rewrite object. Passed by reference.
  */
 function audiotheme_gig_generate_rewrite_rules( $wp_rewrite ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	audiotheme()->get_modules()->get( 'gigs' )->generate_rewrite_rules( $wp_rewrite );
 }
 
@@ -1165,6 +1256,7 @@ function audiotheme_gig_generate_rewrite_rules( $wp_rewrite ) {
  * @uses p2p_type()->each_connected()
  */
 function audiotheme_gig_template_redirect() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	audiotheme()->get_modules()->get( 'gigs' )->template_redirect();
 }
 
@@ -1180,6 +1272,7 @@ function audiotheme_gig_template_redirect() {
  * @return string
  */
 function audiotheme_gig_template_include( $template ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $template;
 }
 
@@ -1190,6 +1283,8 @@ function audiotheme_gig_template_include( $template ) {
  * @deprecated 1.9.0
  */
 function get_audiotheme_gig_admin_url( $args = '' ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
 	$admin_url = admin_url( 'edit.php?post_type=audiotheme_gig' );
 
 	if ( ! empty( $args ) ) {
@@ -1209,7 +1304,9 @@ function get_audiotheme_gig_admin_url( $args = '' ) {
  * @since 1.0.0
  * @deprecated 1.9.0
  */
-function audiotheme_gigs_admin_setup() {}
+function audiotheme_gigs_admin_setup() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Add the admin menu items for gigs.
@@ -1217,7 +1314,9 @@ function audiotheme_gigs_admin_setup() {}
  * @since 1.0.0
  * @deprecated 1.9.0
  */
-function audiotheme_gigs_admin_menu() {}
+function audiotheme_gigs_admin_menu() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Higlight the correct top level and sub menu items for the gig screen being
@@ -1230,6 +1329,7 @@ function audiotheme_gigs_admin_menu() {}
  * @return string The menu item to highlight.
  */
 function audiotheme_gigs_admin_menu_highlight( $parent_file ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $parent_file;
 }
 
@@ -1242,7 +1342,9 @@ function audiotheme_gigs_admin_menu_highlight( $parent_file ) {
  * @since 1.0.0
  * @deprecated 1.9.0
  */
-function audiotheme_gigs_manage_screen_setup() {}
+function audiotheme_gigs_manage_screen_setup() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Display the gig Manage Screen.
@@ -1250,7 +1352,9 @@ function audiotheme_gigs_manage_screen_setup() {}
  * @since 1.0.0
  * @deprecated 1.9.0
  */
-function audiotheme_gigs_manage_screen() {}
+function audiotheme_gigs_manage_screen() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Sanitize the 'per_page' screen option on the Manage Gigs and Manage Venues
@@ -1270,6 +1374,7 @@ function audiotheme_gigs_manage_screen() {}
  * @return mixed The sanitized value.
  */
 function audiotheme_gigs_screen_options( $return, $option, $value ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $return;
 }
 
@@ -1284,7 +1389,9 @@ function audiotheme_gigs_screen_options( $return, $option, $value ) {
  *
  * @param WP_Post $post The gig post object being edited.
  */
-function audiotheme_gig_edit_screen_setup( $post ) {}
+function audiotheme_gig_edit_screen_setup( $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Setup and display the main gig fields for editing.
@@ -1292,7 +1399,9 @@ function audiotheme_gig_edit_screen_setup( $post ) {}
  * @since 1.0.0
  * @deprecated 1.9.0
  */
-function audiotheme_edit_gig_fields() {}
+function audiotheme_edit_gig_fields() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Gig tickets meta box.
@@ -1302,7 +1411,9 @@ function audiotheme_edit_gig_fields() {}
  *
  * @param WP_Post $post The gig post object being edited.
  */
-function audiotheme_gig_tickets_meta_box( $post ) {}
+function audiotheme_gig_tickets_meta_box( $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Process and save gig info when the CPT is saved.
@@ -1313,7 +1424,9 @@ function audiotheme_gig_tickets_meta_box( $post ) {}
  * @param int $gig_id Gig post ID.
  * @param WP_Post $post Gig post object.
  */
-function audiotheme_gig_save_post( $post_id, $post ) {}
+function audiotheme_gig_save_post( $post_id, $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Gig update messages.
@@ -1327,6 +1440,7 @@ function audiotheme_gig_save_post( $post_id, $post ) {}
  * @return array
  */
 function audiotheme_gig_post_updated_messages( $messages ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $messages;
 }
 
@@ -1337,6 +1451,8 @@ function audiotheme_gig_post_updated_messages( $messages ) {
  * @deprecated 1.9.0
  */
 function get_audiotheme_venue_admin_url( $args = '' ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
 	$admin_url = admin_url( 'admin.php?page=audiotheme-venue' );
 
 	if ( ! empty( $args ) ) {
@@ -1357,6 +1473,8 @@ function get_audiotheme_venue_admin_url( $args = '' ) {
  * @deprecated 1.9.0
  */
 function get_audiotheme_venues_admin_url( $args = '' ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
 	$admin_url = admin_url( 'admin.php?page=audiotheme-venues' );
 
 	if ( ! empty( $args ) ) {
@@ -1377,6 +1495,8 @@ function get_audiotheme_venues_admin_url( $args = '' ) {
  * @deprecated 1.9.0
  */
 function get_audiotheme_venue_edit_link( $admin_url, $post_id ) {
+	_deprecated_function( __FUNCTION__, '1.9.0', 'get_edit_post_link()' );
+
 	if ( 'audiotheme_venue' === get_post_type( $post_id ) ) {
 		$args = array(
 			'action'   => 'edit',
@@ -1395,7 +1515,9 @@ function get_audiotheme_venue_edit_link( $admin_url, $post_id ) {
  * @since 1.0.0
  * @deprecated 1.9.0
  */
-function audiotheme_venues_manage_screen_setup() {}
+function audiotheme_venues_manage_screen_setup() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Set up the Edit Venue screen.
@@ -1403,7 +1525,9 @@ function audiotheme_venues_manage_screen_setup() {}
  * @since 1.0.0
  * @deprecated 1.9.0
  */
-function audiotheme_venue_edit_screen_setup() {}
+function audiotheme_venue_edit_screen_setup() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Process venue add/edit actions.
@@ -1411,7 +1535,9 @@ function audiotheme_venue_edit_screen_setup() {}
  * @since 1.0.0
  * @deprecated 1.9.0
  */
-function audiotheme_venue_edit_screen_process_actions() {}
+function audiotheme_venue_edit_screen_process_actions() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Display the venue add/edit screen.
@@ -1419,7 +1545,9 @@ function audiotheme_venue_edit_screen_process_actions() {}
  * @since 1.0.0
  * @deprecated 1.9.0
  */
-function audiotheme_venue_edit_screen() {}
+function audiotheme_venue_edit_screen() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Display venue contact information meta box.
@@ -1429,7 +1557,9 @@ function audiotheme_venue_edit_screen() {}
  *
  * @param WP_Post $post Venue post object.
  */
-function audiotheme_venue_contact_meta_box( $post ) {}
+function audiotheme_venue_contact_meta_box( $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Display venue notes meta box.
@@ -1439,7 +1569,9 @@ function audiotheme_venue_contact_meta_box( $post ) {}
  *
  * @param WP_Post $post Venue post object.
  */
-function audiotheme_venue_notes_meta_box( $post ) {}
+function audiotheme_venue_notes_meta_box( $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Display custom venue submit meta box.
@@ -1449,7 +1581,9 @@ function audiotheme_venue_notes_meta_box( $post ) {}
  *
  * @param WP_Post $post Venue post object.
  */
-function audiotheme_venue_submit_meta_box( $post ) {}
+function audiotheme_venue_submit_meta_box( $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Register video post type and attach hooks to load related functionality.
@@ -1457,7 +1591,9 @@ function audiotheme_venue_submit_meta_box( $post ) {}
  * @since 1.0.0
  * @deprecated 1.9.0
  */
-function audiotheme_videos_init() {}
+function audiotheme_videos_init() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Get the videos rewrite base. Defaults to 'videos'.
@@ -1468,6 +1604,7 @@ function audiotheme_videos_init() {}
  * @return string
  */
 function get_audiotheme_videos_rewrite_base() {
+	_deprecated_function( __FUNCTION__, '1.9.0', 'AudioTheme_Module_Videos::get_rewrite_base()' );
 	return audiotheme()->get_modules()->get( 'videos' )->get_rewrite_base();
 }
 
@@ -1482,7 +1619,9 @@ function get_audiotheme_videos_rewrite_base() {
  *
  * @param object $query The main WP_Query object. Passed by reference.
  */
-function audiotheme_video_query_sort( $query ) {}
+function audiotheme_video_query_sort( $query ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Set posts per page for video archives if the default templates are being
@@ -1496,7 +1635,9 @@ function audiotheme_video_query_sort( $query ) {}
  *
  * @param object $query The main WP_Query object. Passed by reference.
  */
-function audiotheme_video_default_template_query( $query ) {}
+function audiotheme_video_default_template_query( $query ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Load video templates.
@@ -1510,6 +1651,7 @@ function audiotheme_video_default_template_query( $query ) {}
  * @return string
  */
 function audiotheme_video_template_include( $template ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	audiotheme()->get_modules()->get( 'videos' )->template_include( $template );
 }
 
@@ -1523,6 +1665,8 @@ function audiotheme_video_template_include( $template ) {
  */
 function audiotheme_video_delete_attachment( $attachment_id ) {
 	global $wpdb;
+
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 
 	$post_id = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key='_audiotheme_oembed_thumbnail_id' AND meta_value=%d", $attachment_id ) );
 	if ( $post_id ) {
@@ -1546,6 +1690,8 @@ function audiotheme_video_delete_attachment( $attachment_id ) {
  */
 function audiotheme_video_archive_post_class( $classes ) {
 	global $wp_query;
+
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 
 	if ( $wp_query->is_main_query() && is_post_type_archive( 'audiotheme_video' ) ) {
 		$nth_child_classes = audiotheme_nth_child_classes( array(
@@ -1577,6 +1723,7 @@ function audiotheme_load_videos_admin() {}
  * @return array
  */
 function audiotheme_video_post_updated_messages( $messages ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $messages;
 }
 
@@ -1590,6 +1737,7 @@ function audiotheme_video_post_updated_messages( $messages ) {
  * @return array The filtered array of column names.
  */
 function audiotheme_video_register_columns( $columns ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $columns;
 }
 
@@ -1603,7 +1751,9 @@ function audiotheme_video_register_columns( $columns ) {
  * @since 1.0.0
  * @deprecated 1.9.0
  */
-function audiotheme_video_meta_boxes() {}
+function audiotheme_video_meta_boxes() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Display a field to enter a video URL after the post title.
@@ -1611,7 +1761,9 @@ function audiotheme_video_meta_boxes() {}
  * @since 1.0.0
  * @deprecated 1.9.0
  */
-function audiotheme_video_after_title() {}
+function audiotheme_video_after_title() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Add a link to get the video thumbnail from an oEmbed endpoint.
@@ -1629,6 +1781,7 @@ function audiotheme_video_after_title() {}
  * @return string
  */
 function audiotheme_video_admin_post_thumbnail_html( $content, $post_id ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $content;
 }
 
@@ -1638,7 +1791,9 @@ function audiotheme_video_admin_post_thumbnail_html( $content, $post_id ) {
  * @since 1.0.0
  * @deprecated 1.9.0
  */
-function audiotheme_ajax_get_video_oembed_data() {}
+function audiotheme_ajax_get_video_oembed_data() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Import a video thumbnail from an oEmbed endpoint into the media library.
@@ -1652,7 +1807,9 @@ function audiotheme_ajax_get_video_oembed_data() {}
  * @param int $post_id Video post ID.
  * @param string $url Video URL.
  */
-function audiotheme_video_sideload_thumbnail( $post_id, $url ) {}
+function audiotheme_video_sideload_thumbnail( $post_id, $url ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Download an image from the specified URL and attach it to a post.
@@ -1668,6 +1825,7 @@ function audiotheme_video_sideload_thumbnail( $post_id, $url ) {}
  * @return int|WP_Error Populated HTML img tag on success.
  */
 function audiotheme_video_sideload_image( $url, $post_id, $desc = null ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $id;
 }
 
@@ -1680,7 +1838,9 @@ function audiotheme_video_sideload_image( $url, $post_id, $desc = null ) {
  * @param int $post_id The ID of the post.
  * @param object $post The post object.
  */
-function audiotheme_video_save_post( $post_id, $post ) {}
+function audiotheme_video_save_post( $post_id, $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Save video archive sort order.
@@ -1695,7 +1855,9 @@ function audiotheme_video_save_post( $post_id, $post ) {}
  * @param WP_Post $post Post object.
  * @param string $post_type The type of post the archive lists.
  */
-function audiotheme_video_archive_save_settings_hook( $post_id, $post, $post_type ) {}
+function audiotheme_video_archive_save_settings_hook( $post_id, $post, $post_type ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
 
 /**
  * Add an orderby setting to the video archive.
@@ -1708,4 +1870,6 @@ function audiotheme_video_archive_save_settings_hook( $post_id, $post, $post_typ
  *
  * @param WP_Post $post Post object.
  */
-function audiotheme_video_archive_settings( $post ) {}
+function audiotheme_video_archive_settings( $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}

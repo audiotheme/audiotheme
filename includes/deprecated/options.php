@@ -101,7 +101,7 @@ if ( ! function_exists( 'get_audiotheme_theme_options_support' ) ) :
 			$args = array(
 			'callback'    => 'audiotheme_register_theme_options',
 			'option_name' => $option_name,
-			'menu_title'  => __( 'Theme Options', 'audiotheme' ),
+			'menu_title'  => 'Theme Options',
 			);
 
 			if ( isset( $support[0] ) ) {

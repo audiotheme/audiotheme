@@ -466,7 +466,7 @@ function audiotheme_settings_validate_field( $field, $option_name, $option_value
 
 		if ( is_array( $validate ) ) {
 			foreach ( $validate as $func => $error_msg ) {
-				$error_msg = ( is_string( $error_msg ) ) ? $error_msg : __( 'It appears there was a problem with a value entered.', 'audiotheme' );
+				$error_msg = ( is_string( $error_msg ) ) ? $error_msg : 'It appears there was a problem with a value entered.';
 				if ( function_exists( $func ) ) {
 					$value = ( is_array( $option_value ) ) ? $option_value[ $field['id'] ] : $option_value;
 					$is_valid = call_user_func( $func, $value );

@@ -739,8 +739,8 @@ class Audiotheme_Settings {
 		);
 
 		printf( '<span class="description">%s.</span>',
-			sprintf( __( 'Change this setting in the %s', 'audiotheme' ),
-				sprintf( '<a href="%s">%s</a>', admin_url( 'customize.php' ), __( 'theme customizer', 'audiotheme' ) )
+			sprintf( 'Change this setting in the %s',
+				sprintf( '<a href="%s">%s</a>', admin_url( 'customize.php' ), 'theme customizer' )
 			)
 		);
 	}

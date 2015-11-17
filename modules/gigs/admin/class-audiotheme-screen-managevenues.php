@@ -181,11 +181,11 @@ class AudioTheme_Screen_ManageVenues {
 		$count = absint( get_post_meta( $post->ID, '_audiotheme_gig_count', true ) );
 
 		// @todo Update post status?
-		$admin_url = get_audiotheme_gig_admin_url( array(
+		$admin_url = add_query_arg( array(
 			'post_type'   => 'audiotheme_gig',
 			'post_status' => 'any',
 			'venue'       => $post->ID,
-		) );
+		), admin_url( 'edit.php' ) );
 
 		$admin_link = sprintf(
 			'<a href="%s">%d</a>',
