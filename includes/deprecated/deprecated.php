@@ -1873,3 +1873,362 @@ function audiotheme_video_archive_save_settings_hook( $post_id, $post, $post_typ
 function audiotheme_video_archive_settings( $post ) {
 	_deprecated_function( __FUNCTION__, '1.9.0' );
 }
+
+/**
+ * Register archive post type and setup related functionality.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function register_audiotheme_archives() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Filter AudioTheme archive requests.
+ *
+ * Set the number of posts per archive page.
+ *
+ * @since 1.4.2
+ * @deprecated 1.9.0
+ *
+ * @param object $query The main WP_Query object. Passed by reference.
+ */
+function audiotheme_archive_query( $query ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Retrieve the AudioTheme post type for the current archive.
+ *
+ * @since 1.7.0
+ * @deprecated 1.9.0
+ *
+ * @return string
+ */
+function get_audiotheme_current_archive_post_type() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	$post_type = '';
+
+	// Determine the current post type.
+	if ( is_tax() ) {
+		$post_type = get_audiotheme_current_taxonomy_archive_post_type();
+	} elseif ( is_post_type_archive() ) {
+		foreach ( array( 'gig', 'record', 'track', 'video' ) as $type ) {
+			if ( ! is_post_type_archive( 'audiotheme_' . $type ) ) {
+				continue;
+			}
+
+			$post_type = 'audiotheme_' . $type;
+			break;
+		}
+	}
+
+	return $post_type;
+}
+
+/**
+ * Retrieve the AudioTheme post type for the current taxonomy archive.
+ *
+ * @since 1.7.0
+ * @deprecated 1.9.0
+ *
+ * @return string
+ */
+function get_audiotheme_current_taxonomy_archive_post_type() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	$post_type = '';
+	$taxonomy  = get_taxonomy( get_queried_object()->taxonomy );
+
+	if ( empty( $taxonomy->object_type ) ) {
+		return $post_type;
+	}
+
+	foreach ( $taxonomy->object_type as $type ) {
+		if ( false === strpos( $type, 'audiotheme_' ) ) {
+			continue;
+		}
+
+		$post_type = $type;
+		break;
+	}
+
+	return $post_type;
+}
+
+/**
+ * Sanitize archive columns setting.
+ *
+ * The allowd columns value may be different between themes, so make sure it
+ * exists in the settings defined by the theme, otherwise, return the theme
+ * default.
+ *
+ * @since 1.4.4
+ * @deprecated 1.9.0
+ *
+ * @param mixed $value Existing meta value.
+ * @param string $key Optional. The meta key to retrieve. By default, returns data for all keys.
+ * @param bool $single Optional. Whether to return a single value.
+ * @param mixed $default Optional. A default value to return if the requested meta doesn't exist.
+ * @param string $post_type Optional. The post type archive to retrieve meta data for. Defaults to the current post type.
+ * @return mixed Will be an array if $single is false. Will be value of meta data field if $single is true.
+ */
+function audiotheme_sanitize_audiotheme_archive_columns( $value, $key, $single, $default, $post_type ) {
+	_deprecated_function( __FUNCTION__, '1.9.0', 'AudioTheme_Module_Archives::sanitize_columns_settings()' );
+	return audiotheme()->modules['archives']->sanitize_columns_settings( $value, $key, $single, $default, $post_type );
+}
+
+/**
+ * Save the active archive IDs.
+ *
+ * Determines when an archive has become inactive and moves it to a separate
+ * option so that if it's activated again in the future, a new post won't be
+ * created.
+ *
+ * Will flush rewrite rules if any changes are detected.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param array $ids Associative array of post type slugs as keys and archive post IDs as the values.
+ */
+function audiotheme_archives_save_active_archives( $ids ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Flush the rewrite rules when an archive post slug is changed.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param int $post_id Post ID
+ * @param WP_Post $post_after Updated post object.
+ * @param WP_Post $post_before Post object before udpate.
+ */
+function audiotheme_archives_post_updated( $post_id, $post_after, $post_before ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Remove the post type archive reference if it's deleted.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param int $post_id Post ID.
+ */
+function audiotheme_archives_deleted_post( $post_id ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Update a post type's rewrite base option.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $post_type Post type slug.
+ * @param int $archive_id Archive post ID>
+ */
+function audiotheme_archives_update_post_type_rewrite_base( $post_type, $archive_id ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Provide an edit link for archives in the admin bar.
+ *
+ * @since 1.2.1
+ * @deprecated 1.9.0
+ *
+ * @param WP_Admin_Bar $wp_admin_bar Admin bar object instance.
+ */
+function audiotheme_archives_admin_bar_edit_menu( $wp_admin_bar ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Setup archive posts for post types that have support.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_archives_init_admin() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Add submenu items for archives under the post type menu item.
+ *
+ * Ensures the user has the capability to edit pages in general as well
+ * as the individual page before displaying the submenu item.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_archives_admin_menu() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Replace the submit meta box to remove unnecessary fields.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param WP_Post $post Post object.
+ */
+function audiotheme_archives_add_meta_boxes( $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Highlight the corresponding top level and submenu items when editing an
+ * archive page.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $parent_file A parent file identifier.
+ * @return string
+ */
+function audiotheme_archives_parent_file( $parent_file ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+	return $parent_file;
+}
+
+/**
+ * Archive update messages.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param array $messages The array of post update messages.
+ * @return array An array with new CPT update messages.
+ */
+function audiotheme_archives_post_updated_messages( $messages ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+	return $messages;
+}
+
+/**
+ * Create an archive post for a post type if one doesn't exist.
+ *
+ * The post type's plural label is used for the post title and the defined
+ * rewrite slug is used for the postname.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $post_type_name Post type slug.
+ * @return int Post ID.
+ */
+function audiotheme_archives_create_archive( $post_type ) {
+	_deprecated_function( __FUNCTION__, '1.9.0', 'AudioTheme_Module_Archives::add_post_type_archive()' );
+	return audiotheme()->modules['archives']->add_post_type_archive( $post_type );
+}
+
+/**
+ * Retrieve a post type's archive slug.
+ *
+ * Checks the 'has_archive' and 'with_front' args in order to build the
+ * slug.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $post_type Post type name.
+ * @return string Archive slug.
+ */
+function get_audiotheme_post_type_archive_slug( $post_type ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+	return $slug;
+}
+
+/**
+ * Save archive meta data.
+ *
+ * @since 1.3.0
+ * @deprecated 1.9.0
+ *
+ * @param int $post_id Post ID.
+ */
+function audiotheme_archive_save_hook( $post_id, $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Display archive settings meta box.
+ *
+ * The meta box needs to be activated first, then fields can be displayed using
+ * one of the actions.
+ *
+ * @since 1.3.0
+ * @deprecated 1.9.0
+ *
+ * @param WP_Post $post Archive post.
+ */
+function audiotheme_archive_settings_meta_box( $post, $args = array() ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Add fields to the archive settings meta box.
+ *
+ * @since 1.4.2
+ * @deprecated 1.9.0
+ *
+ * @param WP_Post $post Archive post.
+ */
+function audiotheme_archive_settings_meta_box_fields( $post, $post_type, $fields = array() ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Filter audiotheme_archive permalinks to match the corresponding post type's
+ * archive.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $permalink Default permalink.
+ * @param WP_Post $post Post object.
+ * @param bool $leavename Optional, defaults to false. Whether to keep post name.
+ * @return string Permalink.
+ */
+function audiotheme_archives_post_type_link( $permalink, $post, $leavename ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+	return $permalink;
+}
+
+/**
+ * Filter post type archive permalinks.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $link Post type archive link.
+ * @param string $post_type Post type name.
+ * @return string
+ */
+function audiotheme_archives_post_type_archive_link( $link, $post_type ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+	return $link;
+}
+
+/**
+ * Filter the default post_type_archive_title() template tag and replace with
+ * custom archive title.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $label Post type archive title.
+ * @return string
+ */
+function audiotheme_archives_post_type_archive_title( $title ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+	return $title;
+}

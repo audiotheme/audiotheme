@@ -102,6 +102,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 		$this->plugin->register_hooks( new AudioTheme_PostType_Venue() );
 		$this->plugin->register_hooks( new AudioTheme_AJAX_Gigs() );
 
+		add_action( 'init',                   array( $this, 'register_archive' ) );
 		add_action( 'wp_loaded',              array( $this, 'register_post_connections' ) );
 		add_filter( 'generate_rewrite_rules', array( $this, 'generate_rewrite_rules' ) );
 		add_action( 'template_redirect',      array( $this, 'template_redirect' ) );
@@ -115,6 +116,15 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 			$this->plugin->register_hooks( new AudioTheme_Screen_ManageVenues() );
 			$this->plugin->register_hooks( new AudioTheme_Screen_EditVenue() );
 		}
+	}
+
+	/**
+	 * Register the discography archive.
+	 *
+	 * @since 1.9.0
+	 */
+	public function register_archive() {
+		$this->plugin->modules['archives']->add_post_type_archive( 'audiotheme_gig' );
 	}
 
 	/**

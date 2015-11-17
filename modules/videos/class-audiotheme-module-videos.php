@@ -100,6 +100,7 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 		$this->plugin->register_hooks( new AudioTheme_PostType_Video( $this ) );
 		$this->plugin->register_hooks( new AudioTheme_AJAX_Videos() );
 
+		add_action( 'init',             array( $this, 'register_archive' ) );
 		add_action( 'template_include', array( $this, 'template_include' ) );
 
 		if ( is_admin() ) {
@@ -107,6 +108,15 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 			$this->plugin->register_hooks( new AudioTheme_Screen_EditVideo() );
 			$this->plugin->register_hooks( new AudioTheme_Screen_EditVideoArchive() );
 		}
+	}
+
+	/**
+	 * Register the discography archive.
+	 *
+	 * @since 1.9.0
+	 */
+	public function register_archive() {
+		$this->plugin->modules['archives']->add_post_type_archive( 'audiotheme_video' );
 	}
 
 	/**

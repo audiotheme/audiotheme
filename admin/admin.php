@@ -11,7 +11,6 @@
  * @since 1.0.0
  */
 require( AUDIOTHEME_DIR . 'admin/functions.php' );
-require( AUDIOTHEME_DIR . 'admin/includes/archives.php' );
 require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen.php' );
 require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen-dashboard.php' );
 require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen-network-settings.php' );
@@ -34,7 +33,6 @@ function audiotheme_admin_setup() {
 	add_action( 'init', 'audiotheme_update' );
 	add_action( 'init', 'audiotheme_settings_init' );
 	add_action( 'init', 'audiotheme_dashboard_init', 9 );
-	add_action( 'init', 'audiotheme_archives_init_admin', 50 );
 
 	add_action( 'extra_theme_headers', 'audiotheme_theme_headers' );
 	add_action( 'http_request_args', 'audiotheme_update_request', 10, 2 );
@@ -361,11 +359,15 @@ function audiotheme_edit_user_contact_info( $contactmethods ) {
  * @since 1.0.0
  */
 function audiotheme_upgrade() {
-	$saved_version = get_option( 'audiotheme_version', '0' );
+	$saved_version   = get_option( 'audiotheme_version', '0' );
 	$current_version = AUDIOTHEME_VERSION;
 
 	if ( version_compare( $saved_version, '1.7.0', '<' ) ) {
 		audiotheme_upgrade_170();
+	}
+
+	if ( version_compare( $saved_version, '1.9.0', '<' ) ) {
+		audiotheme_upgrade_190();
 	}
 
 	if ( '0' === $saved_version || version_compare( $saved_version, $current_version, '<' ) ) {
@@ -398,6 +400,30 @@ function audiotheme_upgrade_170() {
 					'name' => $name,
 				) );
 			}
+		}
+	}
+}
+
+/**
+ * Upgrade routine for version 1.9.0.
+ *
+ * @since 1.9.0
+ */
+function audiotheme_upgrade_190() {
+	// Add the archive post type to its metadata.
+	if ( $archives = get_option( 'audiotheme_archives_inactive' ) ) {
+		foreach ( $archives as $post_type => $post_id ) {
+			update_post_meta( $post_id, 'archive_for_post_type', $post_type );
+		}
+
+		// Empty the option, but keep it around to prevent an extra SQL query.
+		update_option( 'audiotheme_archives_inactive', array() );
+	}
+
+	// Add the archive post type to its metadata.
+	if ( $archives = get_option( 'audiotheme_archives' ) ) {
+		foreach ( $archives as $post_type => $post_id ) {
+			update_post_meta( $post_id, 'archive_for_post_type', $post_type );
 		}
 	}
 }

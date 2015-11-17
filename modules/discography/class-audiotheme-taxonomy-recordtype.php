@@ -47,6 +47,7 @@ class AudioTheme_Taxonomy_RecordType {
 	 */
 	public function register_hooks() {
 		add_action( 'init',                  array( $this, 'register_taxonomy' ) );
+		add_action( 'pre_get_posts',         array( $this, 'record_type_query' ), 9 );
 		add_action( 'term_updated_messages', array( $this, 'term_updated_messages' ) );
 	}
 
@@ -57,6 +58,22 @@ class AudioTheme_Taxonomy_RecordType {
 	 */
 	public function register_taxonomy() {
 		register_taxonomy( 'audiotheme_record_type', 'audiotheme_record', $this->get_args() );
+	}
+
+	/**
+	 * Set record type requests to use the same archive settings as records.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param WP_Query $wp_query The main WP_Query instance. Passed by reference.
+	 */
+	public function record_type_query( $wp_query ) {
+		if ( is_admin() || ! $wp_query->is_main_query() || ! is_tax( $this->taxonomy ) ) {
+			return;
+		}
+
+		// @todo Inject the reference to the main plugin class.
+		audiotheme()->modules['archives']->set_current_archive_post_type( 'audiotheme_record' );
 	}
 
 	/**

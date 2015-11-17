@@ -106,6 +106,7 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 		$this->plugin->register_hooks( new AudioTheme_PostType_Track( $this ) );
 		$this->plugin->register_hooks( new AudioTheme_AJAX_Discography() );
 
+		add_action( 'init',                   array( $this, 'register_archive' ) );
 		add_action( 'template_include',       array( $this, 'template_include' ) );
 		add_filter( 'generate_rewrite_rules', array( $this, 'generate_rewrite_rules' ) );
 
@@ -136,6 +137,15 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 		}
 
 		return $front . $base;
+	}
+
+	/**
+	 * Register the discography archive.
+	 *
+	 * @since 1.9.0
+	 */
+	public function register_archive() {
+		$this->plugin->modules['archives']->add_post_type_archive( 'audiotheme_record' );
 	}
 
 	/**

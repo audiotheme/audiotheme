@@ -47,6 +47,7 @@ class AudioTheme_Taxonomy_VideoCategory {
 	 */
 	public function register_hooks() {
 		add_action( 'init',                  array( $this, 'register_taxonomy' ) );
+		add_action( 'pre_get_posts',         array( $this, 'video_category_query' ), 9 );
 		add_action( 'term_updated_messages', array( $this, 'term_updated_messages' ) );
 	}
 
@@ -57,6 +58,22 @@ class AudioTheme_Taxonomy_VideoCategory {
 	 */
 	public function register_taxonomy() {
 		register_taxonomy( 'audiotheme_video_category', 'audiotheme_video', $this->get_args() );
+	}
+
+	/**
+	 * Set video category requests to use the same archive settings as videos.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param WP_Query $wp_query The main WP_Query instance. Passed by reference.
+	 */
+	public function video_category_query( $wp_query ) {
+		if ( is_admin() || ! $wp_query->is_main_query() || ! is_tax( $this->taxonomy ) ) {
+			return;
+		}
+
+		// @todo Inject the reference to the main plugin class.
+		audiotheme()->modules['archives']->set_current_archive_post_type( 'audiotheme_video' );
 	}
 
 	/**

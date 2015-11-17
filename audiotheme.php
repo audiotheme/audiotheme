@@ -58,7 +58,6 @@ if ( ! defined( 'AUDIOTHEME_URI' ) ) {
 /**
  * Load additional helper functions and libraries.
  */
-require( AUDIOTHEME_DIR . 'includes/archives.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-license.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-plugin.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-plugin-audiotheme.php' );
@@ -78,6 +77,7 @@ require( AUDIOTHEME_DIR . 'includes/deprecated/options.php' );
 /**
  * Load modules.
  */
+require( AUDIOTHEME_DIR . 'modules/archives/class-audiotheme-module-archives.php' );
 require( AUDIOTHEME_DIR . 'modules/discography/class-audiotheme-module-discography.php' );
 require( AUDIOTHEME_DIR . 'modules/gigs/class-audiotheme-module-gigs.php' );
 require( AUDIOTHEME_DIR . 'modules/videos/class-audiotheme-module-videos.php' );
@@ -105,6 +105,7 @@ audiotheme()
 	->set_slug( 'audiotheme' )
 	->set_url( plugin_dir_url( __FILE__ ) )
 	->modules
+	->register( 'archives', new AudioTheme_Module_Archives() )
 	->register( 'gigs', new AudioTheme_Module_Gigs() )
 	->register( 'discography', new AudioTheme_Module_Discography() )
 	->register( 'videos', new AudioTheme_Module_Videos() );
@@ -126,6 +127,7 @@ function audiotheme_load() {
 	add_action( 'wp_loaded', 'audiotheme_loaded' );
 	add_action( 'audiotheme_template_include', 'audiotheme_template_setup' );
 
+	add_filter( 'audiotheme_archive_title', 'audiotheme_archives_taxonomy_title' );
 	add_filter( 'wp_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
 
 	// Media hooks.
@@ -134,20 +136,6 @@ function audiotheme_load() {
 	add_filter( 'embed_handler_html', 'audiotheme_oembed_html', 10, 4 );
 	add_filter( 'video_embed_html', 'audiotheme_oembed_html', 10 ); // Jetpack compat.
 	add_filter( 'wp_prepare_attachment_for_js', 'audiotheme_wp_prepare_audio_attachment_for_js', 10, 3 );
-
-	// Archive hooks.
-	add_action( 'init', 'register_audiotheme_archives' );
-	add_filter( 'post_type_link', 'audiotheme_archives_post_type_link', 10, 3 );
-	add_filter( 'post_type_archive_link', 'audiotheme_archives_post_type_archive_link', 10, 2 );
-	add_filter( 'post_type_archive_title', 'audiotheme_archives_post_type_archive_title' );
-	add_filter( 'audiotheme_archive_title', 'audiotheme_archives_taxonomy_title' );
-
-	add_action( 'admin_bar_menu', 'audiotheme_archives_admin_bar_edit_menu', 80 );
-	add_action( 'post_updated', 'audiotheme_archives_post_updated', 10, 3 );
-	add_action( 'delete_post', 'audiotheme_archives_deleted_post' );
-
-	// Prevent the audiotheme_archive post type rules from being registered.
-	add_filter( 'audiotheme_archive_rewrite_rules', '__return_empty_array' );
 
 	// Template hooks.
 	add_action( 'audiotheme_before_main_content', 'audiotheme_before_main_content' );
