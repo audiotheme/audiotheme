@@ -487,3 +487,20 @@ function audiotheme_admin_spinner( $args = array() ) {
 		return $spinner;
 	}
 }
+
+/**
+ * Add a Template Version header for child themes to declare which version of a
+ * parent theme they're compatible with.
+ *
+ * @since 1.5.0
+ * @deprecated 1.9.0
+ *
+ * @param array $headers List of extra headers.
+ * @return array
+ */
+function audiotheme_theme_headers( $headers ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	$headers['TemplateVersion'] = 'Template Version';
+	return $headers;
+}

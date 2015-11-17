@@ -35,7 +35,6 @@ function audiotheme_admin_setup() {
 	add_action( 'init', 'audiotheme_settings_init' );
 	add_action( 'init', 'audiotheme_dashboard_init', 9 );
 
-	add_action( 'extra_theme_headers', 'audiotheme_theme_headers' );
 	add_action( 'http_request_args', 'audiotheme_update_request', 10, 2 );
 	add_action( 'admin_init', 'audiotheme_upgrade' );
 	add_action( 'admin_init', 'audiotheme_dashboard_sort_menu' );
@@ -162,20 +161,6 @@ function audiotheme_update_request( $r, $url ) {
 	$r['sslverify'] = false;
 
 	return $r;
-}
-
-/**
- * Add a Template Version header for child themes to declare which version of a
- * parent theme they're compatible with.
- *
- * @since 1.5.0
- *
- * @param array $headers List of extra headers.
- * @return array
- */
-function audiotheme_theme_headers( $headers ) {
-	$headers['TemplateVersion'] = 'Template Version';
-	return $headers;
 }
 
 /**
