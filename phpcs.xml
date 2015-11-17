@@ -2,6 +2,8 @@
 <ruleset name="AudioTheme">
 	<file>./</file>
 
+	<exclude-pattern>*/admin/deprecated/*</exclude-pattern>
+	<exclude-pattern>*/includes/deprecated/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/tests/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
@@ -12,15 +14,13 @@
 	<rule ref="WordPress">
 		<exclude name="WordPress-VIP" />
 
-		<exclude name="WordPress.PHP.DiscouragedFunctions.Discouraged" />
-		<exclude name="WordPress.PHP.DiscouragedFunctions.DiscouragedWithAlternative" />
-		<exclude name="WordPress.Variables.GlobalVariables" />
+		<exclude name="Squiz.Commenting.FileComment.SpacingAfterComment" />
 	</rule>
 
 	<rule ref="WordPress.XSS.EscapeOutput">
-        <properties>
+		<properties>
 			<property name="customAutoEscapedFunctions" value="" type="array" />
-            <property name="customSanitizingFunctions" value="" type="array" />
-        </properties>
-    </rule>
+			<property name="customEscapingFunctions" value="" type="array" />
+		</properties>
+	</rule>
 </ruleset>
