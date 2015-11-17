@@ -56,22 +56,17 @@ function audiotheme_admin_setup() {
  * @since 1.0.0
  */
 function audiotheme_dashboard_init() {
-	global $audiotheme;
+	$plugin = audiotheme();
 
-	$screen = new AudioTheme_Screen_Dashboard();
-	$screen->set_plugin( $audiotheme )->register_hooks();
-
-	$screen = new AudioTheme_Screen_Settings();
-	$screen->register_hooks();
+	$plugin->register_hooks( new AudioTheme_Screen_Dashboard() );
+	$plugin->register_hooks( new AudioTheme_Screen_Settings() );
 
 	if ( is_network_admin() ) {
-		$screen = new AudioTheme_Screen_Network_Settings();
-		$screen->register_hooks();
+		$plugin->register_hooks( new AudioTheme_Screen_Network_Settings() );
 	}
 
 	$license = audiotheme()->license;
-	$setting = new AudioTheme_Setting_LicenseKey( $license );
-	$setting->register_hooks();
+	$plugin->register_hooks( new AudioTheme_Setting_LicenseKey( $license ) );
 }
 
 /**

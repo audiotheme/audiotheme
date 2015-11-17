@@ -99,14 +99,12 @@ function audiotheme() {
 	return $instance;
 }
 
-$audiotheme = audiotheme();
-$audiotheme
+audiotheme()
 	->set_directory( plugin_dir_path( __FILE__ ) )
 	->set_file( __FILE__ )
 	->set_slug( 'audiotheme' )
-	->set_url( plugin_dir_url( __FILE__ ) );
-
-$audiotheme->modules
+	->set_url( plugin_dir_url( __FILE__ ) )
+	->modules
 	->register( 'gigs', new AudioTheme_Module_Gigs() )
 	->register( 'discography', new AudioTheme_Module_Discography() )
 	->register( 'videos', new AudioTheme_Module_Videos() );
