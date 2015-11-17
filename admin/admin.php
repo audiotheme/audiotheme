@@ -43,7 +43,6 @@ function audiotheme_admin_setup() {
 	add_action( 'admin_enqueue_scripts', 'audiotheme_enqueue_admin_scripts' );
 	add_action( 'admin_body_class', 'audiotheme_admin_body_class' );
 	add_action( 'save_post', 'audiotheme_update_post_terms', 10, 2 );
-	add_filter( 'user_contactmethods', 'audiotheme_edit_user_contact_info' );
 
 	add_action( 'manage_pages_custom_column', 'audiotheme_display_custom_column', 10, 2 );
 	add_action( 'manage_posts_custom_column', 'audiotheme_display_custom_column', 10, 2 );
@@ -337,21 +336,6 @@ function audiotheme_update_post_terms( $post_id, $post ) {
 		$term_ids = array_map( 'absint', $term_ids );
 		wp_set_object_terms( $post_id, $term_ids, $taxonomy );
 	}
-}
-
-/**
- * Custom user contact fields.
- *
- * @since 1.0.0
- *
- * @param array $contactmethods List of contact methods.
- * @return array
- */
-function audiotheme_edit_user_contact_info( $contactmethods ) {
-	$contactmethods['twitter'] = __( 'Twitter Username', 'audiotheme' );
-	$contactmethods['facebook'] = __( 'Facebook URL', 'audiotheme' );
-
-	return $contactmethods;
 }
 
 /**

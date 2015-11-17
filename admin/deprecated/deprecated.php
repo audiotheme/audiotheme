@@ -8,6 +8,22 @@
  */
 
 /**
+ * Custom user contact fields.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param array $contactmethods List of contact methods.
+ * @return array
+ */
+function audiotheme_edit_user_contact_info( $contactmethods ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+	$contactmethods['twitter'] = 'Twitter Username';
+	$contactmethods['facebook'] = 'Facebook URL';
+	return $contactmethods;
+}
+
+/**
  * Retrieve system data.
  *
  * @since 1.0.0
