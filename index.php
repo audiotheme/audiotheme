@@ -7,4 +7,5 @@
  * in order to present more helpful error messages in functions.php.
  *
  * @package AudioTheme
+ * @since 1.2.0
  */
