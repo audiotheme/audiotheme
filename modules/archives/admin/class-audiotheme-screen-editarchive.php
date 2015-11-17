@@ -51,23 +51,6 @@ class AudioTheme_Screen_EditArchive {
 	 * @param WP_Post $post Post object.
 	 */
 	public function add_meta_boxes( $post ) {
-		remove_meta_box( 'submitdiv', 'audiotheme_archive', 'side' );
-
-		add_meta_box(
-			'submitdiv',
-			esc_html__( 'Update', 'audiotheme' ),
-			'audiotheme_post_submit_meta_box',
-			'audiotheme_archive',
-			'side',
-			'high',
-			array(
-				'force_delete'      => false,
-				'show_publish_date' => false,
-				'show_statuses'     => false,
-				'show_visibility'   => false,
-			)
-		);
-
 		$post_type = $this->module->is_archive_id( $post->ID );
 
 		// Activate the default archive settings meta box.
@@ -77,6 +60,17 @@ class AudioTheme_Screen_EditArchive {
 		// Show if any settings fields have been registered for the post type.
 		$fields = $this->module->get_settings_fields( $post_type );
 
+		remove_meta_box( 'submitdiv', 'audiotheme_archive', 'side' );
+
+		add_meta_box(
+			'submitdiv',
+			esc_html__( 'Update', 'audiotheme' ),
+			array( $this, 'post_submit_meta_box' ),
+			'audiotheme_archive',
+			'side',
+			'high'
+		);
+
 		if ( $show || $show_for_post_type || ! empty( $fields ) ) {
 			add_meta_box(
 				'audiothem-archive-settings',
@@ -85,9 +79,7 @@ class AudioTheme_Screen_EditArchive {
 				'audiotheme_archive',
 				'side',
 				'default',
-				array(
-					'fields' => $fields,
-				)
+				array( 'fields' => $fields )
 			);
 		}
 	}
@@ -205,5 +197,47 @@ class AudioTheme_Screen_EditArchive {
 
 			update_post_meta( $post_id, 'columns', $value );
 		}
+	}
+
+	/**
+	 * Submit meta box.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @see post_submit_meta_box()
+	 *
+	 * @param WP_Post $post Post object.
+	 * @param array   $args Additional meta box arguments.
+	 */
+	public function post_submit_meta_box( $post, $args ) {
+		?>
+		<div class="submitbox" id="submitpost">
+			<div id="minor-publishing">
+
+				<!-- Hidden submit button early on so that the browser chooses the right button when form is submitted with Return key. -->
+				<div style="display: none"><?php submit_button( __( 'Update', 'audiotheme' ), 'button', 'save' ); ?></div>
+
+				<input type="hidden" name="hidden_post_status" id="hidden_post_status" value="publish">
+				<input type="hidden" name="post_status" id="post_status" value="publish">
+				<input type="hidden" name="hidden_post_visibility" value="public">
+				<input type="hidden" name="visibility" value="public">
+
+				<div class="clear"></div>
+			</div>
+
+
+			<div id="major-publishing-actions">
+				<?php do_action( 'post_submitbox_start' ); ?>
+
+				<div id="publishing-action">
+					<span class="spinner"></span>
+					<input type="hidden" name="original_publish" id="original_publish" value="<?php esc_attr_e( 'Update', 'audiotheme' ) ?>">
+					<input type="submit" name="save" id="publish" class="button-primary button-large" accesskey="p" value="<?php esc_attr_e( 'Update', 'audiotheme' ) ?>">
+				</div>
+
+				<div class="clear"></div>
+			</div>
+		</div>
+		<?php
 	}
 }
