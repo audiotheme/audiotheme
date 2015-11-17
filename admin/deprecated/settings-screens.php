@@ -96,7 +96,7 @@ function audiotheme_settings_init() {
 	if ( ( $support = get_audiotheme_theme_options_support() ) && ! empty( $support['callback'] ) && function_exists( $support['callback'] ) ) {
 		$settings = get_audiotheme_settings();
 
-		$screen = add_audiotheme_settings_screen( 'audiotheme-theme-options', __( 'Theme Options', 'audiotheme' ), array(
+		$screen = add_audiotheme_settings_screen( 'audiotheme-theme-options', 'Theme Options', array(
 			'menu_title'   => $support['menu_title'],
 			'option_group' => 'audiotheme_theme_mods',
 			'option_name'  => $support['option_name'],
@@ -276,7 +276,7 @@ function audiotheme_settings_screen_notices() {
 		}
 
 		if ( $updated && isset( $_REQUEST['settings-updated'] ) )  {
-			echo '<div class="updated fade"><p><strong>' . __( 'Settings saved.', 'audiotheme' ) . '</strong></p></div>';
+			echo '<div class="updated fade"><p><strong>' . 'Settings saved.' . '</strong></p></div>';
 		}
 	}
 }
