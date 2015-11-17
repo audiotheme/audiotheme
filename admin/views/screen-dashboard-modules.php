@@ -1,3 +1,12 @@
+<?php
+/**
+ * View to modules on the dashboard screen.
+ *
+ * @package AudioTheme\Administration
+ * @since 1.9.0
+ */
+?>
+
 <div class="audiotheme-dashboard-lead">
 	<p>
 		<?php _e( 'Gigs, Discography, and Videos are the backbone of AudioTheme. Explore each feature below or use the menu options to the left to get started.', 'audiotheme' ); ?>

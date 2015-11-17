@@ -33,8 +33,8 @@
 			$link = wp_parse_args( $link, array( 'name' => '', 'url' => '' ) );
 			?>
 			<tr class="audiotheme-repeater-item">
-				<td><input type="text" name="record_links[<?php echo $i; ?>][name]" value="<?php echo esc_attr( $link['name'] ); ?>" placeholder="<?php esc_attr_e( 'Text', 'audiotheme' ); ?>" class="record-link-name audiotheme-clear-on-add" style="width: 8em"></td>
-				<td><input type="text" name="record_links[<?php echo $i; ?>][url]" value="<?php echo esc_url( $link['url'] ); ?>" placeholder="<?php esc_attr_e( 'URL', 'audiotheme' ); ?>" class="widefat audiotheme-clear-on-add"></td>
+				<td><input type="text" name="record_links[<?php echo esc_attr( $i ); ?>][name]" value="<?php echo esc_attr( $link['name'] ); ?>" placeholder="<?php esc_attr_e( 'Text', 'audiotheme' ); ?>" class="record-link-name audiotheme-clear-on-add" style="width: 8em"></td>
+				<td><input type="text" name="record_links[<?php echo esc_attr( $i ); ?>][url]" value="<?php echo esc_url( $link['url'] ); ?>" placeholder="<?php esc_attr_e( 'URL', 'audiotheme' ); ?>" class="widefat audiotheme-clear-on-add"></td>
 				<td class="column-action"><a class="audiotheme-repeater-remove-item"><span class="dashicons dashicons-trash"></span></a></td>
 			</tr>
 		<?php endforeach; ?>

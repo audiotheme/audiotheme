@@ -90,7 +90,7 @@ class AudioTheme_Screen_ManageTracks {
 			<?php
 			if ( $records ) {
 				foreach ( $records as $record ) {
-					echo printf(
+					printf(
 						'<option value="%1$d"%2$s>%3$s</option>',
 						esc_attr( $record->ID ),
 						selected( $post_parent, $record->ID, false ),
@@ -195,7 +195,7 @@ class AudioTheme_Screen_ManageTracks {
 					printf(
 						'<a href="%1$s">%2$s</a>',
 						esc_url( get_edit_post_link( $record->ID ) ),
-						wp_strip_all_tags( apply_filters( 'the_title', $record->post_title ) )
+						esc_html( wp_strip_all_tags( apply_filters( 'the_title', $record->post_title ) ) )
 					);
 				}
 				break;

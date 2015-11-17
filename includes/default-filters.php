@@ -97,6 +97,8 @@ function audiotheme_nav_menu_classes( $items, $args ) {
  * Limits default scripts and styles to load only for AudioTheme templates.
  *
  * @since 1.2.0
+ *
+ * @param string $template Template path.
  */
 function audiotheme_template_setup( $template ) {
 	if ( is_audiotheme_default_template( $template ) ) {

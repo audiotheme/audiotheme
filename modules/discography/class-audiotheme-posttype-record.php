@@ -300,9 +300,9 @@ class AudioTheme_PostType_Record extends AudioTheme_PostType {
 			7  => esc_html__( 'Record saved.', 'audiotheme' ),
 			8  => esc_html__( 'Record submitted.', 'audiotheme' ),
 			9  => sprintf(
-					esc_html__( 'Record scheduled for: %s.', 'audiotheme' ),
-					/* translators: Publish box date format, see http://php.net/date */
-					'<strong>' . date_i18n( esc_html__( 'M j, Y @ H:i', 'audiotheme' ), strtotime( $post->post_date ) ) . '</strong>'
+				esc_html__( 'Record scheduled for: %s.', 'audiotheme' ),
+				/* translators: Publish box date format, see http://php.net/date */
+				'<strong>' . date_i18n( esc_html__( 'M j, Y @ H:i', 'audiotheme' ), strtotime( $post->post_date ) ) . '</strong>'
 			),
 			10 => esc_html__( 'Record draft updated.', 'audiotheme' ),
 			'preview' => esc_html__( 'Preview record', 'audiotheme' ),

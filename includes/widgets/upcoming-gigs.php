@@ -1,11 +1,17 @@
 <?php
 /**
+ * Upcoming gigs widget.
+ *
+ * @package AudioTheme\Widgets
+ * @since 1.0.0
+ */
+
+/**
  * AudioTheme record widget class.
  *
  * Display a list of upcoming gigs in a widget area.
  *
  * @package AudioTheme\Widgets
- *
  * @since 1.0.0
  */
 class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {

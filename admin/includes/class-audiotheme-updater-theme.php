@@ -1,9 +1,15 @@
 <?php
 /**
- * The theme update class for AudioTheme.
+ * Theme updater.
  *
  * @package AudioTheme
+ * @since 1.0.0
+ */
+
+/**
+ * Theme updater class.
  *
+ * @package AudioTheme
  * @since 1.0.0
  */
 class Audiotheme_Updater_Theme extends Audiotheme_Updater {
@@ -15,7 +21,6 @@ class Audiotheme_Updater_Theme extends Audiotheme_Updater {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $file Absolute path a plugin file.
 	 * @param array $args Associative array to set object properties.
 	 */
 	public function __construct( $args = array() ) {
@@ -55,6 +60,9 @@ class Audiotheme_Updater_Theme extends Audiotheme_Updater {
 	 * update API.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @param string $source Source to check for updates.
+	 * @return object|false
 	 */
 	public function check_for_update( $source = 'transient' ) {
 		$response = parent::check_for_update( $source );
@@ -81,9 +89,6 @@ class Audiotheme_Updater_Theme extends Audiotheme_Updater {
 	 * process.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @param string $plugin_file Plugin basename.
-	 * @param array $plugin_data Data from the plugin's headers.
 	 */
 	public function update_nag() {
 		if ( ! current_user_can( 'update_themes' ) ) {
@@ -104,7 +109,7 @@ class Audiotheme_Updater_Theme extends Audiotheme_Updater {
 			$notice = sprintf( _x( '<strong>%1$s %2$s</strong> is available.', 'theme name and version', 'audiotheme' ), $theme->get( 'Name' ), $api_response->theme->current_version ) . ' ';
 
 			if ( 'ok' === $api_response->status ) {
-				// If status is ok and there's a new version, display a message to update.'
+				// If status is ok and there's a new version, display a message to update.
 				$update_url = wp_nonce_url( 'update.php?action=upgrade-theme&amp;theme=' . urlencode( $this->slug ), 'upgrade-theme_' . $this->slug );
 				$update_onclick = ' onclick="if ( confirm(\'' . esc_js( __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update.", 'audiotheme' ) ) . '\') ) {return true;}return false;"';
 
@@ -133,7 +138,6 @@ class Audiotheme_Updater_Theme extends Audiotheme_Updater {
 			$notices = wp_parse_args( $this->notices, $this->get_license_error_messages( $notice_args ) );
 
 			// @todo framework_update_required & wordpress_update_required
-
 			// Determine which notice to display.
 			$notice = ( isset( $api_response->status ) && isset( $notices[ $api_response->status ] ) ) ? $notices[ $api_response->status ] : $notices['generic'];
 

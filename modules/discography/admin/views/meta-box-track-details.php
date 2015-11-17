@@ -25,7 +25,7 @@
 	<input type="checkbox" name="is_downloadable" id="track-is-downloadable" value="1"<?php checked( get_post_meta( $post->ID, '_audiotheme_is_downloadable', true ) ); ?>>
 	<label for="track-is-downloadable"><?php esc_html_e( 'Allow downloads?', 'audiotheme' ) ?></label>
 
-	<button class="button audiotheme-media-control-choose" style="float: right"><?php _e( 'Upload MP3', 'audiotheme' ); ?></button>
+	<button class="button audiotheme-media-control-choose" style="float: right"><?php esc_html_e( 'Upload MP3', 'audiotheme' ); ?></button>
 </p>
 
 <p class="audiotheme-field">
@@ -47,13 +47,14 @@ if ( ! get_post( $post->post_parent ) ) {
 			echo '<select name="post_parent" id="post-parent" class="widefat">';
 				echo '<option value=""></option>';
 
-				foreach ( $records as $record ) {
-					printf(
-						'<option value="%s">%s</option>',
-						$record->ID,
-						esc_html( $record->post_title )
-					);
-				}
+		foreach ( $records as $record ) {
+			printf(
+				'<option value="%s">%s</option>',
+				absint( $record->ID ),
+				esc_html( $record->post_title )
+			);
+		}
+
 			echo '</select>';
 			echo '<span class="description">' . esc_html__( 'Associate this track with a record.', 'audiotheme' ) . '</span>';
 		echo '</p>';

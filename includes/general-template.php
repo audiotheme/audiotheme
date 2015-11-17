@@ -16,8 +16,8 @@
  * @see locate_template()
  *
  * @param string|array $template_names Template file(s) to search for, in order.
- * @param bool $load If true the template file will be loaded if it is found.
- * @param bool $require_once Whether to require_once or require. Default true. Has no effect if $load is false.
+ * @param bool         $load If true the template file will be loaded if it is found.
+ * @param bool         $require_once Whether to require_once or require. Default true. Has no effect if $load is false.
  * @return string The template path if one is located.
  */
 function audiotheme_locate_template( $template_names, $load = false, $require_once = true ) {
@@ -53,9 +53,9 @@ function audiotheme_locate_template( $template_names, $load = false, $require_on
  * @since 1.5.0
  *
  * @param string|array $template_file Absolute path to a file or list of template parts.
- * @param array $data Optional. List of variables to extract into the template scope.
- * @param bool $locate Optional. Whether the $template_file argument should be located. Default false.
- * @param bool $require_once Optional. Whether to require_once or require. Default false.
+ * @param array        $data Optional. List of variables to extract into the template scope.
+ * @param bool         $locate Optional. Whether the $template_file argument should be located. Default false.
+ * @param bool         $require_once Optional. Whether to require_once or require. Default false.
  */
 function audiotheme_load_template( $template_file, $data = array(), $locate = false, $require_once = false ) {
 	if ( is_array( $data ) && ! empty( $data ) ) {
@@ -201,7 +201,7 @@ function audiotheme_archive_nav() {
  * @since 1.2.1
  * @link http://www.blazersix.com/blog/wordpress-class-template-tag/
  *
- * @param string $id Element identifier.
+ * @param string       $id Element identifier.
  * @param array|string $classes Optional. List of default classes as an array or space-separated string.
  * @param array|string $args Optional. Override defaults.
  * @return array

@@ -107,7 +107,7 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType {
 	 */
 	public function archive_permalink( $link, $post_type ) {
 		$permalink = get_option( 'permalink_structure' );
-		if ( ! empty( $permalink ) && 'audiotheme_track' == $post_type ) {
+		if ( ! empty( $permalink ) && 'audiotheme_track' === $post_type ) {
 			$link = home_url( '/' . $this->module->get_rewrite_base() . '/' );
 		}
 
@@ -409,9 +409,9 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType {
 			7  => esc_html__( 'Track saved.', 'audiotheme' ),
 			8  => esc_html__( 'Track submitted.', 'audiotheme' ),
 			9  => sprintf(
-					esc_html__( 'Track scheduled for: %s.', 'audiotheme' ),
-					/* translators: Publish box date format, see http://php.net/date */
-					'<strong>' . date_i18n( esc_html__( 'M j, Y @ H:i', 'audiotheme' ), strtotime( $post->post_date ) ) . '</strong>'
+				esc_html__( 'Track scheduled for: %s.', 'audiotheme' ),
+				/* translators: Publish box date format, see http://php.net/date */
+				'<strong>' . date_i18n( esc_html__( 'M j, Y @ H:i', 'audiotheme' ), strtotime( $post->post_date ) ) . '</strong>'
 			),
 			10 => esc_html__( 'Track draft updated.', 'audiotheme' ),
 			'preview' => esc_html__( 'Preview track', 'audiotheme' ),

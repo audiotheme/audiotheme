@@ -194,8 +194,8 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 					load_template( AUDIOTHEME_DIR . 'modules/gigs/feed-json.php' );
 					break;
 				default:
-					$message = sprintf( __( 'ERROR: %s is not a valid feed template.', 'audiotheme' ), esc_html( $type ) );
-					wp_die( $message, '', array( 'response' => 404 ) );
+					$message = sprintf( esc_html__( 'ERROR: %s is not a valid feed template.', 'audiotheme' ), $type );
+					wp_die( esc_html( $message ), '', array( 'response' => 404 ) );
 			}
 			exit;
 		}

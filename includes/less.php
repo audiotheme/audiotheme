@@ -45,12 +45,12 @@ function audiotheme_less_setup() {
  * @param string $url URL to compiled CSS.
  * @return string
  */
-function audiotheme_less_force_ssl( $dir ) {
+function audiotheme_less_force_ssl( $url ) {
 	if ( is_ssl() ) {
-		$dir = set_url_scheme( $dir, 'https' );
+		$url = set_url_scheme( $url, 'https' );
 	}
 
-	return $dir;
+	return $url;
 }
 
 /**

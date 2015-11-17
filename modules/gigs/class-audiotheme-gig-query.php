@@ -38,7 +38,7 @@ class AudioTheme_Gig_Query extends WP_Query {
 					'value'   => date( 'Y-m-d', current_time( 'timestamp' ) ),
 					'compare' => '>=',
 					'type'    => 'DATETIME',
-				)
+				),
 			),
 		) );
 

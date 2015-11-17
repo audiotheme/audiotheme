@@ -1,43 +1,62 @@
 <?php
 /**
- * The base update class for AudioTheme.
+ * Base updater.
  *
  * @package AudioTheme
+ * @since 1.0.0
+ */
+
+/**
+ * Base updater class.
  *
+ * @package AudioTheme
  * @since 1.0.0
  */
 class Audiotheme_Updater {
 	/**
+	 * API endpoint.
+	 *
+	 * @since 1.0.0
 	 * @var string
 	 */
 	protected $api_url = 'https://audiotheme.com/api/';
 
 	/**
 	 * Additional data to send to pass through the API.
+	 *
+	 * @since 1.0.0
 	 * @var array
 	 */
 	protected $api_data = array();
 
 	/**
 	 * Entity type.
+	 *
+	 * @since 1.0.0
 	 * @var string
 	 */
 	protected $type;
 
 	/**
 	 * Entity id.
+	 *
+	 * @since 1.0.0
 	 * @var string
 	 */
 	protected $id;
 
 	/**
 	 * Entity slug. Ex: plugin-name or theme-name
+	 *
+	 * @since 1.0.0
 	 * @var string
 	 */
 	protected $slug;
 
 	/**
 	 * Entity version number.
+	 *
+	 * @since 1.0.0
 	 * @var string
 	 */
 	protected $version;
@@ -45,6 +64,8 @@ class Audiotheme_Updater {
 	/**
 	 * An associative array of update notices to display depending on the
 	 * server response.
+	 *
+	 * @since 1.0.0
 	 * @var array
 	 */
 	protected $notices = array();
@@ -72,7 +93,9 @@ class Audiotheme_Updater {
 	}
 
 	/**
+	 * Attach hooks to integrate with the WordPress update process.
 	 *
+	 * @since 1.0.0
 	 */
 	public function init() { }
 
@@ -87,7 +110,7 @@ class Audiotheme_Updater {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $r Request args.
+	 * @param array  $r Request args.
 	 * @param string $url URI resource.
 	 * @return array Filtered request args.
 	 */
@@ -117,7 +140,7 @@ class Audiotheme_Updater {
 			unset( $entities[ $this->id ] );
 		}
 
-		$r['body'][ $api_type ] = ( 1.0 === $api_version ) ? serialize( $entities ) : json_encode( $entities );
+		$r['body'][ $api_type ] = ( 1.0 === $api_version ) ? serialize( $entities ) : wp_json_encode( $entities );
 
 		return $r;
 	}

@@ -1,3 +1,12 @@
+<?php
+/**
+ * View to display a taxonomy meta box.
+ *
+ * @package AudioTheme\Administration
+ * @since 1.7.0
+ */
+?>
+
 <div id="taxonomy_<?php echo esc_attr( $taxonomy ); ?>" class="audiotheme-taxonomy-meta-box" data-taxonomy="<?php echo esc_attr( $taxonomy ); ?>">
 	<div class="audiotheme-taxonomy-term-list">
 		<ul>
@@ -18,7 +27,9 @@
 		<input type="hidden" name="audiotheme_post_terms[<?php echo esc_attr( $taxonomy ); ?>][]" value="0">
 	</div>
 
-	<?php /*<div class="audiotheme-add-term-group hide-if-no-js">
+	<?php
+	/*
+	<div class="audiotheme-add-term-group hide-if-no-js">
 		<label for="add-<?php echo esc_attr( $taxonomy ); ?>" class="screen-reader-text"><?php echo esc_html( $taxonomy_object->labels->add_new_item ); ?></label>
 		<span class="audiotheme-input-group">
 			<input type="text" id="add-<?php echo esc_attr( $taxonomy ); ?>" class="audiotheme-add-term-field audiotheme-input-group-field">
@@ -28,5 +39,7 @@
 		</span>
 		<input type="hidden" class="audiotheme-add-term-nonce" value="<?php echo wp_create_nonce( 'add-term_' . $taxonomy ); ?>">
 		<span class="audiotheme-add-term-response"></span>
-	</div>*/ ?>
+	</div>
+	*/
+	?>
 </div>

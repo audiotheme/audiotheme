@@ -1,3 +1,12 @@
+<?php
+/**
+ * Dashboard Underscore.js templates.
+ *
+ * @package AudioTheme\Administration
+ * @since 1.9.0
+ */
+?>
+
 <script type="text/html" id="tmpl-audiotheme-module-modal-header">
 	<button class="left dashicons dashicons-no js-previous"><span class="screen-reader-text"><?php esc_html_e( 'Show previous module', 'audiotheme' ); ?></span></button>
 	<button class="right dashicons dashicons-no js-next"><span class="screen-reader-text"><?php esc_html_e( 'Show next module', 'audiotheme' ); ?></span></button>

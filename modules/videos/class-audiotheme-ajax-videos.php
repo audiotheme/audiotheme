@@ -84,17 +84,16 @@ class AudioTheme_AJAX_Videos {
 			if ( ! empty( $youtube_thumbnail_url ) ) {
 				$thumbnail_url = $youtube_thumbnail_url;
 			}
-
 		}
 
 		// Re-use the existing oEmbed data instead of making another copy of the thumbnail.
-		if ( $thumbnail_url == $oembed_thumb_url && ( ! $current_thumb_id || $current_thumb_id != $oembed_thumb_id ) ) {
+		if ( $thumbnail_url === $oembed_thumb_url && ( ! $current_thumb_id || $current_thumb_id !== $oembed_thumb_id ) ) {
 			set_post_thumbnail( $post_id, $oembed_thumb_id );
 		}
 
 		// Add new thumbnail if the returned URL doesn't match the
 		// oEmbed thumb URL or if there isn't a current thumbnail.
-		elseif ( ! $current_thumb_id || $thumbnail_url != $oembed_thumb_url ) {
+		elseif ( ! $current_thumb_id || $thumbnail_url !== $oembed_thumb_url ) {
 			$attachment_id = $this->sideload_image( $thumbnail_url, $post_id );
 
 			if ( ! empty( $attachment_id ) && ! is_wp_error( $attachment_id ) ) {

@@ -1,11 +1,17 @@
 <?php
 /**
+ * Record widget.
+ *
+ * @package AudioTheme\Widgets
+ * @since 1.0.0
+ */
+
+/**
  * AudioTheme record widget class.
  *
  * Display a selected record in a widget area.
  *
  * @package AudioTheme\Widgets
- *
  * @since 1.0.0
  */
 class Audiotheme_Widget_Record extends WP_Widget {

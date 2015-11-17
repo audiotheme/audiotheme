@@ -1,3 +1,12 @@
+<?php
+/**
+ * View to display a dashboard screen footer.
+ *
+ * @package AudioTheme\Administration
+ * @since 1.9.0
+ */
+?>
+
 <div class="audiotheme-dashboard-addendum">
 	<aside>
 		<h1><?php _e( 'Need Help?', 'audiotheme' ); ?></h1>

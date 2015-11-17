@@ -1,11 +1,17 @@
 <?php
 /**
+ * Recent posts widget.
+ *
+ * @package AudioTheme\Widgets
+ * @since 1.0.0
+ */
+
+/**
  * AudioTheme recent posts widget class.
  *
  * An improved recent posts widget to allow for more control over display and post type.
  *
  * @package AudioTheme\Widgets
- *
  * @since 1.0.0
  */
 class Audiotheme_Widget_Recent_Posts extends WP_Widget {

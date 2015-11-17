@@ -215,7 +215,7 @@ class AudioTheme_Screen_EditGig {
 		$time_format = get_option( 'time_format' );
 
 		if ( false !== strpos( $time_format, '\\' ) ) {
-			$time_format = false !== strpbrk( $time_format, 'GH' ) ? 'G:i' : 'g:i a';
+			$time_format = ( false !== strpbrk( $time_format, 'GH' ) ) ? 'G:i' : 'g:i a';
 		}
 
 		return $time_format;

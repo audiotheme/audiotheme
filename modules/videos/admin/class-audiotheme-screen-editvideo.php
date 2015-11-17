@@ -108,7 +108,7 @@ class AudioTheme_Screen_EditVideo {
 	 * @return string
 	 */
 	public function admin_post_thumbnail_html( $content, $post_id ) {
-		if ( 'audiotheme_video' != get_post_type( $post_id ) ) {
+		if ( 'audiotheme_video' !== get_post_type( $post_id ) ) {
 			return $content;
 		}
 

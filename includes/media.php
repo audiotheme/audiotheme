@@ -71,14 +71,14 @@ function audiotheme_trim_image_letterbox( $attachment_id ) {
  *
  * @param string $html HTML.
  * @param string $url oEmbed URL.
- * @param array $attr Embed attributes.
- * @param int $post_id Post ID.
+ * @param array  $attr Embed attributes.
+ * @param int    $post_id Post ID.
  * @return string Embed HTML with wrapper.
  */
 function audiotheme_oembed_html( $html, $url = null, $attr = null, $post_id = null ) {
 	$wrapped = '<div class="audiotheme-embed">' . $html . '</div>';
 
-	if ( empty( $url ) && 'video_embed_html' === current_filter() ) { // Jetpack
+	if ( empty( $url ) && 'video_embed_html' === current_filter() ) { // Jetpack.
 		$html = $wrapped;
 	} elseif ( ! empty( $url ) ) {
 		$players = array( 'youtube', 'youtu.be', 'vimeo', 'dailymotion', 'hulu', 'blip.tv', 'wordpress.tv', 'viddler', 'revision3' );
@@ -110,7 +110,7 @@ function audiotheme_oembed_html( $html, $url = null, $attr = null, $post_id = nu
  * @since 1.0.0
  * @access private
  *
- * @param array $matches
+ * @param array $matches Iframe source matches.
  * @return string
  */
 function _audiotheme_oembed_youtube_wmode_parameter( $matches ) {
@@ -130,7 +130,7 @@ function _audiotheme_oembed_youtube_wmode_parameter( $matches ) {
  * @since 1.2.0
  *
  * @param string $output Output string passed from default shortcode.
- * @param array $attr Array of shortcode attributes.
+ * @param array  $attr Array of shortcode attributes.
  * @return string Custom gallery output markup.
  */
 function audiotheme_post_gallery( $output, $attr ) {
@@ -232,7 +232,7 @@ function audiotheme_post_gallery( $output, $attr ) {
 
 	extract( $attr );
 
-	// id attribute is a combination of post ID and instance to ensure uniqueness.
+	// The id attribute is a combination of post ID and instance to ensure uniqueness.
 	$wrapper = sprintf( "\n" . '<div id="gallery-%d-%d" class="%s">', $post->ID, $instance, join( ' ', array_map( 'sanitize_html_class', $gallery_classes ) ) );
 
 	// Hooks should append custom output to the $wrapper arg if necessary and be sure to close the div.
@@ -313,9 +313,9 @@ function audiotheme_post_gallery( $output, $attr ) {
  *
  * @since 1.4.4
  *
- * @param array $response Attachment data to send as JSON.
+ * @param array   $response Attachment data to send as JSON.
  * @param WP_Post $attachment Attachment object.
- * @param array $meta Attachment meta.
+ * @param array   $meta Attachment meta.
  * @return array
  */
 function audiotheme_wp_prepare_audio_attachment_for_js( $response, $attachment, $meta ) {

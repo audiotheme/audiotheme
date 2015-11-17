@@ -40,7 +40,7 @@
 
 	<tbody class="audiotheme-repeater-items is-empty">
 		<tr>
-			<td colspan="6"><?php echo get_post_type_object( 'audiotheme_track' )->labels->not_found; ?></td>
+			<td colspan="6"><?php echo esc_html( get_post_type_object( 'audiotheme_track' )->labels->not_found ); ?></td>
 		</tr>
 	</tbody>
 </table>

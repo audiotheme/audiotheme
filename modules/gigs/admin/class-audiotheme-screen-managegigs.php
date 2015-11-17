@@ -55,7 +55,7 @@ class AudioTheme_Screen_ManageGigs {
 			! is_admin() ||
 			! $wp_query->is_main_query() ||
 			empty( $_GET['post_type'] ) ||
-			'audiotheme_gig' != $_GET['post_type']
+			'audiotheme_gig' !== $_GET['post_type']
 		) {
 			return;
 		}
@@ -63,11 +63,11 @@ class AudioTheme_Screen_ManageGigs {
 		$current_view = $this->get_current_view();
 
 		// Sort in descending order by default.
-		$order = isset( $_REQUEST['order'] ) && 'asc' == strtolower( $_REQUEST['order'] ) ? 'asc' : 'desc';
+		$order = isset( $_REQUEST['order'] ) && 'asc' === strtolower( $_REQUEST['order'] ) ? 'asc' : 'desc';
 		$wp_query->set( 'order', $order );
 
 		// Upcoming and past views.
-		if ( empty( $_REQUEST['m'] ) && ( 'upcoming' == $current_view || 'past' == $current_view ) ) {
+		if ( empty( $_REQUEST['m'] ) && ( 'upcoming' === $current_view || 'past' === $current_view ) ) {
 			$wp_query->set( 'meta_query', array(
 				array(
 					'key'     => '_audiotheme_gig_datetime',
@@ -113,7 +113,7 @@ class AudioTheme_Screen_ManageGigs {
 		}
 
 		if ( isset( $_REQUEST['orderby'] ) ) {
-			switch( $_REQUEST['orderby'] ) {
+			switch ( $_REQUEST['orderby'] ) {
 				case 'title':
 					$wp_query->set( 'orderby', 'title' );
 					break;
@@ -184,8 +184,8 @@ class AudioTheme_Screen_ManageGigs {
 				pm.meta_key = '_audiotheme_gig_datetime'";
 
 		$current_time   = date( 'Y-m-d H:i:s', current_time( 'timestamp' ) - DAY_IN_SECONDS );
-		$upcoming_count = $wpdb->get_var( $wpdb->prepare( $sql . " AND pm.meta_value >= %s", $current_time ) );
-		$past_count     = $wpdb->get_var( $wpdb->prepare( $sql . " AND pm.meta_value < %s", $current_time ) );
+		$upcoming_count = $wpdb->get_var( $wpdb->prepare( $sql . ' AND pm.meta_value >= %s', $current_time ) );
+		$past_count     = $wpdb->get_var( $wpdb->prepare( $sql . ' AND pm.meta_value < %s', $current_time ) );
 
 		// @todo Translate the numbers?
 		$new_views['upcoming'] = sprintf(
@@ -232,7 +232,7 @@ class AudioTheme_Screen_ManageGigs {
 
 		$month_count = count( $months );
 
-		if ( ! $month_count || ( 1 == $month_count && 0 == $months[0]->month ) ) {
+		if ( ! $month_count || ( 1 === $month_count && 0 === $months[0]->month ) ) {
 			return;
 		}
 
@@ -242,7 +242,7 @@ class AudioTheme_Screen_ManageGigs {
 			<option value="0" <?php selected( $m, 0 ); ?>><?php esc_html_e( 'All dates', 'audiotheme' ); ?></option>
 			<?php
 			foreach ( $months as $arc_row ) {
-				if ( 0 == $arc_row->year ) {
+				if ( empty( $arc_row->year ) ) {
 					continue;
 				}
 
@@ -285,7 +285,7 @@ class AudioTheme_Screen_ManageGigs {
 				$selected = ! empty( $_REQUEST['venue'] ) ? absint( $_REQUEST['venue'] ) : '';
 				foreach ( $venues as $venue ) {
 					printf( '<option value="%s"%s>%s</option>',
-						$venue->ID,
+						absint( $venue->ID ),
 						selected( $selected, $venue->ID, false ),
 						esc_html( $venue->post_title )
 					);
@@ -415,7 +415,7 @@ class AudioTheme_Screen_ManageGigs {
 		} elseif (
 			isset( $_REQUEST['gig_date'] ) &&
 			isset( $_REQUEST['compare'] ) &&
-			'<' == $_REQUEST['compare'] &&
+			'<' === $_REQUEST['compare'] &&
 			empty( $_REQUEST['m'] )
 		) {
 			$view = 'past';

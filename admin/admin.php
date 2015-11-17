@@ -88,7 +88,7 @@ function audiotheme_update() {
 	$api_data = array( 'license' => $license );
 
 	$framework_updater = new Audiotheme_Updater_Plugin( array(
-		'api_data' => $api_data
+		'api_data' => $api_data,
 	), AUDIOTHEME_DIR . 'audiotheme.php' );
 
 	$framework_updater->init();
@@ -150,7 +150,7 @@ function audiotheme_update_notice( $notice ) {
  *
  * @since 1.0.0
  *
- * @param array $r Request args.
+ * @param array  $r Request args.
  * @param string $url URI resource.
  * @return array Filtered request args.
  */
@@ -241,7 +241,7 @@ function audiotheme_admin_init() {
 	wp_localize_script( 'audiotheme-license', '_audiothemeLicenseSettings', array(
 		'activatedResponse' => sprintf( ' <strong class="audiotheme-response is-valid">%s</strong>', __( 'Activated!', 'audiotheme' ) ),
 		'nonce'             => wp_create_nonce( 'audiotheme-activate-license' ),
-		// ok|empty|unknown|invalid|expired|limit_reached|failed
+		// Statuses: ok|empty|unknown|invalid|expired|limit_reached|failed.
 		'errorMessages'     => array(
 			'empty'         => __( 'Empty license key.', 'audiotheme' ),
 			'invalid'       => __( 'Invalid license key.', 'audiotheme' ),
@@ -273,7 +273,7 @@ function audiotheme_enqueue_admin_scripts() {
  *
  * @since 1.0.0
  *
- * @param string $class Body class.
+ * @param string $classes Body classes.
  * @return string
  */
 function audiotheme_admin_body_class( $classes ) {
@@ -297,7 +297,7 @@ function audiotheme_admin_body_class( $classes ) {
  * @since 1.0.0
  *
  * @param string $column_name Column identifier.
- * @param int $post_id Post ID.
+ * @param int    $post_id Post ID.
  */
 function audiotheme_display_custom_column( $column_name, $post_id ) {
 	switch ( $column_name ) {
@@ -315,7 +315,7 @@ function audiotheme_display_custom_column( $column_name, $post_id ) {
  *
  * @since 1.7.0
  *
- * @param int $post_id Post ID.
+ * @param int     $post_id Post ID.
  * @param WP_Post $post Post object.
  */
 function audiotheme_update_post_terms( $post_id, $post ) {

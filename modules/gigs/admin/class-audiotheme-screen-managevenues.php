@@ -37,7 +37,7 @@ class AudioTheme_Screen_ManageVenues {
 		if (
 			! is_admin() ||
 			empty( $_GET['post_type'] ) ||
-			'audiotheme_venue' != $_GET['post_type']
+			'audiotheme_venue' !== $_GET['post_type']
 		) {
 			return;
 		}
@@ -46,7 +46,7 @@ class AudioTheme_Screen_ManageVenues {
 		$order   = isset( $_REQUEST['order'] ) && 'desc' === strtolower( $_REQUEST['order'] ) ? 'desc' : 'asc';
 		$wp_query->set( 'order', $order );
 
-		switch( $orderby ) {
+		switch ( $orderby ) {
 			case 'title':
 				$wp_query->set( 'orderby', 'title' );
 				break;

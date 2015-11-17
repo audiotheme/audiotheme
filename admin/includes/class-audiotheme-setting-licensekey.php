@@ -41,6 +41,8 @@ class AudioTheme_Setting_LicenseKey {
 	 * Constructor method.
 	 *
 	 * @since 1.9.0
+	 *
+	 * @param AudioTheme_License $license License instance.
 	 */
 	public function __construct( $license ) {
 		$this->license     = $license;
@@ -157,10 +159,6 @@ class AudioTheme_Setting_LicenseKey {
 			->set_key( sanitize_key( $_POST['license'] ) )
 			->save()
 			->activate();
-
-		if ( isset( $response->status ) && 'ok' === $response->status ) {
-			// @todo Clear the last update status check with a 'not_activated' response.
-		}
 
 		wp_send_json_success( $response );
 	}

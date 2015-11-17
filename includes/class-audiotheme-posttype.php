@@ -66,7 +66,7 @@ abstract class AudioTheme_PostType {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param array $messages Post updated messages.
+	 * @param array   $messages Post updated messages.
 	 * @param WP_Post $post Post object.
 	 * @return array
 	 */

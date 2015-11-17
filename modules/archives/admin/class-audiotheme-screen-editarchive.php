@@ -128,7 +128,7 @@ class AudioTheme_Screen_EditArchive {
 			$value = $this->module->get_archive_meta( 'posts_per_archive_page', true, '', $post_type );
 			?>
 			<p>
-				<label for="audiotheme-posts-per-archive-page"><?php _e( 'Posts per page:', 'audiotheme' ); ?></label>
+				<label for="audiotheme-posts-per-archive-page"><?php esc_html_e( 'Posts per page:', 'audiotheme' ); ?></label>
 				<input type="text" name="posts_per_archive_page" id="audiotheme-posts-per-archive-page" value="<?php echo esc_attr( $value ); ?>" class="small-text">
 			</p>
 			<?php
@@ -144,14 +144,12 @@ class AudioTheme_Screen_EditArchive {
 			}
 			?>
 			<p>
-				<label for="audiotheme-columns"><?php _e( 'Columns:', 'audiotheme' ); ?></label>
+				<label for="audiotheme-columns"><?php esc_html_e( 'Columns:', 'audiotheme' ); ?></label>
 				<select name="columns" id="audiotheme-columns">
 					<?php
 					foreach ( $choices as $number ) {
-						$number = absint( $number );
-
 						printf( '<option value="%1$d"%2$s>%1$d</option>',
-							$number,
+							absint( $number ),
 							selected( $number, $value, false )
 						);
 					}

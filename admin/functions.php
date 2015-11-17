@@ -9,6 +9,9 @@
  * Print a taxonomy checkbox list.
  *
  * @since 1.7.0
+ *
+ * @param WP_Post $post Post object.
+ * @param array   $metabox Additional meta box arguments.
  */
 function audiotheme_taxonomy_checkbox_list_meta_box( $post, $metabox ) {
 	$taxonomy        = $metabox['args']['taxonomy'];
@@ -34,7 +37,7 @@ function audiotheme_taxonomy_checkbox_list_meta_box( $post, $metabox ) {
  * @since 1.0.0
  *
  * @param WP_Post $post Post object.
- * @param array $metabox Additional meta box args.
+ * @param array   $metabox Additional meta box arguments.
  */
 function audiotheme_post_submit_meta_box( $post, $metabox ) {
 	global $action;
@@ -61,7 +64,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 
 		<div id="minor-publishing">
 
-			<?php // Hidden submit button early on so that the browser chooses the right button when form is submitted with Return key ?>
+			<!-- Hidden submit button early on so that the browser chooses the right button when form is submitted with Return key. -->
 			<div style="display: none"><?php submit_button( __( 'Save', 'audiotheme' ), 'button', 'save' ); ?></div>
 
 
@@ -249,24 +252,24 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 					/* translators: Publish box date format, see http://php.net/date */
 					$datef = __( 'M j, Y @ G:i' );
 					if ( 0 !== $post->ID ) {
-						if ( 'future' === $post->post_status ) { // scheduled for publishing at a future date
+						if ( 'future' === $post->post_status ) { // Scheduled for publishing at a future date.
 							$stamp = __( 'Scheduled for: <strong>%1$s</strong>', 'audiotheme' );
-						} elseif ( 'publish' === $post->post_status || 'private' === $post->post_status ) { // already published
+						} elseif ( 'publish' === $post->post_status || 'private' === $post->post_status ) { // Already published.
 							$stamp = __( 'Published on: <strong>%1$s</strong>', 'audiotheme' );
-						} elseif ( '0000-00-00 00:00:00' === $post->post_date_gmt ) { // draft, 1 or more saves, no date specified
+						} elseif ( '0000-00-00 00:00:00' === $post->post_date_gmt ) { // Draft, 1 or more saves, no date specified.
 							$stamp = __( 'Publish <strong>immediately</strong>', 'audiotheme' );
-						} elseif ( time() < strtotime( $post->post_date_gmt . ' +0000' ) ) { // draft, 1 or more saves, future date specified
+						} elseif ( time() < strtotime( $post->post_date_gmt . ' +0000' ) ) { // Draft, 1 or more saves, future date specified.
 							$stamp = __( 'Schedule for: <strong>%1$s</strong>', 'audiotheme' );
-						} else { // draft, 1 or more saves, date specified
+						} else { // Draft, 1 or more saves, date specified.
 							$stamp = __( 'Publish on: <strong>%1$s</strong>', 'audiotheme' );
 						}
 						$date = date_i18n( $datef, strtotime( $post->post_date ) );
-					} else { // draft (no saves, and thus no date specified)
+					} else { // Draft (no saves, and thus no date specified).
 						$stamp = __( 'Publish <strong>immediately</strong>', 'audiotheme' );
 						$date = date_i18n( $datef, strtotime( current_time( 'mysql' ) ) );
 					}
 
-					if ( $can_publish ) : // Contributors don't get to choose the date of publish ?>
+					if ( $can_publish ) : // Contributors don't get to choose the date of publish. ?>
 						<div class="misc-pub-section curtime">
 							<span id="timestamp"><?php printf( $stamp, $date ); ?></span>
 							<a href="#edit_timestamp" class="edit-timestamp hide-if-no-js"><?php _e( 'Edit', 'audiotheme' ) ?></a>
@@ -374,9 +377,9 @@ function audiotheme_admin_spinner( $args = array() ) {
  *
  * @since 1.0.0
  *
- * @param array $item Menu item.
+ * @param array  $item Menu item.
  * @param string $relative_slug Slug of existing item.
- * @param string $position Optional. Defaults to 'after'. (before|after)
+ * @param string $position Optional. Defaults to 'after'. (before|after).
  */
 function audiotheme_menu_insert_item( $item, $relative_slug, $position = 'after' ) {
 	global $menu;
@@ -394,7 +397,7 @@ function audiotheme_menu_insert_item( $item, $relative_slug, $position = 'after'
  *
  * @param string $move_slug Slug of item to move.
  * @param string $relative_slug Slug of existing item.
- * @param string $position Optional. Defaults to 'after'. (before|after)
+ * @param string $position Optional. Defaults to 'after'. (before|after).
  */
 function audiotheme_menu_move_item( $move_slug, $relative_slug, $position = 'after' ) {
 	global $menu;
@@ -468,7 +471,7 @@ function audiotheme_submenu_move_after( $move_slug, $after_slug, $menu_slug ) {
  * @since 1.3.0
  *
  * @param string $theme Theme slug.
- * @param array $api_args Optional. Arguments to send to the remote API.
+ * @param array  $api_args Optional. Arguments to send to the remote API.
  */
 function audiotheme_update_themes_list( $theme, $api_args = array() ) {
 	if ( ! is_multisite() ) {

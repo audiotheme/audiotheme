@@ -44,7 +44,7 @@ function audiotheme_image_size_names() {
  *
  * @param string $version A package identifier or version number to compare against.
  * @param string $version2 The version number to compare to.
- * @param string $operator Optional. Relationship to test. <, lt, <=, le, >, gt, >=, ge, ==, =, eq, !=, <>, ne
+ * @param string $operator Optional. Relationship to test. ( <, lt, <=, le, >, gt, >=, ge, ==, =, eq, !=, <>, ne ).
  * @return mixed True or false if operator is supplied. -1, 0, or 1 if operator is empty.
  */
 function audiotheme_version_compare( $version, $version2, $operator = null ) {
@@ -79,10 +79,10 @@ function audiotheme_version_compare( $version, $version2, $operator = null ) {
  * @since 1.0.0
  * @uses Audiotheme_Sort_Objects
  *
- * @param array $objects An array of objects to sort.
+ * @param array  $objects An array of objects to sort.
  * @param string $orderby The object property to sort on.
  * @param string $order The sort order; ASC or DESC.
- * @param bool $unique Optional. If the objects have an ID property, it will be used for the array keys, thus they'll unique. Defaults to true.
+ * @param bool   $unique Optional. If the objects have an ID property, it will be used for the array keys, thus they'll unique. Defaults to true.
  * @param string $fallback Optional. Comma-delimited string of properties to sort on if $orderby property is equal.
  * @return array The array of sorted objects.
  */
@@ -108,16 +108,55 @@ function audiotheme_sort_objects( $objects, $orderby, $order = 'ASC', $unique = 
  * @access private
  */
 class Audiotheme_Sort_Objects {
-	var $fallback, $order, $orderby;
+	/**
+	 * Fallback property to sort by if primary is equal.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	public $fallback;
 
-	// Fallback is limited to working with properties of the parent object.
-	function __construct( $orderby, $order, $fallback = null ) {
+	/**
+	 * Sort direction.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	public $order;
+
+	/**
+	 * Property to sort by.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	public $orderby;
+
+	/**
+	 * Constructor method.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $orderby  Property to sort by.
+	 * @param string $order    Sort direction.
+	 * @param string $fallback Fallback property to sort by. Limited to properties of the parent object.
+	 */
+	public function __construct( $orderby, $order, $fallback = null ) {
 		$this->order = ( 'desc' === strtolower( $order ) ) ? 'DESC' : 'ASC';
 		$this->orderby = $orderby;
 		$this->fallback = $fallback;
 	}
 
-	function sort( $a, $b ) {
+	/**
+	 * Sort objects.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param  object $a Object 1.
+	 * @param  object $b Object 2.
+	 * @return int
+	 */
+	public function sort( $a, $b ) {
 		if ( is_string( $this->orderby ) ) {
 			$a_value = $a->{$this->orderby};
 			$b_value = $b->{$this->orderby};
@@ -136,7 +175,7 @@ class Audiotheme_Sort_Objects {
 				$properties = explode( ',', $this->fallback );
 				foreach ( $properties as $prop ) {
 					if ( $a->$prop !== $b->$prop ) {
-						#printf( '(%s - %s) - (%s - %s)<br>', $a_value, $a->$prop, $b_value, $b->$prop );
+						// @todo printf( '(%s - %s) - (%s - %s)<br>', $a_value, $a->$prop, $b_value, $b->$prop );
 						return $this->compare( $a->$prop, $b->$prop );
 					}
 				}
@@ -148,7 +187,16 @@ class Audiotheme_Sort_Objects {
 		return $this->compare( $a_value, $b_value );
 	}
 
-	function compare( $a, $b ) {
+	/**
+	 * Compare two values for equality.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param  mixed $a Value 1.
+	 * @param  mixed $b Value 2.
+	 * @return int
+	 */
+	public function compare( $a, $b ) {
 		if ( $a < $b ) {
 			return ( 'ASC' === $this->order ) ? -1 : 1;
 		} else {
@@ -181,17 +229,17 @@ function audiotheme_timezone_choice( $selected_zone = null ) {
 	return apply_filters( 'audiotheme_timezone_dropdown', $choices, $selected );
 }
 
+if ( ! function_exists( 'vd' ) ) :
 /**
  * Display a variable for debugging.
  *
  * @since 1.0.0
  *
- * @param mixed $var
+ * @param mixed $value Value.
  */
-if ( ! function_exists( 'vd' ) ) :
-	function vd( $var ) {
-		echo '<pre style="font-size: 12px; text-align: left">' . print_r( $var, true ) . '</pre>';
-	}
+function vd( $value ) {
+	echo '<pre style="font-size: 12px; text-align: left">' . print_r( $value, true ) . '</pre>';
+}
 endif;
 
 /**
@@ -207,10 +255,10 @@ endif;
  * @version 1.0.0
  * @see array_splice()
  *
- * @param array $input The input array.
- * @param int $offset The position to start from.
- * @param int $length Optional. The number of elements to remove. Defaults to 0.
- * @param mixed $replacement Optional. Item(s) to replace removed elements.
+ * @param array  $input The input array.
+ * @param int    $offset The position to start from.
+ * @param int    $length Optional. The number of elements to remove. Defaults to 0.
+ * @param mixed  $replacement Optional. Item(s) to replace removed elements.
  * @param string $primary Optiona. input|replacement Defaults to input. Which array should take precedence if there is a key collision.
  * @return array The modified array.
  */
@@ -219,7 +267,7 @@ function audiotheme_array_asplice( $input, $offset, $length = 0, $replacement = 
 	$replacement = (array) $replacement;
 
 	$start = array_slice( $input, 0, $offset, true );
-	// $remove = array_slice( $input, $offset, $length, true );
+	// @todo $remove = array_slice( $input, $offset, $length, true );
 	$end = array_slice( $input, $offset + $length, null, true );
 
 	// Discard elements in $replacement whose keys match keys in $input.
@@ -235,7 +283,7 @@ function audiotheme_array_asplice( $input, $offset, $length = 0, $replacement = 
 	}
 
 	// Which is faster?
-	// return $start + $replacement + $end;
+	// @todo return $start + $replacement + $end;
 	return array_merge( $start, $replacement, $end );
 }
 
@@ -304,7 +352,7 @@ function audiotheme_array_insert_after_key( $input, $needle, $insert ) {
  *
  * @param mixed $needle The value to search for.
  * @param array $haystack The array to search.
- * @param bool $strict Whether to search for identical (types) values.
+ * @param bool  $strict Whether to search for identical (types) values.
  * @return int|bool Position of the first matching element or false if not found.
  */
 function audiotheme_array_find( $needle, $haystack, $strict = false ) {
@@ -325,8 +373,8 @@ function audiotheme_array_find( $needle, $haystack, $strict = false ) {
  * @version 1.0.0
  * @see array_key_exists()
  *
- * @param $key string|int The key to search for.
- * @param $search The array to search.
+ * @param string|int $key The key to search for.
+ * @param array      $search The array to search.
  * @return int|bool Position of the key or false if not found.
  */
 function audiotheme_array_key_find( $key, $search ) {
@@ -349,8 +397,8 @@ function audiotheme_array_key_find( $key, $search ) {
  *
  * @version 1.0.1
  *
- * @param array $array The array to sort.
- * @param array $order Array used for sorting. Values should match keys in $array.
+ * @param array  $array The array to sort.
+ * @param array  $order Array used for sorting. Values should match keys in $array.
  * @param string $keep_diff Optional. Whether to keep the difference of the two arrays if they don't exactly match and where to place the difference.
  * @param string $diff_sort Optional. @todo Implement.
  * @return array The sorted array.
@@ -376,13 +424,13 @@ function audiotheme_array_sort_array( $array, $order, $keep_diff = 'bottom', $di
 }
 
 /**
-* Helper function to determine if a shortcode attribute is true or false.
-*
-* @since 1.0.0
-*
-* @param string|int|bool $var Attribute value.
-* @return bool
-*/
+ * Helper function to determine if a shortcode attribute is true or false.
+ *
+ * @since 1.0.0
+ *
+ * @param string|int|bool $var Attribute value.
+ * @return bool
+ */
 function audiotheme_shortcode_bool( $var ) {
 	$falsey = array( 'false', '0', 'no', 'n' );
 	return ( ! $var || in_array( strtolower( $var ), $falsey ) ) ? false : true;
@@ -444,7 +492,7 @@ function audiotheme_encode_url_path( $url ) {
  *
  * @since 1.6.0
  *
- * @param array $data Array of properties.
+ * @param array  $data Array of properties.
  * @param string $arg_separator Separator between arguments.
  * @param string $value_separator Separator between keys and values.
  * @return array string

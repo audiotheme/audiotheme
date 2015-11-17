@@ -221,7 +221,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 			}
 		}
 
-		if ( $post_id = $this->get_archive_id( $post_type) ) {
+		if ( $post_id = $this->get_archive_id( $post_type ) ) {
 			$title = get_post( $post_id )->post_title;
 		}
 

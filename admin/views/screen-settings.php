@@ -1,3 +1,12 @@
+<?php
+/**
+ * View to display the settings screen.
+ *
+ * @package AudioTheme\Administration
+ * @since 1.9.0
+ */
+?>
+
 <div class="wrap">
 	<h1><?php _e( 'Settings', 'audiotheme' ); ?></h1>
 

@@ -185,7 +185,7 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType {
 			'publicly_queryable' => true,
 			'rewrite'            => array(
 				'slug'       => $this->module->get_rewrite_base(),
-				'with_front' => false
+				'with_front' => false,
 			),
 			'show_ui'            => true,
 			'show_in_menu'       => true,
@@ -251,9 +251,9 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType {
 			7  => esc_html__( 'Video saved.', 'audiotheme' ),
 			8  => esc_html__( 'Video submitted.', 'audiotheme' ),
 			9  => sprintf(
-					esc_html__( 'Video scheduled for: %s.', 'audiotheme' ),
-					/* translators: Publish box date format, see http://php.net/date */
-					'<strong>' . date_i18n( esc_html__( 'M j, Y @ H:i', 'audiotheme' ), strtotime( $post->post_date ) ) . '</strong>'
+				esc_html__( 'Video scheduled for: %s.', 'audiotheme' ),
+				/* translators: Publish box date format, see http://php.net/date */
+				'<strong>' . date_i18n( esc_html__( 'M j, Y @ H:i', 'audiotheme' ), strtotime( $post->post_date ) ) . '</strong>'
 			),
 			10 => esc_html__( 'Video draft updated.', 'audiotheme' ),
 			'preview' => esc_html__( 'Preview video', 'audiotheme' ),

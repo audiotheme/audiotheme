@@ -1,11 +1,17 @@
 <?php
 /**
+ * Track widget.
+ *
+ * @package AudioTheme\Widgets
+ * @since 1.0.0
+ */
+
+/**
  * AudioTheme track widget class.
  *
  * Display a selected track in a widget area.
  *
  * @package AudioTheme\Widgets
- *
  * @since 1.0.0
  */
 class Audiotheme_Widget_Track extends WP_Widget {

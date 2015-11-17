@@ -39,7 +39,7 @@
 			&nbsp;
 		</td>
 		<td class="column-action">
-			<a href="<?php echo admin_url( 'post.php' ); ?>?post={{ data.id }}&amp;action=edit" class="audiotheme-remove-on-add"><?php esc_html_e( 'Edit', 'audiotheme' ); ?></a>
+			<a href="<?php echo esc_url( admin_url( 'post.php' ) ); ?>?post={{ data.id }}&amp;action=edit" class="audiotheme-remove-on-add"><?php esc_html_e( 'Edit', 'audiotheme' ); ?></a>
 			<a class="audiotheme-repeater-remove-item audiotheme-show-on-add"><span class="dashicons dashicons-trash"></span></a>
 		</td>
 	</tr>

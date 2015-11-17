@@ -16,7 +16,7 @@ class AudioTheme_Image_Editor_GD extends WP_Image_Editor_GD {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param  array $args
+	 * @param array $args Arguments to test for GD support.
 	 * @return bool
 	 */
 	public static function test( $args = array() ) {

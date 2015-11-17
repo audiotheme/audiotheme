@@ -1,3 +1,12 @@
+<?php
+/**
+ * View to display a dashboard screen header.
+ *
+ * @package AudioTheme\Administration
+ * @since 1.9.0
+ */
+?>
+
 <div class="wrap">
 
 <header class="audiotheme-dashboard-hero">

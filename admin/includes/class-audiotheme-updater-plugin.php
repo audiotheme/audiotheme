@@ -1,15 +1,21 @@
 <?php
+/**
+ * Plugin updater.
+ *
+ * @package AudioTheme
+ * @since 1.0.0
+ */
+
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 /**
- * The plugin update class for AudioTheme.
+ * Plugin update class.
  *
  * @see wp-includes/update.php
  * @see wp-admin/includes/update.php
  * @see wp-admin/includes/plugin-install.php
  *
  * @package AudioTheme
- *
  * @since 1.0.0
  */
 class Audiotheme_Updater_Plugin extends Audiotheme_Updater {
@@ -27,7 +33,7 @@ class Audiotheme_Updater_Plugin extends Audiotheme_Updater {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $args Associative array to set object properties.
+	 * @param array  $args Associative array to set object properties.
 	 * @param string $file Absolute path a plugin file.
 	 */
 	public function __construct( $args = array(), $file ) {
@@ -72,8 +78,8 @@ class Audiotheme_Updater_Plugin extends Audiotheme_Updater {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param bool|object $data False if the first filter, otherwise a $response object from an earlier filter.
-	 * @param string $action The API method name.
+	 * @param bool|object  $data False if the first filter, otherwise a $response object from an earlier filter.
+	 * @param string       $action The API method name.
 	 * @param array|object $args Arguments to serialize for the Plugin Info API.
 	 * @return object plugins_api response object on success, WP_Error on failure.
 	 */
@@ -106,7 +112,7 @@ class Audiotheme_Updater_Plugin extends Audiotheme_Updater {
 	 * @since 1.0.0
 	 *
 	 * @param string $plugin_file Plugin basename.
-	 * @param array $plugin_data Data from the plugin's headers.
+	 * @param array  $plugin_data Data from the plugin's headers.
 	 */
 	public function after_plugin_row( $plugin_file, $plugin_data ) {
 		if ( ! current_user_can( 'update_plugins' ) ) {
@@ -128,7 +134,6 @@ class Audiotheme_Updater_Plugin extends Audiotheme_Updater {
 			$notices = wp_parse_args( $this->notices, $this->get_license_error_messages( $notice_args ) );
 
 			// @todo framework_update_required & wordpress_update_required
-
 			// Determine which notice to display.
 			$notice = ( isset( $notices[ $api_response->status ] ) ) ? $notices[ $api_response->status ] : $notices['generic'];
 

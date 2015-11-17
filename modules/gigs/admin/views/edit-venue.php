@@ -39,7 +39,7 @@
 				<th><label for="venue-timezone-string"><?php esc_html_e( 'Time zone', 'audiotheme' ) ?></label></th>
 				<td>
 					<select id="venue-timezone-string" name="audiotheme_venue[timezone_string]">
-						<?php echo audiotheme_timezone_choice( $venue->timezone_string ); ?>
+						<?php echo esc_html( audiotheme_timezone_choice( $venue->timezone_string ) ); ?>
 					</select>
 				</td>
 			</tr>

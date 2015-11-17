@@ -16,7 +16,7 @@ class AudioTheme_Image_Editor_Imagick extends WP_Image_Editor_Imagick {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param  array $args
+	 * @param  array $args Arguments to test for ImageMagick support.
 	 * @return bool
 	 */
 	public static function test( $args = array() ) {

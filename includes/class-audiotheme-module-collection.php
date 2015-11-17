@@ -26,7 +26,8 @@ class AudioTheme_Module_Collection implements ArrayAccess, Countable, Iterator {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param  AudioTheme_Module $module Module object.
+	 * @param string            $id Module id.
+	 * @param AudioTheme_Module $module Module object.
 	 * @return $this
 	 */
 	public function register( $id, $module ) {
@@ -217,7 +218,7 @@ class AudioTheme_Module_Collection implements ArrayAccess, Countable, Iterator {
 	 * @since 1.9.0
 	 *
 	 * @param string $offset Item identifier.
-	 * @param array $value Item data.
+	 * @param array  $value Item data.
 	 */
 	public function offsetSet( $offset, $value ) {
 		$this->modules[ $offset ] = $value;
