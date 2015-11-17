@@ -175,8 +175,8 @@ class AudioTheme_PostType_Record extends AudioTheme_PostType {
 	 *
 	 * @param string $post_link The default permalink.
 	 * @param object $post The record post object to get the permalink for.
-	 * @param bool $leavename Whether to keep the post name.
-	 * @param bool $sample Is it a sample permalink.
+	 * @param bool   $leavename Whether to keep the post name.
+	 * @param bool   $sample Is it a sample permalink.
 	 * @return string
 	 */
 	public function post_permalink( $post_link, $post, $leavename, $sample ) {

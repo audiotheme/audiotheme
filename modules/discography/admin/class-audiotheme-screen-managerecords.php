@@ -105,8 +105,8 @@ class AudioTheme_Screen_ManageRecords {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param string $column_id The id of the column to display.
-	 * @param int $post_id Post ID.
+	 * @param string $column_name The id of the column to display.
+	 * @param int    $post_id Post ID.
 	 */
 	public function display_columns( $column_name, $post_id ) {
 		global $post;

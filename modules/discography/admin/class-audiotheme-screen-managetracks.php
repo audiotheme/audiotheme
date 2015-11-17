@@ -67,9 +67,6 @@ class AudioTheme_Screen_ManageTracks {
 	 * Custom track filter dropdowns.
 	 *
 	 * @since 1.9.0
-	 *
-	 * @param array $actions List of actions.
-	 * @return array
 	 */
 	public function list_table_filters() {
 		global $wpdb;
@@ -153,8 +150,8 @@ class AudioTheme_Screen_ManageTracks {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param string $column_id The id of the column to display.
-	 * @param int $post_id Post ID.
+	 * @param string $column_name The id of the column to display.
+	 * @param int    $post_id Post ID.
 	 */
 	public function display_columns( $column_name, $post_id ) {
 		switch ( $column_name ) {

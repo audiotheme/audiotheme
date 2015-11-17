@@ -124,10 +124,10 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType {
 	 *
 	 * @see get_post_permalink()
 	 *
-	 * @param string $post_link The default permalink.
-	 * @param object $post_link The track post object to get the permalink for.
-	 * @param bool $leavename Whether to keep the post name.
-	 * @param bool $sample Is it a sample permalink.
+	 * @param string  $post_link The default permalink.
+	 * @param WP_Post $post The track post object to get the permalink for.
+	 * @param bool    $leavename Whether to keep the post name.
+	 * @param bool    $sample Is it a sample permalink.
 	 * @return string
 	 */
 	public function post_permalink( $post_link, $post, $leavename, $sample ) {
@@ -164,15 +164,15 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType {
 	 * @global wpdb $wpdb
 	 * @global WP_Rewrite $wp_rewrite
 	 *
-	 * @param string $slug The desired slug (post_name).
-	 * @param integer $post_ID
-	 * @param string $post_status No uniqueness checks are made if the post is still draft or pending.
-	 * @param string $post_type
-	 * @param integer $post_parent
-	 * @param string $original_slug Slug passed to the uniqueness method.
+	 * @param string  $slug The desired slug (post_name).
+	 * @param integer $post_id Post ID.
+	 * @param string  $post_status No uniqueness checks are made if the post is still draft or pending.
+	 * @param string  $post_type Post type.
+	 * @param integer $post_parent Post parent ID.
+	 * @param string  $original_slug Slug passed to the uniqueness method.
 	 * @return string
 	 */
-	public function get_unique_slug( $slug, $post_ID, $post_status, $post_type, $post_parent, $original_slug = null ) {
+	public function get_unique_slug( $slug, $post_id, $post_status, $post_type, $post_parent, $original_slug = null ) {
 		global $wpdb, $wp_rewrite;
 
 		if ( 'audiotheme_track' === $post_type ) {
@@ -185,13 +185,13 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType {
 
 			// Make sure the track slug is unique within the context of the record only.
 			$check_sql = "SELECT post_name FROM $wpdb->posts WHERE post_name = %s AND post_type = %s AND post_parent = %d AND ID != %d LIMIT 1";
-			$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug, $post_type, $post_parent, $post_ID ) );
+			$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug, $post_type, $post_parent, $post_id ) );
 
 			if ( $post_name_check || apply_filters( 'wp_unique_post_slug_is_bad_flat_slug', false, $slug, $post_type ) ) {
 				$suffix = 2;
 				do {
 					$alt_post_name = substr( $slug, 0, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
-					$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $alt_post_name, $post_type, $post_parent, $post_ID ) );
+					$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $alt_post_name, $post_type, $post_parent, $post_id ) );
 					$suffix++;
 				} while ( $post_name_check );
 				$slug = $alt_post_name;
@@ -272,6 +272,9 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType {
 	 * Convert enqueued track lists into an array of tracks prepared for
 	 * JavaScript and output the JSON-encoded object in the footer.
 	 *
+	 * @todo The track & record ids should be collected at some point so they
+	 *       can all be fetched in a single query.
+	 *
 	 * @since 1.9.0
 	 */
 	public function print_tracks_js() {
@@ -282,8 +285,6 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType {
 		}
 
 		$lists = array();
-
-		// @todo The track & record ids should be collected at some point so they can all be fetched in a single query.
 
 		foreach ( $audiotheme_enqueued_tracks as $list => $tracks ) {
 			if ( empty( $tracks ) || ! is_array( $tracks ) ) {
@@ -317,7 +318,7 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType {
 			window.AudiothemeTracks = window.AudiothemeTracks || {};
 
 			(function( window ) {
-				var tracks = <?php echo json_encode( $lists ); ?>,
+				var tracks = <?php echo wp_json_encode( $lists ); ?>,
 					i;
 
 				for ( i in tracks ) {

@@ -186,10 +186,10 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType {
 	 *
 	 * @see get_post_permalink()
 	 *
-	 * @param string $post_link The default gig URL.
-	 * @param object $post_link The gig to get the permalink for.
-	 * @param bool $leavename Whether to keep the post name.
-	 * @param bool $sample Is it a sample permalink.
+	 * @param string  $post_link The default gig URL.
+	 * @param WP_Post $post The gig to get the permalink for.
+	 * @param bool    $leavename Whether to keep the post name.
+	 * @param bool    $sample Is it a sample permalink.
 	 * @return string The gig permalink.
 	 */
 	public function post_permalink( $post_link, $post, $leavename, $sample ) {
@@ -217,12 +217,12 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType {
 	 *
 	 * @see wp_unique_post_slug()
 	 *
-	 * @param string $slug The desired slug (post_name).
-	 * @param integer $post_id
-	 * @param string $post_status No uniqueness checks are made if the post is still draft or pending.
-	 * @param string $post_type
-	 * @param integer $post_parent
-	 * @param string $original_slug Slug passed to the uniqueness method.
+	 * @param string  $slug The desired slug (post_name).
+	 * @param integer $post_id Post ID.
+	 * @param string  $post_status No uniqueness checks are made if the post is still draft or pending.
+	 * @param string  $post_type Post type.
+	 * @param integer $post_parent Post parent ID.
+	 * @param string  $original_slug Slug passed to the uniqueness method.
 	 * @return string
 	 */
 	public function get_unique_slug( $slug, $post_id, $post_status, $post_type, $post_parent, $original_slug = null ) {
@@ -278,7 +278,7 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param int $post_id Post ID.
+	 * @param int     $post_id Post ID.
 	 * @param WP_Post $post Post object.
 	 */
 	public function update_bad_slug( $post_id, $post ) {
@@ -327,9 +327,9 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param array $classes List of classes.
+	 * @param array        $classes List of classes.
 	 * @param string|array $class One or more classes to add to the class list.
-	 * @param int $post_id An optional post ID.
+	 * @param int          $post_id An optional post ID.
 	 * @return array Array of classes.
 	 */
 	public function post_class( $classes, $class, $post_id ) {

@@ -1,3 +1,12 @@
+<?php
+/**
+ * View the record track list repeater.
+ *
+ * @package AudioTheme\Discography
+ * @since 1.9.0
+ */
+?>
+
 <table id="record-tracklist" class="audiotheme-repeater audiotheme-edit-after-editor widefat" data-item-template-id="audiotheme-track">
 	<thead>
 		<tr>

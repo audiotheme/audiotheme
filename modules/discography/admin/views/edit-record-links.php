@@ -1,3 +1,12 @@
+<?php
+/**
+ * View for the link repeater in the record details meta box.
+ *
+ * @package AudioTheme\Discography
+ * @since 1.9.0
+ */
+?>
+
 <table class="audiotheme-repeater" id="record-links">
 	<thead>
 		<tr>

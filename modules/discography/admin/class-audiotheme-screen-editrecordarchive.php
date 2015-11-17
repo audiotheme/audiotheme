@@ -32,9 +32,9 @@ class AudioTheme_Screen_EditRecordArchive {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param int $post_id Post ID.
+	 * @param int     $post_id Post ID.
 	 * @param WP_Post $post Post object.
-	 * @param string $post_type The type of post the archive lists.
+	 * @param string  $post_type The type of post the archive lists.
 	 */
 	public function on_save( $post_id, $post, $post_type ) {
 		if ( 'audiotheme_record' !== $post_type ) {

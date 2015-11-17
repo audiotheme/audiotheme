@@ -108,8 +108,8 @@ function get_audiotheme_record_genre( $post_id = null ) {
  *
  * @since 1.0.0
  *
- * @param int $post_id Post ID.
- * @param array $args
+ * @param int   $post_id Post ID.
+ * @param array $args Options to filter the results.
  * @return array
  */
 function get_audiotheme_record_tracks( $post_id = null, $args = array() ) {
@@ -171,7 +171,7 @@ function is_audiotheme_track_downloadable( $post_id = null ) {
  *
  * @since 1.0.0
  *
- * @param int $post_id. Post ID.
+ * @param int $post_id Post ID.
  * @return string
  */
 function get_audiotheme_track_artist( $post_id = null ) {
@@ -226,7 +226,7 @@ function get_audiotheme_track_purchase_url( $post_id = null ) {
  *
  * @since 1.0.0
  *
- * @param int $post_id Optional. Post ID.
+ * @param int|WP_Post $post Optional. Post ID or object.
  * @return int
  */
 function get_audiotheme_track_thumbnail_id( $post = null ) {
@@ -269,7 +269,7 @@ function get_audiotheme_track_thumbnail_id( $post = null ) {
  * @global $audiotheme_enqueued_tracks
  *
  * @param int|array|object $track Accepts a track ID, record ID, post object, or array in the expected format.
- * @param string $list A list identifier.
+ * @param string           $list A list identifier.
  */
 function enqueue_audiotheme_tracks( $track, $list = 'tracks' ) {
 	global $audiotheme_enqueued_tracks;

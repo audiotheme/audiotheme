@@ -104,7 +104,7 @@ class AudioTheme_Screen_EditVideo {
 	 * @since 1.0.0
 	 *
 	 * @param string $content Default post thumbnail HTML.
-	 * @param int $post_id Post ID.
+	 * @param int    $post_id Post ID.
 	 * @return string
 	 */
 	public function admin_post_thumbnail_html( $content, $post_id ) {
@@ -123,7 +123,7 @@ class AudioTheme_Screen_EditVideo {
 			<a href="#" id="audiotheme-select-oembed-thumb-button"><?php esc_html_e( 'Get video thumbnail', 'audiotheme' ); ?></a>
 			<span class="spinner"></span>
 		</p>
-		<script id="audiotheme-video-thumbnail-data" type="application/json"><?php echo json_encode( $data ); ?></script>
+		<script id="audiotheme-video-thumbnail-data" type="application/json"><?php echo wp_json_encode( $data ); ?></script>
 		<script>if ( '_audiothemeVideoThumbnailPing' in window ) { _audiothemeVideoThumbnailPing(); }</script>
 		<?php
 		$content .= ob_get_clean();
@@ -136,7 +136,7 @@ class AudioTheme_Screen_EditVideo {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param int $post_id Video post ID.
+	 * @param int     $post_id Video post ID.
 	 * @param WP_Post $post Video post object.
 	 */
 	public function on_video_save( $post_id, $post ) {

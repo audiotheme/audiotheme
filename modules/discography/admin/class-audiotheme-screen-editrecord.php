@@ -90,6 +90,8 @@ class AudioTheme_Screen_EditRecord {
 	 * Tracklist editor.
 	 *
 	 * @since 1.9.0
+	 *
+	 * @param WP_Post $post Post object.
 	 */
 	public function display_tracklist_editor( $post ) {
 		$tracks = get_audiotheme_record_tracks( $post->ID );

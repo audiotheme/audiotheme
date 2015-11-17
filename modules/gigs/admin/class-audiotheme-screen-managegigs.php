@@ -135,7 +135,7 @@ class AudioTheme_Screen_ManageGigs {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param array $posts Array of posts.
+	 * @param array    $posts Array of posts.
 	 * @param WP_Query $wp_query Query passed by reference.
 	 * @return array
 	 */
@@ -354,7 +354,7 @@ class AudioTheme_Screen_ManageGigs {
 	 * @since 1.9.0
 	 *
 	 * @param string $column_id The id of the column to display.
-	 * @param int $post_id Post ID.
+	 * @param int    $post_id Post ID.
 	 */
 	public function display_columns( $column_id, $post_id ) {
 		$gig = get_audiotheme_gig( $post_id );

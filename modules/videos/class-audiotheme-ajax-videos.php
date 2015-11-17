@@ -28,8 +28,6 @@ class AudioTheme_AJAX_Videos {
 	 * @since 1.9.0
 	 */
 	public function get_video_oembed_data() {
-		global $post_id;
-
 		$post_id = absint( $_POST['post_id'] );
 		$json['postId'] = $post_id;
 
@@ -52,12 +50,12 @@ class AudioTheme_AJAX_Videos {
 	/**
 	 * Import a video thumbnail from an oEmbed endpoint into the media library.
 	 *
-	 * @todo Considering doing video URL comparison rather than oembed thumbnail
+	 * @todo Consider doing video URL comparison rather than oembed thumbnail
 	 *       comparison?
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param int $post_id Video post ID.
+	 * @param int    $post_id Video post ID.
 	 * @param string $url Video URL.
 	 */
 	protected function sideload_thumbnail( $post_id, $url ) {
@@ -121,7 +119,7 @@ class AudioTheme_AJAX_Videos {
 	 * @see media_sideload_image()
 	 *
 	 * @param string $url The URL of the image to download.
-	 * @param int $post_id The post ID the media is to be associated with.
+	 * @param int    $post_id The post ID the media is to be associated with.
 	 * @param string $desc Optional. Description of the image.
 	 * @return int|WP_Error Populated HTML img tag on success.
 	 */

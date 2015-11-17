@@ -1,3 +1,13 @@
+<?php
+/**
+ * Venue Underscore.js templates.
+ *
+ * @package AudioTheme\Gigs
+ * @since 1.9.0
+ */
+?>
+
+
 <script type="text/html" id="tmpl-audiotheme-venues-search-field">
 	<input type="search" placeholder="<?php esc_html_e( 'Search Venues', 'audiotheme' ); ?>">
 </script>

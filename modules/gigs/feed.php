@@ -29,11 +29,11 @@ function get_audiotheme_gig_rss_description( $post = null ) {
  *
  * @since 1.0.0
  *
- * @param int|object $post Venue post ID or object.
+ * @param int|WP_Post $post Venue post ID or object.
  * @return string Venue vCard.
  */
-function get_audiotheme_venue_vcard_rss( $venue ) {
-	$venue = get_audiotheme_venue( $venue );
+function get_audiotheme_venue_vcard_rss( $post ) {
+	$venue = get_audiotheme_venue( $post );
 
 	$output = '';
 
@@ -70,8 +70,8 @@ function get_audiotheme_venue_vcard_rss( $venue ) {
  * @param int|object $post Venue post ID or object.
  * @return string Venue iCal vCard.
  */
-function get_audiotheme_venue_location_ical( $venue = null ) {
-	$venue = get_audiotheme_venue( $venue );
+function get_audiotheme_venue_location_ical( $post = null ) {
+	$venue = get_audiotheme_venue( $post );
 
 	$output = $venue->name;
 
@@ -103,16 +103,16 @@ function get_audiotheme_venue_location_ical( $venue = null ) {
 }
 
 if ( ! function_exists( 'escape_ical_text' ) ) :
-	/**
+/**
  * Sanitize text for inclusion in an iCal feed.
  *
  * @param string $text String to sanitize.
  * @return string
  */
-	function escape_ical_text( $text ) {
-		$search = array( '\\', ';', ',', "\n", "\r" );
-		$replace = array( '\\\\', '\;', '\,', ' ', ' ' );
+function escape_ical_text( $text ) {
+	$search = array( '\\', ';', ',', "\n", "\r" );
+	$replace = array( '\\\\', '\;', '\,', ' ', ' ' );
 
-		return str_replace( $search, $replace, $text );
-	}
+	return str_replace( $search, $replace, $text );
+}
 endif;

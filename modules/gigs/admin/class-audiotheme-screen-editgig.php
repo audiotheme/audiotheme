@@ -85,7 +85,7 @@ class AudioTheme_Screen_EditGig {
 
 		if ( $gig->gig_datetime ) {
 			$timestamp = strtotime( $gig->gig_datetime );
-			// jQuery date format is kinda limited?
+			// The jQuery date format is kinda limited.
 			$gig_date = date( 'Y/m/d', $timestamp );
 
 			$t = date_parse( $gig->gig_time );
@@ -141,7 +141,7 @@ class AudioTheme_Screen_EditGig {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param int $post_id Gig post ID.
+	 * @param int     $post_id Gig post ID.
 	 * @param WP_Post $post Gig post object.
 	 */
 	public function on_gig_save( $post_id, $post ) {

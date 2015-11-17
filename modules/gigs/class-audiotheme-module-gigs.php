@@ -51,8 +51,6 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	 * Constructor method.
 	 *
 	 * @since 1.9.0
-	 *
-	 * @param AudioTheme_Plugin_AudioTheme $plugin Main plugin instance.
 	 */
 	public function __construct() {
 		$this->set_name( esc_html__( 'Gigs & Venues', 'audiotheme' ) );

@@ -125,7 +125,7 @@ class AudioTheme_Screen_EditVenue {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param int $post_id Venue post ID.
+	 * @param int     $post_id Venue post ID.
 	 * @param WP_Post $post Venue post object.
 	 */
 	public function on_venue_save( $post_id, $post ) {

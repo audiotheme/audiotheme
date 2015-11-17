@@ -25,7 +25,7 @@ function get_audiotheme_gig( $post = null ) {
 	$post->tickets_price = get_post_meta( $gig_id, '_audiotheme_tickets_price', true );
 	$post->tickets_url = get_post_meta( $gig_id, '_audiotheme_tickets_url', true );
 
-	// determine the gig time
+	// Determine the gig time.
 	$gig_time = get_post_meta( $post->ID, '_audiotheme_gig_time', true );
 	$t = date_parse( $gig_time );
 	if ( empty( $t['errors'] ) ) {
@@ -84,8 +84,8 @@ function get_audiotheme_gig_title( $post = null ) {
  *
  * @since 1.0.0
  *
- * @param array $args Optional. Passed to get_audiotheme_gig_link()
- * @param bool $echo Optional. Default to true. Whether to display or return.
+ * @param array $args Optional. Passed to get_audiotheme_gig_link().
+ * @param bool  $echo Optional. Default to true. Whether to display or return.
  * @return string|null Null on failure or display. String when echo is false.
  */
 function the_audiotheme_gig_link( $args = array(), $echo = true ) {
@@ -111,7 +111,7 @@ function the_audiotheme_gig_link( $args = array(), $echo = true ) {
  * @since 1.0.0
  *
  * @param int|object $post Optional post ID or object. Default is global $post object.
- * @param array $args Optional. Override the defaults and modify the output structure.
+ * @param array      $args Optional. Override the defaults and modify the output structure.
  * @return string
  */
 function get_audiotheme_gig_link( $post = null, $args = array() ) {
@@ -164,7 +164,8 @@ function get_audiotheme_gig_gmt_date( $post = null ) {
 		$string_gmt = gmdate( $format, $datetime->format( 'U' ) );
 		date_default_timezone_set( 'UTC' );
 	} else {
-		$string_gmt = mysql2date( 'Y-m-d', $gig->gig_datetime ); // only returns the date portion since the time portion is unknown
+		// Only get the date portion since the time portion is unknown.
+		$string_gmt = mysql2date( 'Y-m-d', $gig->gig_datetime );
 	}
 
 	return $string_gmt;
@@ -174,12 +175,11 @@ function get_audiotheme_gig_gmt_date( $post = null ) {
  * Display a gig's date and time.
  *
  * @since 1.3.0
- * @uses get_audiotheme_gig_time()
  *
- * @param string $d Optional. PHP date format.
- * @param string $t Optional. PHP time format.
- * @param bool $gmt Optional, default is false. Whether to return the gmt time.
- * @param array $args Optional. Override the defaults.
+ * @param string     $d Optional. PHP date format.
+ * @param string     $t Optional. PHP time format.
+ * @param bool       $gmt Optional, default is false. Whether to return the gmt time.
+ * @param array      $args Optional. Override the defaults.
  * @param int|object $post Optional post ID or object. Default is global $post object.
  */
 function the_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null, $post = null ) {
@@ -198,16 +198,16 @@ function the_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null,
  *
  * @since 1.0.0
  *
- * @param string $d Optional. PHP date format.
- * @param string $t Optional. PHP time format.
- * @param bool $gmt Optional, default is false. Whether to return the gmt time.
- * @param array $args Optional. Override the defaults.
+ * @param string     $d Optional. PHP date format.
+ * @param string     $t Optional. PHP time format.
+ * @param bool       $gmt Optional, default is false. Whether to return the gmt time.
+ * @param array      $args Optional. Override the defaults.
  * @param int|object $post Optional post ID or object. Default is global $post object.
  * @return string
  */
 function get_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null, $post = null ) {
 	$args = wp_parse_args( $args, array(
-		'empty_time' => '', // displays if time hasn't been saved
+		'empty_time' => '', // Displays if time hasn't been saved.
 		'translate'  => true,
 	) );
 	extract( $args, EXTR_SKIP );
@@ -248,7 +248,7 @@ function get_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null,
  *
  * @param string $before Optional. Content to prepend to the description.
  * @param string $after Optional. Content to append to the description.
- * @param bool $echo Optional, default to true. Whether to display or return.
+ * @param bool   $echo Optional, default to true. Whether to display or return.
  * @return null|string Null on no description. String if $echo parameter is false.
  */
 function the_audiotheme_gig_description( $before = '', $after = '', $echo = true ) {
@@ -300,7 +300,7 @@ function get_audiotheme_gig_description( $post = 0 ) {
  *
  * @since 1.1.0
  *
- * @param string $key Check for a particular type of meta. Defaults to any.
+ * @param string     $key Check for a particular type of meta. Defaults to any.
  * @param int|object $post Optional post ID or object. Default is global $post object.
  * @return bool
  */
@@ -459,6 +459,10 @@ function audiotheme_gig_has_venue( $post = null ) {
  * Update a gig's venue and the gig count for any modified venues.
  *
  * @since 1.0.0
+ *
+ * @param int    $gig_id Gig post ID.
+ * @param string $venue_name Venue name.
+ * @return WP_Post|false Venue post or false.
  */
 function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
 	$gig = get_audiotheme_gig( $gig_id ); // Retrieve current venue info.
@@ -543,6 +547,9 @@ function set_audiotheme_gig_venue_id( $gig_id, $venue_id ) {
  * Retrieve a venue by its ID.
  *
  * @since 1.0.0
+ *
+ * @param int|WP_Post $post Post ID or object.
+ * @return WP_Post
  */
 function get_audiotheme_venue( $post = null ) {
 	if ( null === $post ) {
@@ -582,6 +589,10 @@ function get_audiotheme_venue( $post = null ) {
  * The only field currently supported is the venue name.
  *
  * @since 1.0.0
+ *
+ * @param string $field Field name.
+ * @param string $value Field value.
+ * @return WP_Post|false
  */
 function get_audiotheme_venue_by( $field, $value ) {
 	global $wpdb;
@@ -655,7 +666,7 @@ function prepare_audiotheme_venue_for_js( $venue_id ) {
  * @since 1.0.0
  *
  * @param array $args Optional. Passed to get_audiotheme_venue_link().
- * @param bool $echo Optional. Default to true. Whether to display or return.
+ * @param bool  $echo Optional. Default to true. Whether to display or return.
  * @return string|null Null on failure or display. String when echo is false.
  */
 function the_audiotheme_gig_venue_link( $args = array(), $echo = true ) {
@@ -687,7 +698,7 @@ function the_audiotheme_gig_venue_link( $args = array(), $echo = true ) {
  *
  * @since 1.0.0
  *
- * @param int $venue_id
+ * @param int   $venue_id Venue post ID.
  * @param array $args Optional. Override the defaults and modify the output structure.
  * @return string
  */
@@ -719,8 +730,8 @@ function get_audiotheme_venue_link( $venue_id, $args = array() ) {
  *
  * @since 1.0.0
  *
- * @param array $args Optional. Passed to get_audiotheme_venue_vcard()
- * @param bool $echo Optional. Default to true. Whether to display or return.
+ * @param array $args Optional. Passed to get_audiotheme_venue_vcard().
+ * @param bool  $echo Optional. Default to true. Whether to display or return.
  * @return string|null Null on failure or display. String when echo is false.
  */
 function the_audiotheme_venue_vcard( $args = array(), $echo = true ) {
@@ -747,7 +758,7 @@ function the_audiotheme_venue_vcard( $args = array(), $echo = true ) {
  *
  * @since 1.0.0
  *
- * @param int $venue_id
+ * @param int   $venue_id Venue post ID.
  * @param array $args Optional. Override the defaults and modify the output structure.
  * @return string
  */
@@ -812,7 +823,7 @@ function get_audiotheme_venue_vcard( $venue_id, $args = array() ) {
  *
  * @since 1.0.0
  *
- * @param int $venue_id
+ * @param int   $venue_id Venue post ID.
  * @param array $args Optional. Override the defaults and modify the output structure.
  * @return string
  */
@@ -835,7 +846,7 @@ function get_audiotheme_venue_address( $venue_id, $args = array() ) {
  *
  * @since 1.1.0
  *
- * @param int $venue_id
+ * @param int   $venue_id Venue post ID.
  * @param array $args Optional. Override the defaults and modify the output structure.
  * @return string
  */
@@ -858,9 +869,13 @@ function get_audiotheme_venue_location( $venue_id, $args = array() ) {
 }
 
 /**
- * Return a unique venue name.
+ * Retrieve a unique venue name.
  *
  * @since 1.0.0
+ *
+ * @param string $name Venue name.
+ * @param int    $venue_id Venue post ID.
+ * @return string
  */
 function get_unique_audiotheme_venue_name( $name, $venue_id = 0 ) {
 	global $wpdb;
@@ -880,6 +895,9 @@ function get_unique_audiotheme_venue_name( $name, $venue_id = 0 ) {
  * Sets all post meta fields upon initial save, even if empty.
  *
  * @since 1.0.0
+ *
+ * @param array $data Venue data.
+ * @return int|false Venue post ID or false.
  */
 function save_audiotheme_venue( $data ) {
 	global $wpdb;
@@ -964,6 +982,8 @@ function save_audiotheme_venue( $data ) {
  * Update the number of gigs at a particular venue.
  *
  * @since 1.0.0
+ *
+ * @param int $venue_id Venue post ID.
  */
 function get_audiotheme_venue_gig_count( $venue_id ) {
 	global $wpdb;
@@ -981,6 +1001,9 @@ function get_audiotheme_venue_gig_count( $venue_id ) {
  * Update the number of gigs at a particular venue.
  *
  * @since 1.0.0
+ *
+ * @param int $venue_id Venue post ID.
+ * @param int $count Optional. Number of gigs assigned to a venue.
  */
 function update_audiotheme_venue_gig_count( $venue_id, $count = 0 ) {
 	global $wpdb;
@@ -998,7 +1021,7 @@ function update_audiotheme_venue_gig_count( $venue_id, $count = 0 ) {
  * @since 1.6.0
  *
  * @param array $args Array of args.
- * @param int $venue_id Optional. Venue ID.
+ * @param int   $venue_id Optional. Venue ID.
  * @return string
  */
 function get_audiotheme_google_map_url( $args = array(), $venue_id = 0 ) {
@@ -1045,7 +1068,7 @@ function get_audiotheme_google_map_url( $args = array(), $venue_id = 0 ) {
  * @since 1.2.0
  *
  * @param array $args Array of args.
- * @param int $venue_id Optional. Venue ID.
+ * @param int   $venue_id Optional. Venue ID.
  * @return string
  */
 function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
@@ -1098,10 +1121,11 @@ function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
  * Retrieve the static Google map URL for an address/venue.
  *
  * @since 1.6.0
+ *
  * @link https://developers.google.com/maps/documentation/staticmaps/?csw=1
  *
  * @param array $args Array of args.
- * @param int $venue_id Optional. Venue ID.
+ * @param int   $venue_id Optional. Venue ID.
  * @return string
  */
 function get_audiotheme_google_static_map_url( $args = array(), $venue_id = 0 ) {

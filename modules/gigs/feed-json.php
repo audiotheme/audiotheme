@@ -2,7 +2,10 @@
 /**
  * Gigs JSON feed template.
  *
+ * @todo Attempt to add a property to display the date in UTC.
+ *
  * @package AudioTheme\Gigs
+ * @since 1.0.0
  */
 
 @header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
@@ -18,7 +21,6 @@ foreach ( $wp_query->posts as $post ) {
 	$event->start->date = get_audiotheme_gig_time( 'Y-m-d' );
 	$event->start->time = get_post_meta( $post->ID, '_audiotheme_gig_time', true );
 	$event->start->datetime = get_audiotheme_gig_time( 'c', '', true );
-	// @todo Attempt to add a property to display the date in UTC.
 
 	if ( ! empty( $post->venue ) ) {
 		$event->venue->ID = $post->venue->ID;
@@ -38,4 +40,4 @@ foreach ( $wp_query->posts as $post ) {
 	$events[] = $event;
 }
 
-echo ( is_singular() ) ? json_encode( $events[0] ) : json_encode( $events );
+echo is_singular() ? wp_json_encode( $events[0] ) : wp_json_encode( $events );

@@ -1,3 +1,12 @@
+<?php
+/**
+ * View to display the venue contact meta box.
+ *
+ * @package AudioTheme\Gigs
+ * @since 1.9.0
+ */
+?>
+
 <table class="form-table">
 	<tr>
 		<th><label for="venue-contact-name"><?php esc_html_e( 'Name', 'audiotheme' ) ?></label></th>

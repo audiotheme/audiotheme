@@ -1,6 +1,17 @@
-<?php wp_nonce_field( 'save-gig_' . $post->ID, 'audiotheme_save_gig_nonce' ); ?>
+<?php
+/**
+ * View to display gig date, time, venue and notes fields.
+ *
+ * @package AudioTheme\Gigs
+ * @since 1.9.0
+ */
 
-<?php /*if ( empty( $timezone_string ) && 'auto-draft' !== get_post_status() ) : ?>
+wp_nonce_field( 'save-gig_' . $post->ID, 'audiotheme_save_gig_nonce' );
+?>
+
+<?php
+/*
+if ( empty( $timezone_string ) && 'auto-draft' !== get_post_status() ) : ?>
 	<div class="">
 		This event doesn't have a time zone. Choose one now or <a href="">read more about the importance of time zones</a>:<br>
 
@@ -8,7 +19,9 @@
 			<?php echo audiotheme_timezone_choice( $timezone_string ); ?>
 		</select>
 	</div>
-<?php endif;*/ ?>
+<?php endif;
+*/
+?>
 
 <div class="audiotheme-gig-editor">
 

@@ -85,8 +85,6 @@ class AudioTheme_Taxonomy_RecordType {
 	 * Retrieve taxonomy registration arguments.
 	 *
 	 * @since 1.9.0
-	 *
-	 * @param array
 	 */
 	protected function get_args() {
 		return array(

@@ -24,7 +24,7 @@ function get_audiotheme_video_url( $post_id = null ) {
  *
  * @since 1.0.0
  *
- * @param array $args Optional. (width, height)
+ * @param array $args Optional. (width, height).
  * @param array $query_args Optional. Provider specific parameters.
  */
 function the_audiotheme_video( $args = array(), $query_args = array() ) {
@@ -36,8 +36,8 @@ function the_audiotheme_video( $args = array(), $query_args = array() ) {
  *
  * @since 1.0.0
  *
- * @param int $post_id Optional. Post ID.
- * @param array $args Optional. (width, height)
+ * @param int   $post_id Optional. Post ID.
+ * @param array $args Optional. (width, height).
  * @param array $query_args Optional. Provider specific parameters.
  * @return string Video HTML
  */

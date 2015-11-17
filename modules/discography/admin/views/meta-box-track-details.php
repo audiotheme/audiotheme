@@ -1,3 +1,13 @@
+<?php
+/**
+ * View for the track details meta box.
+ *
+ * @package AudioTheme\Discography
+ * @since 1.9.0
+ */
+?>
+
+
 <p class="audiotheme-field">
 	<label for="track-artist"><?php esc_html_e( 'Artist:', 'audiotheme' ) ?></label>
 	<input type="text" name="artist" id="track-artist" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_artist', true ) ); ?>" class="widefat">

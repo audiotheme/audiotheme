@@ -1,3 +1,13 @@
+<?php
+/**
+ * Record Underscore.js templates.
+ *
+ * @package AudioTheme\Discography
+ * @since 1.9.0
+ */
+?>
+
+
 <script type="text/html" id="tmpl-audiotheme-track">
 	<tr class="audiotheme-repeater-item">
 		<td class="track-number">

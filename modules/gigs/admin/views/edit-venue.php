@@ -1,3 +1,12 @@
+<?php
+/**
+ * View to display the main venue fields.
+ *
+ * @package AudioTheme\Gigs
+ * @since 1.9.0
+ */
+?>
+
 <div id="audiotheme-venue-details-panel" class="audiotheme-panel">
 	<div class="audiotheme-panel-header">
 		<h3 class="audiotheme-panel-title" style="padding: 0"><?php esc_html_e( 'Details', 'audiotheme' ); ?></h3>

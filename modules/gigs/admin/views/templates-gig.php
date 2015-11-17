@@ -1,3 +1,12 @@
+<?php
+/**
+ * Gig Underscore.js templates.
+ *
+ * @package AudioTheme\Gigs
+ * @since 1.9.0
+ */
+?>
+
 <script type="text/html" id="tmpl-audiotheme-gig-venue-details">
 	<h5 class="venue-name">{{ data.name }}</h5>
 

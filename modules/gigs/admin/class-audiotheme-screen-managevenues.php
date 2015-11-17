@@ -128,7 +128,7 @@ class AudioTheme_Screen_ManageVenues {
 	 * @since 1.9.0
 	 *
 	 * @param string $column_id The id of the column to display.
-	 * @param int $post_id Post ID.
+	 * @param int    $post_id Post ID.
 	 */
 	public function display_columns( $column_id, $post_id ) {
 		if ( 'edit-audiotheme_venue' !== get_current_screen()->id ) {
