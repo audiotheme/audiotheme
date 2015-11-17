@@ -110,7 +110,7 @@ class AudioTheme_Screen_EditRecord {
 
 		wp_localize_script( 'audiotheme-record-edit', '_audiothemeTracklistSettings', array(
 			'postId' => $post->ID,
-			'tracks' => empty( $tracks ) ? array() : wp_json_encode( $tracks ),
+			'tracks' => empty( $tracks ) ? null : wp_json_encode( $tracks ),
 			'nonce'  => wp_create_nonce( 'get-default-track_' . $post->ID ),
 		) );
 
