@@ -76,10 +76,9 @@ require( AUDIOTHEME_DIR . 'includes/deprecated/deprecated.php' );
 require( AUDIOTHEME_DIR . 'includes/deprecated/options.php' );
 
 /**
- * Load AudioTheme CPTs and corresponding functionality.
+ * Load modules.
  */
 require( AUDIOTHEME_DIR . 'modules/discography/class-audiotheme-module-discography.php' );
-require( AUDIOTHEME_DIR . 'modules/discography/discography.php' );
 require( AUDIOTHEME_DIR . 'modules/gigs/class-audiotheme-module-gigs.php' );
 require( AUDIOTHEME_DIR . 'modules/videos/class-audiotheme-module-videos.php' );
 
@@ -150,9 +149,6 @@ function audiotheme_load() {
 	// Prevent the audiotheme_archive post type rules from being registered.
 	add_filter( 'audiotheme_archive_rewrite_rules', '__return_empty_array' );
 
-	// Load discography.
-	add_action( 'init', 'audiotheme_discography_init' );
-
 	// Template hooks.
 	add_action( 'audiotheme_before_main_content', 'audiotheme_before_main_content' );
 	add_action( 'audiotheme_after_main_content', 'audiotheme_after_main_content' );
@@ -192,11 +188,6 @@ function audiotheme_load_admin() {
 	if ( is_admin() || ( $wp_customize && $wp_customize->is_preview() ) ) {
 		require( AUDIOTHEME_DIR . 'admin/admin.php' );
 		audiotheme_admin_setup();
-	}
-
-	if ( is_admin() ) {
-		// Load discography admin.
-		add_action( 'init', 'audiotheme_load_discography_admin' );
 	}
 }
 add_action( 'after_setup_theme', 'audiotheme_load_admin', 5 );

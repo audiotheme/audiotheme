@@ -138,13 +138,7 @@ function get_audiotheme_record_tracks( $post_id = null, $args = array() ) {
 		);
 	}
 
-	$tracks = get_posts( $query );
-
-	if ( ! $tracks ) {
-		$tracks = false;
-	}
-
-	return $tracks;
+	return get_posts( $query );
 }
 
 /**
@@ -269,9 +263,10 @@ function get_audiotheme_track_thumbnail_id( $post = null ) {
  * </code>
  *
  * @since 1.1.0
- * @uses $audiotheme_enqueued_tracks
- * @see audiotheme_print_tracks_js()
- * @see audiotheme_prepare_track_for_js()
+ *
+ * @see AudioTheme_PostType_Track::print_track_js()
+ * @see AudioTheme_PostType_Track::prepare_track_for_js()
+ * @global $audiotheme_enqueued_tracks
  *
  * @param int|array|object $track Accepts a track ID, record ID, post object, or array in the expected format.
  * @param string $list A list identifier.
@@ -285,4 +280,21 @@ function enqueue_audiotheme_tracks( $track, $list = 'tracks' ) {
 	}
 
 	$audiotheme_enqueued_tracks[ $key ] = array_merge( $audiotheme_enqueued_tracks[ $key ], (array) $track );
+}
+
+/**
+ * Update a record's track count.
+ *
+ * @since 1.0.0
+ *
+ * @global wpdb $wpdb
+ *
+ * @param int $post_id Record ID.
+ */
+function audiotheme_record_update_track_count( $post_id ) {
+	global $wpdb;
+
+	$track_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = 'audiotheme_track' AND post_parent = %d", $post_id ) );
+	$track_count = empty( $track_count ) ? 0 : absint( $track_count );
+	update_post_meta( $post_id, '_audiotheme_track_count', $track_count );
 }
