@@ -327,4 +327,3 @@ function audiotheme_wp_prepare_audio_attachment_for_js( $response, $attachment, 
 
 	return $response;
 }
-add_filter( 'wp_prepare_attachment_for_js', 'audiotheme_wp_prepare_audio_attachment_for_js', 10, 3 );
