@@ -197,6 +197,8 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType {
 	/**
 	 * Retrieve post type labels.
 	 *
+	 * @since 1.9.0
+	 *
 	 * @return array
 	 */
 	protected function get_labels() {

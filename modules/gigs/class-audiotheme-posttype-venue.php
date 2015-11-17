@@ -34,7 +34,7 @@ class AudioTheme_PostType_Venue extends AudioTheme_PostType {
 	/**
 	 * Retrieve post type registration argments.
 	 *
-	 * @since 1.0.0
+	 * @since 1.9.0
 	 *
 	 * @return array
 	 */
@@ -55,6 +55,8 @@ class AudioTheme_PostType_Venue extends AudioTheme_PostType {
 
 	/**
 	 * Retrieve post type labels.
+	 *
+	 * @since 1.9.0
 	 *
 	 * @return array
 	 */
