@@ -113,7 +113,7 @@ function audiotheme_archives_add_meta_boxes( $post ) {
 
 	if ( $show || $show_for_post_type || ! empty( $fields ) ) {
 		add_meta_box(
-			'audiothemesettingsdiv',
+			'audiotheme-archive-settings',
 			__( 'Archive Settings', 'audiotheme' ),
 			'audiotheme_archive_settings_meta_box',
 			'audiotheme_archive',

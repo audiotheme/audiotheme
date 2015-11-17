@@ -67,7 +67,7 @@ class AudioTheme_Screen_EditGig {
 		);
 
 		add_meta_box(
-			'audiothemegigticketsdiv',
+			'audiotheme-gig-tickets',
 			esc_html__( 'Tickets', 'audiotheme' ),
 			array( $this, 'display_tickets_meta_box' ),
 			'audiotheme_gig',

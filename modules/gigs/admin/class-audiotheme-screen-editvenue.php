@@ -48,7 +48,7 @@ class AudioTheme_Screen_EditVenue {
 	 */
 	public function register_meta_boxes( $post ) {
 		add_meta_box(
-			'venuecontactdiv',
+			'audiotheme-venue-contact',
 			esc_html_x( 'Contact', 'venue meta box title', 'audiotheme' ),
 			array( $this, 'display_contact_meta_box' ),
 			'audiotheme_venue',
@@ -57,7 +57,7 @@ class AudioTheme_Screen_EditVenue {
 		);
 
 		add_meta_box(
-			'venuenotesdiv',
+			'audiotheme-venue-notes',
 			esc_html_x( 'Notes', 'venue meta box title', 'audiotheme' ),
 			array( $this, 'display_notes_meta_box' ),
 			'audiotheme_venue',
