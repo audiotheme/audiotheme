@@ -96,7 +96,7 @@ class AudioTheme_Taxonomy_VideoCategory {
 			'public'            => true,
 			'query_var'         => true,
 			'rewrite'           => array(
-				'slug'          => $this->module->get_rewrite_base() . '/category',
+				'slug'          => $this->module->get_rewrite_base() . '/' . $this->get_rewrite_base(),
 				'with_front'    => false,
 			),
 			'show_ui'           => true,
@@ -136,5 +136,22 @@ class AudioTheme_Taxonomy_VideoCategory {
 			'items_list_navigation'      => esc_html__( 'Categories list navigation', 'audiotheme' ),
 			'items_list'                 => esc_html__( 'Categories list', 'audiotheme' ),
 		);
+	}
+
+	/**
+	 * Retrieve the base slug to use for rewrite rules.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return string
+	 */
+	protected function get_rewrite_base() {
+		$slug = preg_replace( '/[^a-z0-9-_]/', '', _x( 'category', 'video category permalink slug', 'audiotheme' ) );
+
+		if ( empty( $slug ) ) {
+			$slug = 'category';
+		}
+
+		return apply_filters( 'audiotheme_video_category_rewrite_base', $slug );
 	}
 }

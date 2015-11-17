@@ -97,7 +97,7 @@ class AudioTheme_Taxonomy_RecordType {
 			'public'            => true,
 			'query_var'         => true,
 			'rewrite'           => array(
-				'slug'       => $this->module->get_rewrite_base() . '/type',
+				'slug'       => $this->module->get_rewrite_base() . '/' . $this->get_rewrite_base(),
 				'with_front' => false,
 			),
 			'show_ui'           => true,
@@ -137,5 +137,22 @@ class AudioTheme_Taxonomy_RecordType {
 			'items_list_navigation'      => esc_html__( 'Record Types list navigation', 'audiotheme' ),
 			'items_list'                 => esc_html__( 'Record Types list', 'audiotheme' ),
 		);
+	}
+
+	/**
+	 * Retrieve the base slug to use for rewrite rules.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return string
+	 */
+	protected function get_rewrite_base() {
+		$slug = preg_replace( '/[^a-z0-9-_]/', '', _x( 'type', 'record type permalink slug', 'audiotheme' ) );
+
+		if ( empty( $slug ) ) {
+			$slug = 'type';
+		}
+
+		return apply_filters( 'audiotheme_record_type_rewrite_base', $slug );
 	}
 }

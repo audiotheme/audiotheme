@@ -184,14 +184,50 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 	 * @param WP_Rewrite $wp_rewrite The main rewrite object. Passed by reference.
 	 */
 	public function generate_rewrite_rules( $wp_rewrite ) {
-		$base = $this->get_rewrite_base();
+		$base    = $this->get_rewrite_base();
+		$tracks  = $this->get_tracks_rewrite_base();
+		$archive = $this->get_tracks_archive_rewrite_base();
 
-		$new_rules[ $base . '/tracks/?$' ] = 'index.php?post_type=audiotheme_track';
-		$new_rules[ $base . '/page/([0-9]{1,})/?$'] = 'index.php?post_type=audiotheme_record&paged=$matches[1]';
-		$new_rules[ $base .'/([^/]+)/track/([^/]+)?$'] = 'index.php?audiotheme_record=$matches[1]&audiotheme_track=$matches[2]';
+		$new_rules[ $base . '/' . $archive . '/?$' ] = 'index.php?post_type=audiotheme_track';
+		$new_rules[ $base . '/' . $wp_rewrite->pagination_base . '/([0-9]{1,})/?$'] = 'index.php?post_type=audiotheme_record&paged=$matches[1]';
+		$new_rules[ $base .'/([^/]+)/' . $tracks . '/([^/]+)?$'] = 'index.php?audiotheme_record=$matches[1]&audiotheme_track=$matches[2]';
 		$new_rules[ $base . '/([^/]+)/?$'] = 'index.php?audiotheme_record=$matches[1]';
 		$new_rules[ $base . '/?$' ] = 'index.php?post_type=audiotheme_record';
 
 		$wp_rewrite->rules = array_merge( $new_rules, $wp_rewrite->rules );
+	}
+
+	/**
+	 * Retrieve the base slug to use for the namespace in track rewrite rules.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return string
+	 */
+	protected function get_tracks_rewrite_base() {
+		$slug = preg_replace( '/[^a-z0-9-_]/', '', _x( 'track', 'track permalink slug', 'audiotheme' ) );
+
+		if ( empty( $slug ) ) {
+			$slug = 'track';
+		}
+
+		return apply_filters( 'audiotheme_tracks_rewrite_base', $slug );
+	}
+
+	/**
+	 * Retrieve the base slug to use for tracks archive rewrite rules.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return string
+	 */
+	protected function get_tracks_archive_rewrite_base() {
+		$slug = preg_replace( '/[^a-z0-9-_]/', '', _x( 'tracks', 'tracks archive permalink slug', 'audiotheme' ) );
+
+		if ( empty( $slug ) ) {
+			$slug = 'tracks';
+		}
+
+		return apply_filters( 'audiotheme_tracks_archive_rewrite_base', $slug );
 	}
 }
