@@ -66,7 +66,7 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen {
 	 * @since 1.9.0
 	 */
 	public function enqueue_assets() {
-		$modules = $this->plugin->get_modules();
+		$modules = $this->plugin->modules;
 
 		wp_enqueue_script( 'audiotheme-dashboard' );
 		wp_enqueue_style( 'audiotheme-dashboard' );
@@ -107,7 +107,7 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen {
 	 * @since 1.9.0
 	 */
 	public function render_screen() {
-		$modules = $this->plugin->get_modules();
+		$modules = $this->plugin->modules;
 		foreach ( $modules as $id => $module ) {
 			if ( ! $module->show_in_dashboard() ) {
 				unset( $modules[ $id ] );
@@ -134,7 +134,7 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen {
 
 		check_ajax_referer( 'toggle-module_' . $module_id, 'nonce' );
 
-		$modules = $this->plugin->get_modules();
+		$modules = $this->plugin->modules;
 		$module  = $modules[ $module_id ];
 
 		if ( $modules->is_active( $module_id ) ) {

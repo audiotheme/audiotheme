@@ -355,7 +355,7 @@ function audiotheme_discography_init() {
  */
 function get_audiotheme_discography_rewrite_base() {
 	_deprecated_function( __FUNCTION__, '1.9.0', 'AudioTheme_Module_Discography::get_rewrite_base()' );
-	return audiotheme()->get_modules()->get( 'discography' )->get_rewrite_base();
+	return audiotheme()->modules->get( 'discography' )->get_rewrite_base();
 }
 
 /**
@@ -368,7 +368,7 @@ function get_audiotheme_discography_rewrite_base() {
  */
 function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
 	_deprecated_function( __FUNCTION__, '1.9.0' );
-	audiotheme()->get_modules()->get( 'discography' )->generate_rewrite_rules( $wp_rewrite );
+	audiotheme()->modules->get( 'discography' )->generate_rewrite_rules( $wp_rewrite );
 }
 
 /**
@@ -450,7 +450,7 @@ function audiotheme_record_default_template_query( $query ) {
  */
 function audiotheme_discography_template_include( $template ) {
 	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return audiotheme()->get_modules()->get( 'discography' )->template_include( $template );
+	return audiotheme()->modules->get( 'discography' )->template_include( $template );
 }
 
 /**
@@ -1212,7 +1212,7 @@ function audiotheme_gig_post_class( $classes, $class, $post_id ) {
  */
 function audiotheme_gigs_rewrite_base() {
 	_deprecated_function( __FUNCTION__, '1.9.0', 'AudioTheme_Module_Gigs::get_rewrite_base()' );
-	return audiotheme()->get_modules()->get( 'gigs' )->get_rewrite_base();
+	return audiotheme()->modules->get( 'gigs' )->get_rewrite_base();
 }
 
 /**
@@ -1241,7 +1241,7 @@ function audiotheme_gigs_rewrite_base() {
  */
 function audiotheme_gig_generate_rewrite_rules( $wp_rewrite ) {
 	_deprecated_function( __FUNCTION__, '1.9.0' );
-	audiotheme()->get_modules()->get( 'gigs' )->generate_rewrite_rules( $wp_rewrite );
+	audiotheme()->modules->get( 'gigs' )->generate_rewrite_rules( $wp_rewrite );
 }
 
 /**
@@ -1257,7 +1257,7 @@ function audiotheme_gig_generate_rewrite_rules( $wp_rewrite ) {
  */
 function audiotheme_gig_template_redirect() {
 	_deprecated_function( __FUNCTION__, '1.9.0' );
-	audiotheme()->get_modules()->get( 'gigs' )->template_redirect();
+	audiotheme()->modules->get( 'gigs' )->template_redirect();
 }
 
 /**
@@ -1605,7 +1605,7 @@ function audiotheme_videos_init() {
  */
 function get_audiotheme_videos_rewrite_base() {
 	_deprecated_function( __FUNCTION__, '1.9.0', 'AudioTheme_Module_Videos::get_rewrite_base()' );
-	return audiotheme()->get_modules()->get( 'videos' )->get_rewrite_base();
+	return audiotheme()->modules->get( 'videos' )->get_rewrite_base();
 }
 
 /**
@@ -1652,7 +1652,7 @@ function audiotheme_video_default_template_query( $query ) {
  */
 function audiotheme_video_template_include( $template ) {
 	_deprecated_function( __FUNCTION__, '1.9.0' );
-	audiotheme()->get_modules()->get( 'videos' )->template_include( $template );
+	audiotheme()->modules->get( 'videos' )->template_include( $template );
 }
 
 /**

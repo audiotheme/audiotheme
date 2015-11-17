@@ -69,7 +69,7 @@ function audiotheme_dashboard_init() {
 		$screen->register_hooks();
 	}
 
-	$license = audiotheme()->get_license();
+	$license = audiotheme()->license;
 	$setting = new AudioTheme_Setting_LicenseKey( $license );
 	$setting->register_hooks();
 }
@@ -84,7 +84,7 @@ function audiotheme_update() {
 		return;
 	}
 
-	$license = audiotheme()->get_license();
+	$license = audiotheme()->license;
 
 	// Don't do the remote request if a license key hasn't been entered.
 	if ( ! $license->has_key() ) {
@@ -219,7 +219,7 @@ function audiotheme_dashboard_sort_menu() {
  */
 function audiotheme_admin_init() {
 	$suffix  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-	$license = audiotheme()->get_license();
+	$license = audiotheme()->license;
 
 	wp_register_script( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/js/admin.bundle' . $suffix . '.js', array( 'jquery-ui-sortable', 'underscore', 'wp-util' ), AUDIOTHEME_VERSION, true );
 	wp_register_script( 'audiotheme-dashboard', AUDIOTHEME_URI . 'admin/js/dashboard.js',array( 'jquery', 'wp-backbone', 'wp-util' ), AUDIOTHEME_VERSION, true );

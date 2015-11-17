@@ -40,34 +40,29 @@ class AudioTheme_Plugin_AudioTheme extends AudioTheme_Plugin {
 	}
 
 	/**
+	 * Magic get method.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param string $name Property name.
+	 * @return mixed
+	 */
+	public function __get( $name ) {
+		switch ( $name ) {
+			case 'license' :
+				return $this->license;
+			case 'modules' :
+				return $this->modules;
+		}
+	}
+
+	/**
 	 * Load the plugin.
 	 *
 	 * @since 1.9.0
 	 */
 	public function load() {
 		$this->load_modules();
-	}
-
-	/**
-	 * Retrieve the license.
-	 *
-	 * @since 1.9.0
-	 *
-	 * @return AudioTheme_License
-	 */
-	public function get_license() {
-		return $this->license;
-	}
-
-	/**
-	 * Retrieve the modules collection.
-	 *
-	 * @since 1.9.0
-	 *
-	 * @return AudioTheme_Module_Collection
-	 */
-	public function get_modules() {
-		return $this->modules;
 	}
 
 	/**
@@ -79,18 +74,16 @@ class AudioTheme_Plugin_AudioTheme extends AudioTheme_Plugin {
 	 * @since 1.9.0
 	 */
 	protected function load_modules() {
-		$modules = $this->get_modules();
-
 		// Load all modules on the settings screen.
 		if ( $this->is_dashboard_screen() ) {
-			$module_ids = $modules->keys();
+			$module_ids = $this->modules->keys();
 		} else {
-			$module_ids = $modules->get_active_keys();
+			$module_ids = $this->modules->get_active_keys();
 		}
 
 		foreach ( $module_ids as $module_id ) {
-			$modules[ $module_id ]->load();
-			$this->register_hooks( $modules[ $module_id ] );
+			$this->modules[ $module_id ]->load();
+			$this->register_hooks( $this->modules[ $module_id ] );
 		}
 	}
 

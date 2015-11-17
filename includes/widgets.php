@@ -51,7 +51,7 @@ function audiotheme_widgets_init() {
 		return;
 	}
 
-	$modules = audiotheme()->get_modules();
+	$modules = audiotheme()->modules;
 
 	foreach ( $widgets as $widget_id => $details ) {
 		if ( isset( $details['module'] ) && ! $modules->is_active( $details['module'] ) ) {
