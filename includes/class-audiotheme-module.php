@@ -90,6 +90,18 @@ abstract class AudioTheme_Module {
 	abstract public function register_hooks();
 
 	/**
+	 * Whether the module is active.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return bool
+	 */
+	public function is_active() {
+		$inactive_modules = get_option( 'audiotheme_inactive_modules', array() );
+		return ! in_array( $this->id, $inactive_modules );
+	}
+
+	/**
 	 * Set the module description.
 	 *
 	 * @since 1.9.0
