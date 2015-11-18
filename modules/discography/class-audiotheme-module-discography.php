@@ -24,14 +24,6 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 	protected $admin_menu_id = 'menu-posts-audiotheme_record';
 
 	/**
-	 * Whether the module is a core module.
-	 *
-	 * @since 1.9.0
-	 * @var bool
-	 */
-	protected $is_core_module = true;
-
-	/**
 	 * Plugin instance.
 	 *
 	 * @since 1.9.0

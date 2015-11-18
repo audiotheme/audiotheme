@@ -40,14 +40,6 @@ abstract class AudioTheme_Module {
 	protected $description;
 
 	/**
-	 * Whether the module is a core module.
-	 *
-	 * @since 1.9.0
-	 * @var bool
-	 */
-	protected $is_core_module = false;
-
-	/**
 	 * Whether the module should show on the dashboard.
 	 *
 	 * @since 1.9.0
@@ -87,17 +79,6 @@ abstract class AudioTheme_Module {
 	 * @since 1.9.0
 	 */
 	abstract public function register_hooks();
-
-	/**
-	 * Whether the module is a core module.
-	 *
-	 * @since 1.9.0
-	 *
-	 * @return bool
-	 */
-	public function is_core() {
-		return (bool) $this->is_core_module;
-	}
 
 	/**
 	 * Set the module description.

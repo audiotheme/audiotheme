@@ -40,14 +40,6 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 	protected $current_archive_post_type = '';
 
 	/**
-	 * Whether the module is a core module.
-	 *
-	 * @since 1.9.0
-	 * @var bool
-	 */
-	protected $is_core_module = true;
-
-	/**
 	 * Plugin instance.
 	 *
 	 * @since 1.9.0
