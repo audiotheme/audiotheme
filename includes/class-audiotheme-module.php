@@ -24,6 +24,14 @@ abstract class AudioTheme_Module {
 	protected $admin_menu_id;
 
 	/**
+	 * Module id.
+	 *
+	 * @since 1.9.0
+	 * @var string
+	 */
+	protected $id;
+
+	/**
 	 * Module name.
 	 *
 	 * @since 1.9.0
@@ -58,6 +66,7 @@ abstract class AudioTheme_Module {
 	public function __get( $name ) {
 		switch ( $name ) {
 			case 'admin_menu_id' :
+			case 'id' :
 			case 'description' :
 			case 'name' :
 				return $this->{$name};

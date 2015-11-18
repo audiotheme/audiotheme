@@ -24,6 +24,14 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 	protected $admin_menu_id = 'menu-posts-audiotheme_video';
 
 	/**
+	 * Module id.
+	 *
+	 * @since 1.9.0
+	 * @var string
+	 */
+	protected $id = 'videos';
+
+	/**
 	 * Plugin instance.
 	 *
 	 * @since 1.9.0

@@ -30,8 +30,8 @@ class AudioTheme_Module_Collection implements ArrayAccess, Countable, Iterator {
 	 * @param AudioTheme_Module $module Module object.
 	 * @return $this
 	 */
-	public function register( $id, $module ) {
-		$this->modules[ $id ] = $module;
+	public function register( $module ) {
+		$this->modules[ $module->id ] = $module;
 		return $this;
 	}
 
@@ -44,8 +44,8 @@ class AudioTheme_Module_Collection implements ArrayAccess, Countable, Iterator {
 	 * @return bool
 	 */
 	public function is_active( $module_id ) {
-		$active_modules = get_option( 'audiotheme_inactive_modules', array() );
-		return ! in_array( $module_id, $active_modules );
+		$inactive_modules = get_option( 'audiotheme_inactive_modules', array() );
+		return ! in_array( $module_id, $inactive_modules );
 	}
 
 	/**

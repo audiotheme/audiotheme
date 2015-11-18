@@ -24,6 +24,14 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	protected $admin_menu_id = 'menu-posts-audiotheme_gig';
 
 	/**
+	 * Module id.
+	 *
+	 * @since 1.9.0
+	 * @var string
+	 */
+	protected $id = 'gigs';
+
+	/**
 	 * Plugin instance.
 	 *
 	 * @since 1.9.0

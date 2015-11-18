@@ -218,8 +218,8 @@ function audiotheme_admin_init() {
 	wp_localize_script( 'audiotheme-dashboard', '_audiothemeDashboardSettings', array(
 		'canActivateModules' => current_user_can( 'activate_plugins' ),
 		'l10n'               => array(
-			'activate'   => __( 'Activate', 'bandstand' ),
-			'deactivate' => __( 'Deactivate', 'bandstand' ),
+			'activate'   => __( 'Activate', 'audiotheme' ),
+			'deactivate' => __( 'Deactivate', 'audiotheme' ),
 		),
 	) );
 

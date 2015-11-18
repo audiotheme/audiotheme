@@ -105,10 +105,10 @@ audiotheme()
 	->set_slug( 'audiotheme' )
 	->set_url( plugin_dir_url( __FILE__ ) )
 	->modules
-	->register( 'archives', new AudioTheme_Module_Archives() )
-	->register( 'gigs', new AudioTheme_Module_Gigs() )
-	->register( 'discography', new AudioTheme_Module_Discography() )
-	->register( 'videos', new AudioTheme_Module_Videos() );
+	->register( new AudioTheme_Module_Archives() )
+	->register( new AudioTheme_Module_Gigs() )
+	->register( new AudioTheme_Module_Discography() )
+	->register( new AudioTheme_Module_Videos() );
 
 /**
  * AudioTheme setup.

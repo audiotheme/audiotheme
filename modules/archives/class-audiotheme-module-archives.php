@@ -40,6 +40,14 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 	protected $current_archive_post_type = '';
 
 	/**
+	 * Module id.
+	 *
+	 * @since 1.9.0
+	 * @var string
+	 */
+	protected $id = 'archives';
+
+	/**
 	 * Plugin instance.
 	 *
 	 * @since 1.9.0
