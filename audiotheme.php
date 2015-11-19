@@ -58,6 +58,7 @@ if ( ! defined( 'AUDIOTHEME_URI' ) ) {
 /**
  * Load additional helper functions and libraries.
  */
+require( AUDIOTHEME_DIR . 'includes/class-audiotheme-assets.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-i18n.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-license.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-plugin.php' );
@@ -106,12 +107,12 @@ audiotheme()
 	->set_slug( 'audiotheme' )
 	->set_url( plugin_dir_url( __FILE__ ) )
 	->register_hooks( new AudioTheme_i18n() )
+	->register_hooks( new AudioTheme_Assets() )
 	->modules
 	->register( new AudioTheme_Module_Archives() )
 	->register( new AudioTheme_Module_Gigs() )
 	->register( new AudioTheme_Module_Discography() )
 	->register( new AudioTheme_Module_Videos() );
-
 
 /**
  * AudioTheme setup.
@@ -124,7 +125,6 @@ function audiotheme_load() {
 	audiotheme()->load();
 
 	// Default hooks.
-	add_action( 'init', 'audiotheme_register_scripts' );
 	add_action( 'init', 'audiotheme_less_setup' );
 	add_action( 'widgets_init', 'audiotheme_widgets_init' );
 	add_action( 'wp_loaded', 'audiotheme_loaded' );
@@ -182,42 +182,6 @@ function audiotheme_load_admin() {
 	}
 }
 add_action( 'after_setup_theme', 'audiotheme_load_admin', 5 );
-
-/**
- * Register frontend scripts and styles for enqueuing when needed.
- *
- * @since 1.0.0
- * @link https://core.trac.wordpress.org/ticket/18909
- */
-function audiotheme_register_scripts() {
-	global $wp_locale;
-
-	$base_url = set_url_scheme( AUDIOTHEME_URI . '/includes/js' );
-	$suffix   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-
-	wp_register_script( 'audiotheme', $base_url  .'/audiotheme' . $suffix . '.js', array( 'jquery', 'jquery-jplayer', 'jquery-fitvids' ), '1.0', true );
-	wp_register_script( 'jquery-fitvids', $base_url  .'/vendor/jquery.fitvids.min.js', array( 'jquery' ), '1.1.0', true );
-	wp_register_script( 'jquery-jplayer', $base_url  .'/vendor/jquery.jplayer.min.js', array( 'jquery' ), '2.2.19', true );
-	wp_register_script( 'jquery-jplayer-playlist', $base_url  .'/vendor/jquery.jplayer.playlist.min.js', array( 'jquery-jplayer' ), '2.2.2', true );
-	wp_register_script( 'jquery-placeholder', $base_url  .'/vendor/jquery.placeholder.min.js', array( 'jquery' ), '2.0.7', true );
-	wp_register_script( 'jquery-timepicker', $base_url  .'/vendor/jquery.timepicker.min.js', array( 'jquery' ), '1.6.11', true );
-	wp_register_script( 'moment', $base_url  .'/vendor/moment.min.js', array(), '2.10.6', true );
-	wp_register_script( 'pikaday', $base_url  .'/vendor/pikaday.min.js', array( 'moment'), '1.4.0', true );
-
-	wp_localize_script( 'jquery-jplayer', 'AudiothemeJplayer', array(
-		'swfPath' => $base_url . '/vendor',
-	) );
-
-	wp_localize_script( 'pikaday', '_pikadayL10n', array(
-		'previousMonth' => __( 'Previous Month', 'audiotheme' ),
-		'nextMonth'     => __( 'Next Month', 'audiotheme' ),
-		'months'        => array_values( $wp_locale->month ),
-		'weekdays'      => $wp_locale->weekday,
-		'weekdaysShort' => array_values( $wp_locale->weekday_abbrev ),
-	) );
-
-	wp_register_style( 'audiotheme', AUDIOTHEME_URI . 'includes/css/audiotheme.min.css' );
-}
 
 /**
  * Flush the rewrite rules if needed.

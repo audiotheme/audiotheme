@@ -504,3 +504,36 @@ function audiotheme_theme_headers( $headers ) {
 	$headers['TemplateVersion'] = 'Template Version';
 	return $headers;
 }
+
+/**
+ * Set up the framework dashboard.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_dashboard_init() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Register scripts and styles for enqueuing when needed.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_admin_init() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Enqueue admin scripts and styles.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_enqueue_admin_scripts() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	wp_enqueue_script( 'audiotheme-admin' );
+	wp_enqueue_style( 'audiotheme-admin' );
+}
