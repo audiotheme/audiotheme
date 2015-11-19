@@ -1,8 +1,9 @@
 <?php
 /**
- * Define default filters for modifying WordPress behavior.
+ * Hooks for modifying WordPress behavior.
  *
  * @package AudioTheme
+ * @since 1.0.0
  */
 
 /**

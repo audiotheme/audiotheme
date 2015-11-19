@@ -458,3 +458,39 @@ function audiotheme_build_query( $data, $arg_separator = '|', $value_separator =
 	$output = http_build_query( $data, null, $arg_separator );
 	return str_replace( '=', $value_separator, $output );
 }
+
+/**
+ * Remove letterbox matte from an image attachment.
+ *
+ * Overwrites the existing attachment and regenerates all sizes.
+ *
+ * @since 1.9.0
+ *
+ * @param int $attachment_id Attachment ID.
+ */
+function audiotheme_trim_image_letterbox( $attachment_id ) {
+	require_once( ABSPATH . 'wp-admin/includes/image.php' );
+
+	$file  = get_attached_file( $attachment_id );
+
+	$image = wp_get_image_editor( $file, array(
+		'methods' => array( 'trim' )
+	) );
+
+	if ( is_wp_error( $image ) ) {
+		return;
+	}
+
+	// Delete intermediate sizes.
+	$meta  = wp_get_attachment_metadata( $attachment_id );
+	foreach ( $meta['sizes'] as $size ) {
+		$path = path_join( dirname( $file ), $size['file'] );
+		wp_delete_file( $path );
+	}
+
+	$image->trim( 10 );
+	$saved = $image->save( $file );
+
+	$meta = wp_generate_attachment_metadata( $attachment_id, $saved['path'] );
+	wp_update_attachment_metadata( $attachment_id, $meta );
+}

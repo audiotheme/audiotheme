@@ -66,13 +66,13 @@ require( AUDIOTHEME_DIR . 'includes/class-audiotheme-plugin-audiotheme.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-module-collection.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-module.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-posttype.php' );
+require( AUDIOTHEME_DIR . 'includes/class-audiotheme-provider-general.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-provider-widgets.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
 require( AUDIOTHEME_DIR . 'includes/general-template.php' );
 require( AUDIOTHEME_DIR . 'includes/less.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
-require( AUDIOTHEME_DIR . 'includes/media.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets/recent-posts.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets/record.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets/track.php' );
@@ -114,6 +114,7 @@ audiotheme()
 	->register_hooks( new AudioTheme_i18n() )
 	->register_hooks( new AudioTheme_Provider_Widgets() )
 	->register_hooks( new AudioTheme_Assets() )
+	->register_hooks( new AudioTheme_Provider_GeneralHooks() )
 	->modules
 	->register( new AudioTheme_Module_Archives() )
 	->register( new AudioTheme_Module_Gigs() )
@@ -133,23 +134,18 @@ function audiotheme_load() {
 	// Default hooks.
 	add_action( 'init', 'audiotheme_less_setup' );
 	add_action( 'wp_loaded', 'audiotheme_loaded' );
-	add_action( 'audiotheme_template_include', 'audiotheme_template_setup' );
-
 	add_filter( 'audiotheme_archive_title', 'audiotheme_archives_taxonomy_title' );
 	add_filter( 'wp_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
 
-	// Media hooks.
-	add_filter( 'wp_image_editors', 'audiotheme_register_image_editors' );
-	add_filter( 'embed_oembed_html', 'audiotheme_oembed_html', 10, 4 );
-	add_filter( 'embed_handler_html', 'audiotheme_oembed_html', 10, 4 );
-	add_filter( 'video_embed_html', 'audiotheme_oembed_html', 10 ); // Jetpack compat.
-	add_filter( 'wp_prepare_attachment_for_js', 'audiotheme_wp_prepare_audio_attachment_for_js', 10, 3 );
-
 	// Template hooks.
+	add_action( 'audiotheme_template_include', 'audiotheme_template_setup' );
 	add_action( 'audiotheme_before_main_content', 'audiotheme_before_main_content' );
 	add_action( 'audiotheme_after_main_content', 'audiotheme_after_main_content' );
 
 	// Deprecated.
+	add_filter( 'embed_oembed_html', 'audiotheme_oembed_html', 10, 4 );
+	add_filter( 'embed_handler_html', 'audiotheme_oembed_html', 10, 4 );
+	add_filter( 'video_embed_html', 'audiotheme_oembed_html', 10 ); // Jetpack compat.
 	add_filter( 'dynamic_sidebar_params', 'audiotheme_widget_count_class' );
 	add_filter( 'get_pages', 'audiotheme_page_list' );
 	add_filter( 'page_css_class', 'audiotheme_page_list_classes', 10, 2 );
@@ -163,6 +159,7 @@ add_action( 'after_setup_theme', 'audiotheme_load', 5 );
  * @since 1.2.0
  */
 function audiotheme_init() {
+	// This feature was deprecated in 1.9.0.
 	if ( current_theme_supports( 'audiotheme-post-gallery' ) ) {
 		// High priority so plugins filtering ouput don't get stomped. Jetpack, etc.
 		add_filter( 'post_gallery', 'audiotheme_post_gallery', 5000, 2 );
