@@ -84,7 +84,7 @@ function audiotheme_update() {
 		add_filter( 'audiotheme_update_plugin_notice-audiotheme', 'audiotheme_update_notice' );
 	}
 
-	$api_data = array( 'license' => $license );
+	$api_data = array( 'license' => $license->get_key() );
 
 	$framework_updater = new Audiotheme_Updater_Plugin( array(
 		'api_data' => $api_data,

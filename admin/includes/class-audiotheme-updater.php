@@ -201,7 +201,7 @@ class Audiotheme_Updater {
 
 				// If the response failed, try again in 3 hours.
 				set_transient( $this->transient_key(), $data, strtotime( '+3 hours' ) );
-			} else {
+			} elseif ( is_object( $response ) ) {
 				// Set the slug for the API. Unnecessary for themes.
 				if ( 'plugin' === $this->type ) {
 					if ( ! isset( $response->wpargs ) ) {
