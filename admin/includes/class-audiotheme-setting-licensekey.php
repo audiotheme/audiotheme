@@ -191,7 +191,7 @@ class AudioTheme_Setting_LicenseKey {
 			'not_activated',
 		);
 
-		if ( ! isset( $response->status ) || in_array( $response->status, $license_errors ) ) {
+		if ( isset( $response->status ) && in_array( $response->status, $license_errors ) ) {
 			$this->license->reset();
 		}
 	}
