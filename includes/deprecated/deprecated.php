@@ -2609,3 +2609,31 @@ function audiotheme_wp_prepare_audio_attachment_for_js( $response, $attachment, 
 	_deprecated_function( __FUNCTION__, '1.9.0' );
 	return $response;
 }
+
+/**
+ * Attach hook to load the Posts to Posts core.
+ *
+ * This doesn't actually occur during the init hook despite the name.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_p2p_init() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Load Posts 2 Posts core.
+ *
+ * Requires the scbFramework.
+ *
+ * Posts 2 Posts requires two custom database tables to store post
+ * relationships and relationship metadata. If an alternative version of the
+ * library doesn't exist, the tables are created on admin_init.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_p2p_load_core() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}

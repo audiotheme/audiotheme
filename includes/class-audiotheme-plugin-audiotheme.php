@@ -62,7 +62,29 @@ class AudioTheme_Plugin_AudioTheme extends AudioTheme_Plugin {
 	 * @since 1.9.0
 	 */
 	public function load() {
+		scb_init( array( $this, 'load_p2p_core' ) );
 		$this->load_modules();
+	}
+
+	/**
+	 * Load Posts 2 Posts core.
+	 *
+	 * Posts 2 Posts requires two custom database tables to store post
+	 * relationships and relationship metadata. If an alternative version of the
+	 * library doesn't exist, the tables are created on admin_init.
+	 *
+	 * @since 1.0.0
+	 */
+	public function load_p2p_core() {
+		if ( ! defined( 'P2P_TEXTDOMAIN' ) ) {
+			define( 'P2P_TEXTDOMAIN', 'audiotheme' );
+		}
+
+		if ( ! function_exists( 'p2p_register_connection_type' ) ) {
+			require( AUDIOTHEME_DIR . 'includes/vendor/p2p/init.php' );
+		}
+
+		add_action( 'admin_init', array( 'P2P_Storage', 'install' ) );
 	}
 
 	/**
