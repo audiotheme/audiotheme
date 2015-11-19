@@ -95,7 +95,8 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 		require( AUDIOTHEME_DIR . 'modules/gigs/class-audiotheme-posttype-gig.php' );
 		require( AUDIOTHEME_DIR . 'modules/gigs/class-audiotheme-posttype-venue.php' );
 		require( AUDIOTHEME_DIR . 'modules/gigs/class-audiotheme-gig-query.php' );
-		require( AUDIOTHEME_DIR . 'modules/gigs/post-template.php' );
+		require( AUDIOTHEME_DIR . 'modules/gigs/gig-template.php' );
+		require( AUDIOTHEME_DIR . 'modules/gigs/venue-template.php' );
 
 		// Load the admin interface and functionality for gigs and venues.
 		if ( is_admin() ) {
