@@ -66,7 +66,7 @@ require( AUDIOTHEME_DIR . 'includes/class-audiotheme-plugin-audiotheme.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-module-collection.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-module.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-posttype.php' );
-require( AUDIOTHEME_DIR . 'includes/class-audiotheme-provider-general.php' );
+require( AUDIOTHEME_DIR . 'includes/class-audiotheme-provider-generalhooks.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-provider-widgets.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
