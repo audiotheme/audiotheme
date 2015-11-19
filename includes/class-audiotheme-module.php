@@ -32,22 +32,6 @@ abstract class AudioTheme_Module {
 	protected $id;
 
 	/**
-	 * Module name.
-	 *
-	 * @since 1.9.0
-	 * @var string
-	 */
-	protected $name;
-
-	/**
-	 * Module description.
-	 *
-	 * @since 1.9.0
-	 * @var string
-	 */
-	protected $description;
-
-	/**
 	 * Whether the module should show on the dashboard.
 	 *
 	 * @since 1.9.0
@@ -67,10 +51,32 @@ abstract class AudioTheme_Module {
 		switch ( $name ) {
 			case 'admin_menu_id' :
 			case 'id' :
-			case 'description' :
-			case 'name' :
 				return $this->{$name};
+			case 'name' :
+				return $this->get_name();
+			case 'description' :
+				return $this->get_description();
 		}
+	}
+
+	/**
+	 * Retrieve the name of the module.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return string
+	 */
+	abstract public function get_name();
+
+	/**
+	 * Retrieve the module description.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return string
+	 */
+	public function get_description() {
+		return '';
 	}
 
 	/**
@@ -79,8 +85,12 @@ abstract class AudioTheme_Module {
 	 * Typically occurs after the text domain has been loaded.
 	 *
 	 * @since 1.9.0
+	 *
+	 * @return $this
 	 */
-	public function load() {}
+	public function load() {
+		return $this;
+	}
 
 	/**
 	 * Register module hooks.
@@ -88,6 +98,17 @@ abstract class AudioTheme_Module {
 	 * @since 1.9.0
 	 */
 	abstract public function register_hooks();
+
+	/**
+	 * Whether the module's status can be toggled.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return bool
+	 */
+	public function can_toggle_status() {
+		return current_user_can( 'activate_plugins' );
+	}
 
 	/**
 	 * Whether the module is active.
@@ -102,29 +123,30 @@ abstract class AudioTheme_Module {
 	}
 
 	/**
-	 * Set the module description.
+	 * Prepare a module for use in JavaScript.
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param string $description Module description.
-	 * @return $this
+	 * @return array
 	 */
-	protected function set_description( $description ) {
-		$this->description = $description;
-		return $this;
-	}
+	public function prepare_for_js() {
+		$data = array(
+			'id'              => $this->id,
+			'name'            => $this->name,
+			'adminMenuId'     => $this->admin_menu_id,
+			'canToggle'       => $this->can_toggle_status(),
+			'isActive'        => $this->is_active(),
+			'showInDashboard' => $this->show_in_dashboard(),
+			'nonces'   => array(
+				'toggle' => false,
+			),
+		);
 
-	/**
-	 * Set the module name.
-	 *
-	 * @since 1.9.0
-	 *
-	 * @param string $name Module name.
-	 * @return $this
-	 */
-	protected function set_name( $name ) {
-		$this->name = $name;
-		return $this;
+		if ( $this->can_toggle_status() ) {
+			$data['nonces']['toggle'] = wp_create_nonce( 'toggle-module_' . $this->id );
+		}
+
+		return $data;
 	}
 
 	/**

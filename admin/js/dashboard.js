@@ -55,8 +55,10 @@
 			name: '',
 			description: '',
 			overview: '',
+			adminMenuId: '',
+			canToggle: false,
 			isActive: true,
-			toggleNonce: ''
+			nonces: []
 		},
 
 		toggleStatus: function() {
@@ -64,18 +66,22 @@
 
 			return wp.ajax.post( 'audiotheme_ajax_toggle_module', {
 				module: this.get( 'id' ),
-				nonce: this.get( 'toggleNonce' )
+				nonce: this.get( 'nonces' ).toggle
 			}).done(function( response ) {
-				module.set( 'isActive', response.isActive );
-				$( '#' + response.adminMenuId + ', .wp-submenu > .' + response.adminMenuId ).toggle( response.isActive );
+				module.set( response ).toggleAdminMenu();
 			}).fail(function() {
 
 			});
+		},
+
+		toggleAdminMenu: function() {
+			var selector = this.get( 'adminMenuId' );
+			$( '#' + selector + ', .wp-submenu > .' + selector ).toggle( this.get( 'isActive' ) );
 		}
 	});
 
 	app.model.Modules = Backbone.Collection.extend({
-		module: app.model.Module
+		model: app.model.Module
 	});
 
 
@@ -85,10 +91,57 @@
 	 * ========================================================================
 	 */
 
+	app.view.ToggleButton = wp.Backbone.View.extend({
+		className: 'button button-primary button-activate',
+		tagName: 'button',
+
+		events: {
+			'click': 'toggleStatus'
+		},
+
+		initialize: function( options ) {
+			this.model = options.model;
+
+			this.listenTo( this.model, 'change:isActive', this.updateStatus );
+		},
+
+		render: function() {
+			this.$spinner = $( '<span class="spinner" />' );
+			this.updateStatus();
+			return this;
+		},
+
+		toggleStatus: function( e ) {
+			var view = this;
+
+		e.preventDefault();
+
+			view.$el.attr( 'disabled', true );
+			view.$spinner.insertBefore( view.$el ).addClass( 'is-active' );
+
+			this.model.toggleStatus().done(function() {
+				view.$el.attr( 'disabled', false );
+				view.$spinner.removeClass( 'is-active' );
+			});
+		},
+
+		updateStatus: function() {
+		var isActive = this.model.get( 'isActive' ),
+			text = isActive ? l10n.deactivate : l10n.activate;
+
+		this.$el.text( text ).toggleClass( 'button-primary', ! isActive );
+
+		if ( ! this.model.get( 'canToggle' ) ) {
+			this.$el.hide();
+		} else {
+			this.$el.css( 'display', '' );
+		}
+		}
+	});
+
 	app.view.ModuleCard = wp.Backbone.View.extend({
 		events: {
-			'click .audiotheme-module-card-actions-secondary a': 'openModal',
-			'click .js-toggle-module': 'toggleStatus'
+			'click .audiotheme-module-card-actions-secondary a': 'openModal'
 		},
 
 		initialize: function( options ) {
@@ -96,15 +149,18 @@
 			this.modal = options.modal;
 			this.model = options.model;
 
-			this.listenTo( this.model, 'change:status change:isActive', this.updateStatus );
-
-			this.render();
+			this.listenTo( this.model, 'change:isActive', this.updateStatusClass );
 		},
 
 		render: function() {
-			this.$button = this.$el.find( '.button-activate' );
-			this.$spinner = this.$el.find( '.spinner' );
-			this.updateStatus();
+			this.buttonView = new app.view.ToggleButton({
+				model: this.model
+			});
+
+			this.$el.find( '.audiotheme-module-card-actions-primary' )
+				.prepend( this.buttonView.render().$el );
+
+			this.updateStatusClass();
 			return this;
 		},
 
@@ -114,19 +170,7 @@
 			this.modal.open();
 		},
 
-		toggleStatus: function() {
-			var view = this;
-
-			view.$button.attr( 'disabled', true );
-			view.$spinner.addClass( 'is-active' );
-
-			this.model.toggleStatus().done(function() {
-				view.$button.attr( 'disabled', false );
-				view.$spinner.removeClass( 'is-active' );
-			});
-		},
-
-		updateStatus: function() {
+		updateStatusClass: function() {
 			var isActive = this.model.get( 'isActive' );
 			this.$el.toggleClass( 'is-active', isActive ).toggleClass( 'is-inactive', ! isActive );
 		}
@@ -268,36 +312,27 @@
 
 		initialize: function( options ) {
 			this.controller = options.controller;
-			this.listenTo( this.controller, 'change:current', this.updateToggleButton );
-			this.listenTo( this.controller.get( 'modules' ), 'change:isActive', this.updateToggleButton );
+			this.listenTo( this.controller, 'change:current', this.render );
+			this.listenTo( this.controller, 'change:current', this.updateVisibility );
 		},
 
 		render: function() {
-			this.$button = $( '<button class="button button-secondary js-toggle-module" />' )
-				.appendTo( this.$el );
+			if ( this.buttonView ) {
+				this.buttonView.remove();
+			}
 
-			this.$spinner = $( '<span class="spinner" />' )
-				.prependTo( this.$el );
+			this.buttonView = new app.view.ToggleButton({
+				model: this.controller.get( 'current' )
+			});
+
+			this.$el.append( this.buttonView.render().$el );
 
 			return this;
 		},
 
-		toggleModuleStatus: function() {
-			var view = this;
-
-			view.$button.attr( 'disabled', true );
-			view.$spinner.addClass( 'is-active' );
-
-			this.controller.get( 'current' ).toggleStatus().done(function() {
-				view.$button.attr( 'disabled', false );
-				view.$spinner.removeClass( 'is-active' );
-			});
-		},
-
-		updateToggleButton: function() {
-			var isActive = this.controller.get( 'current' ).get( 'isActive' ),
-				text = isActive ? l10n.deactivate : l10n.activate;
-			this.$button.text( text ).toggleClass( 'button-primary', ! isActive );
+		updateVisibility: function() {
+			var module = this.controller.get( 'current' );
+			this.$el.toggle( !! module.get( 'canToggle' ) );
 		}
 	});
 
@@ -309,11 +344,12 @@
 	 */
 
 	$( document ).ready(function() {
-		var controller, modal;
+		var controller, modal,
+			modules = new app.model.Modules( _.where( settings.modules, { showInDashboard: true }) );
 
 		controller = new app.controller.ModalState({
 			current: new app.model.Module(),
-			modules: new app.model.Modules()
+			modules: modules
 		});
 
 		modal = new app.view.Modal({
@@ -321,27 +357,24 @@
 		});
 
 		$( '.audiotheme-module-card' ).each(function() {
-			var $module = $( this ),
-				model = new app.model.Module();
+			var cardView,
+				$module = $( this ),
+				model = modules.get( $module.data( 'module-id' ) );
 
 			model.set({
-				id: $module.data( 'module-id' ),
-				name: $module.find( '.audiotheme-module-card-name' ).text(),
 				description: $module.find( '.audiotheme-module-card-description' ).text(),
 				media: $module.find( '.audiotheme-module-card-overview-media' ).detach().prop( 'outerHTML' ),
 				overview: $module.find( '.audiotheme-module-card-overview' ).html(),
-				isActive: $module.hasClass( 'is-active' ),
-				toggleNonce: $module.data( 'toggle-nonce' )
 			});
 
-			controller.get( 'modules' ).add( model );
-
-			new app.view.ModuleCard({
+			cardView = new app.view.ModuleCard({
 				el: this,
 				controller: controller,
 				modal: modal,
 				model: model
 			});
+
+			cardView.render();
 		});
 	});
 

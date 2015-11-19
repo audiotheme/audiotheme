@@ -217,6 +217,7 @@ function audiotheme_admin_init() {
 
 	wp_localize_script( 'audiotheme-dashboard', '_audiothemeDashboardSettings', array(
 		'canActivateModules' => current_user_can( 'activate_plugins' ),
+		'modules'            => audiotheme()->modules->prepare_for_js(),
 		'l10n'               => array(
 			'activate'   => __( 'Activate', 'audiotheme' ),
 			'deactivate' => __( 'Deactivate', 'audiotheme' ),

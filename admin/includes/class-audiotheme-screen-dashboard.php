@@ -137,15 +137,12 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen {
 		$modules = $this->plugin->modules;
 		$module  = $modules[ $module_id ];
 
-		if ( $modules->is_active( $module_id ) ) {
+		if ( $module->is_active() ) {
 			$modules->deactivate( $module_id );
 		} else {
 			$modules->activate( $module_id );
 		}
 
-		wp_send_json_success( array(
-			'isActive'    => $modules->is_active( $module_id ),
-			'adminMenuId' => $module->admin_menu_id,
-		) );
+		wp_send_json_success( $module->prepare_for_js() );
 	}
 }

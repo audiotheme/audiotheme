@@ -48,13 +48,25 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 	protected $show_in_dashboard = true;
 
 	/**
-	 * Constructor method.
+	 * Retrieve the name of the module.
 	 *
 	 * @since 1.9.0
+	 *
+	 * @return string
 	 */
-	public function __construct() {
-		$this->set_name( esc_html__( 'Videos', 'audiotheme' ) );
-		$this->set_description( esc_html__( 'Embed videos from services like YouTube and Vimeo to create your own video library.', 'audiotheme' ) );
+	public function get_name() {
+		return esc_html__( 'Videos', 'audiotheme' );
+	}
+
+	/**
+	 * Retrieve the module description.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return string
+	 */
+	public function get_description() {
+		return esc_html__( 'Embed videos from services like YouTube and Vimeo to create your own video library.', 'audiotheme' );
 	}
 
 	/**
@@ -74,6 +86,8 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 	 * Load the module.
 	 *
 	 * @since 1.9.0
+	 *
+	 * @return $this
 	 */
 	public function load() {
 		// Load videos functionality.
@@ -88,6 +102,8 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 			require( AUDIOTHEME_DIR . 'modules/videos/admin/class-audiotheme-screen-managevideos.php' );
 			require( AUDIOTHEME_DIR . 'modules/videos/admin/class-audiotheme-screen-editvideoarchive.php' );
 		}
+
+		return $this;
 	}
 
 	/**
@@ -137,6 +153,41 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 		}
 
 		return $front . $base;
+	}
+
+	/**
+	 * Display the module overview.
+	 *
+	 * @since 1.9.0
+	 */
+	public function display_overview() {
+		?>
+		<figure class="audiotheme-module-card-overview-media">
+			<iframe src="https://www.youtube.com/embed/9x47jmTRUtk?rel=0"></iframe>
+		</figure>
+		<p>
+			<strong><?php esc_html_e( 'Easily build your video galleries from over a dozen popular video services.', 'audiotheme' ); ?></strong>
+		</p>
+		<p>
+			<?php esc_html_e( "Showcasing your videos doesn't need to be a hassle. All of our themes allow you the ability to create your video galleries by simply embedding your videos from a number of video services, including: YouTube, Vimeo, WordPress.tv, DailyMotion, blip.tv, Flickr (images and video), Viddler, Hulu, Qik, Revision3, and FunnyorDie.com.", 'audiotheme' ); ?>
+		</p>
+		<p>
+			<strong><?php esc_html_e( 'Try it out:', 'audiotheme' ); ?></strong> <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=audiotheme_video' ) ); ?>"><?php esc_html_e( 'Add a video', 'audiotheme' ); ?></a>
+		</p>
+		<?php
+	}
+
+	/**
+	 * Display a button to perform the module's primary action.
+	 *
+	 * @since 1.9.0
+	 */
+	public function display_primary_button() {
+		printf(
+			'<a href="%s" class="button">%s</a>',
+			esc_url( admin_url( 'post-new.php?post_type=audiotheme_video' ) ),
+			esc_html__( 'Add Video', 'audiotheme' )
+		);
 	}
 
 	/**

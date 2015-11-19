@@ -48,13 +48,25 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	protected $show_in_dashboard = true;
 
 	/**
-	 * Constructor method.
+	 * Retrieve the name of the module.
 	 *
 	 * @since 1.9.0
+	 *
+	 * @return string
 	 */
-	public function __construct() {
-		$this->set_name( esc_html__( 'Gigs & Venues', 'audiotheme' ) );
-		$this->set_description( esc_html__( 'Share event details with your fans, including location, venue, date, time, and ticket prices.', 'audiotheme' ) );
+	public function get_name() {
+		return esc_html__( 'Gigs & Venues', 'audiotheme' );
+	}
+
+	/**
+	 * Retrieve the module description.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return string
+	 */
+	public function get_description() {
+		return esc_html__( 'Share event details with your fans, including location, venue, date, time, and ticket prices.', 'audiotheme' );
 	}
 
 	/**
@@ -74,6 +86,8 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	 * Load the module.
 	 *
 	 * @since 1.9.0
+	 *
+	 * @return $this
 	 */
 	public function load() {
 		// Load gigs functionality.
@@ -90,6 +104,8 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 			require( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-screen-managegigs.php' );
 			require( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-screen-managevenues.php' );
 		}
+
+		return $this;
 	}
 
 	/**
@@ -160,6 +176,41 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 		}
 
 		return $front . $base;
+	}
+
+	/**
+	 * Display the module overview.
+	 *
+	 * @since 1.9.0
+	 */
+	public function display_overview() {
+		?>
+		<figure class="audiotheme-module-card-overview-media">
+			<iframe src="https://www.youtube.com/embed/3ApVW-5MLLU?rel=0"></iframe>
+		</figure>
+		<p>
+			<strong><?php esc_html_e( 'Keep fans updated with live performances, tour dates and venue information.', 'audiotheme' ); ?></strong>
+		</p>
+		<p>
+			<?php esc_html_e( "Schedule all the details about your next show, including location (address, city, state), dates, times, ticket prices and links to ticket purchasing. Set up your venue information by creating new venues and assigning shows to venues you've already created. You also have the ability to feature each venue's website, along with their contact information like email address and phone number.", 'audiotheme' ); ?>
+		</p>
+		<p>
+			<strong><?php esc_html_e( 'Try it out:', 'audiotheme' ); ?></strong> <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=audiotheme_gig' ) ); ?>"><?php esc_html_e( 'Add a gig', 'audiotheme' ); ?></a>
+		</p>
+		<?php
+	}
+
+	/**
+	 * Display a button to perform the module's primary action.
+	 *
+	 * @since 1.9.0
+	 */
+	public function display_primary_button() {
+		printf(
+			'<a href="%s" class="button">%s</a>',
+			esc_url( admin_url( 'post-new.php?post_type=audiotheme_gig' ) ),
+			esc_html__( 'Add Gig', 'audiotheme' )
+		);
 	}
 
 	/**

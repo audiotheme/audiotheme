@@ -48,13 +48,25 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 	protected $show_in_dashboard = true;
 
 	/**
-	 * Constructor method.
+	 * Retrieve the name of the module.
 	 *
 	 * @since 1.9.0
+	 *
+	 * @return string
 	 */
-	public function __construct() {
-		$this->set_name( esc_html__( 'Discography', 'audiotheme' ) );
-		$this->set_description( esc_html__( 'Upload album artwork, assign titles and tracks, add audio files, and enter links to purchase your music.', 'audiotheme' ) );
+	public function get_name() {
+		return esc_html__( 'Discography', 'audiotheme' );
+	}
+
+	/**
+	 * Retrieve the module description.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return string
+	 */
+	public function get_description() {
+		return esc_html__( 'Upload album artwork, assign titles and tracks, add audio files, and enter links to purchase your music.', 'audiotheme' );
 	}
 
 	/**
@@ -74,6 +86,8 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 	 * Load the module.
 	 *
 	 * @since 1.9.0
+	 *
+	 * @return $this
 	 */
 	public function load() {
 		// Load discography functionality.
@@ -92,6 +106,8 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 			require( AUDIOTHEME_DIR . 'modules/discography/admin/class-audiotheme-screen-managetracks.php' );
 			require( AUDIOTHEME_DIR . 'modules/discography/admin/class-audiotheme-screen-editrecordarchive.php' );
 		}
+
+		return $this;
 	}
 
 	/**
@@ -120,6 +136,15 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 	}
 
 	/**
+	 * Register the discography archive.
+	 *
+	 * @since 1.9.0
+	 */
+	public function register_archive() {
+		$this->plugin->modules['archives']->add_post_type_archive( 'audiotheme_record' );
+	}
+
+	/**
 	 * Get the discography rewrite base. Defaults to 'music'.
 	 *
 	 * @since 1.9.0
@@ -140,12 +165,38 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 	}
 
 	/**
-	 * Register the discography archive.
+	 * Display the module overview.
 	 *
 	 * @since 1.9.0
 	 */
-	public function register_archive() {
-		$this->plugin->modules['archives']->add_post_type_archive( 'audiotheme_record' );
+	public function display_overview() {
+		?>
+		<figure class="audiotheme-module-card-overview-media">
+			<iframe src="https://www.youtube.com/embed/ZopsZEiv1F0?rel=0" frameborder="0" allowfullscreen></iframe>
+		</figure>
+		<p>
+			<?php esc_html_e( 'Everything you need to build your Discography is at your fingertips.', 'audiotheme' ); ?>
+		</p>
+		<p>
+			<?php esc_html_e( 'Your discography is the window through which listeners are introduced to and discover your music on the web. Encourage that discovery on your website through a detailed and organized history of your recorded output using the AudioTheme discography feature. Upload album artwork, assign titles and tracks, add audio files, and enter links to purchase your music.', 'audiotheme' ); ?>
+		</p>
+		<p>
+			<strong><?php esc_html_e( 'Try it out:', 'audiotheme' ); ?></strong> <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=audiotheme_record' ) ); ?>"><?php esc_html_e( 'Add a record', 'audiotheme' ); ?></a>
+		</p>
+		<?php
+	}
+
+	/**
+	 * Display a button to perform the module's primary action.
+	 *
+	 * @since 1.9.0
+	 */
+	public function display_primary_button() {
+		printf(
+			'<a href="%s" class="button">%s</a>',
+			esc_url( admin_url( 'post-new.php?post_type=audiotheme_record' ) ),
+			esc_html__( 'Add Record', 'audiotheme' )
+		);
 	}
 
 	/**

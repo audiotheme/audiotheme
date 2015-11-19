@@ -44,8 +44,11 @@ class AudioTheme_Module_Collection implements ArrayAccess, Countable, Iterator {
 	 * @return bool
 	 */
 	public function is_active( $module_id ) {
-		$inactive_modules = get_option( 'audiotheme_inactive_modules', array() );
-		return ! in_array( $module_id, $inactive_modules );
+		if ( isset( $this->modules[ $module_id ] ) ) {
+			return $this->modules[ $module_id ]->is_active();
+		}
+
+		return false;
 	}
 
 	/**
@@ -124,6 +127,21 @@ class AudioTheme_Module_Collection implements ArrayAccess, Countable, Iterator {
 		sort( $modules );
 		update_option( 'audiotheme_inactive_modules', $modules );
 		return $this;
+	}
+
+	/**
+	 * Prepare a module for use in JavaScript.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return array
+	 */
+	public function prepare_for_js() {
+		$data = array();
+		foreach ( $this->modules as $module ) {
+			$data[] = $module->prepare_for_js();
+		}
+		return $data;
 	}
 
 	/**

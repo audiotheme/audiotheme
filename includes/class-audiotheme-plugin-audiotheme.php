@@ -74,16 +74,13 @@ class AudioTheme_Plugin_AudioTheme extends AudioTheme_Plugin {
 	 * @since 1.9.0
 	 */
 	protected function load_modules() {
-		// Load all modules on the settings screen.
-		if ( $this->is_dashboard_screen() ) {
-			$module_ids = $this->modules->keys();
-		} else {
-			$module_ids = $this->modules->get_active_keys();
-		}
+		foreach ( $this->modules as $module ) {
+			// Load all modules on the Dashboard screen.
+			if ( ! $this->is_dashboard_screen() && ! $module->is_active() ) {
+				continue;
+			}
 
-		foreach ( $module_ids as $module_id ) {
-			$this->modules[ $module_id ]->load();
-			$this->register_hooks( $this->modules[ $module_id ] );
+			$this->register_hooks( $module->load() );
 		}
 	}
 

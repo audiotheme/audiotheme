@@ -56,12 +56,14 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 	protected $plugin;
 
 	/**
-	 * Constructor method.
+	 * Retrieve the name of the module.
 	 *
 	 * @since 1.9.0
+	 *
+	 * @return string
 	 */
-	public function __construct() {
-		$this->set_name( esc_html__( 'Archives', 'audiotheme' ) );
+	public function get_name() {
+		return esc_html__( 'Archives', 'audiotheme' );
 	}
 
 	/**
@@ -81,6 +83,8 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 	 * Load the module.
 	 *
 	 * @since 1.9.0
+	 *
+	 * @return $this
 	 */
 	public function load() {
 		require( AUDIOTHEME_DIR . 'modules/archives/class-audiotheme-posttype-archive.php' );
@@ -89,6 +93,8 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 		if ( is_admin() ) {
 			require( AUDIOTHEME_DIR . 'modules/archives/admin/class-audiotheme-screen-editarchive.php' );
 		}
+
+		return $this;
 	}
 
 	/**

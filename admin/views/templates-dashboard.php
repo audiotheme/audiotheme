@@ -15,7 +15,7 @@
 
 <script type="text/html" id="tmpl-audiotheme-module-modal-content">
 	<div class="audiotheme-overlay-content-primary">
-		<h1 class="audiotheme-overlay-content-title">{{ data.name }}</h1>
+		<h1 class="audiotheme-overlay-content-title">{{{ data.name }}}</h1>
 		<div class="audiotheme-overlay-content-body">{{{ data.overview }}}</div>
 	</div>
 	<div class="audiotheme-overlay-content-secondary">
