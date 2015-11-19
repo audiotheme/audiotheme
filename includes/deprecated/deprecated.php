@@ -2302,3 +2302,15 @@ function audiotheme_compatible_time_format() {
 
 	return $time_format;
 }
+
+/**
+ * Support localization for the plugin strings.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_load_textdomain() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	load_plugin_textdomain( 'audiotheme', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}

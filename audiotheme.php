@@ -58,6 +58,7 @@ if ( ! defined( 'AUDIOTHEME_URI' ) ) {
 /**
  * Load additional helper functions and libraries.
  */
+require( AUDIOTHEME_DIR . 'includes/class-audiotheme-i18n.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-license.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-plugin.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-plugin-audiotheme.php' );
@@ -104,11 +105,13 @@ audiotheme()
 	->set_file( __FILE__ )
 	->set_slug( 'audiotheme' )
 	->set_url( plugin_dir_url( __FILE__ ) )
+	->register_hooks( new AudioTheme_i18n() )
 	->modules
 	->register( new AudioTheme_Module_Archives() )
 	->register( new AudioTheme_Module_Gigs() )
 	->register( new AudioTheme_Module_Discography() )
 	->register( new AudioTheme_Module_Videos() );
+
 
 /**
  * AudioTheme setup.
@@ -215,16 +218,6 @@ function audiotheme_register_scripts() {
 
 	wp_register_style( 'audiotheme', AUDIOTHEME_URI . 'includes/css/audiotheme.min.css' );
 }
-
-/**
- * Support localization for the plugin strings.
- *
- * @since 1.0.0
- */
-function audiotheme_load_textdomain() {
-	load_plugin_textdomain( 'audiotheme', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-}
-add_action( 'plugins_loaded', 'audiotheme_load_textdomain' );
 
 /**
  * Flush the rewrite rules if needed.
