@@ -71,7 +71,6 @@ require( AUDIOTHEME_DIR . 'includes/class-audiotheme-provider-widgets.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
 require( AUDIOTHEME_DIR . 'includes/general-template.php' );
-require( AUDIOTHEME_DIR . 'includes/less.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets/recent-posts.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets/record.php' );
@@ -79,6 +78,7 @@ require( AUDIOTHEME_DIR . 'includes/widgets/track.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets/upcoming-gigs.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets/video.php' );
 require( AUDIOTHEME_DIR . 'includes/deprecated/deprecated.php' );
+require( AUDIOTHEME_DIR . 'includes/deprecated/less.php' );
 require( AUDIOTHEME_DIR . 'includes/deprecated/options.php' );
 
 /**
@@ -132,7 +132,6 @@ function audiotheme_load() {
 	audiotheme()->load();
 
 	// Default hooks.
-	add_action( 'init', 'audiotheme_less_setup' );
 	add_action( 'wp_loaded', 'audiotheme_loaded' );
 	add_filter( 'audiotheme_archive_title', 'audiotheme_archives_taxonomy_title' );
 	add_filter( 'wp_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
@@ -143,6 +142,7 @@ function audiotheme_load() {
 	add_action( 'audiotheme_after_main_content', 'audiotheme_after_main_content' );
 
 	// Deprecated.
+	add_action( 'init', 'audiotheme_less_setup' );
 	add_filter( 'embed_oembed_html', 'audiotheme_oembed_html', 10, 4 );
 	add_filter( 'embed_handler_html', 'audiotheme_oembed_html', 10, 4 );
 	add_filter( 'video_embed_html', 'audiotheme_oembed_html', 10 ); // Jetpack compat.

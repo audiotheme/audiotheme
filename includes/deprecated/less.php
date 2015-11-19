@@ -9,12 +9,15 @@
  * so that it won't be recompiled to prevent changes from being made live prematurely.
  *
  * @package AudioTheme
+ * @since 1.0.0
+ * @deprecated 1.9.0
  */
 
 /**
  * Load the LESS compiler and set up Theme Customizer support.
  *
  * @since 1.0.0
+ * @deprecated 1.9.0
  */
 function audiotheme_less_setup() {
 	if ( $support = get_theme_support( 'audiotheme-less' ) ) {
@@ -41,6 +44,7 @@ function audiotheme_less_setup() {
  * Force SSL on LESS cache URLs.
  *
  * @since 1.3.1
+ * @deprecated 1.9.0
  *
  * @param string $url URL to compiled CSS.
  * @return string
@@ -58,6 +62,7 @@ function audiotheme_less_force_ssl( $url ) {
  * additional vars can be registered.
  *
  * @since 1.0.0
+ * @deprecated 1.9.0
  */
 function audiotheme_less_register_vars() {
 	$support = get_theme_support( 'audiotheme-less' );
@@ -80,6 +85,7 @@ function audiotheme_less_register_vars() {
  * order to prevent changes from being made live prematurely.
  *
  * @since 1.0.0
+ * @deprecated 1.9.0
  */
 function audiotheme_less_customize_enqueue_stylesheet() {
 	global $wp_customize;
