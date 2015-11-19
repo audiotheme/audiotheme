@@ -2324,3 +2324,19 @@ function audiotheme_load_textdomain() {
 function audiotheme_register_scripts() {
 	_deprecated_function( __FUNCTION__, '1.9.0' );
 }
+
+/**
+ * Register Supported Widgets
+ *
+ * Themes can load all widgets by calling add_theme_support( 'audiotheme-widgets' ).
+ *
+ * If support for all widgets isn't desired, a second parameter consisting of an array
+ * of widget keys can be passed to load the specified widgets:
+ * add_theme_support( 'audiotheme-widgets', array( 'upcoming-gigs' ) )
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_widgets_init() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}

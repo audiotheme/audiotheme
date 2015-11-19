@@ -66,13 +66,18 @@ require( AUDIOTHEME_DIR . 'includes/class-audiotheme-plugin-audiotheme.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-module-collection.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-module.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-posttype.php' );
+require( AUDIOTHEME_DIR . 'includes/class-audiotheme-provider-widgets.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
 require( AUDIOTHEME_DIR . 'includes/general-template.php' );
 require( AUDIOTHEME_DIR . 'includes/less.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/media.php' );
-require( AUDIOTHEME_DIR . 'includes/widgets.php' );
+require( AUDIOTHEME_DIR . 'includes/widgets/recent-posts.php' );
+require( AUDIOTHEME_DIR . 'includes/widgets/record.php' );
+require( AUDIOTHEME_DIR . 'includes/widgets/track.php' );
+require( AUDIOTHEME_DIR . 'includes/widgets/upcoming-gigs.php' );
+require( AUDIOTHEME_DIR . 'includes/widgets/video.php' );
 require( AUDIOTHEME_DIR . 'includes/deprecated/deprecated.php' );
 require( AUDIOTHEME_DIR . 'includes/deprecated/options.php' );
 
@@ -107,6 +112,7 @@ audiotheme()
 	->set_slug( 'audiotheme' )
 	->set_url( plugin_dir_url( __FILE__ ) )
 	->register_hooks( new AudioTheme_i18n() )
+	->register_hooks( new AudioTheme_Provider_Widgets() )
 	->register_hooks( new AudioTheme_Assets() )
 	->modules
 	->register( new AudioTheme_Module_Archives() )
@@ -126,7 +132,6 @@ function audiotheme_load() {
 
 	// Default hooks.
 	add_action( 'init', 'audiotheme_less_setup' );
-	add_action( 'widgets_init', 'audiotheme_widgets_init' );
 	add_action( 'wp_loaded', 'audiotheme_loaded' );
 	add_action( 'audiotheme_template_include', 'audiotheme_template_setup' );
 
