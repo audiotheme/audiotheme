@@ -6,22 +6,6 @@
  */
 
 /**
- * Admin includes.
- *
- * @since 1.0.0
- */
-require( AUDIOTHEME_DIR . 'admin/functions.php' );
-require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-admin-assets.php' );
-require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen.php' );
-require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen-dashboard.php' );
-require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen-network-settings.php' );
-require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen-settings.php' );
-require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-setting-licensekey.php' );
-require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater.php' );
-require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-plugin.php' );
-require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-theme.php' );
-
-/**
  * Set up the admin.
  *
  * @since 1.0.0

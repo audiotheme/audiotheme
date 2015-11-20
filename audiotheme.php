@@ -56,7 +56,7 @@ if ( ! defined( 'AUDIOTHEME_URI' ) ) {
 }
 
 /**
- * Load additional helper functions and libraries.
+ * Load functions and libraries.
  */
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-assets.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-i18n.php' );
@@ -88,9 +88,22 @@ require( AUDIOTHEME_DIR . 'modules/discography/class-audiotheme-module-discograp
 require( AUDIOTHEME_DIR . 'modules/gigs/class-audiotheme-module-gigs.php' );
 require( AUDIOTHEME_DIR . 'modules/videos/class-audiotheme-module-videos.php' );
 
+/**
+ * Load admin functionality.
+ */
 if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'includes/deprecated/deprecated-admin.php' );
 	require( AUDIOTHEME_DIR . 'includes/deprecated/settings-screens.php' );
+	require( AUDIOTHEME_DIR . 'admin/functions.php' );
+	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-admin-assets.php' );
+	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen.php' );
+	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen-dashboard.php' );
+	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen-network-settings.php' );
+	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen-settings.php' );
+	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-setting-licensekey.php' );
+	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater.php' );
+	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-plugin.php' );
+	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-theme.php' );
 }
 
 /**
