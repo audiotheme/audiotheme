@@ -20,10 +20,6 @@ require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-setting-licensekey.ph
 require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater.php' );
 require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-plugin.php' );
 require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-theme.php' );
-require( AUDIOTHEME_DIR . 'admin/deprecated/class-audiotheme-settings.php' );
-require( AUDIOTHEME_DIR . 'admin/deprecated/dashboard.php' );
-require( AUDIOTHEME_DIR . 'admin/deprecated/deprecated.php' );
-require( AUDIOTHEME_DIR . 'admin/deprecated/settings-screens.php' );
 
 /**
  * Set up the admin.

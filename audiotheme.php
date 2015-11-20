@@ -78,8 +78,7 @@ require( AUDIOTHEME_DIR . 'includes/widgets/upcoming-gigs.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets/video.php' );
 require( AUDIOTHEME_DIR . 'includes/vendor/scb/load.php' );
 require( AUDIOTHEME_DIR . 'includes/deprecated/deprecated.php' );
-require( AUDIOTHEME_DIR . 'includes/deprecated/less.php' );
-require( AUDIOTHEME_DIR . 'includes/deprecated/options.php' );
+require( AUDIOTHEME_DIR . 'includes/deprecated/discontinued.php' );
 
 /**
  * Load modules.
@@ -88,6 +87,11 @@ require( AUDIOTHEME_DIR . 'modules/archives/class-audiotheme-module-archives.php
 require( AUDIOTHEME_DIR . 'modules/discography/class-audiotheme-module-discography.php' );
 require( AUDIOTHEME_DIR . 'modules/gigs/class-audiotheme-module-gigs.php' );
 require( AUDIOTHEME_DIR . 'modules/videos/class-audiotheme-module-videos.php' );
+
+if ( is_admin() ) {
+	require( AUDIOTHEME_DIR . 'includes/deprecated/deprecated-admin.php' );
+	require( AUDIOTHEME_DIR . 'includes/deprecated/settings-screens.php' );
+}
 
 /**
  * Retrieve the AudioTheme plugin instance.

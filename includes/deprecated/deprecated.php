@@ -2,337 +2,17 @@
 /**
  * Deprecated functions.
  *
- * These will be removed in a future version.
+ * These are functions that were most likely never part of a public API and have
+ * been replaced by an alternative or the functionality is no longer necessary
+ * due to improvements in WordPress core.
+ *
+ * Functions in this file are scheduled to be removed in the near future, but
+ * are maintained here during a transition period to help prevent fatal errors
+ * in case they have been called directly.
  *
  * @package AudioTheme\Deprecated
+ * @since 1.6.0
  */
-
-/**
- * Get record type strings.
- *
- * List of default record types to better define the record, much like a post
- * format.
- *
- * @since 1.0.0
- * @deprecated 1.7.0
- *
- * @return array List of record types.
- */
-function get_audiotheme_record_type_strings() {
-	$strings = array(
-		'record-type-album'  => 'Album',
-		'record-type-single' => 'Single',
-	);
-
-	/**
-	 * Filter the list of available of record types.
-	 *
-	 * Terms will be registered automatically for new record types. Keys must
-	 * be prefixed with 'record-type'.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param array strings List of record types. Keys must be prefixed with 'record-type-'.
-	 */
-	return apply_filters( 'audiotheme_record_type_strings', $strings );
-}
-
-/**
- * Get record type slugs.
- *
- * Gets an array of available record type slugs from record type strings.
- *
- * @since 1.0.0
- * @deprecated 1.7.0
- *
- * @return array List of record type slugs.
- */
-function get_audiotheme_record_type_slugs() {
-	$slugs = array_keys( get_audiotheme_record_type_strings() );
-	return $slugs;
-}
-
-/**
- * Get record type string.
- *
- * Sets default value of record type if option is not set.
- *
- * @since 1.0.0
- * @deprecated 1.7.0
- *
- * @param string Record type slug.
- * @return string Record type label.
- */
-function get_audiotheme_record_type_string( $slug ) {
-	if ( false !== strpos( $slug, 'record-type-' ) ) {
-		$strings = get_audiotheme_record_type_strings();
-		if ( isset( $strings[ $slug ] ) ) {
-			return $strings[ $slug ];
-		}
-	}
-
-	$term = get_term_by( 'slug', $slug, 'audiotheme_record_type' );
-	return $term ? $term->name : 'Album';
-}
-
-/**
- * Add widget count classes so they can be targeted based on their position.
- *
- * Adds a class to widgets containing it's position in the sidebar it belongs
- * to and adds a special class to the last widget.
- *
- * @since 1.0.0
- * @deprecated 1.5.0
- *
- * @param array $params Wiget registration args.
- * @return array
- */
-function audiotheme_widget_count_class( $params ) {
-	$class = '';
-	$sidebar_widgets = wp_get_sidebars_widgets();
-	$order = array_search( $params[0]['widget_id'], $sidebar_widgets[ $params[0]['id'] ] ) + 1;
-	if ( $order === count( $sidebar_widgets[ $params[0]['id'] ] ) ) {
-		$class = ' widget-last';
-	}
-
-	$params[0]['before_widget'] = preg_replace( '/class="(.*?)"/i', 'class="$1 widget-' . $order . $class . '"', $params[0]['before_widget'] );
-
-	return $params;
-}
-
-/**
- * Add class to nav menu items based on their title.
- *
- * Adds a class to a nav menu item generated from the item's title, so
- * individual items can be targeted by name.
- *
- * @since 1.0.0
- * @deprecated 1.5.0
- *
- * @param array $classes CSS classes.
- * @param object $item Menu item.
- * @return array
- */
-function audiotheme_nav_menu_name_class( $classes, $item ) {
-	$new_classes[] = sanitize_html_class( 'menu-item-' . sanitize_title_with_dashes( $item->title ) );
-
-	return array_merge( $classes, $new_classes );
-}
-
-/**
- * Page list CSS class helper.
- *
- * Stores information about the order of pages in a global variable to be
- * accessed by audiotheme_page_list_classes().
- *
- * @since 1.0.0
- * @deprecated 1.5.0
- * @see audiotheme_page_list_classes()
- *
- * @param array $pages List of pages.
- * @return array
- */
-function audiotheme_page_list( $pages ) {
-	global $audiotheme_page_depth_classes;
-
-	$classes = array();
-	foreach ( $pages as $page ) {
-		if ( 0 === $page->post_parent ) {
-			if ( ! isset($classes['first-top-level-page'] ) ) {
-				$classes['first-top-level-page'] = $page->ID;
-			}
-			$classes['last-top-level-page'] = $page->ID;
-		} else {
-			if ( ! isset( $classes['first-child-pages'][ $page->post_parent ] ) ) {
-				$classes['first-child-pages'][ $page->post_parent ] = $page->ID;
-			}
-			$classes['last-child-pages'][ $page->post_parent ] = $page->ID;
-		}
-	}
-	$audiotheme_page_depth_classes = $classes;
-
-	return $pages;
-}
-
-/**
- * Add classes to items in a page list.
- *
- * Adds a classes to items in wp_list_pages(), which serves as a fallback
- * when nav menus haven't been assigned. Mimics the classes added to nav menus
- * for consistent behavior.
- *
- * @since 1.0.0
- * @deprecated 1.5.0
- *
- * @param array $classes CSS classes.
- * @param WP_Post $page Page object.
- * @return array
- */
-function audiotheme_page_list_classes( $classes, $page ) {
-	global $audiotheme_page_depth_classes;
-
-	$depth = $audiotheme_page_depth_classes;
-
-	if ( 0 === $page->post_parent ) { $class[] = 'top-level-item'; }
-	if ( isset( $depth['first-top-level-page'] ) && $page->ID === $depth['first-top-level-page'] ) { $classes[] = 'first-item'; }
-	if ( isset( $depth['last-top-level-page'] ) && $page->ID === $depth['last-top-level-page'] ) { $classes[] = 'last-item'; }
-	if ( isset( $depth['first-child-pages'] ) && in_array( $page->ID, $depth['first-child-pages'] ) ) { $classes[] = 'first-child-item'; }
-	if ( isset( $depth['last-child-pages'] ) && in_array( $page->ID, $depth['last-child-pages'] ) ) { $classes[] = 'last-child-item'; }
-
-	return $classes;
-}
-
-/**
- * Parse video oEmbed data.
- *
- * @since 1.0.0
- * @deprecated 1.8.0
- * @see WP_oEmbed->data2html()
- *
- * @param string $return Embed HTML.
- * @param object $data Data returned from the oEmbed request.
- * @param string $url The URL used for the oEmbed request.
- * @return string
- */
-function audiotheme_parse_video_oembed_data( $return, $data, $url ) {
-	global $post_id;
-
-	_deprecated_function( __FUNCTION__, '1.8.0' );
-
-	// Supports any oEmbed providers that respond with 'thumbnail_url'.
-	if ( isset( $data->thumbnail_url ) ) {
-		$current_thumb_id = get_post_thumbnail_id( $post_id );
-		$oembed_thumb_id = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', true );
-		$oembed_thumb = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url', true );
-
-		if ( ( ! $current_thumb_id || $current_thumb_id !== $oembed_thumb_id ) && $data->thumbnail_url === $oembed_thumb ) {
-			// Re-use the existing oEmbed data instead of making another copy of the thumbnail.
-			set_post_thumbnail( $post_id, $oembed_thumb_id );
-		} elseif ( ! $current_thumb_id || $data->thumbnail_url !== $oembed_thumb ) {
-			// Add new thumbnail if the returned URL doesn't match the
-			// oEmbed thumb URL or if there isn't a current thumbnail.
-			add_action( 'add_attachment', 'audiotheme_add_video_thumbnail' );
-			media_sideload_image( $data->thumbnail_url, $post_id );
-			remove_action( 'add_attachment', 'audiotheme_add_video_thumbnail' );
-
-			if ( $thumbnail_id = get_post_thumbnail_id( $post_id ) ) {
-				// Store the oEmbed thumb data so the same image isn't copied on repeated requests.
-				update_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', $thumbnail_id, true );
-				update_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url', $data->thumbnail_url, true );
-			}
-		}
-	}
-
-	return $return;
-}
-
-/**
- * Set a video post's featured image.
- *
- * @since 1.0.0
- * @deprecated 1.8.0
- */
-function audiotheme_add_video_thumbnail( $attachment_id ) {
-	global $post_id;
-	_deprecated_function( __FUNCTION__, '1.8.0' );
-	set_post_thumbnail( $post_id, $attachment_id );
-}
-
-/**
- * Helper function to enqueue a pointer.
- *
- * The $id will be used to reference the pointer in javascript as well as the
- * key it's saved with in the dismissed pointers user meta. $content will be
- * wrapped in wpautop(). Passing a pointer arg will allow the position of the
- * pointer to be changed.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param string $id Pointer id.
- * @param string $title Pointer title.
- * @param string $content Pointer content.
- * @param array $args Additional args.
- */
-function audiotheme_enqueue_pointer( $id, $title, $content, $args = array() ) {
-	global $audiotheme_pointers;
-
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-
-	$id = sanitize_key( $id );
-
-	$args = wp_parse_args( $args, array(
-		'position' => 'left',
-	) );
-
-	$content = sprintf( '<h3>%s</h3>%s', $title, wpautop( $content ) );
-
-	$audiotheme_pointers[ $id ] = array(
-		'id'       => $id,
-		'content'  => $content,
-		'position' => $args['position'],
-	);
-}
-
-/**
- * Check to see if a pointer has been dismissed.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param string $id The pointer id.
- * @return bool
- */
-function is_audiotheme_pointer_dismissed( $id ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	$dismissed = explode( ',', (string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
-	return in_array( $id, $dismissed );
-}
-
-/**
- * Print enqueued pointers to a global javascript variable.
- *
- * Dismissed pointers are automatically removed.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_print_pointers() {
-	global $audiotheme_pointers;
-
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-
-	if ( empty( $audiotheme_pointers ) ) {
-		return;
-	}
-
-	// Remove dismissed pointers.
-	$dismissed = explode( ',', (string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
-	$audiotheme_pointers = array_diff_key( $audiotheme_pointers, array_flip( $dismissed ) );
-
-	if ( empty( $audiotheme_pointers ) ) {
-		return;
-	}
-
-	// @see WP_Scripts::localize()
-	foreach ( (array) $audiotheme_pointers as $id => $pointer ) {
-		foreach ( $pointer as $key => $value ) {
-			if ( ! is_scalar( $value ) ) {
-				continue;
-			}
-
-			$audiotheme_pointers[ $id ][ $key ] = html_entity_decode( (string) $value, ENT_QUOTES, 'UTF-8' );
-		}
-	}
-
-	// Output the object directly since there isn't really have a script to attach it to.
-	// CDATA and type='text/javascript' is not needed for HTML 5.
-	echo "<script type='text/javascript'>\n";
-	echo "/* <![CDATA[ */\n";
-	echo 'var audiothemePointers = ' . json_encode( $audiotheme_pointers ) . ";\n";
-	echo "/* ]]> */\n";
-	echo "</script>\n";
-}
 
 /**
  * Register discography post types and attach hooks to load related
@@ -663,77 +343,6 @@ function audiotheme_record_archive_post_class( $classes ) {
 }
 
 /**
- * Attach hooks for loading and managing discography in the admin dashboard.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_load_discography_admin() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Rename the top level Records menu item to Discography.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @link https://core.trac.wordpress.org/ticket/23316
- */
-function audiotheme_discography_admin_menu() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Discography update messages.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param array $messages The array of existing post update messages.
- * @return array
- */
-function audiotheme_discography_post_updated_messages( $messages ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $messages;
-}
-
-/**
- * Move the playlist menu item under discography.
- *
- * @since 1.5.0
- * @deprecated 1.9.0
- *
- * @param array $args Post type registration args.
- * @return array
- */
-function audiotheme_playlist_args( $args ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	$args['show_in_menu'] = 'edit.php?post_type=audiotheme_record';
-	return $args;
-}
-
-/**
- * Enqueue playlist scripts and styles.
- *
- * @since 1.5.0
- * @deprecated 1.9.0
- */
-function audiotheme_playlist_admin_enqueue_scripts() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Print playlist JavaScript templates.
- *
- * @since 1.5.0
- * @deprecated 1.9.0
- */
-function audiotheme_playlist_print_templates() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
  * Convert a track into the format expected by the Cue plugin.
  *
  * @since 1.5.0
@@ -761,296 +370,6 @@ function get_audiotheme_playlist_track( $post = 0 ) {
 	}
 
 	return $track;
-}
-
-/**
- * Custom sort records on the Manage Records screen.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param object $wp_query The main WP_Query object. Passed by reference.
- */
-function audiotheme_records_admin_query( $wp_query ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Register record columns.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param array $columns An array of the column names to display.
- * @return array Filtered array of column names.
- */
-function audiotheme_record_register_columns( $columns ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $columns;
-}
-
-/**
- * Register sortable record columns.
- *
- * @since 1.0.0
- *
- * @param array $columns Column query vars with their corresponding column id as the key.
- * @return array
- */
-function audiotheme_record_register_sortable_columns( $columns ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $columns;
-}
-
-/**
- * Display custom record columns.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param string $column_id The id of the column to display.
- * @param int $post_id Post ID.
- */
-function audiotheme_record_display_columns( $column_name, $post_id ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Remove quick edit from the record list table.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param array $actions List of actions.
- * @param WP_Post $post A post.
- * @return array
- */
-function audiotheme_record_list_table_actions( $actions, $post ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $actions;
-}
-
-/**
- * Remove bulk edit from the record list table.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param array $actions List of actions.
- * @return array
- */
-function audiotheme_record_list_table_bulk_actions( $actions ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $actions;
-}
-
-/**
- * Custom rules for saving a record.
- *
- * Creates and updates child tracks and saves additional record meta.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param int $post_id Post ID.
- */
-function audiotheme_record_save_post( $post_id ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Register record meta boxes.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param WP_Post $post The record post object being edited.
- */
-function audiotheme_edit_record_meta_boxes( $post ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Tracklist editor.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_edit_record_tracklist() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Record details meta box.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param WP_Post $post The record post object being edited.
- */
-function audiotheme_record_details_meta_box( $post ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Save record archive sort order.
- *
- * The $post_id and $post parameters will refer to the archive CPT, while the
- * $post_type parameter references the type of post the archive is for.
- *
- * @since 1.3.0
- * @deprecated 1.9.0
- *
- * @param int $post_id Post ID.
- * @param WP_Post $post Post object.
- * @param string $post_type The type of post the archive lists.
- */
-function audiotheme_record_archive_save_settings_hook( $post_id, $post, $post_type ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Add an orderby setting to the record archive.
- *
- * Allows for changing the sort order of records. Custom would require a plugin
- * like Simple Page Ordering.
- *
- * @since 1.3.0
- * @deprecated 1.9.0
- *
- * @param WP_Post $post Post object.
- */
-function audiotheme_record_archive_settings( $post ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Custom sort tracks on the Manage Tracks screen.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param object $wp_query The main WP_Query object. Passed by reference.
- */
-function audiotheme_tracks_admin_query( $wp_query ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Register track columns.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param array $columns An array of the column names to display.
- * @return array The filtered array of column names.
- */
-function audiotheme_track_register_columns( $columns ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $columns;
-}
-
-/**
- * Register sortable track columns.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param array $columns Column query vars with their corresponding column id as the key.
- * @return array
- */
-function audiotheme_track_register_sortable_columns( $columns ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $columns;
-}
-
-/**
- * Display custom track columns.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param string $column_id The id of the column to display.
- * @param int $post_id Post ID.
- */
-function audiotheme_track_display_columns( $column_name, $post_id ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Remove quick edit from the track list table.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param array $actions List of actions.
- * @param WP_Post $post A post.
- * @return array
- */
-function audiotheme_track_list_table_actions( $actions, $post ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $actions;
-}
-
-/**
- * Remove bulk edit from the track list table.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_track_list_table_bulk_actions( $actions ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $actions;
-}
-
-/**
- * Custom track filter dropdowns.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param array $actions List of actions.
- * @return array
- */
-function audiotheme_tracks_filters() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Custom rules for saving a track.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param int $post_id Post ID.
- */
-function audiotheme_track_save_post( $post_id ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Register track meta boxes.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param int $post_id Track ID.
- */
-function audiotheme_edit_track_meta_boxes( $post ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-
-/**
- * Display track details meta box.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param WP_Post $post The track post object being edited.
- */
-function audiotheme_track_details_meta_box( $post ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
 }
 
 /**
@@ -1299,293 +618,6 @@ function get_audiotheme_gig_admin_url( $args = '' ) {
 }
 
 /**
- * Attach hooks for loading and managing gigs in the admin dashboard.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_gigs_admin_setup() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Add the admin menu items for gigs.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_gigs_admin_menu() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Higlight the correct top level and sub menu items for the gig screen being
- * displayed.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param string $parent_file The screen being displayed.
- * @return string The menu item to highlight.
- */
-function audiotheme_gigs_admin_menu_highlight( $parent_file ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $parent_file;
-}
-
-/**
- * Set up the gig Manage Screen.
- *
- * Initializes the custom post list table, and processes any actions that need
- * to be handled.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_gigs_manage_screen_setup() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Display the gig Manage Screen.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_gigs_manage_screen() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Sanitize the 'per_page' screen option on the Manage Gigs and Manage Venues
- * screens.
- *
- * Apparently any other hook attached to the same filter that runs after this
- * will stomp all over it. To prevent this filter from doing the same, it's
- * only attached on the screens that require it. The priority should be set
- * extremely low to help ensure the correct value gets returned.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param bool $return Default is 'false'.
- * @param string $option The option name.
- * @param mixed $value The value to sanitize.
- * @return mixed The sanitized value.
- */
-function audiotheme_gigs_screen_options( $return, $option, $value ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $return;
-}
-
-/**
- * Set up the gig Add/Edit screen.
- *
- * Add custom meta boxes, enqueues scripts and styles, and hook up the action
- * to display the edit fields after the title.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param WP_Post $post The gig post object being edited.
- */
-function audiotheme_gig_edit_screen_setup( $post ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Setup and display the main gig fields for editing.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_edit_gig_fields() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Gig tickets meta box.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param WP_Post $post The gig post object being edited.
- */
-function audiotheme_gig_tickets_meta_box( $post ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Process and save gig info when the CPT is saved.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param int $gig_id Gig post ID.
- * @param WP_Post $post Gig post object.
- */
-function audiotheme_gig_save_post( $post_id, $post ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Gig update messages.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @see /wp-admin/edit-form-advanced.php
- *
- * @param array $messages The array of post update messages.
- * @return array
- */
-function audiotheme_gig_post_updated_messages( $messages ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $messages;
-}
-
-/**
- * Get the base admin panel URL for adding a venue.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function get_audiotheme_venue_admin_url( $args = '' ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-
-	$admin_url = admin_url( 'admin.php?page=audiotheme-venue' );
-
-	if ( ! empty( $args ) ) {
-		if ( is_array( $args ) ) {
-			$admin_url = add_query_arg( $args, $admin_url );
-		} else {
-			$admin_url = ( 0 !== strpos( $args, '&' ) ) ? '&' . $admin_url : $admin_url;
-		}
-	}
-
-	return $admin_url;
-}
-
-/**
- * Get the admin panel URL for viewing all venues.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function get_audiotheme_venues_admin_url( $args = '' ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-
-	$admin_url = admin_url( 'admin.php?page=audiotheme-venues' );
-
-	if ( ! empty( $args ) ) {
-		if ( is_array( $args ) ) {
-			$admin_url = add_query_arg( $args, $admin_url );
-		} else {
-			$admin_url = ( 0 !== strpos( $args, '&' ) ) ? '&' . $admin_url : $admin_url;
-		}
-	}
-
-	return $admin_url;
-}
-
-/**
- * Get the admin panel URL for editing a venue.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function get_audiotheme_venue_edit_link( $admin_url, $post_id ) {
-	_deprecated_function( __FUNCTION__, '1.9.0', 'get_edit_post_link()' );
-
-	if ( 'audiotheme_venue' === get_post_type( $post_id ) ) {
-		$args = array(
-			'action'   => 'edit',
-			'venue_id' => $post_id,
-		);
-
-		$admin_url = get_audiotheme_venue_admin_url( $args );
-	}
-
-	return $admin_url;
-}
-
-/**
- * Set up the Manage Venues screen.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_venues_manage_screen_setup() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Set up the Edit Venue screen.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_venue_edit_screen_setup() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Process venue add/edit actions.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_venue_edit_screen_process_actions() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Display the venue add/edit screen.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_venue_edit_screen() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Display venue contact information meta box.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param WP_Post $post Venue post object.
- */
-function audiotheme_venue_contact_meta_box( $post ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Display venue notes meta box.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param WP_Post $post Venue post object.
- */
-function audiotheme_venue_notes_meta_box( $post ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Display custom venue submit meta box.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param WP_Post $post Venue post object.
- */
-function audiotheme_venue_submit_meta_box( $post ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
  * Register video post type and attach hooks to load related functionality.
  *
  * @since 1.0.0
@@ -1706,185 +738,6 @@ function audiotheme_video_archive_post_class( $classes ) {
 }
 
 /**
- * Attach hooks for loading and managing videos in the admin dashboard.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_load_videos_admin() {}
-
-/**
- * Video update messages.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param array $messages The array of existing post update messages.
- * @return array
- */
-function audiotheme_video_post_updated_messages( $messages ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $messages;
-}
-
-/**
- * Register video columns.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param array $columns An array of the column names to display.
- * @return array The filtered array of column names.
- */
-function audiotheme_video_register_columns( $columns ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $columns;
-}
-
-/**
- * Register video meta boxes.
- *
- * This callback is defined in the video CPT registration function. Meta boxes
- * or any other functionality that should be limited to the Add/Edit Video
- * screen and should occur after 'do_meta_boxes' can be registered here.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_video_meta_boxes() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Display a field to enter a video URL after the post title.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_video_after_title() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Add a link to get the video thumbnail from an oEmbed endpoint.
- *
- * Adds data about the current thumbnail and a previously fetched thumbnail
- * from an oEmbed endpoint so the link can be hidden or shown as necessary. A
- * function is also fired each time the HTML is output in order to determine
- * whether the link should be displayed.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param string $content Default post thumbnail HTML.
- * @param int $post_id Post ID.
- * @return string
- */
-function audiotheme_video_admin_post_thumbnail_html( $content, $post_id ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $content;
-}
-
-/**
- * AJAX method to retrieve the thumbnail for a video.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_ajax_get_video_oembed_data() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Import a video thumbnail from an oEmbed endpoint into the media library.
- *
- * @todo Considering doing video URL comparison rather than oembed thumbnail
- *       comparison?
- *
- * @since 1.8.0
- * @deprecated 1.9.0
- *
- * @param int $post_id Video post ID.
- * @param string $url Video URL.
- */
-function audiotheme_video_sideload_thumbnail( $post_id, $url ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Download an image from the specified URL and attach it to a post.
- *
- * @since 1.8.0
- * @deprecated 1.9.0
- *
- * @see media_sideload_image()
- *
- * @param string $url The URL of the image to download.
- * @param int $post_id The post ID the media is to be associated with.
- * @param string $desc Optional. Description of the image.
- * @return int|WP_Error Populated HTML img tag on success.
- */
-function audiotheme_video_sideload_image( $url, $post_id, $desc = null ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $id;
-}
-
-/**
- * Save custom video data.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param int $post_id The ID of the post.
- * @param object $post The post object.
- */
-function audiotheme_video_save_post( $post_id, $post ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Save video archive sort order.
- *
- * The $post_id and $post parameters will refer to the archive CPT, while the
- * $post_type parameter references the type of post the archive is for.
- *
- * @since 1.4.4
- * @deprecated 1.9.0
- *
- * @param int $post_id Post ID.
- * @param WP_Post $post Post object.
- * @param string $post_type The type of post the archive lists.
- */
-function audiotheme_video_archive_save_settings_hook( $post_id, $post, $post_type ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Add an orderby setting to the video archive.
- *
- * Allows for changing the sort order of videos. Custom would require a plugin
- * like Simple Page Ordering.
- *
- * @since 1.4.4
- * @deprecated 1.9.0
- *
- * @param WP_Post $post Post object.
- */
-function audiotheme_video_archive_settings( $post ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Register archive post type and setup related functionality.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function register_audiotheme_archives() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
  * Filter AudioTheme archive requests.
  *
  * Set the number of posts per archive page.
@@ -1896,66 +749,6 @@ function register_audiotheme_archives() {
  */
 function audiotheme_archive_query( $query ) {
 	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Retrieve the AudioTheme post type for the current archive.
- *
- * @since 1.7.0
- * @deprecated 1.9.0
- *
- * @return string
- */
-function get_audiotheme_current_archive_post_type() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-
-	$post_type = '';
-
-	// Determine the current post type.
-	if ( is_tax() ) {
-		$post_type = get_audiotheme_current_taxonomy_archive_post_type();
-	} elseif ( is_post_type_archive() ) {
-		foreach ( array( 'gig', 'record', 'track', 'video' ) as $type ) {
-			if ( ! is_post_type_archive( 'audiotheme_' . $type ) ) {
-				continue;
-			}
-
-			$post_type = 'audiotheme_' . $type;
-			break;
-		}
-	}
-
-	return $post_type;
-}
-
-/**
- * Retrieve the AudioTheme post type for the current taxonomy archive.
- *
- * @since 1.7.0
- * @deprecated 1.9.0
- *
- * @return string
- */
-function get_audiotheme_current_taxonomy_archive_post_type() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-
-	$post_type = '';
-	$taxonomy  = get_taxonomy( get_queried_object()->taxonomy );
-
-	if ( empty( $taxonomy->object_type ) ) {
-		return $post_type;
-	}
-
-	foreach ( $taxonomy->object_type as $type ) {
-		if ( false === strpos( $type, 'audiotheme_' ) ) {
-			continue;
-		}
-
-		$post_type = $type;
-		break;
-	}
-
-	return $post_type;
 }
 
 /**
@@ -2046,143 +839,6 @@ function audiotheme_archives_update_post_type_rewrite_base( $post_type, $archive
  * @param WP_Admin_Bar $wp_admin_bar Admin bar object instance.
  */
 function audiotheme_archives_admin_bar_edit_menu( $wp_admin_bar ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Setup archive posts for post types that have support.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_archives_init_admin() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Add submenu items for archives under the post type menu item.
- *
- * Ensures the user has the capability to edit pages in general as well
- * as the individual page before displaying the submenu item.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- */
-function audiotheme_archives_admin_menu() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Replace the submit meta box to remove unnecessary fields.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param WP_Post $post Post object.
- */
-function audiotheme_archives_add_meta_boxes( $post ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Highlight the corresponding top level and submenu items when editing an
- * archive page.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param string $parent_file A parent file identifier.
- * @return string
- */
-function audiotheme_archives_parent_file( $parent_file ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $parent_file;
-}
-
-/**
- * Archive update messages.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param array $messages The array of post update messages.
- * @return array An array with new CPT update messages.
- */
-function audiotheme_archives_post_updated_messages( $messages ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $messages;
-}
-
-/**
- * Create an archive post for a post type if one doesn't exist.
- *
- * The post type's plural label is used for the post title and the defined
- * rewrite slug is used for the postname.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param string $post_type_name Post type slug.
- * @return int Post ID.
- */
-function audiotheme_archives_create_archive( $post_type ) {
-	_deprecated_function( __FUNCTION__, '1.9.0', 'AudioTheme_Module_Archives::add_post_type_archive()' );
-	return audiotheme()->modules['archives']->add_post_type_archive( $post_type );
-}
-
-/**
- * Retrieve a post type's archive slug.
- *
- * Checks the 'has_archive' and 'with_front' args in order to build the
- * slug.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param string $post_type Post type name.
- * @return string Archive slug.
- */
-function get_audiotheme_post_type_archive_slug( $post_type ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-	return $slug;
-}
-
-/**
- * Save archive meta data.
- *
- * @since 1.3.0
- * @deprecated 1.9.0
- *
- * @param int $post_id Post ID.
- */
-function audiotheme_archive_save_hook( $post_id, $post ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Display archive settings meta box.
- *
- * The meta box needs to be activated first, then fields can be displayed using
- * one of the actions.
- *
- * @since 1.3.0
- * @deprecated 1.9.0
- *
- * @param WP_Post $post Archive post.
- */
-function audiotheme_archive_settings_meta_box( $post, $args = array() ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
-}
-
-/**
- * Add fields to the archive settings meta box.
- *
- * @since 1.4.2
- * @deprecated 1.9.0
- *
- * @param WP_Post $post Archive post.
- */
-function audiotheme_archive_settings_meta_box_fields( $post, $post_type, $fields = array() ) {
 	_deprecated_function( __FUNCTION__, '1.9.0' );
 }
 
@@ -2342,259 +998,6 @@ function audiotheme_widgets_init() {
 }
 
 /**
- * Add an HTML wrapper to certain videos retrieved via oEmbed.
- *
- * The wrapper is useful as a styling hook and for responsive designs. Also
- * attempts to add the wmode parameter to YouTube videos and flash embeds.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- *
- * @param string $html HTML.
- * @param string $url oEmbed URL.
- * @param array  $attr Embed attributes.
- * @param int    $post_id Post ID.
- * @return string Embed HTML with wrapper.
- */
-function audiotheme_oembed_html( $html, $url = null, $attr = null, $post_id = null ) {
-	$wrapped = '<div class="audiotheme-embed">' . $html . '</div>';
-
-	if ( empty( $url ) && 'video_embed_html' === current_filter() ) { // Jetpack.
-		$html = $wrapped;
-	} elseif ( ! empty( $url ) ) {
-		$players = array( 'youtube', 'youtu.be', 'vimeo', 'dailymotion', 'hulu', 'blip.tv', 'wordpress.tv', 'viddler', 'revision3' );
-
-		foreach ( $players as $player ) {
-			if ( false !== strpos( $url, $player ) ) {
-				if ( false !== strpos( $url, 'youtube' ) && false !== strpos( $html, '<iframe' ) && false === strpos( $html, 'wmode' ) ) {
-					$html = preg_replace_callback( '|https?://[^"]+|im', '_audiotheme_oembed_youtube_wmode_parameter', $html );
-				}
-
-				$html = $wrapped;
-				break;
-			}
-		}
-	}
-
-	if ( false !== strpos( $html, '<embed' ) && false === strpos( $html, 'wmode' ) ) {
-		$html = str_replace( '</param><embed', '</param><param name="wmode" value="opaque"></param><embed wmode="opaque"', $html );
-	}
-
-	return $html;
-}
-
-/**
- * Private callback.
- *
- * Adds wmode=transparent query argument to oEmbedded YouTube videos.
- *
- * @since 1.0.0
- * @deprecated 1.9.0
- * @access private
- *
- * @param array $matches Iframe source matches.
- * @return string
- */
-function _audiotheme_oembed_youtube_wmode_parameter( $matches ) {
-	return add_query_arg( 'wmode', 'transparent', $matches[0] );
-}
-
-/**
- * Filter the default gallery shortcode.
- *
- * Not recommended for use -- this will be removed in a future version is
- * currently only maintained for backward compatibility.
- *
- * This filter allows the output of the default gallery shortcode to be
- * customized and adds support for additional functionality, shortcode
- * attributes, and classes for CSS and JavaScript hooks.
- *
- * A lot of the default sanitization is duplicated because WordPress doesn't
- * provide a filter later in the process.
- *
- * @since 1.2.0
- * @deprecated 1.9.0
- *
- * @param string $output Output string passed from default shortcode.
- * @param array  $attr Array of shortcode attributes.
- * @return string Custom gallery output markup.
- */
-function audiotheme_post_gallery( $output, $attr ) {
-	global $post;
-
-	// Something else is already overriding the gallery. Jetpack?
-	if ( ! empty( $output ) ) {
-		return $output;
-	}
-
-	static $instance = 0;
-	$instance ++;
-
-	// Let WordPress handle the output for feed requests.
-	if ( is_feed() ) {
-		return $output;
-	}
-
-	if ( isset( $attr['orderby'] ) ) {
-		$attr['orderby'] = sanitize_sql_orderby( $attr['orderby'] );
-		if ( ! $attr['orderby'] ) {
-			unset( $attr['orderby'] );
-		}
-	}
-
-	$attr = shortcode_atts( array(
-		'order'      => 'ASC',
-		'orderby'    => 'menu_order ID',
-		'id'         => $post->ID,
-		'itemtag'    => 'dl',
-		'icontag'    => 'dt',
-		'captiontag' => 'dd',
-		'link'       => 'file',
-		'columns'    => 3,
-		'size'       => 'thumbnail',
-		'ids'        => '',
-		'include'    => '',
-		'exclude'    => ''
-	), $attr, 'gallery' );
-
-	$attr['id'] = absint( $attr['id'] );
-	if ( 'RAND' === $attr['order'] ) {
-		$attr['orderby'] = 'none';
-	}
-
-	// Build up an array of arguments to pass to get_posts().
-	$args = array(
-		'post_parent'    => $attr['id'],
-		'post_status'    => 'inherit',
-		'post_type'      => 'attachment',
-		'post_mime_type' => 'image',
-		'order'          => $attr['order'],
-		'orderby'        => $attr['orderby'],
-		'numberposts'    => -1
-	);
-
-	if ( ! empty( $attr['ids'] ) ) {
-		$attr['include'] = $attr['ids'];
-
-		// 'ids' should be explicitly ordered.
-		$args['orderby'] = 'post__in';
-	}
-
-	if ( ! empty( $attr['include'] ) ) {
-		$args['include'] = $attr['include'];
-
-		// Don't want to restrict images to a parent post if 'include' is set.
-		unset( $args['post_parent'] );
-	} elseif ( ! empty( $attr['exclude'] ) ) {
-		$args['exclude'] = $attr['exclude'];
-	}
-
-	$attachments = get_posts( $args );
-	if ( empty( $attachments ) ) {
-		return '';
-	}
-
-	// Sanitize tags and values.
-	$attr['captiontag'] = tag_escape( $attr['captiontag'] );
-	$attr['icontag'] = tag_escape( $attr['icontag'] );
-	$attr['itemtag'] = tag_escape( $attr['itemtag'] );
-
-	$valid_tags = wp_kses_allowed_html( 'post' );
-	$attr['captiontag'] = isset( $valid_tags[ $attr['captiontag'] ] ) ? $attr['captiontag'] : 'dd';
-	$attr['icontag'] = isset( $valid_tags[ $attr['icontag'] ] ) ? $attr['icontag'] : 'dl';
-	$attr['itemtag'] = isset( $valid_tags[ $attr['itemtag'] ] ) ? $attr['itemtag'] : 'dl';
-	$attr['columns'] = ( absint( $attr['columns'] ) ) ? absint( $attr['columns'] ) : 1;
-
-	// Add gallery wrapper classes to $attr variable so they can be passed to the filter.
-	$attr['gallery_classes'] = array(
-		'gallery',
-		'galleryid-' . $attr['id'],
-		'gallery-columns-' . $attr['columns'],
-		'gallery-size-' . $attr['size'],
-		'gallery-link-' . $attr['link'],
-		( is_rtl() ) ? 'gallery-rtl' : 'gallery-ltr',
-	);
-	$attr['gallery_classes'] = apply_filters( 'audiotheme_post_gallery_classes', $attr['gallery_classes'], $attr, $instance );
-
-	extract( $attr );
-
-	// The id attribute is a combination of post ID and instance to ensure uniqueness.
-	$wrapper = sprintf( "\n" . '<div id="gallery-%d-%d" class="%s">', $post->ID, $instance, join( ' ', array_map( 'sanitize_html_class', $gallery_classes ) ) );
-
-	// Hooks should append custom output to the $wrapper arg if necessary and be sure to close the div.
-	$output = apply_filters( 'audiotheme_post_gallery_output', $wrapper, $attachments, $attr, $instance );
-
-	// Skip output generation if a hook modified the output.
-	if ( empty( $output ) || $wrapper === $output ) {
-		// If $output is empty for some reason, restart the output with the default wrapper.
-		if ( empty( $output ) ) {
-			$output = $wrapper;
-		}
-
-		foreach ( $attachments as $i => $attachment ) {
-			// More 'link' options have been added.
-			if ( 'none' === $link ) {
-				// Don't link the thumbnails in the gallery.
-				$href = '';
-			} elseif ( 'file' === $link ) {
-				// Link directly to the attachment.
-				$href = wp_get_attachment_url( $attachment->ID );
-			} elseif ( 'link' === $link ) {
-				// Use a custom meta field associated with the image for the link.
-				$href = get_post_meta( $attachment->ID, '_audiotheme_attachment_url', true );
-			} else {
-				// Link to the attachment's permalink page.
-				$href = get_permalink( $attachment->ID );
-			}
-
-			$image_meta = wp_get_attachment_metadata( $attachment->ID );
-
-			$orientation = '';
-			if ( isset( $image_meta['height'], $image_meta['width'] ) ) {
-				$orientation = ( $image_meta['height'] > $image_meta['width'] ) ? 'portrait' : 'landscape';
-			}
-
-			$classes = array( 'gallery-item', 'gallery-item-' . ( $i + 1 ) );
-			$classes = array_merge( $classes, audiotheme_nth_child_classes( array(
-				'base'    => 'gallery-item',
-				'current' => ( $i + 1 ),
-				'max'     => $columns,
-			) ) );
-
-			$output .= "\n\t\t" . '<' . $itemtag . ' class="' . join( ' ', $classes ) . '">';
-
-				$output .= '<' . $icontag . ' class="gallery-icon ' . $orientation . '">';
-
-					$image  = ( $href ) ? '<a href="' . esc_url( $href ) . '">' : '';
-						$image .= wp_get_attachment_image( $attachment->ID, $size, false );
-					$image .= ( $href ) ? '</a>' : '';
-
-					// Some plugins use this filter, so mimic it as best we can.
-			if ( 'none' !== $link ) {
-				$permalink = in_array( $link, array( 'file', 'link' ) ) ? false: true;
-				$icon = $text = false;
-				$image = apply_filters( 'wp_get_attachment_link', $image, $attachment->ID, $size, $permalink, $icon, $text );
-			}
-
-					$output .= $image;
-				$output .= '</' . $icontag . '>';
-
-			if ( $captiontag && trim( $attachment->post_excerpt ) ) {
-				$output .= '<' . $captiontag . ' class="wp-caption-text gallery-caption">';
-					$output .= wptexturize( $attachment->post_excerpt );
-				$output .= '</' . $captiontag . '>';
-			}
-
-			$output .= '</' . $itemtag .'>';
-		}
-
-		$output .= "\n</div>\n"; // Close the default gallery wrapper.
-	}
-
-	return $output;
-}
-
-/**
  * Add audio metadata to attachment response objects.
  *
  * @since 1.4.4
@@ -2637,3 +1040,216 @@ function audiotheme_p2p_init() {
 function audiotheme_p2p_load_core() {
 	_deprecated_function( __FUNCTION__, '1.9.0' );
 }
+
+/**
+ * Load the LESS compiler and set up Theme Customizer support.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_less_setup() {
+	if ( $support = get_theme_support( 'audiotheme-less' ) ) {
+		if ( ! class_exists( 'lessc' ) ) {
+			require( AUDIOTHEME_DIR . 'includes/vendor/lessphp/lessc.inc.php' );
+		}
+
+		require( AUDIOTHEME_DIR . 'includes/vendor/wp-less/wp-less.php' );
+		wp_less::instance();
+
+		add_action( 'wp_loaded', 'audiotheme_less_register_vars', 20 );
+		add_filter( 'wp_less_cache_url', 'audiotheme_less_force_ssl' );
+
+		// Register a style sheet specifically for the Theme Customizer.
+		$stylesheet = ( empty( $support[0]['customize_stylesheet'] ) ) ? '' : $support[0]['customize_stylesheet'];
+		if ( ! empty( $stylesheet ) ) {
+			wp_register_style( 'audiotheme-less-customize', $stylesheet );
+			add_action( 'wp_footer', 'audiotheme_less_customize_enqueue_stylesheet' );
+		}
+	}
+}
+
+/**
+ * Force SSL on LESS cache URLs.
+ *
+ * @since 1.3.1
+ * @deprecated 1.9.0
+ *
+ * @param string $url URL to compiled CSS.
+ * @return string
+ */
+function audiotheme_less_force_ssl( $url ) {
+	if ( is_ssl() ) {
+		$url = set_url_scheme( $url, 'https' );
+	}
+
+	return $url;
+}
+
+/**
+ * Execute the callback function to register LESS vars and fire an action so
+ * additional vars can be registered.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_less_register_vars() {
+	$support = get_theme_support( 'audiotheme-less' );
+	$callback = ( empty( $support[0]['less_vars_callback'] ) ) ? '' : $support[0]['less_vars_callback'];
+
+	// Always points to the parent theme.
+	add_less_var( 'templateurl', '~"' . get_template_directory_uri() . '/"' );
+
+	if ( ! empty( $callback ) && function_exists( $callback ) ) {
+		call_user_func( $callback );
+	}
+
+	do_action( 'audiotheme_less_register_vars' );
+}
+
+/**
+ * Enqueue the Theme Customizer style sheet.
+ *
+ * This should only be run after the main style sheets have been output in
+ * order to prevent changes from being made live prematurely.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_less_customize_enqueue_stylesheet() {
+	global $wp_customize;
+
+	// Load a separate customizer stylesheet when the customizer is being used.
+	// Should prevent temporary changes from displaying on the front-end.
+	if ( ! $wp_customize || ! $wp_customize->is_preview() ) {
+		return;
+	}
+
+	// Enqueue the Theme Customizer style sheet if it has been registered.
+	if ( wp_style_is( 'audiotheme-less-customize', 'registered' ) ) {
+		add_filter( 'less_force_compile', '__return_true' );
+		wp_enqueue_style( 'audiotheme-less-customize' );
+	}
+}
+
+if ( ! function_exists( 'get_audiotheme_option' ) ) :
+/**
+ * Returns an option value.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $option_name Option name as stored in database.
+ * @param string $key Optional. Index of value in the option array.
+ * @param mixed $default Optional. A default value to return if the requested option doesn't exist.
+ * @return mixed The option value or $default.
+ */
+function get_audiotheme_option( $option_name, $key = null, $default = null ) {
+	$option = get_option( $option_name );
+
+	if ( $key === $option_name || empty( $key ) ) {
+		return ( $option ) ? $option : $default;
+	}
+
+	return ( isset( $option[ $key ] ) ) ? $option[ $key ] : $default;
+}
+endif;
+
+if ( ! function_exists( 'get_audiotheme_theme_option' ) ) :
+/**
+ * Returns a theme option value.
+ *
+ * Function called to get a theme option. The returned value defaults to false
+ * unless a default is passed.
+ *
+ * Note that this function footprint is slightly different than get_audiotheme_option(). While working in themes, the $option_name shouldn't necessarily need to be known or required, so it should be slightly easier to use while in a theme.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string The option key
+ * @param mixed Optional. Default value to return if option key doesn't exist.
+ * @param string Optional. Retrieve a non-standard option.
+ * @return mixed The option value or $default or false.
+ */
+function get_audiotheme_theme_option( $key, $default = false, $option_name = '' ) {
+	$option_name = ( empty( $option_name ) ) ? get_audiotheme_theme_options_name() : $option_name;
+
+	return get_audiotheme_option( $option_name, $key, $default );
+}
+endif;
+
+if ( ! function_exists( 'get_audiotheme_theme_options_name' ) ) :
+/**
+ * Retrieve the registered option name for theme options.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+	function get_audiotheme_theme_options_name() {
+		static $option_name;
+
+		if ( ! isset( $option_name ) && ( $name = get_audiotheme_theme_options_support( 'option_name' ) ) ) {
+			// The default option name is the first one registered in add_theme_support().
+			$option_name = ( is_array( $name ) ) ? $name[0] : $name;
+		}
+
+		return ( isset( $option_name ) ) ? $option_name : false;
+	}
+endif;
+
+if ( ! function_exists( 'get_audiotheme_theme_options_support' ) ) :
+/**
+ * Check if the theme supports theme options and return registered arguments
+ * with supplied defaults.
+ *
+ * Adding support for theme options is as simple as:
+ * add_theme_support( 'audiotheme-theme-options' );
+ *
+ * Additional arguments can be supplied for more control. If the second
+ * parameter is a string, it will be the callback for registering theme
+ * options. Otherwise, it should be an array of arguments.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $var Optional. Specific argument to return.
+ * @return mixed Value of requested argument or theme option support arguments.
+ */
+function get_audiotheme_theme_options_support( $var = null ) {
+	if ( $support = get_theme_support( 'audiotheme-theme-options' ) ) {
+		$option_name = 'audiotheme_mods-' . get_option( 'stylesheet' );
+
+		$args = array(
+		'callback'    => 'audiotheme_register_theme_options',
+		'option_name' => $option_name,
+		'menu_title'  => 'Theme Options',
+		);
+
+		if ( isset( $support[0] ) ) {
+			if ( is_array( $support[0] ) ) {
+				$args = wp_parse_args( $support[0], $args );
+			} elseif ( is_string( $support[0] ) ) {
+				$args['callback'] = $support[0];
+			}
+		}
+
+		// Reset the option name if it was blanked out.
+		if ( empty( $args['option_name'] ) ) {
+			$args['option_name'] = $option_name;
+		}
+
+		// Option names can be arrays, so make sure it's always an array and sanitize each name.
+		$args['option_name'] = array_map( 'sanitize_key', (array) $args['option_name'] );
+
+		// If a specific arg is requested and it exists, return it, otherwise return false.
+		if ( ! empty( $var ) ) {
+			return ( isset( $args[ $var ] ) ) ? $args[ $var ] : false;
+		}
+
+		// Return the args.
+		return $args;
+	}
+
+	return false;
+}
+endif;
