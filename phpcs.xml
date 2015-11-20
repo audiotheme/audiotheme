@@ -2,7 +2,6 @@
 <ruleset name="AudioTheme">
 	<file>./</file>
 
-	<exclude-pattern>*/admin/deprecated/*</exclude-pattern>
 	<exclude-pattern>*/includes/deprecated/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/tests/*</exclude-pattern>
