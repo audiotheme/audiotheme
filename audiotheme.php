@@ -6,11 +6,11 @@
  * Version: 1.9.0-beta
  * Author: AudioTheme
  * Author URI: https://audiotheme.com/
- * Requires at least: 4.0.0
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: audiotheme
  * Domain Path: /languages
+ * Requires at least: 4.3.1
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
