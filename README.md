@@ -1,9 +1,11 @@
-# Getting Started
+# AudioTheme
 
-Clone framework in your plugins folder:
+## Getting Started
 
-`git clone git@github.com:AudioTheme/audiotheme.git --recursive audiotheme`
+Clone the repo in your plugins directory:
 
-Activate the plugin in WordPress.
+`git clone git@github.com:audiotheme/audiotheme.git --recursive audiotheme`
+
+Activate AudioTheme in WordPress.
 
 That's it!
