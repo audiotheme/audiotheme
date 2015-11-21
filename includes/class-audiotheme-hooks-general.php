@@ -12,7 +12,7 @@
  * @package AudioTheme
  * @since 1.9.0
  */
-class AudioTheme_Provider_GeneralHooks {
+class AudioTheme_Hooks_General {
 	/**
 	 * Plugin instance.
 	 *
