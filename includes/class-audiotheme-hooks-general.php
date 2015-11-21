@@ -85,9 +85,9 @@ class AudioTheme_Hooks_General {
 	 * @return array
 	 */
 	public function register_image_editors( $editors ) {
-		include_once( AUDIOTHEME_DIR . 'includes/class-audiotheme-image-editor-gd.php' );
-		include_once( AUDIOTHEME_DIR . 'includes/class-audiotheme-image-editor-imagick.php' );
-		include_once( AUDIOTHEME_DIR . 'includes/class-audiotheme-image-pixel-gd.php' );
+		include_once( $this->plugin->get_path( 'includes/class-audiotheme-image-editor-gd.php' ) );
+		include_once( $this->plugin->get_path( 'includes/class-audiotheme-image-editor-imagick.php' ) );
+		include_once( $this->plugin->get_path( 'includes/class-audiotheme-image-pixel-gd.php' ) );
 
 		array_unshift( $editors, 'AudioTheme_Image_Editor_GD' );
 		array_unshift( $editors, 'AudioTheme_Image_Editor_Imagick' );

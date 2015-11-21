@@ -84,7 +84,7 @@ class AudioTheme_Plugin_AudioTheme extends AudioTheme_Plugin {
 		}
 
 		if ( ! function_exists( 'p2p_register_connection_type' ) ) {
-			require( AUDIOTHEME_DIR . 'includes/vendor/p2p/init.php' );
+			require( $this->get_path( 'includes/vendor/p2p/init.php' ) );
 		}
 
 		add_action( 'admin_init', array( 'P2P_Storage', 'install' ) );

@@ -15,7 +15,7 @@
  * @package AudioTheme\Gigs
  * @since   1.9.0
  */
-class AudioTheme_Screen_EditVenue {
+class AudioTheme_Screen_EditVenue extends AudioTheme_Screen {
 	/**
 	 * Register hooks.
 	 *
@@ -88,7 +88,7 @@ class AudioTheme_Screen_EditVenue {
 	 */
 	public function display_edit_fields( $post ) {
 		$venue = get_audiotheme_venue( $post );
-		require( AUDIOTHEME_DIR . 'modules/gigs/admin/views/edit-venue.php' );
+		require( $this->plugin->get_path( 'modules/gigs/admin/views/edit-venue.php' ) );
 	}
 
 	/**
@@ -100,7 +100,7 @@ class AudioTheme_Screen_EditVenue {
 	 */
 	public function display_contact_meta_box( $post ) {
 		$venue = get_audiotheme_venue( $post );
-		require( AUDIOTHEME_DIR . 'modules/gigs/admin/views/edit-venue-contact.php' );
+		require( $this->plugin->get_path( 'modules/gigs/admin/views/edit-venue-contact.php' ) );
 	}
 
 	/**

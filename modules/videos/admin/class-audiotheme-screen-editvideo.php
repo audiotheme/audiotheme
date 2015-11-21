@@ -15,7 +15,7 @@
  * @package AudioTheme\Videos
  * @since   1.9.0
  */
-class AudioTheme_Screen_EditVideo {
+class AudioTheme_Screen_EditVideo extends AudioTheme_Screen {
 	/**
 	 * Register hooks.
 	 *
@@ -51,7 +51,7 @@ class AudioTheme_Screen_EditVideo {
 	public function register_assets() {
 		wp_register_script(
 			'audiotheme-video-edit',
-			AUDIOTHEME_URI . 'modules/videos/admin/js/video-edit.js',
+			$this->plugin->get_url( 'modules/videos/admin/js/video-edit.js' ),
 			array( 'jquery', 'post', 'wp-backbone', 'wp-util' ),
 			'1.9.0',
 			true

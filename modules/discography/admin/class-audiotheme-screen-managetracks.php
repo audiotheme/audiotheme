@@ -15,7 +15,7 @@
  * @package AudioTheme\Discography
  * @since   1.9.0
  */
-class AudioTheme_Screen_ManageTracks {
+class AudioTheme_Screen_ManageTracks extends AudioTheme_Screen {
 	/**
 	 * Register hooks.
 	 *

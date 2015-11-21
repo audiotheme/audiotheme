@@ -15,7 +15,7 @@
  * @package AudioTheme\Archives
  * @since   1.9.0
  */
-class AudioTheme_Screen_EditArchive {
+class AudioTheme_Screen_EditArchive extends AudioTheme_Screen {
 	/**
 	 * Archives module.
 	 *

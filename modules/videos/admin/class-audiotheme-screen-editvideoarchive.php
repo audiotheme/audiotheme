@@ -15,7 +15,7 @@
  * @package AudioTheme\Videos
  * @since   1.9.0
  */
-class AudioTheme_Screen_EditVideoArchive {
+class AudioTheme_Screen_EditVideoArchive extends AudioTheme_Screen {
 	/**
 	 * Register hooks.
 	 *

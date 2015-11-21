@@ -123,7 +123,9 @@ function audiotheme() {
 	return $instance;
 }
 
-audiotheme()
+$audiotheme = audiotheme();
+
+$audiotheme
 	->set_directory( plugin_dir_path( __FILE__ ) )
 	->set_file( __FILE__ )
 	->set_slug( 'audiotheme' )
@@ -134,24 +136,24 @@ audiotheme()
 	->register_hooks( new AudioTheme_Assets() )
 	->register_hooks( new AudioTheme_Hooks_General() )
 	->modules
-	->register( new AudioTheme_Module_Archives() )
-	->register( new AudioTheme_Module_Gigs() )
-	->register( new AudioTheme_Module_Discography() )
-	->register( new AudioTheme_Module_Videos() );
+	->register( new AudioTheme_Module_Archives( $audiotheme ) )
+	->register( new AudioTheme_Module_Gigs( $audiotheme ) )
+	->register( new AudioTheme_Module_Discography( $audiotheme ) )
+	->register( new AudioTheme_Module_Videos( $audiotheme ) );
 
 if ( is_admin() ) {
-	audiotheme()
+	$audiotheme
 		->register_hooks( new AudioTheme_Upgrade() )
 		->register_hooks( new AudioTheme_Hooks_Admin() )
 		->register_hooks( new AudioTheme_Updates() )
 		->register_hooks( new AudioTheme_Assets_Admin() )
 		->register_hooks( new AudioTheme_Screen_Dashboard() )
 		->register_hooks( new AudioTheme_Screen_Settings() )
-		->register_hooks( new AudioTheme_Setting_LicenseKey( audiotheme()->license ) );
+		->register_hooks( new AudioTheme_Setting_LicenseKey( $audiotheme->license ) );
 }
 
 if ( is_network_admin() ) {
-	audiotheme()->register_hooks( new AudioTheme_Screen_Network_Settings() );
+	$audiotheme->register_hooks( new AudioTheme_Screen_Network_Settings() );
 }
 
 /**

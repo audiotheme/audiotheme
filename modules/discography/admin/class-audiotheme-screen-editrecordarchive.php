@@ -15,7 +15,7 @@
  * @package AudioTheme\Discography
  * @since   1.9.0
  */
-class AudioTheme_Screen_EditRecordArchive {
+class AudioTheme_Screen_EditRecordArchive extends AudioTheme_Screen {
 	/**
 	 * Register hooks.
 	 *

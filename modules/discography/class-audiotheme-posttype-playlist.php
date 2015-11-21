@@ -58,11 +58,11 @@ class AudioTheme_PostType_Playlist {
 			return;
 		}
 
-		wp_enqueue_style( 'audiotheme-playlist-admin', AUDIOTHEME_URI . 'modules/discography/admin/css/playlist.css' );
+		wp_enqueue_style( 'audiotheme-playlist-admin', $this->plugin->get_url( 'modules/discography/admin/css/playlist.css' ) );
 
 		wp_enqueue_script(
 			'audiotheme-playlist-admin',
-			AUDIOTHEME_URI . 'modules/discography/admin/js/playlist.js',
+			$this->plugin->get_url( 'modules/discography/admin/js/playlist.js' ),
 			array( 'cue-admin' ),
 			'1.0.0',
 			true

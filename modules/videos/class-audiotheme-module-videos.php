@@ -35,14 +35,6 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 	protected $id = 'videos';
 
 	/**
-	 * Plugin instance.
-	 *
-	 * @since 1.9.0
-	 * @var AudioTheme_Plugin_AudioTheme
-	 */
-	protected $plugin;
-
-	/**
 	 * Whether the module should show on the dashboard.
 	 *
 	 * @since 1.9.0
@@ -73,19 +65,6 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 	}
 
 	/**
-	 * Set a reference to a plugin instance.
-	 *
-	 * @since 1.9.0
-	 *
-	 * @param AudioTheme_Plugin $plugin Main plugin instance.
-	 * @return $this
-	 */
-	public function set_plugin( AudioTheme_Plugin $plugin ) {
-		$this->plugin = $plugin;
-		return $this;
-	}
-
-	/**
 	 * Load the module.
 	 *
 	 * @since 1.9.0
@@ -94,16 +73,16 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 	 */
 	public function load() {
 		// Load videos functionality.
-		require( AUDIOTHEME_DIR . 'modules/videos/class-audiotheme-ajax-videos.php' );
-		require( AUDIOTHEME_DIR . 'modules/videos/class-audiotheme-posttype-video.php' );
-		require( AUDIOTHEME_DIR . 'modules/videos/class-audiotheme-taxonomy-videocategory.php' );
-		require( AUDIOTHEME_DIR . 'modules/videos/post-template.php' );
+		require( $this->plugin->get_path( 'modules/videos/class-audiotheme-ajax-videos.php' ) );
+		require( $this->plugin->get_path( 'modules/videos/class-audiotheme-posttype-video.php' ) );
+		require( $this->plugin->get_path( 'modules/videos/class-audiotheme-taxonomy-videocategory.php' ) );
+		require( $this->plugin->get_path( 'modules/videos/post-template.php' ) );
 
 		// Load the admin interface and functionality for videos.
 		if ( is_admin() ) {
-			require( AUDIOTHEME_DIR . 'modules/videos/admin/class-audiotheme-screen-editvideo.php' );
-			require( AUDIOTHEME_DIR . 'modules/videos/admin/class-audiotheme-screen-managevideos.php' );
-			require( AUDIOTHEME_DIR . 'modules/videos/admin/class-audiotheme-screen-editvideoarchive.php' );
+			require( $this->plugin->get_path( 'modules/videos/admin/class-audiotheme-screen-editvideo.php' ) );
+			require( $this->plugin->get_path( 'modules/videos/admin/class-audiotheme-screen-managevideos.php' ) );
+			require( $this->plugin->get_path( 'modules/videos/admin/class-audiotheme-screen-editvideoarchive.php' ) );
 		}
 
 		return $this;

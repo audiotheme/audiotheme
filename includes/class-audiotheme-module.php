@@ -35,12 +35,29 @@ abstract class AudioTheme_Module {
 	protected $id;
 
 	/**
+	 * Plugin instance.
+	 *
+	 * @since 1.9.0
+	 * @var AudioTheme_Plugin_AudioTheme
+	 */
+	protected $plugin;
+
+	/**
 	 * Whether the module should show on the dashboard.
 	 *
 	 * @since 1.9.0
 	 * @var bool
 	 */
 	protected $show_in_dashboard = false;
+
+	/**
+	 * Constructor method.
+	 *
+	 * @since 1.9.0
+	 */
+	public function __construct( $plugin = null ) {
+		$this->plugin = $plugin;
+	}
 
 	/**
 	 * Magic getter.

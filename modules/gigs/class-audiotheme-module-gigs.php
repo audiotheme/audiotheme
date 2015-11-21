@@ -35,14 +35,6 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	protected $id = 'gigs';
 
 	/**
-	 * Plugin instance.
-	 *
-	 * @since 1.9.0
-	 * @var AudioTheme_Plugin_AudioTheme
-	 */
-	protected $plugin;
-
-	/**
 	 * Whether the module should show on the dashboard.
 	 *
 	 * @since 1.9.0
@@ -73,19 +65,6 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	}
 
 	/**
-	 * Set a reference to a plugin instance.
-	 *
-	 * @since 1.9.0
-	 *
-	 * @param AudioTheme_Plugin $plugin Main plugin instance.
-	 * @return $this
-	 */
-	public function set_plugin( AudioTheme_Plugin $plugin ) {
-		$this->plugin = $plugin;
-		return $this;
-	}
-
-	/**
 	 * Load the module.
 	 *
 	 * @since 1.9.0
@@ -94,19 +73,19 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	 */
 	public function load() {
 		// Load gigs functionality.
-		require( AUDIOTHEME_DIR . 'modules/gigs/class-audiotheme-ajax-gigs.php' );
-		require( AUDIOTHEME_DIR . 'modules/gigs/class-audiotheme-posttype-gig.php' );
-		require( AUDIOTHEME_DIR . 'modules/gigs/class-audiotheme-posttype-venue.php' );
-		require( AUDIOTHEME_DIR . 'modules/gigs/class-audiotheme-gig-query.php' );
-		require( AUDIOTHEME_DIR . 'modules/gigs/gig-template.php' );
-		require( AUDIOTHEME_DIR . 'modules/gigs/venue-template.php' );
+		require( $this->plugin->get_path( 'modules/gigs/class-audiotheme-ajax-gigs.php' ) );
+		require( $this->plugin->get_path( 'modules/gigs/class-audiotheme-posttype-gig.php' ) );
+		require( $this->plugin->get_path( 'modules/gigs/class-audiotheme-posttype-venue.php' ) );
+		require( $this->plugin->get_path( 'modules/gigs/class-audiotheme-gig-query.php' ) );
+		require( $this->plugin->get_path( 'modules/gigs/gig-template.php' ) );
+		require( $this->plugin->get_path( 'modules/gigs/venue-template.php' ) );
 
 		// Load the admin interface and functionality for gigs and venues.
 		if ( is_admin() ) {
-			require( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-screen-editgig.php' );
-			require( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-screen-editvenue.php' );
-			require( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-screen-managegigs.php' );
-			require( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-screen-managevenues.php' );
+			require( $this->plugin->get_path( 'modules/gigs/admin/class-audiotheme-screen-editgig.php' ) );
+			require( $this->plugin->get_path( 'modules/gigs/admin/class-audiotheme-screen-editvenue.php' ) );
+			require( $this->plugin->get_path( 'modules/gigs/admin/class-audiotheme-screen-managegigs.php' ) );
+			require( $this->plugin->get_path( 'modules/gigs/admin/class-audiotheme-screen-managevenues.php' ) );
 		}
 
 		return $this;
@@ -236,17 +215,17 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 		if ( is_feed() && 'audiotheme_gig' === $wp_query->get( 'post_type' ) ) {
 			p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $wp_query );
 
-			require( AUDIOTHEME_DIR . 'modules/gigs/feed.php' );
+			require( $this->plugin->get_path( 'modules/gigs/feed.php' ) );
 
 			switch ( $type ) {
 				case 'feed':
-					load_template( AUDIOTHEME_DIR . 'modules/gigs/feed-rss2.php' );
+					load_template( $this->plugin->get_path( 'modules/gigs/feed-rss2.php' ) );
 					break;
 				case 'ical':
-					load_template( AUDIOTHEME_DIR . 'modules/gigs/feed-ical.php' );
+					load_template( $this->plugin->get_path( 'modules/gigs/feed-ical.php' ) );
 					break;
 				case 'json':
-					load_template( AUDIOTHEME_DIR . 'modules/gigs/feed-json.php' );
+					load_template( $this->plugin->get_path( 'modules/gigs/feed-json.php' ) );
 					break;
 				default:
 					$message = sprintf( esc_html__( 'ERROR: %s is not a valid feed template.', 'audiotheme' ), $type );
@@ -327,12 +306,12 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	 */
 	public function register_admin_assets() {
 		$post_type_object = get_post_type_object( 'audiotheme_venue' );
-		$base_url = set_url_scheme( AUDIOTHEME_URI . 'modules/gigs/admin' );
+		$base_url = set_url_scheme( $this->plugin->get_url( 'modules/gigs/admin' ) );
 
 		wp_register_script( 'audiotheme-gig-edit', $base_url . '/js/gig-edit.bundle.min.js', array( 'audiotheme-admin', 'audiotheme-venue-manager', 'jquery-timepicker', 'jquery-ui-autocomplete', 'pikaday', 'underscore', 'wp-backbone', 'wp-util' ), AUDIOTHEME_VERSION, true );
 		wp_register_script( 'audiotheme-venue-edit', $base_url . '/js/venue-edit.bundle.min.js', array( 'audiotheme-admin', 'jquery-ui-autocomplete', 'post', 'underscore' ), AUDIOTHEME_VERSION, true );
 		wp_register_script( 'audiotheme-venue-manager', $base_url . '/js/venue-manager.bundle.min.js', array( 'audiotheme-admin', 'jquery', 'jquery-ui-autocomplete', 'media-models', 'media-views', 'underscore', 'wp-backbone', 'wp-util' ), AUDIOTHEME_VERSION, true );
-		wp_register_style( 'audiotheme-venue-manager', AUDIOTHEME_URI . 'admin/css/venue-manager.min.css', array(), '1.0.0' );
+		wp_register_style( 'audiotheme-venue-manager', $this->plugin->get_url( 'admin/css/venue-manager.min.css', array(), '1.0.0' ) );
 
 		$settings = array(
 			'canPublishVenues'      => false,

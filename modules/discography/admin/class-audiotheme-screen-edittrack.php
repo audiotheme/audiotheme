@@ -15,7 +15,7 @@
  * @package AudioTheme\Discography
  * @since   1.9.0
  */
-class AudioTheme_Screen_EditTrack {
+class AudioTheme_Screen_EditTrack extends AudioTheme_Screen {
 	/**
 	 * Register hooks.
 	 *
@@ -77,7 +77,7 @@ class AudioTheme_Screen_EditTrack {
 	 */
 	public function display_details_meta_box( $post ) {
 		wp_nonce_field( 'update-track_' . $post->ID, 'audiotheme_track_nonce' );
-		require( AUDIOTHEME_DIR . 'modules/discography/admin/views/meta-box-track-details.php' );
+		require( $this->plugin->get_path( 'modules/discography/admin/views/meta-box-track-details.php' ) );
 	}
 
 	/**

@@ -51,14 +51,6 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 	protected $id = 'archives';
 
 	/**
-	 * Plugin instance.
-	 *
-	 * @since 1.9.0
-	 * @var AudioTheme_Plugin_AudioTheme
-	 */
-	protected $plugin;
-
-	/**
 	 * Retrieve the name of the module.
 	 *
 	 * @since 1.9.0
@@ -70,19 +62,6 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 	}
 
 	/**
-	 * Set a reference to a plugin instance.
-	 *
-	 * @since 1.9.0
-	 *
-	 * @param AudioTheme_Plugin $plugin Main plugin instance.
-	 * @return $this
-	 */
-	public function set_plugin( AudioTheme_Plugin $plugin ) {
-		$this->plugin = $plugin;
-		return $this;
-	}
-
-	/**
 	 * Load the module.
 	 *
 	 * @since 1.9.0
@@ -90,11 +69,11 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 	 * @return $this
 	 */
 	public function load() {
-		require( AUDIOTHEME_DIR . 'modules/archives/class-audiotheme-posttype-archive.php' );
-		require( AUDIOTHEME_DIR . 'modules/archives/post-template.php' );
+		require( $this->plugin->get_path( 'modules/archives/class-audiotheme-posttype-archive.php' ) );
+		require( $this->plugin->get_path( 'modules/archives/post-template.php' ) );
 
 		if ( is_admin() ) {
-			require( AUDIOTHEME_DIR . 'modules/archives/admin/class-audiotheme-screen-editarchive.php' );
+			require( $this->plugin->get_path( 'modules/archives/admin/class-audiotheme-screen-editarchive.php' ) );
 		}
 
 		return $this;

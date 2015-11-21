@@ -15,7 +15,7 @@
  * @package AudioTheme\Settings
  * @since   1.9.0
  */
-class AudioTheme_Screen_Network_Settings {
+class AudioTheme_Screen_Network_Settings extends AudioTheme_Screen {
 	/**
 	 * Register hooks.
 	 *
@@ -63,7 +63,7 @@ class AudioTheme_Screen_Network_Settings {
 	 * @since 1.9.0
 	 */
 	public function render_screen() {
-		include( AUDIOTHEME_DIR . 'admin/views/screen-network-settings.php' );
+		include( $this->plugin->get_path( 'admin/views/screen-network-settings.php' ) );
 	}
 
 	/**

@@ -15,7 +15,7 @@
  * @package AudioTheme\Gigs
  * @since   1.9.0
  */
-class AudioTheme_Screen_EditGig {
+class AudioTheme_Screen_EditGig extends AudioTheme_Screen {
 	/**
 	 * Register hooks.
 	 *
@@ -106,7 +106,7 @@ class AudioTheme_Screen_EditGig {
 			'timeFormat' => $this->compatible_time_format(),
 		) );
 
-		require( AUDIOTHEME_DIR . 'modules/gigs/admin/views/edit-gig.php' );
+		require( $this->plugin->get_path( 'modules/gigs/admin/views/edit-gig.php' ) );
 	}
 
 	/**
@@ -135,8 +135,8 @@ class AudioTheme_Screen_EditGig {
 	 * @since 1.9.0
 	 */
 	public function print_templates() {
-		include( AUDIOTHEME_DIR . 'modules/gigs/admin/views/templates-gig.php' );
-		include( AUDIOTHEME_DIR . 'modules/gigs/admin/views/templates-venue.php' );
+		include( $this->plugin->get_path( 'modules/gigs/admin/views/templates-gig.php' ) );
+		include( $this->plugin->get_path( 'modules/gigs/admin/views/templates-venue.php' ) );
 	}
 
 	/**

@@ -15,7 +15,7 @@
  * @package AudioTheme\Discography
  * @since   1.9.0
  */
-class AudioTheme_Screen_EditRecord {
+class AudioTheme_Screen_EditRecord extends AudioTheme_Screen {
 	/**
 	 * Register hooks.
 	 *
@@ -73,7 +73,7 @@ class AudioTheme_Screen_EditRecord {
 	public function register_assets() {
 		wp_register_script(
 			'audiotheme-record-edit',
-			AUDIOTHEME_URI . 'modules/discography/admin/js/record-edit.js',
+			$this->plugin->get_url( 'modules/discography/admin/js/record-edit.js' ),
 			array( 'audiotheme-admin', 'audiotheme-media', 'wp-backbone', 'wp-util' ),
 			'1.9.0',
 			true
@@ -119,8 +119,8 @@ class AudioTheme_Screen_EditRecord {
 			'nonce'  => wp_create_nonce( 'get-default-track_' . $post->ID ),
 		) );
 
-		require( AUDIOTHEME_DIR . 'modules/discography/admin/views/edit-record-tracklist.php' );
-		require( AUDIOTHEME_DIR . 'modules/discography/admin/views/templates-record.php' );
+		require( $this->plugin->get_path( 'modules/discography/admin/views/edit-record-tracklist.php' ) );
+		require( $this->plugin->get_path( 'modules/discography/admin/views/templates-record.php' ) );
 	}
 
 	/**
@@ -198,7 +198,7 @@ class AudioTheme_Screen_EditRecord {
 		$record_link_source_names = array_keys( $record_link_sources );
 		sort( $record_link_source_names );
 
-		require( AUDIOTHEME_DIR . 'modules/discography/admin/views/edit-record-links.php' );
+		require( $this->plugin->get_path( 'modules/discography/admin/views/edit-record-links.php' ) );
 	}
 
 	/**

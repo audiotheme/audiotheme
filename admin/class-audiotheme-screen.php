@@ -42,5 +42,5 @@ abstract class AudioTheme_Screen {
 	 *
 	 * @since 1.9.0
 	 */
-	public function register_hooks() {}
+	abstract public function register_hooks();
 }

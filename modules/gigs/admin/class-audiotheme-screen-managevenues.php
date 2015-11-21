@@ -15,7 +15,7 @@
  * @package AudioTheme\Gigs
  * @since   1.9.0
  */
-class AudioTheme_Screen_ManageVenues {
+class AudioTheme_Screen_ManageVenues extends AudioTheme_Screen {
 	/**
 	 * Register hooks.
 	 *

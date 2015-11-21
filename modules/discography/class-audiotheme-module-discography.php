@@ -35,14 +35,6 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 	protected $id = 'discography';
 
 	/**
-	 * Plugin instance.
-	 *
-	 * @since 1.9.0
-	 * @var AudioTheme_Plugin_AudioTheme
-	 */
-	protected $plugin;
-
-	/**
 	 * Whether the module should show on the dashboard.
 	 *
 	 * @since 1.9.0
@@ -73,19 +65,6 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 	}
 
 	/**
-	 * Set a reference to a plugin instance.
-	 *
-	 * @since 1.9.0
-	 *
-	 * @param AudioTheme_Plugin $plugin Main plugin instance.
-	 * @return $this
-	 */
-	public function set_plugin( AudioTheme_Plugin $plugin ) {
-		$this->plugin = $plugin;
-		return $this;
-	}
-
-	/**
 	 * Load the module.
 	 *
 	 * @since 1.9.0
@@ -94,20 +73,20 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 	 */
 	public function load() {
 		// Load discography functionality.
-		require( AUDIOTHEME_DIR . 'modules/discography/class-audiotheme-ajax-discography.php' );
-		require( AUDIOTHEME_DIR . 'modules/discography/class-audiotheme-posttype-playlist.php' );
-		require( AUDIOTHEME_DIR . 'modules/discography/class-audiotheme-posttype-record.php' );
-		require( AUDIOTHEME_DIR . 'modules/discography/class-audiotheme-posttype-track.php' );
-		require( AUDIOTHEME_DIR . 'modules/discography/class-audiotheme-taxonomy-recordtype.php' );
-		require( AUDIOTHEME_DIR . 'modules/discography/post-template.php' );
+		require( $this->plugin->get_path( 'modules/discography/class-audiotheme-ajax-discography.php' ) );
+		require( $this->plugin->get_path( 'modules/discography/class-audiotheme-posttype-playlist.php' ) );
+		require( $this->plugin->get_path( 'modules/discography/class-audiotheme-posttype-record.php' ) );
+		require( $this->plugin->get_path( 'modules/discography/class-audiotheme-posttype-track.php' ) );
+		require( $this->plugin->get_path( 'modules/discography/class-audiotheme-taxonomy-recordtype.php' ) );
+		require( $this->plugin->get_path( 'modules/discography/post-template.php' ) );
 
 		// Load the admin interface and functionality for discography.
 		if ( is_admin() ) {
-			require( AUDIOTHEME_DIR . 'modules/discography/admin/class-audiotheme-screen-editrecord.php' );
-			require( AUDIOTHEME_DIR . 'modules/discography/admin/class-audiotheme-screen-edittrack.php' );
-			require( AUDIOTHEME_DIR . 'modules/discography/admin/class-audiotheme-screen-managerecords.php' );
-			require( AUDIOTHEME_DIR . 'modules/discography/admin/class-audiotheme-screen-managetracks.php' );
-			require( AUDIOTHEME_DIR . 'modules/discography/admin/class-audiotheme-screen-editrecordarchive.php' );
+			require( $this->plugin->get_path( 'modules/discography/admin/class-audiotheme-screen-editrecord.php' ) );
+			require( $this->plugin->get_path( 'modules/discography/admin/class-audiotheme-screen-edittrack.php' ) );
+			require( $this->plugin->get_path( 'modules/discography/admin/class-audiotheme-screen-managerecords.php' ) );
+			require( $this->plugin->get_path( 'modules/discography/admin/class-audiotheme-screen-managetracks.php' ) );
+			require( $this->plugin->get_path( 'modules/discography/admin/class-audiotheme-screen-editrecordarchive.php' ) );
 		}
 
 		return $this;
