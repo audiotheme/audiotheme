@@ -15,6 +15,19 @@
  */
 
 /**
+ * Load admin-specific functions and libraries.
+ *
+ * Has to be loaded after the Theme Customizer in order to determine if the
+ * Settings API should be included while customizing a theme.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_load_admin() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
  * Flush the rewrite rules if needed.
  *
  * @since 1.0.0

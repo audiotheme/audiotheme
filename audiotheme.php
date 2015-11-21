@@ -93,8 +93,7 @@ require( AUDIOTHEME_DIR . 'modules/videos/class-audiotheme-module-videos.php' );
  * Load admin functionality.
  */
 if ( is_admin() ) {
-	require( AUDIOTHEME_DIR . 'includes/deprecated/deprecated-admin.php' );
-	require( AUDIOTHEME_DIR . 'includes/deprecated/settings-screens.php' );
+	require( AUDIOTHEME_DIR . 'admin/admin.php' );
 	require( AUDIOTHEME_DIR . 'admin/functions.php' );
 	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-admin-assets.php' );
 	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen.php' );
@@ -105,6 +104,8 @@ if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater.php' );
 	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-plugin.php' );
 	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-theme.php' );
+	require( AUDIOTHEME_DIR . 'includes/deprecated/deprecated-admin.php' );
+	require( AUDIOTHEME_DIR . 'includes/deprecated/settings-screens.php' );
 }
 
 /**
@@ -141,36 +142,20 @@ audiotheme()
 	->register( new AudioTheme_Module_Videos() );
 
 /**
- * AudioTheme setup.
- *
- * Begin setting up the framework during the after_setup_theme action.
+ * Load the plugin.
  *
  * @since 1.0.0
  */
 function audiotheme_load() {
 	audiotheme()->load();
 
+	if ( is_admin() ) {
+		audiotheme_admin_setup();
+	}
+
 	// Template hooks.
 	add_action( 'audiotheme_template_include', 'audiotheme_template_setup' );
 	add_action( 'audiotheme_before_main_content', 'audiotheme_before_main_content' );
 	add_action( 'audiotheme_after_main_content', 'audiotheme_after_main_content' );
 }
-add_action( 'after_setup_theme', 'audiotheme_load', 5 );
-
-/**
- * Load admin-specific functions and libraries.
- *
- * Has to be loaded after the Theme Customizer in order to determine if the
- * Settings API should be included while customizing a theme.
- *
- * @since 1.0.0
- */
-function audiotheme_load_admin() {
-	global $wp_customize;
-
-	if ( is_admin() || ( $wp_customize && $wp_customize->is_preview() ) ) {
-		require( AUDIOTHEME_DIR . 'admin/admin.php' );
-		audiotheme_admin_setup();
-	}
-}
-add_action( 'after_setup_theme', 'audiotheme_load_admin', 5 );
+add_action( 'plugins_loaded', 'audiotheme_load' );
