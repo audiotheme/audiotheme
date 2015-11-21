@@ -75,7 +75,7 @@ class AudioTheme_Updates {
 	 * @param array $api_data Extra data to send to the update API.
 	 */
 	protected function update_audiotheme( $api_data = array() ) {
-		$updater = new Audiotheme_Updater_Plugin(
+		$updater = new AudioTheme_Updater_Plugin(
 			array( 'api_data' => $api_data ),
 			$this->plugin->get_file()
 		);
@@ -98,7 +98,7 @@ class AudioTheme_Updates {
 		$support = get_theme_support( 'audiotheme-automatic-updates' );
 		$args    = wp_parse_args( $support[0], array( 'api_data' => $api_data ) );
 
-		$theme_updater = new Audiotheme_Updater_Theme( $args );
+		$theme_updater = new AudioTheme_Updater_Theme( $args );
 		$theme_updater->init();
 
 		// @todo Does this happen on every request?
@@ -129,7 +129,7 @@ class AudioTheme_Updates {
 		if ( $check ) {
 			foreach ( $check as $slug => $args ) {
 				$args    = wp_parse_args( $args, array( 'api_data' => $api_data ) );
-				$updater = new Audiotheme_Updater_Theme( $args );
+				$updater = new AudioTheme_Updater_Theme( $args );
 				$updater->init();
 			}
 		}

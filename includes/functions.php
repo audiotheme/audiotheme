@@ -38,7 +38,7 @@ function audiotheme_image_size_names() {
  * Ex: sort_objects( $gigs, array( 'venue', 'name' ), 'asc', true, 'gig_datetime' );
  *
  * @since 1.0.0
- * @uses Audiotheme_Sort_Objects
+ * @uses AudioTheme_Sort_Objects
  *
  * @param array  $objects An array of objects to sort.
  * @param string $orderby The object property to sort on.
@@ -52,7 +52,7 @@ function audiotheme_sort_objects( $objects, $orderby, $order = 'ASC', $unique = 
 		return false;
 	}
 
-	usort( $objects, array( new Audiotheme_Sort_Objects( $orderby, $order, $fallback ), 'sort' ) );
+	usort( $objects, array( new AudioTheme_Sort_Objects( $orderby, $order, $fallback ), 'sort' ) );
 
 	// Use object ids as the array keys.
 	if ( $unique && count( $objects ) && isset( $objects[0]->ID ) ) {
@@ -68,7 +68,7 @@ function audiotheme_sort_objects( $objects, $orderby, $order = 'ASC', $unique = 
  * @since 1.0.0
  * @access private
  */
-class Audiotheme_Sort_Objects {
+class AudioTheme_Sort_Objects {
 	/**
 	 * Fallback property to sort by if primary is equal.
 	 *

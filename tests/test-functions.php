@@ -1,5 +1,5 @@
 <?php
-class AudiothemeFunctionsTest extends WP_UnitTestCase {
+class AudioThemeFunctionsTest extends WP_UnitTestCase {
 	public function testShortcodeBool() {
 		$this->assertFalse( audiotheme_shortcode_bool( 'false' ) );
 		$this->assertFalse( audiotheme_shortcode_bool( '0' ) );

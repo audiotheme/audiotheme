@@ -15,7 +15,7 @@
  * @package AudioTheme\Administration
  * @since   1.0.0
  */
-class Audiotheme_Updater_Theme extends Audiotheme_Updater {
+class AudioTheme_Updater_Theme extends AudioTheme_Updater {
 	/**
 	 * Constructor. Sets up the theme updater object.
 	 *

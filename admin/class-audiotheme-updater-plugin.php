@@ -21,7 +21,7 @@ require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
  * @package AudioTheme\Administration
  * @since   1.0.0
  */
-class Audiotheme_Updater_Plugin extends Audiotheme_Updater {
+class AudioTheme_Updater_Plugin extends AudioTheme_Updater {
 	/**
 	 * Absolute path to the plugin file.
 	 * @var string

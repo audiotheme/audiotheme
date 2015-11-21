@@ -15,7 +15,7 @@
  * @package AudioTheme\Administration
  * @since   1.0.0
  */
-class Audiotheme_Updater {
+class AudioTheme_Updater {
 	/**
 	 * API endpoint.
 	 *

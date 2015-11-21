@@ -60,19 +60,19 @@ class AudioTheme_Widgets {
 	 */
 	public function register_widgets() {
 		$widgets = array();
-		$widgets['recent-posts'] = 'Audiotheme_Widget_Recent_Posts';
+		$widgets['recent-posts'] = 'AudioTheme_Widget_Recent_Posts';
 
 		if ( $this->plugin->modules['discography']->is_active() ) {
-			$widgets['record'] = 'Audiotheme_Widget_Record';
-			$widgets['track']  = 'Audiotheme_Widget_Track';
+			$widgets['record'] = 'AudioTheme_Widget_Record';
+			$widgets['track']  = 'AudioTheme_Widget_Track';
 		}
 
 		if ( $this->plugin->modules['gigs']->is_active() ) {
-			$widgets['upcoming-gigs'] = 'Audiotheme_Widget_Upcoming_Gigs';
+			$widgets['upcoming-gigs'] = 'AudioTheme_Widget_Upcoming_Gigs';
 		}
 
 		if ( $this->plugin->modules['videos']->is_active() ) {
-			$widgets['video']  = 'Audiotheme_Widget_Video';
+			$widgets['video']  = 'AudioTheme_Widget_Video';
 		}
 
 		$support = get_theme_support( 'audiotheme-widgets' );
