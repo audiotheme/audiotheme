@@ -40,8 +40,24 @@ class AudioTheme_Provider_GeneralHooks {
 	 * @since 1.9.0
 	 */
 	public function register_hooks() {
+		add_action( 'init',                         array( $this, 'add_post_gallery_support' ) );
 		add_filter( 'wp_image_editors',             array( $this, 'register_image_editors' ) );
 		add_filter( 'wp_prepare_attachment_for_js', array( $this, 'prepare_audio_attachment_for_js' ), 10, 3 );
+	}
+
+	/**
+	 * Add support for custom post gallery output.
+	 *
+	 * This feature was deprecated in 1.9.0 and will be removed in a future
+	 * release.
+	 *
+	 * @since 1.9.0
+	 */
+	public function add_post_gallery_support() {
+		if ( current_theme_supports( 'audiotheme-post-gallery' ) ) {
+			// High priority so plugins filtering ouput don't get stomped. Jetpack, etc.
+			add_filter( 'post_gallery', 'audiotheme_post_gallery', 5000, 2 );
+		}
 	}
 
 	/**

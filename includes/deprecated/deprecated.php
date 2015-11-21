@@ -15,6 +15,15 @@
  */
 
 /**
+ * Additional setup during init.
+ *
+ * @since 1.2.0
+ */
+function audiotheme_init() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
  * Register discography post types and attach hooks to load related
  * functionality.
  *

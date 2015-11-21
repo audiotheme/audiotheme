@@ -171,20 +171,6 @@ function audiotheme_load() {
 add_action( 'after_setup_theme', 'audiotheme_load', 5 );
 
 /**
- * Additional setup during init.
- *
- * @since 1.2.0
- */
-function audiotheme_init() {
-	// This feature was deprecated in 1.9.0.
-	if ( current_theme_supports( 'audiotheme-post-gallery' ) ) {
-		// High priority so plugins filtering ouput don't get stomped. Jetpack, etc.
-		add_filter( 'post_gallery', 'audiotheme_post_gallery', 5000, 2 );
-	}
-}
-add_action( 'init', 'audiotheme_init' );
-
-/**
  * Load admin-specific functions and libraries.
  *
  * Has to be loaded after the Theme Customizer in order to determine if the
