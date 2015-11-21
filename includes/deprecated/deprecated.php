@@ -15,9 +15,53 @@
  */
 
 /**
+ * Flush the rewrite rules if needed.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_loaded() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	if ( ! is_network_admin() && 'no' !== get_option( 'audiotheme_flush_rewrite_rules' ) ) {
+		update_option( 'audiotheme_flush_rewrite_rules', 'no' );
+		flush_rewrite_rules();
+	}
+}
+
+/**
+ * Activation routine.
+ *
+ * Occurs too late to flush rewrite rules, so set an option to flush the
+ * rewrite rules on the next request.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_activate() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+	update_option( 'audiotheme_flush_rewrite_rules', 'yes' );
+}
+
+/**
+ * Deactivation routine.
+ *
+ * Deleting the rewrite rules option should force them to be regenerated the
+ * next time they're needed.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_deactivate() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+	delete_option( 'rewrite_rules' );
+}
+
+/**
  * Additional setup during init.
  *
  * @since 1.2.0
+ * @deprecated 1.9.0
  */
 function audiotheme_init() {
 	_deprecated_function( __FUNCTION__, '1.9.0' );

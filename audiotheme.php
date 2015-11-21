@@ -67,6 +67,7 @@ require( AUDIOTHEME_DIR . 'includes/class-audiotheme-plugin-audiotheme.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-module-collection.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-module.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-posttype.php' );
+require( AUDIOTHEME_DIR . 'includes/class-audiotheme-setup.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-widgets.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
@@ -129,6 +130,7 @@ audiotheme()
 	->set_slug( 'audiotheme' )
 	->set_url( plugin_dir_url( __FILE__ ) )
 	->register_hooks( new AudioTheme_i18n() )
+	->register_hooks( new AudioTheme_Setup() )
 	->register_hooks( new AudioTheme_Widgets() )
 	->register_hooks( new AudioTheme_Assets() )
 	->register_hooks( new AudioTheme_Hooks_General() )
@@ -149,7 +151,6 @@ function audiotheme_load() {
 	audiotheme()->load();
 
 	// Default hooks.
-	add_action( 'wp_loaded', 'audiotheme_loaded' );
 	add_filter( 'audiotheme_archive_title', 'audiotheme_archives_taxonomy_title' );
 	add_filter( 'wp_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
 
@@ -187,41 +188,3 @@ function audiotheme_load_admin() {
 	}
 }
 add_action( 'after_setup_theme', 'audiotheme_load_admin', 5 );
-
-/**
- * Flush the rewrite rules if needed.
- *
- * @since 1.0.0
- */
-function audiotheme_loaded() {
-	if ( ! is_network_admin() && 'no' !== get_option( 'audiotheme_flush_rewrite_rules' ) ) {
-		update_option( 'audiotheme_flush_rewrite_rules', 'no' );
-		flush_rewrite_rules();
-	}
-}
-
-/**
- * Activation routine.
- *
- * Occurs too late to flush rewrite rules, so set an option to flush the
- * rewrite rules on the next request.
- *
- * @since 1.0.0
- */
-function audiotheme_activate() {
-	update_option( 'audiotheme_flush_rewrite_rules', 'yes' );
-}
-register_activation_hook( __FILE__, 'audiotheme_activate' );
-
-/**
- * Deactivation routine.
- *
- * Deleting the rewrite rules option should force them to be regenerated the
- * next time they're needed.
- *
- * @since 1.0.0
- */
-function audiotheme_deactivate() {
-	delete_option( 'rewrite_rules' );
-}
-register_deactivation_hook( __FILE__, 'audiotheme_deactivate' );
