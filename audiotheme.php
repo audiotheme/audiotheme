@@ -97,11 +97,11 @@ if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-screen-network-settings.php' );
 	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-screen-settings.php' );
 	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-setting-licensekey.php' );
+	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-updatemanager.php' );
 	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-updater.php' );
 	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-updater-plugin.php' );
 	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-updater-theme.php' );
-	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-updates.php' );
-	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-upgrade.php' );
+	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-upgrademanager.php' );
 	require( AUDIOTHEME_DIR . 'includes/deprecated/deprecated-admin.php' );
 	require( AUDIOTHEME_DIR . 'includes/deprecated/settings-screens.php' );
 }
@@ -143,9 +143,9 @@ $audiotheme
 
 if ( is_admin() ) {
 	$audiotheme
-		->register_hooks( new AudioTheme_Upgrade() )
+		->register_hooks( new AudioTheme_UpgradeManager() )
 		->register_hooks( new AudioTheme_Hooks_Admin() )
-		->register_hooks( new AudioTheme_Updates() )
+		->register_hooks( new AudioTheme_UpdateManager() )
 		->register_hooks( new AudioTheme_Assets_Admin() )
 		->register_hooks( new AudioTheme_Screen_Dashboard() )
 		->register_hooks( new AudioTheme_Screen_Settings() )

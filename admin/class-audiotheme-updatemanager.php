@@ -1,6 +1,6 @@
 <?php
 /**
- * Updates.
+ * Update manager
  *
  * @package   AudioTheme\Administration
  * @copyright Copyright 2012 AudioTheme
@@ -10,12 +10,12 @@
  */
 
 /**
- * Updates class.
+ * Update manager class.
  *
  * @package AudioTheme\Administration
  * @since   1.9.0
  */
-class AudioTheme_Updates {
+class AudioTheme_UpdateManager {
 	/**
 	 * Plugin instance.
 	 *
