@@ -1051,6 +1051,69 @@ function audiotheme_widgets_init() {
 }
 
 /**
+ * Filter record type archive titles.
+ *
+ * @since 1.7.0
+ * @deprecated 1.9.0
+ *
+ * @param string $title Archive title.
+ * @return string
+ */
+function audiotheme_archives_taxonomy_title( $title ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	if ( is_tax() ) {
+		$title = get_queried_object()->name;
+	}
+
+	return $title;
+}
+
+/**
+ * Add helpful nav menu item classes.
+ *
+ * Adds class hooks to various nav menu items since child pseudo selectors
+ * aren't supported in all browsers.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param array $items List of menu items.
+ * @param array $args Menu display args.
+ * @return array
+ */
+function audiotheme_nav_menu_classes( $items, $args ) {
+	global $wp;
+
+	$classes = array();
+	$first_top = -1;
+
+	foreach ( $items as $key => $item ) {
+		if ( empty( $item->menu_item_parent ) ) {
+			$first_top = ( -1 === $first_top ) ? $key : $first_top;
+			$last_top  = $key;
+		} else {
+			if ( ! isset( $classes['first-child-items'][ $item->menu_item_parent ] ) ) {
+				$classes['first-child-items'][ $item->menu_item_parent ] = $key;
+				$items[ $key ]->classes[] = 'first-child-item';
+			}
+			$classes['last-child-items'][ $item->menu_item_parent ] = $key;
+		}
+	}
+
+	$items[ $first_top ]->classes[] = 'first-item';
+	$items[ $last_top ]->classes[] = 'last-item';
+
+	if ( isset( $classes['last-child-items'] ) ) {
+		foreach ( $classes['last-child-items'] as $item_id ) {
+			$items[ $item_id ]->classes[] = 'last-child-item';
+		}
+	}
+
+	return $items;
+}
+
+/**
  * Add audio metadata to attachment response objects.
  *
  * @since 1.4.4
@@ -1238,16 +1301,16 @@ if ( ! function_exists( 'get_audiotheme_theme_options_name' ) ) :
  * @since 1.0.0
  * @deprecated 1.9.0
  */
-	function get_audiotheme_theme_options_name() {
-		static $option_name;
+function get_audiotheme_theme_options_name() {
+	static $option_name;
 
-		if ( ! isset( $option_name ) && ( $name = get_audiotheme_theme_options_support( 'option_name' ) ) ) {
-			// The default option name is the first one registered in add_theme_support().
-			$option_name = ( is_array( $name ) ) ? $name[0] : $name;
-		}
-
-		return ( isset( $option_name ) ) ? $option_name : false;
+	if ( ! isset( $option_name ) && ( $name = get_audiotheme_theme_options_support( 'option_name' ) ) ) {
+		// The default option name is the first one registered in add_theme_support().
+		$option_name = ( is_array( $name ) ) ? $name[0] : $name;
 	}
+
+	return ( isset( $option_name ) ) ? $option_name : false;
+}
 endif;
 
 if ( ! function_exists( 'get_audiotheme_theme_options_support' ) ) :

@@ -150,24 +150,10 @@ audiotheme()
 function audiotheme_load() {
 	audiotheme()->load();
 
-	// Default hooks.
-	add_filter( 'audiotheme_archive_title', 'audiotheme_archives_taxonomy_title' );
-	add_filter( 'wp_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
-
 	// Template hooks.
 	add_action( 'audiotheme_template_include', 'audiotheme_template_setup' );
 	add_action( 'audiotheme_before_main_content', 'audiotheme_before_main_content' );
 	add_action( 'audiotheme_after_main_content', 'audiotheme_after_main_content' );
-
-	// Deprecated.
-	add_action( 'init', 'audiotheme_less_setup' );
-	add_filter( 'embed_oembed_html', 'audiotheme_oembed_html', 10, 4 );
-	add_filter( 'embed_handler_html', 'audiotheme_oembed_html', 10, 4 );
-	add_filter( 'video_embed_html', 'audiotheme_oembed_html', 10 ); // Jetpack compat.
-	add_filter( 'dynamic_sidebar_params', 'audiotheme_widget_count_class' );
-	add_filter( 'get_pages', 'audiotheme_page_list' );
-	add_filter( 'page_css_class', 'audiotheme_page_list_classes', 10, 2 );
-	add_filter( 'nav_menu_css_class', 'audiotheme_nav_menu_name_class', 10, 2 );
 }
 add_action( 'after_setup_theme', 'audiotheme_load', 5 );
 
