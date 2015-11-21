@@ -12,7 +12,7 @@
  * @package AudioTheme\Administration
  * @since 1.9.0
  */
-class AudioTheme_Admin_Assets {
+class AudioTheme_Assets_Admin {
 	/**
 	 * Plugin instance.
 	 *

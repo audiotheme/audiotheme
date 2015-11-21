@@ -78,23 +78,19 @@ require( AUDIOTHEME_DIR . 'includes/widgets/track.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets/upcoming-gigs.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets/video.php' );
 require( AUDIOTHEME_DIR . 'includes/vendor/scb/load.php' );
-require( AUDIOTHEME_DIR . 'includes/deprecated/deprecated.php' );
-require( AUDIOTHEME_DIR . 'includes/deprecated/discontinued.php' );
-
-/**
- * Load modules.
- */
 require( AUDIOTHEME_DIR . 'modules/archives/class-audiotheme-module-archives.php' );
 require( AUDIOTHEME_DIR . 'modules/discography/class-audiotheme-module-discography.php' );
 require( AUDIOTHEME_DIR . 'modules/gigs/class-audiotheme-module-gigs.php' );
 require( AUDIOTHEME_DIR . 'modules/videos/class-audiotheme-module-videos.php' );
+require( AUDIOTHEME_DIR . 'includes/deprecated/deprecated.php' );
+require( AUDIOTHEME_DIR . 'includes/deprecated/discontinued.php' );
 
 /**
  * Load admin functionality.
  */
 if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'admin/functions.php' );
-	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-admin-assets.php' );
+	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-assets-admin.php' );
 	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-hooks-admin.php' );
 	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-screen.php' );
 	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-screen-dashboard.php' );
@@ -148,7 +144,7 @@ if ( is_admin() ) {
 		->register_hooks( new AudioTheme_Upgrade() )
 		->register_hooks( new AudioTheme_Hooks_Admin() )
 		->register_hooks( new AudioTheme_Updates() )
-		->register_hooks( new AudioTheme_Admin_Assets() )
+		->register_hooks( new AudioTheme_Assets_Admin() )
 		->register_hooks( new AudioTheme_Screen_Dashboard() )
 		->register_hooks( new AudioTheme_Screen_Settings() )
 		->register_hooks( new AudioTheme_Setting_LicenseKey( audiotheme()->license ) );
