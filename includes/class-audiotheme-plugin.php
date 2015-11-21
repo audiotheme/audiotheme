@@ -2,12 +2,15 @@
 /**
  * Common plugin functionality.
  *
- * @package AudioTheme
- * @since   1.9.0
+ * @package   AudioTheme
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 
 /**
- * Main plugin class.
+ * Common plugin class.
  *
  * @package AudioTheme
  * @since   1.9.0

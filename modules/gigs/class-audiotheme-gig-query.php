@@ -2,15 +2,19 @@
 /**
  * Gig query.
  *
- * @package AudioTheme\Gigs
- * @since 1.9.0
+ * @package   AudioTheme\Gigs
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 
 /**
  * Extend WP_Query and set some default arguments when querying for gigs.
  *
- * @since 1.0.0
- * @link http://bradt.ca/blog/extending-wp_query/
+ * @package AudioTheme\Gigs
+ * @since   1.0.0
+ * @link    http://bradt.ca/blog/extending-wp_query/
  */
 class AudioTheme_Gig_Query extends WP_Query {
 	/**

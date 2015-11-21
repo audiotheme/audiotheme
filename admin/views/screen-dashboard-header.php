@@ -2,8 +2,11 @@
 /**
  * View to display a dashboard screen header.
  *
- * @package AudioTheme\Administration
- * @since 1.9.0
+ * @package   AudioTheme\Administration
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 ?>
 

@@ -2,8 +2,11 @@
 /**
  * Post type archives template functions.
  *
- * @package AudioTheme\Archives
- * @since 1.0.0
+ * @package   AudioTheme\Template
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 
 /**

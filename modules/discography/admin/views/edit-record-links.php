@@ -2,8 +2,11 @@
 /**
  * View for the link repeater in the record details meta box.
  *
- * @package AudioTheme\Discography
- * @since 1.9.0
+ * @package   AudioTheme\Discography
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 ?>
 

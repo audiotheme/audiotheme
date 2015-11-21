@@ -2,7 +2,11 @@
 /**
  * Gigs RSS2 feed template.
  *
- * @package AudioTheme\Gigs
+ * @package   AudioTheme\Gigs
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.0.0
  */
 
 header( 'Content-Type: ' . feed_content_type( 'rss-http' ) . '; charset=' . get_option( 'blog_charset' ), true );

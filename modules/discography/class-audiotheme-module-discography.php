@@ -2,15 +2,18 @@
 /**
  * Discography module.
  *
- * @package AudioTheme\Discography
- * @since 1.9.0
+ * @package   AudioTheme\Discography
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 
 /**
  * Discography module class.
  *
  * @package AudioTheme\Discography
- * @since 1.9.0
+ * @since   1.9.0
  */
 class AudioTheme_Module_Discography extends AudioTheme_Module {
 	/**

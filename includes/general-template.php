@@ -2,7 +2,11 @@
 /**
  * General template tags and functions.
  *
- * @package AudioTheme\Template
+ * @package   AudioTheme\Template
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.0.0
  */
 
 /**

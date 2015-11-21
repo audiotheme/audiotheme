@@ -2,13 +2,18 @@
 /**
  * GD image pixel.
  *
- * @package AudioTheme\Media
+ * @package   AudioTheme\Media
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 
 /**
  * Class for a single pixel in an image.
  *
  * @package AudioTheme\Media
+ * @since   1.9.0
  */
 class AudioTheme_Image_Pixel_GD {
 	/**

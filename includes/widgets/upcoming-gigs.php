@@ -2,17 +2,20 @@
 /**
  * Upcoming gigs widget.
  *
- * @package AudioTheme\Widgets
- * @since 1.0.0
+ * Display a list of upcoming gigs in a widget area.
+ *
+ * @package   AudioTheme\Widgets
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.0.0
  */
 
 /**
- * AudioTheme record widget class.
- *
- * Display a list of upcoming gigs in a widget area.
+ * Upcoming gigs widget class.
  *
  * @package AudioTheme\Widgets
- * @since 1.0.0
+ * @since   1.0.0
  */
 class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 	/**
@@ -21,7 +24,7 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 	 * @since 1.0.0
 	 * @see WP_Widget::construct()
 	 */
-	function __construct() {
+	public function __construct() {
 		$widget_options = array( 'classname' => 'widget_audiotheme_upcoming_gigs', 'description' => __( 'Display a list of upcoming gigs', 'audiotheme' ) );
 		parent::__construct( 'audiotheme-upcoming-gigs', __( 'Upcoming Gigs (AudioTheme)', 'audiotheme' ), $widget_options );
 
@@ -38,7 +41,7 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 	 * @param array $args Args specific to the widget area (sidebar).
 	 * @param array $instance Widget instance settings.
 	 */
-	function widget( $args, $instance ) {
+	public function widget( $args, $instance ) {
 		$cache = (array) wp_cache_get( 'audiotheme_widget_upcoming_gigs', 'widget' );
 
 		if ( isset( $cache[ $this->id ] ) ) {
@@ -98,7 +101,7 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 	 *
 	 * @param array $instance Current widget instance settings.
 	 */
-	function form( $instance ) {
+	public function form( $instance ) {
 		$instance = wp_parse_args( (array) $instance, array(
 			'title' => '',
 		) );
@@ -125,7 +128,7 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 	 * @param array $new_instance New widget settings.
 	 * @param array $old_instance Old widget settings.
 	 */
-	function update( $new_instance, $old_instance ) {
+	public function update( $new_instance, $old_instance ) {
 		$instance = wp_parse_args( $new_instance, $old_instance );
 
 		$instance['title'] = wp_strip_all_tags( $new_instance['title'] );
@@ -140,7 +143,7 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 	 *
 	 * @since 1.0.0
 	 */
-	function flush_widget_cache() {
+	public function flush_widget_cache() {
 		$cache = (array) wp_cache_get( 'audiotheme_widget_upcoming_gigs', 'widget' );
 
 		if ( isset( $cache[ $this->id ] ) ) {
@@ -155,7 +158,7 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 	 *
 	 * @since 1.0.0
 	 */
-	function flush_group_cache() {
+	public function flush_group_cache() {
 		wp_cache_delete( 'audiotheme_widget_upcoming_gigs', 'widget' );
 	}
 }

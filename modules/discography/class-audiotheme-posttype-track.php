@@ -2,15 +2,18 @@
 /**
  * Track post type registration and integration.
  *
- * @package AudioTheme\Discography
- * @since 1.9.0
+ * @package   AudioTheme\Discography
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 
 /**
  * Class for registering the track post type and integration.
  *
  * @package AudioTheme\Discography
- * @since 1.9.0
+ * @since   1.9.0
  */
 class AudioTheme_PostType_Track extends AudioTheme_PostType {
 	/**

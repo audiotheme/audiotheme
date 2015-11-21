@@ -7,8 +7,11 @@
  * updated, however they will be maintained longer than deprecated functions
  * until we're sure their removal won't cause unintended issues.
  *
- * @package AudioTheme\Deprecated
- * @since 1.6.0
+ * @package   AudioTheme\Deprecated
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 
 /**

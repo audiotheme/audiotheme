@@ -2,15 +2,18 @@
 /**
  * Base admin screen functionality.
  *
- * @package AudioTheme\Administration
- * @since 1.9.0
+ * @package   AudioTheme\Administration
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 
 /**
  * Base screen class.
  *
  * @package AudioTheme\Administration
- * @since 1.9.0
+ * @since   1.9.0
  */
 abstract class AudioTheme_Screen {
 	/**

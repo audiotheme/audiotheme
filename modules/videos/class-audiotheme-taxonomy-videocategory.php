@@ -2,15 +2,18 @@
 /**
  * Video category taxonomy registration and integration.
  *
- * @package AudioTheme\Videos
- * @since 1.9.0
+ * @package   AudioTheme\Videos
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 
 /**
  * Class for registering the video category taxonomy and integration.
  *
  * @package AudioTheme\Videos
- * @since 1.9.0
+ * @since   1.9.0
  */
 class AudioTheme_Taxonomy_VideoCategory {
 	/**

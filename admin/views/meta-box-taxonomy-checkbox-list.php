@@ -2,8 +2,11 @@
 /**
  * View to display a taxonomy meta box.
  *
- * @package AudioTheme\Administration
- * @since 1.7.0
+ * @package   AudioTheme\Administration
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.7.0
  */
 ?>
 

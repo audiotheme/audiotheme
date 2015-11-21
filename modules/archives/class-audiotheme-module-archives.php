@@ -12,15 +12,18 @@
  *
  * For a general solution, see https://github.com/cedaro/cpt-archives
  *
- * @package AudioTheme\Archives
- * @since 1.9.0
+ * @package   AudioTheme\Archives
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 
 /**
  * Archives module class.
  *
  * @package AudioTheme\Archives
- * @since 1.9.0
+ * @since   1.9.0
  */
 class AudioTheme_Module_Archives extends AudioTheme_Module {
 	/**

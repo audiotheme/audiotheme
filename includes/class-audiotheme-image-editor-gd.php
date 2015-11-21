@@ -2,13 +2,18 @@
 /**
  * GD image editor.
  *
- * @package AudioTheme\Media
+ * @package   AudioTheme\Media
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 
 /**
  * Class for the GD image editor.
  *
  * @package AudioTheme\Media
+ * @since   1.9.0
  */
 class AudioTheme_Image_Editor_GD extends WP_Image_Editor_GD {
 	/**

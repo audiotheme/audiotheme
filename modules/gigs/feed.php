@@ -2,7 +2,11 @@
 /**
  * Gigs feed functions.
  *
- * @package AudioTheme\Gigs
+ * @package   AudioTheme\Gigs
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.0.0
  */
 
 /**

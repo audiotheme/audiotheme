@@ -2,15 +2,18 @@
 /**
  * Internationalization provider.
  *
- * @package AudioTheme\i18n
- * @since 1.9.0
+ * @package   AudioTheme\i18n
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 
 /**
  * Internationalization provider class.
  *
  * @package AudioTheme\i18n
- * @since 1.9.0
+ * @since   1.9.0
  */
 class AudioTheme_i18n {
 	/**

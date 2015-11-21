@@ -2,8 +2,11 @@
 /**
  * Hooks for modifying WordPress behavior.
  *
- * @package AudioTheme
- * @since 1.0.0
+ * @package   AudioTheme
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.0.0
  */
 
 /**

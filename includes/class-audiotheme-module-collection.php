@@ -2,15 +2,18 @@
 /**
  * Module collection.
  *
- * @package AudioTheme\Modules
- * @since 1.9.0
+ * @package   AudioTheme\Modules
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 
 /**
  * Module collection class.
  *
  * @package AudioTheme\Modules
- * @since 1.9.0
+ * @since   1.9.0
  */
 class AudioTheme_Module_Collection implements ArrayAccess, Countable, Iterator {
 	/**

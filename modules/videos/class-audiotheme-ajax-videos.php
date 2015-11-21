@@ -2,15 +2,18 @@
 /**
  * Videos AJAX actions.
  *
- * @package AudioTheme\Videos
- * @since 1.9.0
+ * @package   AudioTheme\Videos
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 
 /**
  * Videos AJAX actions class.
  *
- * @pacakge AudioTheme\Videos
- * @since 1.9.0
+ * @package AudioTheme\Videos
+ * @since   1.9.0
  */
 class AudioTheme_AJAX_Videos {
 	/**

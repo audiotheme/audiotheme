@@ -2,15 +2,18 @@
 /**
  * Gigs module.
  *
- * @package AudioTheme\Gigs
- * @since 1.9.0
+ * @package   AudioTheme\Gigs
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 
 /**
  * Gigs module class.
  *
  * @package AudioTheme\Gigs
- * @since 1.9.0
+ * @since   1.9.0
  */
 class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	/**

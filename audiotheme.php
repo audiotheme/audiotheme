@@ -1,12 +1,19 @@
 <?php
 /**
+ * @package   AudioTheme
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.0.0
+ *
+ * @wordpress-plugin
  * Plugin Name: AudioTheme
- * Plugin URI: https://audiotheme.com/view/audiotheme/
+ * Plugin URI:  https://audiotheme.com/view/audiotheme/
  * Description: A platform for music-oriented websites, allowing for easy management of gigs, discography, videos and more.
- * Version: 1.9.0-beta
- * Author: AudioTheme
- * Author URI: https://audiotheme.com/
- * License: GPL-2.0+
+ * Version:     1.9.0-beta
+ * Author:      AudioTheme
+ * Author URI:  https://audiotheme.com/
+ * License:     GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: audiotheme
  * Domain Path: /languages
@@ -25,13 +32,6 @@
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc., 59
  * Temple Place, Suite 330, Boston, MA 02111-1307 USA
- *
- * @package AudioTheme
- * @version 1.9.0-beta
- * @author AudioTheme
- * @link https://audiotheme.com/
- * @copyright Copyright 2012 AudioTheme
- * @license GPL-2.0+
  */
 
 // Exit if accessed directly.
@@ -163,8 +163,8 @@ function audiotheme_load() {
 	audiotheme()->load();
 
 	// Template hooks.
-	add_action( 'audiotheme_template_include', 'audiotheme_template_setup' );
+	add_action( 'audiotheme_template_include',    'audiotheme_template_setup' );
 	add_action( 'audiotheme_before_main_content', 'audiotheme_before_main_content' );
-	add_action( 'audiotheme_after_main_content', 'audiotheme_after_main_content' );
+	add_action( 'audiotheme_after_main_content',  'audiotheme_after_main_content' );
 }
 add_action( 'plugins_loaded', 'audiotheme_load' );

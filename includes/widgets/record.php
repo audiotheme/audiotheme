@@ -2,17 +2,20 @@
 /**
  * Record widget.
  *
- * @package AudioTheme\Widgets
- * @since 1.0.0
+ * Display a selected record in a widget area.
+ *
+ * @package   AudioTheme\Widgets
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.0.0
  */
 
 /**
- * AudioTheme record widget class.
- *
- * Display a selected record in a widget area.
+ * Record widget class.
  *
  * @package AudioTheme\Widgets
- * @since 1.0.0
+ * @since   1.0.0
  */
 class Audiotheme_Widget_Record extends WP_Widget {
 	/**
@@ -21,7 +24,7 @@ class Audiotheme_Widget_Record extends WP_Widget {
 	 * @since 1.0.0
 	 * @see WP_Widget::construct()
 	 */
-	function __construct() {
+ 	public function __construct() {
 		$widget_options = array( 'classname' => 'widget_audiotheme_record', 'description' => __( 'Display a selected record', 'audiotheme' ) );
 		parent::__construct( 'audiotheme-record', __( 'Record (AudioTheme)', 'audiotheme' ), $widget_options );
 	}
@@ -34,7 +37,7 @@ class Audiotheme_Widget_Record extends WP_Widget {
 	 * @param array $args Args specific to the widget area (sidebar).
 	 * @param array $instance Widget instance settings.
 	 */
-	function widget( $args, $instance ) {
+ 	public function widget( $args, $instance ) {
 		extract( $args );
 
 		$instance['title_raw'] = $instance['title'];
@@ -73,7 +76,7 @@ class Audiotheme_Widget_Record extends WP_Widget {
 	 *
 	 * @param array $instance Current widget instance settings.
 	 */
-	function form( $instance ) {
+ 	public function form( $instance ) {
 		$instance = wp_parse_args( (array) $instance, array(
 			'link_text' => '',
 			'post_id'   => '',
@@ -128,7 +131,7 @@ class Audiotheme_Widget_Record extends WP_Widget {
 	 * @param array $new_instance New widget settings.
 	 * @param array $old_instance Old widget settings.
 	 */
-	function update( $new_instance, $old_instance ) {
+ 	public function update( $new_instance, $old_instance ) {
 		$instance = wp_parse_args( $new_instance, $old_instance );
 
 		$instance['title'] = wp_strip_all_tags( $new_instance['title'] );

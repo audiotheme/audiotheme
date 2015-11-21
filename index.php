@@ -1,11 +1,13 @@
 <?php
 /**
- * Main theme index file.
+ * Main index file.
  *
- * This file won't be used by the framework unless it is installed as a theme.
- * Its purpose is to allow WordPress to recognize the framework as a basic theme
- * in order to present more helpful error messages in functions.php.
+ * Prevents directory browsing on most servers and allows the plugin to be
+ * recognized as a theme if it's incorrectly installed.
  *
- * @package AudioTheme
- * @since 1.2.0
+ * @package   AudioTheme
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.2.0
  */

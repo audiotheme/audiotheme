@@ -2,17 +2,21 @@
 /**
  * Recent posts widget.
  *
- * @package AudioTheme\Widgets
- * @since 1.0.0
+ * An improved recent posts widget to allow for more control over display and
+ * post type.
+ *
+ * @package   AudioTheme\Widgets
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.0.0
  */
 
 /**
- * AudioTheme recent posts widget class.
- *
- * An improved recent posts widget to allow for more control over display and post type.
+ * Recent posts widget class.
  *
  * @package AudioTheme\Widgets
- * @since 1.0.0
+ * @since   1.0.0
  */
 class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 	/**
@@ -21,12 +25,12 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 	 * @since 1.0.0
 	 * @see WP_Widget::construct()
 	 */
-	function __construct() {
+	public function __construct() {
 		$widget_options = array( 'classname' => 'widget_recent_posts', 'description' => __( 'Display a list of recent posts', 'audiotheme' ) );
 		parent::__construct( 'recent-posts', __( 'Recent Posts', 'audiotheme' ), $widget_options );
 		$this->alt_option_name = 'widget_recent_entries';
 
-		add_action( 'save_post', array( $this, 'flush_group_cache' ) );
+		add_action( 'save_post',    array( $this, 'flush_group_cache' ) );
 		add_action( 'deleted_post', array( $this, 'flush_group_cache' ) );
 		add_action( 'switch_theme', array( $this, 'flush_group_cache' ) );
 	}
@@ -39,7 +43,7 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 	 * @param array $args Args specific to the widget area (sidebar).
 	 * @param array $instance Widget instance settings.
 	 */
-	function widget( $args, $instance ) {
+	public function widget( $args, $instance ) {
 		$cache = (array) wp_cache_get( 'audiotheme_widget_recent_posts', 'widget' );
 
 		if ( isset( $cache[ $this->id ] ) ) {
@@ -99,7 +103,7 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 	 * @param array $args Args specific to the widget area (sidebar).
 	 * @param array $instance Widget instance settings.
 	 */
-	function render( $args, $instance ) {
+	public function render( $args, $instance ) {
 		$output = $args['before_widget'];
 
 		// Allow the output to be filtered.
@@ -139,7 +143,7 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 	 *
 	 * @param array $instance Current widget instance settings.
 	 */
-	function form( $instance ) {
+	 public function form( $instance ) {
 		$instance = wp_parse_args( (array) $instance, array(
 			'post_type'      => 'post',
 			'show_date'      => 0,
@@ -205,7 +209,7 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 	 * @param array $new_instance New widget settings.
 	 * @param array $old_instance Old widget settings.
 	 */
-	function update( $new_instance, $old_instance ) {
+	 public function update( $new_instance, $old_instance ) {
 		$instance = wp_parse_args( $new_instance, $old_instance );
 
 		$instance['title'] = wp_strip_all_tags( $new_instance['title'] );
@@ -228,7 +232,7 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 	 *
 	 * @since 1.0.0
 	 */
-	function flush_widget_cache() {
+	 public function flush_widget_cache() {
 		$cache = (array) wp_cache_get( 'audiotheme_widget_recent_posts', 'widget' );
 
 		if ( isset( $cache[ $this->id ] ) ) {
@@ -243,7 +247,7 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 	 *
 	 * @since 1.0.0
 	 */
-	function flush_group_cache() {
+	 public function flush_group_cache() {
 		wp_cache_delete( 'audiotheme_widget_recent_posts', 'widget' );
 	}
 }

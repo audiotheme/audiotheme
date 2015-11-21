@@ -2,8 +2,11 @@
 /**
  * Plugin updater.
  *
- * @package AudioTheme
- * @since 1.0.0
+ * @package   AudioTheme\Administration
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.0.0
  */
 
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
@@ -15,8 +18,8 @@ require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
  * @see wp-admin/includes/update.php
  * @see wp-admin/includes/plugin-install.php
  *
- * @package AudioTheme
- * @since 1.0.0
+ * @package AudioTheme\Administration
+ * @since   1.0.0
  */
 class Audiotheme_Updater_Plugin extends Audiotheme_Updater {
 	/**

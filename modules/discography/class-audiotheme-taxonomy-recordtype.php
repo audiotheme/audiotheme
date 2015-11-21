@@ -2,15 +2,18 @@
 /**
  * Record type taxonomy registration and integration.
  *
- * @package AudioTheme\Discography
- * @since 1.9.0
+ * @package   AudioTheme\Discography
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 
 /**
  * Class for registering the record type taxonomy and integration.
  *
  * @package AudioTheme\Discography
- * @since 1.9.0
+ * @since   1.9.0
  */
 class AudioTheme_Taxonomy_RecordType {
 	/**

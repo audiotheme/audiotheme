@@ -2,8 +2,11 @@
 /**
  * The template to display list of videos.
  *
- * @package AudioTheme\Template
- * @since 1.2.0
+ * @package   AudioTheme\Template
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.2.0
  */
 
 get_header();

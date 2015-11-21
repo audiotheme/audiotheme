@@ -2,15 +2,18 @@
 /**
  * Assets provider.
  *
- * @package AudioTheme
- * @since 1.9.0
+ * @package   AudioTheme
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 
 /**
  * Assets provider class.
  *
  * @package AudioTheme
- * @since 1.9.0
+ * @since   1.9.0
  */
 class AudioTheme_Assets {
 	/**

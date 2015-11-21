@@ -2,15 +2,18 @@
 /**
  * Widgets provider.
  *
- * @package AudioTheme
- * @since 1.9.0
+ * @package   AudioTheme\Widgets
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.9.0
  */
 
 /**
  * Widgets provider class.
  *
- * @package AudioTheme
- * @since 1.9.0
+ * @package AudioTheme\Widgets
+ * @since   1.9.0
  */
 class AudioTheme_Widgets {
 	/**
