@@ -38,7 +38,7 @@ class AudioTheme_Screen_Settings extends AudioTheme_Screen {
 			__( 'Settings', 'audiotheme' ),
 			'manage_options',
 			'audiotheme-settings',
-			array( $this, 'render_screen' )
+			array( $this, 'display_screen' )
 		);
 	}
 
@@ -61,7 +61,7 @@ class AudioTheme_Screen_Settings extends AudioTheme_Screen {
 	 *
 	 * @since 1.9.0
 	 */
-	public function render_screen() {
+	public function display_screen() {
 		include( $this->plugin->get_path( 'admin/views/screen-settings.php' ) );
 	}
 }

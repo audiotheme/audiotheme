@@ -37,7 +37,7 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen {
 			__( 'AudioTheme', 'audiotheme' ),
 			'edit_posts',
 			'audiotheme',
-			array( $this, 'render_screen' ),
+			array( $this, 'display_screen' ),
 			audiotheme_encode_svg( 'admin/images/dashicons/audiotheme.svg' ),
 			511
 		);
@@ -48,7 +48,7 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen {
 			__( 'Features', 'audiotheme' ),
 			'edit_posts',
 			'audiotheme',
-			array( $this, 'render_screen' )
+			array( $this, 'display_screen' )
 		);
 
 		add_action( 'load-' . $page_hook, array( $this, 'load_screen' ) );
@@ -91,7 +91,7 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen {
 	 *
 	 * @since 1.9.0
 	 */
-	public function render_screen_header() {
+	public function display_screen_header() {
 		include( $this->plugin->get_path( 'admin/views/screen-dashboard-header.php' ) );
 	}
 
@@ -100,7 +100,7 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen {
 	 *
 	 * @since 1.9.0
 	 */
-	public function render_screen_footer() {
+	public function display_screen_footer() {
 		include( $this->plugin->get_path( 'admin/views/screen-dashboard-footer.php' ) );
 	}
 
@@ -109,7 +109,7 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen {
 	 *
 	 * @since 1.9.0
 	 */
-	public function render_screen() {
+	public function display_screen() {
 		$modules = $this->plugin->modules;
 		foreach ( $modules as $id => $module ) {
 			if ( ! $module->show_in_dashboard() ) {
@@ -117,9 +117,9 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen {
 			}
 		}
 
-		$this->render_screen_header();
+		$this->display_screen_header();
 		include( $this->plugin->get_path( 'admin/views/screen-dashboard-modules.php' ) );
-		$this->render_screen_footer();
+		$this->display_screen_footer();
 		include( $this->plugin->get_path( 'admin/views/templates-dashboard.php' ) );
 	}
 

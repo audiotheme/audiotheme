@@ -39,7 +39,7 @@ class AudioTheme_Screen_Network_Settings extends AudioTheme_Screen {
 			__( 'AudioTheme', 'audiotheme' ),
 			'manage_network_options',
 			'audiotheme-network-settings',
-			array( $this, 'render_screen' )
+			array( $this, 'display_screen' )
 		);
 	}
 
@@ -62,7 +62,7 @@ class AudioTheme_Screen_Network_Settings extends AudioTheme_Screen {
 	 *
 	 * @since 1.9.0
 	 */
-	public function render_screen() {
+	public function display_screen() {
 		include( $this->plugin->get_path( 'admin/views/screen-network-settings.php' ) );
 	}
 
