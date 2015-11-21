@@ -12,7 +12,7 @@
  * @package AudioTheme
  * @since 1.9.0
  */
-class AudioTheme_Provider_Widgets {
+class AudioTheme_Widgets {
 	/**
 	 * Plugin instance.
 	 *

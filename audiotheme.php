@@ -67,7 +67,7 @@ require( AUDIOTHEME_DIR . 'includes/class-audiotheme-plugin-audiotheme.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-module-collection.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-module.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-posttype.php' );
-require( AUDIOTHEME_DIR . 'includes/class-audiotheme-provider-widgets.php' );
+require( AUDIOTHEME_DIR . 'includes/class-audiotheme-widgets.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
 require( AUDIOTHEME_DIR . 'includes/general-template.php' );
@@ -129,7 +129,7 @@ audiotheme()
 	->set_slug( 'audiotheme' )
 	->set_url( plugin_dir_url( __FILE__ ) )
 	->register_hooks( new AudioTheme_i18n() )
-	->register_hooks( new AudioTheme_Provider_Widgets() )
+	->register_hooks( new AudioTheme_Widgets() )
 	->register_hooks( new AudioTheme_Assets() )
 	->register_hooks( new AudioTheme_Hooks_General() )
 	->modules
