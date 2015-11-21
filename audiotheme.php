@@ -94,18 +94,18 @@ require( AUDIOTHEME_DIR . 'modules/videos/class-audiotheme-module-videos.php' );
  */
 if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'admin/functions.php' );
-	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-admin-assets.php' );
-	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-hooks-admin.php' );
-	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen.php' );
-	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen-dashboard.php' );
-	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen-network-settings.php' );
-	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen-settings.php' );
-	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-setting-licensekey.php' );
-	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater.php' );
-	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-plugin.php' );
-	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-theme.php' );
-	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updates.php' );
-	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-upgrade.php' );
+	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-admin-assets.php' );
+	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-hooks-admin.php' );
+	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-screen.php' );
+	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-screen-dashboard.php' );
+	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-screen-network-settings.php' );
+	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-screen-settings.php' );
+	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-setting-licensekey.php' );
+	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-updater.php' );
+	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-updater-plugin.php' );
+	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-updater-theme.php' );
+	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-updates.php' );
+	require( AUDIOTHEME_DIR . 'admin/class-audiotheme-upgrade.php' );
 	require( AUDIOTHEME_DIR . 'includes/deprecated/deprecated-admin.php' );
 	require( AUDIOTHEME_DIR . 'includes/deprecated/settings-screens.php' );
 }
