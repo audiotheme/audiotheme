@@ -93,9 +93,9 @@ require( AUDIOTHEME_DIR . 'modules/videos/class-audiotheme-module-videos.php' );
  * Load admin functionality.
  */
 if ( is_admin() ) {
-	require( AUDIOTHEME_DIR . 'admin/admin.php' );
 	require( AUDIOTHEME_DIR . 'admin/functions.php' );
 	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-admin-assets.php' );
+	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-hooks-admin.php' );
 	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen.php' );
 	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen-dashboard.php' );
 	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-screen-network-settings.php' );
@@ -104,6 +104,8 @@ if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater.php' );
 	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-plugin.php' );
 	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updater-theme.php' );
+	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-updates.php' );
+	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-upgrade.php' );
 	require( AUDIOTHEME_DIR . 'includes/deprecated/deprecated-admin.php' );
 	require( AUDIOTHEME_DIR . 'includes/deprecated/settings-screens.php' );
 }
@@ -141,6 +143,21 @@ audiotheme()
 	->register( new AudioTheme_Module_Discography() )
 	->register( new AudioTheme_Module_Videos() );
 
+if ( is_admin() ) {
+	audiotheme()
+		->register_hooks( new AudioTheme_Upgrade() )
+		->register_hooks( new AudioTheme_Hooks_Admin() )
+		->register_hooks( new AudioTheme_Updates() )
+		->register_hooks( new AudioTheme_Admin_Assets() )
+		->register_hooks( new AudioTheme_Screen_Dashboard() )
+		->register_hooks( new AudioTheme_Screen_Settings() )
+		->register_hooks( new AudioTheme_Setting_LicenseKey( audiotheme()->license ) );
+}
+
+if ( is_network_admin() ) {
+	audiotheme()->register_hooks( new AudioTheme_Screen_Network_Settings() );
+}
+
 /**
  * Load the plugin.
  *
@@ -148,10 +165,6 @@ audiotheme()
  */
 function audiotheme_load() {
 	audiotheme()->load();
-
-	if ( is_admin() ) {
-		audiotheme_admin_setup();
-	}
 
 	// Template hooks.
 	add_action( 'audiotheme_template_include', 'audiotheme_template_setup' );

@@ -8,6 +8,227 @@
  */
 
 /**
+ * Set up the admin.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_admin_setup() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Check for AudioTheme framework and theme updates.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_update() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Display a notice to register if the license key is empty.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $notice The default notice.
+ * @return string
+ */
+function audiotheme_update_notice( $notice ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	$settings_page = is_network_admin() ? 'network/settings.php' : 'admin.php';
+
+	$notice  = sprintf( __( '<a href="%s">Register your copy of AudioTheme</a> to receive automatic updates and support. Need a license key?', 'audiotheme' ),
+		esc_url( add_query_arg( 'page', 'audiotheme-settings', admin_url( $settings_page ) ) )
+	);
+	$notice .= ' <a href="https://audiotheme.com/view/audiotheme/" target="_blank">' . __( 'Purchase one now.', 'audiotheme' ) . '</a>';
+
+	return $notice;
+}
+
+/**
+ * Disable SSL verification when interacting with audiotheme.com.
+ *
+ * Prevents automatic updates from failing when 'sslverify' is true.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param array  $r Request args.
+ * @param string $url URI resource.
+ * @return array Filtered request args.
+ */
+function audiotheme_update_request( $r, $url ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+	return $r;
+}
+
+/**
+ * Sort the admin menu.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_dashboard_sort_menu() {
+	global $menu;
+
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	if ( is_network_admin() || ! $menu ) {
+		return;
+	}
+
+	$menu = array_values( $menu ); // Re-key the array.
+
+	audiotheme_menu_move_item( 'audiotheme', 'separator1', 'before' );
+
+	$separator = array( '', 'read', 'separator-before-audiotheme', '', 'wp-menu-separator' );
+	audiotheme_menu_insert_item( $separator, 'audiotheme', 'before' );
+
+	// Reverse the order and always insert them after the main AudioTheme menu item.
+	audiotheme_menu_move_item( 'edit.php?post_type=audiotheme_video', 'audiotheme' );
+	audiotheme_menu_move_item( 'edit.php?post_type=audiotheme_record', 'audiotheme' );
+	audiotheme_menu_move_item( 'edit.php?post_type=audiotheme_gig', 'audiotheme' );
+
+	audiotheme_submenu_move_after( 'audiotheme-settings', 'audiotheme', 'audiotheme' );
+}
+
+/**
+ * Add current screen ID as CSS class to the body element.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $classes Body classes.
+ * @return string
+ */
+function audiotheme_admin_body_class( $classes ) {
+	global $post;
+
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	$classes .= ' screen-' . sanitize_html_class( get_current_screen()->id );
+
+	if ( 'audiotheme_archive' === get_current_screen()->id && $post_type = is_audiotheme_post_type_archive_id( $post->ID ) ) {
+		$classes .= ' ' . $post_type . '-archive';
+	}
+
+	return implode( ' ', array_unique( explode( ' ', $classes ) ) );
+}
+
+/**
+ * General custom post type columns.
+ *
+ * This hook is run for all custom columns, so the column name is prefixed to
+ * prevent potential conflicts.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $column_name Column identifier.
+ * @param int    $post_id Post ID.
+ */
+function audiotheme_display_custom_column( $column_name, $post_id ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	switch ( $column_name ) {
+		case 'audiotheme_image' :
+			printf( '<a href="%1$s">%2$s</a>',
+				esc_url( get_edit_post_link( $post_id ) ),
+				get_the_post_thumbnail( $post_id, array( 60, 60 ) )
+			);
+			break;
+	}
+}
+
+/**
+ * Save custom taxonomy terms when a post is saved.
+ *
+ * @since 1.7.0
+ * @deprecated 1.9.0
+ *
+ * @param int     $post_id Post ID.
+ * @param WP_Post $post Post object.
+ */
+function audiotheme_update_post_terms( $post_id, $post ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	$is_autosave = defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE;
+	$is_revision = wp_is_post_revision( $post_id );
+
+	// Bail if the data shouldn't be saved.
+	if ( $is_autosave || $is_revision || empty( $_POST['audiotheme_post_terms'] ) ) {
+		return;
+	}
+
+	foreach ( $_POST['audiotheme_post_terms'] as $taxonomy => $term_ids ) {
+		// Don't save if intention can't be verified.
+		if ( ! isset( $_POST[ $taxonomy . '_nonce' ] ) || ! wp_verify_nonce( $_POST[ $taxonomy . '_nonce' ], 'save-post-terms_' . $post_id ) ) {
+			continue;
+		}
+
+		$term_ids = array_map( 'absint', $term_ids );
+		wp_set_object_terms( $post_id, $term_ids, $taxonomy );
+	}
+}
+
+/**
+ * Upgrade routine.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_upgrade() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	$saved_version   = get_option( 'audiotheme_version', '0' );
+	$current_version = AUDIOTHEME_VERSION;
+
+	if ( version_compare( $saved_version, '1.7.0', '<' ) ) {
+		audiotheme_upgrade_170();
+	}
+
+	if ( '0' === $saved_version || version_compare( $saved_version, $current_version, '<' ) ) {
+		update_option( 'audiotheme_version', AUDIOTHEME_VERSION );
+	}
+}
+
+/**
+ * Upgrade routine for version 1.7.0.
+ *
+ * @since 1.7.0
+ * @deprecated 1.9.0
+ */
+function audiotheme_upgrade_170() {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	// Update record types.
+	$terms = get_terms( 'audiotheme_record_type', array( 'get' => 'all' ) );
+	if ( ! empty( $terms ) ) {
+		foreach ( $terms as $term ) {
+			$name = get_audiotheme_record_type_string( $term->slug );
+			$name = empty( $name ) ? ucwords( str_replace( array( 'record-type-', '-' ), array( '', ' ' ), $term->name ) ) : $name;
+			$slug = str_replace( 'record-type-', '', $term->slug );
+
+			$result = wp_update_term( $term->term_id, 'audiotheme_record_type', array(
+				'name' => $name,
+				'slug' => $slug,
+			) );
+
+			if ( is_wp_error( $result ) ) {
+				// Update the name only. We'll account for the 'record-type-' prefix.
+				wp_update_term( $term->term_id, 'audiotheme_record_type', array(
+					'name' => $name,
+				) );
+			}
+		}
+	}
+}
+
+/**
  * Set up the framework dashboard.
  *
  * @since 1.0.0
@@ -25,6 +246,31 @@ function audiotheme_dashboard_init() {
  */
 function audiotheme_admin_init() {
 	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Add AudioTheme themes to a site option so they can be checked for updates
+ * when in multsite mode.
+ *
+ * @since 1.3.0
+ * @deprecated 1.9.0
+ *
+ * @param string $theme Theme slug.
+ * @param array  $api_args Optional. Arguments to send to the remote API.
+ */
+function audiotheme_update_themes_list( $theme, $api_args = array() ) {
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	if ( ! is_multisite() ) {
+		return;
+	}
+
+	$themes = (array) get_site_option( 'audiotheme_themes' );
+
+	if ( ! array_key_exists( $theme, $themes ) || $themes[ $theme ] !== $api_args ) {
+		$themes[ $theme ] = wp_parse_args( $api_args, array( 'slug' => $theme ) );
+		update_site_option( 'audiotheme_themes', $themes );
+	}
 }
 
 /**
@@ -1753,4 +1999,108 @@ function audiotheme_archive_settings_meta_box( $post, $args = array() ) {
  */
 function audiotheme_archive_settings_meta_box_fields( $post, $post_type, $fields = array() ) {
 	_deprecated_function( __FUNCTION__, '1.9.0' );
+}
+
+/**
+ * Insert a menu item relative to an existing item.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param array  $item Menu item.
+ * @param string $relative_slug Slug of existing item.
+ * @param string $position Optional. Defaults to 'after'. (before|after).
+ */
+function audiotheme_menu_insert_item( $item, $relative_slug, $position = 'after' ) {
+	global $menu;
+
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	$relative_key = audiotheme_menu_get_item_key( $relative_slug );
+	$before = ( 'before' === $position ) ? $relative_key : $relative_key + 1;
+
+	array_splice( $menu, $before, 0, array( $item ) );
+}
+
+/**
+ * Move an existing menu item relative to another item.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $move_slug Slug of item to move.
+ * @param string $relative_slug Slug of existing item.
+ * @param string $position Optional. Defaults to 'after'. (before|after).
+ */
+function audiotheme_menu_move_item( $move_slug, $relative_slug, $position = 'after' ) {
+	global $menu;
+
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	$move_key = audiotheme_menu_get_item_key( $move_slug );
+	if ( $move_key ) {
+		$item = $menu[ $move_key ];
+		unset( $menu[ $move_key ] );
+
+		audiotheme_menu_insert_item( $item, $relative_slug, $position );
+	}
+}
+
+/**
+ * Retrieve the key of a menu item.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param array $menu_slug Menu item slug.
+ * @return int|bool Menu item key or false if it couldn't be found.
+ */
+function audiotheme_menu_get_item_key( $menu_slug ) {
+	global $menu;
+
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	foreach ( $menu as $key => $item ) {
+		if ( $menu_slug === $item[2] ) {
+			return $key;
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Move a submenu item after another submenu item under the same top-level item.
+ *
+ * @since 1.0.0
+ * @deprecated 1.9.0
+ *
+ * @param string $move_slug Slug of the item to move.
+ * @param string $after_slug Slug of the item to move after.
+ * @param string $menu_slug Top-level menu item.
+ */
+function audiotheme_submenu_move_after( $move_slug, $after_slug, $menu_slug ) {
+	global $submenu;
+
+	_deprecated_function( __FUNCTION__, '1.9.0' );
+
+	if ( isset( $submenu[ $menu_slug ] ) ) {
+		foreach ( $submenu[ $menu_slug ] as $key => $item ) {
+			if ( $item[2] === $move_slug ) {
+				$move_key = $key;
+			} elseif ( $item[2] === $after_slug ) {
+				$after_key = $key;
+			}
+		}
+
+		if ( isset( $move_key ) && isset( $after_key ) ) {
+			$move_item = $submenu[ $menu_slug ][ $move_key ];
+			unset( $submenu[ $menu_slug ][ $move_key ] );
+
+			// Need to account for the change in the array with the previous unset.
+			$new_position = ( $move_key > $after_key ) ? $after_key + 1 : $after_key;
+
+			array_splice( $submenu[ $menu_slug ], $new_position, 0, array( $move_item ) );
+		}
+	}
 }
