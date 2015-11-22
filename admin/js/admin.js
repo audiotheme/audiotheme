@@ -14,6 +14,45 @@ jQuery(function( $ ) {
 	});
 });
 
+jQuery(function( $ ) {
+	$( '.audiotheme-taxonomy-meta-box' ).each(function() {
+		var $this = $( this ),
+			$group = $this.find( '.audiotheme-add-term-group' ),
+			$button = $group.find( '.button' ).attr( 'disabled', false ),
+			$field = $group.find( '.audiotheme-add-term-field' ),
+			$list = $this.find( '.audiotheme-taxonomy-term-list ul' ),
+			$response = $( '.audiotheme-add-term-response' );
+
+		$field.on( 'keypress', function( e ) {
+			if ( 13 === e.which ) {
+				e.preventDefault();
+				$button.click();
+			}
+		});
+
+		// Add a record type.
+		$button.on( 'click', function() {
+			$group.addClass( 'is-loading' );
+			$button.attr( 'disabled', true );
+			$response.text( '' ).hide();
+
+			wp.ajax.post( 'audiotheme_ajax_insert_term', {
+				taxonomy: $this.data( 'taxonomy' ),
+				term: $field.val(),
+				nonce: $group.find( '.audiotheme-add-term-nonce' ).val()
+			}).done(function( response ) {
+				$field.val( '' );
+				$list.prepend( response.html );
+			}).fail(function( response ) {
+				$response.css( 'display', 'block' ).text( response.message );
+			}).always(function() {
+				$group.removeClass( 'is-loading' );
+				$button.attr( 'disabled', false );
+			});
+		});
+	});
+});
+
 /**
  * Repeater
  */

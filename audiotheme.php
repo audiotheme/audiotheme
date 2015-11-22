@@ -123,6 +123,7 @@ if ( is_admin() ) {
 		->register_hooks( new AudioTheme_UpgradeManager() )
 		->register_hooks( new AudioTheme_Hooks_Admin() )
 		->register_hooks( new AudioTheme_UpdateManager() )
+		->register_hooks( new AudioTheme_AJAX_Admin() )
 		->register_hooks( new AudioTheme_Assets_Admin() )
 		->register_hooks( new AudioTheme_Screen_Dashboard() )
 		->register_hooks( new AudioTheme_Screen_Settings() )

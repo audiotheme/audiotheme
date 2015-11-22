@@ -30,8 +30,6 @@
 		<input type="hidden" name="audiotheme_post_terms[<?php echo esc_attr( $taxonomy ); ?>][]" value="0">
 	</div>
 
-	<?php
-	/*
 	<div class="audiotheme-add-term-group hide-if-no-js">
 		<label for="add-<?php echo esc_attr( $taxonomy ); ?>" class="screen-reader-text"><?php echo esc_html( $taxonomy_object->labels->add_new_item ); ?></label>
 		<span class="audiotheme-input-group">
@@ -43,6 +41,4 @@
 		<input type="hidden" class="audiotheme-add-term-nonce" value="<?php echo wp_create_nonce( 'add-term_' . $taxonomy ); ?>">
 		<span class="audiotheme-add-term-response"></span>
 	</div>
-	*/
-	?>
 </div>
