@@ -157,11 +157,7 @@ module.exports = function( grunt ) {
 							'!package.json',
 							'!phpcs.xml',
 							'!phpunit.xml',
-							'!README.md',
-							'!includes/vendor/lessphp/**',
-							'!includes/vendor/wp-less/**',
-							'includes/vendor/lessphp/lessc.inc.php',
-							'includes/vendor/wp-less/wp-less.php'
+							'!README.md'
 						],
 						dest: '<%= pkg.name %>/'
 					}
@@ -210,8 +206,8 @@ module.exports = function( grunt ) {
 			build: {
 				options: {
 					replacements: [{
-						pattern: /Version: .+/,
-						replacement: 'Version: <%= version %>'
+						pattern: /(Version:[\s]+).+/,
+						replacement: '$1<%= version %>'
 					}, {
 						pattern: /@version .+/,
 						replacement: '@version <%= version %>'

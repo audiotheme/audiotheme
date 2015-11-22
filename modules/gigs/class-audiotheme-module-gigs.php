@@ -72,21 +72,8 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	 * @return $this
 	 */
 	public function load() {
-		// Load gigs functionality.
-		require( $this->plugin->get_path( 'modules/gigs/class-audiotheme-ajax-gigs.php' ) );
-		require( $this->plugin->get_path( 'modules/gigs/class-audiotheme-posttype-gig.php' ) );
-		require( $this->plugin->get_path( 'modules/gigs/class-audiotheme-posttype-venue.php' ) );
-		require( $this->plugin->get_path( 'modules/gigs/class-audiotheme-gig-query.php' ) );
 		require( $this->plugin->get_path( 'modules/gigs/gig-template.php' ) );
 		require( $this->plugin->get_path( 'modules/gigs/venue-template.php' ) );
-
-		// Load the admin interface and functionality for gigs and venues.
-		if ( is_admin() ) {
-			require( $this->plugin->get_path( 'modules/gigs/admin/class-audiotheme-screen-editgig.php' ) );
-			require( $this->plugin->get_path( 'modules/gigs/admin/class-audiotheme-screen-editvenue.php' ) );
-			require( $this->plugin->get_path( 'modules/gigs/admin/class-audiotheme-screen-managegigs.php' ) );
-			require( $this->plugin->get_path( 'modules/gigs/admin/class-audiotheme-screen-managevenues.php' ) );
-		}
 
 		return $this;
 	}

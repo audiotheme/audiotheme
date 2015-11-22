@@ -69,12 +69,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 	 * @return $this
 	 */
 	public function load() {
-		require( $this->plugin->get_path( 'modules/archives/class-audiotheme-posttype-archive.php' ) );
 		require( $this->plugin->get_path( 'modules/archives/post-template.php' ) );
-
-		if ( is_admin() ) {
-			require( $this->plugin->get_path( 'modules/archives/admin/class-audiotheme-screen-editarchive.php' ) );
-		}
 
 		return $this;
 	}

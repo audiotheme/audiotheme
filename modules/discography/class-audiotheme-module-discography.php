@@ -72,22 +72,7 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 	 * @return $this
 	 */
 	public function load() {
-		// Load discography functionality.
-		require( $this->plugin->get_path( 'modules/discography/class-audiotheme-ajax-discography.php' ) );
-		require( $this->plugin->get_path( 'modules/discography/class-audiotheme-posttype-playlist.php' ) );
-		require( $this->plugin->get_path( 'modules/discography/class-audiotheme-posttype-record.php' ) );
-		require( $this->plugin->get_path( 'modules/discography/class-audiotheme-posttype-track.php' ) );
-		require( $this->plugin->get_path( 'modules/discography/class-audiotheme-taxonomy-recordtype.php' ) );
 		require( $this->plugin->get_path( 'modules/discography/post-template.php' ) );
-
-		// Load the admin interface and functionality for discography.
-		if ( is_admin() ) {
-			require( $this->plugin->get_path( 'modules/discography/admin/class-audiotheme-screen-editrecord.php' ) );
-			require( $this->plugin->get_path( 'modules/discography/admin/class-audiotheme-screen-edittrack.php' ) );
-			require( $this->plugin->get_path( 'modules/discography/admin/class-audiotheme-screen-managerecords.php' ) );
-			require( $this->plugin->get_path( 'modules/discography/admin/class-audiotheme-screen-managetracks.php' ) );
-			require( $this->plugin->get_path( 'modules/discography/admin/class-audiotheme-screen-editrecordarchive.php' ) );
-		}
 
 		return $this;
 	}

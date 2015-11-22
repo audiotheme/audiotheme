@@ -72,18 +72,7 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 	 * @return $this
 	 */
 	public function load() {
-		// Load videos functionality.
-		require( $this->plugin->get_path( 'modules/videos/class-audiotheme-ajax-videos.php' ) );
-		require( $this->plugin->get_path( 'modules/videos/class-audiotheme-posttype-video.php' ) );
-		require( $this->plugin->get_path( 'modules/videos/class-audiotheme-taxonomy-videocategory.php' ) );
 		require( $this->plugin->get_path( 'modules/videos/post-template.php' ) );
-
-		// Load the admin interface and functionality for videos.
-		if ( is_admin() ) {
-			require( $this->plugin->get_path( 'modules/videos/admin/class-audiotheme-screen-editvideo.php' ) );
-			require( $this->plugin->get_path( 'modules/videos/admin/class-audiotheme-screen-managevideos.php' ) );
-			require( $this->plugin->get_path( 'modules/videos/admin/class-audiotheme-screen-editvideoarchive.php' ) );
-		}
 
 		return $this;
 	}

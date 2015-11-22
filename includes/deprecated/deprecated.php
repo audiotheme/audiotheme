@@ -1181,11 +1181,6 @@ function audiotheme_p2p_load_core() {
  */
 function audiotheme_less_setup() {
 	if ( $support = get_theme_support( 'audiotheme-less' ) ) {
-		if ( ! class_exists( 'lessc' ) ) {
-			require( AUDIOTHEME_DIR . 'includes/vendor/lessphp/lessc.inc.php' );
-		}
-
-		require( AUDIOTHEME_DIR . 'includes/vendor/wp-less/wp-less.php' );
 		wp_less::instance();
 
 		add_action( 'wp_loaded', 'audiotheme_less_register_vars', 20 );

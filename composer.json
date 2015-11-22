@@ -1,0 +1,66 @@
+{
+  "name": "audiotheme/audiotheme",
+  "description": "A platform for music-oriented websites, allowing for easy management of gigs, discography, videos and more.",
+  "keywords": [
+    "wordpress"
+  ],
+  "homepage": "https://github.com/audiotheme/audiotheme",
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "AudioTheme",
+      "email": "support@audiotheme.com",
+      "homepage": "https://audiotheme.com/"
+    }
+  ],
+  "type": "wordpress-plugin",
+  "support": {
+    "issues": "https://github.com/audiotheme/audiotheme/issues",
+    "source": "https://github.com/audiotheme/audiotheme"
+  },
+  "require": {
+    "icit/wp-less": "^0.3.0",
+    "leafo/lessphp": "^0.4.0",
+    "xrstf/composer-php52": "^1.0",
+    "composer/installers": "^1.0",
+    "scribu/lib-posts-to-posts": "dev-master"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*@stable"
+  },
+  "autoload": {
+    "classmap": [
+      "admin/",
+      "includes/",
+      "modules/"
+    ]
+  },
+  "autoload-dev": {
+    "classmap": [
+      "tests/"
+    ]
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "package": [
+      "composer install --no-dev --prefer-dist",
+      "composer dump-autoload --optimize"
+    ],
+    "post-install-cmd": [
+      "xrstf\\Composer52\\Generator::onPostInstallCmd"
+    ],
+    "post-update-cmd": [
+      "xrstf\\Composer52\\Generator::onPostInstallCmd"
+    ],
+    "post-autoload-dump": [
+      "xrstf\\Composer52\\Generator::onPostInstallCmd"
+    ],
+    "test": "phpunit"
+  },
+  "extra": {
+    "installer-paths": {
+      "vendor/icit/{$name}": [ "icit/wp-less" ]
+    }
+  }
+}
