@@ -50,7 +50,7 @@ class AudioTheme_UpdateManager {
 		// Don't send the remote request if a license key hasn't been entered.
 		if ( ! $this->plugin->license->has_key() ) {
 			add_filter( 'do_audiotheme_update_request',               '__return_false' );
-			add_filter( 'audiotheme_update_plugin_notice-audiotheme', 'audiotheme_update_notice' );
+			add_filter( 'audiotheme_update_plugin_notice-audiotheme', array( $this, 'display_audiotheme_update_notice' ) );
 		}
 	}
 
@@ -65,6 +65,26 @@ class AudioTheme_UpdateManager {
 		$this->update_audiotheme( $api_data );
 		$this->update_theme( $api_data );
 		$this->update_network_themes( $api_data );
+	}
+
+	/**
+	 * Display a notice to register if the license key is empty.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param string $notice The default notice.
+	 * @return string
+	 */
+	public function display_audiotheme_update_notice( $notice ) {
+		$settings_page = is_network_admin() ? 'network/settings.php' : 'admin.php';
+
+		$notice  = sprintf(
+			__( '<a href="%s">Register your copy of AudioTheme</a> to receive automatic updates and support. Need a license key?', 'audiotheme' ),
+			esc_url( add_query_arg( 'page', 'audiotheme-settings', admin_url( $settings_page ) ) )
+		);
+		$notice .= ' <a href="https://audiotheme.com/view/audiotheme/" target="_blank">' . __( 'Purchase one now.', 'audiotheme' ) . '</a>';
+
+		return $notice;
 	}
 
 	/**
