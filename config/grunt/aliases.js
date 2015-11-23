@@ -19,7 +19,8 @@ module.exports = function( grunt, options ) {
 			'uglify'
 		],
 		'check': [
-			'jshint'
+			'jshint',
+			'jscs'
 		],
 		'package': [
 			'check',

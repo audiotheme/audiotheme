@@ -2,8 +2,7 @@ module.exports = {
 	options: {
 		jshintrc: 'config/.jshintrc'
 	},
-	build: [
-		'Gruntfile.js',
+	check: [
 		'admin/js/*.js',
 		'!admin/js/*.bundle.js',
 		'!admin/js/*.min.js',
