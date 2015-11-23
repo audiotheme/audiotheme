@@ -17,12 +17,33 @@
  */
 class AudioTheme_PostType_Playlist {
 	/**
+	 * Plugin instance.
+	 *
+	 * @since 1.9.0
+	 * @var AudioTheme_Plugin_AudioTheme
+	 */
+	protected $plugin;
+
+	/**
 	 * Post type name.
 	 *
 	 * @since 1.9.0
 	 * @var string
 	 */
 	protected $post_type = 'cue_playlist';
+
+	/**
+	 * Set a reference to a plugin instance.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param AudioTheme_Plugin $plugin Main plugin instance.
+	 * @return $this
+	 */
+	public function set_plugin( AudioTheme_Plugin $plugin ) {
+		$this->plugin = $plugin;
+		return $this;
+	}
 
 	/**
 	 * Register hooks.
