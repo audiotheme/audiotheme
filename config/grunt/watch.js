@@ -1,6 +1,6 @@
 module.exports = {
 	js: {
-		files: [ '<%= jshint.build %>' ],
+		files: [ '<%= jshint.check %>' ],
 		tasks: [ 'jshint', 'uglify' ]
 	},
 	less: {
