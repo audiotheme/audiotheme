@@ -54,7 +54,7 @@ class AudioTheme_Setup {
 	 * @since 1.9.0
 	 */
 	public function maybe_flush_rewrite_rules() {
-		if ( is_network_admin() || 'no' !== get_option( 'audiotheme_flush_rewrite_rules' ) ) {
+		if ( is_network_admin() || 'no' === get_option( 'audiotheme_flush_rewrite_rules' ) ) {
 			return;
 		}
 
