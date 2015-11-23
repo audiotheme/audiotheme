@@ -92,7 +92,6 @@ new app.view.GigVenueMetaBox({
 	controller: wpScreen
 }).render();
 
-
 $( window ).on( 'keyup', function( e ) {
 	// Only handle key events when the venue list state is active.
 	if ( ! frame.$el.is( ':visible' ) || 'audiotheme-venues' !== frame.state().id ) {

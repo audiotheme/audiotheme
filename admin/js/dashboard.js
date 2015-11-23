@@ -11,7 +11,6 @@
 
 	_.extend( app, { controller: {}, model: {}, view: {} } );
 
-
 	/**
 	 * ========================================================================
 	 * CONTROLLERS
@@ -22,7 +21,7 @@
 		defaults: {
 			canActivateModules: settings.canActivateModules || false,
 			current: {},
-			modules: {},
+			modules: {}
 		},
 
 		next: function() {
@@ -41,7 +40,6 @@
 			this.set( 'current', modules.at( previousIndex ) );
 		}
 	});
-
 
 	/**
 	 * ========================================================================
@@ -84,7 +82,6 @@
 		model: app.model.Module
 	});
 
-
 	/**
 	 * ========================================================================
 	 * VIEWS
@@ -114,7 +111,7 @@
 		toggleStatus: function( e ) {
 			var view = this;
 
-		e.preventDefault();
+			e.preventDefault();
 
 			view.$el.attr( 'disabled', true );
 			view.$spinner.insertBefore( view.$el ).addClass( 'is-active' );
@@ -239,7 +236,7 @@
 		className: 'audiotheme-overlay-header',
 		template: wp.template( 'audiotheme-module-modal-header' ),
 
-		events : {
+		events: {
 			'click .js-next': 'next',
 			'click .js-previous': 'previous',
 			'keyup': 'routeKey'
@@ -286,7 +283,7 @@
 		className: 'audiotheme-overlay-content',
 		template: wp.template( 'audiotheme-module-modal-content' ),
 
-		events : {
+		events: {
 			'click .js-toggle-module': 'toggleModuleStatus'
 		},
 
@@ -306,7 +303,7 @@
 		className: 'audiotheme-overlay-footer',
 		template: wp.template( 'audiotheme-module-modal-footer' ),
 
-		events : {
+		events: {
 			'click .js-toggle-module': 'toggleModuleStatus'
 		},
 
@@ -336,7 +333,6 @@
 		}
 	});
 
-
 	/**
 	 * ========================================================================
 	 * SETUP
@@ -364,7 +360,7 @@
 			model.set({
 				description: $module.find( '.audiotheme-module-card-description' ).text(),
 				media: $module.find( '.audiotheme-module-card-overview-media' ).detach().prop( 'outerHTML' ),
-				overview: $module.find( '.audiotheme-module-card-overview' ).html(),
+				overview: $module.find( '.audiotheme-module-card-overview' ).html()
 			});
 
 			cardView = new app.view.ModuleCard({

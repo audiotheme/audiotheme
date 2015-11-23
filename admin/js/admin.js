@@ -3,7 +3,8 @@
 
 'use strict';
 
-var $ = require( 'jquery' ),
+var methods,
+	$ = require( 'jquery' ),
 	app = require( 'audiotheme' ),
 	wp = require( 'wp' );
 
@@ -58,13 +59,13 @@ $(function( $ ) {
 
 /**
  * Repeater
+ *
+ * .audiotheme-clear-on-add will clear the value of a form element in a newly added row.
+ * .audiotheme-hide-on-add will hide the element in a newly added row.
+ * .audiotheme-remove-on-add will remove an element from a newly added row.
+ * .audiotheme-show-on-add will show a hidden elment in a newly added row.
  */
-// .audiotheme-clear-on-add will clear the value of a form element in a newly added row.
-// .audiotheme-hide-on-add will hide the element in a newly added row.
-// .audiotheme-remove-on-add will remove an element from a newly added row.
-// .audiotheme-show-on-add will show a hidden elment in a newly added row.
-
-var methods = {
+methods = {
 	init: function( options ) {
 		var settings = {
 			items: null
@@ -181,7 +182,7 @@ var methods = {
 $.fn.audiothemeRepeater = function( method ) {
 	if ( methods[ method ] ) {
 		return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ) );
-	} else if ( typeof method === 'object' || ! method ) {
+	} else if ( 'object' === typeof method || ! method ) {
 		return methods.init.apply( this, arguments );
 	} else {
 		$.error( 'Method ' + method + ' does not exist on jQuery.audiothemeRepeater' );

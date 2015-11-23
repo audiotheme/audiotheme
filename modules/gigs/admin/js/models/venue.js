@@ -55,9 +55,7 @@ Venue = Backbone.Model.extend({
 				ID: this.id
 			});
 			return wp.ajax.send( options );
-		}
-
-		else if ( 'update' === method ) {
+		} else if ( 'update' === method ) {
 			// If we do not have the necessary nonce, fail immeditately.
 			if ( ! this.get( 'nonces' ) || ! this.get( 'nonces' ).update ) {
 				return Backbone.$.Deferred().rejectWith( this ).promise();

@@ -45,7 +45,7 @@
 		el: '#post',
 
 		events: {
-			'change #audiotheme-video-url': 'updateVideoUrl',
+			'change #audiotheme-video-url': 'updateVideoUrl'
 		},
 
 		initialize: function() {
@@ -60,7 +60,7 @@
 			this.views.add( '.audiotheme-edit-after-title', [
 				new app.view.Preview({
 					model: this.model
-				}),
+				})
 			]);
 
 			return this;
@@ -144,7 +144,7 @@
 		theVideo = new app.model.Video({
 			id: parseInt( $( '#post_ID' ).val(), 10 ),
 			title: $( '#title' ).val(),
-			videoUrl: $( '#audiotheme-video-url' ).val(),
+			videoUrl: $( '#audiotheme-video-url' ).val()
 		});
 
 		new app.view.PostForm({

@@ -33,7 +33,7 @@ module.exports = function( $city, $state, $country, $timezone ) {
 	}
 
 	$city.autocomplete({
-		source: function ( request, callback ) {
+		source: function( request, callback ) {
 			$.ajax({
 				url: 'https://gazetteer.audiotheme.com/api/v1/city/search',
 				data: {

@@ -46,6 +46,7 @@ Frame = wp.media.view.Frame.extend({
 		if ( ! this.state() && this.options.state ) {
 			this.setState( this.options.state );
 		}
+
 		// Call 'render' directly on the parent class.
 		return wp.media.view.Frame.prototype.render.apply( this, arguments );
 	},
@@ -71,7 +72,7 @@ Frame = wp.media.view.Frame.extend({
 });
 
 // Map some of the modal's methods to the frame.
-_.each(['open','close','attach','detach','escape'], function( method ) {
+_.each([ 'open', 'close', 'attach', 'detach', 'escape' ], function( method ) {
 	/**
 	 * @returns {wp.media.view.VenueFrame} Returns itself to allow chaining.
 	 */

@@ -25,13 +25,15 @@
 			license: $field.val(),
 			nonce: settings.nonce
 		}).done(function( data ) {
+			var $response;
+
 			data = data || {};
 
 			if ( 'status' in data && 'ok' === data.status ) {
 				$field.parent().find( '.audiotheme-response' ).remove();
 				$button.hide().after( settings.activatedResponse );
 			} else {
-				var $response = $field.parent().find( '.audiotheme-response').addClass( 'is-error' );
+				$response = $field.parent().find( '.audiotheme-response' ).addClass( 'is-error' );
 
 				if ( 'status' in data && data.status in settings.errorMessages ) {
 					$response.html( settings.errorMessages[ data.status ] );

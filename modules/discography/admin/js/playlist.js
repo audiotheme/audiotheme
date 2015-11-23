@@ -8,7 +8,6 @@ window.cue = window.cue || {};
 	var l10n = _audiothemePlaylistSettings.l10n,
 		frame;
 
-
 	/**
 	 * ========================================================================
 	 * MODELS
@@ -40,7 +39,6 @@ window.cue = window.cue || {};
 		});
 	};
 
-
 	/**
 	 * ========================================================================
 	 * CONTROLLERS
@@ -48,6 +46,8 @@ window.cue = window.cue || {};
 	 */
 
 	/**
+	 * Tracks controller.
+	 *
 	 * cue.controller.AudiothemePlaylistTracks
 	 */
 	cue.controller.AudiothemePlaylistTracks = wp.media.controller.State.extend({
@@ -67,7 +67,6 @@ window.cue = window.cue || {};
 		}
 	});
 
-
 	/**
 	 * ========================================================================
 	 * VIEWS
@@ -75,6 +74,8 @@ window.cue = window.cue || {};
 	 */
 
 	/**
+	 * Tracks content.
+	 *
 	 * cue.view.AudiothemePlaylistTracksContent
 	 */
 	cue.view.AudiothemePlaylistTracksContent = wp.media.View.extend({
@@ -89,8 +90,6 @@ window.cue = window.cue || {};
 		},
 
 		render: function() {
-			//var selection = this.controller.state().get( 'selection' ).pluck( 'id' );
-
 			if ( ! this.collection.length ) {
 				this.getRecords();
 			}
@@ -133,6 +132,8 @@ window.cue = window.cue || {};
 	});
 
 	/**
+	 * Tracks toolbar.
+	 *
 	 * cue.view.AudiothemePlaylistTracksToolbar
 	 */
 	cue.view.AudiothemePlaylistTracksToolbar = wp.media.view.Toolbar.extend({
@@ -172,6 +173,8 @@ window.cue = window.cue || {};
 	});
 
 	/**
+	 * Record view.
+	 *
 	 * cue.view.AudiothemePlaylistRecord
 	 */
 	cue.view.AudiothemePlaylistRecord = wp.media.View.extend({
@@ -217,7 +220,6 @@ window.cue = window.cue || {};
 		}
 	});
 
-
 	/**
 	 * ========================================================================
 	 * SETUP
@@ -237,7 +239,7 @@ window.cue = window.cue || {};
 		view = new cue.view.AudiothemePlaylistTracksContent({
 			controller: this,
 			mode: this.state(),
-			collection: this.state().get( 'records' ),
+			collection: this.state().get( 'records' )
 		});
 
 		this.content.set( view );

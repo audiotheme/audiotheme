@@ -19,13 +19,14 @@
 		$( '.audiotheme-settings-hidden-field' ).closest( 'tr' ).hide();
 
 		updateTabs = function() {
-			var hash = window.location.hash;
+			var href,
+				hash = window.location.hash;
 
 			$navTabs.removeClass( 'nav-tab-active' ).filter( '[href="' + hash + '"]' ).addClass( 'nav-tab-active' );
 			$tabPanels.removeClass( 'tab-panel-active' ).filter( hash ).addClass( 'tab-panel-active' ).trigger( 'showTabPanel' );
 
 			if ( $navTabs.filter( '.nav-tab-active' ).length < 1 ) {
-				var href = $navTabs.eq( 0 ).addClass( 'nav-tab-active' ).attr( 'href' );
+				href = $navTabs.eq( 0 ).addClass( 'nav-tab-active' ).attr( 'href' );
 				$tabPanels.removeClass( 'tab-panel-active' ).filter( href ).addClass( 'tab-panel-active' );
 			}
 

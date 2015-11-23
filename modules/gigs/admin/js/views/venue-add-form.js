@@ -36,7 +36,6 @@ VenueAddForm = wp.media.View.extend({
 			this.$el.find( '[data-setting="timezone_string"]' )
 		);
 
-		//this.$button = this.controller.toolbar.view.views.first( '.media-frame-toolbar' ).primary.get( 'save' ).$el;
 		return this;
 	},
 

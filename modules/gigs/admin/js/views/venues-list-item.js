@@ -31,7 +31,7 @@ VenuesListItem = wp.media.View.extend({
 
 	updateSelected: function() {
 		var state = this.controller.state( 'audiotheme-venues' ),
-			isSelected =state.get( 'selection' ).first() === this.model;
+			isSelected = state.get( 'selection' ).first() === this.model;
 
 		this.$el.toggleClass( 'is-selected', isSelected );
 
