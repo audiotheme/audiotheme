@@ -34,7 +34,7 @@ class AudioTheme_Screen_EditTrack extends AudioTheme_Screen {
 	 * @since 1.9.0
 	 */
 	public function load_screen() {
-		if ( 'audiotheme_record' !== get_current_screen()->id ) {
+		if ( 'audiotheme_track' !== get_current_screen()->id ) {
 			return;
 		}
 
