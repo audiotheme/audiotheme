@@ -9,3 +9,25 @@
 		clear: both;
 	}
 }
+
+.audiotheme-icon( @font-family ) {
+	cursor: pointer;
+	display: inline-block;
+	font-family: @font-family;
+	font-size: 16px;
+	-webkit-font-smoothing: antialiased;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1;
+	text-align: center;
+	text-decoration: inherit;
+	vertical-align: top;
+}
+
+.audiotheme-dashicon {
+	.audiotheme-icon( "dashicons" );
+}
+
+.audiotheme-genericon {
+	.audiotheme-icon( "Genericons" );
+}
