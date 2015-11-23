@@ -241,3 +241,41 @@ ul.ui-autocomplete {
 	font-size: 14px;
 	margin: 0;
 }
+
+
+/* Taxonomy Meta Box
+-------------------------------------------------------------- */
+
+.audiotheme-taxonomy-term-list {
+	background: #fdfdfd;
+	border: 1px solid #dfdfdf;
+	max-height: 200px;
+	min-height: 42px;
+	overflow: auto;
+	padding: 0 0.9em;
+}
+
+.audiotheme-add-term-group {
+	margin-top: 1em;
+}
+
+.audiotheme-add-term-response {
+	color: #c00;
+	display: none;
+	margin: 1em 0 0 0;
+}
+
+
+/* HiDPI Displays
+-------------------------------------------------------------- */
+
+@media print,
+  (-o-min-device-pixel-ratio: 5/4),
+  (-webkit-min-device-pixel-ratio: 1.25),
+  (min-resolution: 120dpi) {
+	.is-loading .audiotheme-button-load,
+	.is-loading .audiotheme-button-load[disabled="disabled"] {
+		background-image: url(../images/spinner-2x.gif) !important;
+		background-size: 20px 20px !important;
+	}
+}
