@@ -98,10 +98,8 @@ class AudioTheme_Assets_Admin {
 
 		$base_url = set_url_scheme( $this->plugin->get_url( 'admin/css' ) );
 
-		wp_register_style( 'audiotheme-admin',           $base_url . '/admin.min.css' );
-		wp_register_style( 'audiotheme-dashboard',       $base_url. '/dashboard.min.css' );
-		wp_register_style( 'jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css' );
-		wp_register_style( 'jquery-ui-theme-audiotheme', $base_url . '/jquery-ui-audiotheme.css', array( 'jquery-ui-theme-smoothness' ) );
+		wp_register_style( 'audiotheme-admin',     $base_url . '/admin.min.css' );
+		wp_register_style( 'audiotheme-dashboard', $base_url. '/dashboard.min.css' );
 	}
 
 	/**

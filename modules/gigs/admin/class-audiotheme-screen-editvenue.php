@@ -76,7 +76,6 @@ class AudioTheme_Screen_EditVenue extends AudioTheme_Screen {
 	 */
 	public function enqueue_assets() {
 		wp_enqueue_script( 'audiotheme-venue-edit' );
-		wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
 	}
 
 	/**

@@ -68,9 +68,7 @@ class AudioTheme_Screen_EditGig extends AudioTheme_Screen {
 	 */
 	public function enqueue_assets() {
 		wp_enqueue_script( 'audiotheme-gig-edit' );
-		wp_enqueue_style( 'audiotheme-admin' );
 		wp_enqueue_style( 'audiotheme-venue-manager' );
-		wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
 	}
 
 	/**
