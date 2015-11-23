@@ -1,4 +1,9 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var VenuesController,
+	Backbone = require( 'backbone' ),
 	l10n = require( 'audiotheme' ).l10n,
 	Venues = require( '../models/venues' ),
 	VenuesQuery = require( '../models/venues-query' ),

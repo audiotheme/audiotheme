@@ -1,3 +1,7 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var Frame,
 	_ = require( 'underscore' ),
 	wp = require( 'wp' );

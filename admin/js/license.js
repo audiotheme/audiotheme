@@ -1,4 +1,4 @@
-/*global _audiothemeLicenseSettings:false, wp:false */
+/*global _audiothemeLicenseSettings:false, jQuery:false, wp:false */
 
 (function( window, $, wp, undefined ) {
 	'use strict';

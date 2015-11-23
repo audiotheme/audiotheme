@@ -1,3 +1,7 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var VenuesContent,
 	VenuePanel = require( '../venue-panel' ),
 	VenuesList = require( '../venues-list' ),

@@ -1,4 +1,9 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var GigVenueDetails,
+	_ = require( 'underscore' ),
 	templateHelpers = require( '../utils/template-helpers' ),
 	wp = require( 'wp' );
 

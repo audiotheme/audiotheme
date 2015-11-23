@@ -1,3 +1,7 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var VenueFrame,
 	_ = require( 'underscore' ),
 	Frame = require( '../frame' ),

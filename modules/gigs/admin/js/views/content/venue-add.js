@@ -1,3 +1,7 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var VenueAddContent,
 	VenueAddForm = require( '../venue-add-form' ),
 	wp = require( 'wp' );

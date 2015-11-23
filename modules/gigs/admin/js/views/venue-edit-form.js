@@ -1,3 +1,7 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var VenueEditForm,
 	$ = require( 'jquery' ),
 	wp = require( 'wp' ),

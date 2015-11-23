@@ -1,3 +1,7 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var VenueAddToolbar,
 	_ = require( 'underscore' ),
 	Venue = require( '../../models/venue' ),

@@ -1,3 +1,7 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var VenueAddController,
 	l10n = require( 'audiotheme' ).l10n,
 	Venue = require( '../models/venue' ),

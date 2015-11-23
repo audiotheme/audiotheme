@@ -1,4 +1,9 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var VenueSelectToolbar,
+	_ = require( 'underscore' ),
 	wp = require( 'wp' );
 
 VenueSelectToolbar = wp.media.view.Toolbar.extend({

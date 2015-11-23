@@ -1,3 +1,7 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var VenuesList,
 	_ = require( 'underscore' ),
 	VenuesListItem = require( './venues-list-item' ),

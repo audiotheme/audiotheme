@@ -1,3 +1,7 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var VenuesQuery,
 	_ = require( 'underscore' ),
 	Backbone = require( 'backbone' ),

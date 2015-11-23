@@ -1,8 +1,10 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var Venues,
-	_ = require( 'underscore' ),
 	Backbone = require( 'backbone' ),
-	Venue = require( './venue' ),
-	wp = require( 'wp' );
+	Venue = require( './venue' );
 
 Venues = Backbone.Collection.extend({
 	model: Venue,

@@ -1,3 +1,7 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var VenuesListItem,
 	wp = require( 'wp' );
 

@@ -1,3 +1,7 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var VenuePanel,
 	VenueDetails = require( './venue-details' ),
 	VenueEditForm = require( './venue-edit-form' ),

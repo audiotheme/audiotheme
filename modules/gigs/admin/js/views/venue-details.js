@@ -1,3 +1,7 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var VenueDetails,
 	_ = require( 'underscore' ),
 	templateHelpers = require( '../utils/template-helpers' ),

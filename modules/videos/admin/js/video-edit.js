@@ -1,4 +1,5 @@
-/*global _:false, _audiothemeVideoThumbnailPing:true, Backbone:false, wp:false, WPSetThumbnailHTML:false, WPSetThumbnailID:false */
+/*jshint newcap:false */
+/*global _:false, _audiothemeVideoThumbnailPing:true, Backbone:false, jQuery:false, wp:false, WPSetThumbnailHTML:false, WPSetThumbnailID:false */
 
 (function( window, $, _, Backbone, wp, undefined ) {
 	'use strict';

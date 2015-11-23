@@ -1,3 +1,7 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var GigVenueMetaBox,
 	GigVenueDetails = require( '../gig-venue-details' ),
 	GigVenueSelectButton = require( '../button/gig-venue-select' ),

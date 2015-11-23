@@ -1,3 +1,7 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var VenuePanelTitle,
 	l10n = require( 'audiotheme' ).l10n,
 	wp = require( 'wp' );

@@ -1,4 +1,4 @@
-/*global _:false, _audiothemeDashboardSettings:false, Backbone:false, wp:false */
+/*global _:false, _audiothemeDashboardSettings:false, Backbone:false, jQuery:false, wp:false */
 
 (function( window, $, _, Backbone, wp, undefined ) {
 	'use strict';

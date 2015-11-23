@@ -1,4 +1,4 @@
-/*global _:false, _audiothemePlaylistSettings:false, Backbone:false, cue:false, wp:false */
+/*global _:false, _audiothemePlaylistSettings:false, Backbone:false, cue:false, jQuery:false, wp:false */
 
 window.cue = window.cue || {};
 
@@ -234,7 +234,7 @@ window.cue = window.cue || {};
 
 	// Set the content view.
 	frame.on( 'content:render:audiotheme-playlist-tracks', _.bind( function( view ) {
-		var view = new cue.view.AudiothemePlaylistTracksContent({
+		view = new cue.view.AudiothemePlaylistTracksContent({
 			controller: this,
 			mode: this.state(),
 			collection: this.state().get( 'records' ),

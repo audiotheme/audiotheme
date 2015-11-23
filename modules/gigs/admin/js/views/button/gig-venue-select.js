@@ -1,3 +1,7 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var GigVenueSelectButton,
 	l10n = require( 'audiotheme' ).l10n,
 	wp = require( 'wp' );

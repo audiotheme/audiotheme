@@ -1,3 +1,8 @@
+/*jshint browserify:true */
+/*global isRtl:false */
+
+'use strict';
+
 var settings,
 	$ = require( 'jquery' ),
 	app = require( 'audiotheme' ),

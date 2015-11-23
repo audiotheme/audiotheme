@@ -1,3 +1,7 @@
+/*jshint browserify:true */
+
+'use strict';
+
 var VenuesSearch,
 	wp = require( 'wp' );
 
