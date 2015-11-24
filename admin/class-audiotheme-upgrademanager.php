@@ -122,5 +122,17 @@ class AudioTheme_UpgradeManager {
 				update_post_meta( $post_id, 'archive_for_post_type', $post_type );
 			}
 		}
+
+		// Add autoloaded options to prevent extra queries on every request.
+		$options = array(
+			'audiotheme_inactive_modules' => array(),
+			'audiotheme_license_key'      => '',
+		);
+
+		foreach ( $options as $name => $value ) {
+			if ( ! get_option( $name ) ) {
+				update_option( $name, $value );
+			}
+		}
 	}
 }
