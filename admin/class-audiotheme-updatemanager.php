@@ -136,10 +136,12 @@ class AudioTheme_UpdateManager {
 	 * @param array $api_data Extra data to send to the update API.
 	 */
 	protected function update_network_themes( $api_data = array() ) {
-		$themes = get_site_option( 'audiotheme_themes' );
+		if ( ! is_network_admin() ) {
+			return;
+		}
 
-		// Check for updates to all AudioTheme themes in the network admin.
-		if ( ! is_network_admin() || empty( $themes ) ) {
+		$themes = get_site_option( 'audiotheme_themes' );
+		if ( empty( $themes ) ) {
 			return;
 		}
 
