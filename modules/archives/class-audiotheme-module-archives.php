@@ -84,6 +84,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 
 		if ( is_admin() ) {
 			// High priority makes archive links appear last in submenus.
+			add_action( 'init',                        array( $this, 'prime_archives_cache' ) );
 			add_action( 'admin_menu',                  array( $this, 'admin_menu' ), 100 );
 			add_action( 'parent_file',                 array( $this, 'parent_file' ) );
 			add_filter( 'get_audiotheme_archive_meta', array( $this, 'sanitize_columns_setting' ), 10, 5 );
@@ -373,6 +374,24 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 		}
 
 		return $parent_file;
+	}
+
+	/**
+	 * Prime the archive post cache.
+	 *
+	 * Queries all the archives at once instead of running separate queries for
+	 * each archive.
+	 *
+	 * @since 1.9.0
+	 */
+	public function prime_archives_cache() {
+		new WP_Query( array(
+			'post_type'              => 'audiotheme_archive',
+			'posts_per_page'         => 10,
+			'no_found_rows'          => true,
+			'update_post_meta_cache' => false,
+			'update_post_term_cache' => false,
+		) );
 	}
 
 	/**
