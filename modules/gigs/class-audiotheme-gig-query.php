@@ -50,7 +50,5 @@ class AudioTheme_Gig_Query extends WP_Query {
 		$args['post_type'] = 'audiotheme_gig';
 
 		parent::__construct( $args );
-
-		p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $this );
 	}
 }

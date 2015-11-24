@@ -129,25 +129,6 @@ class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen {
 			$wp_query->set( 'meta_key', '_audiotheme_gig_datetime' );
 			$wp_query->set( 'orderby', 'meta_value' );
 		}
-
-		add_filter( 'the_posts', array( $this, 'query_connected' ), 10, 2 );
-	}
-
-	/**
-	 * Add connected posts to the query.
-	 *
-	 * @since 1.9.0
-	 *
-	 * @param array    $posts Array of posts.
-	 * @param WP_Query $wp_query Query passed by reference.
-	 * @return array
-	 */
-	public function query_connected( $posts, $wp_query ) {
-		if ( $wp_query->is_main_query() ) {
-			p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $wp_query );
-		}
-
-		return $posts;
 	}
 
 	/**

@@ -93,6 +93,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 		add_filter( 'generate_rewrite_rules', array( $this, 'generate_rewrite_rules' ) );
 		add_action( 'template_redirect',      array( $this, 'template_redirect' ) );
 		add_action( 'template_include',       array( $this, 'template_include' ) );
+		add_filter( 'the_posts',              array( $this, 'query_connected_venues' ), 10, 2 );
 
 		if ( is_admin() ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_assets' ), 1 );
@@ -194,32 +195,29 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	public function template_redirect() {
 		global $wp_query;
 
-		if ( is_post_type_archive( 'audiotheme_gig' ) ) {
-			p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $wp_query );
+		if ( ! is_feed() || 'audiotheme_gig' !== $wp_query->get( 'post_type' ) ) {
+			return;
 		}
+
+		require( $this->plugin->get_path( 'modules/gigs/feed.php' ) );
 
 		$type = $wp_query->get( 'feed' );
-		if ( is_feed() && 'audiotheme_gig' === $wp_query->get( 'post_type' ) ) {
-			p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $wp_query );
 
-			require( $this->plugin->get_path( 'modules/gigs/feed.php' ) );
-
-			switch ( $type ) {
-				case 'feed':
-					load_template( $this->plugin->get_path( 'modules/gigs/feed-rss2.php' ) );
-					break;
-				case 'ical':
-					load_template( $this->plugin->get_path( 'modules/gigs/feed-ical.php' ) );
-					break;
-				case 'json':
-					load_template( $this->plugin->get_path( 'modules/gigs/feed-json.php' ) );
-					break;
-				default:
-					$message = sprintf( esc_html__( 'ERROR: %s is not a valid feed template.', 'audiotheme' ), $type );
-					wp_die( esc_html( $message ), '', array( 'response' => 404 ) );
-			}
-			exit;
+		switch ( $type ) {
+			case 'feed':
+				load_template( $this->plugin->get_path( 'modules/gigs/feed-rss2.php' ) );
+				break;
+			case 'ical':
+				load_template( $this->plugin->get_path( 'modules/gigs/feed-ical.php' ) );
+				break;
+			case 'json':
+				load_template( $this->plugin->get_path( 'modules/gigs/feed-json.php' ) );
+				break;
+			default:
+				$message = sprintf( esc_html__( 'ERROR: %s is not a valid feed template.', 'audiotheme' ), $type );
+				wp_die( esc_html( $message ), '', array( 'response' => 404 ) );
 		}
+		exit;
 	}
 
 	/**
@@ -242,6 +240,23 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 		}
 
 		return $template;
+	}
+
+	/**
+	 * Add connected venues to a gig query.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param array    $posts Array of posts.
+	 * @param WP_Query $wp_query Query passed by reference.
+	 * @return array
+	 */
+	public function query_connected_venues( $posts, $wp_query ) {
+		if ( ! empty( $posts ) && 'audiotheme_gig' === get_post_type( $posts[0] ) ) {
+			p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $wp_query );
+		}
+
+		return $posts;
 	}
 
 	/**
