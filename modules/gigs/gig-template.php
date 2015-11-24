@@ -39,6 +39,8 @@ function get_audiotheme_gig( $post = null ) {
 	$post->venue = null;
 	if ( isset( $post->connected[0] ) && isset( $post->connected[0]->ID ) ) {
 		$post->venue = get_audiotheme_venue( $post->connected[0]->ID );
+	} elseif ( ! empty( $post->_audiotheme_venue_id ) ) {
+		$post->venue = get_audiotheme_venue( $post->_audiotheme_venue_id );
 	} elseif ( ! isset( $post->connected ) ) {
 		$venues = get_posts( array(
 			'post_type'        => 'audiotheme_venue',
