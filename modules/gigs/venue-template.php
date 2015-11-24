@@ -34,50 +34,42 @@ function audiotheme_gig_has_venue( $post = null ) {
  */
 function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
 	$gig = get_audiotheme_gig( $gig_id ); // Retrieve current venue info.
-	$venue_name = trim( stripslashes( $venue_name ) );
+	$venue_name = trim( wp_unslash( $venue_name ) );
 
 	if ( empty( $venue_name ) ) {
-		p2p_delete_connections( 'audiotheme_venue_to_gig', array( 'to' => $gig_id ) );
+		set_audiotheme_gig_venue_id( $gig_id, 0 );
 	} elseif ( ! isset( $gig->venue->name ) || $venue_name !== $gig->venue->name ) {
-		p2p_delete_connections( 'audiotheme_venue_to_gig', array( 'to' => $gig_id ) );
-
 		$new_venue = get_audiotheme_venue_by( 'name', $venue_name );
+
 		if ( ! $new_venue ) {
 			$new_venue = array(
 				'name'      => $venue_name,
 				'gig_count' => 1,
 			);
 
-			// Timezone is important, so retrieve it from the global $_POST array if it exists.
+			// Time zone is important, so retrieve it from the global $_POST array if it exists.
 			if ( ! empty( $_POST['audiotheme_venue']['timezone_string'] ) ) {
 				$new_venue['timezone_string'] = $_POST['audiotheme_venue']['timezone_string'];
 			}
 
 			$venue_id = save_audiotheme_venue( $new_venue );
 			if ( $venue_id ) {
-				p2p_create_connection( 'audiotheme_venue_to_gig', array(
-					'from' => $venue_id,
-					'to'   => $gig_id,
-				) );
+				set_audiotheme_gig_venue_id( $gig_id, $venue_id );
+			} else {
+				set_audiotheme_gig_venue_id( $gig_id, 0 );
 			}
 		} else {
 			$venue_id = $new_venue->ID;
-
-			p2p_create_connection( 'audiotheme_venue_to_gig', array(
-				'from' => $new_venue->ID,
-				'to'   => $gig_id,
-			) );
-
-			update_audiotheme_venue_gig_count( $new_venue->ID );
+			set_audiotheme_gig_venue_id( $gig_id, $venue_id );
 		}
 	}
 
-	if ( isset( $gig->venue->ID ) ) {
-		$venue_id = $gig->venue->ID;
-		update_audiotheme_venue_gig_count( $venue_id );
+	$venue = false;
+	if ( ! empty( $venue_id ) ) {
+		$venue = get_audiotheme_venue( $venue_id );
 	}
 
-	return empty( $venue_id ) ? false : get_audiotheme_venue( $venue_id );
+	return $venue;
 }
 
 /**
@@ -90,13 +82,35 @@ function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
  * @return object Venue object.
  */
 function set_audiotheme_gig_venue_id( $gig_id, $venue_id ) {
+	global $wpdb;
+
 	$gig_id   = absint( $gig_id );
 	$venue_id = absint( $venue_id );
 
-	p2p_delete_connections(
-		'audiotheme_venue_to_gig',
-		array( 'to' => $gig_id )
-	);
+	// Query for existing connections.
+	$old_venue_id = $wpdb->get_var( $wpdb->prepare(
+		"SELECT p2p_from
+		FROM $wpdb->p2p
+		WHERE p2p_type = 'audiotheme_venue_to_gig' AND p2p_to = %d",
+		$gig_id
+	) );
+
+	// Remove the existing connection.
+	if ( $venue_id !== absint( $old_venue_id ) ) {
+		p2p_delete_connections(
+			'audiotheme_venue_to_gig',
+			array( 'to' => $gig_id )
+		);
+
+		update_audiotheme_venue_gig_count( $old_venue_id );
+	}
+
+	// Bail if the there isn't a new venue ID.
+	if ( empty( $venue_id ) ) {
+		delete_post_meta( $gig_id, '_audiotheme_venue_id' );
+		delete_post_meta( $gig_id, '_audiotheme_venue_guid' );
+		return null;
+	}
 
 	p2p_create_connection(
 		'audiotheme_venue_to_gig',
@@ -108,7 +122,12 @@ function set_audiotheme_gig_venue_id( $gig_id, $venue_id ) {
 
 	update_audiotheme_venue_gig_count( $venue_id );
 
-	return get_audiotheme_venue( $venue_id );
+	$venue = get_audiotheme_venue( $venue_id );
+
+	update_post_meta( $gig_id, '_audiotheme_venue_id', $venue_id );
+	update_post_meta( $gig_id, '_audiotheme_venue_guid', $venue->guid );
+
+	return $venue;
 }
 
 /**
