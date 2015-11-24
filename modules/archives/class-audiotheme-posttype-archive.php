@@ -49,7 +49,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType {
 	 * @since 1.9.0
 	 */
 	public function register_hooks() {
-		add_action( 'init',                    array( $this, 'register_post_type' ) );
+		add_action( 'init',                    array( $this, 'register_post_type' ), 5 );
 		add_action( 'pre_get_posts',           array( $this, 'pre_get_posts' ) );
 		add_filter( 'post_type_link',          array( $this, 'post_type_link' ), 10, 3 );
 		add_filter( 'post_type_archive_link',  array( $this, 'post_type_archive_link' ), 10, 2 );

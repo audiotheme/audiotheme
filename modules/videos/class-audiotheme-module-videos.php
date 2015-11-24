@@ -87,7 +87,7 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 		$this->plugin->register_hooks( new AudioTheme_PostType_Video( $this ) );
 		$this->plugin->register_hooks( new AudioTheme_AJAX_Videos() );
 
-		add_action( 'init',             array( $this, 'register_archive' ) );
+		add_action( 'init',             array( $this, 'register_archive' ), 20 );
 		add_action( 'template_include', array( $this, 'template_include' ) );
 
 		if ( is_admin() ) {

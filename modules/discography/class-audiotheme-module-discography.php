@@ -89,7 +89,7 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 		$this->plugin->register_hooks( new AudioTheme_PostType_Track( $this ) );
 		$this->plugin->register_hooks( new AudioTheme_AJAX_Discography() );
 
-		add_action( 'init',                   array( $this, 'register_archive' ) );
+		add_action( 'init',                   array( $this, 'register_archive' ), 20 );
 		add_action( 'template_include',       array( $this, 'template_include' ) );
 		add_filter( 'generate_rewrite_rules', array( $this, 'generate_rewrite_rules' ) );
 
@@ -122,7 +122,7 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 		global $wp_rewrite;
 
 		$front = '';
-		$base  = get_option( 'audiotheme_record_rewrite_base', 'videos' );
+		$base  = get_option( 'audiotheme_record_rewrite_base', 'music' );
 
 		if ( $wp_rewrite->using_index_permalinks() ) {
 			$front = $wp_rewrite->index . '/';

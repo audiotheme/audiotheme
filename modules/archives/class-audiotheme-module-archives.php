@@ -27,6 +27,15 @@
  */
 class AudioTheme_Module_Archives extends AudioTheme_Module {
 	/**
+	 * Map of post types and archive post IDs.
+	 *
+	 * @since 1.9.0
+	 * @var array An associative array with post types as the keys and archive
+	 *            post IDs as the values.
+	 */
+	protected $archive_map = array();
+
+	/**
 	 * Cached archive settings.
 	 *
 	 * @since 1.9.0
@@ -109,10 +118,9 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 	 * @return int Archive post ID.
 	 */
 	public function add_post_type_archive( $post_type, $args = array() ) {
+		$this->archives[ $post_type ] = $args;
 		$post_id = $this->maybe_insert_archive_post( $post_type );
-
-		// Cache the archive args.
-		$this->archives[ $post_type ] = array_merge( array( 'post_id' => $post_id ), $args );
+		$this->archive_map[ $post_type ] = $post_id;
 
 		return $post_id;
 	}
@@ -128,11 +136,6 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 	public function get_archive_id( $post_type = null ) {
 		$post_type = $post_type ? $post_type : $this->get_post_type();
 		$archives  = $this->get_archive_ids();
-
-		if ( empty( $post_type ) ) {
-			$post_type = get_query_var( 'post_type' );
-		}
-
 		return empty( $archives[ $post_type ] ) ? null : $archives[ $post_type ];
 	}
 
@@ -144,7 +147,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 	 * @return array Associative array with post types as keys and post IDs as the values.
 	 */
 	public function get_archive_ids() {
-		return get_option( 'audiotheme_archives', array() );
+		return $this->archive_map;
 	}
 
 	/**
@@ -389,7 +392,6 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 			'post_type'              => 'audiotheme_archive',
 			'posts_per_page'         => 10,
 			'no_found_rows'          => true,
-			'update_post_meta_cache' => false,
 			'update_post_term_cache' => false,
 		) );
 	}
@@ -484,23 +486,30 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 	 * @return int Post ID.
 	 */
 	protected function maybe_insert_archive_post( $post_type ) {
-		$archive_id = $this->get_archive_id( $post_type );
+		$post_id = null;
 
-		// Validate the post ID in the admin panel, otherwise just return it.
-		if ( $archive_id && ( ! is_admin() || get_post( $archive_id ) ) ) {
-			return $archive_id;
+		// Check the option cache first.
+		// Prevents a database lookup for quick checks.
+		$cache = get_option( 'audiotheme_archives', array() );
+		if ( isset( $cache[ $post_type ] ) ) {
+			$post_id = $cache[ $post_type ];
 		}
 
-		// Search for an inactive archive before creating a new post.
-		$inactive_posts = get_posts( array(
+		// Validate the post ID in the admin panel, otherwise just return it.
+		if ( $post_id && ( ! is_admin() || $this->is_valid_archive( $post_id, $post_type ) ) ) {
+			return $post_id;
+		}
+
+		// Search for an existing post.
+		$posts = get_posts( array(
 			'post_type'  => 'audiotheme_archive',
 			'meta_key'   => 'archive_for_post_type',
 			'meta_value' => $post_type,
 			'fields'     => 'ids',
 		) );
 
-		if ( ! empty( $inactive_posts ) ) {
-			$post_id = reset( $inactive_posts );
+		if ( ! empty( $posts ) ) {
+			$post_id = reset( $posts );
 		}
 
 		// Search the inactive option before creating a new page.
@@ -508,7 +517,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 		// upgrading to 1.9.0. This is here for legacy purposes.
 		$inactive = get_option( 'audiotheme_archives_inactive' );
 		if ( $inactive && isset( $inactive[ $post_type ] ) && get_post( $inactive[ $post_type ] ) ) {
-			$post_id = $inactive[ $post_type ];
+			#$post_id = $inactive[ $post_type ];
 		}
 
 		// Otherwise, create a new archive post.
@@ -524,14 +533,27 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 		update_post_meta( $post_id, 'archive_for_post_type', $post_type );
 
 		// Update the option cache.
-		$archives = $this->get_archive_ids();
-		$archives[ $post_type ] = $post_id;
-		update_option( 'audiotheme_archives', $archives );
+		$cache[ $post_type ] = $post_id;
+		update_option( 'audiotheme_archives', $cache );
 
 		// Update the post type rewrite base.
 		$this->update_post_type_rewrite_base( $post_type, $post_id );
 		update_option( 'audiotheme_flush_rewrite_rules', 'yes' );
 
 		return $post_id;
+	}
+
+	/**
+	 * Whether an archive post is valid for the given post type.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param  $post_id   $post_id   Archive post ID.
+	 * @param  $post_type $post_type Archive post type.
+	 * @return boolean
+	 */
+	protected function is_valid_archive( $post_id, $post_type ) {
+		$post = get_post( $post_id );
+		return $post && 'audiotheme_archive' === get_post_type( $post ) && $post->archive_for_post_type === $post_type;
 	}
 }
