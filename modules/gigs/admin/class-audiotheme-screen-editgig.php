@@ -146,14 +146,18 @@ class AudioTheme_Screen_EditGig extends AudioTheme_Screen {
 	 * @param WP_Post $post Gig post object.
 	 */
 	public function on_gig_save( $post_id, $post ) {
+		static $is_active = false; // Prevent recursion.
+
 		$is_autosave    = defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE;
 		$is_revision    = wp_is_post_revision( $post_id );
 		$is_valid_nonce = isset( $_POST['audiotheme_save_gig_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_save_gig_nonce'], 'save-gig_' . $post_id );
 
 		// Bail if the data shouldn't be saved or intention can't be verified.
-		if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
+		if ( $is_active || $is_autosave || $is_revision || ! $is_valid_nonce ) {
 			return;
 		}
+
+		$is_active = true;
 
 		$post_type_object = get_post_type_object( 'audiotheme_gig' );
 		if ( isset( $_POST['gig_date'] ) && isset( $_POST['gig_time'] ) && current_user_can( $post_type_object->cap->edit_post, $post_id ) ) {
@@ -165,13 +169,15 @@ class AudioTheme_Screen_EditGig extends AudioTheme_Screen {
 			// If GMT, or time in another locale is needed, use the venue time zone to calculate.
 			// Other functions should be aware that time is optional; check for the presence of gig_time.
 			if ( checkdate( $dt['month'], $dt['day'], $dt['year'] ) ) {
-				$datetime = sprintf( '%d-%s-%s %s:%s:%s',
+				$datetime = sprintf(
+					'%d-%s-%s %s:%s:%s',
 					$dt['year'],
 					zeroise( $dt['month'], 2 ),
 					zeroise( $dt['day'], 2 ),
 					zeroise( $dt['hour'], 2 ),
 					zeroise( $dt['minute'], 2 ),
-				zeroise( $dt['second'], 2 ) );
+					zeroise( $dt['second'], 2 )
+				);
 
 				update_post_meta( $post_id, '_audiotheme_gig_datetime', $datetime );
 
@@ -200,6 +206,8 @@ class AudioTheme_Screen_EditGig extends AudioTheme_Screen {
 			update_post_meta( $post_id, '_audiotheme_tickets_price', sanitize_text_field( $_POST['gig_tickets_price'] ) );
 			update_post_meta( $post_id, '_audiotheme_tickets_url', esc_url_raw( $_POST['gig_tickets_url'] ) );
 		}
+
+		$is_active = false;
 	}
 
 	/**
