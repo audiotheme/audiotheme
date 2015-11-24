@@ -22,8 +22,7 @@
     "icit/wp-less": "^0.3.0",
     "leafo/lessphp": "^0.4.0",
     "xrstf/composer-php52": "^1.0",
-    "composer/installers": "^1.0",
-    "scribu/lib-posts-to-posts": "dev-master"
+    "composer/installers": "^1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "*@stable"

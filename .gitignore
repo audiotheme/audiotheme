@@ -12,4 +12,6 @@ modules/*/admin/js/*.min.js
 node_modules
 phpcs.log
 release/
-vendor/
+vendor/*
+
+!vendor/scribu/

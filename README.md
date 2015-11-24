@@ -9,7 +9,7 @@ Requires WordPress 4.3+. Licensed under the GPL-2.0+.
 Clone the repo in your plugins folder:
 
 ```sh
-git clone https://github.com/audiotheme/audiotheme.git
+git clone https://github.com/audiotheme/audiotheme.git --recursive
 cd audiotheme
 ```
 

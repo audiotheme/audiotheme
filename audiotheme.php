@@ -71,6 +71,7 @@ if ( file_exists( AUDIOTHEME_DIR . 'vendor/autoload_52.php' ) ) {
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
 require( AUDIOTHEME_DIR . 'includes/general-template.php' );
+require( AUDIOTHEME_DIR . 'vendor/scribu/scb-framework/load.php' );
 require( AUDIOTHEME_DIR . 'includes/deprecated/deprecated.php' );
 require( AUDIOTHEME_DIR . 'includes/deprecated/discontinued.php' );
 

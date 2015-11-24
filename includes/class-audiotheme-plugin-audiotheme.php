@@ -83,6 +83,10 @@ class AudioTheme_Plugin_AudioTheme extends AudioTheme_Plugin {
 			define( 'P2P_TEXTDOMAIN', 'audiotheme' );
 		}
 
+		if ( ! function_exists( 'p2p_register_connection_type' ) ) {
+			require( $this->get_path( 'vendor/scribu/lib-posts-to-posts/autoload.php' ) );
+		}
+
 		P2P_Storage::init();
 		P2P_Query_Post::init();
 		P2P_Query_User::init();
