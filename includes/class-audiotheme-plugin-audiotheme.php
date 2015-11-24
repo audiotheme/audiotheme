@@ -89,12 +89,27 @@ class AudioTheme_Plugin_AudioTheme extends AudioTheme_Plugin {
 
 		P2P_Storage::init();
 		P2P_Query_Post::init();
-		P2P_Query_User::init();
-		P2P_URL_Query::init();
-		P2P_Widget::init();
-		P2P_Shortcodes::init();
 
-		add_action( 'admin_init', array( 'P2P_Storage', 'install' ) );
+		add_action( 'admin_init', array( $this, 'maybe_install_p2p_tables' ) );
+	}
+
+	/**
+	 * Install P2P database tables.
+	 *
+	 * @since 1.9.0
+	 */
+	public function maybe_install_p2p_tables() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$current_version = (int) get_option( 'p2p_storage' );
+		if ( P2P_Storage::$version === $current_version ) {
+			return;
+		}
+
+		P2P_Storage::install();
+		update_option( 'p2p_storage', P2P_Storage::$version );
 	}
 
 	/**
