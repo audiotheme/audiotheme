@@ -108,18 +108,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 	 * @return int Archive post ID.
 	 */
 	public function add_post_type_archive( $post_type, $args = array() ) {
-		$archives = $this->get_archive_ids();
-		$post_id  = isset( $archives[ $post_type ] ) ? $archives[ $post_type ] : '';
-
-		if ( empty( $post_id ) ) {
-			$post_id = $this->maybe_insert_archive_post( $post_type );
-			$archives[ $post_type ] = $post_id;
-			update_option( 'audiotheme_archives', $archives );
-
-			// Update the post type rewrite base.
-			$this->update_post_type_rewrite_base( $post_type, $post_id );
-			update_option( 'audiotheme_flush_rewrite_rules', 'yes' );
-		}
+		$post_id = $this->maybe_insert_archive_post( $post_type );
 
 		// Cache the archive args.
 		$this->archives[ $post_type ] = array_merge( array( 'post_id' => $post_id ), $args );
@@ -477,7 +466,9 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 	 */
 	protected function maybe_insert_archive_post( $post_type ) {
 		$archive_id = $this->get_archive_id( $post_type );
-		if ( $archive_id ) {
+
+		// Validate the post ID in the admin panel, otherwise just return it.
+		if ( $archive_id && ( ! is_admin() || get_post( $archive_id ) ) ) {
 			return $archive_id;
 		}
 
@@ -490,7 +481,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 		) );
 
 		if ( ! empty( $inactive_posts ) ) {
-			return $inactive_posts[0];
+			$post_id = reset( $inactive_posts );
 		}
 
 		// Search the inactive option before creating a new page.
@@ -498,22 +489,29 @@ class AudioTheme_Module_Archives extends AudioTheme_Module {
 		// upgrading to 1.9.0. This is here for legacy purposes.
 		$inactive = get_option( 'audiotheme_archives_inactive' );
 		if ( $inactive && isset( $inactive[ $post_type ] ) && get_post( $inactive[ $post_type ] ) ) {
-			return $inactive[ $post_type ];
+			$post_id = $inactive[ $post_type ];
 		}
 
 		// Otherwise, create a new archive post.
-		$post_type_object = get_post_type_object( $post_type );
-
-		$post_id = wp_insert_post( array(
-			'post_title'  => $post_type_object->labels->name,
-			'post_name'   => $this->get_post_type_archive_slug( $post_type ),
-			'post_type'   => 'audiotheme_archive',
-			'post_status' => 'publish',
-		) );
-
-		if ( $post_id ) {
-			update_post_meta( $post_id, 'archive_for_post_type', $post_type );
+		if ( empty( $post_id ) ) {
+			$post_id = wp_insert_post( array(
+				'post_title'  => get_post_type_object( $post_type )->labels->name,
+				'post_name'   => $this->get_post_type_archive_slug( $post_type ),
+				'post_type'   => 'audiotheme_archive',
+				'post_status' => 'publish',
+			) );
 		}
+
+		update_post_meta( $post_id, 'archive_for_post_type', $post_type );
+
+		// Update the option cache.
+		$archives = $this->get_archive_ids();
+		$archives[ $post_type ] = $post_id;
+		update_option( 'audiotheme_archives', $archives );
+
+		// Update the post type rewrite base.
+		$this->update_post_type_rewrite_base( $post_type, $post_id );
+		update_option( 'audiotheme_flush_rewrite_rules', 'yes' );
 
 		return $post_id;
 	}
