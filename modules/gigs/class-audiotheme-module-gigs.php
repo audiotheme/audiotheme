@@ -88,12 +88,14 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 		$this->plugin->register_hooks( new AudioTheme_PostType_Venue() );
 		$this->plugin->register_hooks( new AudioTheme_AJAX_Gigs() );
 
-		add_action( 'init',                   array( $this, 'register_archive' ), 20 );
-		add_action( 'wp_loaded',              array( $this, 'register_post_connections' ) );
-		add_filter( 'generate_rewrite_rules', array( $this, 'generate_rewrite_rules' ) );
-		add_action( 'template_redirect',      array( $this, 'template_redirect' ) );
-		add_action( 'template_include',       array( $this, 'template_include' ) );
-		add_filter( 'the_posts',              array( $this, 'query_connected_venues' ), 10, 2 );
+		add_action( 'init',                     array( $this, 'register_archive' ), 20 );
+		add_action( 'wp_loaded',                array( $this, 'register_post_connections' ) );
+		add_filter( 'generate_rewrite_rules',   array( $this, 'generate_rewrite_rules' ) );
+		add_action( 'template_redirect',        array( $this, 'template_redirect' ) );
+		add_action( 'template_include',         array( $this, 'template_include' ) );
+		add_filter( 'the_posts',                array( $this, 'query_connected_venues' ), 10, 2 );
+		add_filter( 'wxr_export_skip_postmeta', array( $this, 'exclude_meta_from_export' ) );
+		add_action( 'import_end',               array( $this, 'remap_gig_venues' ) );
 
 		if ( is_admin() ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_assets' ), 1 );
@@ -106,7 +108,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	}
 
 	/**
-	 * Register the discography archive.
+	 * Register the gig archive.
 	 *
 	 * @since 1.9.0
 	 */
@@ -185,10 +187,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	}
 
 	/**
-	 * Gig feeds and venue connections.
-	 *
-	 * Caches gig->venue connections and reroutes feed requests to
-	 * the appropriate template for processing.
+	 * Reroute feed requests to the appropriate template for processing.
 	 *
 	 * @since 1.9.0
 	 */
@@ -338,6 +337,41 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 		}
 
 		wp_localize_script( 'audiotheme-venue-manager', '_audiothemeVenueManagerSettings', $settings );
+	}
+
+	/**
+	 * Exclude metadata from exports.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param  bool   $result   Whether the metadata should be excluded.
+	 * @param  string $meta_key Meta key.
+	 * @return bool
+	 */
+	public function exclude_meta_from_export( $result, $meta_key ) {
+		return $result;
+	}
+
+	/**
+	 * Remap gig venues after an import.
+	 *
+	 * @todo Try to do this only when a gig or venue is imported.
+	 *
+	 * @since 1.9.0
+	 */
+	public function remap_gig_venues() {
+		global $wpdb;
+
+		$results = $wpdb->get_results(
+			"SELECT pm.post_id AS gig_id, p.ID as venue_id
+			FROM $wpdb->posts p
+			INNER JOIN $wpdb->postmeta pm ON pm.meta_key = '_audiotheme_venue_guid' AND pm.meta_value = p.guid
+			WHERE post_type = 'audiotheme_venue'"
+		);
+
+		foreach ( $results as $result ) {
+			set_audiotheme_gig_venue_id( $result->gig_id, $result->venue_id );
+		}
 	}
 
 	/**
