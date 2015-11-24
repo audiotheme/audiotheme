@@ -106,6 +106,8 @@ class AudioTheme_UpgradeManager {
 	 * @since 1.9.0
 	 */
 	protected function upgrade_190() {
+		global $wpdb;
+
 		// Add the archive post type to its metadata.
 		if ( $archives = get_option( 'audiotheme_archives_inactive' ) ) {
 			foreach ( $archives as $post_type => $post_id ) {
@@ -134,5 +136,39 @@ class AudioTheme_UpgradeManager {
 				update_option( $name, $value );
 			}
 		}
+
+		$p2p_table = $wpdb->prefix . 'p2p';
+
+		// Bail if the P2P table doesn't exist.
+		if ( $p2p_table !== $wpdb->get_var( $wpdb->prepare( "SHOW TABLES LIKE %s", $p2p_table ) ) ) {
+			return;
+		}
+
+		// Copy the venue ID from P2P to gig meta.
+		$wpdb->query(
+			"INSERT INTO $wpdb->postmeta ( post_id, meta_key, meta_value )
+			SELECT p2p_to AS post_id, '_audiotheme_venue_id' AS meta_key, p2p_from AS meta_value
+			FROM $p2p_table AS p2p
+			WHERE
+				p2p.p2p_type = 'audiotheme_venue_to_gig' AND
+				NOT EXISTS (
+					SELECT post_id FROM $wpdb->postmeta WHERE post_id = p2p.p2p_to AND meta_key = '_audiotheme_venue_id'
+				)
+			GROUP BY p2p_to"
+		);
+
+		// Copy the venue guid from P2P to gig meta.
+		$wpdb->query(
+			"INSERT INTO $wpdb->postmeta ( post_id, meta_key, meta_value )
+			SELECT p2p.p2p_to AS post_id, '_audiotheme_venue_guid' AS meta_key, p.guid AS meta_value
+			FROM $p2p_table AS p2p
+			INNER JOIN $wpdb->posts AS p ON p.ID = p2p.p2p_from
+			WHERE
+				p2p.p2p_type = 'audiotheme_venue_to_gig' AND
+				NOT EXISTS (
+					SELECT post_id FROM $wpdb->postmeta WHERE post_id = p2p.p2p_to AND meta_key = '_audiotheme_venue_guid'
+				)
+			GROUP BY p2p_to"
+		);
 	}
 }
