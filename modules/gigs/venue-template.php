@@ -127,6 +127,10 @@ function get_audiotheme_venue( $post = null ) {
 		$post = get_post( $post );
 	}
 
+	if ( empty( $post ) ) {
+		return null;
+	}
+
 	$defaults = get_default_audiotheme_venue_properties();
 	$meta = (array) get_post_custom( $post->ID );
 	foreach ( $meta as $key => $val ) {
