@@ -42,7 +42,7 @@
   "scripts": {
     "package": [
       "composer install --no-dev --prefer-dist",
-      "composer dump-autoload --optimize"
+      "composer dump-autoload --no-dev --optimize"
     ],
     "post-install-cmd": [
       "xrstf\\Composer52\\Generator::onPostInstallCmd"
