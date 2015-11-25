@@ -29,9 +29,7 @@
   },
   "autoload": {
     "classmap": [
-      "admin/",
-      "includes/",
-      "modules/"
+      "php/"
     ]
   },
   "autoload-dev": {

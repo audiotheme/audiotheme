@@ -4,9 +4,9 @@ module.exports = {
 			exclude: [
 				'.git/.*',
 				'dist/.*',
-				'includes/vendor/.*',
 				'node_modules/.*',
-				'tests/.*'
+				'tests/.*',
+				'vendor/.*'
 			],
 			mainFile: 'audiotheme.php',
 			potHeaders: {

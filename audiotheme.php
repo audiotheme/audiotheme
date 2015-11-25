@@ -89,13 +89,13 @@ if ( is_admin() ) {
  *
  * @since 1.9.0
  *
- * @return AudioTheme_PLugin
+ * @return AudioTheme_Plugin
  */
 function audiotheme() {
 	static $instance;
 
 	if ( null === $instance ) {
-		$instance = new AudioTheme_Plugin_AudioTheme();
+		$instance = new AudioTheme_Plugin();
 	}
 
 	return $instance;
@@ -108,11 +108,11 @@ $audiotheme
 	->set_file( __FILE__ )
 	->set_slug( 'audiotheme' )
 	->set_url( plugin_dir_url( __FILE__ ) )
-	->register_hooks( new AudioTheme_i18n() )
-	->register_hooks( new AudioTheme_Setup() )
-	->register_hooks( new AudioTheme_Widgets() )
-	->register_hooks( new AudioTheme_Assets() )
-	->register_hooks( new AudioTheme_Hooks_General() )
+	->register_hooks( new AudioTheme_Provider_i18n() )
+	->register_hooks( new AudioTheme_Provider_Setup() )
+	->register_hooks( new AudioTheme_Provider_Widgets() )
+	->register_hooks( new AudioTheme_Provider_Assets() )
+	->register_hooks( new AudioTheme_Provider_GeneralHooks() )
 	->modules
 	->register( new AudioTheme_Module_Archives( $audiotheme ) )
 	->register( new AudioTheme_Module_Gigs( $audiotheme ) )
@@ -122,13 +122,13 @@ $audiotheme
 if ( is_admin() ) {
 	$audiotheme
 		->register_hooks( new AudioTheme_UpgradeManager() )
-		->register_hooks( new AudioTheme_Hooks_Admin() )
+		->register_hooks( new AudioTheme_Provider_AdminHooks() )
 		->register_hooks( new AudioTheme_UpdateManager() )
 		->register_hooks( new AudioTheme_AJAX_Admin() )
-		->register_hooks( new AudioTheme_Assets_Admin() )
+		->register_hooks( new AudioTheme_Provider_AdminAssets() )
 		->register_hooks( new AudioTheme_Screen_Dashboard() )
 		->register_hooks( new AudioTheme_Screen_Settings() )
-		->register_hooks( new AudioTheme_Setting_LicenseKey( $audiotheme->license ) );
+		->register_hooks( new AudioTheme_Provider_Setting_LicenseKey( $audiotheme->license ) );
 }
 
 if ( is_network_admin() ) {

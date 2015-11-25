@@ -7,8 +7,6 @@ dist/
 includes/css/*.min.css
 includes/js/*.min.js
 languages/audiotheme.pot
-modules/*/admin/css/*.min.css
-modules/*/admin/js/*.min.js
 node_modules
 phpcs.log
 release/
