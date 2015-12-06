@@ -54,7 +54,7 @@ function register_audiotheme_archives() {
 		'labels'                     => $labels,
 		'map_meta_cap'               => true,
 		'public'                     => true,
-		'publicly_queryable'         => false,
+		'publicly_queryable'         => true,
 		'rewrite'                    => 'audiotheme_archive', // Allows slug to be edited. Extra rules wont' be generated.
 		'query_var'                  => false,
 		'show_ui'                    => true,
