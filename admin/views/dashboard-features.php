@@ -1,4 +1,4 @@
-<div class="audiotheme-wrap">
+<div class="audiotheme-wrap wrap">
 	<header class="audiotheme-dashboard-hero">
 		<div class="audiotheme-dashboard-hero-branding">
 			<h1 class="audiotheme-dashboard-hero-title"><a href="https://audiotheme.com/view/audiotheme/" target="_blank"><svg viewBox="0 0 80 40">
@@ -9,6 +9,9 @@
 			</p>
 		</div>
 	</header>
+
+	<!-- Notice catcher -->
+	<h1 style="display: none"></h1>
 
 	<div class="audiotheme-dashboard-body">
 		<div class="audiotheme-dashboard-lead">
