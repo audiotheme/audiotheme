@@ -88,7 +88,7 @@ class AudioTheme_Updater_Plugin extends AudioTheme_Updater_AbstractUpdater {
 	 */
 	public function plugins_api( $data, $action, $args ) {
 		// Bail if this isn't an information request for this plugin.
-		if ( 'plugin_information' !== $action || empty( $args->slug ) || $args->slug !== $this->id ) {
+		if ( 'plugin_information' !== $action || empty( $args->slug ) || $args->slug !== $this->slug ) {
 			return $data;
 		}
 
