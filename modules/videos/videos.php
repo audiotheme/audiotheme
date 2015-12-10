@@ -166,8 +166,6 @@ function audiotheme_video_query_sort( $query ) {
  * @param object $query The main WP_Query object. Passed by reference.
  */
 function audiotheme_video_default_template_query( $query ) {
-	global $wpdb;
-
 	if (
 		is_admin() ||
 		! $query->is_main_query() ||
@@ -248,7 +246,11 @@ function audiotheme_video_delete_attachment( $attachment_id ) {
 function audiotheme_video_archive_post_class( $classes ) {
 	global $wp_query;
 
-	if ( $wp_query->is_main_query() && is_post_type_archive( 'audiotheme_video' ) ) {
+	if ( ! $wp_query->is_main_query() ) {
+		return $classes;
+	}
+
+	if ( is_post_type_archive( 'audiotheme_video' ) || is_tax( 'audiotheme_video_category' ) ) {
 		$nth_child_classes = audiotheme_nth_child_classes( array(
 			'current' => $wp_query->current_post + 1,
 			'max'     => get_audiotheme_archive_meta( 'columns', true, 4 ),

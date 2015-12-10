@@ -279,10 +279,17 @@ function audiotheme_track_query( $query ) {
  * @param object $query The main WP_Query object. Passed by reference.
  */
 function audiotheme_record_default_template_query( $query ) {
-	if ( is_admin() || ! $query->is_main_query() || ! is_post_type_archive( 'audiotheme_record' ) ) {
+	if (
+		is_admin() ||
+		! $query->is_main_query() ||
+		! is_post_type_archive( 'audiotheme_record' ) ||
+		! is_tax( 'audiotheme_record_type' )
+	) {
 		return;
 	}
 
+	// The default record archive template uses a 4-column grid.
+	// If it's being loaded from the plugin, set the posts per page arg to a multiple of 4.
 	if ( is_audiotheme_default_template( audiotheme_locate_template( 'archive-record.php' ) ) ) {
 		if ( '' === $query->get( 'posts_per_archive_page' ) ) {
 			$query->set( 'posts_per_archive_page', 12 );
