@@ -26,7 +26,6 @@ function audiotheme_load_discography_admin() {
 	add_action( 'wp_ajax_audiotheme_ajax_get_playlist_tracks', 'audiotheme_ajax_get_playlist_tracks' );
 	add_action( 'wp_ajax_audiotheme_ajax_get_playlist_records', 'audiotheme_ajax_get_playlist_records' );
 
-	add_action( 'admin_menu', 'audiotheme_discography_admin_menu' );
 	add_filter( 'post_updated_messages', 'audiotheme_discography_post_updated_messages' );
 
 	// Playlists
@@ -73,6 +72,7 @@ function audiotheme_load_discography_admin() {
  * Discography admin menu.
  *
  * @since 1.0.0
+ * @deprecated 1.8.2
  */
 function audiotheme_discography_admin_menu() {
 	add_menu_page(
