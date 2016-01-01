@@ -104,6 +104,7 @@ function audiotheme() {
 $audiotheme = audiotheme();
 
 $audiotheme
+	->set_basename( plugin_basename( __FILE__ ) )
 	->set_directory( plugin_dir_path( __FILE__ ) )
 	->set_file( __FILE__ )
 	->set_slug( 'audiotheme' )
