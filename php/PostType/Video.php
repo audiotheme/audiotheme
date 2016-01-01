@@ -249,7 +249,7 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType_AbstractPostType {
 			3  => esc_html__( 'Custom field deleted.', 'audiotheme' ),
 			4  => esc_html__( 'Video updated.', 'audiotheme' ),
 			/* translators: %s: date and time of the revision */
-			5  => isset( $_GET['revision'] ) ? sprintf( esc_htmlesc_html__( 'Video restored to revision from %s.' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			5  => isset( $_GET['revision'] ) ? sprintf( esc_html__( 'Video restored to revision from %s.' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
 			6  => esc_html__( 'Video published.', 'audiotheme' ),
 			7  => esc_html__( 'Video saved.', 'audiotheme' ),
 			8  => esc_html__( 'Video submitted.', 'audiotheme' ),
