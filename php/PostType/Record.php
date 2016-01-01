@@ -211,7 +211,7 @@ class AudioTheme_PostType_Record extends AudioTheme_PostType_AbstractPostType {
 	public function archive_post_class( $classes ) {
 		global $wp_query;
 
-		if ( $wp_query->is_main_query() && is_post_type_archive( 'audiotheme_record' ) ) {
+		if ( $wp_query->is_main_query() && $this->is_archive_request() ) {
 			$nth_child_classes = audiotheme_nth_child_classes( array(
 				'current' => $wp_query->current_post + 1,
 				'max'     => get_audiotheme_archive_meta( 'columns', true, 4 ),
