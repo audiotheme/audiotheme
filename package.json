@@ -2,11 +2,10 @@
   "name": "audiotheme",
   "version": "1.9.0-beta",
   "description": "AudioTheme",
+  "homepage": "https://audiotheme.com/",
+  "license": "GPL-2.0+",
+  "repository": "audiotheme/audiotheme",
   "main": "Gruntfile.js",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/audiotheme/audiotheme.git"
-  },
   "devDependencies": {
     "autoprefixer": "^6.1.0",
     "browserify-shim": "~3.8.10",

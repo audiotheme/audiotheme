@@ -123,16 +123,16 @@
 		},
 
 		updateStatus: function() {
-		var isActive = this.model.get( 'isActive' ),
-			text = isActive ? l10n.deactivate : l10n.activate;
+			var isActive = this.model.get( 'isActive' ),
+				text = isActive ? l10n.deactivate : l10n.activate;
 
-		this.$el.text( text ).toggleClass( 'button-primary', ! isActive );
+			this.$el.text( text ).toggleClass( 'button-primary', ! isActive );
 
-		if ( ! this.model.get( 'canToggle' ) ) {
-			this.$el.hide();
-		} else {
-			this.$el.css( 'display', '' );
-		}
+			if ( ! this.model.get( 'canToggle' ) ) {
+				this.$el.hide();
+			} else {
+				this.$el.css( 'display', '' );
+			}
 		}
 	});
 
