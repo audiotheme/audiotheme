@@ -29,7 +29,7 @@
   },
   "autoload": {
     "classmap": [
-      "php/"
+      "classes/"
     ]
   },
   "autoload-dev": {
