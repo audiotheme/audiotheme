@@ -3,27 +3,13 @@
 module.exports = function( grunt ) {
 	'use strict';
 
+	var autoprefixer = require( 'autoprefixer' );
+
 	require( 'matchdep' ).filterDev( 'grunt-*' ).forEach( grunt.loadNpmTasks );
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON( 'package.json' ),
 		version: '<%= pkg.version %>',
-
-		/**
-		 * Autoprefix CSS files.
-		 */
-		autoprefixer: {
-			options: {
-				browsers: [ '> 1%', 'last 2 versions', 'ff 17', 'opera 12.1', 'android 4' ]
-			},
-			dist: {
-				files: [
-					{ src: 'admin/css/admin.min.css' },
-					{ src: 'admin/css/admin-legacy.min.css' },
-					{ src: 'includes/css/audiotheme.min.css' }
-				]
-			}
-		},
 
 		/**
 		 * Check JavaScript for errors and warnings.
@@ -70,6 +56,27 @@ module.exports = function( grunt ) {
 		},
 
 		/**
+		 * Autoprefix CSS files.
+		 */
+		postcss: {
+			options: {
+				processors: [
+					autoprefixer({
+						browsers: [ '> 1%', 'last 2 versions', 'ff 17', 'opera 12.1', 'android 4' ],
+						cascade: false
+					})
+				]
+			},
+			dist: {
+				files: [
+					{ src: 'admin/css/admin.min.css' },
+					{ src: 'admin/css/admin-legacy.min.css' },
+					{ src: 'includes/css/audiotheme.min.css' }
+				]
+			}
+		},
+
+		/**
 		 * Minify JavaScript source files.
 		 */
 		uglify: {
@@ -96,7 +103,7 @@ module.exports = function( grunt ) {
 			},
 			less: {
 				files: [ 'includes/css/less/*.less', 'admin/css/less/*.less', 'admin/css/less/**/*.less' ],
-				tasks: [ 'less', 'autoprefixer', 'cssmin' ]
+				tasks: [ 'less', 'postcss', 'cssmin' ]
 			}
 		},
 
@@ -180,7 +187,7 @@ module.exports = function( grunt ) {
 	/**
 	 * Default task.
 	 */
-	grunt.registerTask( 'default', [ 'jshint', 'uglify', 'less', 'autoprefixer', 'cssmin', 'watch' ] );
+	grunt.registerTask( 'default', [ 'jshint', 'uglify', 'less', 'postcss', 'cssmin', 'watch' ] );
 
 	/**
 	 * Build a release.
@@ -202,7 +209,7 @@ module.exports = function( grunt ) {
 			'string-replace:build',
 			'jshint',
 			'less',
-			'autoprefixer',
+			'postcss',
 			'cssmin',
 			'uglify',
 			'makepot',
