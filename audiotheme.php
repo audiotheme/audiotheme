@@ -136,6 +136,8 @@ if ( is_network_admin() ) {
 	$audiotheme->register_hooks( new AudioTheme_Screen_Network_Settings() );
 }
 
+class AudioTheme_Gig_Query extends AudioTheme_Query_Gig {}
+
 /**
  * Load the plugin.
  *

@@ -16,7 +16,7 @@
  * @since   1.0.0
  * @link    http://bradt.ca/blog/extending-wp_query/
  */
-class AudioTheme_Gig_Query extends WP_Query {
+class AudioTheme_Query_Gig extends WP_Query {
 	/**
 	 * Build the query args.
 	 *
