@@ -9,7 +9,7 @@
  * @since     1.0.0
  */
 
-header( 'Content-Type: ' . feed_content_type( 'rss-http' ) . '; charset=' . get_option( 'blog_charset' ), true );
+header( 'Content-Type: ' . feed_content_type( 'rss2' ) . '; charset=' . get_option( 'blog_charset' ), true );
 
 // Servers with short tags enabled get confused if we don't output this with PHP.
 echo '<?xml version="1.0" encoding="' . get_option( 'blog_charset' ) . '"?>';
@@ -24,12 +24,7 @@ echo '<?xml version="1.0" encoding="' . get_option( 'blog_charset' ) . '"?>';
 >
 
 <channel>
-	<title>
-		<?php
-		bloginfo_rss( 'name' );
-		wp_title_rss();
-		?>
-	</title>
+	<title><?php wp_title_rss(); ?></title>
 	<atom:link href="<?php self_link(); ?>" rel="self" type="application/rss+xml" />
 	<link><?php bloginfo_rss( 'url' ) ?></link>
 	<description><?php bloginfo_rss( 'description' ) ?></description>
