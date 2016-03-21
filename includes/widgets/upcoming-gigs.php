@@ -53,6 +53,14 @@ class Audiotheme_Widget_Upcoming_Gigs extends WP_Widget {
 		$loop = new Audiotheme_Gig_Query( apply_filters( 'audiotheme_widget_upcoming_gigs_loop_args', array(
 			'no_found_rows'  => true,
 			'posts_per_page' => $instance['number'],
+			'meta_query'     => array(
+				array(
+					'key'     => '_audiotheme_gig_datetime',
+					'value'   => date( 'Y-m-d', current_time( 'timestamp' ) - DAY_IN_SECONDS ),
+					'compare' => '>=',
+					'type'    => 'DATETIME',
+				),
+			),
 		) ) );
 
 		// Add a class with the number of gigs to display.
