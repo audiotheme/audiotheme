@@ -1,6 +1,12 @@
 /* General
 -------------------------------------------------------------- */
 
+// Hide the "Move to Trash" link on the archive screens.
+// Multisite gives super admins all capabilities, which is why this is needed.
+body.screen-audiotheme_archive #delete-action {
+	display: none;
+}
+
 ul.ui-autocomplete {
 	z-index: 160001 !important; // Urghhh, above the media modal.
 }
