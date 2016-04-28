@@ -14,6 +14,12 @@ body.screen-edit-audiotheme_track select[name="m"] {
 	display: none;
 }
 
+// Hide the "Move to Trash" link on the archive screens.
+// Multisite gives super admins all capabilities, which is why this is needed.
+body.screen-audiotheme_archive #delete-action {
+	display: none;
+}
+
 // Meta fields.
 .audiotheme-field {
 	clear: both;
