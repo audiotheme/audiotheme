@@ -309,7 +309,7 @@ function audiotheme_archives_save_active_archives( $ids ) {
 	$archives = get_audiotheme_archive_ids();
 	$diff = array_diff_key( $archives, $ids );
 
-	if ( count( $ids ) !== count( $archives ) || $diff ) {
+	if ( count( $ids ) !== count( $archives ) || $diff || array_diff( $ids, $archives ) ) {
 		$inactive = (array) get_option( 'audiotheme_archives_inactive' );
 
 		// Remove $ids from $inactive.
@@ -358,8 +358,8 @@ function audiotheme_archives_deleted_post( $post_id ) {
 		return;
 	}
 
-	$active = get_audiotheme_archives();
-	if ( $key = array_search( $active ) ) {
+	$active = get_audiotheme_archive_ids();
+	if ( $key = array_search( $post_id, $active ) ) {
 		unset( $active[ $key ] );
 		audiotheme_archives_save_active_archives( $active );
 	}
