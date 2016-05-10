@@ -51,22 +51,8 @@ class AudioTheme_PostType_Playlist {
 	 * @since 1.9.0
 	 */
 	public function register_hooks() {
-		add_filter( 'cue_playlist_args',     array( $this, 'filter_post_type_args' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ), 15 );
 		add_action( 'print_media_templates', array( $this, 'print_templates' ) );
-	}
-
-	/**
-	 * Move the playlist menu item under discography.
-	 *
-	 * @since 1.9.0
-	 *
-	 * @param array $args Post type registration args.
-	 * @return array
-	 */
-	public function filter_post_type_args( $args ) {
-		$args['show_in_menu'] = 'edit.php?post_type=audiotheme_record';
-		return $args;
 	}
 
 	/**
