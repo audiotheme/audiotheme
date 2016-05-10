@@ -10,19 +10,6 @@
  */
 
 /**
- * Move the playlist menu item under discography.
- *
- * @since 1.5.0
- *
- * @param array $args Post type registration args.
- * @return array
- */
-function audiotheme_playlist_args( $args ) {
-	$args['show_in_menu'] = 'edit.php?post_type=audiotheme_record';
-	return $args;
-}
-
-/**
  * Enqueue playlist scripts and styles.
  *
  * @since 1.5.0

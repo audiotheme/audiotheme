@@ -29,7 +29,6 @@ function audiotheme_load_discography_admin() {
 	add_filter( 'post_updated_messages', 'audiotheme_discography_post_updated_messages' );
 
 	// Playlists
-	add_filter( 'cue_playlist_args', 'audiotheme_playlist_args' );
 	add_action( 'admin_enqueue_scripts', 'audiotheme_playlist_admin_enqueue_scripts' );
 	add_action( 'print_media_templates', 'audiotheme_playlist_print_templates' );
 

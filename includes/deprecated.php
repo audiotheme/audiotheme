@@ -230,3 +230,17 @@ function audiotheme_add_video_thumbnail( $attachment_id ) {
 	global $post_id;
 	set_post_thumbnail( $post_id, $attachment_id );
 }
+
+/**
+ * Move the playlist menu item under discography.
+ *
+ * @since 1.5.0
+ * @deprecated 1.8.4
+ *
+ * @param array $args Post type registration args.
+ * @return array
+ */
+function audiotheme_playlist_args( $args ) {
+	$args['show_in_menu'] = 'edit.php?post_type=audiotheme_record';
+	return $args;
+}
