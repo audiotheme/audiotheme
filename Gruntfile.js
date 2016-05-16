@@ -116,7 +116,7 @@ module.exports = function( grunt ) {
 		compress: {
 			build: {
 				options: {
-					archive: 'dist/<%= pkg.name %>-plugin-<%= version %>.zip'
+					archive: 'dist/<%= pkg.name %>-<%= version %>.zip'
 				},
 				files: [
 					{

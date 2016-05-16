@@ -6,6 +6,7 @@
   "repository": "audiotheme/audiotheme",
   "devDependencies": {
     "autoprefixer": "^6.3.3",
+    "aws-sdk": "^2.3.11",
     "grunt": "~0.4.5",
     "grunt-contrib-compress": "~0.13.0",
     "grunt-contrib-cssmin": "~0.14.0",
