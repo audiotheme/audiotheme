@@ -136,7 +136,8 @@ module.exports = function( grunt ) {
 							'!includes/vendor/lessphp/**',
 							'!includes/vendor/wp-less/**',
 							'includes/vendor/lessphp/lessc.inc.php',
-							'includes/vendor/wp-less/wp-less.php'
+							'includes/vendor/wp-less/wp-less.php',
+							'!shipitfile.js'
 						],
 						dest: '<%= pkg.name %>/'
 					}
