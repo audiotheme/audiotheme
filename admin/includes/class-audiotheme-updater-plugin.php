@@ -143,7 +143,11 @@ class Audiotheme_Updater_Plugin extends Audiotheme_Updater {
 
 		// Finally display the notice.
 		if ( ! empty( $notice ) ) {
-			echo '</tr><tr class="plugin-update-tr"><td class="plugin-update colspanchange" colspan="3"><div class="update-message">' . $notice . '</div></td>';
+			if ( version_compare( $GLOBALS['wp_version'], '4.6-alpha', '<' ) ) {
+				echo '</tr><tr class="plugin-update-tr"><td class="plugin-update colspanchange" colspan="3"><div class="update-message">' . $notice . '</div></td>';
+			} else {
+				echo '</tr><tr class="plugin-update-tr active"><td class="plugin-update colspanchange" colspan="3"><div class="update-message notice inline notice-warning notice-alt"><p>' . $notice . '</p></div></td>';
+			}
 		}
 	}
 }
