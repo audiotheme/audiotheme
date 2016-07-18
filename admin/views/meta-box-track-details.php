@@ -42,7 +42,7 @@
 </p>
 
 <?php
-if ( ! get_post( $post->post_parent ) ) {
+if ( empty( $post->post_parent ) || ! get_post( $post->post_parent ) ) {
 	$records = get_posts( 'post_type=audiotheme_record&orderby=title&order=asc&posts_per_page=-1' );
 	if ( $records ) {
 		echo '<p class="audiotheme-field">';
