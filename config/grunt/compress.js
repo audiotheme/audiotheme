@@ -1,7 +1,7 @@
 module.exports = {
 	package: {
 		options: {
-			archive: 'dist/<%= package.name %>-plugin-<%= package.version %>.zip'
+			archive: 'dist/<%= package.name %>-<%= package.version %>.zip'
 		},
 		files: [
 			{
@@ -24,7 +24,8 @@ module.exports = {
 					'!package.json',
 					'!phpcs.xml',
 					'!phpunit.xml',
-					'!README.md'
+					'!README.md',
+					'!shipitfile.js'
 				],
 				dest: '<%= package.name %>/'
 			}
