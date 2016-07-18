@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class for registering the record type taxonomy and integration.
  *
  * @package AudioTheme\Discography
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Taxonomy_RecordType {
 	/**
 	 * Module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_Module_Discography
 	 */
 	protected $module;
@@ -27,7 +27,7 @@ class AudioTheme_Taxonomy_RecordType {
 	/**
 	 * Taxonomy name.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $taxonomy = 'audiotheme_record_type';
@@ -35,7 +35,7 @@ class AudioTheme_Taxonomy_RecordType {
 	/**
 	 * Constructor method.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param AudioTheme_Module_Discography $module Discography module.
 	 */
@@ -46,7 +46,7 @@ class AudioTheme_Taxonomy_RecordType {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'init',                  array( $this, 'register_taxonomy' ) );
@@ -57,7 +57,7 @@ class AudioTheme_Taxonomy_RecordType {
 	/**
 	 * Register taxonomies.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_taxonomy() {
 		register_taxonomy( 'audiotheme_record_type', 'audiotheme_record', $this->get_args() );
@@ -66,7 +66,7 @@ class AudioTheme_Taxonomy_RecordType {
 	/**
 	 * Set record type requests to use the same archive settings as records.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Query $wp_query The main WP_Query instance. Passed by reference.
 	 */
@@ -82,7 +82,7 @@ class AudioTheme_Taxonomy_RecordType {
 	/**
 	 * Term updated messages.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $messages Term update messages.
 	 * @return array
@@ -104,7 +104,7 @@ class AudioTheme_Taxonomy_RecordType {
 	/**
 	 * Retrieve taxonomy registration arguments.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	protected function get_args() {
 		return array(
@@ -128,7 +128,7 @@ class AudioTheme_Taxonomy_RecordType {
 	/**
 	 * Retrieve taxonomy labels.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array
 	 */
@@ -160,7 +160,7 @@ class AudioTheme_Taxonomy_RecordType {
 	/**
 	 * Retrieve the base slug to use for rewrite rules.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */

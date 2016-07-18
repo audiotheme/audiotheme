@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class for registering the video post type and integration.
  *
  * @package AudioTheme\Videos
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_PostType_Video extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Videos module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_Module_Videos
 	 */
 	protected $module;
@@ -27,7 +27,7 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Post type name.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $post_type = 'audiotheme_video';
@@ -35,7 +35,7 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Constructor method.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param AudioTheme_Module_Videos $module Gigs module.
 	 */
@@ -46,7 +46,7 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'init',                  array( $this, 'register_post_type' ) );
@@ -63,7 +63,7 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType_AbstractPostType {
 	 * Defaults to sorting by publish date in descending order. A plugin can
 	 * hook into pre_get_posts at an earlier priority and manually set the order.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Query $wp_query The main WP_Query object. Passed by reference.
 	 */
@@ -104,7 +104,7 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType_AbstractPostType {
 	 * The default video archive template uses a 4-column grid. If it's loaded
 	 * from the plugin, set the posts per page arg to a multiple of 4.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Query $wp_query The main WP_Query object. Passed by reference.
 	 */
@@ -125,7 +125,7 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Delete oEmbed thumbnail post meta if the associated attachment is deleted.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int $attachment_id The ID of the attachment being deleted.
 	 */
@@ -150,7 +150,7 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Add classes to video posts on the archive page.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $classes Default post classes.
 	 * @return array
@@ -173,7 +173,7 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Retrieve post type registration argments.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array
 	 */
@@ -200,7 +200,7 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Retrieve post type labels.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array
 	 */
@@ -236,7 +236,7 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Retrieve post updated messages.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Post object.
 	 * @return array
@@ -267,7 +267,7 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Whether the current request is for a video archive.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return bool
 	 */

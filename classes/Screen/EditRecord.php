@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class providing integration with the Edit Record administration screen.
  *
  * @package AudioTheme\Discography
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Screen_EditRecord extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'load-post.php',                      array( $this, 'load_screen' ) );
@@ -36,7 +36,7 @@ class AudioTheme_Screen_EditRecord extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Set up the screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function load_screen() {
 		if ( 'audiotheme_record' !== get_current_screen()->id ) {
@@ -50,7 +50,7 @@ class AudioTheme_Screen_EditRecord extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register record meta boxes.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post The record post object being edited.
 	 */
@@ -68,14 +68,14 @@ class AudioTheme_Screen_EditRecord extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register scripts and styles.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_assets() {
 		wp_register_script(
 			'audiotheme-record-edit',
 			$this->plugin->get_url( 'admin/js/record-edit.js' ),
 			array( 'audiotheme-admin', 'audiotheme-media', 'wp-backbone', 'wp-util' ),
-			'1.9.0',
+			'2.0.0',
 			true
 		);
 	}
@@ -83,7 +83,7 @@ class AudioTheme_Screen_EditRecord extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Enqueue assets for the Edit Record screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function enqueue_assets() {
 		wp_enqueue_script( 'audiotheme-record-edit' );
@@ -92,7 +92,7 @@ class AudioTheme_Screen_EditRecord extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Tracklist editor.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Post object.
 	 */
@@ -126,7 +126,7 @@ class AudioTheme_Screen_EditRecord extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Display the record details meta box.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post The record post object being edited.
 	 */
@@ -138,7 +138,7 @@ class AudioTheme_Screen_EditRecord extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Display a field to edit the record release year.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Post object.
 	 */
@@ -154,7 +154,7 @@ class AudioTheme_Screen_EditRecord extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Display a field to edit the record artist.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Post object.
 	 */
@@ -170,7 +170,7 @@ class AudioTheme_Screen_EditRecord extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Display a field to edit the record genre.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Post object.
 	 */
@@ -186,7 +186,7 @@ class AudioTheme_Screen_EditRecord extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Display a field to edit record links.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Post object.
 	 */
@@ -206,7 +206,7 @@ class AudioTheme_Screen_EditRecord extends AudioTheme_Screen_AbstractScreen{
 	 *
 	 * Creates and updates child tracks and saves additional record meta.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int $post_id Post ID.
 	 */

@@ -24,7 +24,7 @@
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
  * @since     1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 
 /*
@@ -35,7 +35,7 @@
  * Get the settings object instance.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @return Audiotheme_Settings The main settings object.
  */
@@ -47,7 +47,7 @@ function get_audiotheme_settings() {
  * Add a settings screen.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $screen_id A screen identifier.
  * @param string $title The screen name. Also used as the first tab.
@@ -66,7 +66,7 @@ function add_audiotheme_settings_screen( $screen_id, $title, $args = array() ) {
  * Get a settings screen.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $screen_id The screen id. Defaults to 'audiotheme-theme-options'.
  * @return Audiotheme_Settings The main settings object.
@@ -92,7 +92,7 @@ function get_audiotheme_settings_screen( $screen_id = 'audiotheme-theme-options'
  * Hooked on 'init' in audiotheme_admin_setup().
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_settings_init() {
 	// Add theme options support.
@@ -136,7 +136,7 @@ function audiotheme_settings_init() {
  * the same action.
  *
  * @since 1.3.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_settings_save_network_options() {
 	if ( ! is_network_admin() || empty( $_GET['action'] ) || 'audiotheme-save-network-settings' !== $_GET['action'] ) {
@@ -150,7 +150,7 @@ function audiotheme_settings_save_network_options() {
  * Register Theme Customizer settings.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_settings_register_customizer_settings( $wp_customize ) {
 
@@ -169,7 +169,7 @@ function audiotheme_settings_register_customizer_settings( $wp_customize ) {
  * with a setting.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @todo https://make.wordpress.org/themes/2011/07/01/wordpress-3-2-fixing-the-edit_theme_optionsmanage_options-bug/
  */
@@ -204,7 +204,7 @@ function audiotheme_settings_add_admin_menus() {
  * Change the capability required for modifying a particular option.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @return string
  */
@@ -216,7 +216,7 @@ function audiotheme_settings_page_capability() {
  * Register sections and settings with the WordPress Settings API.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_settings_register_wp_settings_api() {
 	$settings = Audiotheme_Settings::instance();
@@ -227,7 +227,7 @@ function audiotheme_settings_register_wp_settings_api() {
  * Enqueue thickbox functionality for selecting media files.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_settings_screen_load() {
 	wp_enqueue_media();
@@ -249,7 +249,7 @@ function audiotheme_settings_screen_load() {
  * specific field and moved with javascript.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_settings_screen_notices() {
 	global $plugin_page;
@@ -289,7 +289,7 @@ function audiotheme_settings_screen_notices() {
  * attaching error messages to fields and their parent tabs.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_settings_display_screen() {
 	global $plugin_page;
@@ -352,7 +352,7 @@ function audiotheme_settings_display_screen() {
  * revert to the old value, otherwise, it discards the new value.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param mixed $value Value to sanitize/validate.
  * @param string $option Name of the option.
@@ -406,7 +406,7 @@ function audiotheme_settings_sanitize_option( $value, $option ) {
  * callback, it will be skipped.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param array $field Settings field properties.
  * @param mixed $option_value The option value to sanitize.
@@ -451,7 +451,7 @@ function audiotheme_settings_sanitize_field( $field, $option_value ) {
  * error message isn't registered, a default message will be shown.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param array $field Settings field properties.
  * @param mixed $option_value The option name.
@@ -496,13 +496,13 @@ function audiotheme_settings_validate_field( $field, $option_name, $option_value
  * @package AudioTheme\Settings
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  * @link https://core.trac.wordpress.org/ticket/18285
  */
 class Audiotheme_Settings {
 	/**
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 * @var Audiotheme_Settings
 	 */
 	private static $instance;
@@ -511,7 +511,7 @@ class Audiotheme_Settings {
 	 * All registered screens and their settings, including tabs and sections.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 * @var array
 	 */
 	protected $screens;
@@ -520,28 +520,28 @@ class Audiotheme_Settings {
 	 * All registered settings.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 * @var array
 	 */
 	protected $settings;
 
 	/**
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 * @var string
 	 */
 	protected $current_screen;
 
 	/**
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 * @var string
 	 */
 	protected $current_tab;
 
 	/**
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 * @var string
 	 */
 	protected $current_section;
@@ -554,7 +554,7 @@ class Audiotheme_Settings {
 	 * through one of the helper functions.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 */
 	public static function instance() {
 		if ( null === self::$instance ) {
@@ -570,7 +570,7 @@ class Audiotheme_Settings {
 	 * Registers the special Theme Customizer screen object when initialized.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 * @see Audiotheme_Settings::instance();
 	 */
 	private function __construct() {
@@ -595,7 +595,7 @@ class Audiotheme_Settings {
 	 * used to add the menu items for the screens.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @todo Finish implementing additional $args.
 	 *
@@ -644,7 +644,7 @@ class Audiotheme_Settings {
 	 * Return the specified screen and its settings.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param string $screen_id The screen id.
 	 * @return object $screen The screen or null if it doesn't exist.
@@ -659,7 +659,7 @@ class Audiotheme_Settings {
 	 * Sets the current screen so tabs, sections, and fields can be added.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param string $screen_id The screen id.
 	 * @return Audiotheme_Settings|WP_Error The main settings object or an error if the screen doesn't exist.
@@ -679,7 +679,7 @@ class Audiotheme_Settings {
 	 * Get all the screens.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @return array An array of all the screen objects.
 	 */
@@ -693,7 +693,7 @@ class Audiotheme_Settings {
 	 * Should only be called after 'init'.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param string $screen_id The screen id.
 	 * @return bool
@@ -710,7 +710,7 @@ class Audiotheme_Settings {
 	 * Sets the current tab if the tab already exists on the current screen.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param string $tab_id A tab identifier.
 	 * @param string $title The tab title.
@@ -752,7 +752,7 @@ class Audiotheme_Settings {
 	 * having tabs.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param string $tab_id The tab id.
 	 * @return Audiotheme_Settings|WP_Error The main settings object or an error if the tab doesn't exist.
@@ -776,7 +776,7 @@ class Audiotheme_Settings {
 	 * Add a settings section to a tab.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param string $section_id A section identifier.
 	 * @param string $title The section title.
@@ -820,7 +820,7 @@ class Audiotheme_Settings {
 	 * current screen is the Theme Customizer, then no sanitization is done.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param string $section_id The section id.
 	 * @return Audiotheme_Settings The main settings object.
@@ -848,7 +848,7 @@ class Audiotheme_Settings {
 	 * registered when the screen is added.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param string $id Field id.
 	 * @param string $label The field label. Should be translated.
@@ -958,7 +958,7 @@ class Audiotheme_Settings {
 	 * Callback to render a checkbox field.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param array $args Setting field arguments.
 	 */
@@ -1000,7 +1000,7 @@ class Audiotheme_Settings {
 	 * Callback to render a color field.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param array $args Setting field arguments.
 	 */
@@ -1023,7 +1023,7 @@ class Audiotheme_Settings {
 	 * Callback to output HTML.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param array $args Setting field arguments.
 	 */
@@ -1037,7 +1037,7 @@ class Audiotheme_Settings {
 	 * Defaults to using thickbox for selecting an image URL.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @todo Allow for overriding the various labels.
 	 * @todo Add support for the WordPress 3.5 media manager.
@@ -1099,7 +1099,7 @@ class Audiotheme_Settings {
 	 * Callback to render a radio list field.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param array $args Setting field arguments.
 	 */
@@ -1135,7 +1135,7 @@ class Audiotheme_Settings {
 	 * Callback to render a select field.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param array $args Setting field arguments.
 	 */
@@ -1163,7 +1163,7 @@ class Audiotheme_Settings {
 	 * Callback to render a text field.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param array $args Setting field arguments.
 	 */
@@ -1186,7 +1186,7 @@ class Audiotheme_Settings {
 	 * Callback to render a textarea field.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param array $args Setting field arguments.
 	 */
@@ -1210,7 +1210,7 @@ class Audiotheme_Settings {
 	 * Callback to render a hidden field to store a Theme Customizer setting.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @todo Figure out if this will work for non-scalar values.
 	 *
@@ -1245,7 +1245,7 @@ class Audiotheme_Settings {
 	 * optional classes will be used instead.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param array|string Array of classes or string separated by spaces.
 	 * @param array $args Setting field arguments.
@@ -1279,7 +1279,7 @@ class Audiotheme_Settings {
 	 * Return the field description from a list of field arguments.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param array $args Setting field arguments.
 	 * @return string Description markup.
@@ -1301,7 +1301,7 @@ class Audiotheme_Settings {
 	 * and pass the manager object directly.
 	 *
 	 * @since  1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @see audiotheme_settings_register_customizer_settings()
 	 *
@@ -1356,7 +1356,7 @@ class Audiotheme_Settings {
 	 * whenever the screen is saved.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 */
 	public function register_wp_settings() {
 		foreach ( $this->screens as $screen_id => $screen ) {
@@ -1422,7 +1422,7 @@ class Audiotheme_Settings {
 	 * Theme Customizer.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @return array
 	 */
@@ -1439,7 +1439,7 @@ class Audiotheme_Settings {
 	 * Provides an action for returning custom controls.
 	 *
 	 * @since  1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param WP_Customizer_Manager $manager The Theme Customizer manager object.
 	 * @param array $args Setting field arguments.
@@ -1479,7 +1479,7 @@ class Audiotheme_Settings {
 	 * Return the currently active screen.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @return object Screen object.
 	 */
@@ -1491,7 +1491,7 @@ class Audiotheme_Settings {
 	 * Return the currently active tab id.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @return string Tab id.
 	 */
@@ -1511,7 +1511,7 @@ class Audiotheme_Settings {
 	 * Return the currently active section id.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @return string Screen id.
 	 */
@@ -1524,7 +1524,7 @@ class Audiotheme_Settings {
 	 * once.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @param string $screen_id A screen id.
 	 * @param string $tab_id Optional. A tab id.
@@ -1544,7 +1544,7 @@ class Audiotheme_Settings {
 	 * and either a label or title property.
 	 *
 	 * @since 1.0.0
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 *
 	 * @link https://core.trac.wordpress.org/ticket/22487
 	 */

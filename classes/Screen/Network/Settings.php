@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Network settings screen class.
  *
  * @package AudioTheme\Settings
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Screen_Network_Settings extends AudioTheme_Screen_AbstractScreen {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'network_admin_menu', array( $this, 'add_menu_item' ) );
@@ -30,7 +30,7 @@ class AudioTheme_Screen_Network_Settings extends AudioTheme_Screen_AbstractScree
 	/**
 	 * Add the settings menu item.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function add_menu_item() {
 		add_submenu_page(
@@ -46,7 +46,7 @@ class AudioTheme_Screen_Network_Settings extends AudioTheme_Screen_AbstractScree
 	/**
 	 * Add settings sections.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function add_sections() {
 		add_settings_section(
@@ -60,7 +60,7 @@ class AudioTheme_Screen_Network_Settings extends AudioTheme_Screen_AbstractScree
 	/**
 	 * Display the screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function display_screen() {
 		include( $this->plugin->get_path( 'admin/views/screen-network-settings.php' ) );
@@ -75,7 +75,7 @@ class AudioTheme_Screen_Network_Settings extends AudioTheme_Screen_AbstractScree
 	 * Don't call wp_die() or exit() since all network settings screens will use
 	 * the same action.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function save_network_settings() {
 		if ( ! is_network_admin() || empty( $_GET['action'] ) || 'audiotheme-save-network-settings' !== $_GET['action'] ) {

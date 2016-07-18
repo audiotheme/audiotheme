@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class providing integration with the Edit Archive administration screen.
  *
  * @package AudioTheme\Archives
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Screen_EditArchive extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Archives module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_Module_Archives
 	 */
 	protected $module;
@@ -27,7 +27,7 @@ class AudioTheme_Screen_EditArchive extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Constructor method.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param AudioTheme_Module_Archives $module Archives module.
 	 */
@@ -38,7 +38,7 @@ class AudioTheme_Screen_EditArchive extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'add_meta_boxes_audiotheme_archive',    array( $this, 'add_meta_boxes' ) );
@@ -49,7 +49,7 @@ class AudioTheme_Screen_EditArchive extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Replace the submit meta box to remove unnecessary fields.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Post object.
 	 */
@@ -93,7 +93,7 @@ class AudioTheme_Screen_EditArchive extends AudioTheme_Screen_AbstractScreen{
 	 * The meta box needs to be activated first, then fields can be displayed
 	 * using one of the actions.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Archive post.
 	 * @param array   $args Meta box arguments.
@@ -108,7 +108,7 @@ class AudioTheme_Screen_EditArchive extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Add fields to the archive settings meta box.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Archive post.
 	 * @param string  $post_type Post type name.
@@ -158,7 +158,7 @@ class AudioTheme_Screen_EditArchive extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Save archive meta data.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int     $post_id Post ID.
 	 * @param WP_Post $post Post object.
@@ -205,7 +205,7 @@ class AudioTheme_Screen_EditArchive extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Submit meta box.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @see post_submit_meta_box()
 	 *

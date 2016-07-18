@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class providing integration with the Manage Venues administration screen.
  *
  * @package AudioTheme\Gigs
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Screen_ManageVenues extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_filter( 'parse_query',                                   array( $this, 'parse_admin_query' ) );
@@ -31,7 +31,7 @@ class AudioTheme_Screen_ManageVenues extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Sort posts on the Manage Venues screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Query $wp_query The main WP_Query object passed by reference.
 	 */
@@ -70,7 +70,7 @@ class AudioTheme_Screen_ManageVenues extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Remove 'Edit' from the bulk edit options.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $actions List of actions.
 	 * @return array
@@ -83,7 +83,7 @@ class AudioTheme_Screen_ManageVenues extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register list table columns.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $columns An array of the column names to display.
 	 * @return array Filtered array of column names.
@@ -109,7 +109,7 @@ class AudioTheme_Screen_ManageVenues extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register sortable list table columns.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $columns Column query vars with their corresponding column id as the key.
 	 * @return array
@@ -128,7 +128,7 @@ class AudioTheme_Screen_ManageVenues extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Display custom list table columns.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $column_id The id of the column to display.
 	 * @param int    $post_id Post ID.
@@ -156,7 +156,7 @@ class AudioTheme_Screen_ManageVenues extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Filter post row actions.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array   $actions Post actions.
 	 * @param WP_Post $post    Post object.
@@ -173,7 +173,7 @@ class AudioTheme_Screen_ManageVenues extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Retrieve the value for the gig count column.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Venue post object.
 	 * @return string
@@ -200,7 +200,7 @@ class AudioTheme_Screen_ManageVenues extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Retrieve the value for the URL column.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Venue post object.
 	 * @return string

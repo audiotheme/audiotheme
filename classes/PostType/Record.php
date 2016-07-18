@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class for registering the record post type and integration.
  *
  * @package AudioTheme\Discography
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_PostType_Record extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Discography module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_Module_Discography
 	 */
 	protected $module;
@@ -27,7 +27,7 @@ class AudioTheme_PostType_Record extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Post type name.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $post_type = 'audiotheme_record';
@@ -35,7 +35,7 @@ class AudioTheme_PostType_Record extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Constructor method.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param AudioTheme_Module_Discography $module Gigs module.
 	 */
@@ -46,7 +46,7 @@ class AudioTheme_PostType_Record extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'init',                   array( $this, 'register_post_type' ) );
@@ -69,7 +69,7 @@ class AudioTheme_PostType_Record extends AudioTheme_PostType_AbstractPostType {
 	 * Alternatively, a plugin can hook into pre_get_posts at an earlier priority
 	 * and manually set the order.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Query $wp_query The main WP_Query object. Passed by reference.
 	 */
@@ -110,7 +110,7 @@ class AudioTheme_PostType_Record extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Sort records by title after sorting by release year.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @global wpdb $wpdb
 	 *
@@ -129,7 +129,7 @@ class AudioTheme_PostType_Record extends AudioTheme_PostType_AbstractPostType {
 	 * The default record archive template uses a 4-column grid. If it's loaded from
 	 * the plugin, set the posts per page arg to a multiple of 4.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Query $wp_query The main WP_Query object. Passed by reference.
 	 */
@@ -151,7 +151,7 @@ class AudioTheme_PostType_Record extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Filter the permalink for the discography archive.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $link The default archive URL.
 	 * @param string $post_type Post type.
@@ -172,7 +172,7 @@ class AudioTheme_PostType_Record extends AudioTheme_PostType_AbstractPostType {
 	 * Allows the standard WordPress API function get_permalink() to return the
 	 * correct URL when used with a record post type.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @see get_post_permalink()
 	 *
@@ -203,7 +203,7 @@ class AudioTheme_PostType_Record extends AudioTheme_PostType_AbstractPostType {
 	 *
 	 * - Adds nth-child classes to record posts.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $classes Default post classes.
 	 * @return array
@@ -226,7 +226,7 @@ class AudioTheme_PostType_Record extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Retrieve post type registration argments.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array
 	 */
@@ -285,7 +285,7 @@ class AudioTheme_PostType_Record extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Retrieve post updated messages.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Post object.
 	 * @return array
@@ -316,7 +316,7 @@ class AudioTheme_PostType_Record extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Whether the current request is for a record archive.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return bool
 	 */

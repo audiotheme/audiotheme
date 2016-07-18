@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Upgrade manager class.
  *
  * @package AudioTheme\Administration
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_UpgradeManager {
 	/**
 	 * Plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_Plugin
 	 */
 	protected $plugin;
@@ -27,7 +27,7 @@ class AudioTheme_UpgradeManager {
 	/**
 	 * Set a reference to a plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param AudioTheme_Plugin $plugin Main plugin instance.
 	 * @return $this
@@ -40,7 +40,7 @@ class AudioTheme_UpgradeManager {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'admin_init', array( $this, 'maybe_upgrade' ) );
@@ -49,7 +49,7 @@ class AudioTheme_UpgradeManager {
 	/**
 	 * Upgrade routine.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function maybe_upgrade() {
 		$saved_version   = get_option( 'audiotheme_version', '0' );
@@ -59,7 +59,7 @@ class AudioTheme_UpgradeManager {
 			$this->upgrade_170();
 		}
 
-		if ( version_compare( $saved_version, '1.9.0', '<' ) ) {
+		if ( version_compare( $saved_version, '2.0.0', '<' ) ) {
 			$this->upgrade_190();
 		}
 
@@ -71,7 +71,7 @@ class AudioTheme_UpgradeManager {
 	/**
 	 * Upgrade routine for version 1.7.0.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	protected function upgrade_170() {
 		// Update record types.
@@ -101,9 +101,9 @@ class AudioTheme_UpgradeManager {
 	}
 
 	/**
-	 * Upgrade routine for version 1.9.0.
+	 * Upgrade routine for version 2.0.0.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	protected function upgrade_190() {
 		global $wpdb;

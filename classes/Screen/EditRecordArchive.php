@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class providing integration with the Edit Record Archive administration screen.
  *
  * @package AudioTheme\Discography
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Screen_EditRecordArchive extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'add_audiotheme_archive_settings_meta_box_audiotheme_record', '__return_true' );
@@ -33,7 +33,7 @@ class AudioTheme_Screen_EditRecordArchive extends AudioTheme_Screen_AbstractScre
 	 * The $post_id and $post parameters will refer to the archive CPT, while the
 	 * $post_type parameter references the type of post the archive is for.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int     $post_id Post ID.
 	 * @param WP_Post $post Post object.
@@ -54,7 +54,7 @@ class AudioTheme_Screen_EditRecordArchive extends AudioTheme_Screen_AbstractScre
 	 * Allows for changing the sort order of videos. Custom would require a plugin
 	 * like Simple Page Ordering.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Post object.
 	 */

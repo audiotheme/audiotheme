@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class providing integration with the Edit Track administration screen.
  *
  * @package AudioTheme\Discography
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Screen_EditTrack extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'load-post.php',                   array( $this, 'load_screen' ) );
@@ -31,7 +31,7 @@ class AudioTheme_Screen_EditTrack extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Set up the screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function load_screen() {
 		if ( 'audiotheme_track' !== get_current_screen()->id ) {
@@ -44,7 +44,7 @@ class AudioTheme_Screen_EditTrack extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register record meta boxes.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post The record post object being edited.
 	 */
@@ -62,7 +62,7 @@ class AudioTheme_Screen_EditTrack extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Enqueue assets for the Edit Record screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function enqueue_assets() {
 		wp_enqueue_script( 'audiotheme-media' );
@@ -71,7 +71,7 @@ class AudioTheme_Screen_EditTrack extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Display track details meta box.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post The track post object being edited.
 	 */
@@ -83,7 +83,7 @@ class AudioTheme_Screen_EditTrack extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Process and save track info when the CPT is saved.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @todo Get ID3 info for remote files.
 	 *
 	 * @param int $post_id Post ID.

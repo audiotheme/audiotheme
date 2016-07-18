@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class for the ImageMagick image editor.
  *
  * @package AudioTheme\Media
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Image_Editor_Imagick extends WP_Image_Editor_Imagick {
 	/**
 	 * Whether the current environment is configured with required methods.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param  array $args Arguments to test for ImageMagick support.
 	 * @return bool
@@ -43,7 +43,7 @@ class AudioTheme_Image_Editor_Imagick extends WP_Image_Editor_Imagick {
 	/**
 	 * Trim letterbox bars from an image.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int $fuzz Number between 0 and 100.
 	 * @return $this
@@ -58,7 +58,7 @@ class AudioTheme_Image_Editor_Imagick extends WP_Image_Editor_Imagick {
 	/**
 	 * Retrieve the quantum range as an integer.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return int
 	 */
@@ -70,7 +70,7 @@ class AudioTheme_Image_Editor_Imagick extends WP_Image_Editor_Imagick {
 	/**
 	 * Whether the image size is closer to 16:9 than 4:3.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return bool
 	 */
@@ -83,7 +83,7 @@ class AudioTheme_Image_Editor_Imagick extends WP_Image_Editor_Imagick {
 	/**
 	 * Crop the image to 16:9 or 4:3.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return $this
 	 */

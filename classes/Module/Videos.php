@@ -6,14 +6,14 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Videos module class.
  *
  * @package AudioTheme\Videos
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Module_Videos extends AudioTheme_Module_AbstractModule {
 	/**
@@ -21,7 +21,7 @@ class AudioTheme_Module_Videos extends AudioTheme_Module_AbstractModule {
 	 *
 	 * Used for hiding menu items when toggling modules.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $admin_menu_id = 'menu-posts-audiotheme_video';
@@ -29,7 +29,7 @@ class AudioTheme_Module_Videos extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Module id.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $id = 'videos';
@@ -37,7 +37,7 @@ class AudioTheme_Module_Videos extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Whether the module should show on the dashboard.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var bool
 	 */
 	protected $show_in_dashboard = true;
@@ -45,7 +45,7 @@ class AudioTheme_Module_Videos extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Retrieve the name of the module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */
@@ -56,7 +56,7 @@ class AudioTheme_Module_Videos extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Retrieve the module description.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */
@@ -67,7 +67,7 @@ class AudioTheme_Module_Videos extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Load the module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return $this
 	 */
@@ -80,7 +80,7 @@ class AudioTheme_Module_Videos extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Register module hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		$this->plugin->register_hooks( new AudioTheme_Taxonomy_VideoCategory( $this ) );
@@ -100,7 +100,7 @@ class AudioTheme_Module_Videos extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Register the discography archive.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_archive() {
 		$this->plugin->modules['archives']->add_post_type_archive( 'audiotheme_video' );
@@ -109,7 +109,7 @@ class AudioTheme_Module_Videos extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Get the videos rewrite base. Defaults to 'videos'.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */
@@ -129,7 +129,7 @@ class AudioTheme_Module_Videos extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Display the module overview.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function display_overview() {
 		?>
@@ -151,7 +151,7 @@ class AudioTheme_Module_Videos extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Display a button to perform the module's primary action.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function display_primary_button() {
 		printf(
@@ -166,7 +166,7 @@ class AudioTheme_Module_Videos extends AudioTheme_Module_AbstractModule {
 	 *
 	 * Templates should be included in an /audiotheme/ directory within the theme.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $template Template path.
 	 * @return string

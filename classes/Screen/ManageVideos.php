@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class providing integration with the Manage Videos administration screen.
  *
  * @package AudioTheme\Videos
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Screen_ManageVideos extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_filter( 'manage_edit-audiotheme_video_columns', array( $this, 'register_columns' ) );
@@ -28,7 +28,7 @@ class AudioTheme_Screen_ManageVideos extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register list table columns.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $columns An array of the column names to display.
 	 * @return array Filtered array of column names.

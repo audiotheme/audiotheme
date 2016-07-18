@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class providing integration with the Edit Video administration screen.
  *
  * @package AudioTheme\Videos
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Screen_EditVideo extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'load-post.php',              array( $this, 'load_screen' ) );
@@ -32,7 +32,7 @@ class AudioTheme_Screen_EditVideo extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Set up the screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function load_screen() {
 		if ( 'audiotheme_video' !== get_current_screen()->id ) {
@@ -46,14 +46,14 @@ class AudioTheme_Screen_EditVideo extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register scripts and styles.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_assets() {
 		wp_register_script(
 			'audiotheme-video-edit',
 			$this->plugin->get_url( 'admin/js/video-edit.js' ),
 			array( 'jquery', 'post', 'wp-backbone', 'wp-util' ),
-			'1.9.0',
+			'2.0.0',
 			true
 		);
 	}
@@ -61,7 +61,7 @@ class AudioTheme_Screen_EditVideo extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Enqueue assets for the Edit Venue screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function enqueue_assets() {
 		wp_enqueue_script( 'audiotheme-video-edit' );
@@ -70,7 +70,7 @@ class AudioTheme_Screen_EditVideo extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Display a field to enter a video URL after the post title.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Post object.
 	 */
@@ -137,7 +137,7 @@ class AudioTheme_Screen_EditVideo extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Process and save video info when the CPT is saved.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int     $post_id Video post ID.
 	 * @param WP_Post $post Video post object.

@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class providing integration with the Edit Gig administration screen.
  *
  * @package AudioTheme\Gigs
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Screen_EditGig extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'load-post.php',                 array( $this, 'load_screen' ) );
@@ -31,7 +31,7 @@ class AudioTheme_Screen_EditGig extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Set up the screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function load_screen() {
 		if ( 'audiotheme_gig' !== get_current_screen()->id ) {
@@ -46,7 +46,7 @@ class AudioTheme_Screen_EditGig extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register gig meta boxes.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post The gig post object being edited.
 	 */
@@ -64,7 +64,7 @@ class AudioTheme_Screen_EditGig extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Enqueue assets for the Edit Gig screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function enqueue_assets() {
 		wp_enqueue_script( 'audiotheme-gig-edit' );
@@ -74,7 +74,7 @@ class AudioTheme_Screen_EditGig extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Set up and display the main gig fields for editing.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Post object.
 	 */
@@ -110,7 +110,7 @@ class AudioTheme_Screen_EditGig extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Gig tickets meta box.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post The gig post object being edited.
 	 */
@@ -130,7 +130,7 @@ class AudioTheme_Screen_EditGig extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Print Underscore.js templates.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function print_templates() {
 		include( $this->plugin->get_path( 'admin/views/templates-gig.php' ) );
@@ -140,7 +140,7 @@ class AudioTheme_Screen_EditGig extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Process and save gig info when the CPT is saved.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int     $post_id Gig post ID.
 	 * @param WP_Post $post Gig post object.
@@ -216,7 +216,7 @@ class AudioTheme_Screen_EditGig extends AudioTheme_Screen_AbstractScreen{
 	 * If the time format option has an escape sequences, use a default format
 	 * determined by whether or not the option uses 24 hour format or not.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */

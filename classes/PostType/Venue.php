@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class for registering the venue post type and integration.
  *
  * @package AudioTheme\Gigs
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_PostType_Venue extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Post type name.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $post_type = 'audiotheme_venue';
@@ -27,7 +27,7 @@ class AudioTheme_PostType_Venue extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'init',                  array( $this, 'register_post_type' ) );
@@ -37,7 +37,7 @@ class AudioTheme_PostType_Venue extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Retrieve post type registration argments.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array
 	 */
@@ -59,7 +59,7 @@ class AudioTheme_PostType_Venue extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Retrieve post type labels.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array
 	 */
@@ -95,7 +95,7 @@ class AudioTheme_PostType_Venue extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Retrieve post updated messages.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param  WP_Post $post Post object.
 	 * @return array

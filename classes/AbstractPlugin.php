@@ -6,14 +6,14 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Common plugin class.
  *
  * @package AudioTheme
- * @since   1.9.0
+ * @since   2.0.0
  */
 abstract class AudioTheme_AbstractPlugin {
 	/**
@@ -21,7 +21,7 @@ abstract class AudioTheme_AbstractPlugin {
 	 *
 	 * Ex: plugin-name/plugin-name.php
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $basename;
@@ -29,7 +29,7 @@ abstract class AudioTheme_AbstractPlugin {
 	/**
 	 * Absolute path to the main plugin directory.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $directory;
@@ -37,7 +37,7 @@ abstract class AudioTheme_AbstractPlugin {
 	/**
 	 * Absolute path to the main plugin file.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $file;
@@ -45,7 +45,7 @@ abstract class AudioTheme_AbstractPlugin {
 	/**
 	 * Plugin identifier.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $slug;
@@ -53,7 +53,7 @@ abstract class AudioTheme_AbstractPlugin {
 	/**
 	 * URL to the main plugin directory.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $url;
@@ -61,7 +61,7 @@ abstract class AudioTheme_AbstractPlugin {
 	/**
 	 * Retrieve the absolute path for the main plugin file.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */
@@ -72,7 +72,7 @@ abstract class AudioTheme_AbstractPlugin {
 	/**
 	 * Set the plugin basename.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param  string $basename Relative path from the main plugin directory.
 	 * @return string
@@ -85,7 +85,7 @@ abstract class AudioTheme_AbstractPlugin {
 	/**
 	 * Retrieve the plugin directory.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */
@@ -96,7 +96,7 @@ abstract class AudioTheme_AbstractPlugin {
 	/**
 	 * Set the plugin's directory.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param  string $directory Absolute path to the main plugin directory.
 	 * @return $this
@@ -109,7 +109,7 @@ abstract class AudioTheme_AbstractPlugin {
 	/**
 	 * Retrieve the path to a file in the plugin.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param  string $path Optional. Path relative to the plugin root.
 	 * @return string
@@ -121,7 +121,7 @@ abstract class AudioTheme_AbstractPlugin {
 	/**
 	 * Retrieve the absolute path for the main plugin file.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */
@@ -132,7 +132,7 @@ abstract class AudioTheme_AbstractPlugin {
 	/**
 	 * Set the path to the main plugin file.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param  string $file Absolute path to the main plugin file.
 	 * @return $this
@@ -145,7 +145,7 @@ abstract class AudioTheme_AbstractPlugin {
 	/**
 	 * Retrieve the plugin indentifier.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */
@@ -156,7 +156,7 @@ abstract class AudioTheme_AbstractPlugin {
 	/**
 	 * Set the plugin identifier.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param  string $slug Plugin identifier.
 	 * @return $this
@@ -169,7 +169,7 @@ abstract class AudioTheme_AbstractPlugin {
 	/**
 	 * Retrieve the URL for a file in the plugin.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param  string $path Optional. Path relative to the plugin root.
 	 * @return string
@@ -181,7 +181,7 @@ abstract class AudioTheme_AbstractPlugin {
 	/**
 	 * Set the URL for plugin directory root.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param  string $url URL to the root of the plugin directory.
 	 * @return $this
@@ -194,7 +194,7 @@ abstract class AudioTheme_AbstractPlugin {
 	/**
 	 * Register a hook provider.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param  object $provider Hook provider.
 	 * @return $this

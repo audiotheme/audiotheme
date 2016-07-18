@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class for the GD image editor.
  *
  * @package AudioTheme\Media
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Image_Editor_GD extends WP_Image_Editor_GD {
 	/**
 	 * Whether the current environment is configured with required methods.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $args Arguments to test for GD support.
 	 * @return bool
@@ -35,7 +35,7 @@ class AudioTheme_Image_Editor_GD extends WP_Image_Editor_GD {
 	/**
 	 * Trim letterbox bars from an image.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int $fuzz Number between 0 and 100.
 	 * @return $this
@@ -56,7 +56,7 @@ class AudioTheme_Image_Editor_GD extends WP_Image_Editor_GD {
 	/**
 	 * Retrieve a pixel.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int $x Position on the x-axis.
 	 * @param int $y Position on the y-axis.
@@ -69,7 +69,7 @@ class AudioTheme_Image_Editor_GD extends WP_Image_Editor_GD {
 	/**
 	 * Whether the image size is closer to 16:9 than 4:3.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return bool
 	 */
@@ -82,7 +82,7 @@ class AudioTheme_Image_Editor_GD extends WP_Image_Editor_GD {
 	/**
 	 * Crop the image to 16:9 or 4:3.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return $this
 	 */
@@ -111,7 +111,7 @@ class AudioTheme_Image_Editor_GD extends WP_Image_Editor_GD {
 	/**
 	 * Retrieve the height of the top letterbox bar.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int $fuzz Number between 0 and 100.
 	 * @return int
@@ -135,7 +135,7 @@ class AudioTheme_Image_Editor_GD extends WP_Image_Editor_GD {
 	/**
 	 * Retrieve the height of the bottom letterbox bar.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int $fuzz Number between 0 and 100.
 	 * @return int
@@ -159,7 +159,7 @@ class AudioTheme_Image_Editor_GD extends WP_Image_Editor_GD {
 	/**
 	 * Whether a line is part of a letterbox matte.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int $y    Position on the y-axis.
 	 * @param int $fuzz Number between 0 and 100.

@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Dashboard screen class.
  *
  * @package AudioTheme\Administration
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Screen_Dashboard extends AudioTheme_Screen_AbstractScreen {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'admin_menu', array( $this, 'add_menu_item' ) );
@@ -29,7 +29,7 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen_AbstractScreen {
 	/**
 	 * Add menu items.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function add_menu_item() {
 		$page_hook = add_menu_page(
@@ -57,7 +57,7 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen_AbstractScreen {
 	/**
 	 * Set up the main Dashboard screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function load_screen() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
@@ -66,7 +66,7 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen_AbstractScreen {
 	/**
 	 * Enqueue assets for the Dashboard screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function enqueue_assets() {
 		$modules = $this->plugin->modules;
@@ -89,7 +89,7 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen_AbstractScreen {
 	/**
 	 * Display the screen header.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function display_screen_header() {
 		include( $this->plugin->get_path( 'admin/views/screen-dashboard-header.php' ) );
@@ -98,7 +98,7 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen_AbstractScreen {
 	/**
 	 * Display the screen footer.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function display_screen_footer() {
 		include( $this->plugin->get_path( 'admin/views/screen-dashboard-footer.php' ) );
@@ -107,7 +107,7 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen_AbstractScreen {
 	/**
 	 * Display the Dashboard screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function display_screen() {
 		$modules = $this->plugin->modules;
@@ -126,7 +126,7 @@ class AudioTheme_Screen_Dashboard extends AudioTheme_Screen_AbstractScreen {
 	/**
 	 * Toggle a module's status.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function ajax_toggle_module() {
 		if ( empty( $_POST['module'] ) ) {

@@ -11,7 +11,7 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
@@ -193,10 +193,10 @@ function audiotheme_page_list_classes( $classes, $page ) {
  * Get the base admin panel URL for adding a venue.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function get_audiotheme_venue_admin_url( $args = '' ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 
 	$admin_url = admin_url( 'admin.php?page=audiotheme-venue' );
 
@@ -215,10 +215,10 @@ function get_audiotheme_venue_admin_url( $args = '' ) {
  * Get the admin panel URL for viewing all venues.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function get_audiotheme_venues_admin_url( $args = '' ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 
 	$admin_url = admin_url( 'admin.php?page=audiotheme-venues' );
 
@@ -237,10 +237,10 @@ function get_audiotheme_venues_admin_url( $args = '' ) {
  * Get the admin panel URL for editing a venue.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function get_audiotheme_venue_edit_link( $admin_url, $post_id ) {
-	_deprecated_function( __FUNCTION__, '1.9.0', 'get_edit_post_link()' );
+	_deprecated_function( __FUNCTION__, '2.0.0', 'get_edit_post_link()' );
 
 	if ( 'audiotheme_venue' === get_post_type( $post_id ) ) {
 		$args = array(
@@ -258,12 +258,12 @@ function get_audiotheme_venue_edit_link( $admin_url, $post_id ) {
  * Retrieve the AudioTheme post type for the current archive.
  *
  * @since 1.7.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @return string
  */
 function get_audiotheme_current_archive_post_type() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 
 	$post_type = '';
 
@@ -288,12 +288,12 @@ function get_audiotheme_current_archive_post_type() {
  * Retrieve the AudioTheme post type for the current taxonomy archive.
  *
  * @since 1.7.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @return string
  */
 function get_audiotheme_current_taxonomy_archive_post_type() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 
 	$post_type = '';
 	$taxonomy  = get_taxonomy( get_queried_object()->taxonomy );
@@ -321,7 +321,7 @@ function get_audiotheme_current_taxonomy_archive_post_type() {
  * attempts to add the wmode parameter to YouTube videos and flash embeds.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $html HTML.
  * @param string $url oEmbed URL.
@@ -362,7 +362,7 @@ function audiotheme_oembed_html( $html, $url = null, $attr = null, $post_id = nu
  * Adds wmode=transparent query argument to oEmbedded YouTube videos.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  * @access private
  *
  * @param array $matches Iframe source matches.
@@ -386,7 +386,7 @@ function _audiotheme_oembed_youtube_wmode_parameter( $matches ) {
  * provide a filter later in the process.
  *
  * @since 1.2.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $output Output string passed from default shortcode.
  * @param array  $attr Array of shortcode attributes.

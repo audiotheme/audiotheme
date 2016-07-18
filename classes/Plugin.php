@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Main plugin class.
  *
  * @package AudioTheme
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Plugin extends AudioTheme_AbstractPlugin {
 	/**
 	 * License.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_License
 	 */
 	protected $license;
@@ -27,7 +27,7 @@ class AudioTheme_Plugin extends AudioTheme_AbstractPlugin {
 	/**
 	 * Modules.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_Module_Collection
 	 */
 	protected $modules;
@@ -35,7 +35,7 @@ class AudioTheme_Plugin extends AudioTheme_AbstractPlugin {
 	/**
 	 * Constructor method.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function __construct() {
 		$this->license = new AudioTheme_License();
@@ -45,7 +45,7 @@ class AudioTheme_Plugin extends AudioTheme_AbstractPlugin {
 	/**
 	 * Magic get method.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $name Property name.
 	 * @return mixed
@@ -62,7 +62,7 @@ class AudioTheme_Plugin extends AudioTheme_AbstractPlugin {
 	/**
 	 * Load the plugin.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function load() {
 		scb_init( array( $this, 'load_p2p_core' ) );
@@ -96,7 +96,7 @@ class AudioTheme_Plugin extends AudioTheme_AbstractPlugin {
 	/**
 	 * Install P2P database tables.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function maybe_install_p2p_tables() {
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -118,7 +118,7 @@ class AudioTheme_Plugin extends AudioTheme_AbstractPlugin {
 	 * Modules are always loaded when viewing the AudioTheme Settings screen so
 	 * they can be toggled with instant access.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	protected function load_modules() {
 		foreach ( $this->modules as $module ) {
@@ -134,7 +134,7 @@ class AudioTheme_Plugin extends AudioTheme_AbstractPlugin {
 	/**
 	 * Whether the current request is the dashboard screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return bool
 	 */

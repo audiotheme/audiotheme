@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class for integration with the Cue playlist post type.
  *
  * @package AudioTheme\Discography
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_PostType_Playlist {
 	/**
 	 * Plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_Plugin
 	 */
 	protected $plugin;
@@ -27,7 +27,7 @@ class AudioTheme_PostType_Playlist {
 	/**
 	 * Post type name.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $post_type = 'cue_playlist';
@@ -35,7 +35,7 @@ class AudioTheme_PostType_Playlist {
 	/**
 	 * Set a reference to a plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param AudioTheme_Plugin $plugin Main plugin instance.
 	 * @return $this
@@ -48,7 +48,7 @@ class AudioTheme_PostType_Playlist {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ), 15 );
@@ -58,7 +58,7 @@ class AudioTheme_PostType_Playlist {
 	/**
 	 * Enqueue playlist scripts and styles.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function enqueue_assets() {
 		if ( 'cue_playlist' !== get_current_screen()->id ) {
@@ -87,7 +87,7 @@ class AudioTheme_PostType_Playlist {
 	/**
 	 * Print playlist JavaScript templates.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function print_templates() {
 		?>

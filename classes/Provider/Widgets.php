@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Widgets provider class.
  *
  * @package AudioTheme\Widgets
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Provider_Widgets {
 	/**
 	 * Plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_Plugin
 	 */
 	protected $plugin;
@@ -27,7 +27,7 @@ class AudioTheme_Provider_Widgets {
 	/**
 	 * Set a reference to a plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param AudioTheme_Plugin $plugin Main plugin instance.
 	 * @return $this
@@ -40,7 +40,7 @@ class AudioTheme_Provider_Widgets {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
@@ -56,7 +56,7 @@ class AudioTheme_Provider_Widgets {
 	 * of an array of widget keys can be passed to load the specified widgets:
 	 * add_theme_support( 'audiotheme-widgets', array( 'upcoming-events' ) )
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_widgets() {
 		$widgets = array();

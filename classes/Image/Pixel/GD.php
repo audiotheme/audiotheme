@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class for a single pixel in an image.
  *
  * @package AudioTheme\Media
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Image_Pixel_GD {
 	/**
 	 * GD image resource.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var resource
 	 */
 	protected $image;
@@ -27,7 +27,7 @@ class AudioTheme_Image_Pixel_GD {
 	/**
 	 * Position on the x-axis.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var int
 	 */
 	protected $x;
@@ -35,7 +35,7 @@ class AudioTheme_Image_Pixel_GD {
 	/**
 	 * Position on the y-axis.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var int
 	 */
 	protected $y;
@@ -43,7 +43,7 @@ class AudioTheme_Image_Pixel_GD {
 	/**
 	 * Class constructor method.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param resource $image GD image resource.
 	 * @param int      $x     Position of the pixel on the x-axis.
@@ -58,7 +58,7 @@ class AudioTheme_Image_Pixel_GD {
 	/**
 	 * Retrieve the pixel's RGB values.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array
 	 */
@@ -70,7 +70,7 @@ class AudioTheme_Image_Pixel_GD {
 	/**
 	 * Retrieve the pixel's luma.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @link https://en.wikipedia.org/wiki/Luma_%28video%29
 	 *

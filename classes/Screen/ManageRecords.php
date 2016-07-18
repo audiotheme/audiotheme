@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class providing integration with the Manage Records administration screen.
  *
  * @package AudioTheme\Discography
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Screen_ManageRecords extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_filter( 'parse_query',                                    array( $this, 'admin_query' ) );
@@ -31,7 +31,7 @@ class AudioTheme_Screen_ManageRecords extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Custom sort records on the Manage Records screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Query $wp_query The main WP_Query object. Passed by reference.
 	 */
@@ -67,7 +67,7 @@ class AudioTheme_Screen_ManageRecords extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register record columns.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $columns An array of the column names to display.
 	 * @return array Filtered array of column names.
@@ -92,7 +92,7 @@ class AudioTheme_Screen_ManageRecords extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register sortable record columns.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $columns Column query vars with their corresponding column id as the key.
 	 * @return array
@@ -106,7 +106,7 @@ class AudioTheme_Screen_ManageRecords extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Display custom record columns.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $column_name The id of the column to display.
 	 * @param int    $post_id Post ID.

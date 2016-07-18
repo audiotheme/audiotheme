@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class providing integration with the Edit Venue administration screen.
  *
  * @package AudioTheme\Gigs
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Screen_EditVenue extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'load-post.php',                   array( $this, 'load_screen' ) );
@@ -31,7 +31,7 @@ class AudioTheme_Screen_EditVenue extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Set up the screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function load_screen() {
 		if ( 'audiotheme_venue' !== get_current_screen()->id ) {
@@ -45,7 +45,7 @@ class AudioTheme_Screen_EditVenue extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register venue meta boxes.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post The venue post object being edited.
 	 */
@@ -72,7 +72,7 @@ class AudioTheme_Screen_EditVenue extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Enqueue assets for the Edit Venue screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function enqueue_assets() {
 		wp_enqueue_script( 'audiotheme-venue-edit' );
@@ -81,7 +81,7 @@ class AudioTheme_Screen_EditVenue extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Set up and display the main venue fields for editing.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Post object.
 	 */
@@ -93,7 +93,7 @@ class AudioTheme_Screen_EditVenue extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Display venue contact information meta box.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Venue post object.
 	 */
@@ -105,7 +105,7 @@ class AudioTheme_Screen_EditVenue extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Display venue notes meta box.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Venue post object.
 	 */
@@ -125,7 +125,7 @@ class AudioTheme_Screen_EditVenue extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Process and save venue info when the CPT is saved.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int     $post_id Venue post ID.
 	 * @param WP_Post $post Venue post object.

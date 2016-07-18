@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Videos AJAX actions class.
  *
  * @package AudioTheme\Videos
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_AJAX_Videos {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'wp_ajax_audiotheme_get_video_oembed_data', array( $this, 'get_video_oembed_data' ) );
@@ -28,7 +28,7 @@ class AudioTheme_AJAX_Videos {
 	/**
 	 * AJAX method to retrieve the thumbnail for a video.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function get_video_oembed_data() {
 		$post_id = absint( $_POST['post_id'] );
@@ -56,7 +56,7 @@ class AudioTheme_AJAX_Videos {
 	 * @todo Consider doing video URL comparison rather than oembed thumbnail
 	 *       comparison?
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int    $post_id Video post ID.
 	 * @param string $url Video URL.
@@ -116,7 +116,7 @@ class AudioTheme_AJAX_Videos {
 	/**
 	 * Download an image from the specified URL and attach it to a post.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @see media_sideload_image()
 	 *
@@ -156,7 +156,7 @@ class AudioTheme_AJAX_Videos {
 	/**
 	 * Whether a URL points to YouTube.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $url Video URL.
 	 * @return bool
@@ -168,7 +168,7 @@ class AudioTheme_AJAX_Videos {
 	/**
 	 * Parse a YouTube URL to retrieve the ID.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @link http://stackoverflow.com/a/27728417
 	 *
@@ -183,7 +183,7 @@ class AudioTheme_AJAX_Videos {
 	/**
 	 * Retrieve the largest possible thumbnail for a YouTube video.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $url Video URL.
 	 */

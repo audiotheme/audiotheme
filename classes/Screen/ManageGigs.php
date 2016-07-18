@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class providing integration with the Manage Gigs administration screen.
  *
  * @package AudioTheme\Gigs
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_filter( 'parse_query',   array( $this, 'parse_admin_query' ) );
@@ -29,7 +29,7 @@ class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Set up the screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function load_screen() {
 		if ( 'edit-audiotheme_gig' !== get_current_screen()->id ) {
@@ -48,7 +48,7 @@ class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Sort posts on the screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Query $wp_query The main WP_Query object passed by reference.
 	 */
@@ -134,7 +134,7 @@ class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Filter the view links.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $views Array of view links.
 	 * @return array
@@ -194,7 +194,7 @@ class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Display the months filter dropdown.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function display_months_filter() {
 		global $wpdb, $wp_locale;
@@ -248,7 +248,7 @@ class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Display the venues filter dropdown.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function display_venues_filter() {
 		global $wpdb;
@@ -283,7 +283,7 @@ class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register list table columns.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $columns An array of the column names to display.
 	 * @return array Filtered array of column names.
@@ -308,7 +308,7 @@ class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register the primary column.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param  string $column_id Column name.
 	 * @return string
@@ -320,7 +320,7 @@ class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register sortable list table columns.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $columns Column query vars with their corresponding column id as the key.
 	 * @return array
@@ -335,7 +335,7 @@ class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Display custom list table columns.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $column_id The id of the column to display.
 	 * @param int    $post_id Post ID.
@@ -358,7 +358,7 @@ class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Display the date column value.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $gig Gig post object.
 	 */
@@ -384,7 +384,7 @@ class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Retrieve the current view.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */

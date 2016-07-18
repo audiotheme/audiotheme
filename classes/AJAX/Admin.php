@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Administration AJAX provider class.
  *
  * @package AudioTheme\Administration
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_AJAX_Admin {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'wp_ajax_audiotheme_ajax_insert_term',   array( $this, 'insert_term' ) );
@@ -28,7 +28,7 @@ class AudioTheme_AJAX_Admin {
 	/**
 	 * AJAX callback to insert a new term.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function insert_term() {
 		$response       = array();

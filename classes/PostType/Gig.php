@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class for registering the gig post type and integration.
  *
  * @package AudioTheme\Gigs
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Gigs module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_Module_Gigs
 	 */
 	protected $module;
@@ -27,7 +27,7 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Post type name.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $post_type = 'audiotheme_gig';
@@ -35,7 +35,7 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Constructor method.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param AudioTheme_Module_Gigs $module Gigs module.
 	 */
@@ -46,7 +46,7 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'init',                     array( $this, 'register_post_type' ) );
@@ -64,7 +64,7 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Register query variables.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $vars Array of valid query variables.
 	 * @return array
@@ -81,7 +81,7 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 	 * to showing upcoming gigs unless a specific date range is requested (year,
 	 * month, day).
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Query $wp_query The main WP_Query object. Passed by reference.
 	 */
@@ -162,7 +162,7 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Filter the permalink for the gigs archive.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $link The default archive URL.
 	 * @param string $post_type Post type.
@@ -185,7 +185,7 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 	 * Allows the standard WordPress API function get_permalink() to return the
 	 * correct URL when used with a gig post type.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @see get_post_permalink()
 	 *
@@ -216,7 +216,7 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 	 * when the ID is a 4 digit number, it will conflict with date-based permalinks.
 	 * Any slugs that match the ID are preprended with 'gig-'.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @see wp_unique_post_slug()
 	 *
@@ -279,7 +279,7 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 	 * saved. If the saved slug matches the post ID for a gig, it's prefixed with
 	 * 'gig-' here to mimic the behavior in audiotheme_gig_unique_slug().
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int     $post_id Post ID.
 	 * @param WP_Post $post Post object.
@@ -311,7 +311,7 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 	 * Determines if a venue's gig_count meta field needs to be updated when a
 	 * gig is deleted.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int $post_id ID of the gig being deleted.
 	 */
@@ -328,7 +328,7 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Add useful classes to gig posts.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array        $classes List of classes.
 	 * @param string|array $class One or more classes to add to the class list.
@@ -346,7 +346,7 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Retrieve post type registration argments.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array
 	 */
@@ -369,7 +369,7 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Retrieve post type labels.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array
 	 */
@@ -405,7 +405,7 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Retrieve post updated messages.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param  WP_Post $post Post object.
 	 * @return array

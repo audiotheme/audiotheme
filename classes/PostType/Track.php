@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class for registering the track post type and integration.
  *
  * @package AudioTheme\Discography
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_PostType_Track extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Discography module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_Module_Discography
 	 */
 	protected $module;
@@ -27,7 +27,7 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Post type name.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $post_type = 'audiotheme_track';
@@ -35,7 +35,7 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Constructor method.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param AudioTheme_Module_Discography $module Gigs module.
 	 */
@@ -46,7 +46,7 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'init',                    array( $this, 'register_post_type' ) );
@@ -64,7 +64,7 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType_AbstractPostType {
 	 * Tracks must belong to a record, so the parent record is set for track
 	 * requests.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @global wpdb $wpdb
 	 *
@@ -102,7 +102,7 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Filter the permalink for track archives.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $link The default archive URL.
 	 * @param string $post_type Post type.
@@ -123,7 +123,7 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType_AbstractPostType {
 	 * Allows the standard WordPress API function get_permalink() to return the
 	 * correct URL when used with a track post type.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @see get_post_permalink()
 	 *
@@ -161,7 +161,7 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType_AbstractPostType {
 	 * Tracks should always be associated with a record so their slugs only need
 	 * to be unique within the context of a record.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @see wp_unique_post_slug()
 	 * @global wpdb $wpdb
@@ -208,7 +208,7 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType_AbstractPostType {
 	 * Transform a track id or array of data into the expected format for use as
 	 * a JavaScript object.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int|array $track Track ID or array of expected track properties.
 	 * @return array
@@ -278,7 +278,7 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType_AbstractPostType {
 	 * @todo The track & record ids should be collected at some point so they
 	 *       can all be fetched in a single query.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function print_tracks_js() {
 		global $audiotheme_enqueued_tracks;
@@ -337,7 +337,7 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Retrieve post type registration argments.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array
 	 */
@@ -394,7 +394,7 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Retrieve post updated messages.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Post object.
 	 * @return array

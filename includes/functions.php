@@ -468,7 +468,7 @@ function audiotheme_build_query( $data, $arg_separator = '|', $value_separator =
  *
  * Overwrites the existing attachment and regenerates all sizes.
  *
- * @since 1.9.0
+ * @since 2.0.0
  *
  * @param int $attachment_id Attachment ID.
  */

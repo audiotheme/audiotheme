@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Base post type class.
  *
  * @package AudioTheme
- * @since   1.9.0
+ * @since   2.0.0
  */
 abstract class AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Register the post type.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_post_type() {
 		register_post_type( $this->post_type, $this->get_args() );
@@ -28,7 +28,7 @@ abstract class AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Retrieve post type registration arguments.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array
 	 */
@@ -37,7 +37,7 @@ abstract class AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Retrieve post updated messages.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Post object.
 	 * @return array
@@ -47,7 +47,7 @@ abstract class AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Filter post type update messages.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $messages Post type updated messages.
 	 * @return array
@@ -67,7 +67,7 @@ abstract class AudioTheme_PostType_AbstractPostType {
 	 * Add preview and view links to update messages for publicly queryable
 	 * posts types.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array   $messages Post updated messages.
 	 * @param WP_Post $post Post object.
@@ -97,7 +97,7 @@ abstract class AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Whether a post has a draft or pending status.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Post $post Post object.
 	 * @return bool

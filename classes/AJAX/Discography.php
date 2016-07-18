@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Discography AJAX actions class.
  *
  * @package AudioTheme\Discography
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_AJAX_Discography {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'wp_ajax_audiotheme_ajax_get_default_track',    array( $this, 'get_default_track' ) );
@@ -31,7 +31,7 @@ class AudioTheme_AJAX_Discography {
 	/**
 	 * Create a default track for use in the tracklist repeater.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function get_default_track() {
 		$is_valid_nonce = ! empty( $_POST['nonce'] ) && wp_verify_nonce( $_POST['nonce'], 'get-default-track_' . $_POST['record'] );
@@ -49,7 +49,7 @@ class AudioTheme_AJAX_Discography {
 	/**
 	 * Retrieve a track for use in Cue.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function get_playlist_track() {
 		wp_send_json_success( get_cue_playlist_track( absint( $_POST['post_id'] ) ) );
@@ -58,7 +58,7 @@ class AudioTheme_AJAX_Discography {
 	/**
 	 * Retrieve a collection of tracks for use in Cue.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function get_playlist_tracks() {
 		$posts = get_posts( array(
@@ -78,7 +78,7 @@ class AudioTheme_AJAX_Discography {
 	/**
 	 * Retrieve a list of records and their corresponding tracks for use in Cue.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function get_playlist_records() {
 		global $wpdb;
@@ -148,7 +148,7 @@ class AudioTheme_AJAX_Discography {
 	/**
 	 * Convert a track into the format expected by the Cue plugin.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int|WP_Post $post Post object or ID.
 	 * @return object Track object expected by Cue.

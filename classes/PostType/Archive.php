@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class for registering the archive post type and integration.
  *
  * @package AudioTheme\Archives
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Archives module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_Module_Archives
 	 */
 	protected $module;
@@ -27,7 +27,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Post type name.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $post_type = 'audiotheme_archive';
@@ -35,7 +35,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Constructor method.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param AudioTheme_Module_Archives $module Archives module.
 	 */
@@ -46,7 +46,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'init',                    array( $this, 'register_post_type' ), 5 );
@@ -68,7 +68,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	 *
 	 * Sets the number of posts per archive page based on saved archive meta.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Query $wp_query The main WP_Query object. Passed by reference.
 	 */
@@ -113,7 +113,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	 * Filter archive CPT permalinks to match the corresponding post type's
 	 * archive link.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string  $post_link Default permalink.
 	 * @param WP_Post $post Post object.
@@ -155,7 +155,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Filter post type archive permalinks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $link Post type archive link.
 	 * @param string $post_type Post type name.
@@ -175,7 +175,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	 * Filter the default post_type_archive_title() template tag and replace
 	 * with custom archive title.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $title Post type archive title.
 	 * @return string
@@ -188,7 +188,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Provide an edit link for archives in the admin bar.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Admin_Bar $wp_admin_bar Admin bar object instance.
 	 */
@@ -214,7 +214,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Flush the rewrite rules when an archive post slug is changed.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int     $post_id Post ID.
 	 * @param WP_Post $post_after Updated post object.
@@ -232,7 +232,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Delete the cached reference to an archive post.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $post_type Post type name.
 	 */
@@ -253,7 +253,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Retrieve post type registration argments.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array
 	 */
@@ -291,7 +291,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Retrieve post type labels.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array
 	 */
@@ -327,7 +327,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	/**
 	 * Retrieve post updated messages.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param  WP_Post $post Post object.
 	 * @return array

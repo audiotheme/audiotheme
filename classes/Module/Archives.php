@@ -16,20 +16,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Archives module class.
  *
  * @package AudioTheme\Archives
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Map of post types and archive post IDs.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var array An associative array with post types as the keys and archive
 	 *            post IDs as the values.
 	 */
@@ -38,7 +38,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Cached archive settings.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var array Post type name is the key and the value is an array of archive settings.
 	 */
 	protected $archives = array();
@@ -46,7 +46,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Post type for the current request.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $current_archive_post_type = '';
@@ -54,7 +54,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Module id.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $id = 'archives';
@@ -62,7 +62,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Retrieve the name of the module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */
@@ -73,7 +73,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Load the module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return $this
 	 */
@@ -86,7 +86,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Register module hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		$this->plugin->register_hooks( new AudioTheme_PostType_Archive( $this ) );
@@ -107,7 +107,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	 *
 	 * This should be called after the post type has been registered.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $post_type Post type name.
 	 * @param array  $args {
@@ -128,7 +128,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Retrieve the archive post ID for a post type.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $post_type Optional. Post type name. Defaults to the current post type.
 	 * @return int
@@ -142,7 +142,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Retrieve archive post IDs.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array Associative array with post types as keys and post IDs as the values.
 	 */
@@ -153,7 +153,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Retrieve archive meta.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $key Optional. The meta key to retrieve. By default, returns data for all keys.
 	 * @param bool   $single Optional. Whether to return a single value.
@@ -183,7 +183,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Retrieve the title for a post type archive.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $post_type Optional. Post type name. Defaults to the current post type.
 	 * @param string $title Optional. Fallback title.
@@ -207,7 +207,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Retrieve the post type for the current query.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */
@@ -224,7 +224,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Retrieve archive settings fields and data.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $post_type Post type name.
 	 * @return array
@@ -233,7 +233,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 		/**
 		 * Enable and filter post type archive settings.
 		 *
-		 * @since 1.9.0
+		 * @since 2.0.0
 		 *
 		 * @param array $settings {
 		 *     Settings to enable for the archive.
@@ -256,7 +256,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Retrieve the post type for the current archive request.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */
@@ -272,7 +272,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	 * settings as a post type archive, set the post type with this method in
 	 * 'pre_get_posts'.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $post_type Post type name.
 	 */
@@ -283,7 +283,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Determine if a post ID is for an archive post.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int $archive_id Post ID.
 	 * @return string|bool Post type name if true, otherwise false.
@@ -296,7 +296,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Whether the current query has a corresponding archive post.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array|string $post_types Optional. A post type name or array of
 	 *                                 post type names. Defaults to all archives
@@ -317,7 +317,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	 * Ensures the user has the capability to edit pages in general as well as
 	 * the individual page before displaying the submenu item.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function admin_menu() {
 		$archives = $this->get_archive_ids();
@@ -359,7 +359,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	 * Highlight the corresponding top level and submenu items when editing an
 	 * archive post.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $parent_file A parent file identifier.
 	 * @return string
@@ -385,7 +385,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	 * Queries all the archives at once instead of running separate queries for
 	 * each archive.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function prime_archives_cache() {
 		new WP_Query( array(
@@ -403,7 +403,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	 * it exists in the settings defined by the theme, otherwise, return the
 	 * theme default.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param mixed  $value Existing meta value.
 	 * @param string $key Optional. The meta key to retrieve. By default, returns data for all keys.
@@ -428,7 +428,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Update a post type's rewrite base option.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $post_type Post type slug.
 	 * @param int    $archive_id Archive post ID.
@@ -443,7 +443,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	 *
 	 * Checks the 'has_archive' and 'with_front' args in order to build the slug.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $post_type Post type name.
 	 * @return string Archive slug.
@@ -480,7 +480,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	 * The post type's plural label is used for the post title and the defined
 	 * rewrite slug is used for the postname.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $post_type Post type name.
 	 * @return int Post ID.
@@ -514,7 +514,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 
 		// Search the inactive option before creating a new page.
 		// The 'audiotheme_archives_inactive' option should be empty when
-		// upgrading to 1.9.0. This is here for legacy purposes.
+		// upgrading to 2.0.0. This is here for legacy purposes.
 		$inactive = get_option( 'audiotheme_archives_inactive' );
 		if ( $inactive && isset( $inactive[ $post_type ] ) && get_post( $inactive[ $post_type ] ) ) {
 			#$post_id = $inactive[ $post_type ];
@@ -546,7 +546,7 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Whether an archive post is valid for the given post type.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param  $post_id   $post_id   Archive post ID.
 	 * @param  $post_type $post_type Archive post type.

@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * License class.
  *
  * @package AudioTheme
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_License {
 	/**
 	 * Option name for storing the key.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	const OPTION_NAME = 'audiotheme_license_key';
@@ -33,7 +33,7 @@ class AudioTheme_License {
 	/**
 	 * Constructor method.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $key License key.
 	 */
@@ -44,7 +44,7 @@ class AudioTheme_License {
 	/**
 	 * Whether a key has been saved.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return boolean
 	 */
@@ -56,7 +56,7 @@ class AudioTheme_License {
 	/**
 	 * Retrieve the license key.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */
@@ -70,7 +70,7 @@ class AudioTheme_License {
 	/**
 	 * Set the license key.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $key License key.
 	 * @return $this
@@ -83,7 +83,7 @@ class AudioTheme_License {
 	/**
 	 * Whether the key is valid.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return boolean
 	 */
@@ -101,7 +101,7 @@ class AudioTheme_License {
 	/**
 	 * Activate the current site.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return object|WP_Error
 	 */
@@ -120,7 +120,7 @@ class AudioTheme_License {
 	 *
 	 * Forces the key to be reactivated.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return $this
 	 */
@@ -132,7 +132,7 @@ class AudioTheme_License {
 	/**
 	 * Save the license key.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return $this
 	 */
@@ -144,7 +144,7 @@ class AudioTheme_License {
 	/**
 	 * Send a remote API request.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $args Arguments to send to the API endpoint.
 	 * @return object JSON-decoded response or WP_Error on failure.

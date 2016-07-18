@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Administration assets provider class.
  *
  * @package AudioTheme\Administration
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Provider_AdminAssets {
 	/**
 	 * Plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_Plugin
 	 */
 	protected $plugin;
@@ -27,7 +27,7 @@ class AudioTheme_Provider_AdminAssets {
 	/**
 	 * Set a reference to a plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param AudioTheme_Plugin $plugin Main plugin instance.
 	 * @return $this
@@ -40,7 +40,7 @@ class AudioTheme_Provider_AdminAssets {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'register_assets' ), 1 );
@@ -50,7 +50,7 @@ class AudioTheme_Provider_AdminAssets {
 	/**
 	 * Register admin scripts and styles.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_assets() {
 		$base_url = set_url_scheme( $this->plugin->get_url( 'admin/js' ) );
@@ -105,7 +105,7 @@ class AudioTheme_Provider_AdminAssets {
 	/**
 	 * Enqueue global admin scripts and styles.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function enqueue_assets() {
 		wp_enqueue_script( 'audiotheme-admin' );

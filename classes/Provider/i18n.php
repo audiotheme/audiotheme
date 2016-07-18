@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Internationalization provider class.
  *
  * @package AudioTheme\i18n
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Provider_i18n {
 	/**
 	 * Plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_Plugin
 	 */
 	protected $plugin;
@@ -27,7 +27,7 @@ class AudioTheme_Provider_i18n {
 	/**
 	 * Set a reference to a plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param AudioTheme_Plugin $plugin Main plugin instance.
 	 * @return $this
@@ -42,7 +42,7 @@ class AudioTheme_Provider_i18n {
 	 *
 	 * Loads the text domain during the `plugins_loaded` action.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		if ( did_action( 'plugins_loaded' ) ) {
@@ -55,7 +55,7 @@ class AudioTheme_Provider_i18n {
 	/**
 	 * Load the text domain to localize the plugin.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function load_textdomain() {
 		$plugin_rel_path = dirname( $this->plugin->get_basename() ) . '/languages';

@@ -10,7 +10,7 @@
  * Plugin Name: AudioTheme
  * Plugin URI:  https://audiotheme.com/view/audiotheme/
  * Description: A platform for music-oriented websites, allowing for easy management of gigs, discography, videos and more.
- * Version:     1.9.0-beta
+ * Version:     2.0.0-beta
  * Author:      AudioTheme
  * Author URI:  https://audiotheme.com/
  * License:     GPL-2.0+
@@ -42,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * The plugin version.
  */
-define( 'AUDIOTHEME_VERSION', '1.9.0-beta' );
+define( 'AUDIOTHEME_VERSION', '2.0.0-beta' );
 
 /**
  * Plugin path.
@@ -87,7 +87,7 @@ if ( is_admin() ) {
 /**
  * Retrieve the AudioTheme plugin instance.
  *
- * @since 1.9.0
+ * @since 2.0.0
  *
  * @return AudioTheme_Plugin
  */

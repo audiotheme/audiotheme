@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * License key setting class.
  *
  * @package AudioTheme\Settings
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Provider_Setting_LicenseKey {
 	/**
 	 * License.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_License
 	 */
 	protected $license;
@@ -27,7 +27,7 @@ class AudioTheme_Provider_Setting_LicenseKey {
 	/**
 	 * Option group.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $page = 'audiotheme-settings';
@@ -35,7 +35,7 @@ class AudioTheme_Provider_Setting_LicenseKey {
 	/**
 	 * License key option name.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $option_name;
@@ -43,7 +43,7 @@ class AudioTheme_Provider_Setting_LicenseKey {
 	/**
 	 * Constructor method.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param AudioTheme_License $license License instance.
 	 */
@@ -59,7 +59,7 @@ class AudioTheme_Provider_Setting_LicenseKey {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'wp_ajax_audiotheme_ajax_activate_license', array( $this, 'ajax_activate_license' ) );
@@ -75,7 +75,7 @@ class AudioTheme_Provider_Setting_LicenseKey {
 	/**
 	 * Register the settings option.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_settings() {
 		register_setting(
@@ -88,7 +88,7 @@ class AudioTheme_Provider_Setting_LicenseKey {
 	/**
 	 * Add settings sections.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function add_sections() {
 		add_settings_section(
@@ -102,7 +102,7 @@ class AudioTheme_Provider_Setting_LicenseKey {
 	/**
 	 * Register settings fields.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function add_fields() {
 		add_settings_field(
@@ -117,7 +117,7 @@ class AudioTheme_Provider_Setting_LicenseKey {
 	/**
 	 * Display the license section.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function display_section_description() {
 		printf(
@@ -131,7 +131,7 @@ class AudioTheme_Provider_Setting_LicenseKey {
 	/**
 	 * Display the license key field.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function display_field() {
 		?>
@@ -153,7 +153,7 @@ class AudioTheme_Provider_Setting_LicenseKey {
 	 * Send a request to the remote API to activate the license for the current
 	 * site.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function ajax_activate_license() {
 		check_ajax_referer( 'audiotheme-activate-license', 'nonce' );
@@ -171,7 +171,7 @@ class AudioTheme_Provider_Setting_LicenseKey {
 	 *
 	 * Forces the new key to be activated.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function on_option_update() {
 		$this->license->reset();
@@ -182,7 +182,7 @@ class AudioTheme_Provider_Setting_LicenseKey {
 	 *
 	 * Forces the license key to be reactivated.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param object $response Update response.
 	 */
@@ -202,7 +202,7 @@ class AudioTheme_Provider_Setting_LicenseKey {
 	/**
 	 * Manually save network settings.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function save_network_settings() {
 		$is_valid_nonce = ! empty( $_POST['_wpnonce'] ) && wp_verify_nonce( $_POST['_wpnonce'], 'audiotheme-network-settings-options' );

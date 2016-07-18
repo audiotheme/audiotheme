@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Update manager class.
  *
  * @package AudioTheme\Administration
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_UpdateManager {
 	/**
 	 * Plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_Plugin
 	 */
 	protected $plugin;
@@ -27,7 +27,7 @@ class AudioTheme_UpdateManager {
 	/**
 	 * Set a reference to a plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param AudioTheme_Plugin $plugin Main plugin instance.
 	 * @return $this
@@ -40,7 +40,7 @@ class AudioTheme_UpdateManager {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		if ( ! is_multisite() || is_network_admin() ) {
@@ -57,7 +57,7 @@ class AudioTheme_UpdateManager {
 	/**
 	 * Check for AudioTheme and theme updates.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function update() {
 		$api_data = array( 'license' => $this->plugin->license->get_key() );
@@ -70,7 +70,7 @@ class AudioTheme_UpdateManager {
 	/**
 	 * Display a notice to register if the license key is empty.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $notice The default notice.
 	 * @return string
@@ -90,7 +90,7 @@ class AudioTheme_UpdateManager {
 	/**
 	 * Set up the plugin updater.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $api_data Extra data to send to the update API.
 	 */
@@ -106,7 +106,7 @@ class AudioTheme_UpdateManager {
 	/**
 	 * Set up the theme updater.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $api_data Extra data to send to the update API.
 	 */
@@ -131,7 +131,7 @@ class AudioTheme_UpdateManager {
 	 *
 	 * @todo Implement bulk updating.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $api_data Extra data to send to the update API.
 	 */
@@ -165,7 +165,7 @@ class AudioTheme_UpdateManager {
 	 * Add AudioTheme themes to a site option so they can be checked for updates
 	 * when in multsite mode.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $theme Theme slug.
 	 * @param array  $api_args Optional. Arguments to send to the remote API.

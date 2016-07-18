@@ -6,14 +6,14 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Gigs module class.
  *
  * @package AudioTheme\Gigs
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	/**
@@ -21,7 +21,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	 *
 	 * Used for hiding menu items when toggling modules.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $admin_menu_id = 'menu-posts-audiotheme_gig';
@@ -29,7 +29,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Module id.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $id = 'gigs';
@@ -37,7 +37,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Whether the module should show on the dashboard.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var bool
 	 */
 	protected $show_in_dashboard = true;
@@ -45,7 +45,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Retrieve the name of the module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */
@@ -56,7 +56,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Retrieve the module description.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */
@@ -67,7 +67,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Load the module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return $this
 	 */
@@ -81,7 +81,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Register module hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		$this->plugin->register_hooks( new AudioTheme_PostType_Gig( $this ) );
@@ -110,7 +110,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Register the gig archive.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_archive() {
 		$this->plugin->modules['archives']->add_post_type_archive( 'audiotheme_gig' );
@@ -119,7 +119,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Register post connections.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_post_connections() {
 		p2p_register_connection_type( array(
@@ -134,7 +134,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Get the gigs rewrite base. Defaults to 'shows'.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */
@@ -154,7 +154,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Display the module overview.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function display_overview() {
 		?>
@@ -176,7 +176,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Display a button to perform the module's primary action.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function display_primary_button() {
 		printf(
@@ -189,7 +189,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Reroute feed requests to the appropriate template for processing.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function template_redirect() {
 		global $wp_query;
@@ -224,7 +224,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	 *
 	 * Templates should be included in an /audiotheme/ directory within the theme.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $template Template path.
 	 * @return string
@@ -244,7 +244,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Add connected venues to a gig query.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array    $posts Array of posts.
 	 * @param WP_Query $wp_query Query passed by reference.
@@ -277,7 +277,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	 *       /base/YYYY/page/2/
 	 *       etc.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Rewrite $wp_rewrite The main rewrite object. Passed by reference.
 	 */
@@ -303,7 +303,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Register administration scripts and styles.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_admin_assets() {
 		$post_type_object = get_post_type_object( 'audiotheme_venue' );
@@ -342,7 +342,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Exclude metadata from exports.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param  bool   $result   Whether the metadata should be excluded.
 	 * @param  string $meta_key Meta key.
@@ -357,7 +357,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	 *
 	 * @todo Try to do this only when a gig or venue is imported.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function remap_gig_venues() {
 		global $wpdb;
@@ -377,7 +377,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Retrieve the base slug to use for past gigs rewrite rules.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */

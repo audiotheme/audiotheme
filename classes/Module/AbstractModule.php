@@ -6,14 +6,14 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Base module class.
  *
  * @package AudioTheme\Modules
- * @since   1.9.0
+ * @since   2.0.0
  */
 abstract class AudioTheme_Module_AbstractModule {
 	/**
@@ -21,7 +21,7 @@ abstract class AudioTheme_Module_AbstractModule {
 	 *
 	 * Used for hiding menu items when toggling modules.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $admin_menu_id;
@@ -29,7 +29,7 @@ abstract class AudioTheme_Module_AbstractModule {
 	/**
 	 * Module id.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $id;
@@ -37,7 +37,7 @@ abstract class AudioTheme_Module_AbstractModule {
 	/**
 	 * Plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_Plugin
 	 */
 	protected $plugin;
@@ -45,7 +45,7 @@ abstract class AudioTheme_Module_AbstractModule {
 	/**
 	 * Whether the module should show on the dashboard.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var bool
 	 */
 	protected $show_in_dashboard = false;
@@ -53,7 +53,7 @@ abstract class AudioTheme_Module_AbstractModule {
 	/**
 	 * Constructor method.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function __construct( $plugin = null ) {
 		$this->plugin = $plugin;
@@ -62,7 +62,7 @@ abstract class AudioTheme_Module_AbstractModule {
 	/**
 	 * Magic getter.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $name Property name.
 	 * @return mixed Property value.
@@ -82,7 +82,7 @@ abstract class AudioTheme_Module_AbstractModule {
 	/**
 	 * Retrieve the name of the module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */
@@ -91,7 +91,7 @@ abstract class AudioTheme_Module_AbstractModule {
 	/**
 	 * Retrieve the module description.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */
@@ -104,7 +104,7 @@ abstract class AudioTheme_Module_AbstractModule {
 	 *
 	 * Typically occurs after the text domain has been loaded.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return $this
 	 */
@@ -115,14 +115,14 @@ abstract class AudioTheme_Module_AbstractModule {
 	/**
 	 * Register module hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	abstract public function register_hooks();
 
 	/**
 	 * Whether the module's status can be toggled.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return bool
 	 */
@@ -133,7 +133,7 @@ abstract class AudioTheme_Module_AbstractModule {
 	/**
 	 * Whether the module is active.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return bool
 	 */
@@ -145,7 +145,7 @@ abstract class AudioTheme_Module_AbstractModule {
 	/**
 	 * Prepare a module for use in JavaScript.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array
 	 */
@@ -172,7 +172,7 @@ abstract class AudioTheme_Module_AbstractModule {
 	/**
 	 * Whether the module should show on the dashboard.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function show_in_dashboard() {
 		return (bool) $this->show_in_dashboard;

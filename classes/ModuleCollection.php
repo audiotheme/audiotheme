@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Module collection class.
  *
  * @package AudioTheme\Modules
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Modules.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var array
 	 */
 	protected $modules;
@@ -27,7 +27,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Register a module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string            $id Module id.
 	 * @param AudioTheme_Module $module Module object.
@@ -41,7 +41,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Whether a module is active.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $module_id Module identifier.
 	 * @return bool
@@ -57,7 +57,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Retrieve all module ids.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array
 	 */
@@ -68,7 +68,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Retrieve all active modules.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array
 	 */
@@ -86,7 +86,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Retrieve inactive modules.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array
 	 */
@@ -104,7 +104,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Activate a module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $module_id Module identifier.
 	 * @return $this
@@ -119,7 +119,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Deactivate a module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $module_id Module identifier.
 	 * @return $this
@@ -135,7 +135,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Prepare a module for use in JavaScript.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return array
 	 */
@@ -150,7 +150,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Retrieve the number of registered modules.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return int
 	 */
@@ -161,7 +161,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Retrieve the current module in an iterator.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return AudioTheme_Module
 	 */
@@ -172,7 +172,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Retrieve the key of the current module in an iterator.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @return string
 	 */
@@ -183,7 +183,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Move the pointer to the next module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function next() {
 		next( $this->modules );
@@ -192,7 +192,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Reset to the first module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function rewind() {
 		reset( $this->modules );
@@ -212,7 +212,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Whether an item exists at the given offset.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $offset Item identifier.
 	 * @return bool
@@ -224,7 +224,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Retrieve a module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $offset Item identifier.
 	 * @return array
@@ -236,7 +236,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Register a module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $offset Item identifier.
 	 * @param array  $value Item data.
@@ -248,7 +248,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	/**
 	 * Remove a module.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $offset Item identifier.
 	 */

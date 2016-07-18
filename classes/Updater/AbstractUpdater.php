@@ -349,7 +349,7 @@ abstract class AudioTheme_Updater_AbstractUpdater {
 	/**
 	 * Activate a license key.
 	 *
-	 * @deprecated 1.9.0
+	 * @deprecated 2.0.0
 	 * @since 1.0.0
 	 *
 	 * @param string $key License key.

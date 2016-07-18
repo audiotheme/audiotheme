@@ -6,7 +6,7 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
@@ -75,7 +75,7 @@ function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
 /**
  * Update a gig's venue and the gig count for any modified venues.
  *
- * @since 1.9.0
+ * @since 2.0.0
  *
  * @param int $gig_id Gig ID.
  * @param int $venue_id Venue ID.
@@ -229,7 +229,7 @@ function get_default_audiotheme_venue_properties() {
 /**
  * Prepare a venue for use in JavaScript.
  *
- * @since 1.9.0
+ * @since 2.0.0
  *
  * @param int $venue_id Venue ID.
  * @return object Venue object.

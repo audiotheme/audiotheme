@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Assets provider class.
  *
  * @package AudioTheme
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Provider_Assets {
 	/**
 	 * Plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_Plugin
 	 */
 	protected $plugin;
@@ -27,7 +27,7 @@ class AudioTheme_Provider_Assets {
 	/**
 	 * Set a reference to a plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param AudioTheme_Plugin $plugin Main plugin instance.
 	 * @return $this
@@ -40,7 +40,7 @@ class AudioTheme_Provider_Assets {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'wp_enqueue_scripts',    array( $this, 'register_assets' ), 1 );
@@ -50,7 +50,7 @@ class AudioTheme_Provider_Assets {
 	/**
 	 * Register frontend scripts and styles.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_assets() {
 		global $wp_locale;

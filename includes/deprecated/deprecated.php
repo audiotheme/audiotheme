@@ -14,7 +14,7 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
@@ -24,20 +24,20 @@
  * Settings API should be included while customizing a theme.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_load_admin() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
  * Flush the rewrite rules if needed.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_loaded() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 
 	if ( ! is_network_admin() && 'no' !== get_option( 'audiotheme_flush_rewrite_rules' ) ) {
 		update_option( 'audiotheme_flush_rewrite_rules', 'no' );
@@ -52,10 +52,10 @@ function audiotheme_loaded() {
  * rewrite rules on the next request.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_activate() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	update_option( 'audiotheme_flush_rewrite_rules', 'yes' );
 }
 
@@ -66,10 +66,10 @@ function audiotheme_activate() {
  * next time they're needed.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_deactivate() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	delete_option( 'rewrite_rules' );
 }
 
@@ -77,10 +77,10 @@ function audiotheme_deactivate() {
  * Additional setup during init.
  *
  * @since 1.2.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_init() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
@@ -88,22 +88,22 @@ function audiotheme_init() {
  * functionality.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_discography_init() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
  * Get the discography rewrite base. Defaults to 'music'.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @return string
  */
 function get_audiotheme_discography_rewrite_base() {
-	_deprecated_function( __FUNCTION__, '1.9.0', 'AudioTheme_Module_Discography::get_rewrite_base()' );
+	_deprecated_function( __FUNCTION__, '2.0.0', 'AudioTheme_Module_Discography::get_rewrite_base()' );
 	return audiotheme()->modules['discography']->get_rewrite_base();
 }
 
@@ -111,12 +111,12 @@ function get_audiotheme_discography_rewrite_base() {
  * Add custom discography rewrite rules.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param object $wp_rewrite The main rewrite object. Passed by reference.
  */
 function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	audiotheme()->modules['discography']->generate_rewrite_rules( $wp_rewrite );
 }
 
@@ -132,26 +132,26 @@ function audiotheme_discography_generate_rewrite_rules( $wp_rewrite ) {
  * and manually set the order.
  *
  * @since 1.3.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param object $query The main WP_Query object. Passed by reference.
  */
 function audiotheme_record_query_sort( $query ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
  * Sort records by title after sorting by release year.
  *
  * @since 1.3.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $orderby SQL order clause.
  * @return string
  */
 function audiotheme_record_query_sort_sql( $orderby ) {
 	global $wpdb;
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	return $orderby . ", {$wpdb->posts}.post_title ASC";
 }
 
@@ -162,12 +162,12 @@ function audiotheme_record_query_sort_sql( $orderby ) {
  * requests.
  *
  * @since 1.3.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param object $query The main WP_Query object. Passed by reference.
  */
 function audiotheme_track_query( $query ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
@@ -178,12 +178,12 @@ function audiotheme_track_query( $query ) {
  * the plugin, set the posts per page arg to a multiple of 4.
  *
  * @since 1.3.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param object $query The main WP_Query object. Passed by reference.
  */
 function audiotheme_record_default_template_query( $query ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
@@ -192,13 +192,13 @@ function audiotheme_record_default_template_query( $query ) {
  * Templates should be included in an /audiotheme/ directory within the theme.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $template Template path.
  * @return string
  */
 function audiotheme_discography_template_include( $template ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	return audiotheme()->modules['discography']->template_include( $template );
 }
 
@@ -209,7 +209,7 @@ function audiotheme_discography_template_include( $template ) {
  * correct URL when used with a discography post type.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $post_link The default permalink.
  * @param object $post_link The record or track to get the permalink for.
@@ -218,7 +218,7 @@ function audiotheme_discography_template_include( $template ) {
  * @return string The record or track permalink.
  */
 function audiotheme_discography_permalinks( $post_link, $post, $leavename, $sample ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	return $post_link;
 }
 
@@ -226,14 +226,14 @@ function audiotheme_discography_permalinks( $post_link, $post, $leavename, $samp
  * Filter the permalink for the discography archive.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $link The default archive URL.
  * @param string $post_type Post type.
  * @return string The discography archive URL.
  */
 function audiotheme_discography_archive_link( $link, $post_type ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	return $link;
 }
 
@@ -244,7 +244,7 @@ function audiotheme_discography_archive_link( $link, $post_type ) {
  * to be unique within the context of a record.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $slug The desired slug (post_name).
  * @param integer $post_ID
@@ -255,7 +255,7 @@ function audiotheme_discography_archive_link( $link, $post_type ) {
  * @return string
  */
 function audiotheme_track_unique_slug( $slug, $post_ID, $post_status, $post_type, $post_parent, $original_slug = null ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	return $slug;
 }
 
@@ -264,13 +264,13 @@ function audiotheme_track_unique_slug( $slug, $post_ID, $post_status, $post_type
  * JavaScript object.
  *
  * @since 1.1.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param int|array $track Track ID or array of expected track properties.
  * @return array
  */
 function audiotheme_prepare_track_for_js( $track ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 
 	$data = array(
 		'artist'  => '',
@@ -333,12 +333,12 @@ function audiotheme_prepare_track_for_js( $track ) {
  * and output the JSON-encoded object in the footer.
  *
  * @since 1.1.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_print_tracks_js() {
 	global $audiotheme_enqueued_tracks;
 
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 
 	if ( empty( $audiotheme_enqueued_tracks ) || ! is_array( $audiotheme_enqueued_tracks ) ) {
 		return;
@@ -401,13 +401,13 @@ function audiotheme_print_tracks_js() {
  * - Adds nth-child classes to record posts.
  *
  * @since 1.2.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param array $classes Default post classes.
  * @return array
  */
 function audiotheme_record_archive_post_class( $classes ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	return $classes;
 }
 
@@ -415,13 +415,13 @@ function audiotheme_record_archive_post_class( $classes ) {
  * Convert a track into the format expected by the Cue plugin.
  *
  * @since 1.5.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param int|WP_Post $post Post object or ID.
  * @return object Track object expected by Cue.
  */
 function get_audiotheme_playlist_track( $post = 0 ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 
 	$post = get_post( $post );
 	$track = new stdClass;
@@ -446,23 +446,23 @@ function get_audiotheme_playlist_track( $post = 0 ) {
  * functionality.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_gigs_init() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
  * Register query variables.
  *
  * @since 1.6.3
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param array $vars Array of valid query variables.
  * @return array
  */
 function audiotheme_gigs_register_query_vars( $vars ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
@@ -473,12 +473,12 @@ function audiotheme_gigs_register_query_vars( $vars ) {
  * month, day).
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param object $query The main WP_Query object. Passed by reference.
  */
 function audiotheme_pre_gig_query( $query ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
@@ -488,7 +488,7 @@ function audiotheme_pre_gig_query( $query ) {
  * correct URL when used with a gig post type.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  * @see get_post_permalink()
  *
  * @param string $post_link The default gig URL.
@@ -498,7 +498,7 @@ function audiotheme_pre_gig_query( $query ) {
  * @return string The gig permalink.
  */
 function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	return $post_link;
 }
 
@@ -506,14 +506,14 @@ function audiotheme_gig_permalink( $post_link, $post, $leavename, $sample ) {
  * Filter the permalink for the gigs archive.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $link The default archive URL.
  * @param string $post_type Post type.
  * @return string The gig archive URL.
  */
 function audiotheme_gigs_archive_link( $link, $post_type ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	return $link;
 }
 
@@ -525,7 +525,7 @@ function audiotheme_gigs_archive_link( $link, $post_type ) {
  * Any slugs that match the ID are preprended with 'gig-'.
  *
  * @since 1.6.1
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  * @see wp_unique_post_slug()
  *
  * @param string $slug The desired slug (post_name).
@@ -537,7 +537,7 @@ function audiotheme_gigs_archive_link( $link, $post_type ) {
  * @return string
  */
 function audiotheme_gig_unique_slug( $slug, $post_ID, $post_status, $post_type, $post_parent, $original_slug = null ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	return $slug;
 }
 
@@ -550,13 +550,13 @@ function audiotheme_gig_unique_slug( $slug, $post_ID, $post_status, $post_type, 
  * 'gig-' here to mimic the behavior in audiotheme_gig_unique_slug().
  *
  * @since 1.6.1
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param int $post_id Post ID.
  * @param WP_Post $post Post object.
  */
 function audiotheme_gig_update_bad_slug( $post_id, $post ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
@@ -566,19 +566,19 @@ function audiotheme_gig_update_bad_slug( $post_id, $post ) {
  * when a gig is deleted.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param int $post_id ID of the gig being deleted.
  */
 function audiotheme_gig_before_delete( $post_id ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
  * Add useful classes to gig posts.
  *
  * @since 1.1.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param array $classes List of classes.
  * @param string|array $class One or more classes to add to the class list.
@@ -586,7 +586,7 @@ function audiotheme_gig_before_delete( $post_id ) {
  * @return array Array of classes.
  */
 function audiotheme_gig_post_class( $classes, $class, $post_id ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	return $classes;
 }
 
@@ -594,12 +594,12 @@ function audiotheme_gig_post_class( $classes, $class, $post_id ) {
  * Get the gigs rewrite base. Defaults to 'shows'.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @return string
  */
 function audiotheme_gigs_rewrite_base() {
-	_deprecated_function( __FUNCTION__, '1.9.0', 'AudioTheme_Module_Gigs::get_rewrite_base()' );
+	_deprecated_function( __FUNCTION__, '2.0.0', 'AudioTheme_Module_Gigs::get_rewrite_base()' );
 	return audiotheme()->modules['gigs']->get_rewrite_base();
 }
 
@@ -623,12 +623,12 @@ function audiotheme_gigs_rewrite_base() {
  *       etc.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param object $wp_rewrite The main rewrite object. Passed by reference.
  */
 function audiotheme_gig_generate_rewrite_rules( $wp_rewrite ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	audiotheme()->modules['gigs']->generate_rewrite_rules( $wp_rewrite );
 }
 
@@ -639,12 +639,12 @@ function audiotheme_gig_generate_rewrite_rules( $wp_rewrite ) {
  * the appropriate template for processing.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  * @uses $wp_query
  * @uses p2p_type()->each_connected()
  */
 function audiotheme_gig_template_redirect() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	audiotheme()->modules['gigs']->template_redirect();
 }
 
@@ -654,13 +654,13 @@ function audiotheme_gig_template_redirect() {
  * Templates should be included in an /audiotheme/ directory within the theme.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $template Template path.
  * @return string
  */
 function audiotheme_gig_template_include( $template ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	return $template;
 }
 
@@ -668,10 +668,10 @@ function audiotheme_gig_template_include( $template ) {
  * Get the admin panel URL for gigs.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function get_audiotheme_gig_admin_url( $args = '' ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 
 	$admin_url = admin_url( 'edit.php?post_type=audiotheme_gig' );
 
@@ -690,22 +690,22 @@ function get_audiotheme_gig_admin_url( $args = '' ) {
  * Register video post type and attach hooks to load related functionality.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_videos_init() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
  * Get the videos rewrite base. Defaults to 'videos'.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @return string
  */
 function get_audiotheme_videos_rewrite_base() {
-	_deprecated_function( __FUNCTION__, '1.9.0', 'AudioTheme_Module_Videos::get_rewrite_base()' );
+	_deprecated_function( __FUNCTION__, '2.0.0', 'AudioTheme_Module_Videos::get_rewrite_base()' );
 	return audiotheme()->modules['videos']->get_rewrite_base();
 }
 
@@ -716,12 +716,12 @@ function get_audiotheme_videos_rewrite_base() {
  * into pre_get_posts at an earlier priority and manually set the order.
  *
  * @since 1.4.4
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param object $query The main WP_Query object. Passed by reference.
  */
 function audiotheme_video_query_sort( $query ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
@@ -732,12 +732,12 @@ function audiotheme_video_query_sort( $query ) {
  * the plugin, set the posts per page arg to a multiple of 4.
  *
  * @since 1.3.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param object $query The main WP_Query object. Passed by reference.
  */
 function audiotheme_video_default_template_query( $query ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
@@ -746,13 +746,13 @@ function audiotheme_video_default_template_query( $query ) {
  * Templates should be included in an /audiotheme/ directory within the theme.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $template Template path.
  * @return string
  */
 function audiotheme_video_template_include( $template ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	audiotheme()->modules['videos']->template_include( $template );
 }
 
@@ -760,14 +760,14 @@ function audiotheme_video_template_include( $template ) {
  * Delete oEmbed thumbnail post meta if the associated attachment is deleted.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param int $attachment_id The ID of the attachment being deleted.
  */
 function audiotheme_video_delete_attachment( $attachment_id ) {
 	global $wpdb;
 
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 
 	$post_id = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key='_audiotheme_oembed_thumbnail_id' AND meta_value=%d", $attachment_id ) );
 	if ( $post_id ) {
@@ -784,7 +784,7 @@ function audiotheme_video_delete_attachment( $attachment_id ) {
  * - Adds nth-child classes to video posts.
  *
  * @since 1.2.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param array $classes Default post classes.
  * @return array
@@ -792,7 +792,7 @@ function audiotheme_video_delete_attachment( $attachment_id ) {
 function audiotheme_video_archive_post_class( $classes ) {
 	global $wp_query;
 
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 
 	if ( $wp_query->is_main_query() && is_post_type_archive( 'audiotheme_video' ) ) {
 		$nth_child_classes = audiotheme_nth_child_classes( array(
@@ -812,12 +812,12 @@ function audiotheme_video_archive_post_class( $classes ) {
  * Set the number of posts per archive page.
  *
  * @since 1.4.2
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param object $query The main WP_Query object. Passed by reference.
  */
 function audiotheme_archive_query( $query ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
@@ -828,7 +828,7 @@ function audiotheme_archive_query( $query ) {
  * default.
  *
  * @since 1.4.4
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param mixed $value Existing meta value.
  * @param string $key Optional. The meta key to retrieve. By default, returns data for all keys.
@@ -838,7 +838,7 @@ function audiotheme_archive_query( $query ) {
  * @return mixed Will be an array if $single is false. Will be value of meta data field if $single is true.
  */
 function audiotheme_sanitize_audiotheme_archive_columns( $value, $key, $single, $default, $post_type ) {
-	_deprecated_function( __FUNCTION__, '1.9.0', 'AudioTheme_Module_Archives::sanitize_columns_settings()' );
+	_deprecated_function( __FUNCTION__, '2.0.0', 'AudioTheme_Module_Archives::sanitize_columns_settings()' );
 	return audiotheme()->modules['archives']->sanitize_columns_settings( $value, $key, $single, $default, $post_type );
 }
 
@@ -852,63 +852,63 @@ function audiotheme_sanitize_audiotheme_archive_columns( $value, $key, $single, 
  * Will flush rewrite rules if any changes are detected.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param array $ids Associative array of post type slugs as keys and archive post IDs as the values.
  */
 function audiotheme_archives_save_active_archives( $ids ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
  * Flush the rewrite rules when an archive post slug is changed.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param int $post_id Post ID
  * @param WP_Post $post_after Updated post object.
  * @param WP_Post $post_before Post object before udpate.
  */
 function audiotheme_archives_post_updated( $post_id, $post_after, $post_before ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
  * Remove the post type archive reference if it's deleted.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param int $post_id Post ID.
  */
 function audiotheme_archives_deleted_post( $post_id ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
  * Update a post type's rewrite base option.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $post_type Post type slug.
  * @param int $archive_id Archive post ID>
  */
 function audiotheme_archives_update_post_type_rewrite_base( $post_type, $archive_id ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
  * Provide an edit link for archives in the admin bar.
  *
  * @since 1.2.1
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param WP_Admin_Bar $wp_admin_bar Admin bar object instance.
  */
 function audiotheme_archives_admin_bar_edit_menu( $wp_admin_bar ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
@@ -916,7 +916,7 @@ function audiotheme_archives_admin_bar_edit_menu( $wp_admin_bar ) {
  * archive.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $permalink Default permalink.
  * @param WP_Post $post Post object.
@@ -924,7 +924,7 @@ function audiotheme_archives_admin_bar_edit_menu( $wp_admin_bar ) {
  * @return string Permalink.
  */
 function audiotheme_archives_post_type_link( $permalink, $post, $leavename ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	return $permalink;
 }
 
@@ -932,14 +932,14 @@ function audiotheme_archives_post_type_link( $permalink, $post, $leavename ) {
  * Filter post type archive permalinks.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $link Post type archive link.
  * @param string $post_type Post type name.
  * @return string
  */
 function audiotheme_archives_post_type_archive_link( $link, $post_type ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	return $link;
 }
 
@@ -948,13 +948,13 @@ function audiotheme_archives_post_type_archive_link( $link, $post_type ) {
  * custom archive title.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $label Post type archive title.
  * @return string
  */
 function audiotheme_archives_post_type_archive_title( $title ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	return $title;
 }
 
@@ -969,7 +969,7 @@ function audiotheme_archives_post_type_archive_title( $title ) {
  * function, but allows a known package to be passed as the first parameter.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @see PHP docs for version_compare()
  * @uses version_compare()
@@ -980,7 +980,7 @@ function audiotheme_archives_post_type_archive_title( $title ) {
  * @return mixed True or false if operator is supplied. -1, 0, or 1 if operator is empty.
  */
 function audiotheme_version_compare( $version, $version2, $operator = null ) {
-	_deprecated_function( __FUNCTION__, '1.9.0', 'version_compare()' );
+	_deprecated_function( __FUNCTION__, '2.0.0', 'version_compare()' );
 
 	switch ( $version ) {
 		case 'audiotheme' :
@@ -1012,12 +1012,12 @@ function audiotheme_version_compare( $version, $version2, $operator = null ) {
  * determined by whether or not the option uses 24 hour format or not.
  *
  * @since 1.7.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @return string
  */
 function audiotheme_compatible_time_format() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 
 	$time_format = get_option( 'time_format' );
 
@@ -1032,10 +1032,10 @@ function audiotheme_compatible_time_format() {
  * Support localization for the plugin strings.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_load_textdomain() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 
 	load_plugin_textdomain( 'audiotheme', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }
@@ -1044,10 +1044,10 @@ function audiotheme_load_textdomain() {
  * Register frontend scripts and styles for enqueuing when needed.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_register_scripts() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
@@ -1060,23 +1060,23 @@ function audiotheme_register_scripts() {
  * add_theme_support( 'audiotheme-widgets', array( 'upcoming-gigs' ) )
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_widgets_init() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
  * Filter record type archive titles.
  *
  * @since 1.7.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $title Archive title.
  * @return string
  */
 function audiotheme_archives_taxonomy_title( $title ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 
 	if ( is_tax() ) {
 		$title = get_queried_object()->name;
@@ -1092,7 +1092,7 @@ function audiotheme_archives_taxonomy_title( $title ) {
  * aren't supported in all browsers.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param array $items List of menu items.
  * @param array $args Menu display args.
@@ -1133,7 +1133,7 @@ function audiotheme_nav_menu_classes( $items, $args ) {
  * Add audio metadata to attachment response objects.
  *
  * @since 1.4.4
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param array   $response Attachment data to send as JSON.
  * @param WP_Post $attachment Attachment object.
@@ -1141,7 +1141,7 @@ function audiotheme_nav_menu_classes( $items, $args ) {
  * @return array
  */
 function audiotheme_wp_prepare_audio_attachment_for_js( $response, $attachment, $meta ) {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 	return $response;
 }
 
@@ -1151,10 +1151,10 @@ function audiotheme_wp_prepare_audio_attachment_for_js( $response, $attachment, 
  * This doesn't actually occur during the init hook despite the name.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_p2p_init() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
@@ -1167,17 +1167,17 @@ function audiotheme_p2p_init() {
  * library doesn't exist, the tables are created on admin_init.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_p2p_load_core() {
-	_deprecated_function( __FUNCTION__, '1.9.0' );
+	_deprecated_function( __FUNCTION__, '2.0.0' );
 }
 
 /**
  * Load the LESS compiler and set up Theme Customizer support.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_less_setup() {
 	if ( $support = get_theme_support( 'audiotheme-less' ) ) {
@@ -1199,7 +1199,7 @@ function audiotheme_less_setup() {
  * Force SSL on LESS cache URLs.
  *
  * @since 1.3.1
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $url URL to compiled CSS.
  * @return string
@@ -1217,7 +1217,7 @@ function audiotheme_less_force_ssl( $url ) {
  * additional vars can be registered.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_less_register_vars() {
 	$support = get_theme_support( 'audiotheme-less' );
@@ -1240,7 +1240,7 @@ function audiotheme_less_register_vars() {
  * order to prevent changes from being made live prematurely.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function audiotheme_less_customize_enqueue_stylesheet() {
 	global $wp_customize;
@@ -1263,7 +1263,7 @@ if ( ! function_exists( 'get_audiotheme_option' ) ) :
  * Returns an option value.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $option_name Option name as stored in database.
  * @param string $key Optional. Index of value in the option array.
@@ -1291,7 +1291,7 @@ if ( ! function_exists( 'get_audiotheme_theme_option' ) ) :
  * Note that this function footprint is slightly different than get_audiotheme_option(). While working in themes, the $option_name shouldn't necessarily need to be known or required, so it should be slightly easier to use while in a theme.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string The option key
  * @param mixed Optional. Default value to return if option key doesn't exist.
@@ -1310,7 +1310,7 @@ if ( ! function_exists( 'get_audiotheme_theme_options_name' ) ) :
  * Retrieve the registered option name for theme options.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  */
 function get_audiotheme_theme_options_name() {
 	static $option_name;
@@ -1337,7 +1337,7 @@ if ( ! function_exists( 'get_audiotheme_theme_options_support' ) ) :
  * options. Otherwise, it should be an array of arguments.
  *
  * @since 1.0.0
- * @deprecated 1.9.0
+ * @deprecated 2.0.0
  *
  * @param string $var Optional. Specific argument to return.
  * @return mixed Value of requested argument or theme option support arguments.

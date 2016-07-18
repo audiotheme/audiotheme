@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Administration hook provider class.
  *
  * @package AudioTheme\Administration
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Provider_AdminHooks {
 	/**
 	 * Plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_Plugin
 	 */
 	protected $plugin;
@@ -27,7 +27,7 @@ class AudioTheme_Provider_AdminHooks {
 	/**
 	 * Set a reference to a plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param AudioTheme_Plugin $plugin Main plugin instance.
 	 * @return $this
@@ -40,7 +40,7 @@ class AudioTheme_Provider_AdminHooks {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'admin_init',                 array( $this, 'sort_admin_menu' ) );
@@ -56,7 +56,7 @@ class AudioTheme_Provider_AdminHooks {
 	/**
 	 * Display a notice to register if the license key is empty.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $notice The default notice.
 	 * @return string
@@ -77,7 +77,7 @@ class AudioTheme_Provider_AdminHooks {
 	/**
 	 * Sort the admin menu.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function sort_admin_menu() {
 		global $menu;
@@ -107,7 +107,7 @@ class AudioTheme_Provider_AdminHooks {
 	/**
 	 * Add current screen ID as HTML class to the body element.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $classes Body classes.
 	 * @return string
@@ -130,7 +130,7 @@ class AudioTheme_Provider_AdminHooks {
 	 * This hook is run for all custom columns, so the column name is prefixed to
 	 * prevent potential conflicts.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $column_name Column identifier.
 	 * @param int    $post_id Post ID.
@@ -150,7 +150,7 @@ class AudioTheme_Provider_AdminHooks {
 	/**
 	 * Save custom taxonomy terms when a post is saved.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param int     $post_id Post ID.
 	 * @param WP_Post $post Post object.
@@ -178,7 +178,7 @@ class AudioTheme_Provider_AdminHooks {
 	/**
 	 * Insert a menu item relative to an existing item.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array  $item Menu item.
 	 * @param string $relative_slug Slug of existing item.
@@ -196,7 +196,7 @@ class AudioTheme_Provider_AdminHooks {
 	/**
 	 * Move an existing menu item relative to another item.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $move_slug Slug of item to move.
 	 * @param string $relative_slug Slug of existing item.
@@ -217,7 +217,7 @@ class AudioTheme_Provider_AdminHooks {
 	/**
 	 * Retrieve the key of a menu item.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $menu_slug Menu item slug.
 	 * @return int|bool Menu item key or false if it couldn't be found.
@@ -237,7 +237,7 @@ class AudioTheme_Provider_AdminHooks {
 	/**
 	 * Move a submenu item after another submenu item under the same top-level item.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $move_slug Slug of the item to move.
 	 * @param string $after_slug Slug of the item to move after.

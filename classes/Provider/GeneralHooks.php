@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * General hooks provider class.
  *
  * @package AudioTheme
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Provider_GeneralHooks {
 	/**
 	 * Plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 * @var AudioTheme_Plugin
 	 */
 	protected $plugin;
@@ -27,7 +27,7 @@ class AudioTheme_Provider_GeneralHooks {
 	/**
 	 * Set a reference to a plugin instance.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param AudioTheme_Plugin $plugin Main plugin instance.
 	 * @return $this
@@ -40,7 +40,7 @@ class AudioTheme_Provider_GeneralHooks {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'init',                         array( $this, 'add_post_gallery_support' ) );
@@ -64,10 +64,10 @@ class AudioTheme_Provider_GeneralHooks {
 	/**
 	 * Add support for custom post gallery output.
 	 *
-	 * This feature was deprecated in 1.9.0 and will be removed in a future
+	 * This feature was deprecated in 2.0.0 and will be removed in a future
 	 * release.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function add_post_gallery_support() {
 		if ( current_theme_supports( 'audiotheme-post-gallery' ) ) {
@@ -79,7 +79,7 @@ class AudioTheme_Provider_GeneralHooks {
 	/**
 	 * Register custom image editors.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $editors Array of image editors.
 	 * @return array
@@ -98,7 +98,7 @@ class AudioTheme_Provider_GeneralHooks {
 	/**
 	 * Filter record type archive titles.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $title Archive title.
 	 * @return string
@@ -114,7 +114,7 @@ class AudioTheme_Provider_GeneralHooks {
 	/**
 	 * Add helpful nav menu item classes.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $items List of menu items.
 	 * @param array $args Menu display args.
@@ -175,7 +175,7 @@ class AudioTheme_Provider_GeneralHooks {
 	/**
 	 * Add audio metadata to attachment response objects.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array   $response Attachment data to send as JSON.
 	 * @param WP_Post $attachment Attachment object.

@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Gigs AJAX actions class.
  *
  * @package AudioTheme\Gigs
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_AJAX_Gigs {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'wp_ajax_audiotheme_ajax_get_venue_matches', array( $this, 'get_venue_matches' ) );
@@ -32,7 +32,7 @@ class AudioTheme_AJAX_Gigs {
 	/**
 	 * Search for venues that begin with a string.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function get_venue_matches() {
 		global $wpdb;
@@ -47,7 +47,7 @@ class AudioTheme_AJAX_Gigs {
 	/**
 	 * Check for an existing venue with the same name.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function is_new_venue() {
 		global $wpdb;
@@ -61,7 +61,7 @@ class AudioTheme_AJAX_Gigs {
 	/**
 	 * Retrieve a venue.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function get_venue() {
 		$venue = prepare_audiotheme_venue_for_js( absint( $_POST['ID'] ) );
@@ -71,7 +71,7 @@ class AudioTheme_AJAX_Gigs {
 	/**
 	 * Retrieve venues.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function get_venues() {
 		$response = array();
@@ -99,7 +99,7 @@ class AudioTheme_AJAX_Gigs {
 	/**
 	 * Create or update a venue.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function save_venue() {
 		$data = $_POST['model'];

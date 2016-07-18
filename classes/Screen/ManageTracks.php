@@ -6,20 +6,20 @@
  * @copyright Copyright 2012 AudioTheme
  * @license   GPL-2.0+
  * @link      https://audiotheme.com/
- * @since     1.9.0
+ * @since     2.0.0
  */
 
 /**
  * Class providing integration with the Manage Tracks administration screen.
  *
  * @package AudioTheme\Discography
- * @since   1.9.0
+ * @since   2.0.0
  */
 class AudioTheme_Screen_ManageTracks extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register hooks.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function register_hooks() {
 		add_filter( 'parse_query',                                   array( $this, 'admin_query' ) );
@@ -32,7 +32,7 @@ class AudioTheme_Screen_ManageTracks extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Custom sort tracks on the Manage Tracks screen.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param WP_Query $wp_query The main WP_Query object. Passed by reference.
 	 */
@@ -69,7 +69,7 @@ class AudioTheme_Screen_ManageTracks extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Custom track filter dropdowns.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 */
 	public function list_table_filters() {
 		global $wpdb;
@@ -109,7 +109,7 @@ class AudioTheme_Screen_ManageTracks extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register track columns.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $columns An array of the column names to display.
 	 * @return array The filtered array of column names.
@@ -135,7 +135,7 @@ class AudioTheme_Screen_ManageTracks extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Register sortable track columns.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param array $columns Column query vars with their corresponding column id as the key.
 	 * @return array
@@ -151,7 +151,7 @@ class AudioTheme_Screen_ManageTracks extends AudioTheme_Screen_AbstractScreen{
 	/**
 	 * Display custom track columns.
 	 *
-	 * @since 1.9.0
+	 * @since 2.0.0
 	 *
 	 * @param string $column_name The id of the column to display.
 	 * @param int    $post_id Post ID.
