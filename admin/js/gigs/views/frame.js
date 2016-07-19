@@ -26,7 +26,7 @@ Frame = wp.media.view.Frame.extend({
 		if ( this.options.modal ) {
 			this.modal = new wp.media.view.Modal({
 				controller: this,
-				title:      this.options.title
+				title: this.options.title
 			});
 
 			this.modal.content( this );
@@ -38,7 +38,7 @@ Frame = wp.media.view.Frame.extend({
 		this.on( 'title:create:default', this.createTitle, this );
 		this.title.mode( 'default' );
 
-		this.on( 'menu:create:audiotheme-venues', this.createMenu, this );
+		this.on( 'menu:create:default', this.createMenu, this );
 	},
 
 	render: function() {
@@ -51,16 +51,16 @@ Frame = wp.media.view.Frame.extend({
 		return wp.media.view.Frame.prototype.render.apply( this, arguments );
 	},
 
+	createMenu: function( menu ) {
+		menu.view = new wp.media.view.Menu({
+			controller: this
+		});
+	},
+
 	createTitle: function( title ) {
 		title.view = new wp.media.View({
 			controller: this,
 			tagName: 'h1'
-		});
-	},
-
-	createMenu: function( menu ) {
-		menu.view = new wp.media.view.Menu({
-			controller: this
 		});
 	},
 

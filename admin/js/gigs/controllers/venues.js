@@ -11,19 +11,19 @@ var VenuesController,
 
 VenuesController = wp.media.controller.State.extend({
 	defaults: {
-		id:      'audiotheme-venues',
-		menu:    'audiotheme-venues',
-		content: 'audiotheme-venues',
-		toolbar: 'main-audiotheme-venues',
+		id:      'venues',
 		title:   l10n.venues || 'Venues',
 		button:  {
 			text: l10n.select || 'Select'
 		},
+		content: 'venues-manager',
+		menu:    'default',
 		menuItem: {
 			text: l10n.manageVenues || 'Manage Venues',
 			priority: 10
 		},
 		mode: 'view',
+		toolbar: 'venues',
 		provider: 'venues'
 	},
 

@@ -37,6 +37,7 @@ VenuesList = wp.media.View.extend({
 		} else {
 			// @todo Show feedback about there not being any matches.
 		}
+
 		return this;
 	},
 
@@ -63,7 +64,9 @@ VenuesList = wp.media.View.extend({
 
 	scroll: function() {
 		if ( this.el.scrollHeight < this.el.scrollTop + this.el.clientHeight * 3 && this.collection.hasMore() ) {
-			this.collection.more();
+			this.collection.more({
+				remove: false
+			});
 		}
 	},
 

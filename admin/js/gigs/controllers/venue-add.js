@@ -9,18 +9,18 @@ var VenueAddController,
 
 VenueAddController = wp.media.controller.State.extend({
 	defaults: {
-		id:      'audiotheme-venue-add',
-		menu:    'audiotheme-venues',
-		content: 'audiotheme-venue-add',
-		toolbar: 'audiotheme-venue-add',
+		id:      'venue-add',
 		title:   l10n.addNewVenue || 'Add New Venue',
 		button:  {
 			text: l10n.save || 'Save'
 		},
+		content: 'venue-add',
+		menu:    'default',
 		menuItem: {
 			text: l10n.addVenue || 'Add a Venue',
 			priority: 20
-		}
+		},
+		toolbar: 'venue-add'
 	},
 
 	initialize: function() {

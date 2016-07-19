@@ -22,7 +22,7 @@ VenueFrame = Frame.extend({
 		_.defaults( this.options, {
 			title: '',
 			modal: true,
-			state: 'audiotheme-venues'
+			state: 'venues'
 		});
 
 		this.createStates();
@@ -38,36 +38,38 @@ VenueFrame = Frame.extend({
 	},
 
 	bindHandlers: function() {
-		this.on( 'content:create:audiotheme-venues', this.createContent, this );
-		this.on( 'toolbar:create:main-audiotheme-venues', this.createSelectToolbar, this );
-		this.on( 'toolbar:create:audiotheme-venue-add', this.createAddToolbar, this );
-		this.on( 'content:render:audiotheme-venue-add', this.renderAddContent, this );
+		this.on( 'content:create:venues-manager', this.createContent, this );
+		this.on( 'toolbar:create:venues', this.createSelectToolbar, this );
+		this.on( 'toolbar:create:venue-add', this.createAddToolbar, this );
+		this.on( 'content:render:venue-add', this.renderAddContent, this );
 	},
 
 	createContent: function( contentRegion ) {
 		contentRegion.view = new VenuesContent({
 			controller: this,
 			collection: this.state().get( 'venues' ),
-			searchQuery: this.state().get( 'search' )
+			searchQuery: this.state().get( 'search' ),
+			selection: this.state().get( 'selection' )
 		});
 	},
 
 	createSelectToolbar: function( toolbar ) {
 		toolbar.view = new VenueSelectToolbar({
-			controller: this
+			controller: this,
+			selection: this.state().get( 'selection' )
 		});
 	},
 
 	createAddToolbar: function( toolbar ) {
 		toolbar.view = new VenueAddToolbar({
 			controller: this,
-			model: this.state( 'audiotheme-venue-add' ).get( 'model' )
+			model: this.state( 'venue-add' ).get( 'model' )
 		});
 	},
 
 	renderAddContent: function() {
 		this.content.set( new VenueAddContent({
-			controller: this
+			model: this.state( 'venue-add' ).get( 'model' )
 		}) );
 	}
 });

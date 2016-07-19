@@ -26,7 +26,7 @@ VenuePanelTitle = wp.media.View.extend({
 	},
 
 	render: function() {
-		var state = this.controller.state( 'audiotheme-venues' ),
+		var state = this.controller.state( 'venues' ),
 			mode = state.get( 'mode' );
 
 		this.$el.html( this.template( this.model.toJSON() ) );

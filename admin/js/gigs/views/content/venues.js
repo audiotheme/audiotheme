@@ -3,7 +3,7 @@
 'use strict';
 
 var VenuesContent,
-	VenuePanel = require( '../venue-panel' ),
+	VenuePanel = require( '../venue/panel' ),
 	VenuesList = require( '../venues-list' ),
 	VenuesSearch = require( '../venues-search' ),
 	wp = require( 'wp' );
@@ -13,7 +13,7 @@ VenuesContent = wp.media.View.extend({
 
 	initialize: function( options ) {
 		var view = this,
-			selection = this.controller.state( 'audiotheme-venues' ).get( 'selection' );
+			selection = this.controller.state( 'venues' ).get( 'selection' );
 
 		if ( ! this.collection.length ) {
 			this.collection.fetch().done(function() {

@@ -3,9 +3,9 @@
 'use strict';
 
 var VenuePanel,
-	VenueDetails = require( './venue-details' ),
-	VenueEditForm = require( './venue-edit-form' ),
-	VenuePanelTitle = require( './venue-panel-title' ),
+	VenueDetails = require( './details' ),
+	VenueEditForm = require( './edit-form' ),
+	VenuePanelTitle = require( './panel-title' ),
 	wp = require( 'wp' );
 
 VenuePanel = wp.media.View.extend({
@@ -21,7 +21,7 @@ VenuePanel = wp.media.View.extend({
 		var panelContent,
 			model = this.controller.state().get( 'selection' ).first();
 
-		if ( ! this.controller.state( 'audiotheme-venues' ).get( 'selection' ).length ) {
+		if ( ! this.controller.state( 'venues' ).get( 'selection' ).length ) {
 			return this;
 		}
 

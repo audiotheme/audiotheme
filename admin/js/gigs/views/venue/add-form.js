@@ -2,12 +2,18 @@
 
 'use strict';
 
-var VenueEditForm,
+var VenueAddForm,
 	$ = require( 'jquery' ),
 	wp = require( 'wp' ),
-	cityTypeahead = require( '../utils/city-typeahead' );
+	cityTypeahead = require( '../../utils/city-typeahead' );
 
-VenueEditForm = wp.media.View.extend({
+/**
+ *
+ *
+ * @todo Search for timezone based on the city.
+ * @todo Display an error if the timezone isn't set.
+ */
+VenueAddForm = wp.media.View.extend({
 	tagName: 'div',
 	className: 'audiotheme-venue-edit-form',
 	template: wp.template( 'audiotheme-venue-edit-form' ),
@@ -18,17 +24,10 @@ VenueEditForm = wp.media.View.extend({
 
 	initialize: function( options ) {
 		this.model = options.model;
-		this.$spinner = $( '<span class="spinner"></span>' );
 	},
 
 	render: function() {
-		var tzString = this.model.get( 'timezone_string' );
-
 		this.$el.html( this.template( this.model.toJSON() ) );
-
-		if ( tzString ) {
-			this.$el.find( '#venue-timezone-string' ).find( 'option[value="' + tzString + '"]' ).prop( 'selected', true );
-		}
 
 		cityTypeahead(
 			this.$el.find( '[data-setting="city"]' ),
@@ -49,19 +48,13 @@ VenueEditForm = wp.media.View.extend({
 	 * @param {Object} e Event object.
 	 */
 	updateAttribute: function( e ) {
-		var $target = $( e.target ),
-			attribute = $target.data( 'setting' ),
-			value = e.target.value,
-			$spinner = this.$spinner;
+		var attribute = $( e.target ).data( 'setting' ),
+			value = e.target.value;
 
 		if ( this.model.get( attribute ) !== value ) {
-			$spinner.insertAfter( $target ).addClass( 'is-active' );
-
-			this.model.set( attribute, value ).save().always(function() {
-				$spinner.removeClass( 'is-active' );
-			});
+			this.model.set( attribute, value );
 		}
 	}
 });
 
-module.exports = VenueEditForm;
+module.exports = VenueAddForm;

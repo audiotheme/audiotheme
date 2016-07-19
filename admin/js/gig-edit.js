@@ -1,5 +1,5 @@
 /*jshint browserify:true */
-/*global _audiothemeGigEditSettings:false, _pikadayL10n:false, isRtl:false, Pikaday:false */
+/*global _audiothemeGigEditSettings:false, _audiothemeVenueManagerSettings:false, _pikadayL10n:false, isRtl:false, Pikaday:false */
 
 'use strict';
 
@@ -14,11 +14,12 @@ var frame, settings, wpScreen,
 	lastGigTime = 'lastGigTime' in ss ? new Date( ss.lastGigTime ) : null,
 	$venueIdField = $( '#gig-venue-id' );
 
-settings = app.settings( _audiothemeGigEditSettings );
+var GigVenueMetaBox = require( './gigs/views/meta-box/gig-venue' ),
+	Venue = require( './gigs/models/venue' ),
+	VenueFrame = require( './gigs/views/frame/venue' );
 
-app.view.GigVenueMetaBox = require( './gigs/views/meta-box/gig-venue' );
-app.view.GigVenueDetails = require( './gigs/views/gig-venue-details' );
-app.view.GigVenueSelectButton = require( './gigs/views/button/gig-venue-select' );
+settings = app.settings( _audiothemeGigEditSettings );
+settings = app.settings( _audiothemeVenueManagerSettings );
 
 // Add a day to the last saved gig date.
 if ( lastGigDate ) {
@@ -66,7 +67,7 @@ new Pikaday({
 });
 
 // Initialize the venue frame.
-frame = new app.view.VenueFrame({
+frame = new VenueFrame({
 	title: app.l10n.venues || 'Venues',
 	button: {
 		text: app.l10n.selectVenue || 'Select Venue'
@@ -85,16 +86,16 @@ frame.on( 'insert', function( selection ) {
 
 wpScreen = new Backbone.Model({
 	frame: frame,
-	venue: new app.model.Venue( settings.venue || {} )
+	venue: new Venue( settings.venue || {} )
 });
 
-new app.view.GigVenueMetaBox({
+new GigVenueMetaBox({
 	controller: wpScreen
 }).render();
 
 $( window ).on( 'keyup', function( e ) {
 	// Only handle key events when the venue list state is active.
-	if ( ! frame.$el.is( ':visible' ) || 'audiotheme-venues' !== frame.state().id ) {
+	if ( ! frame.$el.is( ':visible' ) || 'venues' !== frame.state().id ) {
 		return;
 	}
 

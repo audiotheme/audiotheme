@@ -43,7 +43,7 @@ VenueAddToolbar = wp.media.view.Toolbar.extend({
 			spinner = this.get( 'spinner' ).show();
 
 		model.save().done(function( response ) {
-			var selectController = controller.state( 'audiotheme-venues' );
+			var selectController = controller.state( 'venues' );
 
 			// Insert into the venues collection and update the selection.
 			selectController.get( 'venues' ).add( model );
@@ -52,7 +52,7 @@ VenueAddToolbar = wp.media.view.Toolbar.extend({
 			controller.state().set( 'model', new Venue() );
 
 			// Switch to the select view.
-			controller.setState( 'audiotheme-venues' );
+			controller.setState( 'venues' );
 
 			spinner.hide();
 		});

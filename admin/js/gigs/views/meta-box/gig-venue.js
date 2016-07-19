@@ -12,13 +12,15 @@ GigVenueMetaBox = wp.media.View.extend({
 
 	initialize: function( options ) {
 		this.controller = options.controller;
+
+		this.listenTo( this.controller, 'change:venue', this.render );
 		this.controller.get( 'frame' ).on( 'open', this.updateSelection, this );
 	},
 
 	render: function() {
-		this.views.add( '.audiotheme-panel-body', [
+		this.views.set( '.audiotheme-panel-body', [
 			new GigVenueDetails({
-				controller: this.controller
+				model: this.controller.get( 'venue' )
 			}),
 			new GigVenueSelectButton({
 				controller: this.controller
@@ -30,13 +32,13 @@ GigVenueMetaBox = wp.media.View.extend({
 
 	updateSelection: function() {
 		var frame = this.controller.get( 'frame' ),
-			venue = this.controller.get( 'venue' ),
-			venues = frame.states.get( 'audiotheme-venues' ).get( 'venues' ),
-			selection = frame.states.get( 'audiotheme-venues' ).get( 'selection' );
+			model = this.controller.get( 'venue' ),
+			venues = frame.states.get( 'venues' ).get( 'venues' ),
+			selection = frame.states.get( 'venues' ).get( 'selection' );
 
-		if ( venue.get( 'ID' ) ) {
-			venues.add( venue, { at: 0 });
-			selection.reset( venue );
+		if ( model.get( 'ID' ) ) {
+			venues.add( model, { at: 0 });
+			selection.reset( model );
 		}
 	}
 });

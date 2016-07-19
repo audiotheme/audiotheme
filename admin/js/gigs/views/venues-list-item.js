@@ -14,7 +14,7 @@ VenuesListItem = wp.media.View.extend({
 	},
 
 	initialize: function() {
-		var selection = this.controller.state( 'audiotheme-venues' ).get( 'selection' );
+		var selection = this.controller.state( 'venues' ).get( 'selection' );
 		selection.on( 'reset', this.updateSelected, this );
 		this.listenTo( this.model, 'change:name', this.render );
 	},
@@ -30,7 +30,7 @@ VenuesListItem = wp.media.View.extend({
 	},
 
 	updateSelected: function() {
-		var state = this.controller.state( 'audiotheme-venues' ),
+		var state = this.controller.state( 'venues' ),
 			isSelected = state.get( 'selection' ).first() === this.model;
 
 		this.$el.toggleClass( 'is-selected', isSelected );

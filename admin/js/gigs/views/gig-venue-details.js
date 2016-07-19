@@ -12,15 +12,16 @@ GigVenueDetails = wp.media.View.extend({
 	template: wp.template( 'audiotheme-gig-venue-details' ),
 
 	initialize: function( options ) {
-		this.listenTo( this.controller, 'change:venue', this.render );
-		this.listenTo( this.controller.get( 'venue' ), 'change', this.render );
+		this.model = options.model;
+
+		this.listenTo( this.model, 'change', this.render );
 	},
 
 	render: function() {
-		var data, model = this.controller.get( 'venue' );
+		var data;
 
-		if ( model.get( 'ID' ) ) {
-			data = _.extend( model.toJSON(), templateHelpers );
+		if ( this.model.get( 'ID' ) ) {
+			data = _.extend( this.model.toJSON(), templateHelpers );
 			this.$el.html( this.template( data ) );
 		} else {
 			this.$el.empty();

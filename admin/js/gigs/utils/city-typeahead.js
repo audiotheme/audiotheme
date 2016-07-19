@@ -24,8 +24,8 @@ if ( 'undefined' !== typeof isRtl && isRtl ) {
  *
  * Currently used in:
  * - venue-edit.js
- * - views/venue-add-form.js
- * - views/venue-edit-form.js
+ * - views/venue/add-form.js
+ * - views/venue/edit-form.js
  */
 module.exports = function( $city, $state, $country, $timezone ) {
 	if ( 'active' !== settings.licenseStatus ) {
@@ -59,7 +59,9 @@ module.exports = function( $city, $state, $country, $timezone ) {
 						label: label,
 						value: item.name,
 						region: location.region,
+						region_code: location.region_code,
 						country: location.country,
+						country_code: location.country_code,
 						timezoneId: item.timezone.id
 					};
 				}) );
@@ -72,7 +74,7 @@ module.exports = function( $city, $state, $country, $timezone ) {
 		position: position,
 		select: function( e, ui ) {
 			if ( $state && '' === $state.val() ) {
-				$state.val( ui.item.region ).trigger( 'change' );
+				$state.val( ui.item.region_code || ui.item.region ).trigger( 'change' );
 			}
 
 			if ( $country && '' === $country.val() ) {
@@ -80,7 +82,7 @@ module.exports = function( $city, $state, $country, $timezone ) {
 			}
 
 			if ( $timezone ) {
-				$timezone.find( 'option[value="' + ui.item.timezoneId + '"]' ).attr( 'selected', 'selected' );
+				$timezone.find( 'option[value="' + ui.item.timezoneId + '"]' ).attr( 'selected', true );
 				$timezone.trigger( 'change' );
 			}
 		},

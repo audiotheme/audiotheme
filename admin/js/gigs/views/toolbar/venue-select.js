@@ -8,6 +8,10 @@ var VenueSelectToolbar,
 
 VenueSelectToolbar = wp.media.view.Toolbar.extend({
 	initialize: function( options ) {
+		var selection = options.selection;
+
+		this.controller = options.controller;
+
 		// This is a button.
 		this.options.items = _.defaults( this.options.items || {}, {
 			select: {
@@ -18,10 +22,7 @@ VenueSelectToolbar = wp.media.view.Toolbar.extend({
 					selection: true
 				},
 				click: function() {
-					var state = this.controller.state(),
-						selection = state.get( 'selection' );
-
-					state.trigger( 'insert', selection );
+					this.controller.state().trigger( 'insert', selection );
 					this.controller.close();
 				}
 			}
