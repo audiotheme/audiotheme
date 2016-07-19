@@ -28,18 +28,13 @@ if ( 'undefined' !== typeof isRtl && isRtl ) {
  * - views/venue/edit-form.js
  */
 module.exports = function( $city, $state, $country, $timezone ) {
-	if ( 'active' !== settings.licenseStatus ) {
-		return;
-	}
-
 	$city.autocomplete({
 		source: function( request, callback ) {
 			$.ajax({
 				url: 'https://gazetteer.audiotheme.com/api/v1/city/search',
 				data: {
 					q: request.term,
-					include: 'timezone',
-					license_key: settings.licenseKey
+					include: 'timezone'
 				}
 			})
 			.done(function( response ) {

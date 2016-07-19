@@ -120,10 +120,19 @@ class AudioTheme_Provider_Setting_LicenseKey {
 	 * @since 2.0.0
 	 */
 	public function display_section_description() {
-		printf(
-			__( 'Find your license key in <a href="%s" target="_blank">your account</a> on AudioTheme.com. Your license key allows you to receive automatic upgrades and support.', 'audiotheme' ),
-			'https://audiotheme.com/account/'
-		);
+		echo '<p>';
+			printf(
+				__( 'Find your license key in <a href="%s" target="_blank">your account</a> on AudioTheme.com. Your license key allows you to receive automatic upgrades and support.', 'audiotheme' ),
+				'https://audiotheme.com/account/'
+			);
+		echo '</p>';
+
+		echo '<p>';
+			printf(
+				__( 'License keys have been deprecated. If you purchased a theme or plugin after March 15, 2016, you don\'t have a license key and should use the <a href="%s" target="_blank">AudioTheme Agent</a> for support and updates.', 'audiotheme' ),
+				'https://audiotheme.com/support/audiotheme-agent/'
+			);
+		echo '</p>';
 
 		wp_enqueue_script( 'audiotheme-license' );
 	}
