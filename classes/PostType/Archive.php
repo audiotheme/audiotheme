@@ -270,16 +270,21 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	 */
 	public function post_navigation_join_clause( $join ) {
 		global $wpdb;
+
 		if ( ! in_array( get_post_type(), array( 'audiotheme_record', 'audiotheme_track', 'audiotheme_video' ), true ) ) {
 			return $join;
 		}
+
 		$orderby = get_audiotheme_archive_meta( 'orderby', true, 'release_year', get_post_type() );
+
 		if ( 'post_date' !== $orderby ) {
 			$join = '';
 		}
+
 		if ( 'audiotheme_record' === get_post_type() && 'release_year' === $orderby ) {
 			$join = "INNER JOIN $wpdb->postmeta pm ON p.ID = pm.post_id";
 		}
+
 		return $join;
 	}
 
@@ -293,6 +298,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	 */
 	public function post_navigation_where_clause( $where ) {
 		global $wpdb;
+
 		if ( in_array( get_post_type(), array( 'audiotheme_record', 'audiotheme_video' ) ) ) {
 			$post      = get_post();
 			$previous  = ( 0 === strpos( current_filter(), 'get_previous_post_' ) );
@@ -300,30 +306,32 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 			$operation = $previous ? '<' : '>';
 			$orderby   = get_audiotheme_archive_meta( 'orderby', true, 'release_year', get_post_type() );
 			$order     = $previous ? 'DESC' : 'ASC';
-			if ( 'custom' == $orderby ) {
+
+			if ( 'custom' === $orderby ) {
 				$where = $wpdb->prepare(
 					"WHERE p.menu_order $operation %d AND p.post_type = %s AND p.post_status = 'publish'",
 					$post->menu_order,
 					$post->post_type
 				);
-			} elseif ( 'title' == $orderby ) {
+			} elseif ( 'title' === $orderby ) {
 				$where = $wpdb->prepare(
 					"WHERE p.post_title $operation %s AND p.post_type = %s AND p.post_status = 'publish' AND ID != %d",
 					$post->post_title,
 					$post->post_type,
 					$post->ID
 				);
-			} elseif ( 'post_date' == $orderby ) {
+			} elseif ( 'post_date' === $orderby ) {
 				$operation = $previous ? '>' : '<';
 				$where = $wpdb->prepare(
 					"WHERE p.post_date $operation %s AND p.post_type = %s AND p.post_status = 'publish'",
 					$post->post_date,
 					$post->post_type
 				);
-			} elseif ( 'release_year' == $orderby ) {
+			} elseif ( 'release_year' === $orderby ) {
 				$operation       = $previous ? '>' : '<';
 				$operation_title = $previous ? '<' : '>';
 				$operation_year  = $previous ? '>=' : '<=';
+
 				$where = $wpdb->prepare(
 					"WHERE
 						pm.meta_key = '_audiotheme_release_year' AND
@@ -340,12 +348,14 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 				);
 			}
 		}
-		if ( 'audiotheme_track' == get_post_type() ) {
+
+		if ( 'audiotheme_track' === get_post_type() ) {
 			$post      = get_post();
 			$previous  = ( 0 === strpos( current_filter(), 'get_previous_post_' ) );
 			$adjacent  = $previous ? 'previous' : 'next';
 			$operation = $previous ? '<' : '>';
 			$order     = $previous ? 'DESC' : 'ASC';
+
 			$where = $wpdb->prepare(
 				"WHERE p.menu_order $operation %d AND p.post_type = %s AND p.post_parent = %d AND p.post_status = 'publish'",
 				$post->menu_order,
@@ -353,6 +363,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 				$post->post_parent
 			);
 		}
+
 		return $where;
 	}
 
@@ -369,6 +380,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 			$previous = ( 0 === strpos( current_filter(), 'get_previous_post_' ) );
 			$orderby  = get_audiotheme_archive_meta( 'orderby', true, 'release_year', get_post_type() );
 			$order    = $previous ? 'DESC' : 'ASC';
+
 			if ( 'custom' == $orderby ) {
 				$sort = "ORDER BY p.menu_order $order LIMIT 1";
 			} elseif ( 'title' == $orderby ) {
@@ -381,12 +393,15 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 				$sort  = "ORDER BY pm.meta_value $order, p.post_title ASC LIMIT 1";
 			}
 		}
+
 		if ( 'audiotheme_track' == get_post_type() ) {
 			$post     = get_post();
 			$previous = ( 0 === strpos( current_filter(), 'get_previous_post_' ) );
 			$order    = $previous ? 'DESC' : 'ASC';
+
 			$sort = "ORDER BY p.menu_order $order LIMIT 1";
 		}
+
 		return $sort;
 	}
 
