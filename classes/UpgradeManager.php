@@ -60,7 +60,7 @@ class AudioTheme_UpgradeManager {
 		}
 
 		if ( version_compare( $saved_version, '2.0.0', '<' ) ) {
-			$this->upgrade_190();
+			$this->upgrade_200();
 		}
 
 		if ( '0' === $saved_version || version_compare( $saved_version, $current_version, '<' ) ) {
@@ -105,7 +105,7 @@ class AudioTheme_UpgradeManager {
 	 *
 	 * @since 2.0.0
 	 */
-	protected function upgrade_190() {
+	protected function upgrade_200() {
 		global $wpdb;
 
 		// Add the archive post type to its metadata.
