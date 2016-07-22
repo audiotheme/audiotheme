@@ -94,6 +94,8 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 		add_action( 'template_redirect',        array( $this, 'template_redirect' ) );
 		add_action( 'template_include',         array( $this, 'template_include' ) );
 		add_filter( 'the_posts',                array( $this, 'query_connected_venues' ), 10, 2 );
+		add_action( 'wp_footer',                array( $this, 'maybe_print_front_page_gigs_jsonld' ) );
+		add_action( 'wp_footer',                array( $this, 'maybe_print_upcoming_gigs_jsonld' ) );
 		add_filter( 'wxr_export_skip_postmeta', array( $this, 'exclude_meta_from_export' ) );
 		add_action( 'import_end',               array( $this, 'remap_gig_venues' ) );
 
@@ -301,6 +303,49 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	}
 
 	/**
+	 * Print a JSON-LD tag for upcoming gigs on the front page.
+	 *
+	 * @since 2.0.0
+	 */
+	public function maybe_print_front_page_gigs_jsonld() {
+		if ( ! is_front_page() ) {
+			return;
+		}
+
+		$args = array(
+			'order'          => 'desc',
+			'posts_per_page' => 20,
+			'no_found_rows'  => true,
+			'meta_query'     => array(
+				array(
+					'key'     => '_audiotheme_gig_datetime',
+					'value'   => date( 'Y-m-d', current_time( 'timestamp' ) - DAY_IN_SECONDS ),
+					'compare' => '>=',
+					'type'    => 'DATETIME',
+				),
+			),
+		);
+
+		$wp_query = new Audiotheme_Gig_Query( $args );
+		if ( ! empty( $wp_query->posts ) ) {
+			$this->print_jsonld( $wp_query->posts );
+		}
+	}
+
+	/**
+	 * Print a JSON-LD tag for upcoming gigs on the gig archive.
+	 *
+	 * @since 2.0.0
+	 */
+	public function maybe_print_upcoming_gigs_jsonld() {
+		if ( ! is_post_type_archive( 'audiotheme_gig' ) ) {
+			return;
+		}
+
+		$this->print_jsonld( $GLOBALS['wp_query']->posts );
+	}
+
+	/**
 	 * Register administration scripts and styles.
 	 *
 	 * @since 2.0.0
@@ -388,5 +433,86 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 		}
 
 		return apply_filters( 'audiotheme_past_gigs_rewrite_base', $slug );
+	}
+
+	/**
+	 * Print a JSON-LD script tag for a list of posts.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param array $posts Array of posts.
+	 */
+	protected function print_jsonld( $posts ) {
+		$items = array();
+
+		foreach ( $posts as $post ) {
+			$items[] = $this->prepare_gig_for_jsonld( $post );
+		}
+
+		echo '<pre>';
+		print_r( json_encode( $items, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) );
+		echo '</pre>';
+
+		printf(
+			'<script type="application/ld+json"></script>',
+			wp_json_encode( $items )
+		);
+	}
+
+	/**
+	 * Format a gig for JSON-LD.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param  WP_Post $post Gig post object.
+	 * @return array
+	 */
+	protected function prepare_gig_for_jsonld( $post ) {
+		$item = array(
+			'@context'    => 'http://schema.org',
+			'@type'       => 'MusicEvent',
+			'name'        => get_audiotheme_gig_title( $post ),
+			'startDate'   => get_audiotheme_gig_time( 'c', '', false, null, $post ),
+			'description' => get_audiotheme_gig_description( $post ),
+			//'url'         => get_permalink( $post ),
+			//'image'       => '',
+		);
+
+		/*$item['performer'] = array(
+			'@type'  => '', // Organization, Person
+			'name'   => '',
+			//'image'  => '',
+			//'sameAs' => '', // Wikipedia URL
+			//'url'    => '',
+		);*/
+
+		if ( audiotheme_gig_has_venue( $post ) ) {
+			$venue = get_audiotheme_venue( $post->venue->ID );
+
+			$item['location'] = array(
+				'@type'     => 'Place',
+				'name'      => $venue->name,
+				'telephone' => $venue->phone,
+				'sameAs'    => $venue->website,
+				'address'   => array(
+					'@type' => 'PostalAddress',
+					'addressLocality' => $venue->city,
+					'addressRegion'   => $venue->state,
+					'postalCode'      => $venue->postal_code,
+					'streetAddress'   => $venue->address,
+					'addressCountry'  => $venue->country,
+				),
+			);
+		}
+
+		$tickets_url = get_audiotheme_gig_tickets_url( $post );
+		if ( ! empty( $tickets_url ) ) {
+			$item['offers'] = array(
+				'@type' => 'Offer',
+				'url'   => esc_url( $tickets_url ),
+			);
+		}
+
+		return apply_filters( 'audiotheme_prepare_gig_for_jsonld', $item, $post );
 	}
 }
