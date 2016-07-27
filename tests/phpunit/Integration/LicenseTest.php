@@ -1,9 +1,7 @@
 <?php
-
 namespace AudioTheme\Test\Integration;
 
 use AudioTheme_License;
-
 
 class LicenseTest extends \WP_UnitTestCase {
 	public function setUp() {
