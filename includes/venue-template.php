@@ -123,7 +123,6 @@ function set_audiotheme_gig_venue_id( $gig_id, $venue_id ) {
 	update_audiotheme_venue_gig_count( $venue_id );
 
 	update_post_meta( $gig_id, '_audiotheme_venue_id', $venue_id );
-	update_post_meta( $gig_id, '_audiotheme_venue_guid', get_post( $venue_id )->guid );
 
 	return get_audiotheme_venue( $venue_id );
 }

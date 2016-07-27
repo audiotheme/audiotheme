@@ -59,6 +59,8 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 		add_filter( 'post_class',               array( $this, 'post_class' ), 10, 3 );
 		add_action( 'before_delete_post',       array( $this, 'on_before_delete' ) );
 		add_filter( 'wp_insert_post_data',      array( $this, 'add_uuid_to_new_posts' ) );
+		add_action( 'added_post_meta',          array( $this, 'sync_venue_guid' ), 10, 4 );
+		add_action( 'updated_post_meta',        array( $this, 'sync_venue_guid' ), 10, 4 );
 		add_filter( 'post_updated_messages',    array( $this, 'post_updated_messages' ) );
 	}
 
@@ -342,6 +344,24 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 		}
 
 		return $classes;
+	}
+
+	/**
+	 * Synchronize the venue guid metadata when the venue id is updated.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param int    $meta_id    Metadata ID.
+	 * @param int    $post_id    Post ID.
+	 * @param string $meta_key   Meta key.
+	 * @param mixed  $meta_value Meta value.
+	 */
+	public function sync_venue_guid( $meta_id, $post_id, $meta_key, $meta_value ) {
+		if ( '_audiotheme_venue_id' !== $meta_key ) {
+			return;
+		}
+
+		update_post_meta( $post_id, '_audiotheme_venue_guid', get_post( $meta_value )->guid );
 	}
 
 	/**
