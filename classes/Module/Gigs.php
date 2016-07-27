@@ -449,12 +449,8 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 			$items[] = $this->prepare_gig_for_jsonld( $post );
 		}
 
-		echo '<pre>';
-		print_r( json_encode( $items, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) );
-		echo '</pre>';
-
 		printf(
-			'<script type="application/ld+json"></script>',
+			'<script type="application/ld+json">%s</script>',
 			wp_json_encode( $items )
 		);
 	}
