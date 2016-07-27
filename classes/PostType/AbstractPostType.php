@@ -45,6 +45,22 @@ abstract class AudioTheme_PostType_AbstractPostType {
 	abstract protected function get_updated_messages( $post );
 
 	/**
+	 * Use a v4 UUID for new CPTs.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param  array $data Post data to save to the database.
+	 * @return array
+	 */
+	public function add_uuid_to_new_posts( $data ) {
+		if ( empty( $data['guid'] ) && $this->post_type === $data['post_type'] ) {
+			$data['guid'] = wp_slash( sprintf( 'urn:uuid:%s', $this->generate_uuid_v4() ) );
+		}
+
+		return $data;
+	}
+
+	/**
 	 * Filter post type update messages.
 	 *
 	 * @since 2.0.0
@@ -104,5 +120,38 @@ abstract class AudioTheme_PostType_AbstractPostType {
 	 */
 	protected function is_draft_or_pending( $post ) {
 		return isset( $post->post_status ) && in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) );
+	}
+
+	/**
+	 * Generate a UUID using the v4 algorithm.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @link http://php.net/manual/en/function.uniqid.php#94959
+	 * @link https://github.com/rmccue/realguids
+	 *
+	 * @return string Generated UUID.
+	 */
+	protected function generate_uuid_v4() {
+		return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+
+			// 32 bits for "time_low"
+			mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+
+			// 16 bits for "time_mid"
+			mt_rand( 0, 0xffff ),
+
+			// 16 bits for "time_hi_and_version",
+			// four most significant bits holds version number 4
+			mt_rand( 0, 0x0fff ) | 0x4000,
+
+			// 16 bits, 8 bits for "clk_seq_hi_res",
+			// 8 bits for "clk_seq_low",
+			// two most significant bits holds zero and one for variant DCE1.1
+			mt_rand( 0, 0x3fff ) | 0x8000,
+
+			// 48 bits for "node"
+			mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+		);
 	}
 }

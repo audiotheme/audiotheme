@@ -58,6 +58,7 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 		add_action( 'save_post_audiotheme_gig', array( $this, 'update_bad_slug' ), 20, 2 );
 		add_filter( 'post_class',               array( $this, 'post_class' ), 10, 3 );
 		add_action( 'before_delete_post',       array( $this, 'on_before_delete' ) );
+		add_filter( 'wp_insert_post_data',      array( $this, 'add_uuid_to_new_posts' ) );
 		add_filter( 'post_updated_messages',    array( $this, 'post_updated_messages' ) );
 	}
 

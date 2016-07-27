@@ -48,6 +48,7 @@ class AudioTheme_Provider_GeneralHooks {
 		add_filter( 'audiotheme_archive_title',     array( $this, 'taxonomy_archives_titles' ) );
 		add_filter( 'wp_nav_menu_objects',          array( $this, 'nav_menu_classes' ), 10, 3 );
 		add_filter( 'wp_prepare_attachment_for_js', array( $this, 'prepare_audio_attachment_for_js' ), 10, 3 );
+		add_filter( 'kses_allowed_protocols',       array( $this, 'register_urn_protocol' ) );
 
 		// Deprecated.
 		add_action( 'init',                   'audiotheme_less_setup' );
@@ -190,5 +191,22 @@ class AudioTheme_Provider_GeneralHooks {
 		$response['audiotheme'] = $meta;
 
 		return $response;
+	}
+
+	/**
+	 * Register urn: as an allowed protocol.
+	 *
+	 * The GUID gets passed through `esc_url_raw`, so we need to allow urn.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @link https://github.com/rmccue/realguids
+	 *
+	 * @param  array $protocols Allowed protocols.
+	 * @return array
+	 */
+	public function register_urn_protocol( $protocols ) {
+		$protocols[] = 'urn';
+		return $protocols;
 	}
 }

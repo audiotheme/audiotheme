@@ -31,6 +31,7 @@ class AudioTheme_PostType_Venue extends AudioTheme_PostType_AbstractPostType {
 	 */
 	public function register_hooks() {
 		add_action( 'init',                  array( $this, 'register_post_type' ) );
+		add_filter( 'wp_insert_post_data',   array( $this, 'add_uuid_to_new_posts' ) );
 		add_action( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
 	}
 
