@@ -55,6 +55,7 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType_AbstractPostType {
 		add_filter( 'post_type_link',          array( $this, 'post_permalink' ), 10, 4 );
 		add_filter( 'wp_unique_post_slug',     array( $this, 'get_unique_slug' ), 10, 6 );
 		add_action( 'wp_print_footer_scripts', array( $this, 'print_tracks_js' ) );
+		add_filter( 'wp_insert_post_data',     array( $this, 'add_uuid_to_new_posts' ) );
 		add_filter( 'post_updated_messages',   array( $this, 'post_updated_messages' ) );
 	}
 

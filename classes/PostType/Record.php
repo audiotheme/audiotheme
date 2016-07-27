@@ -55,6 +55,7 @@ class AudioTheme_PostType_Record extends AudioTheme_PostType_AbstractPostType {
 		add_filter( 'post_type_archive_link', array( $this, 'archive_permalink' ), 10, 2 );
 		add_filter( 'post_type_link',         array( $this, 'post_permalink' ), 10, 4 );
 		add_filter( 'post_class',             array( $this, 'archive_post_class' ) );
+		add_filter( 'wp_insert_post_data',    array( $this, 'add_uuid_to_new_posts' ) );
 		add_action( 'post_updated_messages',  array( $this, 'post_updated_messages' ) );
 	}
 

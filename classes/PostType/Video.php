@@ -54,6 +54,7 @@ class AudioTheme_PostType_Video extends AudioTheme_PostType_AbstractPostType {
 		add_action( 'pre_get_posts',         array( $this, 'default_template_archive_query' ) );
 		add_action( 'delete_attachment',     array( $this, 'delete_oembed_thumbnail_data' ) );
 		add_filter( 'post_class',            array( $this, 'archive_post_class' ) );
+		add_filter( 'wp_insert_post_data',   array( $this, 'add_uuid_to_new_posts' ) );
 		add_action( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
 	}
 
