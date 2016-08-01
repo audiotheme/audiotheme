@@ -157,12 +157,18 @@ class AudioTheme_Screen_EditGig extends AudioTheme_Screen_AbstractScreen{
 			return;
 		}
 
+		$post_type_object = get_post_type_object( 'audiotheme_gig' );
+		if ( ! current_user_can( $post_type_object->cap->edit_post, $post_id ) ) {
+			return;
+		}
+
 		$is_active = true;
 
-		$post_type_object = get_post_type_object( 'audiotheme_gig' );
-		if ( isset( $_POST['gig_date'] ) && isset( $_POST['gig_time'] ) && current_user_can( $post_type_object->cap->edit_post, $post_id ) ) {
+		if ( isset( $_POST['gig_venue_id'] ) ) {
 			set_audiotheme_gig_venue_id( $post_id, absint( $_POST['gig_venue_id'] ) );
+		}
 
+		if ( isset( $_POST['gig_date'] ) && isset( $_POST['gig_time'] ) ) {
 			$dt = date_parse( $_POST['gig_date'] . ' ' . $_POST['gig_time'] );
 
 			// Date and time are always stored local to the venue.

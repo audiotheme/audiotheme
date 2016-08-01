@@ -55,9 +55,8 @@ if ( empty( $timezone_string ) && 'auto-draft' !== get_post_status() ) : ?>
 			<div class="audiotheme-panel-header">
 				<h4 class="audiotheme-panel-title"><?php esc_html_e( 'Venue', 'audiotheme' ); ?></h4>
 			</div>
-			<div class="audiotheme-panel-body">
-				<input type="hidden" name="gig_venue_id" id="gig-venue-id" value="<?php echo absint( $venue_id ); ?>">
-			</div>
+			<input type="hidden" name="gig_venue_id" id="gig-venue-id" value="<?php echo absint( $venue_id ); ?>">
+			<div class="audiotheme-panel-body"></div>
 		</div>
 
 	</div>
