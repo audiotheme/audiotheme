@@ -38,7 +38,6 @@ class AudioTheme_Screen_EditVenue extends AudioTheme_Screen_AbstractScreen{
 			return;
 		}
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'edit_form_after_title', array( $this, 'display_edit_fields' ) );
 	}
 
@@ -67,15 +66,6 @@ class AudioTheme_Screen_EditVenue extends AudioTheme_Screen_AbstractScreen{
 			'normal',
 			'core'
 		);
-	}
-
-	/**
-	 * Enqueue assets for the Edit Venue screen.
-	 *
-	 * @since 2.0.0
-	 */
-	public function enqueue_assets() {
-		wp_enqueue_script( 'audiotheme-venue-edit' );
 	}
 
 	/**
