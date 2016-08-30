@@ -15,12 +15,15 @@ module.exports = function( grunt, options ) {
 			'cssmin'
 		],
 		'build:js': [
-			'browserify',
+			'browserify:build',
 			'uglify'
 		],
 		'check': [
 			'jshint',
 			'jscs'
+		],
+		'develop:js': [
+			'browserify:develop'
 		],
 		'package': [
 			'check',

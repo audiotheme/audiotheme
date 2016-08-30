@@ -1,10 +1,15 @@
-module.exports = {
+var config,
+	_ = require( 'lodash' );
+
+config = {
 	options: {
 		alias: {
 			audiotheme: './includes/js/application.js'
-		}
+		},
+		watch: true
 	},
 	build: {
+		options: {},
 		files: [
 			{
 				src: 'admin/js/admin.js',
@@ -25,3 +30,8 @@ module.exports = {
 		]
 	}
 };
+
+config.develop = _.cloneDeep( config.build );
+config.develop.options.keepAlive = true;
+
+module.exports = config;
