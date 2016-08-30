@@ -62,6 +62,10 @@ class AudioTheme_Provider_Setting_LicenseKey {
 	 * @since 2.0.0
 	 */
 	public function register_hooks() {
+		if ( function_exists( 'audiotheme_agent' ) ) {
+			return;
+		}
+
 		add_action( 'wp_ajax_audiotheme_ajax_activate_license', array( $this, 'ajax_activate_license' ) );
 		add_action( 'audiotheme_update_response_error',         array( $this, 'clear_status' ) );
 		add_action( 'update_option_' . $this->option_name,      array( $this, 'on_option_update' ) );

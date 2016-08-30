@@ -22,7 +22,7 @@ class AudioTheme_Screen_Settings extends AudioTheme_Screen_AbstractScreen {
 	 * @since 2.0.0
 	 */
 	public function register_hooks() {
-		add_action( 'admin_menu', array( $this, 'add_menu_item' ) );
+		add_action( 'admin_menu', array( $this, 'add_menu_item' ), 22 );
 		add_action( 'admin_init', array( $this, 'add_sections' ) );
 	}
 
