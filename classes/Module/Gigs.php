@@ -365,14 +365,29 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 		$post_type_object = get_post_type_object( 'audiotheme_venue' );
 		$base_url = set_url_scheme( $this->plugin->get_url( 'admin/js' ) );
 
-		wp_register_script( 'audiotheme-gig-edit', $base_url . '/gig-edit.bundle.min.js', array( 'audiotheme-admin', 'jquery-timepicker', 'jquery-ui-autocomplete', 'media-models', 'media-views', 'pikaday', 'underscore', 'wp-backbone', 'wp-util' ), AUDIOTHEME_VERSION, true );
-		wp_register_script( 'audiotheme-venue-edit', $base_url . '/venue-edit.bundle.min.js', array( 'audiotheme-admin', 'jquery-ui-autocomplete', 'post', 'underscore' ), AUDIOTHEME_VERSION, true );
-		wp_register_style( 'audiotheme-venue-manager', $this->plugin->get_url( 'admin/css/venue-manager.min.css', array(), '1.0.0' ) );
+		wp_register_script(
+			'audiotheme-google-maps',
+			add_query_arg( 'key', $this->get_google_maps_api_key(), 'https://maps.googleapis.com/maps/api/js?libraries=places' )
+		);
+
+		wp_register_script(
+			'audiotheme-gig-edit',
+			$base_url . '/gig-edit.bundle.min.js',
+			array( 'audiotheme-admin', 'audiotheme-google-maps', 'jquery-timepicker', 'media-models', 'media-views', 'pikaday', 'underscore', 'wp-backbone', 'wp-util' ),
+			AUDIOTHEME_VERSION,
+			true
+		);
+
+		wp_register_style(
+			'audiotheme-venue-manager',
+			$this->plugin->get_url( 'admin/css/venue-manager.min.css' )
+		);
 
 		$settings = array(
 			'canPublishVenues'      => false,
 			'canEditVenues'         => current_user_can( $post_type_object->cap->edit_posts ),
 			'defaultTimezoneString' => get_option( 'timezone_string' ),
+			'googleMapsApiKey'      => $this->get_google_maps_api_key(),
 			'insertVenueNonce'      => false,
 			'l10n'                  => array(
 				'addNewVenue'  => $post_type_object->labels->add_new_item,

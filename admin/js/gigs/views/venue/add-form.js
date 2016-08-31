@@ -5,12 +5,11 @@
 var VenueAddForm,
 	$ = require( 'jquery' ),
 	wp = require( 'wp' ),
-	cityTypeahead = require( '../../utils/city-typeahead' );
+	placeAutocomplete = require( '../../utils/place-autocomplete' );
 
 /**
  *
  *
- * @todo Search for timezone based on the city.
  * @todo Display an error if the timezone isn't set.
  */
 VenueAddForm = wp.media.View.extend({
@@ -29,12 +28,19 @@ VenueAddForm = wp.media.View.extend({
 	render: function() {
 		this.$el.html( this.template( this.model.toJSON() ) );
 
-		cityTypeahead(
-			this.$el.find( '[data-setting="city"]' ),
-			this.$el.find( '[data-setting="state"]' ),
-			this.$el.find( '[data-setting="country"]' ),
-			this.$el.find( '[data-setting="timezone_string"]' )
-		);
+		placeAutocomplete({
+			fields: {
+				name: this.$( '[data-setting="name"]' ),
+				address: this.$( '[data-setting="address"]' ),
+				city: this.$( '[data-setting="city"]' ),
+				state: this.$( '[data-setting="state"]' ),
+				postalCode: this.$( '[data-setting="postal_code"]' ),
+				country: this.$( '[data-setting="country"]' ),
+				timeZone: this.$( '[data-setting="timezone_string"]' ),
+				phone: this.$( '[data-setting="phone"]' ),
+				website: this.$( '[data-setting="website"]' )
+			}
+		});
 
 		return this;
 	},

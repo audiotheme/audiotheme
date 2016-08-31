@@ -59,7 +59,7 @@
 		<tr>
 			<th><label for="venue-name"><?php esc_html_e( 'Name', 'audiotheme' ) ?></label></th>
 			<td>
-				<input type="text" name="audiotheme_venue[name]" id="venue-name" class="regular-text" value="{{ data.name }}" data-setting="name">
+				<input type="text" name="audiotheme_venue[name]" id="venue-name" class="regular-text" value="{{ data.name }}" data-setting="name" placeholder="">
 			</td>
 		</tr>
 		<tr>

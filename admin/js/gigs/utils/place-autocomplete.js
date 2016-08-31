@@ -1,0 +1,90 @@
+/*jshint browserify:true */
+/*global google:false */
+
+'use strict';
+
+var settings,
+	$ = require( 'jquery' ),
+	_ = require( 'underscore' ),
+	app = require( 'audiotheme' );
+
+settings = app.settings();
+
+function getAddress( components ) {
+	var map,
+		address = {};
+
+	map = {
+		street_number: 'short_name',
+		route: 'long_name',
+		locality: 'long_name',
+		administrative_area_level_1: 'short_name',
+		country: 'long_name',
+		postal_code: 'short_name'
+	 };
+
+	 _.each( components, function( component ) {
+		var type = component.types[0];
+
+		if ( map[ type ] ) {
+			address[ type ] = component[ map[ type ] ];
+		}
+	});
+
+	return address;
+}
+
+function updateTimeZone( $field, latitude, longitude ) {
+	return $.ajax({
+		url: 'https://maps.googleapis.com/maps/api/timezone/json',
+		data: {
+			location: latitude + ',' + longitude,
+			key: settings.googleMapsApiKey,
+			timestamp: parseInt( Math.floor( Date.now() / 1000 ), 10 )
+		}
+	})
+	.done(function( response ) {
+		$field
+			.find( 'option[value="' + response.timeZoneId + '"]' ).attr( 'selected', true )
+			.end()
+			.trigger( 'change' );
+	});
+}
+
+/*
+ * Currently used in:
+ * - views/venue/add-form.js
+ * - views/venue/edit-form.js
+ */
+module.exports = function( options ) {
+	var autocomplete = new google.maps.places.Autocomplete( options.fields.name[0], {
+		types: [ 'establishment' ]
+	});
+
+	_.extend({
+		fields: {}
+	}, options );
+
+	autocomplete.addListener( 'place_changed', function() {
+		var place = autocomplete.getPlace(),
+			address = getAddress( place.address_components ),
+			location = place.geometry.location;
+
+		options.fields.name.val( place.name ).trigger( 'change' );
+		options.fields.address.val( address.street_number + ' ' + address.route ).trigger( 'change' );
+		options.fields.city.val( address.locality ).trigger( 'change' );
+		options.fields.state.val( address.administrative_area_level_1 ).trigger( 'change' );
+		options.fields.postalCode.val( address.postal_code ).trigger( 'change' );
+		options.fields.country.val( address.country ).trigger( 'change' );
+		options.fields.phone.val( place.formatted_phone_number ).trigger( 'change' );
+		options.fields.website.val( place.website ).trigger( 'change' );
+
+		if ( options.fields.timeZone ) {
+			updateTimeZone(
+				options.fields.timeZone,
+				location.lat(),
+				location.lng()
+			);
+		}
+	});
+};
