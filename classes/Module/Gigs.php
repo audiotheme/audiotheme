@@ -110,6 +110,17 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	}
 
 	/**
+	 * Retrieve the Google Maps API key.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return string
+	 */
+	public function get_google_maps_api_key() {
+		return get_option( AudioTheme_Provider_Setting_GoogleMaps::API_KEY_OPTION_NAME, '' );
+	}
+
+	/**
 	 * Register the gig archive.
 	 *
 	 * @since 2.0.0

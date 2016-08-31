@@ -129,6 +129,7 @@ if ( is_admin() ) {
 		->register_hooks( new AudioTheme_Provider_AdminAssets() )
 		->register_hooks( new AudioTheme_Screen_Dashboard() )
 		->register_hooks( new AudioTheme_Screen_Settings() )
+		->register_hooks( new AudioTheme_Provider_Setting_GoogleMaps() )
 		->register_hooks( new AudioTheme_Provider_Setting_LicenseKey( $audiotheme->license ) );
 }
 

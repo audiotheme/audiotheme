@@ -686,6 +686,7 @@ function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 	$args['embed_url'] = add_query_arg( array(
 		'q'      => rawurlencode( $args['address'] ),
 		'output' => 'embed',
+		'key'    => audiotheme()->modules['gigs']->get_google_maps_api_key(),
 	), '//maps.google.com/maps' );
 
 	$args['link_url'] = add_query_arg( 'q', urlencode( $args['address'] ), 'https://maps.google.com/maps' );
@@ -746,6 +747,7 @@ function get_audiotheme_google_static_map_url( $args = array(), $venue_id = 0 ) 
 			'format'  => 'jpg',
 			'sensor'  => 'false',
 			'markers' => 'size:small|color:0xff0000|' . rawurlencode( $args['address'] ),
+			'key'     => audiotheme()->modules['gigs']->get_google_maps_api_key(),
 		),
 		'//maps.googleapis.com/maps/api/staticmap'
 	);
