@@ -23,7 +23,7 @@ class AudioTheme_Screen_Settings extends AudioTheme_Screen_AbstractScreen {
 	 */
 	public function register_hooks() {
 		add_action( 'admin_menu', array( $this, 'add_menu_item' ), 22 );
-		add_action( 'admin_init', array( $this, 'add_sections' ) );
+		add_action( 'admin_init', array( $this, 'register_sections' ) );
 	}
 
 	/**
@@ -43,11 +43,11 @@ class AudioTheme_Screen_Settings extends AudioTheme_Screen_AbstractScreen {
 	}
 
 	/**
-	 * Add settings sections.
+	 * Register settings sections.
 	 *
 	 * @since 2.0.0
 	 */
-	public function add_sections() {
+	public function register_sections() {
 		add_settings_section(
 			'default',
 			'',

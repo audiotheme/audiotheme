@@ -23,7 +23,7 @@ class AudioTheme_Screen_Network_Settings extends AudioTheme_Screen_AbstractScree
 	 */
 	public function register_hooks() {
 		add_action( 'network_admin_menu', array( $this, 'add_menu_item' ) );
-		add_action( 'admin_init',         array( $this, 'add_sections' ) );
+		add_action( 'admin_init',         array( $this, 'register_sections' ) );
 		add_action( 'admin_init',         array( $this, 'save_network_settings' ) );
 	}
 
@@ -44,11 +44,11 @@ class AudioTheme_Screen_Network_Settings extends AudioTheme_Screen_AbstractScree
 	}
 
 	/**
-	 * Add settings sections.
+	 * Register settings sections.
 	 *
 	 * @since 2.0.0
 	 */
-	public function add_sections() {
+	public function register_sections() {
 		add_settings_section(
 			'default',
 			'',

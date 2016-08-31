@@ -72,8 +72,8 @@ class AudioTheme_Provider_Setting_LicenseKey {
 		add_action( 'audiotheme_save_network_settings',         array( $this, 'save_network_settings' ) );
 
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
-		add_action( 'admin_init', array( $this, 'add_sections' ) );
-		add_action( 'admin_init', array( $this, 'add_fields' ) );
+		add_action( 'admin_init', array( $this, 'register_sections' ) );
+		add_action( 'admin_init', array( $this, 'register_fields' ) );
 	}
 
 	/**
@@ -90,11 +90,11 @@ class AudioTheme_Provider_Setting_LicenseKey {
 	}
 
 	/**
-	 * Add settings sections.
+	 * Register settings sections.
 	 *
 	 * @since 2.0.0
 	 */
-	public function add_sections() {
+	public function register_sections() {
 		add_settings_section(
 			'audiotheme-license',
 			__( 'License', 'audiotheme' ),
@@ -108,7 +108,7 @@ class AudioTheme_Provider_Setting_LicenseKey {
 	 *
 	 * @since 2.0.0
 	 */
-	public function add_fields() {
+	public function register_fields() {
 		add_settings_field(
 			$this->option_name,
 			__( 'License Key', 'audiotheme' ),
