@@ -11,7 +11,7 @@
 ?>
 
 <div class="wrap">
-	<h1><?php _e( 'Settings', 'audiotheme' ); ?></h1>
+	<h1><?php _e( 'AudioTheme Settings', 'audiotheme' ); ?></h1>
 
 	<form action="options.php" method="post">
 		<?php settings_fields( 'audiotheme-settings' ); ?>
