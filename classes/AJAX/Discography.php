@@ -15,7 +15,7 @@
  * @package AudioTheme\Discography
  * @since   2.0.0
  */
-class AudioTheme_AJAX_Discography {
+class AudioTheme_AJAX_Discography extends AudioTheme_AbstractProvider {
 	/**
 	 * Register hooks.
 	 *

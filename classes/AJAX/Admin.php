@@ -15,7 +15,7 @@
  * @package AudioTheme\Administration
  * @since   2.0.0
  */
-class AudioTheme_AJAX_Admin {
+class AudioTheme_AJAX_Admin extends AudioTheme_AbstractProvider {
 	/**
 	 * Register hooks.
 	 *

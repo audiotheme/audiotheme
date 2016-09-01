@@ -15,7 +15,7 @@
  * @package AudioTheme
  * @since   2.0.0
  */
-class AudioTheme_Provider_Setting_GoogleMaps {
+class AudioTheme_Provider_Setting_GoogleMaps extends AudioTheme_AbstractProvider {
 	/**
 	 * API key option name.
 	 *
@@ -25,33 +25,12 @@ class AudioTheme_Provider_Setting_GoogleMaps {
 	const API_KEY_OPTION_NAME = 'audiotheme_google_maps_api_key';
 
 	/**
-	 * Plugin instance.
-	 *
-	 * @since 2.0.0
-	 * @var AudioTheme_Plugin
-	 */
-	protected $plugin;
-
-	/**
 	 * Option group.
 	 *
 	 * @since 2.0.0
 	 * @var string
 	 */
 	protected $page = 'audiotheme-settings';
-
-	/**
-	 * Set a reference to a plugin instance.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param AudioTheme_Plugin $plugin Main plugin instance.
-	 * @return $this
-	 */
-	public function set_plugin( AudioTheme_Plugin $plugin ) {
-		$this->plugin = $plugin;
-		return $this;
-	}
 
 	/**
 	 * Register hooks.

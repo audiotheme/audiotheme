@@ -15,7 +15,7 @@
  * @package AudioTheme\Settings
  * @since   2.0.0
  */
-class AudioTheme_Provider_Setting_LicenseKey {
+class AudioTheme_Provider_Setting_LicenseKey extends AudioTheme_AbstractProvider {
 	/**
 	 * License.
 	 *

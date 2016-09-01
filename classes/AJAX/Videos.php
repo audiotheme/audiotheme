@@ -15,7 +15,7 @@
  * @package AudioTheme\Videos
  * @since   2.0.0
  */
-class AudioTheme_AJAX_Videos {
+class AudioTheme_AJAX_Videos extends AudioTheme_AbstractProvider {
 	/**
 	 * Register hooks.
 	 *

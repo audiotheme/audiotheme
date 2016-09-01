@@ -15,7 +15,7 @@
  * @package AudioTheme\Gigs
  * @since   2.0.0
  */
-class AudioTheme_AJAX_Gigs {
+class AudioTheme_AJAX_Gigs extends AudioTheme_AbstractProvider {
 	/**
 	 * Register hooks.
 	 *

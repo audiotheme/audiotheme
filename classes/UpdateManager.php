@@ -15,28 +15,7 @@
  * @package AudioTheme\Administration
  * @since   2.0.0
  */
-class AudioTheme_UpdateManager {
-	/**
-	 * Plugin instance.
-	 *
-	 * @since 2.0.0
-	 * @var AudioTheme_Plugin
-	 */
-	protected $plugin;
-
-	/**
-	 * Set a reference to a plugin instance.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param AudioTheme_Plugin $plugin Main plugin instance.
-	 * @return $this
-	 */
-	public function set_plugin( AudioTheme_Plugin $plugin ) {
-		$this->plugin = $plugin;
-		return $this;
-	}
-
+class AudioTheme_UpdateManager extends AudioTheme_AbstractProvider {
 	/**
 	 * Register hooks.
 	 *

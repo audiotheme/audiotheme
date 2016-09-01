@@ -15,32 +15,6 @@
  * @package AudioTheme\Administration
  * @since   2.0.0
  */
-abstract class AudioTheme_Screen_AbstractScreen {
-	/**
-	 * Plugin instance.
-	 *
-	 * @since 2.0.0
-	 * @var AudioTheme_Plugin
-	 */
-	protected $plugin;
+abstract class AudioTheme_Screen_AbstractScreen extends AudioTheme_AbstractProvider {
 
-	/**
-	 * Set the plugin instance.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param AudioTheme_Plugin $plugin Plugin instance.
-	 * @return $this
-	 */
-	public function set_plugin( $plugin ) {
-		$this->plugin = $plugin;
-		return $this;
-	}
-
-	/**
-	 * Register hooks.
-	 *
-	 * @since 2.0.0
-	 */
-	abstract public function register_hooks();
 }
