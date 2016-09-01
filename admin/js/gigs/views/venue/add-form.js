@@ -50,7 +50,7 @@ VenueAddForm = wp.media.View.extend({
 				city: this.$( '[data-setting="city"]' ),
 				state: this.$( '[data-setting="state"]' ),
 				country: this.$( '[data-setting="country"]' ),
-				timeZone: this.$( '[data-setting="timezone_string"]' ),
+				timeZone: this.$( '[data-setting="timezone_string"]' )
 			},
 			type: '(cities)'
 		});

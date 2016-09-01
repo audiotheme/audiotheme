@@ -64,8 +64,6 @@ module.exports = function( options ) {
 		types: [ options.type ]
 	});
 
-
-
 	autocomplete.addListener( 'place_changed', function() {
 		var place = autocomplete.getPlace(),
 			address = getAddress( place.address_components ),
