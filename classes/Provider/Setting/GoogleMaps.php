@@ -196,7 +196,7 @@ class AudioTheme_Provider_Setting_GoogleMaps {
 			'center' => urlencode( 'Gruene Hall, 1281 Gruene Road, New Braunfels, TX 78130' ),
 			'size'   => '100x100',
 			'format' => 'png8',
-			'key'    => $api_key(),
+			'key'    => $api_key,
 		), 'https://maps.googleapis.com/maps/api/staticmap' );
 
 		$response = wp_remote_head( $url );
