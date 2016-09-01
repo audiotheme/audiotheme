@@ -29,6 +29,7 @@ VenueAddForm = wp.media.View.extend({
 		this.$el.html( this.template( this.model.toJSON() ) );
 
 		placeAutocomplete({
+			input: this.$( '[data-setting="name"]' )[0],
 			fields: {
 				name: this.$( '[data-setting="name"]' ),
 				address: this.$( '[data-setting="address"]' ),
@@ -39,7 +40,19 @@ VenueAddForm = wp.media.View.extend({
 				timeZone: this.$( '[data-setting="timezone_string"]' ),
 				phone: this.$( '[data-setting="phone"]' ),
 				website: this.$( '[data-setting="website"]' )
-			}
+			},
+			type: 'establishment'
+		});
+
+		placeAutocomplete({
+			input: this.$( '[data-setting="city"]' )[0],
+			fields: {
+				city: this.$( '[data-setting="city"]' ),
+				state: this.$( '[data-setting="state"]' ),
+				country: this.$( '[data-setting="country"]' ),
+				timeZone: this.$( '[data-setting="timezone_string"]' ),
+			},
+			type: '(cities)'
 		});
 
 		return this;

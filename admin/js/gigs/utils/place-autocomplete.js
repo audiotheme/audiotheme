@@ -57,31 +57,55 @@ function updateTimeZone( $field, latitude, longitude ) {
  * - views/venue/edit-form.js
  */
 module.exports = function( options ) {
-	var autocomplete = new google.maps.places.Autocomplete( options.fields.name[0], {
-		types: [ 'establishment' ]
+	var autocomplete,
+		fields = options.fields || {};
+
+	autocomplete = new google.maps.places.Autocomplete( options.input, {
+		types: [ options.type ]
 	});
 
-	_.extend({
-		fields: {}
-	}, options );
+
 
 	autocomplete.addListener( 'place_changed', function() {
 		var place = autocomplete.getPlace(),
 			address = getAddress( place.address_components ),
 			location = place.geometry.location;
 
-		options.fields.name.val( place.name ).trigger( 'change' );
-		options.fields.address.val( address.street_number + ' ' + address.route ).trigger( 'change' );
-		options.fields.city.val( address.locality ).trigger( 'change' );
-		options.fields.state.val( address.administrative_area_level_1 ).trigger( 'change' );
-		options.fields.postalCode.val( address.postal_code ).trigger( 'change' );
-		options.fields.country.val( address.country ).trigger( 'change' );
-		options.fields.phone.val( place.formatted_phone_number ).trigger( 'change' );
-		options.fields.website.val( place.website ).trigger( 'change' );
+		if ( fields.name ) {
+			fields.name.val( place.name ).trigger( 'change' );
+		}
 
-		if ( options.fields.timeZone ) {
+		if ( fields.address ) {
+			fields.address.val( address.street_number + ' ' + address.route ).trigger( 'change' );
+		}
+
+		if ( fields.city ) {
+			fields.city.val( address.locality ).trigger( 'change' );
+		}
+
+		if ( fields.state ) {
+			fields.state.val( address.administrative_area_level_1 ).trigger( 'change' );
+		}
+
+		if ( fields.postalCode ) {
+			fields.postalCode.val( address.postal_code ).trigger( 'change' );
+		}
+
+		if ( fields.country ) {
+			fields.country.val( address.country ).trigger( 'change' );
+		}
+
+		if ( fields.phone ) {
+			fields.phone.val( place.formatted_phone_number ).trigger( 'change' );
+		}
+
+		if ( fields.website ) {
+			fields.website.val( place.website ).trigger( 'change' );
+		}
+
+		if ( fields.timeZone ) {
 			updateTimeZone(
-				options.fields.timeZone,
+				fields.timeZone,
 				location.lat(),
 				location.lng()
 			);
