@@ -33,14 +33,26 @@ class AudioTheme_Provider_Setting_GoogleMaps extends AudioTheme_AbstractProvider
 	protected $page = 'audiotheme-settings';
 
 	/**
+	 * Constructor method.
+	 *
+	 * @since 2.0.0
+	 */
+	public function __construct() {
+		if ( is_multisite() ) {
+			$this->page = 'audiotheme-network-settings';
+		}
+	}
+
+	/**
 	 * Register hooks.
 	 *
 	 * @since 2.0.0
 	 */
 	public function register_hooks() {
-		add_action( 'admin_init', array( $this, 'register_settings' ) );
-		add_action( 'admin_init', array( $this, 'register_sections' ) );
-		add_action( 'admin_init', array( $this, 'register_fields' ) );
+		add_action( 'admin_init',                       array( $this, 'register_settings' ) );
+		add_action( 'admin_init',                       array( $this, 'register_sections' ) );
+		add_action( 'admin_init',                       array( $this, 'register_fields' ) );
+		add_action( 'audiotheme_save_network_settings', array( $this, 'save_network_settings' ) );
 	}
 
 	/**
@@ -115,6 +127,25 @@ class AudioTheme_Provider_Setting_GoogleMaps extends AudioTheme_AbstractProvider
 			<input type="text" name="<?php echo self::API_KEY_OPTION_NAME; ?>" id="audiotheme-google-maps-api-key" value="<?php echo esc_attr( $this->get_api_key() ); ?>" class="regular-text"><br>
 		</p>
 		<?php
+	}
+
+	/**
+	 * Manually save network settings.
+	 *
+	 * @since 2.0.0
+	 */
+	public function save_network_settings() {
+		$is_valid_nonce = ! empty( $_POST['_wpnonce'] ) && wp_verify_nonce( $_POST['_wpnonce'], 'audiotheme-network-settings-options' );
+
+		if ( ! is_network_admin() || ! $is_valid_nonce ) {
+			return;
+		}
+
+		// Update the API key.
+		if ( isset( $_POST[ self::API_KEY_OPTION_NAME ] ) ) {
+			$value = sanitize_text_field( $_POST[ self::API_KEY_OPTION_NAME ] );
+			update_option( self::API_KEY_OPTION_NAME, $value );
+		}
 	}
 
 	/**
