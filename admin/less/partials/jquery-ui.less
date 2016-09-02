@@ -3,57 +3,16 @@
  * -----------------------------------------------------------------------------
  */
 
-.ui-state-default,
-.ui-widget-content .ui-state-default,
-.ui-widget-header .ui-state-default {
-	background-image: none;
+.ui-timepicker-wrapper.ui-autocomplete {
+	border-width: 0;
 }
 
-ul.ui-autocomplete {
+.ui-timepicker-list {
+	height: 150px;
+	margin: 0;
+	overflow-y: auto;
 	border-style: solid;
 	border-width: 1px;
-	border-top-right-radius: 0;
-	border-top-left-radius: 0;
-	list-style: none;
-	margin: 0;
-	max-height: 150px;
-	overflow-y: auto;
-	overflow-x: hidden;
-	padding: 0;
-	position: absolute;
-	z-index: 10000;
-
-	.ui-menu-item {
-		margin-bottom: 0;
-		text-align: left;
-		white-space: nowrap;
-
-		a {
-			height: 100%;
-			padding: 4px 10px;
-
-			&.ui-state-focus,
-			&.ui-state-active {
-				border-radius: 0;
-				border-width: 0;
-				cursor: pointer;
-				margin: 0;
-			}
-		}
-	}
-}
-
-ul.ui-autocomplete-input.open {
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
-}
-
-ul.ui-timepicker-list {
-	height: 150px;
-	margin-top: 0;
-	overflow-y: auto;
-	border-style: solid;
-	border-width: 0 1px 1px 1px;
 
 	li {
 		cursor: pointer;
@@ -69,24 +28,13 @@ ul.ui-timepicker-list {
 /* Colors
 ------------------------------------------------------------------------------*/
 
-.ui-autocomplete,
-.ui-timepicker-list {
-	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-ul.ui-autocomplete {
-	background: #efefef;
-	border-color: #aaa;
-
-	.ui-menu-item a.ui-state-focus,
-	.ui-menu-item a.ui-state-active {
-		background: #ddd;
-	}
+input.ui-timepicker-input.open {
+	border-bottom-color: #ddd;
 }
 
 .ui-timepicker-list {
 	background-color: #efefef;
-	border-color: #aaa;
+	border-color: #5b9dd9;
 
 	li {
 		color: #333;
