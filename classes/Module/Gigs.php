@@ -496,9 +496,12 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 			'name'        => get_audiotheme_gig_title( $post ),
 			'startDate'   => get_audiotheme_gig_time( 'c', '', false, null, $post ),
 			'description' => get_audiotheme_gig_description( $post ),
-			//'url'         => get_permalink( $post ),
-			//'image'       => '',
+			'url'         => get_permalink( $post ),
 		);
+
+		if ( has_post_thumbnail() ) {
+			$item['image'] = get_the_post_thumbnail_url( 'full' );
+		}
 
 		/*$item['performer'] = array(
 			'@type'  => '', // Organization, Person
