@@ -171,7 +171,7 @@ class AudioTheme_Image_Editor_GD extends WP_Image_Editor_GD {
 		$fuzz         = $fuzz / 100 * 255;
 
 		$left_luma   = $this->get_pixel( 0, $y )->get_luma();
-		$middle_luma = $this->get_pixe( floor( $size['width'] / 2 ), $y )->get_luma();
+		$middle_luma = $this->get_pixel( floor( $size['width'] / 2 ), $y )->get_luma();
 		$right_luma  = $this->get_pixel( $size['width'] - 1, $y )->get_luma();
 
 		if ( $left_luma > $fuzz || $middle_luma > $fuzz || $right_luma > $fuzz ) {
