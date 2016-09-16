@@ -271,11 +271,11 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	public function post_navigation_join_clause( $join ) {
 		global $wpdb;
 
-		if ( ! in_array( get_post_type(), array( 'audiotheme_record', 'audiotheme_track', 'audiotheme_video' ), true ) ) {
+		if ( ! in_array( get_post_type(), array( 'audiotheme_record', 'audiotheme_video' ), true ) ) {
 			return $join;
 		}
 
-		$orderby = get_audiotheme_archive_meta( 'orderby', true, 'release_year', get_post_type() );
+		$orderby = $this->get_archive_orderby();
 
 		if ( 'post_date' !== $orderby ) {
 			$join = '';
@@ -304,7 +304,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 			$previous  = ( 0 === strpos( current_filter(), 'get_previous_post_' ) );
 			$adjacent  = $previous ? 'previous' : 'next';
 			$operation = $previous ? '<' : '>';
-			$orderby   = get_audiotheme_archive_meta( 'orderby', true, 'release_year', get_post_type() );
+			$orderby   = $this->get_archive_orderby();
 			$order     = $previous ? 'DESC' : 'ASC';
 
 			if ( 'custom' === $orderby ) {
@@ -378,7 +378,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	public function post_navigation_sort_clause( $sort ) {
 		if ( in_array( get_post_type(), array( 'audiotheme_record', 'audiotheme_video' ) ) ) {
 			$previous = ( 0 === strpos( current_filter(), 'get_previous_post_' ) );
-			$orderby  = get_audiotheme_archive_meta( 'orderby', true, 'release_year', get_post_type() );
+			$orderby  = $this->get_archive_orderby();
 			$order    = $previous ? 'DESC' : 'ASC';
 
 			if ( 'custom' == $orderby ) {
@@ -508,5 +508,22 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 			'preview' => esc_html__( 'Preview archive', 'audiotheme' ),
 			'view'    => esc_html__( 'View archive', 'audiotheme' ),
 		);
+	}
+
+	/**
+	 * Retrieve the field to sort an archive.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return string
+	 */
+	protected function get_archive_orderby() {
+		$default = 'post_date';
+
+		if ( 'audiotheme_record' === get_post_type() ) {
+			$default = 'release_year';
+		}
+
+		return get_audiotheme_archive_meta( 'orderby', true, $default, get_post_type() );
 	}
 }
