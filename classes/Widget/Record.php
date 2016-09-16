@@ -38,17 +38,19 @@ class AudioTheme_Widget_Record extends WP_Widget {
 	 * @param array $instance Widget instance settings.
 	 */
  	public function widget( $args, $instance ) {
-		extract( $args );
+		if ( empty( $instance['post_id'] ) ) {
+			return;
+		}
 
 		$instance['title_raw'] = $instance['title'];
 		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? get_the_title( $instance['post_id'] ) : $instance['title'], $instance, $this->id_base );
 		$instance['title'] = apply_filters( 'audiotheme_widget_title', $instance['title'], $instance, $args, $this->id_base );
 
-		echo $before_widget;
+		echo $args['before_widget'];
 
 			// Output filter is for backwards compatibility.
 		if ( $output = apply_filters( 'audiotheme_widget_record_output', '', $instance, $args ) ) {
-			echo ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
+			echo ( empty( $instance['title'] ) ) ? '' : $args['before_title'] . $instance['title'] . $args['after_title'];
 			echo $output;
 		} else {
 			$image_size = apply_filters( 'audiotheme_widget_record_image_size', 'thumbnail', $instance, $args );
@@ -66,7 +68,7 @@ class AudioTheme_Widget_Record extends WP_Widget {
 			audiotheme_load_template( $template, $data );
 		}
 
-		echo $after_widget;
+		echo $args['after_widget'];
 	}
 
 	/**
@@ -101,9 +103,11 @@ class AudioTheme_Widget_Record extends WP_Widget {
 		<p>
 			<label for="<?php echo $this->get_field_id( 'post_id' ); ?>"><?php _e( 'Record:', 'audiotheme' ); ?></label>
 			<select name="<?php echo $this->get_field_name( 'post_id' ); ?>" id="<?php echo $this->get_field_id( 'post_id' ); ?>" class="widefat">
+				<option value=""></option>
 				<?php
 				foreach ( $records as $record ) {
-					printf( '<option value="%s"%s>%s</option>',
+					printf(
+						'<option value="%s"%s>%s</option>',
 						$record->ID,
 						selected( $instance['post_id'], $record->ID, false ),
 						esc_html( $record->post_title )

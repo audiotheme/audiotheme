@@ -38,17 +38,19 @@ class AudioTheme_Widget_Track extends WP_Widget {
 	 * @param array $instance Widget instance settings.
 	 */
 	public function widget( $args, $instance ) {
-		extract( $args );
+		if ( empty( $instance['post_id'] ) ) {
+			return;
+		}
 
 		$instance['title_raw'] = $instance['title'];
 		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? get_the_title( $instance['post_id'] ) : $instance['title'], $instance, $this->id_base );
 		$instance['title'] = apply_filters( 'audiotheme_widget_title', $instance['title'], $instance, $args, $this->id_base );
 
-		echo $before_widget;
+		echo $args['before_widget'];
 
 			// Output filter is for backwards compatibility.
 		if ( $output = apply_filters( 'audiotheme_widget_track_output', '', $instance, $args ) ) {
-			echo ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
+			echo ( empty( $instance['title'] ) ) ? '' : $args['before_title'] . $instance['title'] . $args['after_title'];
 			echo $output;
 		} else {
 			$post = get_post( $instance['post_id'] );
@@ -68,7 +70,7 @@ class AudioTheme_Widget_Track extends WP_Widget {
 			audiotheme_load_template( $template, $data );
 		}
 
-		echo $after_widget;
+		echo $args['after_widget'];
 	}
 
 	/**
@@ -103,6 +105,7 @@ class AudioTheme_Widget_Track extends WP_Widget {
 		<p>
 			<label for="<?php echo $this->get_field_id( 'post_id' ); ?>"><?php _e( 'Track:', 'audiotheme' ); ?></label>
 			<select name="<?php echo $this->get_field_name( 'post_id' ); ?>" id="<?php echo $this->get_field_id( 'post_id' ); ?>" class="widefat">
+				<option value=""></option>
 				<?php
 				$last_record = '';
 				foreach ( $tracks as $key => $track ) {
@@ -110,7 +113,8 @@ class AudioTheme_Widget_Track extends WP_Widget {
 					echo ( $last_record !== $track->record ) ? '<optgroup label="' . esc_attr( $track->record ) . '">' : '';
 					$last_record = $track->record;
 
-					printf( '<option value="%s"%s>%s</option>',
+					printf(
+						'<option value="%s"%s>%s</option>',
 						$track->ID,
 						selected( $instance['post_id'], $track->ID, false ),
 						esc_html( $track->post_title )

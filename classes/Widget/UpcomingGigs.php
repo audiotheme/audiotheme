@@ -44,12 +44,10 @@ class AudioTheme_Widget_Upcoming_Gigs extends WP_Widget {
 	public function widget( $args, $instance ) {
 		$cache = (array) wp_cache_get( 'audiotheme_widget_upcoming_gigs', 'widget' );
 
-		if ( isset( $cache[ $this->id ] ) ) {
+		if ( ! is_preview() && isset( $cache[ $this->id ] ) ) {
 			echo $cache[ $this->id ];
 			return;
 		}
-
-		extract( $args );
 
 		$instance['title_raw'] = empty( $instance['title'] ) ? '' : $instance['title'];
 		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Upcoming Gigs', 'audiotheme' ) : $instance['title'], $instance, $this->id_base );
@@ -72,13 +70,13 @@ class AudioTheme_Widget_Upcoming_Gigs extends WP_Widget {
 		) ) );
 
 		// Add a class with the number of gigs to display.
-		$output = preg_replace( '/class="([^"]+)"/', 'class="$1 widget-items-' . $instance['number'] . '"', $before_widget );
+		$output = preg_replace( '/class="([^"]+)"/', 'class="$1 widget-items-' . $instance['number'] . '"', $args['before_widget'] );
 
 		if ( $inside = apply_filters( 'audiotheme_widget_upcoming_gigs_output', '', $instance, $args, $loop ) ) {
 			// Call loop have_posts() for backwards compatibility with themes
 			// that don't call it in their filters.
 			$loop->have_posts();
-			$output .= ( empty( $instance['title'] ) ) ? '' : $before_title . $instance['title'] . $after_title;
+			$output .= ( empty( $instance['title'] ) ) ? '' : $args['before_title'] . $instance['title'] . $args['after_title'];
 			$output .= $inside;
 		} else {
 			$data                 = array();
@@ -95,7 +93,7 @@ class AudioTheme_Widget_Upcoming_Gigs extends WP_Widget {
 		}
 
 		wp_reset_postdata();
-		$output .= $after_widget;
+		$output .= $args['after_widget'];
 		echo $output;
 
 		$cache[ $this->id ] = $output;
