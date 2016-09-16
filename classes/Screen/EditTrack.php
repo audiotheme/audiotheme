@@ -57,6 +57,21 @@ class AudioTheme_Screen_EditTrack extends AudioTheme_Screen_AbstractScreen{
 			'side',
 			'default'
 		);
+
+		if ( empty( $post->post_parent ) || ! get_post( $post->post_parent ) ) {
+			return;
+		}
+
+		add_meta_box(
+			'audiotheme-track-related-tracks',
+			esc_html__( 'Related Tracks', 'audiotheme' ),
+			array( $this, 'display_related_tracks_meta_box' ),
+			'audiotheme_track',
+			'side',
+			'low'
+		);
+
+		add_action( 'edit_form_after_title', array( $this, 'display_record_panel' ) );
 	}
 
 	/**
@@ -69,6 +84,24 @@ class AudioTheme_Screen_EditTrack extends AudioTheme_Screen_AbstractScreen{
 	}
 
 	/**
+	 * Display a record panel.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param WP_Post $post The track post object being edited.
+	 */
+	public function display_record_panel( $post ) {
+		$record                  = get_post( $post->post_parent );
+		$record_post_type_object = get_post_type_object( 'audiotheme_record' );
+
+		$artist  = get_audiotheme_record_artist( $record->ID );
+		$genre   = get_audiotheme_record_genre( $record->ID );
+		$release = get_audiotheme_record_release_year( $record->ID );
+
+		include( $this->plugin->get_path( 'admin/views/panel-track-record-details.php' ) );
+	}
+
+	/**
 	 * Display track details meta box.
 	 *
 	 * @since 2.0.0
@@ -78,6 +111,18 @@ class AudioTheme_Screen_EditTrack extends AudioTheme_Screen_AbstractScreen{
 	public function display_details_meta_box( $post ) {
 		wp_nonce_field( 'update-track_' . $post->ID, 'audiotheme_track_nonce' );
 		require( $this->plugin->get_path( 'admin/views/meta-box-track-details.php' ) );
+	}
+
+	/**
+	 * Display related tracks meta box.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param WP_Post $post The track post object being edited.
+	 */
+	public function display_related_tracks_meta_box( $post ) {
+		$record = get_post( $post->post_parent );
+		include( $this->plugin->get_path( 'admin/views/meta-box-track-related-tracks.php' ) );
 	}
 
 	/**
