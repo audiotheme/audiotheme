@@ -107,6 +107,7 @@ class AudioTheme_Screen_EditRecord extends AudioTheme_Screen_AbstractScreen{
 					'title'          => esc_attr( $track->post_title ),
 					'artist'         => esc_attr( get_post_meta( $track->ID, '_audiotheme_artist', true ) ),
 					'fileUrl'        => esc_attr( get_post_meta( $track->ID, '_audiotheme_file_url', true ) ),
+					'length'         => esc_attr( get_post_meta( $track->ID, '_audiotheme_length', true ) ),
 					'isDownloadable' => is_audiotheme_track_downloadable( $track->ID ),
 					'purchaseUrl'    => esc_url( get_post_meta( $track->ID, '_audiotheme_purchase_url', true ) ),
 				);
@@ -275,6 +276,7 @@ class AudioTheme_Screen_EditRecord extends AudioTheme_Screen_AbstractScreen{
 			if ( ! empty( $track_id ) && ! is_wp_error( $track_id ) ) {
 				update_post_meta( $track_id, '_audiotheme_artist', sanitize_text_field( $data['artist'] ) );
 				update_post_meta( $track_id, '_audiotheme_file_url', esc_url_raw( $data['file_url'] ) );
+				update_post_meta( $track_id, '_audiotheme_length', preg_replace( '/[^0-9:]/', '', $data['length'] ) );
 			}
 		}
 

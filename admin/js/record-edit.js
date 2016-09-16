@@ -24,14 +24,15 @@
 			var $track = $( e.target ).closest( 'tr' ),
 				attachment = selection.first().toJSON();
 
-			_.each( [ 'title', 'artist' ], function( key ) {
+			_.each( [ 'title', 'artist', 'length' ], function( key ) {
 				var $field = $track.find( '.audiotheme-tracklist-track-' + key ),
 					value = $field.val();
 
 				if ( '' === value && value !== attachment.audiotheme[ key ] ) {
+					key = 'length' === key ? 'length_formatted' : key;
 					$field.val( attachment.audiotheme[ key ] ).trigger( 'change' );
 				}
-			} );
+			});
 		});
 	});
 

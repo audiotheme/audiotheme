@@ -60,6 +60,7 @@ body.screen-edit-audiotheme_track select[name="m"] {
 #record-tracklist.audiotheme-repeater {
 	input {
 		height: 34px;
+		max-width: 100%;
 	}
 
 	tbody td {
@@ -86,6 +87,12 @@ body.screen-edit-audiotheme_track select[name="m"] {
 		vertical-align: middle;
 	}
 
+	.column-track-file-url {
+		.audiotheme-media-control {
+			width: 100%;
+		}
+	}
+
 	.column-track-info {
 		font-size: 12px;
 		vertical-align: middle;
@@ -95,6 +102,10 @@ body.screen-edit-audiotheme_track select[name="m"] {
 		span {
 			padding: 0 3px;
 		}
+	}
+
+	.column-track-length {
+		max-width: 50px;
 	}
 
 	.ui-sortable-helper {

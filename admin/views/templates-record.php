@@ -10,16 +10,22 @@
  */
 ?>
 
-
 <script type="text/html" id="tmpl-audiotheme-track">
 	<tr class="audiotheme-repeater-item">
 		<td class="track-number">
 			<span class="audiotheme-repeater-index"></span>
 			<input type="hidden" name="audiotheme_tracks[__i__][post_id]" value="{{ data.id }}" class="post-id audiotheme-clear-on-add">
 		</td>
-		<td><input type="text" name="audiotheme_tracks[__i__][title]" placeholder="<?php esc_attr_e( 'Title', 'audiotheme' ) ?>" value="{{{ data.title }}}" class="audiotheme-tracklist-track-title widefat audiotheme-clear-on-add"></td>
-		<td><input type="text" name="audiotheme_tracks[__i__][artist]" placeholder="<?php esc_attr_e( 'Artist', 'audiotheme' ) ?>" value="{{{ data.artist }}}" class="audiotheme-tracklist-track-artist widefat"></td>
 		<td>
+			<input type="text" name="audiotheme_tracks[__i__][title]" placeholder="<?php esc_attr_e( 'Title', 'audiotheme' ) ?>" value="{{{ data.title }}}" class="audiotheme-tracklist-track-title widefat audiotheme-clear-on-add">
+		</td>
+		<td>
+			<input type="text" name="audiotheme_tracks[__i__][artist]" placeholder="<?php esc_attr_e( 'Artist', 'audiotheme' ) ?>" value="{{{ data.artist }}}" class="audiotheme-tracklist-track-artist widefat">
+		</td>
+		<td class="column-track-length">
+			<input type="text" name="audiotheme_tracks[__i__][length]" placeholder="<?php esc_attr_e( 'Length', 'audiotheme' ) ?>" value="{{{ data.length }}}" class="audiotheme-tracklist-track-length">
+		</td>
+		<td class="column-track-file-url">
 			<div class="audiotheme-media-control audiotheme-input-group"
 				data-title="<?php esc_attr_e( 'Choose an MP3', 'audiotheme' ); ?>"
 				data-update-text="<?php esc_attr_e( 'Update MP3', 'audiotheme' ); ?>"
