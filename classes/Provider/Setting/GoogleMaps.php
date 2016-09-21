@@ -38,7 +38,7 @@ class AudioTheme_Provider_Setting_GoogleMaps extends AudioTheme_AbstractProvider
 	 * @since 2.0.0
 	 */
 	public function __construct() {
-		if ( is_multisite() ) {
+		if ( is_network_admin() ) {
 			$this->page = 'audiotheme-network-settings';
 		}
 	}
@@ -122,9 +122,14 @@ class AudioTheme_Provider_Setting_GoogleMaps extends AudioTheme_AbstractProvider
 	 * @since 2.0.0
 	 */
 	public function render_field_api_key() {
+		if ( is_network_admin() ) {
+			$api_key = get_site_option( self::API_KEY_OPTION_NAME, '' );
+		} else {
+			$api_key = get_option( self::API_KEY_OPTION_NAME, '' );
+		}
 		?>
 		<p>
-			<input type="text" name="<?php echo self::API_KEY_OPTION_NAME; ?>" id="audiotheme-google-maps-api-key" value="<?php echo esc_attr( $this->get_api_key() ); ?>" class="regular-text"><br>
+			<input type="text" name="<?php echo self::API_KEY_OPTION_NAME; ?>" id="audiotheme-google-maps-api-key" value="<?php echo esc_attr( $api_key ); ?>" class="regular-text"><br>
 		</p>
 		<?php
 	}
@@ -144,7 +149,7 @@ class AudioTheme_Provider_Setting_GoogleMaps extends AudioTheme_AbstractProvider
 		// Update the API key.
 		if ( isset( $_POST[ self::API_KEY_OPTION_NAME ] ) ) {
 			$value = sanitize_text_field( $_POST[ self::API_KEY_OPTION_NAME ] );
-			update_option( self::API_KEY_OPTION_NAME, $value );
+			update_site_option( self::API_KEY_OPTION_NAME, $value );
 		}
 	}
 
@@ -186,7 +191,7 @@ class AudioTheme_Provider_Setting_GoogleMaps extends AudioTheme_AbstractProvider
 		}
 		</script>
 
-		<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo sanitize_text_field( $api_key ); ?>"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=<?php echo sanitize_text_field( $api_key ); ?>"></script>
 
 		<div id="audiotheme-google-maps-auth-error-notice" class="notice notice-error inline" style="display: none">
 			<p>

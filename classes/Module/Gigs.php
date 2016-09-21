@@ -112,12 +112,24 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	/**
 	 * Retrieve the Google Maps API key.
 	 *
+	 * On multisite, this defaults to a key saved for the blog, but will fall
+	 * back to a global key if AudioTheme is network activated.
+	 *
+	 * Always use the global key in the network admin panel.
+	 *
 	 * @since 2.0.0
 	 *
 	 * @return string
 	 */
 	public function get_google_maps_api_key() {
-		return get_option( AudioTheme_Provider_Setting_GoogleMaps::API_KEY_OPTION_NAME, '' );
+		$option_name = AudioTheme_Provider_Setting_GoogleMaps::API_KEY_OPTION_NAME;
+
+		$value = get_option( $option_name, '' );
+		if ( empty( $value ) || is_network_admin() ) {
+			$value = get_site_option( $option_name, '' );
+		}
+
+		return $value;
 	}
 
 	/**
