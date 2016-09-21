@@ -25,7 +25,12 @@ class AudioTheme_Widget_Upcoming_Gigs extends WP_Widget {
 	 * @see WP_Widget::construct()
 	 */
 	public function __construct() {
-		$widget_options = array( 'classname' => 'widget_audiotheme_upcoming_gigs', 'description' => __( 'Display a list of upcoming gigs', 'audiotheme' ) );
+		$widget_options = array(
+			'classname'                   => 'widget_audiotheme_upcoming_gigs',
+			'customize_selective_refresh' => true,
+			'description'                 => __( 'Display a list of upcoming gigs.', 'audiotheme' )
+		);
+
 		parent::__construct( 'audiotheme-upcoming-gigs', __( 'Upcoming Gigs (AudioTheme)', 'audiotheme' ), $widget_options );
 
 		add_action( 'save_post', array( $this, 'flush_group_cache' ) );

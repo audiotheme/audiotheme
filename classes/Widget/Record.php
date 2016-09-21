@@ -25,7 +25,12 @@ class AudioTheme_Widget_Record extends WP_Widget {
 	 * @see WP_Widget::construct()
 	 */
  	public function __construct() {
-		$widget_options = array( 'classname' => 'widget_audiotheme_record', 'description' => __( 'Display a selected record', 'audiotheme' ) );
+		$widget_options = array(
+			'classname'                   => 'widget_audiotheme_record',
+			'customize_selective_refresh' => true,
+			'description'                 => __( 'Display a record.', 'audiotheme' )
+		);
+
 		parent::__construct( 'audiotheme-record', __( 'Record (AudioTheme)', 'audiotheme' ), $widget_options );
 	}
 

@@ -25,7 +25,12 @@ class AudioTheme_Widget_Track extends WP_Widget {
 	 * @see WP_Widget::construct()
 	 */
 	public function __construct() {
-		$widget_options = array( 'classname' => 'widget_audiotheme_track', 'description' => __( 'Display a selected track', 'audiotheme' ) );
+		$widget_options = array(
+			'classname'                   => 'widget_audiotheme_track',
+			'customize_selective_refresh' => true,
+			'description'                 => __( 'Display a track.', 'audiotheme' )
+		);
+
 		parent::__construct( 'audiotheme-track', __( 'Track (AudioTheme)', 'audiotheme' ), $widget_options );
 	}
 

@@ -25,7 +25,12 @@ class AudioTheme_Widget_Video extends WP_Widget {
 	 * @see WP_Widget::construct()
 	 */
 	public function __construct() {
-		$widget_options = array( 'classname' => 'widget_audiotheme_video', 'description' => __( 'Display a video', 'audiotheme' ) );
+		$widget_options = array(
+			'classname'                   => 'widget_audiotheme_video',
+			'customize_selective_refresh' => true,
+			'description'                 => __( 'Display a video.', 'audiotheme' )
+		);
+
 		parent::__construct( 'audiotheme-video', __( 'Video (AudioTheme)', 'audiotheme' ), $widget_options );
 	}
 
