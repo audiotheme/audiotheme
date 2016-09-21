@@ -79,7 +79,7 @@ class AudioTheme_PostType_Venue extends AudioTheme_PostType_AbstractPostType {
 			'parent_item_colon'     => esc_html__( 'Parent Venue:', 'audiotheme' ),
 			'all_items'             => esc_html__( 'Venues', 'audiotheme' ),
 			'menu_name'             => esc_html_x( 'Venues', 'admin menu name', 'audiotheme' ),
-			'name_admin_bar'        => esc_html_x( 'Venues', 'add new on admin bar', 'audiotheme' ),
+			'name_admin_bar'        => esc_html_x( 'Venue', 'add new on admin bar', 'audiotheme' ),
 			'archives'              => esc_html__( 'Post Archives', 'audiotheme' ),
 			'insert_into_item'      => esc_html__( 'Insert into venue', 'audiotheme' ),
 			'uploaded_to_this_item' => esc_html__( 'Uploaded to this venue', 'audiotheme' ),

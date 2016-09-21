@@ -269,7 +269,7 @@ class AudioTheme_PostType_Record extends AudioTheme_PostType_AbstractPostType {
 			'parent_item_colon'     => esc_html__( 'Parent Record:', 'audiotheme' ),
 			'all_items'             => esc_html__( 'All Records', 'audiotheme' ),
 			'menu_name'             => esc_html_x( 'Discography', 'admin menu name', 'audiotheme' ),
-			'name_admin_bar'        => esc_html_x( 'Records', 'add new on admin bar', 'audiotheme' ),
+			'name_admin_bar'        => esc_html_x( 'Record', 'add new on admin bar', 'audiotheme' ),
 			'archives'              => esc_html__( 'Post Archives', 'audiotheme' ),
 			'insert_into_item'      => esc_html__( 'Insert into record', 'audiotheme' ),
 			'uploaded_to_this_item' => esc_html__( 'Uploaded to this record', 'audiotheme' ),

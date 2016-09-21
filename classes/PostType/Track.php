@@ -378,7 +378,7 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType_AbstractPostType {
 			'parent_item_colon'     => esc_html__( 'Parent Track:', 'audiotheme' ),
 			'all_items'             => esc_html__( 'All Tracks', 'audiotheme' ),
 			'menu_name'             => esc_html_x( 'Tracks', 'admin menu name', 'audiotheme' ),
-			'name_admin_bar'        => esc_html_x( 'Tracks', 'add new on admin bar', 'audiotheme' ),
+			'name_admin_bar'        => esc_html_x( 'Track', 'add new on admin bar', 'audiotheme' ),
 			'archives'              => esc_html__( 'Post Archives', 'audiotheme' ),
 			'insert_into_item'      => esc_html__( 'Insert into track', 'audiotheme' ),
 			'uploaded_to_this_item' => esc_html__( 'Uploaded to this track', 'audiotheme' ),
