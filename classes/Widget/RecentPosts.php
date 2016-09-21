@@ -29,10 +29,6 @@ class AudioTheme_Widget_Recent_Posts extends WP_Widget {
 		$widget_options = array( 'classname' => 'widget_recent_posts', 'description' => __( 'Display a list of recent posts', 'audiotheme' ) );
 		parent::__construct( 'recent-posts', __( 'Recent Posts', 'audiotheme' ), $widget_options );
 		$this->alt_option_name = 'widget_recent_entries';
-
-		add_action( 'save_post',    array( $this, 'flush_group_cache' ) );
-		add_action( 'deleted_post', array( $this, 'flush_group_cache' ) );
-		add_action( 'switch_theme', array( $this, 'flush_group_cache' ) );
 	}
 
 	/**
@@ -44,13 +40,6 @@ class AudioTheme_Widget_Recent_Posts extends WP_Widget {
 	 * @param array $instance Widget instance settings.
 	 */
 	public function widget( $args, $instance ) {
-		$cache = (array) wp_cache_get( 'audiotheme_widget_recent_posts', 'widget' );
-
-		if ( isset( $cache[ $this->id ] ) ) {
-			echo $cache[ $this->id ];
-			return;
-		}
-
 		// Sanitize some of the instance values.
 		$instance['post_type'] = ( empty( $instance['post_type'] ) ) ? 'post' : $instance['post_type'];
 		$instance['number'] = ( empty( $instance['number'] ) || ! absint( $instance['number'] ) ) ? 5 : absint( $instance['number'] );
@@ -90,9 +79,6 @@ class AudioTheme_Widget_Recent_Posts extends WP_Widget {
 
 		$output = $this->render( $args, $instance );
 		echo $output;
-
-		$cache[ $this->id ] = $output;
-		wp_cache_set( 'audiotheme_widget_recent_posts', $cache, 'widget' );
 	}
 
 	/**
@@ -217,37 +203,7 @@ class AudioTheme_Widget_Recent_Posts extends WP_Widget {
 		$instance['show_date'] = isset( $new_instance['show_date'] );
 		$instance['show_excerpts'] = isset( $new_instance['show_excerpts'] );
 		$instance['show_feed_link'] = isset( $new_instance['show_feed_link'] );
-		$this->flush_widget_cache();
-
-		$alloptions = wp_cache_get( 'alloptions', 'options' );
-		if ( isset( $alloptions['widget_recent_entries' ]) ) {
-			delete_option( 'widget_recent_entries' );
-		}
 
 		return $instance;
-	}
-
-	/**
-	 * Remove a single recent posts widget from the cache.
-	 *
-	 * @since 1.0.0
-	 */
-	 public function flush_widget_cache() {
-		$cache = (array) wp_cache_get( 'audiotheme_widget_recent_posts', 'widget' );
-
-		if ( isset( $cache[ $this->id ] ) ) {
-			unset( $cache[ $this->id ] );
-		}
-
-		wp_cache_set( 'audiotheme_widget_recent_posts', array_filter( $cache ), 'widget' );
-	}
-
-	/**
-	 * Flush the cache for all recent posts widgets.
-	 *
-	 * @since 1.0.0
-	 */
-	 public function flush_group_cache() {
-		wp_cache_delete( 'audiotheme_widget_recent_posts', 'widget' );
 	}
 }
