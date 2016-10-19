@@ -45,7 +45,7 @@
 		el: '#post',
 
 		events: {
-			'change #audiotheme-video-url': 'updateVideoUrl'
+			'input #audiotheme-video-url': 'updateVideoUrl'
 		},
 
 		initialize: function() {

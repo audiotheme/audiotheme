@@ -38,9 +38,9 @@ class AudioTheme_AJAX_Videos extends AudioTheme_AbstractProvider {
 			wp_send_json_error();
 		}
 
-		$this->sideload_thumbnail( $post_id, esc_url_raw( $_POST['video_url'] ) );
+		$thumbnail_id = $this->sideload_thumbnail( $post_id, esc_url_raw( $_POST['video_url'] ) );
 
-		if ( $thumbnail_id = get_post_thumbnail_id( $post_id ) ) {
+		if ( $thumbnail_id ) {
 			$json['oembedThumbnailId']    = get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', true );
 			$json['thumbnailId']          = $thumbnail_id;
 			$json['thumbnailUrl']         = wp_get_attachment_url( $thumbnail_id );
@@ -90,8 +90,8 @@ class AudioTheme_AJAX_Videos extends AudioTheme_AbstractProvider {
 		}
 
 		// Re-use the existing oEmbed data instead of making another copy of the thumbnail.
-		if ( $thumbnail_url === $oembed_thumb_url && ( ! $current_thumb_id || $current_thumb_id !== $oembed_thumb_id ) ) {
-			set_post_thumbnail( $post_id, $oembed_thumb_id );
+		if ( $thumbnail_url === $oembed_thumb_url ) {
+			return $oembed_thumb_id;
 		}
 
 		// Add new thumbnail if the returned URL doesn't match the
@@ -104,13 +104,15 @@ class AudioTheme_AJAX_Videos extends AudioTheme_AbstractProvider {
 					audiotheme_trim_image_letterbox( $attachment_id );
 				}
 
-				set_post_thumbnail( $post_id, $attachment_id );
-
 				// Store the oEmbed thumb data so the same image isn't copied on repeated requests.
 				update_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', $attachment_id );
 				update_post_meta( $post_id, '_audiotheme_oembed_thumbnail_url', $thumbnail_url );
+
+				return $attachment_id;
 			}
 		}
+
+		return 0;
 	}
 
 	/**

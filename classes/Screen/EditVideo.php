@@ -25,7 +25,7 @@ class AudioTheme_Screen_EditVideo extends AudioTheme_Screen_AbstractScreen{
 		add_action( 'load-post.php',              array( $this, 'load_screen' ) );
 		add_action( 'load-post-new.php',          array( $this, 'load_screen' ) );
 		add_action( 'admin_enqueue_scripts',      array( $this, 'register_assets' ), 1 );
-		add_filter( 'admin_post_thumbnail_html',  array( $this, 'admin_post_thumbnail_html' ), 10, 2 );
+		add_filter( 'admin_post_thumbnail_html',  array( $this, 'admin_post_thumbnail_html' ), 10, 3 );
 		add_action( 'save_post_audiotheme_video', array( $this, 'on_video_save' ), 10, 2 );
 	}
 
@@ -108,22 +108,23 @@ class AudioTheme_Screen_EditVideo extends AudioTheme_Screen_AbstractScreen{
 	 *
 	 * @param string $content Default post thumbnail HTML.
 	 * @param int    $post_id Post ID.
+	 * @param int    $thumbnail_id Attachment ID.
 	 * @return string
 	 */
-	public function admin_post_thumbnail_html( $content, $post_id ) {
+	public function admin_post_thumbnail_html( $content, $post_id, $thumbnail_id ) {
 		if ( 'audiotheme_video' !== get_post_type( $post_id ) ) {
 			return $content;
 		}
 
 		$data = array(
-			'thumbnailId'       => get_post_thumbnail_id( $post_id ),
+			'thumbnailId'       => $thumbnail_id,
 			'oembedThumbnailId' => get_post_meta( $post_id, '_audiotheme_oembed_thumbnail_id', true ),
 		);
 
 		ob_start();
 		?>
 		<p id="audiotheme-select-oembed-thumb" class="hide-if-no-js">
-			<a href="#" id="audiotheme-select-oembed-thumb-button"><?php esc_html_e( 'Get video thumbnail', 'audiotheme' ); ?></a>
+			<a href="#" id="audiotheme-select-oembed-thumb-button"><?php esc_html_e( 'Fetch video thumbnail', 'audiotheme' ); ?></a>
 			<span class="spinner"></span>
 		</p>
 		<script id="audiotheme-video-thumbnail-data" type="application/json"><?php echo wp_json_encode( $data ); ?></script>
