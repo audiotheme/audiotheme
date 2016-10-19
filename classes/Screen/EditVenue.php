@@ -51,16 +51,7 @@ class AudioTheme_Screen_EditVenue extends AudioTheme_Screen_AbstractScreen{
 	public function register_meta_boxes( $post ) {
 		add_meta_box(
 			'audiotheme-venue-contact',
-			esc_html_x( 'Contact', 'venue meta box title', 'audiotheme' ),
-			array( $this, 'display_contact_meta_box' ),
-			'audiotheme_venue',
-			'normal',
-			'core'
-		);
-
-		add_meta_box(
-			'audiotheme-venue-notes',
-			esc_html_x( 'Notes', 'venue meta box title', 'audiotheme' ),
+			esc_html_x( 'Additional Notes', 'venue meta box title', 'audiotheme' ),
 			array( $this, 'display_notes_meta_box' ),
 			'audiotheme_venue',
 			'normal',
@@ -81,19 +72,7 @@ class AudioTheme_Screen_EditVenue extends AudioTheme_Screen_AbstractScreen{
 	}
 
 	/**
-	 * Display venue contact information meta box.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param WP_Post $post Venue post object.
-	 */
-	public function display_contact_meta_box( $post ) {
-		$venue = get_audiotheme_venue( $post );
-		require( $this->plugin->get_path( 'admin/views/edit-venue-contact.php' ) );
-	}
-
-	/**
-	 * Display venue notes meta box.
+	 * Display venue contact information and notes meta box.
 	 *
 	 * @since 2.0.0
 	 *
@@ -102,14 +81,7 @@ class AudioTheme_Screen_EditVenue extends AudioTheme_Screen_AbstractScreen{
 	public function display_notes_meta_box( $post ) {
 		$venue = get_audiotheme_venue( $post );
 		$notes = format_to_edit( $venue->notes, user_can_richedit() );
-
-		wp_editor( $notes, 'venuenotes', array(
-			'editor_css'    => '<style type="text/css" scoped="true">.mceIframeContainer { background-color: #fff;}</style>',
-			'media_buttons' => false,
-			'textarea_name' => 'audiotheme_venue[notes]',
-			'textarea_rows' => 6,
-			'teeny'         => true,
-		) );
+		require( $this->plugin->get_path( 'admin/views/edit-venue-notes.php' ) );
 	}
 
 	/**
