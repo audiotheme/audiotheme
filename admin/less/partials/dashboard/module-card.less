@@ -1,0 +1,133 @@
+/* Module Cards
+-------------------------------------------------------------- */
+
+.audiotheme-module-cards {
+	.clearfix();
+
+	margin-bottom: 30px;
+}
+
+.audiotheme-module-card,
+.audiotheme-module-card * {
+	box-sizing: border-box;
+}
+
+.audiotheme-module-card {
+	.clearfix();
+
+	background-color: #fff;
+	background-position: 50% 30px;
+	background-repeat: no-repeat;
+	background-size: 36px 36px;
+	border: 1px solid #dedede;
+	margin: 0 8px 18px 10px;
+}
+
+.audiotheme-module-card-actions {
+	background: #fafafa;
+	border-top: 1px solid #dedede;
+	float: left;
+	padding: 12px 20px;
+	width: 100%;
+}
+
+.audiotheme-module-card-actions-primary {
+	float: right;
+
+	.spinner {
+		float: none;
+		margin-top: 4px;
+		vertical-align: middle;
+	}
+
+	.is-inactive & .button,
+	.is-active & button.button-activate {
+		display: none;
+	}
+
+	.is-active & .button,
+	.is-inactive & .button-activate {
+		display: inline-block;
+	}
+}
+
+.audiotheme-module-card-actions-secondary {
+	float: left;
+	line-height: 28px;
+}
+
+.audiotheme-module-card-details {
+	color: #737780;
+	padding: 79px 20px 10px;
+	position: relative;
+	text-align: center;
+
+	p {
+		font-size: 14px;
+		margin-top: 0;
+	}
+}
+
+.audiotheme-module-card-name,
+h2.audiotheme-module-card-name {
+	color: #000;
+	font-size: 18px;
+	margin: 0 0 10px 0;
+	padding: 0;
+	text-transform: uppercase;
+}
+
+.audiotheme-module-card-overview-media {
+	height: 0;
+	margin: 0;
+	position: relative;
+	padding-bottom: 56.25%;
+
+	iframe {
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+	}
+}
+
+.audiotheme-module-card--discography {
+	background-image: url(../images/dashicons/discography.svg);
+}
+
+.audiotheme-module-card--gigs {
+	background-image: url(../images/dashicons/gigs.svg);
+}
+
+.audiotheme-module-card--videos {
+	background-image: url(../images/dashicons/videos.svg);
+}
+
+// Hide the overview when JavaScript is enabled.
+// It'll be displayed in the modal.
+.js .audiotheme-module-card-overview {
+	display: none;
+}
+
+@media (min-width: 782px) {
+	.audiotheme-module-card {
+		float: left;
+		margin: 0 9px 18px;
+		width: calc(33.33% ~"-" 12px);
+
+		&:nth-of-type(3n+1) {
+			clear: left;
+			margin-left: 0;
+		}
+
+		&:nth-of-type(3n) {
+			clear: right;
+			margin-right: 0;
+		}
+	}
+
+	.audiotheme-module-card-details {
+		min-height: 220px;
+	}
+}

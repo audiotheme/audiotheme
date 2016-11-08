@@ -1,0 +1,88 @@
+/**
+ * Gigs
+ * -----------------------------------------------------------------------------
+ */
+
+
+/* Manage Gigs Screen
+------------------------------------------------------------------------------*/
+
+.screen-edit-audiotheme_gig {
+	#filter-by-date,
+	.inline-edit-date,
+	.inline-edit-col-left .inline-edit-group {
+		display: none;
+	}
+
+	.column-title {
+		.row-title {
+			font-weight: normal;
+		}
+	}
+}
+
+
+/* Edit Gig Screen
+------------------------------------------------------------------------------*/
+
+.audiotheme-gig-editor,
+.audiotheme-gig-editor * {
+	box-sizing: border-box;
+}
+
+.audiotheme-gig-editor {
+	.clearfix();
+	margin-top: 20px;
+	position: relative;
+	width: 100%;
+}
+
+.audiotheme-gig-editor-primary {
+	float: left;
+	width: calc(50% ~"-" 10px);
+}
+
+.audiotheme-gig-editor-secondary {
+	float: right;
+	width: calc(50% ~"-" 10px);
+}
+
+.audiotheme-gig-date-picker {
+	margin-bottom: 20px;
+}
+
+.audiotheme-gig-time-picker {
+	width: 100%;
+
+	.audiotheme-input-group-field,
+	input.audiotheme-input-group-field {
+		height: 34px;
+	}
+
+	.audiotheme-input-group-trigger {
+		width: 34px;
+	}
+}
+
+.audiotheme-gig-venue-details {
+	color: #545454;
+	font-size: 14px;
+	line-height: (22 / 14);
+
+	.venue-name {
+		color: #545454;
+		font-size: 18px;
+		font-weight: normal;
+		line-height: (27 / 18);
+		margin: 0;
+	}
+}
+
+#audiotheme-gig-note-meta-box {
+	clear: both;
+	margin-bottom: 0;
+
+	#excerpt {
+		margin: 0 0 6px 0;
+	}
+}

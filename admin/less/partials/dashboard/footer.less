@@ -1,0 +1,78 @@
+/* Footer Section
+-------------------------------------------------------------- */
+
+.audiotheme-dashboard-addendum,
+.audiotheme-dashboard-addendum * {
+	box-sizing: border-box;
+}
+
+.audiotheme-dashboard-addendum {
+	.clearfix();
+
+	background: #fff;
+	border-color: #dedede;
+	border-style: solid;
+	border-width: 1px 0 0 0;
+	color: #737780;
+	margin: 0 -20px 40px -22px;
+	position: relative;
+	text-align: center;
+}
+
+.audiotheme-dashboard-addendum aside {
+	border-color: #dedede;
+	border-style: solid;
+	border-width: 0 0 1px 0;
+	padding: 40px 30px;
+
+	> :last-child {
+		margin-bottom: 0;
+	}
+
+	h1 {
+		color: #222;
+		font-weight: 300;
+		margin-top: 0;
+	}
+
+	p {
+		font-size: 14px;
+		line-height: 1.5;
+	}
+}
+
+.audiotheme-dashboard-footer {
+	color: #737780;
+	text-align: center;
+
+	a {
+		color: #737780;
+	}
+}
+
+.audiotheme-footer-logo {
+	display: inline-block;
+	margin: 0 auto;
+	width: 50px;
+}
+
+@media screen and (min-width: 1000px) {
+	.audiotheme-dashboard-addendum {
+		border-width: 1px 0;
+	}
+
+	.audiotheme-dashboard-addendum aside {
+		border-width: 0;
+		float: left;
+		width: 50%;
+
+		&:first-child:after {
+			border-left: 1px solid #dedede;
+			content: "";
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 50%;
+		}
+	}
+}

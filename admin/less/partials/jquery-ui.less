@@ -1,0 +1,48 @@
+/**
+ * jQuery UI Overrides
+ * -----------------------------------------------------------------------------
+ */
+
+.ui-timepicker-wrapper.ui-autocomplete {
+	border-width: 0;
+}
+
+.ui-timepicker-list {
+	height: 150px;
+	margin: 0;
+	overflow-y: auto;
+	border-style: solid;
+	border-width: 1px;
+
+	li {
+		cursor: pointer;
+		line-height: 18px;
+		list-style: none;
+		margin: 0;
+		padding: 4px 10px;
+		white-space: nowrap;
+	}
+}
+
+
+/* Colors
+------------------------------------------------------------------------------*/
+
+input.ui-timepicker-input.open {
+	border-bottom-color: #ddd;
+}
+
+.ui-timepicker-list {
+	background-color: #efefef;
+	border-color: #5b9dd9;
+
+	li {
+		color: #333;
+	}
+}
+
+.ui-timepicker-selected,
+.ui-timepicker-list li:hover,
+.ui-timepicker-selected:hover {
+	background-color: #ddd;
+}

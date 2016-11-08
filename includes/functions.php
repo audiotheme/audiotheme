@@ -2,7 +2,11 @@
 /**
  * Generic utility functions.
  *
- * @package AudioTheme_Framework
+ * @package   AudioTheme
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.0.0
  */
 
 /**
@@ -29,60 +33,17 @@ function audiotheme_image_size_names() {
 }
 
 /**
- * Compare two version numbers.
- *
- * This function abstracts the logic for determining the current version
- * number for various packages, so the only version number that needs to be
- * known is the one to compare against.
- *
- * Basically serves as a wrapper for the native PHP version_compare()
- * function, but allows a known package to be passed as the first parameter.
- *
- * @since 1.0.0
- * @see PHP docs for version_compare()
- * @uses version_compare()
- *
- * @param string $version A package identifier or version number to compare against.
- * @param string $version2 The version number to compare to.
- * @param string $operator Optional. Relationship to test. <, lt, <=, le, >, gt, >=, ge, ==, =, eq, !=, <>, ne
- * @return mixed True or false if operator is supplied. -1, 0, or 1 if operator is empty.
- */
-function audiotheme_version_compare( $version, $version2, $operator = null ) {
-	switch ( $version ) {
-		case 'audiotheme' :
-			$version = AUDIOTHEME_VERSION;
-			break;
-		case 'php' :
-			$version = phpversion();
-			break;
-		case 'stylesheet' : // Child theme if it exists, otherwise same as template.
-			$theme = wp_get_theme();
-			$version = $theme->get( 'Version' );
-			break;
-		case 'template' : // Parent theme.
-			$theme = wp_get_theme( get_template() );
-			$version = $theme->get( 'Version' );
-			break;
-		case 'wp' :
-			$version = get_bloginfo( 'version' );
-			break;
-	}
-
-	return version_compare( $version, $version2, $operator );
-}
-
-/**
  * Sort an array of objects by an objects properties.
  *
  * Ex: sort_objects( $gigs, array( 'venue', 'name' ), 'asc', true, 'gig_datetime' );
  *
  * @since 1.0.0
- * @uses Audiotheme_Sort_Objects
+ * @uses AudioTheme_Sort_Objects
  *
- * @param array $objects An array of objects to sort.
+ * @param array  $objects An array of objects to sort.
  * @param string $orderby The object property to sort on.
  * @param string $order The sort order; ASC or DESC.
- * @param bool $unique Optional. If the objects have an ID property, it will be used for the array keys, thus they'll unique. Defaults to true.
+ * @param bool   $unique Optional. If the objects have an ID property, it will be used for the array keys, thus they'll unique. Defaults to true.
  * @param string $fallback Optional. Comma-delimited string of properties to sort on if $orderby property is equal.
  * @return array The array of sorted objects.
  */
@@ -91,7 +52,7 @@ function audiotheme_sort_objects( $objects, $orderby, $order = 'ASC', $unique = 
 		return false;
 	}
 
-	usort( $objects, array( new Audiotheme_Sort_Objects( $orderby, $order, $fallback ), 'sort' ) );
+	usort( $objects, array( new AudioTheme_Sort_Objects( $orderby, $order, $fallback ), 'sort' ) );
 
 	// Use object ids as the array keys.
 	if ( $unique && count( $objects ) && isset( $objects[0]->ID ) ) {
@@ -107,17 +68,56 @@ function audiotheme_sort_objects( $objects, $orderby, $order = 'ASC', $unique = 
  * @since 1.0.0
  * @access private
  */
-class Audiotheme_Sort_Objects {
-	var $fallback, $order, $orderby;
+class AudioTheme_Sort_Objects {
+	/**
+	 * Fallback property to sort by if primary is equal.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	public $fallback;
 
-	// Fallback is limited to working with properties of the parent object.
-	function __construct( $orderby, $order, $fallback = null ) {
+	/**
+	 * Sort direction.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	public $order;
+
+	/**
+	 * Property to sort by.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	public $orderby;
+
+	/**
+	 * Constructor method.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $orderby  Property to sort by.
+	 * @param string $order    Sort direction.
+	 * @param string $fallback Fallback property to sort by. Limited to properties of the parent object.
+	 */
+	public function __construct( $orderby, $order, $fallback = null ) {
 		$this->order = ( 'desc' === strtolower( $order ) ) ? 'DESC' : 'ASC';
 		$this->orderby = $orderby;
 		$this->fallback = $fallback;
 	}
 
-	function sort( $a, $b ) {
+	/**
+	 * Sort objects.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param  object $a Object 1.
+	 * @param  object $b Object 2.
+	 * @return int
+	 */
+	public function sort( $a, $b ) {
 		if ( is_string( $this->orderby ) ) {
 			$a_value = $a->{$this->orderby};
 			$b_value = $b->{$this->orderby};
@@ -136,7 +136,7 @@ class Audiotheme_Sort_Objects {
 				$properties = explode( ',', $this->fallback );
 				foreach ( $properties as $prop ) {
 					if ( $a->$prop !== $b->$prop ) {
-						#printf( '(%s - %s) - (%s - %s)<br>', $a_value, $a->$prop, $b_value, $b->$prop );
+						// @todo printf( '(%s - %s) - (%s - %s)<br>', $a_value, $a->$prop, $b_value, $b->$prop );
 						return $this->compare( $a->$prop, $b->$prop );
 					}
 				}
@@ -148,7 +148,16 @@ class Audiotheme_Sort_Objects {
 		return $this->compare( $a_value, $b_value );
 	}
 
-	function compare( $a, $b ) {
+	/**
+	 * Compare two values for equality.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param  mixed $a Value 1.
+	 * @param  mixed $b Value 2.
+	 * @return int
+	 */
+	public function compare( $a, $b ) {
 		if ( $a < $b ) {
 			return ( 'ASC' === $this->order ) ? -1 : 1;
 		} else {
@@ -169,8 +178,8 @@ class Audiotheme_Sort_Objects {
  * @return string
  */
 function audiotheme_timezone_choice( $selected_zone = null ) {
-	$selected = ( empty( $selected_zone ) ) ? get_option( 'timezone_string' ) : $selected_zone;
-	$choices = wp_timezone_choice( $selected );
+	$selected = empty( $selected_zone ) ? get_option( 'timezone_string' ) : $selected_zone;
+	$choices  = wp_timezone_choice( $selected );
 
 	// Remove the manual offsets optgroup.
 	$pos = strrpos( $choices, '<optgroup' );
@@ -181,17 +190,17 @@ function audiotheme_timezone_choice( $selected_zone = null ) {
 	return apply_filters( 'audiotheme_timezone_dropdown', $choices, $selected );
 }
 
+if ( ! function_exists( 'vd' ) ) :
 /**
  * Display a variable for debugging.
  *
  * @since 1.0.0
  *
- * @param mixed $var
+ * @param mixed $value Value.
  */
-if ( ! function_exists( 'vd' ) ) :
-	function vd( $var ) {
-		echo '<pre style="font-size: 12px; text-align: left">' . print_r( $var, true ) . '</pre>';
-	}
+function vd( $value ) {
+	echo '<pre style="font-size: 12px; text-align: left">' . print_r( $value, true ) . '</pre>';
+}
 endif;
 
 /**
@@ -207,10 +216,10 @@ endif;
  * @version 1.0.0
  * @see array_splice()
  *
- * @param array $input The input array.
- * @param int $offset The position to start from.
- * @param int $length Optional. The number of elements to remove. Defaults to 0.
- * @param mixed $replacement Optional. Item(s) to replace removed elements.
+ * @param array  $input The input array.
+ * @param int    $offset The position to start from.
+ * @param int    $length Optional. The number of elements to remove. Defaults to 0.
+ * @param mixed  $replacement Optional. Item(s) to replace removed elements.
  * @param string $primary Optiona. input|replacement Defaults to input. Which array should take precedence if there is a key collision.
  * @return array The modified array.
  */
@@ -219,7 +228,7 @@ function audiotheme_array_asplice( $input, $offset, $length = 0, $replacement = 
 	$replacement = (array) $replacement;
 
 	$start = array_slice( $input, 0, $offset, true );
-	// $remove = array_slice( $input, $offset, $length, true );
+	// @todo $remove = array_slice( $input, $offset, $length, true );
 	$end = array_slice( $input, $offset + $length, null, true );
 
 	// Discard elements in $replacement whose keys match keys in $input.
@@ -235,7 +244,7 @@ function audiotheme_array_asplice( $input, $offset, $length = 0, $replacement = 
 	}
 
 	// Which is faster?
-	// return $start + $replacement + $end;
+	// @todo return $start + $replacement + $end;
 	return array_merge( $start, $replacement, $end );
 }
 
@@ -304,7 +313,7 @@ function audiotheme_array_insert_after_key( $input, $needle, $insert ) {
  *
  * @param mixed $needle The value to search for.
  * @param array $haystack The array to search.
- * @param bool $strict Whether to search for identical (types) values.
+ * @param bool  $strict Whether to search for identical (types) values.
  * @return int|bool Position of the first matching element or false if not found.
  */
 function audiotheme_array_find( $needle, $haystack, $strict = false ) {
@@ -325,8 +334,8 @@ function audiotheme_array_find( $needle, $haystack, $strict = false ) {
  * @version 1.0.0
  * @see array_key_exists()
  *
- * @param $key string|int The key to search for.
- * @param $search The array to search.
+ * @param string|int $key The key to search for.
+ * @param array      $search The array to search.
  * @return int|bool Position of the key or false if not found.
  */
 function audiotheme_array_key_find( $key, $search ) {
@@ -349,8 +358,8 @@ function audiotheme_array_key_find( $key, $search ) {
  *
  * @version 1.0.1
  *
- * @param array $array The array to sort.
- * @param array $order Array used for sorting. Values should match keys in $array.
+ * @param array  $array The array to sort.
+ * @param array  $order Array used for sorting. Values should match keys in $array.
  * @param string $keep_diff Optional. Whether to keep the difference of the two arrays if they don't exactly match and where to place the difference.
  * @param string $diff_sort Optional. @todo Implement.
  * @return array The sorted array.
@@ -376,13 +385,13 @@ function audiotheme_array_sort_array( $array, $order, $keep_diff = 'bottom', $di
 }
 
 /**
-* Helper function to determine if a shortcode attribute is true or false.
-*
-* @since 1.0.0
-*
-* @param string|int|bool $var Attribute value.
-* @return bool
-*/
+ * Helper function to determine if a shortcode attribute is true or false.
+ *
+ * @since 1.0.0
+ *
+ * @param string|int|bool $var Attribute value.
+ * @return bool
+ */
 function audiotheme_shortcode_bool( $var ) {
 	$falsey = array( 'false', '0', 'no', 'n' );
 	return ( ! $var || in_array( strtolower( $var ), $falsey ) ) ? false : true;
@@ -409,7 +418,9 @@ function audiotheme_encode_svg( $path ) {
 /**
  * Encode the path portion of a URL.
  *
- * Spaces in directory or filenames are stripped by esc_url() and can cause issues when requesting a URL programmatically. This method encodes spaces and other characters.
+ * Spaces in directory or filenames are stripped by esc_url() and can cause
+ * issues when requesting a URL programmatically. This method encodes spaces
+ * and other characters.
  *
  * @since 1.4.4
  *
@@ -442,7 +453,7 @@ function audiotheme_encode_url_path( $url ) {
  *
  * @since 1.6.0
  *
- * @param array $data Array of properties.
+ * @param array  $data Array of properties.
  * @param string $arg_separator Separator between arguments.
  * @param string $value_separator Separator between keys and values.
  * @return array string
@@ -453,21 +464,37 @@ function audiotheme_build_query( $data, $arg_separator = '|', $value_separator =
 }
 
 /**
- * Attempt to make custom time formats more compatible between JavaScript and PHP.
+ * Remove letterbox matte from an image attachment.
  *
- * If the time format option has an escape sequences, use a default format
- * determined by whether or not the option uses 24 hour format or not.
+ * Overwrites the existing attachment and regenerates all sizes.
  *
- * @since 1.7.0
+ * @since 2.0.0
  *
- * @return string
+ * @param int $attachment_id Attachment ID.
  */
-function audiotheme_compatible_time_format() {
-	$time_format = get_option( 'time_format' );
+function audiotheme_trim_image_letterbox( $attachment_id ) {
+	require_once( ABSPATH . 'wp-admin/includes/image.php' );
 
-	if ( false !== strpos( $time_format, '\\' ) ) {
-		$time_format = false !== strpbrk( $time_format, 'GH' ) ? 'G:i' : 'g:i a';
+	$file  = get_attached_file( $attachment_id );
+
+	$image = wp_get_image_editor( $file, array(
+		'methods' => array( 'trim' )
+	) );
+
+	if ( is_wp_error( $image ) ) {
+		return;
 	}
 
-	return $time_format;
+	// Delete intermediate sizes.
+	$meta  = wp_get_attachment_metadata( $attachment_id );
+	foreach ( $meta['sizes'] as $size ) {
+		$path = path_join( dirname( $file ), $size['file'] );
+		wp_delete_file( $path );
+	}
+
+	$image->trim( 10 );
+	$saved = $image->save( $file );
+
+	$meta = wp_generate_attachment_metadata( $attachment_id, $saved['path'] );
+	wp_update_attachment_metadata( $attachment_id, $meta );
 }

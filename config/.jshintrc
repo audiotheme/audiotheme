@@ -1,0 +1,14 @@
+{
+  "boss": true,
+  "curly": true,
+  "eqeqeq": true,
+  "eqnull": true,
+  "latedef": true,
+  "noarg": true,
+  "quotmark": "single",
+  "strict": true,
+  "undef": true,
+  "unused": "vars",
+
+  "browser": true
+}

@@ -7,25 +7,34 @@
  * display an alert to users who mistakenly install the framework as a theme and
  * give them the option to move it automatically if possible.
  *
- * @package AudioTheme_Framework
+ * @package   AudioTheme
+ * @copyright Copyright 2012 AudioTheme
+ * @license   GPL-2.0+
+ * @link      https://audiotheme.com/
+ * @since     1.2.0
  */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Load the translation files as a theme.
  *
  * @since 1.2.0
  */
-function audiotheme_framework_not_a_theme_setup_as_theme() {
+function audiotheme_not_a_theme_setup_as_theme() {
 	load_theme_textdomain( 'audiotheme', get_template_directory() . '/languages' );
 }
-add_action( 'after_setup_theme', 'audiotheme_framework_not_a_theme_setup_as_theme' );
+add_action( 'after_setup_theme', 'audiotheme_not_a_theme_setup_as_theme' );
 
 /**
  * Move the framework to the plugins directory.
  *
  * @since 1.2.0
  */
-function audiotheme_framework_not_a_theme() {
+function audiotheme_not_a_theme() {
 	global $wp_filesystem;
 
 	if ( ! isset( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'audiotheme-theme-to-plugin' ) ) {
@@ -45,7 +54,7 @@ function audiotheme_framework_not_a_theme() {
 	}
 
 	$plugin_dir = $wp_filesystem->wp_plugins_dir() . 'audiotheme/';
-	$theme_dir = trailingslashit( get_template_directory() );
+	$theme_dir  = trailingslashit( get_template_directory() );
 
 	// Check if the framework plugin directory already exists.
 	if ( is_dir( $plugin_dir ) ) {
@@ -61,43 +70,44 @@ function audiotheme_framework_not_a_theme() {
 		exit;
 	}
 
-	// Redirect to nag saying it didn't work. Move it manually.
+	// Redirect to notice saying it didn't work. Move it manually.
 	else {
 		$redirect = add_query_arg( 'atmovemsg', 'move-failed', admin_url( 'themes.php' ) );
 		wp_safe_redirect( esc_url_raw( $redirect ) );
 		exit;
 	}
 }
-add_action( 'admin_init', 'audiotheme_framework_not_a_theme' );
+add_action( 'admin_init', 'audiotheme_not_a_theme' );
 
 /**
- * Display a nag in the dashboard to alert the user that the framework is not a theme.
+ * Display a notice in the dashboard to alert the user that the framework is not a theme.
  *
  * @since 1.2.0
  */
-function audiotheme_framework_not_a_theme_nag() {
-	$notice = '';
+function audiotheme_not_a_theme_notice() {
+	$notice     = '';
 	$message_id = ( isset( $_REQUEST['atmovemsg'] ) ) ? $_REQUEST['atmovemsg'] : '';
-	$move_url = wp_nonce_url( 'themes.php', 'audiotheme-theme-to-plugin' );
+	$move_url   = wp_nonce_url( 'themes.php', 'audiotheme-theme-to-plugin' );
 
 	switch ( $message_id ) {
 		case 'plugin-exists' :
 			if ( ! is_multisite() && current_user_can( 'delete_themes' ) ) {
 				$stylesheet = get_template();
-				$delete_link = sprintf( __( 'You should <a href="%s">delete the theme</a> and activate as a plugin instead.', 'audiotheme' ),
+				$delete_link = sprintf(
+					__( 'You should <a href="%s">delete the theme</a> and activate as a plugin instead.', 'audiotheme' ),
 					wp_nonce_url( 'themes.php?action=delete&amp;stylesheet=' . urlencode( $stylesheet ), 'delete-theme_' . $stylesheet )
 				);
 			}
 
 			$notice  = __( 'The AudioTheme framework appears to already exist as a plugin.', 'audiotheme' );
-			$notice .= ( empty( $delete_link ) ) ? '' : ' ' . $delete_link;
+			$notice .= empty( $delete_link ) ? '' : ' ' . $delete_link;
 			break;
 		case 'move-failed' :
 			$notice  = __( 'The AudioTheme framework could not be moved to your plugins folder automatically. You should move it manually.', 'audiotheme' );
 			break;
 		default :
 			$notice  = __( '<strong>The AudioTheme framework is not a theme.</strong> It should be installed as a plugin.', 'audiotheme' );
-			$notice .= ( current_user_can( 'install_plugins' ) ) ? sprintf( ' <a href="%s">%s</a>', esc_url( $move_url ), __( 'Would you like to move it now?', 'audiotheme' ) ) : '';
+			$notice .= current_user_can( 'install_plugins' ) ? sprintf( ' <a href="%s">%s</a>', esc_url( $move_url ), __( 'Would you like to move it now?', 'audiotheme' ) ) : '';
 	}
 
 	if ( ! empty( $notice ) ) :
@@ -108,4 +118,4 @@ function audiotheme_framework_not_a_theme_nag() {
 		<?php
 	endif;
 }
-add_action( 'admin_notices', 'audiotheme_framework_not_a_theme_nag' );
+add_action( 'admin_notices', 'audiotheme_not_a_theme_notice' );
