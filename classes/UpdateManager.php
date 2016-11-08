@@ -29,7 +29,10 @@ class AudioTheme_UpdateManager extends AudioTheme_AbstractProvider {
 		// Don't send the remote request if a license key hasn't been entered.
 		if ( ! $this->plugin->license->has_key() ) {
 			add_filter( 'do_audiotheme_update_request',               '__return_false' );
-			add_filter( 'audiotheme_update_plugin_notice-audiotheme', array( $this, 'display_audiotheme_update_notice' ) );
+
+			if ( ! function_exists( 'audiotheme_agent' ) ) {
+				add_filter( 'audiotheme_update_plugin_notice-audiotheme', array( $this, 'display_audiotheme_update_notice' ) );
+			}
 		}
 	}
 
