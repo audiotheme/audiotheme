@@ -512,7 +512,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 		);
 
 		if ( has_post_thumbnail() ) {
-			$item['image'] = get_the_post_thumbnail_url( 'full' );
+			$item['image'] = get_the_post_thumbnail_url( $post, 'full' );
 		}
 
 		/*$item['performer'] = array(
