@@ -3,11 +3,10 @@
 
 'use strict';
 
-var frame, settings, wpScreen,
+var datepicker, frame, settings, wpScreen,
 	$ = require( 'jquery' ),
 	app = require( 'audiotheme' ),
 	Backbone = require( 'backbone' ),
-	$date = $( '#gig-date' ),
 	$time = $( '#gig-time' ),
 	ss = sessionStorage || {},
 	lastGigDate = 'lastGigDate' in ss ? new Date( ss.lastGigDate ) : null,
@@ -43,7 +42,7 @@ $time.timepicker({
 // Add the last saved date and time to session storage
 // when the gig is saved.
 $( '#publish' ).on( 'click', function() {
-	var date = $date.datepicker( 'getDate' ),
+	var date = datepicker.getDate(),
 		time = $time.timepicker( 'getTime' );
 
 	if ( ss && '' !== date ) {
@@ -56,7 +55,7 @@ $( '#publish' ).on( 'click', function() {
 });
 
 // Initialize the date picker.
-new Pikaday({
+datepicker = new Pikaday({
 	bound: false,
 	container: document.getElementById( 'audiotheme-gig-start-date-picker' ),
 	field: $( '.audiotheme-gig-date-picker-start' ).find( 'input' ).get( 0 ),
