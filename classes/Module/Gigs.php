@@ -276,8 +276,13 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	 * @return array
 	 */
 	public function query_connected_venues( $posts, $wp_query ) {
-		if ( ! empty( $posts ) && 'audiotheme_gig' === get_post_type( $posts[0] ) ) {
-			p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $wp_query );
+		if ( empty( $posts ) || 'audiotheme_gig' !== get_post_type( $posts[0] ) ) {
+			return $posts;
+		}
+
+		$connection_type = p2p_type( 'audiotheme_venue_to_gig' );
+		if ( $connection_type ) {
+			$connection_type->each_connected( $wp_query );
 		}
 
 		return $posts;
