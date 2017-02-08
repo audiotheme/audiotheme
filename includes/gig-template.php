@@ -122,21 +122,28 @@ function the_audiotheme_gig_link( $args = array(), $echo = true ) {
  */
 function get_audiotheme_gig_link( $post = null, $args = array() ) {
 	$gig = get_audiotheme_gig( $post );
+	$before_link = '<span class="summary" itemprop="name">';
 
-	$defaults = array(
+	$args = wp_parse_args( $args, array(
 		'before'      => '',
 		'after'       => '',
-		'before_link' => '<span class="summary" itemprop="name">',
+		'before_link' => $before_link,
 		'after_link'  => '</span>',
-	);
-	$args = wp_parse_args( $args, $defaults );
-	extract( $args );
+		'microdata'   => true,
+	) );
 
-	$html  = $before;
-	$html .= '<a href="' . esc_url( get_permalink( $gig->ID ) ) . '" class="url uid" itemprop="url">';
-	$html .= $before_link . get_audiotheme_gig_title( $post ) . $after_link;
+	$schema = $args['microdata'] ? ' itemprop="url"' : '';
+
+	// Remove microdata. This is for backward compatibility.
+	if ( ! $args['microdata'] && $args['before_link'] === $before_link ) {
+		$args['before_link'] = '<span class="summary">';
+	}
+
+	$html  = $args['before'];
+	$html .= '<a href="' . esc_url( get_permalink( $gig->ID ) ) . '" class="url uid"' . $schema . '>';
+	$html .= $args['before_link'] . get_audiotheme_gig_title( $post ) . $args['after_link'];
 	$html .= '</a>';
-	$html .= $after;
+	$html .= $args['after'];
 
 	return $html;
 }

@@ -297,18 +297,28 @@ function get_audiotheme_venue_link( $venue_id, $args = array() ) {
 		return '';
 	}
 
-	extract( wp_parse_args( $args, array(
+	$before_link = '<span class="fn org" itemprop="name">';
+
+	$args = wp_parse_args( $args, array(
 		'before'      => '',
 		'after'       => '',
-		'before_link' => '<span class="fn org" itemprop="name">',
+		'before_link' => $before_link,
 		'after_link'  => '</span>',
-	) ) );
+		'microdata'   => false,
+	) );
 
-	$html  = $before;
-	$html .= ( empty( $venue->website ) ) ? '' : sprintf( '<a href="%s" class="url" itemprop="url">', esc_url( $venue->website ) );
-	$html .= $before_link . $venue->name . $after_link;
-	$html .= ( empty( $venue->website ) ) ? '' : '</a>';
-	$html .= $after;
+	$schema = $args['microdata'] ? ' itemprop="url"' : '';
+
+	// Remove microdata. This is for backward compatibility.
+	if ( ! $args['microdata'] && $args['before_link'] === $before_link ) {
+		$args['before_link'] = '<span class="fn org">';
+	}
+
+	$html  = $args['before'];
+	$html .= empty( $venue->website ) ? '' : sprintf( '<a href="%s" class="url"' . $schema . '>', esc_url( $venue->website ) );
+	$html .= $args['before_link'] . $venue->name . $args['after_link'];
+	$html .= empty( $venue->website ) ? '' : '</a>';
+	$html .= $args['after'];
 
 	return $html;
 }
@@ -355,6 +365,7 @@ function get_audiotheme_venue_vcard( $venue_id, $args = array() ) {
 
 	$args = wp_parse_args( $args, array(
 		'container'         => 'dd',
+		'microdata'         => true,
 		'show_country'      => true,
 		'show_name'         => true,
 		'show_name_link'    => true,
@@ -366,19 +377,26 @@ function get_audiotheme_venue_vcard( $venue_id, $args = array() ) {
 	$output  = '';
 
 	if ( $args['show_name'] ) {
-		$output .= ( empty( $venue->website ) || ! $args['show_name_link'] ) ? '' : '<a href="' . esc_url( $venue->website ) . '" class="url" itemprop="url">';
-		$output .= '<span class="venue-name fn org" itemprop="name">' . $venue->name . '</span>';
+		$schema  = $args['microdata'] ? ' itemprop="url"' : '';
+		$output .= ( empty( $venue->website ) || ! $args['show_name_link'] ) ? '' : '<a href="' . esc_url( $venue->website ) . '" class="url"' . $schema . '>';
+
+		$schema  = $args['microdata'] ? ' itemprop="name"' : '';
+		$output .= '<span class="venue-name fn org"' . $schema . '>' . $venue->name . '</span>';
 		$output .= ( empty( $venue->website ) || ! $args['show_name_link'] ) ? '' : '</a>';
 	}
 
 	$address  = '';
-	$address .= ( empty( $venue->address ) ) ? '' : '<span class="street-address" itemprop="streetAddress">' . esc_html( $venue->address ) . '</span>';
+	$schema   = $args['microdata'] ? ' itemprop="streetAddress"' : '';
+	$address .= ( empty( $venue->address ) ) ? '' : '<span class="street-address"' . $schema . '>' . esc_html( $venue->address ) . '</span>';
 
 	$region  = '';
-	$region .= ( empty( $venue->city ) ) ? '' : '<span class="locality" itemprop="addressLocality">' . $venue->city . '</span>';
+	$schema  = $args['microdata'] ? ' itemprop="addressLocality"' : '';
+	$region .= ( empty( $venue->city ) ) ? '' : '<span class="locality"' . $schema . '>' . $venue->city . '</span>';
 	$region .= ( ! empty( $venue->city ) && ! empty( $venue->state ) ) ? ', ' : '';
-	$region .= ( empty( $venue->state ) ) ? '' : '<span class="region" itemprop="addressRegion">' . $venue->state . '</span>';
-	$region .= ( empty( $venue->postal_code ) ) ? '' : ' <span class="postal-code" itemprop="postalCode">' . $venue->postal_code . '</span>';
+	$schema  = $args['microdata'] ? ' itemprop="addressRegion"' : '';
+	$region .= ( empty( $venue->state ) ) ? '' : '<span class="region"' . $schema . '>' . $venue->state . '</span>';
+	$schema  = $args['microdata'] ? ' itemprop="postalCode"' : '';
+	$region .= ( empty( $venue->postal_code ) ) ? '' : ' <span class="postal-code"' . $schema . '>' . $venue->postal_code . '</span>';
 
 	$address .= ( ! empty( $address ) && ! empty( $region ) ) ? '<span class="sep sep-street-address">' . $args['separator_address'] . '</span>' : '';
 	$address .= ( empty( $region ) ) ? '' : '<span class="venue-location">' . $region . '</span>';
@@ -387,20 +405,33 @@ function get_audiotheme_venue_vcard( $venue_id, $args = array() ) {
 		$country_class = esc_attr( 'country-name-' . sanitize_title_with_dashes( $venue->country ) );
 
 		$address .= ( ! empty( $address ) && ! empty( $venue->country ) ) ? '<span class="sep sep-country-name ' . $country_class . '">' . $args['separator_country'] . '</span> ' : '';
-		$address .= ( empty( $venue->country ) ) ? '' : '<span class="country-name ' . $country_class . '" itemprop="addressCountry">' . $venue->country . '</span>';
+		$schema   = $args['microdata'] ? ' itemprop="addressCountry"' : '';
+		$address .= ( empty( $venue->country ) ) ? '' : '<span class="country-name ' . $country_class . '"' . $schema . '>' . $venue->country . '</span>';
 	}
 
-	$output .= ( empty( $address ) ) ? '' : '<div class="venue-address adr" itemscope itemtype="http://schema.org/PostalAddress" itemprop="address">' . $address . '</div> ';
+	if ( ! empty( $address ) ) {
+		$output .= sprintf(
+			'<div class="venue-address adr"%2$s%3$s%4$s>%1$s</div> ',
+			$address,
+			$args['microdata'] ? ' itemscope' : '',
+			$args['microdata'] ? ' itemtype="http://schema.org/PostalAddress"' : '',
+			$args['microdata'] ? ' itemprop="address"' : ''
+		);
+	}
 
 	if ( $args['show_phone'] ) {
-		$output .= ( empty( $venue->phone ) ) ? '' : '<span class="venue-phone tel" itemprop="telephone">' . $venue->phone . '</span>';
+		$schema  = $args['microdata'] ? ' itemprop="telephone"' : '';
+		$output .= ( empty( $venue->phone ) ) ? '' : '<span class="venue-phone tel"' . $schema . '>' . $venue->phone . '</span>';
 	}
 
 	if ( ! empty( $output ) && ! empty( $args['container'] ) ) {
-		$container_open = '<' . $args['container'] . ' class="location vcard" itemprop="location" itemscope itemtype="http://schema.org/EventVenue">';
-		$container_close = '</' . $args['container'] . '>';
-
-		$output = $container_open . $output . $container_close;
+		$output = sprintf(
+			'<%1$s class="location vcard"%2$s%3$s%4$s></%1$s>',
+			$args['container'],
+			$args['microdata'] ? ' itemprop="location"' : '',
+			$args['microdata'] ? ' itemscope' : '',
+			$args['microdata'] ? ' itemtype="http://schema.org/EventVenue"' : ''
+		);
 	}
 
 	return $output;
