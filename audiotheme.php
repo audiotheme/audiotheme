@@ -14,7 +14,7 @@
  * Author:      AudioTheme
  * Author URI:  https://audiotheme.com/
  * License:     GPL-2.0+
- * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: audiotheme
  * Domain Path: /languages
  * Requires at least: 4.3.1
@@ -124,13 +124,11 @@ if ( is_admin() ) {
 	$audiotheme
 		->register_hooks( new AudioTheme_UpgradeManager() )
 		->register_hooks( new AudioTheme_Provider_AdminHooks() )
-		->register_hooks( new AudioTheme_UpdateManager() )
 		->register_hooks( new AudioTheme_AJAX_Admin() )
 		->register_hooks( new AudioTheme_Provider_AdminAssets() )
 		->register_hooks( new AudioTheme_Screen_Dashboard() )
 		->register_hooks( new AudioTheme_Screen_Settings() )
-		->register_hooks( new AudioTheme_Provider_Setting_GoogleMaps() )
-		->register_hooks( new AudioTheme_Provider_Setting_LicenseKey( $audiotheme->license ) );
+		->register_hooks( new AudioTheme_Provider_Setting_GoogleMaps() );
 }
 
 if ( is_network_admin() ) {

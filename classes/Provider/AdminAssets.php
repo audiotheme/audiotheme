@@ -34,18 +34,11 @@ class AudioTheme_Provider_AdminAssets extends AudioTheme_AbstractProvider {
 	public function register_assets() {
 		$base_url = set_url_scheme( $this->plugin->get_url( 'admin/js' ) );
 		$suffix   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-		$license  = $this->plugin->license;
 
 		wp_register_script( 'audiotheme-admin',     $base_url . '/admin.bundle' . $suffix . '.js', array( 'jquery-ui-sortable', 'underscore', 'wp-util' ), AUDIOTHEME_VERSION, true );
 		wp_register_script( 'audiotheme-dashboard', $base_url . '/dashboard.js',                   array( 'jquery', 'wp-backbone', 'wp-util' ),            AUDIOTHEME_VERSION, true );
-		wp_register_script( 'audiotheme-license',   $base_url . '/license.js',                     array( 'jquery', 'wp-util' ),                           AUDIOTHEME_VERSION, true );
 		wp_register_script( 'audiotheme-media',     $base_url . '/media' . $suffix . '.js',        array( 'jquery' ),                                      AUDIOTHEME_VERSION, true );
 		wp_register_script( 'audiotheme-settings',  $base_url . '/settings' . $suffix . '.js',     array(),                                                AUDIOTHEME_VERSION, true );
-
-		wp_localize_script( 'audiotheme-admin', '_audiothemeAdminSettings', array(
-			'licenseKey'    => $license->get_key(),
-			'licenseStatus' => $license->is_valid() ? 'active' : 'inactive',
-		) );
 
 		wp_localize_script( 'audiotheme-dashboard', '_audiothemeDashboardSettings', array(
 			'canActivateModules' => current_user_can( 'activate_plugins' ),
@@ -53,19 +46,6 @@ class AudioTheme_Provider_AdminAssets extends AudioTheme_AbstractProvider {
 			'l10n'               => array(
 				'activate'   => __( 'Activate', 'audiotheme' ),
 				'deactivate' => __( 'Deactivate', 'audiotheme' ),
-			),
-		) );
-
-		wp_localize_script( 'audiotheme-license', '_audiothemeLicenseSettings', array(
-			'activatedResponse' => sprintf( ' <strong class="audiotheme-response is-valid">%s</strong>', __( 'Activated!', 'audiotheme' ) ),
-			'nonce'             => wp_create_nonce( 'audiotheme-activate-license' ),
-			// Statuses: ok|empty|unknown|invalid|expired|limit_reached|failed.
-			'errorMessages'     => array(
-				'empty'         => __( 'Empty license key.', 'audiotheme' ),
-				'invalid'       => __( 'Invalid license key.', 'audiotheme' ),
-				'expired'       => __( 'License key expired.', 'audiotheme' ) .' <a href="https://audiotheme.com/view/audiotheme/" target="_blank">' . __( 'Renew now.', 'audiotheme' ) . '</a>',
-				'limit_reached' => __( 'Activation limit reached.', 'audiotheme' ) . ' <a href="https://audiotheme.com/view/audiotheme/" target="_blank">' . __( 'Upgrade your license.', 'audiotheme' ) . '</a>',
-				'generic'       => __( 'An unknown error occurred while checking the licensing server.', 'audiotheme' ),
 			),
 		) );
 

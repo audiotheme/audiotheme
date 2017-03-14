@@ -33,27 +33,6 @@ class AudioTheme_Provider_AdminHooks extends AudioTheme_AbstractProvider {
 	}
 
 	/**
-	 * Display a notice to register if the license key is empty.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param string $notice The default notice.
-	 * @return string
-	 */
-	public function display_update_notice( $notice ) {
-		$settings_page = is_network_admin() ? 'network/settings.php' : 'admin.php';
-
-		$notice = sprintf(
-			__( '<a href="%s">Register your copy of AudioTheme</a> to receive automatic updates and support. Need a license key?', 'audiotheme' ),
-			esc_url( add_query_arg( 'page', 'audiotheme-settings', admin_url( $settings_page ) ) )
-		);
-
-		$notice .= ' <a href="https://audiotheme.com/view/audiotheme/" target="_blank">' . __( 'Purchase one now.', 'audiotheme' ) . '</a>';
-
-		return $notice;
-	}
-
-	/**
 	 * Sort the admin menu.
 	 *
 	 * @since 2.0.0

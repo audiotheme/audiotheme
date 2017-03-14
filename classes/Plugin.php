@@ -17,14 +17,6 @@
  */
 class AudioTheme_Plugin extends AudioTheme_AbstractPlugin {
 	/**
-	 * License.
-	 *
-	 * @since 2.0.0
-	 * @var AudioTheme_License
-	 */
-	protected $license;
-
-	/**
 	 * Modules.
 	 *
 	 * @since 2.0.0
@@ -38,7 +30,6 @@ class AudioTheme_Plugin extends AudioTheme_AbstractPlugin {
 	 * @since 2.0.0
 	 */
 	public function __construct() {
-		$this->license = new AudioTheme_License();
 		$this->modules = new AudioTheme_ModuleCollection();
 	}
 
@@ -52,8 +43,6 @@ class AudioTheme_Plugin extends AudioTheme_AbstractPlugin {
 	 */
 	public function __get( $name ) {
 		switch ( $name ) {
-			case 'license' :
-				return $this->license;
 			case 'modules' :
 				return $this->modules;
 		}
