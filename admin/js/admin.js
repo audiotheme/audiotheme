@@ -1,14 +1,10 @@
 /*jshint browserify:true */
-/*global _audiothemeAdminSettings */
 
 'use strict';
 
 var methods,
 	$ = require( 'jquery' ),
-	app = require( 'audiotheme' ),
 	wp = require( 'wp' );
-
-app.settings( _audiothemeAdminSettings );
 
 $(function( $ ) {
 	$( '.wrap' ).on( 'focus', '.audiotheme-input-group input', function() {
