@@ -1,4 +1,4 @@
-/*jshint browserify:true */
+/* jshint browserify: true */
 
 'use strict';
 

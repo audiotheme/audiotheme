@@ -1,4 +1,4 @@
-/*jshint node:true */
+/* jshint node: true */
 
 var path = require( 'path' );
 

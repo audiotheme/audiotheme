@@ -1,5 +1,5 @@
-/*jshint browserify:true */
-/*global isRtl:false */
+/* jshint browserify: true */
+/* global isRtl */
 
 'use strict';
 

@@ -1,4 +1,4 @@
-/*global AudiothemeJplayer:false, AudiothemeTracks:false, jQuery:false */
+/* global AudiothemeJplayer, AudiothemeTracks, jQuery */
 
 (function( $, window, undefined ) {
 	'use strict';

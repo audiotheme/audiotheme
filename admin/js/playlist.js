@@ -1,4 +1,4 @@
-/*global _:false, _audiothemePlaylistSettings:false, Backbone:false, cue:false, jQuery:false, wp:false */
+/* global _, _audiothemePlaylistSettings, Backbone, cue, jQuery, wp */
 
 window.cue = window.cue || {};
 

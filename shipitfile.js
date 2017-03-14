@@ -1,4 +1,4 @@
-/*global Promise:false */
+/* global Promise */
 
 var aws = require('aws-sdk'),
 	fs = require('fs'),

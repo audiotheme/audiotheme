@@ -1,4 +1,4 @@
-/*global AudiothemeMediaControl:false, jQuery:false, wp:false */
+/* global AudiothemeMediaControl, jQuery, wp */
 
 (function( $, window, undefined ) {
 	'use strict';

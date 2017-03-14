@@ -1,4 +1,4 @@
-/*global jQuery:false */
+/* global jQuery */
 
 (function( $, window, undefined ) {
 	'use strict';

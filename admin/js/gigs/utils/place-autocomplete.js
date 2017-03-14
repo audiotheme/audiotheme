@@ -1,5 +1,5 @@
-/*jshint browserify:true */
-/*global google:false */
+/* jshint browserify: true */
+/* global google */
 
 'use strict';
 

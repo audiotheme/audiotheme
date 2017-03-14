@@ -1,5 +1,5 @@
-/*jshint browserify:true */
-/*global _audiothemeGigEditSettings:false, _audiothemeVenueManagerSettings:false, _pikadayL10n:false, isRtl:false, Pikaday:false */
+/* jshint browserify: true */
+/* global _audiothemeGigEditSettings, _audiothemeVenueManagerSettings, _pikadayL10n, isRtl, Pikaday */
 
 'use strict';
 
