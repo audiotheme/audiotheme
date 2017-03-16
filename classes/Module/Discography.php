@@ -92,6 +92,7 @@ class AudioTheme_Module_Discography extends AudioTheme_Module_AbstractModule {
 		add_action( 'init',                   array( $this, 'register_archive' ), 20 );
 		add_action( 'template_include',       array( $this, 'template_include' ) );
 		add_filter( 'generate_rewrite_rules', array( $this, 'generate_rewrite_rules' ) );
+		add_action( 'wp_footer',              array( $this, 'maybe_print_jsonld' ) );
 
 		if ( is_admin() ) {
 			$this->plugin->register_hooks( new AudioTheme_Screen_ManageRecords() );
@@ -226,6 +227,19 @@ class AudioTheme_Module_Discography extends AudioTheme_Module_AbstractModule {
 	}
 
 	/**
+	 * Print a JSON-LD tag for records on the record archive.
+	 *
+	 * @since 2.0.3
+	 */
+	public function maybe_print_jsonld() {
+		if ( ! is_singular( 'audiotheme_record' ) ) {
+			return;
+		}
+
+		$this->print_jsonld( $GLOBALS['wp_query']->posts );
+	}
+
+	/**
 	 * Retrieve the base slug to use for the namespace in track rewrite rules.
 	 *
 	 * @since 2.0.0
@@ -257,5 +271,90 @@ class AudioTheme_Module_Discography extends AudioTheme_Module_AbstractModule {
 		}
 
 		return apply_filters( 'audiotheme_tracks_archive_rewrite_base', $slug );
+	}
+
+	/**
+	 * Print a JSON-LD script tag for a list of posts.
+	 *
+	 * @since 2.0.3
+	 *
+	 * @param array $posts Array of posts.
+	 */
+	protected function print_jsonld( $posts ) {
+		$items = array();
+
+		foreach ( $posts as $post ) {
+			$items[] = $this->prepare_record_for_jsonld( $post );
+		}
+
+		printf(
+			'<script type="application/ld+json">%s</script>',
+			wp_json_encode( $items )
+		);
+	}
+
+	/**
+	 * Format a record for JSON-LD.
+	 *
+	 * @since 2.0.3
+	 *
+	 * @param  WP_Post $post Record post object.
+	 * @return array
+	 */
+	protected function prepare_record_for_jsonld( $post ) {
+		$item = array(
+			'@context'    => 'http://schema.org',
+			'@type'       => 'MusicAlbum',
+			'name'        => esc_html( get_the_title( $post ) ),
+			'url'         => esc_url( get_permalink( $post ) ),
+		);
+
+		$artist = get_audiotheme_record_artist( $post->ID );
+		if ( ! empty( $artist ) ) {
+			$item['byArtist'] = array(
+				'@type' => 'MusicGroup',
+				'name'  => esc_html( $artist ),
+			);
+		}
+
+		$released = get_audiotheme_record_release_year( $post->ID );
+		if ( ! empty( $released ) ) {
+			$item['dateCreated'] = esc_html( $released );
+		}
+
+		$genre = get_audiotheme_record_genre( $post->ID );
+		if ( ! empty( $genre ) ) {
+			$item['genre'] = esc_html( $genre );
+		}
+
+		if ( has_post_thumbnail() ) {
+			$item['image'] = esc_url( get_the_post_thumbnail_url( $post, 'full' ) );
+		}
+
+		$tracks = get_audiotheme_record_tracks( $post->ID );
+		if ( ! empty( $tracks ) ) {
+			$item['numTracks'] = count( $tracks );
+
+			foreach ( $tracks as $track ) {
+				$item['track'][] = array(
+					'@type' => 'MusicRecording',
+					'name'  => esc_html( get_the_title( $track->ID ) ),
+					'url'   => esc_url( get_permalink( $track->ID ) ),
+				);
+			}
+		}
+
+		$links = get_audiotheme_record_links( $post->ID );
+		if ( ! empty( $links ) ) {
+			foreach ( $links as $link ) {
+				$item['offers'][] = array(
+					'@type'       => 'Offer',
+					'url'         => esc_url( $link['url'] ),
+					'description' => esc_html( $link['name'] ),
+				);
+			}
+		}
+
+		return apply_filters( 'audiotheme_prepare_record_for_jsonld', $item, $post );
 	}
 }
