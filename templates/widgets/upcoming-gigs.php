@@ -17,11 +17,11 @@ endif;
 
 	<?php while ( $loop->have_posts() ) : $loop->the_post(); ?>
 
-		<dl class="vevent" itemscope itemtype="http://schema.org/MusicEvent">
+		<dl class="vevent">
 
 			<?php
 			$gig = get_audiotheme_gig();
-			echo get_audiotheme_gig_link( $gig, array( 'before' => '<dt>', 'after' => '</dt>' ) );
+			echo get_audiotheme_gig_link( $gig, array( 'before' => '<dt>', 'after' => '</dt>', 'microdata' => false ) );
 			?>
 
 			<?php if ( audiotheme_gig_has_venue() ) : ?>
@@ -31,7 +31,7 @@ endif;
 			<?php endif; ?>
 
 			<dd class="date">
-				<meta content="<?php echo esc_attr( get_audiotheme_gig_time( 'c' ) ); ?>" itemprop="startDate">
+				<meta content="<?php echo esc_attr( get_audiotheme_gig_time( 'c' ) ); ?>">
 				<time class="dtstart" datetime="<?php echo esc_attr( get_audiotheme_gig_time( 'c' ) ); ?>">
 					<?php echo get_audiotheme_gig_time( $date_format ); ?>
 				</time>
