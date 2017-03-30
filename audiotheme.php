@@ -114,6 +114,7 @@ $audiotheme
 	->register_hooks( new AudioTheme_Provider_Widgets() )
 	->register_hooks( new AudioTheme_Provider_Assets() )
 	->register_hooks( new AudioTheme_Provider_GeneralHooks() )
+	->register_hooks( new AudioTheme_Provider_JetpackCompatibility() )
 	->modules
 	->register( new AudioTheme_Module_Archives( $audiotheme ) )
 	->register( new AudioTheme_Module_Gigs( $audiotheme ) )
