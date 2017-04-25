@@ -426,11 +426,12 @@ function get_audiotheme_venue_vcard( $venue_id, $args = array() ) {
 
 	if ( ! empty( $output ) && ! empty( $args['container'] ) ) {
 		$output = sprintf(
-			'<%1$s class="location vcard"%2$s%3$s%4$s></%1$s>',
+			'<%1$s class="location vcard"%2$s%3$s%4$s>%5$s</%1$s>',
 			$args['container'],
 			$args['microdata'] ? ' itemprop="location"' : '',
 			$args['microdata'] ? ' itemscope' : '',
-			$args['microdata'] ? ' itemtype="http://schema.org/EventVenue"' : ''
+			$args['microdata'] ? ' itemtype="http://schema.org/EventVenue"' : '',
+			$output
 		);
 	}
 
