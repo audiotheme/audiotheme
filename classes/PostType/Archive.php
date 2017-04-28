@@ -271,7 +271,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	public function post_navigation_join_clause( $join ) {
 		global $wpdb;
 
-		if ( ! in_array( get_post_type(), array( 'audiotheme_record', 'audiotheme_video' ), true ) ) {
+		if ( ! in_array( get_post_type(), array( 'audiotheme_gig', 'audiotheme_record', 'audiotheme_video' ), true ) ) {
 			return $join;
 		}
 
@@ -282,6 +282,10 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 		}
 
 		if ( 'audiotheme_record' === get_post_type() && 'release_year' === $orderby ) {
+			$join = "INNER JOIN $wpdb->postmeta pm ON p.ID = pm.post_id";
+		}
+
+		if ( 'audiotheme_gig' === get_post_type() && 'gig_datetime' === $orderby ) {
 			$join = "INNER JOIN $wpdb->postmeta pm ON p.ID = pm.post_id";
 		}
 
@@ -299,7 +303,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	public function post_navigation_where_clause( $where ) {
 		global $wpdb;
 
-		if ( in_array( get_post_type(), array( 'audiotheme_record', 'audiotheme_video' ) ) ) {
+		if ( in_array( get_post_type(), array( 'audiotheme_gig', 'audiotheme_record', 'audiotheme_video' ) ) ) {
 			$post      = get_post();
 			$previous  = ( 0 === strpos( current_filter(), 'get_previous_post_' ) );
 			$adjacent  = $previous ? 'previous' : 'next';
@@ -325,6 +329,16 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 				$where = $wpdb->prepare(
 					"WHERE p.post_date $operation %s AND p.post_type = %s AND p.post_status = 'publish'",
 					$post->post_date,
+					$post->post_type
+				);
+			} elseif ( 'gig_datetime' === $orderby ) {
+				$where = $wpdb->prepare(
+					"WHERE
+						pm.meta_key = '_audiotheme_gig_datetime'
+						AND CAST( pm.meta_value AS DATETIME ) $operation %s
+						AND p.post_type = %s
+						AND p.post_status = 'publish'",
+					$post->_audiotheme_gig_datetime,
 					$post->post_type
 				);
 			} elseif ( 'release_year' === $orderby ) {
@@ -376,19 +390,21 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	 * @return string
 	 */
 	public function post_navigation_sort_clause( $sort ) {
-		if ( in_array( get_post_type(), array( 'audiotheme_record', 'audiotheme_video' ) ) ) {
+		if ( in_array( get_post_type(), array( 'audiotheme_gig', 'audiotheme_record', 'audiotheme_video' ) ) ) {
 			$previous = ( 0 === strpos( current_filter(), 'get_previous_post_' ) );
 			$orderby  = $this->get_archive_orderby();
 			$order    = $previous ? 'DESC' : 'ASC';
 
-			if ( 'custom' == $orderby ) {
+			if ( 'custom' === $orderby ) {
 				$sort = "ORDER BY p.menu_order $order LIMIT 1";
-			} elseif ( 'title' == $orderby ) {
+			} elseif ( 'title' === $orderby ) {
 				$sort = "ORDER BY p.post_title $order LIMIT 1";
-			} elseif( 'post_date' == $orderby ) {
+			} elseif( 'post_date' === $orderby ) {
 				$order = $previous ? 'ASC' : 'DESC';
 				$sort  = "ORDER BY p.post_date $order LIMIT 1";
-			} elseif ( 'release_year' == $orderby ) {
+			} elseif ( 'gig_datetime' === $orderby ) {
+				$sort = "ORDER BY pm.meta_value $order, p.post_title ASC LIMIT 1";
+			} elseif ( 'release_year' === $orderby ) {
 				$order = $previous ? 'ASC' : 'DESC';
 				$sort  = "ORDER BY pm.meta_value $order, p.post_title ASC LIMIT 1";
 			}
@@ -522,6 +538,10 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 
 		if ( 'audiotheme_record' === get_post_type() ) {
 			$default = 'release_year';
+		}
+
+		if ( 'audiotheme_gig' === get_post_type() ) {
+			$default = 'gig_datetime';
 		}
 
 		return get_audiotheme_archive_meta( 'orderby', true, $default, get_post_type() );
