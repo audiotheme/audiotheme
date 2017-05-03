@@ -96,7 +96,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 		add_filter( 'the_posts',                array( $this, 'query_connected_venues' ), 10, 2 );
 		add_action( 'wp_footer',                array( $this, 'maybe_print_front_page_gigs_jsonld' ) );
 		add_action( 'wp_footer',                array( $this, 'maybe_print_upcoming_gigs_jsonld' ) );
-		add_filter( 'wxr_export_skip_postmeta', array( $this, 'exclude_meta_from_export' ) );
+		add_filter( 'wxr_export_skip_postmeta', array( $this, 'exclude_meta_from_export' ), 10, 2 );
 		add_action( 'import_end',               array( $this, 'remap_gig_venues' ) );
 
 		if ( is_admin() ) {
