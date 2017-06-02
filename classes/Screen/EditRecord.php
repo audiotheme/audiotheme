@@ -28,6 +28,7 @@ class AudioTheme_Screen_EditRecord extends AudioTheme_Screen_AbstractScreen{
 		add_action( 'audiotheme_record_details_meta_box', array( $this, 'display_released_field' ) );
 		add_action( 'audiotheme_record_details_meta_box', array( $this, 'display_artist_field' ), 20 );
 		add_action( 'audiotheme_record_details_meta_box', array( $this, 'display_genre_field' ), 30 );
+		add_action( 'audiotheme_record_details_meta_box', array( $this, 'display_tracklist_links_field' ), 32 );
 		add_action( 'audiotheme_record_details_meta_box', array( $this, 'display_links_field' ), 40 );
 		add_action( 'admin_enqueue_scripts',              array( $this, 'register_assets' ), 1 );
 		add_action( 'save_post_audiotheme_record',        array( $this, 'on_record_save' ), 10, 2 );
@@ -203,6 +204,22 @@ class AudioTheme_Screen_EditRecord extends AudioTheme_Screen_AbstractScreen{
 	}
 
 	/**
+	 * Display a field to disable links in the tracklist.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @param WP_Post $post Post object.
+	 */
+	public function display_tracklist_links_field( $post ) {
+		?>
+		<p class="audiotheme-field">
+			<input type="checkbox" name="disable_tracklist_links" id="disable-tracklist-links" value="1"<?php checked( get_post_meta( $post->ID, '_audiotheme_disable_tracklist_links', true ), 'yes' ); ?>>
+			<label for="disable-tracklist-links"><?php esc_html_e( 'Disable tracklist links', 'audiotheme' ); ?></label>
+		</p>
+		<?php
+	}
+
+	/**
 	 * Process and save record info when the CPT is saved.
 	 *
 	 * Creates and updates child tracks and saves additional record meta.
@@ -229,6 +246,8 @@ class AudioTheme_Screen_EditRecord extends AudioTheme_Screen_AbstractScreen{
 			$value = empty( $_POST[ $field ] ) ? '' : sanitize_text_field( $_POST[ $field ] );
 			update_post_meta( $post_id, '_audiotheme_' . $field, $value );
 		}
+
+		update_post_meta( $post_id, '_audiotheme_disable_tracklist_links', empty( $_POST['disable_tracklist_links'] ) ? 'no' : 'yes' );
 
 		// Update purchase urls.
 		$record_links = array();
