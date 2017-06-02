@@ -185,15 +185,17 @@ function get_audiotheme_track_title( $post = null, $args = array() ) {
 		'before_link' => '',
 		'after_link'  => '',
 		'link_class'  => 'track-title',
+		'microdata'   => true,
 	) );
 
 	$output = $args['before'];
 
 	if ( 'yes' !== $disable_links ) {
 		$output .= sprintf(
-			'<a href="%s" class="%s">',
+			'<a href="%s" class="%s"%s>',
 			esc_url( get_permalink( $post->ID ) ),
-			esc_attr( $args['link_class'] )
+			esc_attr( $args['link_class'] ),
+			$args['microdata'] ? ' itemprop="url"' : ''
 		);
 	}
 
