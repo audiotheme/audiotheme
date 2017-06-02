@@ -146,6 +146,69 @@ function get_audiotheme_record_tracks( $post_id = null, $args = array() ) {
 }
 
 /**
+ * Display a track title.
+ *
+ * @since 2.1.0
+ *
+ * @param  array   $args Optional. An array of arguments.
+ */
+function the_audiotheme_track_title( $args = array() ) {
+	echo get_audiotheme_track_title( null, $args );
+}
+
+/**
+ * Retrieve a linked title to the current track.
+ *
+ * The link isn't added if the record has disabled tracklist links.
+ *
+ * @since 2.1.0
+ *
+ * @param int|object $post Optional post ID or object. Default is global $post object.
+ * @param array      $args {
+ *     Optional. An array of arguments.
+ *
+ *     string $before      Content to prepend to the link.
+ *     string $after       Content to append to the link.
+ *     string $before_link Content to prepend to text in the link tag.
+ *     string $after_link  Content to append to text in the link tag.
+ *     string $link_class  HTML class for the link tag.
+ * }
+ * @return string
+ */
+function get_audiotheme_track_title( $post = null, $args = array() ) {
+	$post = get_post( $post );
+	$disable_links = get_post_meta( $post->post_parent, '_audiotheme_disable_tracklist_links', true );
+
+	$args = wp_parse_args( $args, array(
+		'before'      => '',
+		'after'       => '',
+		'before_link' => '',
+		'after_link'  => '',
+		'link_class'  => 'track-title',
+	) );
+
+	$output = $args['before'];
+
+	if ( 'yes' !== $disable_links ) {
+		$output .= sprintf(
+			'<a href="%s" class="%s">',
+			esc_url( get_permalink( $post->ID ) ),
+			esc_attr( $args['link_class'] )
+		);
+	}
+
+	$output .= $args['before_link'] . get_the_title( $post ) . $args['after_link'];
+
+	if ( 'yes' !== $disable_links ) {
+		$output .= '</a>';
+	}
+
+	$output .= $args['after'];
+
+	return $output;
+}
+
+/**
  * Check if a track is downloadable.
  *
  * @since 1.0.0

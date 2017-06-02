@@ -98,9 +98,10 @@ function the_audiotheme_gig_link( $args = array(), $echo = true ) {
 	$html = get_audiotheme_gig_link( null, $args );
 
 	if ( $echo ) {
-		echo $html; }
-	else {
-		return $html; }
+		echo $html;
+	} else {
+		return $html;
+	}
 }
 
 /**
