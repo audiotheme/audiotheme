@@ -310,6 +310,18 @@ function get_audiotheme_gig_description( $post = 0 ) {
 }
 
 /**
+ * Whether a gig is upcoming.
+ *
+ * @since 2.1.0
+ *
+ * @param  int|WP_Post $post Post id or object.
+ * @return boolean
+ */
+function is_audiotheme_gig_upcoming( $post = 0 ) {
+	return time() <= get_audiotheme_gig_time( 'U', '', true, null, $post );
+}
+
+/**
  * Does a gig have ticket meta?
  *
  * @since 1.1.0
