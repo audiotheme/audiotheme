@@ -91,7 +91,7 @@ class AudioTheme_Screen_EditGig extends AudioTheme_Screen_AbstractScreen{
 
 			$t = date_parse( $gig->gig_time );
 			if ( empty( $t['errors'] ) ) {
-				$gig_time = date( $this->compatible_time_format(), $timestamp );
+				$gig_time = date( AudioTheme_Module_Gigs::get_time_format(), $timestamp );
 			}
 		}
 
@@ -101,7 +101,7 @@ class AudioTheme_Screen_EditGig extends AudioTheme_Screen_AbstractScreen{
 
 		wp_localize_script( 'audiotheme-gig-edit', '_audiothemeGigEditSettings', array(
 			'venue'      => prepare_audiotheme_venue_for_js( $venue_id ),
-			'timeFormat' => $this->compatible_time_format(),
+			'timeFormat' => AudioTheme_Module_Gigs::get_time_format(),
 		) );
 
 		require( $this->plugin->get_path( 'admin/views/edit-gig.php' ) );
@@ -175,17 +175,7 @@ class AudioTheme_Screen_EditGig extends AudioTheme_Screen_AbstractScreen{
 			// If GMT, or time in another locale is needed, use the venue time zone to calculate.
 			// Other functions should be aware that time is optional; check for the presence of gig_time.
 			if ( checkdate( $dt['month'], $dt['day'], $dt['year'] ) ) {
-				$datetime = sprintf(
-					'%d-%s-%s %s:%s:%s',
-					$dt['year'],
-					zeroise( $dt['month'], 2 ),
-					zeroise( $dt['day'], 2 ),
-					zeroise( $dt['hour'], 2 ),
-					zeroise( $dt['minute'], 2 ),
-					zeroise( $dt['second'], 2 )
-				);
-
-				update_post_meta( $post_id, '_audiotheme_gig_datetime', $datetime );
+				update_post_meta( $post_id, '_audiotheme_gig_datetime', audiotheme_parse_date( $_POST['gig_date'], $_POST['gig_time'] ) );
 
 				// If the post name is empty, default it to the date.
 				if ( empty( $post->post_name ) ) {
@@ -199,40 +189,16 @@ class AudioTheme_Screen_EditGig extends AudioTheme_Screen_AbstractScreen{
 			}
 
 			// Store time separately to check for empty values, TBA, etc.
-			$time = $_POST['gig_time'];
-			$t = date_parse( $time );
-			if ( empty( $t['errors'] ) ) {
-				$time = sprintf( '%s:%s:%s',
-					zeroise( $t['hour'], 2 ),
-					zeroise( $t['minute'], 2 ),
-				zeroise( $t['second'], 2 ) );
+			$time = audiotheme_parse_time( $_POST['gig_time'] );
+			if ( empty( $time ) ) {
+				$time = $_POST['time'];
 			}
 
-			update_post_meta( $post_id, '_audiotheme_gig_time', $time );
+			update_post_meta( $post_id, '_audiotheme_gig_time', sanitize_text_field( $time ) );
 			update_post_meta( $post_id, '_audiotheme_tickets_price', sanitize_text_field( $_POST['gig_tickets_price'] ) );
 			update_post_meta( $post_id, '_audiotheme_tickets_url', esc_url_raw( $_POST['gig_tickets_url'] ) );
 		}
 
 		$is_active = false;
-	}
-
-	/**
-	 * Attempt to make custom time formats more compatible between JavaScript and PHP.
-	 *
-	 * If the time format option has an escape sequences, use a default format
-	 * determined by whether or not the option uses 24 hour format or not.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @return string
-	 */
-	protected function compatible_time_format() {
-		$time_format = get_option( 'time_format' );
-
-		if ( false !== strpos( $time_format, '\\' ) ) {
-			$time_format = ( false !== strpbrk( $time_format, 'GH' ) ) ? 'G:i' : 'g:i a';
-		}
-
-		return $time_format;
 	}
 }

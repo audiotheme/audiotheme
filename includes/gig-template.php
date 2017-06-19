@@ -466,3 +466,64 @@ function get_audiotheme_gig_ical_link( $post = null ) {
 function the_audiotheme_gig_ical_link() {
 	echo esc_url( get_audiotheme_gig_ical_link() );
 }
+
+/**
+ * Duplicate a gig.
+ *
+ * @since 2.1.0
+ *
+ * @param int   $post_id Post id of the gig to duplicate.
+ * @param array $args    Array of arguments.
+ * @return int
+ */
+function audiotheme_duplicate_gig( $post_id, $args = array() ) {
+	$original = get_post( $post_id );
+	if ( empty( $original->ID ) ) {
+		return 0;
+	}
+
+	$args = wp_parse_args( $args, array(
+		'date' => '',
+		'time' => '',
+	) );
+
+	$original_gig  = get_audiotheme_gig( $original );
+	$original_meta = get_post_custom( $original->ID );
+
+	$duplicate = (array) $original;
+
+	$unset = array( 'ID', 'post_name', 'post_date', 'post_date_gmt', 'post_modified', 'post_modified_gmt' );
+	foreach ( $unset as $key ) {
+		unset( $duplicate[ $key ] );
+	}
+
+	// Create the gig.
+	$duplicate_id = wp_insert_post( $duplicate );
+
+	// Copy the gig meta.
+	if ( ! empty( $original_meta ) ) {
+		$ignore = array( '_edit_last', '_edit_lock', '_wp_old_slug' );
+
+		foreach ( $original_meta as $meta_key => $values ) {
+			foreach ( $values as $key => $meta_value ) {
+				$meta_value = maybe_unserialize( $meta_value );
+
+				// Sanitize date and time values.
+				if ( '_audiotheme_gig_datetime' === $meta_key && ! empty( $args['date'] ) ) {
+					$meta_value = audiotheme_parse_date( $args['date'], $args['time'] );
+				} elseif ( '_audiotheme_gig_time' === $meta_key && ! empty( $args['time'] ) ) {
+					$meta_value = audiotheme_parse_time( $args['time'] );
+				}
+
+				update_post_meta( $duplicate_id, $meta_key, $meta_value );
+			}
+		}
+	}
+
+	// Set the gig venue.
+	if ( ! empty( $original_gig->venue->ID ) ) {
+		set_audiotheme_gig_venue_id( $duplicate_id, $original_gig->venue->ID );
+	}
+
+	return $duplicate_id;
+}

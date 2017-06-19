@@ -22,11 +22,64 @@ class AudioTheme_AJAX_Gigs extends AudioTheme_AbstractProvider {
 	 * @since 2.0.0
 	 */
 	public function register_hooks() {
+		add_action( 'wp_ajax_audiotheme_ajax_get_gig_data',      array( $this, 'get_gig_data' ) );
+		add_action( 'wp_ajax_audiotheme_ajax_duplicate_gig',     array( $this, 'duplicate_gig' ) );
+
 		add_action( 'wp_ajax_audiotheme_ajax_get_venue_matches', array( $this, 'get_venue_matches' ) );
 		add_action( 'wp_ajax_audiotheme_ajax_is_new_venue',      array( $this, 'is_new_venue' ) );
 		add_action( 'wp_ajax_audiotheme_ajax_get_venue',         array( $this, 'get_venue' ) );
 		add_action( 'wp_ajax_audiotheme_ajax_get_venues',        array( $this, 'get_venues' ) );
 		add_action( 'wp_ajax_audiotheme_ajax_save_venue',        array( $this, 'save_venue' ) );
+	}
+
+	/**
+	 * Retrieve gig data.
+	 *
+	 * @since 2.1.0
+	 */
+	public function get_gig_data() {
+		$post_id = absint( $_POST['post_id'] );
+		$gig     = get_audiotheme_gig( $post_id );
+
+		$data = array(
+			'id'   => $post_id,
+			'date' => '',
+			'time' => '',
+		);
+
+		if ( $gig->gig_datetime ) {
+			$timestamp = strtotime( $gig->gig_datetime );
+
+			// jQuery date format is kinda limited?
+			$data['date'] = date( 'Y/m/d', $timestamp );
+
+			$t = date_parse( $gig->gig_time );
+			if ( empty( $t['errors'] ) ) {
+				$data['time'] = date( get_option( 'time_format' ), $timestamp );
+			}
+		}
+
+		wp_send_json_success( $data );
+	}
+
+	/**
+	 * Duplicate a gig.
+	 *
+	 * @since 2.1.0
+	 */
+	public function duplicate_gig() {
+		// @todo Check permissions.
+
+		$post_id = absint( $_POST['post_id'] );
+
+		check_ajax_referer( 'duplicate-gig_' . $post_id );
+
+		$duplicate_id = audiotheme_duplicate_gig( $post_id, array(
+			'date' => sanitize_text_field( $_POST['date'] ),
+			'time' => sanitize_text_field( $_POST['time'] ),
+		) );
+
+		wp_send_json_success();
 	}
 
 	/**

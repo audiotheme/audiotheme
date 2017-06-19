@@ -36,13 +36,17 @@ class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen_AbstractScreen{
 			return;
 		}
 
+		add_action( 'load-audiotheme_gig',                         array( $this, 'handle_request' ) );
+		add_action( 'admin_enqueue_scripts',                       array( $this, 'enqueue_assets' ) );
 		add_filter( 'views_edit-audiotheme_gig',                   array( $this, 'filter_views' ) );
 		add_action( 'restrict_manage_posts',                       array( $this, 'display_months_filter' ) );
 		add_action( 'restrict_manage_posts',                       array( $this, 'display_venues_filter' ) );
 		add_filter( 'manage_audiotheme_gig_posts_columns',         array( $this, 'register_columns' ) );
 		add_filter( 'list_table_primary_column',                   array( $this, 'register_primary_column' ) );
-		add_action( 'manage_posts_custom_column',                  array( $this, 'display_columns' ), 10, 2 );
 		add_action( 'manage_edit-audiotheme_gig_sortable_columns', array( $this, 'register_sortable_columns' ) );
+		add_action( 'post_row_actions',                            array( $this, 'register_row_actions' ), 10, 2 );
+		add_action( 'manage_posts_custom_column',                  array( $this, 'display_columns' ), 10, 2 );
+		add_action( 'admin_footer',                                array( $this, 'print_templates' ) );
 	}
 
 	/**
@@ -129,6 +133,58 @@ class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen_AbstractScreen{
 			$wp_query->set( 'meta_key', '_audiotheme_gig_datetime' );
 			$wp_query->set( 'orderby', 'meta_value' );
 		}
+	}
+
+	/**
+	 * Process the request to duplicate a gig.
+	 *
+	 * @since 2.1.0
+	 */
+	public function handle_request() {
+		$post_id = empty( $_GET['post'] ) ? 0 : absint( $_GET['post'] );
+
+		// Bail if the action shouldn't be executed or intention can't be verified.
+		if ( empty( $_GET['action'] ) || 'duplicate-gig' !== $_GET['action'] ) {
+			return;
+		}
+
+		check_admin_referer( 'duplicate-gig_' . $post_id );
+
+		$duplicate_id = audiotheme_duplicate_gig( $post_id );
+
+		if ( $duplicate_id ) {
+			// @todo Display an admin notice.
+			$redirect_url = get_edit_post_link( $duplicate_id, 'redirect' );
+			wp_safe_redirect( $redirect_url );
+			exit;
+		}
+
+		// @todo Display an admin notice about the failure.
+		wp_safe_redirect( admin_url( 'edit.php?post_type=audiotheme_gig' ) );
+		exit;
+	}
+
+	/**
+	 * Enqueue assets.
+	 *
+	 * @since 2.1.0
+	 */
+	public function enqueue_assets( $hook_suffix ) {
+		wp_enqueue_script(
+			'audiotheme-duplicate-gig',
+			$this->plugin->get_url( 'admin/js/duplicate-gig.js' ),
+			array( 'jquery', 'jquery-timepicker', 'pikaday', 'wp-backbone', 'wp-util' ),
+			'1.0.0',
+			true
+		);
+
+		wp_localize_script( 'audiotheme-duplicate-gig', '_audiothemeDuplicateGigSettings', array(
+			'l10n'       => array(
+				'duplicate'           => esc_html__( 'Duplicate', 'audiotheme' ),
+				'duplicateModalTitle' => esc_html__( 'Gig Date and Time', 'audiotheme' ),
+			),
+			'timeFormat' => AudioTheme_Module_Gigs::get_time_format(),
+		) );
 	}
 
 	/**
@@ -333,6 +389,35 @@ class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen_AbstractScreen{
 	}
 
 	/**
+	 * Register row actions.
+	 *
+	 * @since 2.1.0
+	 */
+	public function register_row_actions( $actions, $item ) {
+		if ( ! current_user_can( 'publish_posts' ) ) {
+			return $actions;
+		}
+
+		$base_url = admin_url( 'edit.php?post_type=audiotheme_gig' );
+
+		$url = add_query_arg( array(
+			'action'   => 'duplicate-gig',
+			'post'     => $item->ID,
+			'_wpnonce' => wp_create_nonce( 'duplicate-gig_' . $item->ID ),
+		), $base_url );
+
+		$actions['duplicate hide-if-no-js'] = sprintf(
+			'<a href="%1$a" title="%2$s" data-nonce="%3$s">%4$s</a>',
+			'#',
+			esc_attr__( 'Duplicate this gig', 'audiotheme' ),
+			wp_create_nonce( 'duplicate-gig_' . $item->ID ),
+			esc_html__( 'Duplicate', 'audiotheme' )
+		);
+
+		return $actions;
+	}
+
+	/**
 	 * Display custom list table columns.
 	 *
 	 * @since 2.0.0
@@ -353,6 +438,47 @@ class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen_AbstractScreen{
 				}
 				break;
 		}
+	}
+
+	/**
+	 * Print Underscore.js templates.
+	 *
+	 * @since 2.1.0
+	 */
+	public function print_templates() {
+		?>
+		<script type="text/html" id="tmpl-audiotheme-modal">
+			<div class="audiotheme-modal-header">
+				<h1 class="audiotheme-modal-title">{{ data.title }}</h1>
+				<button type="button" class="audiotheme-modal-close dashicons dashicons-no js-close"><span class="screen-reader-text"><?php esc_html_e( 'Close overlay', 'audiotheme' ); ?></span></button>
+			</div>
+			<div class="audiotheme-modal-content"></div>
+			<div class="audiotheme-modal-footer"></div>
+		</script>
+
+		<script type="text/html" id="tmpl-audiotheme-duplicate-gig-form">
+			<table>
+				<tr>
+					<th><label for="gig-date"><?php esc_html_e( 'Date', 'audiotheme' ) ?></label></th>
+					<td>
+						<div class="audiotheme-input-group">
+							<input type="text" name="gig_date" id="gig-date" data-setting="date" value="{{ data.date }}" placeholder="YYYY/MM/DD" class="audiotheme-input-group-field ui-autocomplete-input">
+							<label for="gig-date" id="gig-date-select" class="audiotheme-input-group-trigger dashicons dashicons-calendar"></label>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="gig-time"><?php esc_html_e( 'Time', 'audiotheme' ) ?></label></th>
+					<td>
+						<div class="audiotheme-input-group">
+							<input type="text" name="gig_time" id="gig-time" data-setting="time" value="{{ data.time }}" placeholder="HH:MM" class="audiotheme-input-group-field ui-autocomplete-input">
+							<label for="gig-time" id="gig-time-select" class="audiotheme-input-group-trigger dashicons dashicons-clock"></label>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</script>
+		<?php
 	}
 
 	/**

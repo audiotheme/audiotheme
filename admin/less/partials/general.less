@@ -198,6 +198,111 @@ ul.ui-autocomplete {
 }
 
 
+/* Modal
+-------------------------------------------------------------- */
+
+.audiotheme-modal {
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+	display: none;
+	height: 180px;
+	margin: -94px 0 0 -200px;
+	overflow: hidden;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 400px;
+	z-index: 160000;
+}
+
+.audiotheme-modal.is-open {
+	display: block;
+}
+
+.audiotheme-modal-header {
+	background: #fcfcfc;
+	border-bottom: 1px solid #dfdfdf;
+	font-size: 18px;
+	font-weight: 600;
+	height: 36px;
+	line-height: 36px;
+	padding: 0 36px 0 16px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+}
+
+.audiotheme-modal-title {
+	font-size: 18px;
+	font-weight: 600;
+	margin: 0;
+}
+
+.audiotheme-modal-close {
+	background: transparent;
+	border-width: 0;
+	color: #666666;
+	cursor: pointer;
+	display: block;
+	height: 36px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	text-align: center;
+	width: 36px;
+}
+
+.audiotheme-modal-close:hover {
+	color: #2ea2cc;
+}
+
+.audiotheme-modal-content {
+	background: #fff;
+	overflow-x: auto;
+	overflow-y: scroll;
+	padding: 16px;
+	position: absolute;
+	top: 37px;
+	right: 0;
+	bottom: 45px;
+	left: 0;
+	width: 100%;
+}
+
+.audiotheme-modal-footer {
+	background: #fcfcfc;
+	border-top: 1px solid #dfdfdf;
+	padding: 8px 16px;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	text-align: right;
+}
+
+.audiotheme-modal-footer .spinner {
+	float: none;
+	margin-top: 4px;
+	vertical-align: middle;
+}
+
+.audiotheme-modal-backdrop {
+	background: #000;
+	display: none;
+	opacity: 0.8;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 159900;
+}
+
+.audiotheme-modal-backdrop.is-open {
+	display: block;
+}
+
+
 /* Panel
 -------------------------------------------------------------- */
 

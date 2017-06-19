@@ -498,3 +498,58 @@ function audiotheme_trim_image_letterbox( $attachment_id ) {
 	$meta = wp_generate_attachment_metadata( $attachment_id, $saved['path'] );
 	wp_update_attachment_metadata( $attachment_id, $meta );
 }
+
+/**
+ * Parse a date string into a formatted string.
+ *
+ * @since 2.1.0
+ *
+ * @param  string $date Date string.
+ * @param  string $time Time string.
+ * @return string
+ */
+function audiotheme_parse_date( $date, $time = '' ) {
+	$result = '';
+	$parts  = date_parse( $date . ' ' . $time );
+
+	// Date and time are always stored local to the venue.
+	// If GMT, or time in another locale is needed, use the venue time zone to calculate.
+	// Other functions should be aware that time is optional; check for the presence of gig_time.
+	if ( checkdate( $parts['month'], $parts['day'], $parts['year'] ) ) {
+		$result = sprintf(
+			'%d-%s-%s %s:%s:%s',
+			$parts['year'],
+			zeroise( $parts['month'], 2 ),
+			zeroise( $parts['day'], 2 ),
+			zeroise( $parts['hour'], 2 ),
+			zeroise( $parts['minute'], 2 ),
+			zeroise( $parts['second'], 2 )
+		);
+	}
+
+	return $result;
+}
+
+/**
+ * Parse a time string into a formatted string.
+ *
+ * @since 2.1.0
+ *
+ * @param  string $time Time string.
+ * @return string
+ */
+function audiotheme_parse_time( $time ) {
+	$result = '';
+	$parts  = date_parse( $time );
+
+	if ( empty( $parts['errors'] ) ) {
+		$result = sprintf(
+			'%s:%s:%s',
+			zeroise( $parts['hour'], 2 ),
+			zeroise( $parts['minute'], 2 ),
+			zeroise( $parts['second'], 2 )
+		);
+	}
+
+	return $result;
+}
