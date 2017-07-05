@@ -1073,7 +1073,7 @@ class Audiotheme_Settings {
 		}
 
 		/*
-		if ( 'media_frame' == $control ) {
+		if ( 'media_frame' === $control ) {
 			$has_image = ( empty( $value ) ) ? '' : ' has-image';
 			echo '<span class="' . $this->get_field_class( 'audiotheme-media-control', $args ) . $has_image . '"';
 				echo 'data-title="' . 'Choose an Image' . '"';

@@ -115,21 +115,21 @@ class AudioTheme_Provider_GeneralHooks extends AudioTheme_AbstractProvider {
 
 		foreach ( $items as $key => $item ) {
 			if (
-				'audiotheme_archive' == $item->object &&
+				'audiotheme_archive' === $item->object &&
 				$post_type_archive_id == $item->object_id &&
-				trailingslashit( $item->url ) == $current_url
+				trailingslashit( $item->url ) === $current_url
 			) {
 				$items[ $key ]->classes[] = 'current-menu-item';
 				$current_menu_parents[] = $item->menu_item_parent;
 			}
 
-			if ( $is_blog_post && $blog_page_id == $item->object_id ) {
+			if ( $is_blog_post && $blog_page_id === $item->object_id ) {
 				$items[ $key ]->classes[] = 'current-menu-parent';
 				$current_menu_parents[] = $item->menu_item_parent;
 			}
 
 			// Add 'current-menu-parent' class to CPT archive links when viewing a singular template.
-			if ( $is_audiotheme_post_type && $post_type_archive_link == $item->url ) {
+			if ( $is_audiotheme_post_type && $post_type_archive_link === $item->url ) {
 				$items[ $key ]->classes[] = 'current-menu-parent';
 			}
 		}

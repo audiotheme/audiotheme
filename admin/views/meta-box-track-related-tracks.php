@@ -4,7 +4,7 @@
 		<?php
 		foreach ( $tracks as $track ) {
 			echo '<li>';
-				if ( $track->ID == $post->ID ) {
+				if ( $track->ID === $post->ID ) {
 					echo esc_html( get_the_title( $track->ID ) );
 				} else {
 					printf(

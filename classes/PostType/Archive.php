@@ -410,7 +410,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 			}
 		}
 
-		if ( 'audiotheme_track' == get_post_type() ) {
+		if ( 'audiotheme_track' === get_post_type() ) {
 			$post     = get_post();
 			$previous = ( 0 === strpos( current_filter(), 'get_previous_post_' ) );
 			$order    = $previous ? 'DESC' : 'ASC';

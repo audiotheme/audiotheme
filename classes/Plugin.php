@@ -128,6 +128,6 @@ class AudioTheme_Plugin extends AudioTheme_AbstractPlugin {
 	 * @return bool
 	 */
 	protected function is_dashboard_screen() {
-		return is_admin() && isset( $_GET['page'] ) && 'audiotheme' == $_GET['page'];
+		return is_admin() && isset( $_GET['page'] ) && 'audiotheme' === $_GET['page'];
 	}
 }
