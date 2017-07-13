@@ -542,7 +542,7 @@ function save_audiotheme_venue( $data ) {
 
 	// Map the 'name' property to the 'post_title' field.
 	if ( ! empty( $data['name'] ) ) {
-		$post_title = get_unique_audiotheme_venue_name( $data['name'], $data['ID'] );
+		$post_title = $data['name'];
 
 		if ( ! isset( $current_venue ) || $post_title !== $current_venue->name ) {
 			$venue['post_title'] = $post_title;
