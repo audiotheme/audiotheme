@@ -42,6 +42,10 @@ class AudioTheme_UpgradeManager extends AudioTheme_AbstractProvider {
 			$this->upgrade_200();
 		}
 
+		if ( version_compare( $saved_version, '2.1.2', '<' ) ) {
+			$this->upgrade_212();
+		}
+
 		if ( '0' === $saved_version || version_compare( $saved_version, $current_version, '<' ) ) {
 			update_option( 'audiotheme_version', AUDIOTHEME_VERSION );
 		}
@@ -149,5 +153,51 @@ class AudioTheme_UpgradeManager extends AudioTheme_AbstractProvider {
 				)
 			GROUP BY p2p_to"
 		);
+	}
+
+	/**
+	 * Upgrade routine for version 2.1.2.
+	 *
+	 * @since 2.1.2
+	 */
+	protected function upgrade_212() {
+		global $wpdb;
+
+		$p2p_table = $wpdb->prefix . 'p2p';
+
+		// Bail if the P2P table doesn't exist.
+		if ( $p2p_table !== $wpdb->get_var( $wpdb->prepare( "SHOW TABLES LIKE %s", $p2p_table ) ) ) {
+			return;
+		}
+
+		// Find venues with duplicate connections.
+		$duplicates = $wpdb->get_results(
+			"SELECT a.p2p_id AS id, a.p2p_to AS gig, a.p2p_from AS venue
+			FROM $p2p_table AS a
+			LEFT JOIN $p2p_table AS b ON a.p2p_to = b.p2p_to
+			WHERE
+				a.p2p_id > b.p2p_id
+				AND a.p2p_type = 'audiotheme_venue_to_gig'
+				AND b.p2p_type = 'audiotheme_venue_to_gig'
+				GROUP BY a.p2p_id"
+		);
+
+		if ( empty( $duplicates ) ) {
+			return;
+		}
+
+		// Delete duplicate connections.
+		$wpdb->query( sprintf(
+			"DELETE
+			FROM $p2p_table
+			WHERE p2p_id IN ( %s )",
+			implode( ', ', wp_list_pluck( $duplicates, 'id' ) )
+		) );
+
+		// Update gig connection counts.
+		$venue_ids = array_unique( wp_list_pluck( $duplicates, 'venue' ) );
+		foreach ( $venue_ids as $venue_id ) {
+			update_audiotheme_venue_gig_count( $venue_id );
+		}
 	}
 }
