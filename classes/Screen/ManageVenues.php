@@ -53,7 +53,7 @@ class AudioTheme_Screen_ManageVenues extends AudioTheme_Screen_AbstractScreen{
 			case 'title':
 				$wp_query->set( 'orderby', 'title' );
 				break;
-			case 'gigs':
+			case 'gig_count':
 				$wp_query->set( 'meta_key', '_audiotheme_gig_count' );
 				$wp_query->set( 'orderby', 'meta_value_num' );
 				break;
