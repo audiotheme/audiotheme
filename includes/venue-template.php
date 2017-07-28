@@ -112,13 +112,15 @@ function set_audiotheme_gig_venue_id( $gig_id, $venue_id ) {
 		return null;
 	}
 
-	p2p_create_connection(
-		'audiotheme_venue_to_gig',
-		array(
-			'from' => $venue_id,
-			'to'   => $gig_id,
-		)
-	);
+	if ( $venue_id !== absint( $old_venue_id ) ) {
+		p2p_create_connection(
+			'audiotheme_venue_to_gig',
+			array(
+				'from' => $venue_id,
+				'to'   => $gig_id,
+			)
+		);
+	}
 
 	update_audiotheme_venue_gig_count( $venue_id );
 
