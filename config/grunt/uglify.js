@@ -18,14 +18,6 @@ module.exports = {
 				dest: 'admin/js/gig-edit.bundle.min.js'
 			},
 			{
-				src: 'admin/js/venue-edit.bundle.min.js',
-				dest: 'admin/js/venue-edit.bundle.min.js'
-			},
-			{
-				src: 'admin/js/venue-manager.bundle.min.js',
-				dest: 'admin/js/venue-manager.bundle.min.js'
-			},
-			{
 				src: 'includes/js/audiotheme.js',
 				dest: 'includes/js/audiotheme.min.js'
 			}

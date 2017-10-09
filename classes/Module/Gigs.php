@@ -381,6 +381,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 	public function register_admin_assets() {
 		$post_type_object = get_post_type_object( 'audiotheme_venue' );
 		$base_url = set_url_scheme( $this->plugin->get_url( 'admin/js' ) );
+		$suffix   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 		wp_register_script(
 			'audiotheme-google-maps',
@@ -389,7 +390,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module_AbstractModule {
 
 		wp_register_script(
 			'audiotheme-gig-edit',
-			$base_url . '/gig-edit.bundle.min.js',
+			$base_url . '/gig-edit.bundle' . $suffix . '.js',
 			array( 'audiotheme-admin', 'audiotheme-google-maps', 'jquery-timepicker', 'media-models', 'media-views', 'pikaday', 'underscore', 'wp-backbone', 'wp-util' ),
 			AUDIOTHEME_VERSION,
 			true

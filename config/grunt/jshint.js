@@ -1,6 +1,6 @@
 module.exports = {
 	options: {
-		jshintrc: 'config/.jshintrc'
+		jshintrc: '.jshintrc'
 	},
 	check: [
 		'admin/js/*.js',

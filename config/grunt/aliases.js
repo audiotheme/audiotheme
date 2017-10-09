@@ -15,7 +15,7 @@ module.exports = function( grunt, options ) {
 			'cssmin'
 		],
 		'build:js': [
-			'browserify:build',
+			'webpack:build',
 			'uglify'
 		],
 		'check': [
@@ -23,7 +23,7 @@ module.exports = function( grunt, options ) {
 			'jscs'
 		],
 		'develop:js': [
-			'browserify:develop'
+			'webpack:develop'
 		],
 		'package': [
 			'check',
