@@ -57,6 +57,15 @@ class AudioTheme_Screen_EditVenue extends AudioTheme_Screen_AbstractScreen{
 			'normal',
 			'core'
 		);
+
+		add_meta_box(
+			'venue-coordinates',
+			esc_html__( 'Venue Coordinates', 'audiotheme' ),
+			array( $this, 'display_coordinates_meta_box' ),
+			'audiotheme_venue',
+			'side',
+			'default'
+		);
 	}
 
 	/**
@@ -85,6 +94,26 @@ class AudioTheme_Screen_EditVenue extends AudioTheme_Screen_AbstractScreen{
 	}
 
 	/**
+	 * Display a meta box for adding coordinates to a venue.
+	 *
+	 * @since 2.2.0
+	 *
+	 * @param WP_Post $post Venue post object.
+	 */
+	public function display_coordinates_meta_box( $post ) {
+		?>
+		<p class="audiotheme-field">
+			<label for="venue-latitude"><?php esc_html_e( 'Latitude', 'audiotheme' ); ?></label>
+			<input type="text" name="audiotheme_venue[latitude]" id="venue-latitude" value="<?php echo esc_attr( $post->_audiotheme_latitude ) ; ?>" class="widefat">
+		</p>
+		<p class="audiotheme-field">
+			<label for="venue-longitude"><?php esc_html_e( 'Longitude', 'audiotheme' ); ?></label>
+			<input type="text" name="audiotheme_venue[longitude]" id="venue-longitude" value="<?php echo esc_attr( $post->_audiotheme_longitude ) ; ?>" class="widefat">
+		</p>
+		<?php
+	}
+
+	/**
 	 * Process and save venue info when the CPT is saved.
 	 *
 	 * @since 2.0.0
@@ -110,6 +139,8 @@ class AudioTheme_Screen_EditVenue extends AudioTheme_Screen_AbstractScreen{
 
 		$is_active = true;
 		save_audiotheme_venue( $data );
+		update_post_meta( $post_id, '_audiotheme_latitude', sanitize_text_field( $_POST['audiotheme_venue']['latitude'] ) );
+		update_post_meta( $post_id, '_audiotheme_longitude', sanitize_text_field( $_POST['audiotheme_venue']['longitude'] ) );
 		$is_active = false;
 	}
 }

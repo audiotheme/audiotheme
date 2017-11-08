@@ -696,9 +696,11 @@ function get_audiotheme_google_map_url( $args = array(), $venue_id = 0 ) {
 function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 	$args = wp_parse_args( $args, array(
 		'address'   => '',
+		'latitude'  => '',
+		'longitude' => '',
 		'width'     => '100%',
 		'height'    => 300,
-		'link_text' => __( 'Get Directions', 'audiotheme' ),
+		'link_text' => esc_html__( 'Get Directions', 'audiotheme' ),
 		'format'    => '%1$s<p class="venue-map-link">%2$s</p>',
 	) );
 
@@ -713,8 +715,16 @@ function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 	if ( $venue_id ) {
 		$venue = get_audiotheme_venue( $venue_id );
 
-		$args['address'] = get_audiotheme_venue_address( $venue->ID );
-		$args['address'] = ( $args['address'] ) ? $venue->name . ', ' . $args['address'] : $venue->name;
+		$address = get_audiotheme_venue_address( $venue->ID );
+		$args['address'] = $address ? $venue->name . ', ' . $address : $venue->name;
+
+		$args['latitude']  = get_post_meta( $venue_id, '_audiotheme_latitude', true );
+		$args['longitude'] = get_post_meta( $venue_id, '_audiotheme_longitude', true );
+
+		// Remove the venue name from the query if coordinates are available.
+		if ( ! empty( $args['latitude'] ) && ! empty( $args['longitude'] ) && ! empty( $address ) ) {
+			$args['address'] = $address;
+		}
 	}
 
 	$args['embed_url'] = add_query_arg( array(
@@ -722,6 +732,14 @@ function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 		'output' => 'embed',
 		'key'    => audiotheme()->modules['gigs']->get_google_maps_api_key(),
 	), 'https://maps.google.com/maps' );
+
+	// Add coordinates if they exist.
+	if ( ! empty( $args['latitude'] ) && ! empty( $args['longitude'] ) ) {
+		$args['embed_url'] = add_query_arg( array(
+			'll' => $args['latitude'] . ',' . $args['longitude'],
+			'z'  => 15,
+		), $args['embed_url'] );
+	}
 
 	$args['link_url'] = add_query_arg( 'q', urlencode( $args['address'] ), 'https://maps.google.com/maps' );
 
@@ -754,6 +772,8 @@ function get_audiotheme_google_map_embed( $args = array(), $venue_id = 0 ) {
 function get_audiotheme_google_static_map_url( $args = array(), $venue_id = 0 ) {
 	$args = wp_parse_args( $args, array(
 		'address'   => '',
+		'latitude'  => '',
+		'longitude' => '',
 		'width'     => 640,
 		'height'    => 300,
 	) );
@@ -771,6 +791,9 @@ function get_audiotheme_google_static_map_url( $args = array(), $venue_id = 0 ) 
 
 		$args['address'] = get_audiotheme_venue_address( $venue->ID );
 		$args['address'] = ( $args['address'] ) ? $venue->name . ', ' . $args['address'] : $venue->name;
+
+		$args['latitude']  = get_post_meta( $venue_id, '_audiotheme_latitude', true );
+		$args['longitude'] = get_post_meta( $venue_id, '_audiotheme_longitude', true );
 	}
 
 	$image_url = add_query_arg(
@@ -785,6 +808,18 @@ function get_audiotheme_google_static_map_url( $args = array(), $venue_id = 0 ) 
 		),
 		'https://maps.googleapis.com/maps/api/staticmap'
 	);
+
+	// Use coordinates if they exist.
+	if ( ! empty( $args['latitude'] ) && ! empty( $args['longitude'] ) ) {
+		$image_url = add_query_arg(
+			array(
+				'center'  => $args['latitude'] . ',' . $args['longitude'],
+				'markers' => 'size:small|color:0xff0000|' . rawurlencode( $args['latitude'] . ',' . $args['longitude'] ),
+				'zoom'    => 14,
+			),
+			$image_url
+		);
+	}
 
 	$image_url = apply_filters( 'audiotheme_google_static_map_url', $image_url, $args, $venue_id );
 
