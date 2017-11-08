@@ -648,7 +648,7 @@ function update_audiotheme_venue_gig_count( $venue_id, $count = 0 ) {
  */
 function get_audiotheme_google_map_url( $args = array(), $venue_id = 0 ) {
 	$args = wp_parse_args( $args, array(
-		'address'   => '',
+		'address' => '',
 	) );
 
 	// Get the current post and determine if it's a gig with a venue.
@@ -663,7 +663,7 @@ function get_audiotheme_google_map_url( $args = array(), $venue_id = 0 ) {
 		$venue = get_audiotheme_venue( $venue_id );
 
 		$args['address'] = get_audiotheme_venue_address( $venue->ID );
-		$args['address'] = ( $args['address'] ) ? $venue->name . ', ' . $args['address'] : $venue->name;
+		$args['address'] = $args['address'] ? $args['address'] : $venue->name;
 	}
 
 	$url = add_query_arg( array(
