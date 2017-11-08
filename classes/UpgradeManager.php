@@ -42,8 +42,8 @@ class AudioTheme_UpgradeManager extends AudioTheme_AbstractProvider {
 			$this->upgrade_200();
 		}
 
-		if ( version_compare( $saved_version, '2.1.2', '<' ) ) {
-			$this->upgrade_212();
+		if ( version_compare( $saved_version, '2.2.0', '<' ) ) {
+			$this->upgrade_220();
 		}
 
 		if ( '0' === $saved_version || version_compare( $saved_version, $current_version, '<' ) ) {
@@ -156,11 +156,11 @@ class AudioTheme_UpgradeManager extends AudioTheme_AbstractProvider {
 	}
 
 	/**
-	 * Upgrade routine for version 2.1.2.
+	 * Upgrade routine for version 2.2.0.
 	 *
-	 * @since 2.1.2
+	 * @since 2.2.0
 	 */
-	protected function upgrade_212() {
+	protected function upgrade_220() {
 		global $wpdb;
 
 		$p2p_table = $wpdb->prefix . 'p2p';
