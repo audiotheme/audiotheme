@@ -28,6 +28,7 @@ class AudioTheme_Provider_GeneralHooks extends AudioTheme_AbstractProvider {
 		add_filter( 'wp_nav_menu_objects',          array( $this, 'nav_menu_classes' ), 10, 3 );
 		add_filter( 'wp_prepare_attachment_for_js', array( $this, 'prepare_audio_attachment_for_js' ), 10, 3 );
 		add_filter( 'kses_allowed_protocols',       array( $this, 'register_urn_protocol' ) );
+		add_filter( 'attachment_link',              array( $this, 'filter_attachment_links' ), 10, 2 );
 
 		// Deprecated.
 		add_action( 'init',                   'audiotheme_less_setup' );
@@ -183,5 +184,47 @@ class AudioTheme_Provider_GeneralHooks extends AudioTheme_AbstractProvider {
 	public function register_urn_protocol( $protocols ) {
 		$protocols[] = 'urn';
 		return $protocols;
+	}
+
+	/**
+	 * Filter links for attachments uploaded to gigs, records, and tracks.
+	 *
+	 * Ensures /attachment/ is in the path when permalinks are enabled to let
+	 * WordPress handle displaying the attachment page.
+	 *
+	 * @since 2.2.1
+	 *
+	 * @see get_attachment_link()
+	 *
+	 * @param string  $link          Attachment link.
+	 * @param integer $attachment_id Attachment ID.
+	 * @return string
+	 */
+	public function filter_attachment_links( $link, $attachment_id ) {
+		global $wp_rewrite;
+
+		$attachment = get_post( $attachment_id );
+		$leavename  = false !== strpos( $link, '%postname%' );
+		$parent     = $attachment->post_parent > 0 && $attachment->post_parent !== $attachment->ID ? get_post( $attachment->post_parent ) : false;
+
+		if (
+			! $wp_rewrite->using_permalinks()
+			|| ! $parent
+			|| ! in_array( $parent->post_type, array( 'audiotheme_gig', 'audiotheme_record', 'audiotheme_track' ) )
+		) {
+			return $link;
+		}
+
+		$parent_link = get_permalink( $parent );
+
+		if ( false === strpos( $parent_link, '?' ) ) {
+			$link = user_trailingslashit( trailingslashit( $parent_link ) . 'attachment/%postname%' );
+		}
+
+		if ( ! $leavename ) {
+			$link = str_replace( '%postname%', $attachment->post_name, $link );
+		}
+
+		return $link;
 	}
 }
