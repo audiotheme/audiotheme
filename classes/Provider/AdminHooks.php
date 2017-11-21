@@ -22,11 +22,12 @@ class AudioTheme_Provider_AdminHooks extends AudioTheme_AbstractProvider {
 	 * @since 2.0.0
 	 */
 	public function register_hooks() {
-		add_action( 'admin_init',                 array( $this, 'sort_admin_menu' ) );
-		add_action( 'admin_body_class',           array( $this, 'admin_body_classes' ) );
-		add_action( 'save_post',                  array( $this, 'update_post_terms' ), 10, 2 );
-		add_action( 'manage_pages_custom_column', array( $this, 'display_list_table_columns' ), 10, 2 );
-		add_action( 'manage_posts_custom_column', array( $this, 'display_list_table_columns' ), 10, 2 );
+		add_action( 'admin_init',                          array( $this, 'sort_admin_menu' ) );
+		add_action( 'admin_body_class',                    array( $this, 'admin_body_classes' ) );
+		add_action( 'save_post',                           array( $this, 'update_post_terms' ), 10, 2 );
+		add_action( 'manage_pages_custom_column',          array( $this, 'display_list_table_columns' ), 10, 2 );
+		add_action( 'manage_posts_custom_column',          array( $this, 'display_list_table_columns' ), 10, 2 );
+		add_filter( 'page_attributes_dropdown_pages_args', array( $this, 'disable_post_parent_dropdown' ), 10, 2 );
 
 		// Deprecated.
 		add_action( 'init', 'audiotheme_settings_init' );
@@ -131,6 +132,29 @@ class AudioTheme_Provider_AdminHooks extends AudioTheme_AbstractProvider {
 			$term_ids = array_map( 'absint', $term_ids );
 			wp_set_object_terms( $post_id, $term_ids, $taxonomy );
 		}
+	}
+
+	/**
+	 * Disable the post parent dropdown in the Page Attributes meta box for
+	 * AudioTheme custom post types.
+	 *
+	 * The Page Attributes meta box can be enabled by plugins or if a post type
+	 * template is added to the theme. We don't support parent/child
+	 * relationships for any of the core CPTs, so this prevents the post parent
+	 * dropdown from appearing.
+	 *
+	 * @since 2.2.1
+	 *
+	 * @param array   $args Dropdown arguments.
+	 * @param WP_Post $post Post object.
+	 * @return array
+	 */
+	public function disable_post_parent_dropdown( $args, $post ) {
+		if ( 0 === strpos( get_post_type( $post ), 'audiotheme_' ) ) {
+			$args['post_type'] = '_' . $post->post_type;
+		}
+
+		return $args;
 	}
 
 	/**
