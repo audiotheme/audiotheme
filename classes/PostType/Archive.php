@@ -483,6 +483,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 			'menu_name'             => esc_html_x( 'Archives', 'admin menu name', 'audiotheme' ),
 			'name_admin_bar'        => esc_html_x( 'Archive', 'add new on admin bar', 'audiotheme' ),
 			'archives'              => esc_html__( 'Post Archives', 'audiotheme' ),
+			'attributes'            => esc_html__( 'Archive Attributes', 'audiotheme' ),
 			'insert_into_item'      => esc_html__( 'Insert into archive', 'audiotheme' ),
 			'uploaded_to_this_item' => esc_html__( 'Uploaded to this archive', 'audiotheme' ),
 			'featured_image'        => esc_html__( 'Featured Image', 'audiotheme' ),
