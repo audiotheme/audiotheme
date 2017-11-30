@@ -366,65 +366,16 @@ function get_audiotheme_venue_vcard( $venue_id, $args = array() ) {
 	$venue = get_audiotheme_venue( $venue_id );
 
 	$args = wp_parse_args( $args, array(
-		'container'         => 'dd',
-		'microdata'         => true,
-		'show_country'      => true,
-		'show_name'         => true,
-		'show_name_link'    => true,
-		'show_phone'        => true,
-		'separator_address' => '<br>',
-		'separator_country' => '<br>',
+		'container'      => 'dd',
+		'microdata'      => true,
+		'show_country'   => true,
+		'show_name'      => true,
+		'show_name_link' => true,
+		'show_phone'     => true,
 	) );
 
-	$output  = '';
-
-	if ( $args['show_name'] ) {
-		$schema  = $args['microdata'] ? ' itemprop="url"' : '';
-		$output .= ( empty( $venue->website ) || ! $args['show_name_link'] ) ? '' : '<a href="' . esc_url( $venue->website ) . '" class="url"' . $schema . '>';
-
-		$schema  = $args['microdata'] ? ' itemprop="name"' : '';
-		$output .= '<span class="venue-name fn org"' . $schema . '>' . $venue->name . '</span>';
-		$output .= ( empty( $venue->website ) || ! $args['show_name_link'] ) ? '' : '</a>';
-	}
-
-	$address  = '';
-	$schema   = $args['microdata'] ? ' itemprop="streetAddress"' : '';
-	$address .= ( empty( $venue->address ) ) ? '' : '<span class="street-address"' . $schema . '>' . esc_html( $venue->address ) . '</span>';
-
-	$region  = '';
-	$schema  = $args['microdata'] ? ' itemprop="addressLocality"' : '';
-	$region .= ( empty( $venue->city ) ) ? '' : '<span class="locality"' . $schema . '>' . $venue->city . '</span>';
-	$region .= ( ! empty( $venue->city ) && ! empty( $venue->state ) ) ? ', ' : '';
-	$schema  = $args['microdata'] ? ' itemprop="addressRegion"' : '';
-	$region .= ( empty( $venue->state ) ) ? '' : '<span class="region"' . $schema . '>' . $venue->state . '</span>';
-	$schema  = $args['microdata'] ? ' itemprop="postalCode"' : '';
-	$region .= ( empty( $venue->postal_code ) ) ? '' : ' <span class="postal-code"' . $schema . '>' . $venue->postal_code . '</span>';
-
-	$address .= ( ! empty( $address ) && ! empty( $region ) ) ? '<span class="sep sep-street-address">' . $args['separator_address'] . '</span>' : '';
-	$address .= ( empty( $region ) ) ? '' : '<span class="venue-location">' . $region . '</span>';
-
-	if ( ! empty( $venue->country ) && $args['show_country'] && apply_filters( 'show_audiotheme_venue_country', true ) ) {
-		$country_class = esc_attr( 'country-name-' . sanitize_title_with_dashes( $venue->country ) );
-
-		$address .= ( ! empty( $address ) && ! empty( $venue->country ) ) ? '<span class="sep sep-country-name ' . $country_class . '">' . $args['separator_country'] . '</span> ' : '';
-		$schema   = $args['microdata'] ? ' itemprop="addressCountry"' : '';
-		$address .= ( empty( $venue->country ) ) ? '' : '<span class="country-name ' . $country_class . '"' . $schema . '>' . $venue->country . '</span>';
-	}
-
-	if ( ! empty( $address ) ) {
-		$output .= sprintf(
-			'<div class="venue-address adr"%2$s%3$s%4$s>%1$s</div> ',
-			$address,
-			$args['microdata'] ? ' itemscope' : '',
-			$args['microdata'] ? ' itemtype="http://schema.org/PostalAddress"' : '',
-			$args['microdata'] ? ' itemprop="address"' : ''
-		);
-	}
-
-	if ( $args['show_phone'] ) {
-		$schema  = $args['microdata'] ? ' itemprop="telephone"' : '';
-		$output .= ( empty( $venue->phone ) ) ? '' : '<span class="venue-phone tel"' . $schema . '>' . $venue->phone . '</span>';
-	}
+	$formatter = new AudioTheme_AddressFormatter( $venue );
+	$output = $formatter->get_html( $args );
 
 	if ( ! empty( $output ) && ! empty( $args['container'] ) ) {
 		$output = sprintf(
@@ -452,15 +403,16 @@ function get_audiotheme_venue_vcard( $venue_id, $args = array() ) {
 function get_audiotheme_venue_address( $venue_id, $args = array() ) {
 	$venue = get_audiotheme_venue( $venue_id );
 
-	$address  = '';
-	$address .= ( empty( $venue->address ) ) ? '' : trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( $venue->address ) ) ) . ', ';
+	$args = wp_parse_args( $args, array(
+		'separator'    => ', ',
+		'show_country' => false,
+		'show_name'    => false,
+		'show_phone'   => false,
+	) );
 
-	$address .= ( empty( $venue->city ) ) ? '' : $venue->city;
-	$address .= ( ! empty( $venue->city ) && ! empty( $venue->state ) ) ? ', ' : '';
-	$address .= ( empty( $venue->state ) ) ? '' : $venue->state;
-	$address .= ( empty( $venue->postal_code ) ) ? '' : ' ' . $venue->postal_code;
+	$formatter = new AudioTheme_AddressFormatter( $venue );
 
-	return $address;
+	return $formatter->get_text( $args );
 }
 
 /**
@@ -476,15 +428,15 @@ function get_audiotheme_venue_location( $venue_id, $args = array() ) {
 	$venue = get_audiotheme_venue( $venue_id );
 
 	$location  = '';
-	$location .= ( empty( $venue->city ) ) ? '' : '<span class="locality">' . $venue->city . '</span>';
-	$location .= ( ! empty( $location ) && ! empty( $venue->state ) ) ? '<span class="sep sep-region">,</span> ' : '';
-	$location .= ( empty( $venue->state ) ) ? '' : '<span class="region">' . $venue->state . '</span>';
+	$location .= empty( $venue->city ) ? '' : '<span class="locality">' . $venue->city . '</span>';
+	$location .= empty( $location ) || empty( $venue->state ) ? '' : '<span class="sep sep-region">,</span> ';
+	$location .= empty( $venue->state ) ? '' : '<span class="region">' . $venue->state . '</span>';
 
 	if ( ! empty( $venue->country ) && apply_filters( 'show_audiotheme_venue_country', true ) ) {
 		$country_class = esc_attr( 'country-name-' . sanitize_title_with_dashes( $venue->country ) );
 
-		$location .= ( ! empty( $location ) ) ? '<span class="sep sep-country-name ' . $country_class . '">,</span> ' : '';
-		$location .= ( empty( $venue->country ) ) ? '' : '<span class="country-name ' . $country_class . '">' . $venue->country . '</span>';
+		$location .= empty( $location ) ? '': '<span class="sep sep-country-name ' . $country_class . '">,</span> ';
+		$location .= empty( $venue->country ) ? '' : '<span class="country-name ' . $country_class . '">' . $venue->country . '</span>';
 	}
 
 	return $location;
