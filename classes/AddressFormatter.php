@@ -75,9 +75,9 @@ class AudioTheme_AddressFormatter {
 		$output = sprintf(
 			'<span class="venue-address adr"%2$s%3$s%4$s>%1$s</span>',
 			$output,
+			$args['microdata'] ? ' itemprop="address"' : '',
 			$args['microdata'] ? ' itemscope' : '',
-			$args['microdata'] ? ' itemtype="http://schema.org/PostalAddress"' : '',
-			$args['microdata'] ? ' itemprop="address"' : ''
+			$args['microdata'] ? ' itemtype="http://schema.org/PostalAddress"' : ''
 		);
 
 		// Prepend the venue name.
@@ -323,7 +323,7 @@ class AudioTheme_AddressFormatter {
 			'IT' => "{name}\n{address}\n{postal_code} {city}\n{country}\n{phone}",
 			'FR' => "{name}\n{address}\n{postal_code} {city}\n{country}\n{phone}",
 			'NL' => "{name}\n{address}\n{postal_code} {city}\n{country}\n{phone}",
-			"US" => "{name}\n{address}\n{city}, {state} {postal_code}\n{country}\n{phone}",
+			'US' => "{name}\n{address}\n{city}, {state} {postal_code}\n{country}\n{phone}",
 		);
 	}
 
