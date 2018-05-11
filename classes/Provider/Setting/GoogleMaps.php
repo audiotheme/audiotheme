@@ -214,7 +214,11 @@ class AudioTheme_Provider_Setting_GoogleMaps extends AudioTheme_AbstractProvider
 			'key'    => $api_key,
 		), 'https://maps.googleapis.com/maps/api/staticmap' );
 
-		$response = wp_remote_head( $url );
+		$response = wp_remote_get( $url, array(
+			'headers' => array(
+				'Referer' => esc_url_raw( home_url( '/' ) ),
+			),
+		) );
 
 		if ( 403 !== wp_remote_retrieve_response_code( $response ) ) {
 			return;
