@@ -133,6 +133,10 @@ class AudioTheme_PostType_Gig extends AudioTheme_PostType_AbstractPostType {
 					'type'    => 'DATETIME',
 				);
 
+				$wp_query->is_date = false;
+				$wp_query->is_day = false;
+				$wp_query->is_month = false;
+				$wp_query->is_year = false;
 				$wp_query->set( 'day', null );
 				$wp_query->set( 'monthnum', null );
 				$wp_query->set( 'year', null );
