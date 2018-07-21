@@ -14,7 +14,7 @@ module.exports = {
 				dest: 'admin/js/settings.min.js'
 			},
 			{
-				src: 'admin/js/gig-edit.bundle.min.js',
+				src: 'admin/js/gig-edit.bundle.js',
 				dest: 'admin/js/gig-edit.bundle.min.js'
 			},
 			{
