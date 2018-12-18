@@ -62,6 +62,7 @@ datepicker = new Pikaday({
 	format: 'YYYY/MM/DD',
 	i18n: _pikadayL10n || {},
 	isRTL: isRtl,
+	keyboardInput: false,
 	theme: 'audiotheme-pikaday'
 });
 
