@@ -1,6 +1,8 @@
 const webpack = require( 'webpack' );
+const mode = process.env.NODE_ENV || 'production';
 
 const config = {
+	mode: mode,
 	entry: {
 		'admin': './admin/js/admin.js',
 		'gig-edit': './admin/js/gig-edit.js'
@@ -32,14 +34,5 @@ const config = {
 	},
 	plugins: []
 };
-
-// switch ( process.env.NODE_ENV ) {
-// 	case 'production':
-// 		config.plugins.push( new webpack.optimize.UglifyJsPlugin() );
-// 		break;
-//
-// 	default:
-// 		config.devtool = 'source-map';
-// }
 
 module.exports = config;
