@@ -79,13 +79,17 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 	 * @param WP_Query $wp_query The main WP_Query object. Passed by reference.
 	 */
 	public function pre_get_posts( $wp_query ) {
+		if ( is_admin() || ! $wp_query->is_main_query() ) {
+			return;
+		}
+
 		$post_type = apply_filters( 'audiotheme_archive_query_post_type', $this->module->get_current_archive_post_type(), $wp_query );
 
 		if ( empty( $post_type ) && $this->module->is_post_type_archive() ) {
 			$post_type = $this->module->get_post_type();
 		}
 
-		if ( is_admin() || ! $wp_query->is_main_query() || empty( $post_type ) ) {
+		if ( empty( $post_type ) ) {
 			return;
 		}
 
