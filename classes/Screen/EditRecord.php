@@ -115,11 +115,14 @@ class AudioTheme_Screen_EditRecord extends AudioTheme_Screen_AbstractScreen{
 			}
 		}
 
-		wp_localize_script( 'audiotheme-record-edit', '_audiothemeTracklistSettings', array(
-			'postId' => $post->ID,
-			'tracks' => empty( $tracks ) ? null : wp_json_encode( $tracks ),
-			'nonce'  => wp_create_nonce( 'get-default-track_' . $post->ID ),
-		) );
+		// JSON-encoded tracks needs to be backward compatible with wp_localize_script().
+		$data = 'var _audiothemeTracklistSettings = {
+			postId: ' . $post->ID . ',
+			tracks: \'' . wp_json_encode( $tracks ) . '\',
+			nonce: "' . wp_create_nonce( 'get-default-track_' . $post->ID ) . '"
+		};';
+
+		wp_add_inline_script( 'audiotheme-record-edit', $data, 'before' );
 
 		require( $this->plugin->get_path( 'admin/views/edit-record-tracklist.php' ) );
 		require( $this->plugin->get_path( 'admin/views/templates-record.php' ) );
