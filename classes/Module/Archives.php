@@ -214,6 +214,10 @@ class AudioTheme_Module_Archives extends AudioTheme_Module_AbstractModule {
 	public function get_post_type() {
 		$post_type = get_query_var( 'post_type' );
 
+		if ( empty( $post_type ) ) {
+			$post_type = $this->get_current_archive_post_type();
+		}
+
 		if ( is_array( $post_type ) ) {
 			$post_type = reset( $post_type );
 		}
