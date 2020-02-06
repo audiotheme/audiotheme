@@ -24,7 +24,7 @@ class AudioTheme_Screen_ManageTracks extends AudioTheme_Screen_AbstractScreen{
 	public function register_hooks() {
 		add_filter( 'parse_query',                                   array( $this, 'admin_query' ) );
 		add_action( 'restrict_manage_posts',                         array( $this, 'list_table_filters' ) );
-		add_filter( 'manage_edit-audiotheme_track_columns',          array( $this, 'register_columns' ) );
+		add_filter( 'manage_edit-audiotheme_track_columns',          array( $this, 'register_columns' ), 9 );
 		add_action( 'manage_edit-audiotheme_track_sortable_columns', array( $this, 'register_sortable_columns' ) );
 		add_action( 'manage_posts_custom_column',                    array( $this, 'display_columns' ), 10, 2 );
 	}

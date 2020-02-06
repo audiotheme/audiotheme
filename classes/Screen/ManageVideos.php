@@ -22,7 +22,7 @@ class AudioTheme_Screen_ManageVideos extends AudioTheme_Screen_AbstractScreen{
 	 * @since 2.0.0
 	 */
 	public function register_hooks() {
-		add_filter( 'manage_edit-audiotheme_video_columns', array( $this, 'register_columns' ) );
+		add_filter( 'manage_edit-audiotheme_video_columns', array( $this, 'register_columns' ), 9 );
 	}
 
 	/**

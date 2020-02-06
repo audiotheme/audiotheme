@@ -41,7 +41,7 @@ class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen_AbstractScreen{
 		add_filter( 'views_edit-audiotheme_gig',                   array( $this, 'filter_views' ) );
 		add_action( 'restrict_manage_posts',                       array( $this, 'display_months_filter' ) );
 		add_action( 'restrict_manage_posts',                       array( $this, 'display_venues_filter' ) );
-		add_filter( 'manage_audiotheme_gig_posts_columns',         array( $this, 'register_columns' ) );
+		add_filter( 'manage_audiotheme_gig_posts_columns',         array( $this, 'register_columns' ), 9 );
 		add_filter( 'list_table_primary_column',                   array( $this, 'register_primary_column' ) );
 		add_action( 'manage_edit-audiotheme_gig_sortable_columns', array( $this, 'register_sortable_columns' ) );
 		add_action( 'post_row_actions',                            array( $this, 'register_row_actions' ), 10, 2 );
