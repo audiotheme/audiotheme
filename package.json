@@ -1,17 +1,17 @@
 {
   "name": "audiotheme",
   "description": "AudioTheme WordPress plugin.",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "license": "GPL-2.0+",
   "homepage": "https://audiotheme.com/",
   "author": "AudioTheme",
   "repository": "audiotheme/audiotheme",
   "main": "Gruntfile.js",
   "devDependencies": {
-    "@babel/core": "^7",
-    "@babel/preset-env": "^7.7.7",
-    "autoprefixer": "^9.7.3",
-    "aws-sdk": "^2.593.0",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "autoprefixer": "^9.7.4",
+    "aws-sdk": "^2.623.0",
     "babel-loader": "^8.0.6",
     "grunt": "^1.0.4",
     "grunt-contrib-compress": "^1.6.0",
@@ -27,9 +27,6 @@
     "grunt-wp-i18n": "^1.0.3",
     "load-grunt-config": "^3.0.1",
     "time-grunt": "^2.0.0",
-    "webpack": "^4.41.3"
-  },
-  "dependencies": {
-    "npm-check-updates": "^4.0.1"
+    "webpack": "^4.41.6"
   }
 }
