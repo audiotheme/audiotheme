@@ -1101,6 +1101,10 @@ function audiotheme_archives_taxonomy_title( $title ) {
 function audiotheme_nav_menu_classes( $items, $args ) {
 	global $wp;
 
+	if ( empty( $items ) ) {
+		return $items;
+	}
+
 	$classes = array();
 	$first_top = -1;
 
