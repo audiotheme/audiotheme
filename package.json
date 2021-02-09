@@ -10,9 +10,11 @@
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
+    "@wordpress/browserslist-config": "^3.0.1",
     "autoprefixer": "^9.7.4",
     "aws-sdk": "^2.623.0",
     "babel-loader": "^8.0.6",
+    "browserslist": "^4.16.3",
     "grunt": "^1.0.4",
     "grunt-contrib-compress": "^1.6.0",
     "grunt-contrib-cssmin": "^3.0.0",
@@ -28,5 +30,8 @@
     "load-grunt-config": "^3.0.1",
     "time-grunt": "^2.0.0",
     "webpack": "^4.41.6"
-  }
+  },
+  "browserslist": [
+    "extends @wordpress/browserslist-config"
+  ]
 }
