@@ -198,7 +198,7 @@ class AudioTheme_Screen_ManageTracks extends AudioTheme_Screen_AbstractScreen{
 					printf(
 						'<a href="%1$s">%2$s</a>',
 						esc_url( get_edit_post_link( $record->ID ) ),
-						esc_html( wp_strip_all_tags( apply_filters( 'the_title', $record->post_title ) ) )
+						esc_html( wp_strip_all_tags( apply_filters( 'the_title', $record->post_title, $post_id ) ) )
 					);
 				}
 				break;
