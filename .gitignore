@@ -8,6 +8,7 @@ includes/css/*.min.css
 includes/js/*.min.js
 languages/audiotheme.pot
 node_modules
+package-lock.json
 phpcs.log
 release/
 vendor/*
