@@ -363,7 +363,8 @@ function enqueue_audiotheme_tracks( $track, $list = 'tracks' ) {
 function audiotheme_record_update_track_count( $post_id ) {
 	global $wpdb;
 
-	$track_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = 'audiotheme_track' AND post_parent = %d", $post_id ) );
+	$sql = "SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = 'audiotheme_track' AND post_parent = %d AND ( post_status = 'publish' OR post_status = 'future' OR post_status = 'draft' OR post_status = 'pending' OR post_status = 'private' )";
+	$track_count = $wpdb->get_var( $wpdb->prepare( $sql, $post_id ) );
 	$track_count = empty( $track_count ) ? 0 : absint( $track_count );
 	update_post_meta( $post_id, '_audiotheme_track_count', $track_count );
 }

@@ -56,6 +56,9 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType_AbstractPostType {
 		add_filter( 'wp_unique_post_slug',     array( $this, 'get_unique_slug' ), 10, 6 );
 		add_action( 'wp_print_footer_scripts', array( $this, 'print_tracks_js' ) );
 		add_filter( 'wp_insert_post_data',     array( $this, 'add_uuid_to_new_posts' ) );
+		add_action( 'deleted_post',            array( $this, 'update_record_track_count' ), 10, 2 );
+		add_action( 'trashed_post',            array( $this, 'update_record_track_count' ) );
+		add_action( 'untrashed_post',          array( $this, 'update_record_track_count' ) );
 		add_filter( 'post_updated_messages',   array( $this, 'post_updated_messages' ) );
 	}
 
@@ -332,6 +335,24 @@ class AudioTheme_PostType_Track extends AudioTheme_PostType_AbstractPostType {
 			/* ]]> */
 			</script>
 			<?php
+		}
+	}
+
+	/**
+	 * Update the track count for a record.
+	 *
+	 * @since 2.3.5
+	 *
+	 * @param int     $track_id Post ID.
+	 * @param WP_Post $track    Optional. Track post object.
+	 */
+	public function update_record_track_count( $track_id, $track = null ) {
+		if ( empty( $track ) ) {
+			$track = get_post( $track_id );
+		}
+
+		if ( ! empty( $track->post_parent ) ) {
+			audiotheme_record_update_track_count( $track->post_parent );
 		}
 	}
 
