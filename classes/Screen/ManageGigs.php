@@ -407,7 +407,7 @@ class AudioTheme_Screen_ManageGigs extends AudioTheme_Screen_AbstractScreen{
 		), $base_url );
 
 		$actions['duplicate hide-if-no-js'] = sprintf(
-			'<a href="%1$a" title="%2$s" data-nonce="%3$s">%4$s</a>',
+			'<a href="%1$s" title="%2$s" data-nonce="%3$s">%4$s</a>',
 			'#',
 			esc_attr__( 'Duplicate this gig', 'audiotheme' ),
 			wp_create_nonce( 'duplicate-gig_' . $item->ID ),
