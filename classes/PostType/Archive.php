@@ -146,7 +146,7 @@ class AudioTheme_PostType_Archive extends AudioTheme_PostType_AbstractPostType {
 				$front .= $wp_rewrite->index . '/';
 			}
 
-			if ( isset( $post_type_object->rewrite ) && $post_type_object->rewrite['with_front'] ) {
+			if ( ! empty( $post_type_object->rewrite['with_front'] ) ) {
 				$front = $wp_rewrite->front;
 			}
 
