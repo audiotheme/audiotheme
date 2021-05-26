@@ -289,7 +289,7 @@ class AudioTheme_Module_Discography extends AudioTheme_Module_AbstractModule {
 
 		printf(
 			'<script type="application/ld+json">%s</script>',
-			wp_json_encode( $items )
+			wp_json_encode( $items, JSON_UNESCAPED_SLASHES )
 		);
 	}
 
