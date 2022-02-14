@@ -61,7 +61,9 @@ class AudioTheme_Widget_Track extends WP_Widget {
 			$post = get_post( $instance['post_id'] );
 
 			$image_size = apply_filters( 'audiotheme_widget_track_image_size', 'thumbnail', $instance, $args );
-			$image_size = apply_filters( 'audiotheme_widget_track_image_size-' . $args['id'], $image_size, $instance, $args );
+			if ( ! empty( $args['id'] ) ) {
+				$image_size = apply_filters( 'audiotheme_widget_track_image_size-' . $args['id'], $image_size, $instance, $args );
+			}
 
 			$data                 = array();
 			$data['args']         = $args;
@@ -71,7 +73,12 @@ class AudioTheme_Widget_Track extends WP_Widget {
 			$data['post']         = get_post( $instance['post_id'] );
 			$data                 = array_merge( $instance, $data );
 
-			$template = audiotheme_locate_template( array( "widgets/{$args['id']}_track.php", 'widgets/track.php' ) );
+			$templates = array( 'widgets/track.php' );
+			if ( ! empty( $args['id'] ) ) {
+				array_unshift( $templates, "widgets/{$args['id']}_track.php" );
+			}
+
+			$template = audiotheme_locate_template( $templates );
 			audiotheme_load_template( $template, $data );
 		}
 

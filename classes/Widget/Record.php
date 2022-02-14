@@ -28,7 +28,7 @@ class AudioTheme_Widget_Record extends WP_Widget {
 		$widget_options = array(
 			'classname'                   => 'widget_audiotheme_record',
 			'customize_selective_refresh' => true,
-			'description'                 => __( 'Display a record.', 'audiotheme' )
+			'description'                 => __( 'Display a record.', 'audiotheme' ),
 		);
 
 		parent::__construct( 'audiotheme-record', __( 'Record (AudioTheme)', 'audiotheme' ), $widget_options );
@@ -59,7 +59,9 @@ class AudioTheme_Widget_Record extends WP_Widget {
 			echo $output;
 		} else {
 			$image_size = apply_filters( 'audiotheme_widget_record_image_size', 'thumbnail', $instance, $args );
-			$image_size = apply_filters( 'audiotheme_widget_record_image_size-' . $args['id'], $image_size, $instance, $args );
+			if ( ! empty( $args['id'] ) ) {
+				$image_size = apply_filters( 'audiotheme_widget_record_image_size-' . $args['id'], $image_size, $instance, $args );
+			}
 
 			$data                 = array();
 			$data['args']         = $args;
@@ -69,7 +71,12 @@ class AudioTheme_Widget_Record extends WP_Widget {
 			$data['post']         = get_post( $instance['post_id'] );
 			$data                 = array_merge( $instance, $data );
 
-			$template = audiotheme_locate_template( array( "widgets/{$args['id']}_record.php", 'widgets/record.php' ) );
+			$templates = array( 'widgets/record.php' );
+			if ( ! empty( $args['id'] ) ) {
+				array_unshift( $templates, "widgets/{$args['id']}_record.php" );
+			}
+
+			$template = audiotheme_locate_template( $templates );
 			audiotheme_load_template( $template, $data );
 		}
 
