@@ -1,6 +1,3 @@
-[submodule "vendor/scribu/scb-framework"]
-	path = vendor/scribu/scb-framework
-	url = https://github.com/scribu/wp-scb-framework
 [submodule "vendor/scribu/lib-posts-to-posts"]
 	path = vendor/scribu/lib-posts-to-posts
 	url = https://github.com/scribu/wp-lib-posts-to-posts
