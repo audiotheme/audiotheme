@@ -10,14 +10,14 @@
  * Plugin Name: AudioTheme
  * Plugin URI:  https://audiotheme.com/view/audiotheme/
  * Description: A platform for music-oriented websites, allowing for easy management of gigs, discography, videos and more.
- * Version:     2.3.5
+ * Version:     2.3.6
  * Author:      AudioTheme
  * Author URI:  https://audiotheme.com/
  * License:     GPL-2.0+
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: audiotheme
  * Domain Path: /languages
- * Requires at least: 4.3.1
+ * Requires at least: 5.9.3
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -42,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * The plugin version.
  */
-define( 'AUDIOTHEME_VERSION', '2.3.5' );
+define( 'AUDIOTHEME_VERSION', '2.3.6' );
 
 /**
  * Plugin path.
