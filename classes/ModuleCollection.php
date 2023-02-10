@@ -154,6 +154,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	 *
 	 * @return int
 	 */
+	#[ReturnTypeWillChange]
 	public function count() {
 		return count( $this->modules );
 	}
@@ -165,6 +166,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	 *
 	 * @return AudioTheme_Module
 	 */
+	#[ReturnTypeWillChange]
 	public function current() {
 		return current( $this->modules );
 	}
@@ -176,6 +178,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	 *
 	 * @return string
 	 */
+	#[ReturnTypeWillChange]
 	public function key() {
 		return key( $this->modules );
 	}
@@ -185,6 +188,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	 *
 	 * @since 2.0.0
 	 */
+	#[ReturnTypeWillChange]
 	public function next() {
 		next( $this->modules );
 	}
@@ -194,6 +198,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	 *
 	 * @since 2.0.0
 	 */
+	#[ReturnTypeWillChange]
 	public function rewind() {
 		reset( $this->modules );
 	}
@@ -205,6 +210,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	 *
 	 * @return bool
 	 */
+	#[ReturnTypeWillChange]
 	public function valid() {
 		return key( $this->modules ) !== null;
 	}
@@ -217,6 +223,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	 * @param string $offset Item identifier.
 	 * @return bool
 	 */
+	#[ReturnTypeWillChange]
 	public function offsetExists( $offset ) {
 		return isset( $this->modules[ $offset ] );
 	}
@@ -229,6 +236,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	 * @param string $offset Item identifier.
 	 * @return array
 	 */
+	#[ReturnTypeWillChange]
 	public function offsetGet( $offset ) {
 		return isset( $this->modules[ $offset ] ) ? $this->modules[ $offset ] : null;
 	}
@@ -241,6 +249,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	 * @param string $offset Item identifier.
 	 * @param array  $value Item data.
 	 */
+	#[ReturnTypeWillChange]
 	public function offsetSet( $offset, $value ) {
 		$this->modules[ $offset ] = $value;
 	}
@@ -252,6 +261,7 @@ class AudioTheme_ModuleCollection implements ArrayAccess, Countable, Iterator {
 	 *
 	 * @param string $offset Item identifier.
 	 */
+	#[ReturnTypeWillChange]
 	public function offsetUnset( $offset ) {
 		unset( $this->modules[ $offset ] );
 	}
