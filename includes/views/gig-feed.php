@@ -100,7 +100,7 @@ function get_audiotheme_venue_location_ical( $post = null ) {
 	}
 
 	if ( ! empty( $address ) ) {
-		$output .= ', ' . join( $address, ', ' );
+		$output .= ', ' . join( ', ', $address );
 	}
 
 	return escape_ical_text( $output );
