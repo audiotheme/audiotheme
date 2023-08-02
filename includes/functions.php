@@ -459,7 +459,7 @@ function audiotheme_encode_url_path( $url ) {
  * @return array string
  */
 function audiotheme_build_query( $data, $arg_separator = '|', $value_separator = ':' ) {
-	$output = http_build_query( $data, null, $arg_separator );
+	$output = http_build_query( $data, '', $arg_separator );
 	return str_replace( '=', $value_separator, $output );
 }
 
